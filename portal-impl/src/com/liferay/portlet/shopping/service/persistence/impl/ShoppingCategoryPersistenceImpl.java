@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -113,11 +112,9 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 *
 	 * @param groupId the group ID
 	 * @return the matching shopping categories
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<ShoppingCategory> findByGroupId(long groupId)
-		throws SystemException {
+	public List<ShoppingCategory> findByGroupId(long groupId) {
 		return findByGroupId(groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -132,11 +129,9 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 * @param start the lower bound of the range of shopping categories
 	 * @param end the upper bound of the range of shopping categories (not inclusive)
 	 * @return the range of matching shopping categories
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<ShoppingCategory> findByGroupId(long groupId, int start, int end)
-		throws SystemException {
+	public List<ShoppingCategory> findByGroupId(long groupId, int start, int end) {
 		return findByGroupId(groupId, start, end, null);
 	}
 
@@ -152,11 +147,10 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 * @param end the upper bound of the range of shopping categories (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching shopping categories
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<ShoppingCategory> findByGroupId(long groupId, int start,
-		int end, OrderByComparator orderByComparator) throws SystemException {
+		int end, OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -259,12 +253,10 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching shopping category
 	 * @throws com.liferay.portlet.shopping.NoSuchCategoryException if a matching shopping category could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ShoppingCategory findByGroupId_First(long groupId,
-		OrderByComparator orderByComparator)
-		throws NoSuchCategoryException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchCategoryException {
 		ShoppingCategory shoppingCategory = fetchByGroupId_First(groupId,
 				orderByComparator);
 
@@ -290,11 +282,10 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching shopping category, or <code>null</code> if a matching shopping category could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ShoppingCategory fetchByGroupId_First(long groupId,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		List<ShoppingCategory> list = findByGroupId(groupId, 0, 1,
 				orderByComparator);
 
@@ -312,12 +303,10 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching shopping category
 	 * @throws com.liferay.portlet.shopping.NoSuchCategoryException if a matching shopping category could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ShoppingCategory findByGroupId_Last(long groupId,
-		OrderByComparator orderByComparator)
-		throws NoSuchCategoryException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchCategoryException {
 		ShoppingCategory shoppingCategory = fetchByGroupId_Last(groupId,
 				orderByComparator);
 
@@ -343,11 +332,10 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching shopping category, or <code>null</code> if a matching shopping category could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ShoppingCategory fetchByGroupId_Last(long groupId,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		int count = countByGroupId(groupId);
 
 		if (count == 0) {
@@ -372,12 +360,11 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next shopping category
 	 * @throws com.liferay.portlet.shopping.NoSuchCategoryException if a shopping category with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ShoppingCategory[] findByGroupId_PrevAndNext(long categoryId,
 		long groupId, OrderByComparator orderByComparator)
-		throws NoSuchCategoryException, SystemException {
+		throws NoSuchCategoryException {
 		ShoppingCategory shoppingCategory = findByPrimaryKey(categoryId);
 
 		Session session = null;
@@ -515,11 +502,9 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 *
 	 * @param groupId the group ID
 	 * @return the matching shopping categories that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<ShoppingCategory> filterFindByGroupId(long groupId)
-		throws SystemException {
+	public List<ShoppingCategory> filterFindByGroupId(long groupId) {
 		return filterFindByGroupId(groupId, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
@@ -535,11 +520,10 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 * @param start the lower bound of the range of shopping categories
 	 * @param end the upper bound of the range of shopping categories (not inclusive)
 	 * @return the range of matching shopping categories that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<ShoppingCategory> filterFindByGroupId(long groupId, int start,
-		int end) throws SystemException {
+		int end) {
 		return filterFindByGroupId(groupId, start, end, null);
 	}
 
@@ -555,11 +539,10 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 * @param end the upper bound of the range of shopping categories (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching shopping categories that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<ShoppingCategory> filterFindByGroupId(long groupId, int start,
-		int end, OrderByComparator orderByComparator) throws SystemException {
+		int end, OrderByComparator orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByGroupId(groupId, start, end, orderByComparator);
 		}
@@ -647,12 +630,11 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next shopping category
 	 * @throws com.liferay.portlet.shopping.NoSuchCategoryException if a shopping category with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ShoppingCategory[] filterFindByGroupId_PrevAndNext(long categoryId,
 		long groupId, OrderByComparator orderByComparator)
-		throws NoSuchCategoryException, SystemException {
+		throws NoSuchCategoryException {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByGroupId_PrevAndNext(categoryId, groupId,
 				orderByComparator);
@@ -829,10 +811,9 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 * Removes all the shopping categories where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByGroupId(long groupId) throws SystemException {
+	public void removeByGroupId(long groupId) {
 		for (ShoppingCategory shoppingCategory : findByGroupId(groupId,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(shoppingCategory);
@@ -844,10 +825,9 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 *
 	 * @param groupId the group ID
 	 * @return the number of matching shopping categories
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByGroupId(long groupId) throws SystemException {
+	public int countByGroupId(long groupId) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_GROUPID;
 
 		Object[] finderArgs = new Object[] { groupId };
@@ -897,10 +877,9 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 *
 	 * @param groupId the group ID
 	 * @return the number of matching shopping categories that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int filterCountByGroupId(long groupId) throws SystemException {
+	public int filterCountByGroupId(long groupId) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return countByGroupId(groupId);
 		}
@@ -971,11 +950,9 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 * @param groupId the group ID
 	 * @param parentCategoryId the parent category ID
 	 * @return the matching shopping categories
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<ShoppingCategory> findByG_P(long groupId, long parentCategoryId)
-		throws SystemException {
+	public List<ShoppingCategory> findByG_P(long groupId, long parentCategoryId) {
 		return findByG_P(groupId, parentCategoryId, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
@@ -992,11 +969,10 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 * @param start the lower bound of the range of shopping categories
 	 * @param end the upper bound of the range of shopping categories (not inclusive)
 	 * @return the range of matching shopping categories
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<ShoppingCategory> findByG_P(long groupId,
-		long parentCategoryId, int start, int end) throws SystemException {
+		long parentCategoryId, int start, int end) {
 		return findByG_P(groupId, parentCategoryId, start, end, null);
 	}
 
@@ -1013,12 +989,11 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 * @param end the upper bound of the range of shopping categories (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching shopping categories
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<ShoppingCategory> findByG_P(long groupId,
 		long parentCategoryId, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1131,12 +1106,11 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching shopping category
 	 * @throws com.liferay.portlet.shopping.NoSuchCategoryException if a matching shopping category could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ShoppingCategory findByG_P_First(long groupId,
 		long parentCategoryId, OrderByComparator orderByComparator)
-		throws NoSuchCategoryException, SystemException {
+		throws NoSuchCategoryException {
 		ShoppingCategory shoppingCategory = fetchByG_P_First(groupId,
 				parentCategoryId, orderByComparator);
 
@@ -1166,12 +1140,10 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 * @param parentCategoryId the parent category ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching shopping category, or <code>null</code> if a matching shopping category could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ShoppingCategory fetchByG_P_First(long groupId,
-		long parentCategoryId, OrderByComparator orderByComparator)
-		throws SystemException {
+		long parentCategoryId, OrderByComparator orderByComparator) {
 		List<ShoppingCategory> list = findByG_P(groupId, parentCategoryId, 0,
 				1, orderByComparator);
 
@@ -1190,12 +1162,10 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching shopping category
 	 * @throws com.liferay.portlet.shopping.NoSuchCategoryException if a matching shopping category could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ShoppingCategory findByG_P_Last(long groupId, long parentCategoryId,
-		OrderByComparator orderByComparator)
-		throws NoSuchCategoryException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchCategoryException {
 		ShoppingCategory shoppingCategory = fetchByG_P_Last(groupId,
 				parentCategoryId, orderByComparator);
 
@@ -1225,12 +1195,10 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 * @param parentCategoryId the parent category ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching shopping category, or <code>null</code> if a matching shopping category could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ShoppingCategory fetchByG_P_Last(long groupId,
-		long parentCategoryId, OrderByComparator orderByComparator)
-		throws SystemException {
+		long parentCategoryId, OrderByComparator orderByComparator) {
 		int count = countByG_P(groupId, parentCategoryId);
 
 		if (count == 0) {
@@ -1256,12 +1224,11 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next shopping category
 	 * @throws com.liferay.portlet.shopping.NoSuchCategoryException if a shopping category with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ShoppingCategory[] findByG_P_PrevAndNext(long categoryId,
 		long groupId, long parentCategoryId, OrderByComparator orderByComparator)
-		throws NoSuchCategoryException, SystemException {
+		throws NoSuchCategoryException {
 		ShoppingCategory shoppingCategory = findByPrimaryKey(categoryId);
 
 		Session session = null;
@@ -1404,11 +1371,10 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 * @param groupId the group ID
 	 * @param parentCategoryId the parent category ID
 	 * @return the matching shopping categories that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<ShoppingCategory> filterFindByG_P(long groupId,
-		long parentCategoryId) throws SystemException {
+		long parentCategoryId) {
 		return filterFindByG_P(groupId, parentCategoryId, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
@@ -1425,11 +1391,10 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 * @param start the lower bound of the range of shopping categories
 	 * @param end the upper bound of the range of shopping categories (not inclusive)
 	 * @return the range of matching shopping categories that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<ShoppingCategory> filterFindByG_P(long groupId,
-		long parentCategoryId, int start, int end) throws SystemException {
+		long parentCategoryId, int start, int end) {
 		return filterFindByG_P(groupId, parentCategoryId, start, end, null);
 	}
 
@@ -1446,12 +1411,11 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 * @param end the upper bound of the range of shopping categories (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching shopping categories that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<ShoppingCategory> filterFindByG_P(long groupId,
 		long parentCategoryId, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_P(groupId, parentCategoryId, start, end,
 				orderByComparator);
@@ -1545,12 +1509,11 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next shopping category
 	 * @throws com.liferay.portlet.shopping.NoSuchCategoryException if a shopping category with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ShoppingCategory[] filterFindByG_P_PrevAndNext(long categoryId,
 		long groupId, long parentCategoryId, OrderByComparator orderByComparator)
-		throws NoSuchCategoryException, SystemException {
+		throws NoSuchCategoryException {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_P_PrevAndNext(categoryId, groupId, parentCategoryId,
 				orderByComparator);
@@ -1732,11 +1695,9 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 *
 	 * @param groupId the group ID
 	 * @param parentCategoryId the parent category ID
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByG_P(long groupId, long parentCategoryId)
-		throws SystemException {
+	public void removeByG_P(long groupId, long parentCategoryId) {
 		for (ShoppingCategory shoppingCategory : findByG_P(groupId,
 				parentCategoryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(shoppingCategory);
@@ -1749,11 +1710,9 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 * @param groupId the group ID
 	 * @param parentCategoryId the parent category ID
 	 * @return the number of matching shopping categories
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByG_P(long groupId, long parentCategoryId)
-		throws SystemException {
+	public int countByG_P(long groupId, long parentCategoryId) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_P;
 
 		Object[] finderArgs = new Object[] { groupId, parentCategoryId };
@@ -1808,11 +1767,9 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 * @param groupId the group ID
 	 * @param parentCategoryId the parent category ID
 	 * @return the number of matching shopping categories that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int filterCountByG_P(long groupId, long parentCategoryId)
-		throws SystemException {
+	public int filterCountByG_P(long groupId, long parentCategoryId) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return countByG_P(groupId, parentCategoryId);
 		}
@@ -1967,11 +1924,10 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 * @param categoryId the primary key of the shopping category
 	 * @return the shopping category that was removed
 	 * @throws com.liferay.portlet.shopping.NoSuchCategoryException if a shopping category with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ShoppingCategory remove(long categoryId)
-		throws NoSuchCategoryException, SystemException {
+		throws NoSuchCategoryException {
 		return remove((Serializable)categoryId);
 	}
 
@@ -1981,11 +1937,10 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 * @param primaryKey the primary key of the shopping category
 	 * @return the shopping category that was removed
 	 * @throws com.liferay.portlet.shopping.NoSuchCategoryException if a shopping category with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ShoppingCategory remove(Serializable primaryKey)
-		throws NoSuchCategoryException, SystemException {
+		throws NoSuchCategoryException {
 		Session session = null;
 
 		try {
@@ -2017,8 +1972,7 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	}
 
 	@Override
-	protected ShoppingCategory removeImpl(ShoppingCategory shoppingCategory)
-		throws SystemException {
+	protected ShoppingCategory removeImpl(ShoppingCategory shoppingCategory) {
 		shoppingCategory = toUnwrappedModel(shoppingCategory);
 
 		Session session = null;
@@ -2051,8 +2005,7 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 
 	@Override
 	public ShoppingCategory updateImpl(
-		com.liferay.portlet.shopping.model.ShoppingCategory shoppingCategory)
-		throws SystemException {
+		com.liferay.portlet.shopping.model.ShoppingCategory shoppingCategory) {
 		shoppingCategory = toUnwrappedModel(shoppingCategory);
 
 		boolean isNew = shoppingCategory.isNew();
@@ -2166,11 +2119,10 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 * @param primaryKey the primary key of the shopping category
 	 * @return the shopping category
 	 * @throws com.liferay.portlet.shopping.NoSuchCategoryException if a shopping category with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ShoppingCategory findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchCategoryException, SystemException {
+		throws NoSuchCategoryException {
 		ShoppingCategory shoppingCategory = fetchByPrimaryKey(primaryKey);
 
 		if (shoppingCategory == null) {
@@ -2191,11 +2143,10 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 * @param categoryId the primary key of the shopping category
 	 * @return the shopping category
 	 * @throws com.liferay.portlet.shopping.NoSuchCategoryException if a shopping category with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ShoppingCategory findByPrimaryKey(long categoryId)
-		throws NoSuchCategoryException, SystemException {
+		throws NoSuchCategoryException {
 		return findByPrimaryKey((Serializable)categoryId);
 	}
 
@@ -2204,11 +2155,9 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 *
 	 * @param primaryKey the primary key of the shopping category
 	 * @return the shopping category, or <code>null</code> if a shopping category with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public ShoppingCategory fetchByPrimaryKey(Serializable primaryKey)
-		throws SystemException {
+	public ShoppingCategory fetchByPrimaryKey(Serializable primaryKey) {
 		ShoppingCategory shoppingCategory = (ShoppingCategory)EntityCacheUtil.getResult(ShoppingCategoryModelImpl.ENTITY_CACHE_ENABLED,
 				ShoppingCategoryImpl.class, primaryKey);
 
@@ -2253,11 +2202,9 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 *
 	 * @param categoryId the primary key of the shopping category
 	 * @return the shopping category, or <code>null</code> if a shopping category with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public ShoppingCategory fetchByPrimaryKey(long categoryId)
-		throws SystemException {
+	public ShoppingCategory fetchByPrimaryKey(long categoryId) {
 		return fetchByPrimaryKey((Serializable)categoryId);
 	}
 
@@ -2265,10 +2212,9 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 * Returns all the shopping categories.
 	 *
 	 * @return the shopping categories
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<ShoppingCategory> findAll() throws SystemException {
+	public List<ShoppingCategory> findAll() {
 		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -2282,11 +2228,9 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 * @param start the lower bound of the range of shopping categories
 	 * @param end the upper bound of the range of shopping categories (not inclusive)
 	 * @return the range of shopping categories
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<ShoppingCategory> findAll(int start, int end)
-		throws SystemException {
+	public List<ShoppingCategory> findAll(int start, int end) {
 		return findAll(start, end, null);
 	}
 
@@ -2301,11 +2245,10 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 * @param end the upper bound of the range of shopping categories (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of shopping categories
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<ShoppingCategory> findAll(int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2387,10 +2330,9 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	/**
 	 * Removes all the shopping categories from the database.
 	 *
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeAll() throws SystemException {
+	public void removeAll() {
 		for (ShoppingCategory shoppingCategory : findAll()) {
 			remove(shoppingCategory);
 		}
@@ -2400,10 +2342,9 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	 * Returns the number of shopping categories.
 	 *
 	 * @return the number of shopping categories
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countAll() throws SystemException {
+	public int countAll() {
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
 				FINDER_ARGS_EMPTY, this);
 

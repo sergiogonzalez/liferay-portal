@@ -302,8 +302,7 @@ public class AssetTagStatsWrapper implements AssetTagStats,
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void persist() {
 		_assetTagStats.persist();
 	}
 

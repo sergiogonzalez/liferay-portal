@@ -71,12 +71,11 @@ public abstract class AnnouncementsFlagLocalServiceBaseImpl
 	 *
 	 * @param announcementsFlag the announcements flag
 	 * @return the announcements flag that was added
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public AnnouncementsFlag addAnnouncementsFlag(
-		AnnouncementsFlag announcementsFlag) throws SystemException {
+		AnnouncementsFlag announcementsFlag) {
 		announcementsFlag.setNew(true);
 
 		return announcementsFlagPersistence.update(announcementsFlag);
@@ -99,12 +98,11 @@ public abstract class AnnouncementsFlagLocalServiceBaseImpl
 	 * @param flagId the primary key of the announcements flag
 	 * @return the announcements flag that was removed
 	 * @throws PortalException if a announcements flag with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public AnnouncementsFlag deleteAnnouncementsFlag(long flagId)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return announcementsFlagPersistence.remove(flagId);
 	}
 
@@ -113,12 +111,11 @@ public abstract class AnnouncementsFlagLocalServiceBaseImpl
 	 *
 	 * @param announcementsFlag the announcements flag
 	 * @return the announcements flag that was removed
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public AnnouncementsFlag deleteAnnouncementsFlag(
-		AnnouncementsFlag announcementsFlag) throws SystemException {
+		AnnouncementsFlag announcementsFlag) {
 		return announcementsFlagPersistence.remove(announcementsFlag);
 	}
 
@@ -135,12 +132,10 @@ public abstract class AnnouncementsFlagLocalServiceBaseImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery) {
 		return announcementsFlagPersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -155,12 +150,10 @@ public abstract class AnnouncementsFlagLocalServiceBaseImpl
 	 * @param start the lower bound of the range of model instances
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
 		return announcementsFlagPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end);
 	}
@@ -177,12 +170,11 @@ public abstract class AnnouncementsFlagLocalServiceBaseImpl
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
 	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		return announcementsFlagPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
 	}
@@ -192,11 +184,9 @@ public abstract class AnnouncementsFlagLocalServiceBaseImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public long dynamicQueryCount(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return announcementsFlagPersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
@@ -206,18 +196,16 @@ public abstract class AnnouncementsFlagLocalServiceBaseImpl
 	 * @param dynamicQuery the dynamic query
 	 * @param projection the projection to apply to the query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection) throws SystemException {
+		Projection projection) {
 		return announcementsFlagPersistence.countWithDynamicQuery(dynamicQuery,
 			projection);
 	}
 
 	@Override
-	public AnnouncementsFlag fetchAnnouncementsFlag(long flagId)
-		throws SystemException {
+	public AnnouncementsFlag fetchAnnouncementsFlag(long flagId) {
 		return announcementsFlagPersistence.fetchByPrimaryKey(flagId);
 	}
 
@@ -227,17 +215,15 @@ public abstract class AnnouncementsFlagLocalServiceBaseImpl
 	 * @param flagId the primary key of the announcements flag
 	 * @return the announcements flag
 	 * @throws PortalException if a announcements flag with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnnouncementsFlag getAnnouncementsFlag(long flagId)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return announcementsFlagPersistence.findByPrimaryKey(flagId);
 	}
 
 	@Override
-	public ActionableDynamicQuery getActionableDynamicQuery()
-		throws SystemException {
+	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.announcements.service.AnnouncementsFlagLocalServiceUtil.getService());
@@ -250,8 +236,7 @@ public abstract class AnnouncementsFlagLocalServiceBaseImpl
 	}
 
 	protected void initActionableDynamicQuery(
-		ActionableDynamicQuery actionableDynamicQuery)
-		throws SystemException {
+		ActionableDynamicQuery actionableDynamicQuery) {
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.announcements.service.AnnouncementsFlagLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(AnnouncementsFlag.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
@@ -261,7 +246,7 @@ public abstract class AnnouncementsFlagLocalServiceBaseImpl
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return announcementsFlagPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -275,11 +260,9 @@ public abstract class AnnouncementsFlagLocalServiceBaseImpl
 	 * @param start the lower bound of the range of announcements flags
 	 * @param end the upper bound of the range of announcements flags (not inclusive)
 	 * @return the range of announcements flags
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<AnnouncementsFlag> getAnnouncementsFlags(int start, int end)
-		throws SystemException {
+	public List<AnnouncementsFlag> getAnnouncementsFlags(int start, int end) {
 		return announcementsFlagPersistence.findAll(start, end);
 	}
 
@@ -287,10 +270,9 @@ public abstract class AnnouncementsFlagLocalServiceBaseImpl
 	 * Returns the number of announcements flags.
 	 *
 	 * @return the number of announcements flags
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int getAnnouncementsFlagsCount() throws SystemException {
+	public int getAnnouncementsFlagsCount() {
 		return announcementsFlagPersistence.countAll();
 	}
 
@@ -299,12 +281,11 @@ public abstract class AnnouncementsFlagLocalServiceBaseImpl
 	 *
 	 * @param announcementsFlag the announcements flag
 	 * @return the announcements flag that was updated
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public AnnouncementsFlag updateAnnouncementsFlag(
-		AnnouncementsFlag announcementsFlag) throws SystemException {
+		AnnouncementsFlag announcementsFlag) {
 		return announcementsFlagPersistence.update(announcementsFlag);
 	}
 
@@ -427,7 +408,7 @@ public abstract class AnnouncementsFlagLocalServiceBaseImpl
 	 *
 	 * @param sql the sql query
 	 */
-	protected void runSQL(String sql) throws SystemException {
+	protected void runSQL(String sql) {
 		try {
 			DataSource dataSource = announcementsFlagPersistence.getDataSource();
 

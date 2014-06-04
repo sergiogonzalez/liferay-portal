@@ -46,11 +46,9 @@ public class DLFileEntryLocalServiceUtil {
 	*
 	* @param dlFileEntry the document library file entry
 	* @return the document library file entry that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntry addDLFileEntry(
-		com.liferay.portlet.documentlibrary.model.DLFileEntry dlFileEntry)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.documentlibrary.model.DLFileEntry dlFileEntry) {
 		return getService().addDLFileEntry(dlFileEntry);
 	}
 
@@ -71,12 +69,10 @@ public class DLFileEntryLocalServiceUtil {
 	* @param fileEntryId the primary key of the document library file entry
 	* @return the document library file entry that was removed
 	* @throws PortalException if a document library file entry with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntry deleteDLFileEntry(
 		long fileEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteDLFileEntry(fileEntryId);
 	}
 
@@ -85,11 +81,9 @@ public class DLFileEntryLocalServiceUtil {
 	*
 	* @param dlFileEntry the document library file entry
 	* @return the document library file entry that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntry deleteDLFileEntry(
-		com.liferay.portlet.documentlibrary.model.DLFileEntry dlFileEntry)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.documentlibrary.model.DLFileEntry dlFileEntry) {
 		return getService().deleteDLFileEntry(dlFileEntry);
 	}
 
@@ -102,12 +96,10 @@ public class DLFileEntryLocalServiceUtil {
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -122,12 +114,11 @@ public class DLFileEntryLocalServiceUtil {
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -143,14 +134,12 @@ public class DLFileEntryLocalServiceUtil {
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getService()
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
@@ -160,11 +149,9 @@ public class DLFileEntryLocalServiceUtil {
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -174,18 +161,15 @@ public class DLFileEntryLocalServiceUtil {
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public static long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntry fetchDLFileEntry(
-		long fileEntryId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long fileEntryId) {
 		return getService().fetchDLFileEntry(fileEntryId);
 	}
 
@@ -195,11 +179,9 @@ public class DLFileEntryLocalServiceUtil {
 	* @param uuid the document library file entry's UUID
 	* @param companyId the primary key of the company
 	* @return the matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntry fetchDLFileEntryByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long companyId) {
 		return getService().fetchDLFileEntryByUuidAndCompanyId(uuid, companyId);
 	}
 
@@ -209,11 +191,9 @@ public class DLFileEntryLocalServiceUtil {
 	* @param uuid the document library file entry's UUID
 	* @param groupId the primary key of the group
 	* @return the matching document library file entry, or <code>null</code> if a matching document library file entry could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntry fetchDLFileEntryByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long groupId) {
 		return getService().fetchDLFileEntryByUuidAndGroupId(uuid, groupId);
 	}
 
@@ -223,30 +203,25 @@ public class DLFileEntryLocalServiceUtil {
 	* @param fileEntryId the primary key of the document library file entry
 	* @return the document library file entry
 	* @throws PortalException if a document library file entry with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntry getDLFileEntry(
 		long fileEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getDLFileEntry(fileEntryId);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext) {
 		return getService().getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	public static com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
@@ -257,12 +232,10 @@ public class DLFileEntryLocalServiceUtil {
 	* @param companyId the primary key of the company
 	* @return the matching document library file entry
 	* @throws PortalException if a matching document library file entry could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntry getDLFileEntryByUuidAndCompanyId(
 		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getDLFileEntryByUuidAndCompanyId(uuid, companyId);
 	}
 
@@ -273,12 +246,10 @@ public class DLFileEntryLocalServiceUtil {
 	* @param groupId the primary key of the group
 	* @return the matching document library file entry
 	* @throws PortalException if a matching document library file entry could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntry getDLFileEntryByUuidAndGroupId(
 		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getDLFileEntryByUuidAndGroupId(uuid, groupId);
 	}
 
@@ -292,11 +263,9 @@ public class DLFileEntryLocalServiceUtil {
 	* @param start the lower bound of the range of document library file entries
 	* @param end the upper bound of the range of document library file entries (not inclusive)
 	* @return the range of document library file entries
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getDLFileEntries(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return getService().getDLFileEntries(start, end);
 	}
 
@@ -304,10 +273,8 @@ public class DLFileEntryLocalServiceUtil {
 	* Returns the number of document library file entries.
 	*
 	* @return the number of document library file entries
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int getDLFileEntriesCount()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int getDLFileEntriesCount() {
 		return getService().getDLFileEntriesCount();
 	}
 
@@ -316,11 +283,9 @@ public class DLFileEntryLocalServiceUtil {
 	*
 	* @param dlFileEntry the document library file entry
 	* @return the document library file entry that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntry updateDLFileEntry(
-		com.liferay.portlet.documentlibrary.model.DLFileEntry dlFileEntry)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.documentlibrary.model.DLFileEntry dlFileEntry) {
 		return getService().updateDLFileEntry(dlFileEntry);
 	}
 

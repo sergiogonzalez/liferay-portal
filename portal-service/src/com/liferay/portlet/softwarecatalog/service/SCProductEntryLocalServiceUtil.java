@@ -46,11 +46,9 @@ public class SCProductEntryLocalServiceUtil {
 	*
 	* @param scProductEntry the s c product entry
 	* @return the s c product entry that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.softwarecatalog.model.SCProductEntry addSCProductEntry(
-		com.liferay.portlet.softwarecatalog.model.SCProductEntry scProductEntry)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.softwarecatalog.model.SCProductEntry scProductEntry) {
 		return getService().addSCProductEntry(scProductEntry);
 	}
 
@@ -71,12 +69,10 @@ public class SCProductEntryLocalServiceUtil {
 	* @param productEntryId the primary key of the s c product entry
 	* @return the s c product entry that was removed
 	* @throws PortalException if a s c product entry with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.softwarecatalog.model.SCProductEntry deleteSCProductEntry(
 		long productEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteSCProductEntry(productEntryId);
 	}
 
@@ -85,11 +81,9 @@ public class SCProductEntryLocalServiceUtil {
 	*
 	* @param scProductEntry the s c product entry
 	* @return the s c product entry that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.softwarecatalog.model.SCProductEntry deleteSCProductEntry(
-		com.liferay.portlet.softwarecatalog.model.SCProductEntry scProductEntry)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.softwarecatalog.model.SCProductEntry scProductEntry) {
 		return getService().deleteSCProductEntry(scProductEntry);
 	}
 
@@ -102,12 +96,10 @@ public class SCProductEntryLocalServiceUtil {
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -122,12 +114,11 @@ public class SCProductEntryLocalServiceUtil {
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -143,14 +134,12 @@ public class SCProductEntryLocalServiceUtil {
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getService()
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
@@ -160,11 +149,9 @@ public class SCProductEntryLocalServiceUtil {
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -174,18 +161,15 @@ public class SCProductEntryLocalServiceUtil {
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public static long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
 	public static com.liferay.portlet.softwarecatalog.model.SCProductEntry fetchSCProductEntry(
-		long productEntryId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long productEntryId) {
 		return getService().fetchSCProductEntry(productEntryId);
 	}
 
@@ -195,24 +179,20 @@ public class SCProductEntryLocalServiceUtil {
 	* @param productEntryId the primary key of the s c product entry
 	* @return the s c product entry
 	* @throws PortalException if a s c product entry with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.softwarecatalog.model.SCProductEntry getSCProductEntry(
 		long productEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getSCProductEntry(productEntryId);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}
 
 	public static com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
@@ -226,11 +206,9 @@ public class SCProductEntryLocalServiceUtil {
 	* @param start the lower bound of the range of s c product entries
 	* @param end the upper bound of the range of s c product entries (not inclusive)
 	* @return the range of s c product entries
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> getSCProductEntries(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return getService().getSCProductEntries(start, end);
 	}
 
@@ -238,10 +216,8 @@ public class SCProductEntryLocalServiceUtil {
 	* Returns the number of s c product entries.
 	*
 	* @return the number of s c product entries
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int getSCProductEntriesCount()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int getSCProductEntriesCount() {
 		return getService().getSCProductEntriesCount();
 	}
 
@@ -250,91 +226,53 @@ public class SCProductEntryLocalServiceUtil {
 	*
 	* @param scProductEntry the s c product entry
 	* @return the s c product entry that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.softwarecatalog.model.SCProductEntry updateSCProductEntry(
-		com.liferay.portlet.softwarecatalog.model.SCProductEntry scProductEntry)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.softwarecatalog.model.SCProductEntry scProductEntry) {
 		return getService().updateSCProductEntry(scProductEntry);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public static void addSCLicenseSCProductEntry(long licenseId,
-		long productEntryId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long productEntryId) {
 		getService().addSCLicenseSCProductEntry(licenseId, productEntryId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public static void addSCLicenseSCProductEntry(long licenseId,
-		com.liferay.portlet.softwarecatalog.model.SCProductEntry scProductEntry)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.softwarecatalog.model.SCProductEntry scProductEntry) {
 		getService().addSCLicenseSCProductEntry(licenseId, scProductEntry);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public static void addSCLicenseSCProductEntries(long licenseId,
-		long[] productEntryIds)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long[] productEntryIds) {
 		getService().addSCLicenseSCProductEntries(licenseId, productEntryIds);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public static void addSCLicenseSCProductEntries(long licenseId,
-		java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> SCProductEntries)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> SCProductEntries) {
 		getService().addSCLicenseSCProductEntries(licenseId, SCProductEntries);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void clearSCLicenseSCProductEntries(long licenseId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void clearSCLicenseSCProductEntries(long licenseId) {
 		getService().clearSCLicenseSCProductEntries(licenseId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public static void deleteSCLicenseSCProductEntry(long licenseId,
-		long productEntryId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long productEntryId) {
 		getService().deleteSCLicenseSCProductEntry(licenseId, productEntryId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public static void deleteSCLicenseSCProductEntry(long licenseId,
-		com.liferay.portlet.softwarecatalog.model.SCProductEntry scProductEntry)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.softwarecatalog.model.SCProductEntry scProductEntry) {
 		getService().deleteSCLicenseSCProductEntry(licenseId, scProductEntry);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public static void deleteSCLicenseSCProductEntries(long licenseId,
-		long[] productEntryIds)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long[] productEntryIds) {
 		getService().deleteSCLicenseSCProductEntries(licenseId, productEntryIds);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public static void deleteSCLicenseSCProductEntries(long licenseId,
-		java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> SCProductEntries)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> SCProductEntries) {
 		getService().deleteSCLicenseSCProductEntries(licenseId, SCProductEntries);
 	}
 
@@ -343,74 +281,44 @@ public class SCProductEntryLocalServiceUtil {
 	*
 	* @param productEntryId the productEntryId of the s c product entry
 	* @return long[] the licenseIds of s c licenses associated with the s c product entry
-	* @throws SystemException if a system exception occurred
 	*/
-	public static long[] getSCLicensePrimaryKeys(long productEntryId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static long[] getSCLicensePrimaryKeys(long productEntryId) {
 		return getService().getSCLicensePrimaryKeys(productEntryId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> getSCLicenseSCProductEntries(
-		long licenseId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long licenseId) {
 		return getService().getSCLicenseSCProductEntries(licenseId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> getSCLicenseSCProductEntries(
-		long licenseId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long licenseId, int start, int end) {
 		return getService().getSCLicenseSCProductEntries(licenseId, start, end);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public static java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> getSCLicenseSCProductEntries(
 		long licenseId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getService()
 				   .getSCLicenseSCProductEntries(licenseId, start, end,
 			orderByComparator);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int getSCLicenseSCProductEntriesCount(long licenseId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int getSCLicenseSCProductEntriesCount(long licenseId) {
 		return getService().getSCLicenseSCProductEntriesCount(licenseId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public static boolean hasSCLicenseSCProductEntry(long licenseId,
-		long productEntryId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long productEntryId) {
 		return getService().hasSCLicenseSCProductEntry(licenseId, productEntryId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	public static boolean hasSCLicenseSCProductEntries(long licenseId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static boolean hasSCLicenseSCProductEntries(long licenseId) {
 		return getService().hasSCLicenseSCProductEntries(licenseId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public static void setSCLicenseSCProductEntries(long licenseId,
-		long[] productEntryIds)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long[] productEntryIds) {
 		getService().setSCLicenseSCProductEntries(licenseId, productEntryIds);
 	}
 

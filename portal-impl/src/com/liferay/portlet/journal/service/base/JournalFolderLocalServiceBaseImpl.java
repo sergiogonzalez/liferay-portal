@@ -102,12 +102,10 @@ public abstract class JournalFolderLocalServiceBaseImpl
 	 *
 	 * @param journalFolder the journal folder
 	 * @return the journal folder that was added
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public JournalFolder addJournalFolder(JournalFolder journalFolder)
-		throws SystemException {
+	public JournalFolder addJournalFolder(JournalFolder journalFolder) {
 		journalFolder.setNew(true);
 
 		return journalFolderPersistence.update(journalFolder);
@@ -130,12 +128,11 @@ public abstract class JournalFolderLocalServiceBaseImpl
 	 * @param folderId the primary key of the journal folder
 	 * @return the journal folder that was removed
 	 * @throws PortalException if a journal folder with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public JournalFolder deleteJournalFolder(long folderId)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return journalFolderPersistence.remove(folderId);
 	}
 
@@ -144,12 +141,10 @@ public abstract class JournalFolderLocalServiceBaseImpl
 	 *
 	 * @param journalFolder the journal folder
 	 * @return the journal folder that was removed
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public JournalFolder deleteJournalFolder(JournalFolder journalFolder)
-		throws SystemException {
+	public JournalFolder deleteJournalFolder(JournalFolder journalFolder) {
 		return journalFolderPersistence.remove(journalFolder);
 	}
 
@@ -166,12 +161,10 @@ public abstract class JournalFolderLocalServiceBaseImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery) {
 		return journalFolderPersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -186,12 +179,10 @@ public abstract class JournalFolderLocalServiceBaseImpl
 	 * @param start the lower bound of the range of model instances
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
 		return journalFolderPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end);
 	}
@@ -208,12 +199,11 @@ public abstract class JournalFolderLocalServiceBaseImpl
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
 	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		return journalFolderPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
 	}
@@ -223,11 +213,9 @@ public abstract class JournalFolderLocalServiceBaseImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public long dynamicQueryCount(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return journalFolderPersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
@@ -237,18 +225,16 @@ public abstract class JournalFolderLocalServiceBaseImpl
 	 * @param dynamicQuery the dynamic query
 	 * @param projection the projection to apply to the query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection) throws SystemException {
+		Projection projection) {
 		return journalFolderPersistence.countWithDynamicQuery(dynamicQuery,
 			projection);
 	}
 
 	@Override
-	public JournalFolder fetchJournalFolder(long folderId)
-		throws SystemException {
+	public JournalFolder fetchJournalFolder(long folderId) {
 		return journalFolderPersistence.fetchByPrimaryKey(folderId);
 	}
 
@@ -258,11 +244,10 @@ public abstract class JournalFolderLocalServiceBaseImpl
 	 * @param uuid the journal folder's UUID
 	 * @param  companyId the primary key of the company
 	 * @return the matching journal folder, or <code>null</code> if a matching journal folder could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public JournalFolder fetchJournalFolderByUuidAndCompanyId(String uuid,
-		long companyId) throws SystemException {
+		long companyId) {
 		return journalFolderPersistence.fetchByUuid_C_First(uuid, companyId,
 			null);
 	}
@@ -273,11 +258,10 @@ public abstract class JournalFolderLocalServiceBaseImpl
 	 * @param uuid the journal folder's UUID
 	 * @param groupId the primary key of the group
 	 * @return the matching journal folder, or <code>null</code> if a matching journal folder could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public JournalFolder fetchJournalFolderByUuidAndGroupId(String uuid,
-		long groupId) throws SystemException {
+		long groupId) {
 		return journalFolderPersistence.fetchByUUID_G(uuid, groupId);
 	}
 
@@ -287,17 +271,15 @@ public abstract class JournalFolderLocalServiceBaseImpl
 	 * @param folderId the primary key of the journal folder
 	 * @return the journal folder
 	 * @throws PortalException if a journal folder with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public JournalFolder getJournalFolder(long folderId)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return journalFolderPersistence.findByPrimaryKey(folderId);
 	}
 
 	@Override
-	public ActionableDynamicQuery getActionableDynamicQuery()
-		throws SystemException {
+	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil.getService());
@@ -310,8 +292,7 @@ public abstract class JournalFolderLocalServiceBaseImpl
 	}
 
 	protected void initActionableDynamicQuery(
-		ActionableDynamicQuery actionableDynamicQuery)
-		throws SystemException {
+		ActionableDynamicQuery actionableDynamicQuery) {
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(JournalFolder.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
@@ -321,11 +302,10 @@ public abstract class JournalFolderLocalServiceBaseImpl
 
 	@Override
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		final PortletDataContext portletDataContext) throws SystemException {
+		final PortletDataContext portletDataContext) {
 		final ExportActionableDynamicQuery exportActionableDynamicQuery = new ExportActionableDynamicQuery() {
 				@Override
-				public long performCount()
-					throws PortalException, SystemException {
+				public long performCount() throws PortalException {
 					ManifestSummary manifestSummary = portletDataContext.getManifestSummary();
 
 					StagedModelType stagedModelType = getStagedModelType();
@@ -369,9 +349,8 @@ public abstract class JournalFolderLocalServiceBaseImpl
 
 		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
 				@Override
-				@SuppressWarnings("unused")
 				public void performAction(Object object)
-					throws PortalException, SystemException {
+					throws PortalException {
 					JournalFolder stagedModel = (JournalFolder)object;
 
 					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
@@ -386,7 +365,7 @@ public abstract class JournalFolderLocalServiceBaseImpl
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return journalFolderPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -397,11 +376,10 @@ public abstract class JournalFolderLocalServiceBaseImpl
 	 * @param  companyId the primary key of the company
 	 * @return the matching journal folder
 	 * @throws PortalException if a matching journal folder could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public JournalFolder getJournalFolderByUuidAndCompanyId(String uuid,
-		long companyId) throws PortalException, SystemException {
+		long companyId) throws PortalException {
 		return journalFolderPersistence.findByUuid_C_First(uuid, companyId, null);
 	}
 
@@ -412,11 +390,10 @@ public abstract class JournalFolderLocalServiceBaseImpl
 	 * @param groupId the primary key of the group
 	 * @return the matching journal folder
 	 * @throws PortalException if a matching journal folder could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public JournalFolder getJournalFolderByUuidAndGroupId(String uuid,
-		long groupId) throws PortalException, SystemException {
+		long groupId) throws PortalException {
 		return journalFolderPersistence.findByUUID_G(uuid, groupId);
 	}
 
@@ -430,11 +407,9 @@ public abstract class JournalFolderLocalServiceBaseImpl
 	 * @param start the lower bound of the range of journal folders
 	 * @param end the upper bound of the range of journal folders (not inclusive)
 	 * @return the range of journal folders
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<JournalFolder> getJournalFolders(int start, int end)
-		throws SystemException {
+	public List<JournalFolder> getJournalFolders(int start, int end) {
 		return journalFolderPersistence.findAll(start, end);
 	}
 
@@ -442,10 +417,9 @@ public abstract class JournalFolderLocalServiceBaseImpl
 	 * Returns the number of journal folders.
 	 *
 	 * @return the number of journal folders
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int getJournalFoldersCount() throws SystemException {
+	public int getJournalFoldersCount() {
 		return journalFolderPersistence.countAll();
 	}
 
@@ -454,93 +428,78 @@ public abstract class JournalFolderLocalServiceBaseImpl
 	 *
 	 * @param journalFolder the journal folder
 	 * @return the journal folder that was updated
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public JournalFolder updateJournalFolder(JournalFolder journalFolder)
-		throws SystemException {
+	public JournalFolder updateJournalFolder(JournalFolder journalFolder) {
 		return journalFolderPersistence.update(journalFolder);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void addDDMStructureJournalFolder(long structureId, long folderId)
-		throws SystemException {
+	public void addDDMStructureJournalFolder(long structureId, long folderId) {
 		ddmStructurePersistence.addJournalFolder(structureId, folderId);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public void addDDMStructureJournalFolder(long structureId,
-		JournalFolder journalFolder) throws SystemException {
+		JournalFolder journalFolder) {
 		ddmStructurePersistence.addJournalFolder(structureId, journalFolder);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void addDDMStructureJournalFolders(long structureId, long[] folderIds)
-		throws SystemException {
+	public void addDDMStructureJournalFolders(long structureId, long[] folderIds) {
 		ddmStructurePersistence.addJournalFolders(structureId, folderIds);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public void addDDMStructureJournalFolders(long structureId,
-		List<JournalFolder> JournalFolders) throws SystemException {
+		List<JournalFolder> JournalFolders) {
 		ddmStructurePersistence.addJournalFolders(structureId, JournalFolders);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void clearDDMStructureJournalFolders(long structureId)
-		throws SystemException {
+	public void clearDDMStructureJournalFolders(long structureId) {
 		ddmStructurePersistence.clearJournalFolders(structureId);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void deleteDDMStructureJournalFolder(long structureId, long folderId)
-		throws SystemException {
+	public void deleteDDMStructureJournalFolder(long structureId, long folderId) {
 		ddmStructurePersistence.removeJournalFolder(structureId, folderId);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public void deleteDDMStructureJournalFolder(long structureId,
-		JournalFolder journalFolder) throws SystemException {
+		JournalFolder journalFolder) {
 		ddmStructurePersistence.removeJournalFolder(structureId, journalFolder);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public void deleteDDMStructureJournalFolders(long structureId,
-		long[] folderIds) throws SystemException {
+		long[] folderIds) {
 		ddmStructurePersistence.removeJournalFolders(structureId, folderIds);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public void deleteDDMStructureJournalFolders(long structureId,
-		List<JournalFolder> JournalFolders) throws SystemException {
+		List<JournalFolder> JournalFolders) {
 		ddmStructurePersistence.removeJournalFolders(structureId, JournalFolders);
 	}
 
@@ -549,77 +508,62 @@ public abstract class JournalFolderLocalServiceBaseImpl
 	 *
 	 * @param folderId the folderId of the journal folder
 	 * @return long[] the structureIds of d d m structures associated with the journal folder
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public long[] getDDMStructurePrimaryKeys(long folderId)
-		throws SystemException {
+	public long[] getDDMStructurePrimaryKeys(long folderId) {
 		return journalFolderPersistence.getDDMStructurePrimaryKeys(folderId);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<JournalFolder> getDDMStructureJournalFolders(long structureId)
-		throws SystemException {
+	public List<JournalFolder> getDDMStructureJournalFolders(long structureId) {
 		return ddmStructurePersistence.getJournalFolders(structureId);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<JournalFolder> getDDMStructureJournalFolders(long structureId,
-		int start, int end) throws SystemException {
+		int start, int end) {
 		return ddmStructurePersistence.getJournalFolders(structureId, start, end);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<JournalFolder> getDDMStructureJournalFolders(long structureId,
-		int start, int end, OrderByComparator orderByComparator)
-		throws SystemException {
+		int start, int end, OrderByComparator orderByComparator) {
 		return ddmStructurePersistence.getJournalFolders(structureId, start,
 			end, orderByComparator);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int getDDMStructureJournalFoldersCount(long structureId)
-		throws SystemException {
+	public int getDDMStructureJournalFoldersCount(long structureId) {
 		return ddmStructurePersistence.getJournalFoldersSize(structureId);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public boolean hasDDMStructureJournalFolder(long structureId, long folderId)
-		throws SystemException {
+	public boolean hasDDMStructureJournalFolder(long structureId, long folderId) {
 		return ddmStructurePersistence.containsJournalFolder(structureId,
 			folderId);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public boolean hasDDMStructureJournalFolders(long structureId)
-		throws SystemException {
+	public boolean hasDDMStructureJournalFolders(long structureId) {
 		return ddmStructurePersistence.containsJournalFolders(structureId);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void setDDMStructureJournalFolders(long structureId, long[] folderIds)
-		throws SystemException {
+	public void setDDMStructureJournalFolders(long structureId, long[] folderIds) {
 		ddmStructurePersistence.setJournalFolders(structureId, folderIds);
 	}
 
@@ -1590,7 +1534,7 @@ public abstract class JournalFolderLocalServiceBaseImpl
 	 *
 	 * @param sql the sql query
 	 */
-	protected void runSQL(String sql) throws SystemException {
+	protected void runSQL(String sql) {
 		try {
 			DataSource dataSource = journalFolderPersistence.getDataSource();
 

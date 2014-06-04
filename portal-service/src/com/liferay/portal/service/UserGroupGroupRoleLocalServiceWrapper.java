@@ -37,12 +37,10 @@ public class UserGroupGroupRoleLocalServiceWrapper
 	*
 	* @param userGroupGroupRole the user group group role
 	* @return the user group group role that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.UserGroupGroupRole addUserGroupGroupRole(
-		com.liferay.portal.model.UserGroupGroupRole userGroupGroupRole)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.UserGroupGroupRole userGroupGroupRole) {
 		return _userGroupGroupRoleLocalService.addUserGroupGroupRole(userGroupGroupRole);
 	}
 
@@ -64,13 +62,11 @@ public class UserGroupGroupRoleLocalServiceWrapper
 	* @param userGroupGroupRolePK the primary key of the user group group role
 	* @return the user group group role that was removed
 	* @throws PortalException if a user group group role with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.UserGroupGroupRole deleteUserGroupGroupRole(
 		com.liferay.portal.service.persistence.UserGroupGroupRolePK userGroupGroupRolePK)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userGroupGroupRoleLocalService.deleteUserGroupGroupRole(userGroupGroupRolePK);
 	}
 
@@ -79,7 +75,7 @@ public class UserGroupGroupRoleLocalServiceWrapper
 	*
 	* @param userGroupGroupRole the user group group role
 	* @return the user group group role that was removed
-	* @throws SystemException if a system exception occurred
+	* @throws SystemException
 	*/
 	@Override
 	public com.liferay.portal.model.UserGroupGroupRole deleteUserGroupGroupRole(
@@ -98,13 +94,11 @@ public class UserGroupGroupRoleLocalServiceWrapper
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _userGroupGroupRoleLocalService.dynamicQuery(dynamicQuery);
 	}
 
@@ -119,13 +113,12 @@ public class UserGroupGroupRoleLocalServiceWrapper
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return _userGroupGroupRoleLocalService.dynamicQuery(dynamicQuery,
 			start, end);
 	}
@@ -142,15 +135,13 @@ public class UserGroupGroupRoleLocalServiceWrapper
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return _userGroupGroupRoleLocalService.dynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
 	}
@@ -160,12 +151,10 @@ public class UserGroupGroupRoleLocalServiceWrapper
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _userGroupGroupRoleLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
@@ -175,21 +164,18 @@ public class UserGroupGroupRoleLocalServiceWrapper
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return _userGroupGroupRoleLocalService.dynamicQueryCount(dynamicQuery,
 			projection);
 	}
 
 	@Override
 	public com.liferay.portal.model.UserGroupGroupRole fetchUserGroupGroupRole(
-		com.liferay.portal.service.persistence.UserGroupGroupRolePK userGroupGroupRolePK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.service.persistence.UserGroupGroupRolePK userGroupGroupRolePK) {
 		return _userGroupGroupRoleLocalService.fetchUserGroupGroupRole(userGroupGroupRolePK);
 	}
 
@@ -199,27 +185,23 @@ public class UserGroupGroupRoleLocalServiceWrapper
 	* @param userGroupGroupRolePK the primary key of the user group group role
 	* @return the user group group role
 	* @throws PortalException if a user group group role with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.UserGroupGroupRole getUserGroupGroupRole(
 		com.liferay.portal.service.persistence.UserGroupGroupRolePK userGroupGroupRolePK)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userGroupGroupRoleLocalService.getUserGroupGroupRole(userGroupGroupRolePK);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _userGroupGroupRoleLocalService.getActionableDynamicQuery();
 	}
 
 	@Override
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userGroupGroupRoleLocalService.getPersistedModel(primaryKeyObj);
 	}
 
@@ -233,12 +215,10 @@ public class UserGroupGroupRoleLocalServiceWrapper
 	* @param start the lower bound of the range of user group group roles
 	* @param end the upper bound of the range of user group group roles (not inclusive)
 	* @return the range of user group group roles
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.model.UserGroupGroupRole> getUserGroupGroupRoles(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return _userGroupGroupRoleLocalService.getUserGroupGroupRoles(start, end);
 	}
 
@@ -246,11 +226,9 @@ public class UserGroupGroupRoleLocalServiceWrapper
 	* Returns the number of user group group roles.
 	*
 	* @return the number of user group group roles
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public int getUserGroupGroupRolesCount()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public int getUserGroupGroupRolesCount() {
 		return _userGroupGroupRoleLocalService.getUserGroupGroupRolesCount();
 	}
 
@@ -259,12 +237,10 @@ public class UserGroupGroupRoleLocalServiceWrapper
 	*
 	* @param userGroupGroupRole the user group group role
 	* @return the user group group role that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.UserGroupGroupRole updateUserGroupGroupRole(
-		com.liferay.portal.model.UserGroupGroupRole userGroupGroupRole)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.UserGroupGroupRole userGroupGroupRole) {
 		return _userGroupGroupRoleLocalService.updateUserGroupGroupRole(userGroupGroupRole);
 	}
 

@@ -17,7 +17,6 @@ package com.liferay.portal.model;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -107,9 +106,8 @@ public interface UserIdMapperModel extends BaseModel<UserIdMapper>, MVCCModel {
 	 * Returns the user uuid of this user ID mapper.
 	 *
 	 * @return the user uuid of this user ID mapper
-	 * @throws SystemException if a system exception occurred
 	 */
-	public String getUserUuid() throws SystemException;
+	public String getUserUuid();
 
 	/**
 	 * Sets the user uuid of this user ID mapper.

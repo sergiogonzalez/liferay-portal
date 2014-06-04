@@ -91,12 +91,10 @@ public abstract class DLFileShortcutLocalServiceBaseImpl
 	 *
 	 * @param dlFileShortcut the document library file shortcut
 	 * @return the document library file shortcut that was added
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public DLFileShortcut addDLFileShortcut(DLFileShortcut dlFileShortcut)
-		throws SystemException {
+	public DLFileShortcut addDLFileShortcut(DLFileShortcut dlFileShortcut) {
 		dlFileShortcut.setNew(true);
 
 		return dlFileShortcutPersistence.update(dlFileShortcut);
@@ -119,12 +117,11 @@ public abstract class DLFileShortcutLocalServiceBaseImpl
 	 * @param fileShortcutId the primary key of the document library file shortcut
 	 * @return the document library file shortcut that was removed
 	 * @throws PortalException if a document library file shortcut with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public DLFileShortcut deleteDLFileShortcut(long fileShortcutId)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return dlFileShortcutPersistence.remove(fileShortcutId);
 	}
 
@@ -133,12 +130,10 @@ public abstract class DLFileShortcutLocalServiceBaseImpl
 	 *
 	 * @param dlFileShortcut the document library file shortcut
 	 * @return the document library file shortcut that was removed
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public DLFileShortcut deleteDLFileShortcut(DLFileShortcut dlFileShortcut)
-		throws SystemException {
+	public DLFileShortcut deleteDLFileShortcut(DLFileShortcut dlFileShortcut) {
 		return dlFileShortcutPersistence.remove(dlFileShortcut);
 	}
 
@@ -155,12 +150,10 @@ public abstract class DLFileShortcutLocalServiceBaseImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery) {
 		return dlFileShortcutPersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -175,12 +168,10 @@ public abstract class DLFileShortcutLocalServiceBaseImpl
 	 * @param start the lower bound of the range of model instances
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
 		return dlFileShortcutPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end);
 	}
@@ -197,12 +188,11 @@ public abstract class DLFileShortcutLocalServiceBaseImpl
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
 	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		return dlFileShortcutPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
 	}
@@ -212,11 +202,9 @@ public abstract class DLFileShortcutLocalServiceBaseImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public long dynamicQueryCount(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return dlFileShortcutPersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
@@ -226,18 +214,16 @@ public abstract class DLFileShortcutLocalServiceBaseImpl
 	 * @param dynamicQuery the dynamic query
 	 * @param projection the projection to apply to the query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection) throws SystemException {
+		Projection projection) {
 		return dlFileShortcutPersistence.countWithDynamicQuery(dynamicQuery,
 			projection);
 	}
 
 	@Override
-	public DLFileShortcut fetchDLFileShortcut(long fileShortcutId)
-		throws SystemException {
+	public DLFileShortcut fetchDLFileShortcut(long fileShortcutId) {
 		return dlFileShortcutPersistence.fetchByPrimaryKey(fileShortcutId);
 	}
 
@@ -247,11 +233,10 @@ public abstract class DLFileShortcutLocalServiceBaseImpl
 	 * @param uuid the document library file shortcut's UUID
 	 * @param  companyId the primary key of the company
 	 * @return the matching document library file shortcut, or <code>null</code> if a matching document library file shortcut could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DLFileShortcut fetchDLFileShortcutByUuidAndCompanyId(String uuid,
-		long companyId) throws SystemException {
+		long companyId) {
 		return dlFileShortcutPersistence.fetchByUuid_C_First(uuid, companyId,
 			null);
 	}
@@ -262,11 +247,10 @@ public abstract class DLFileShortcutLocalServiceBaseImpl
 	 * @param uuid the document library file shortcut's UUID
 	 * @param groupId the primary key of the group
 	 * @return the matching document library file shortcut, or <code>null</code> if a matching document library file shortcut could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DLFileShortcut fetchDLFileShortcutByUuidAndGroupId(String uuid,
-		long groupId) throws SystemException {
+		long groupId) {
 		return dlFileShortcutPersistence.fetchByUUID_G(uuid, groupId);
 	}
 
@@ -276,17 +260,15 @@ public abstract class DLFileShortcutLocalServiceBaseImpl
 	 * @param fileShortcutId the primary key of the document library file shortcut
 	 * @return the document library file shortcut
 	 * @throws PortalException if a document library file shortcut with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DLFileShortcut getDLFileShortcut(long fileShortcutId)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return dlFileShortcutPersistence.findByPrimaryKey(fileShortcutId);
 	}
 
 	@Override
-	public ActionableDynamicQuery getActionableDynamicQuery()
-		throws SystemException {
+	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.documentlibrary.service.DLFileShortcutLocalServiceUtil.getService());
@@ -299,8 +281,7 @@ public abstract class DLFileShortcutLocalServiceBaseImpl
 	}
 
 	protected void initActionableDynamicQuery(
-		ActionableDynamicQuery actionableDynamicQuery)
-		throws SystemException {
+		ActionableDynamicQuery actionableDynamicQuery) {
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.documentlibrary.service.DLFileShortcutLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(DLFileShortcut.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
@@ -310,11 +291,10 @@ public abstract class DLFileShortcutLocalServiceBaseImpl
 
 	@Override
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		final PortletDataContext portletDataContext) throws SystemException {
+		final PortletDataContext portletDataContext) {
 		final ExportActionableDynamicQuery exportActionableDynamicQuery = new ExportActionableDynamicQuery() {
 				@Override
-				public long performCount()
-					throws PortalException, SystemException {
+				public long performCount() throws PortalException {
 					ManifestSummary manifestSummary = portletDataContext.getManifestSummary();
 
 					StagedModelType stagedModelType = getStagedModelType();
@@ -358,9 +338,8 @@ public abstract class DLFileShortcutLocalServiceBaseImpl
 
 		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
 				@Override
-				@SuppressWarnings("unused")
 				public void performAction(Object object)
-					throws PortalException, SystemException {
+					throws PortalException {
 					DLFileShortcut stagedModel = (DLFileShortcut)object;
 
 					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
@@ -375,7 +354,7 @@ public abstract class DLFileShortcutLocalServiceBaseImpl
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return dlFileShortcutPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -386,11 +365,10 @@ public abstract class DLFileShortcutLocalServiceBaseImpl
 	 * @param  companyId the primary key of the company
 	 * @return the matching document library file shortcut
 	 * @throws PortalException if a matching document library file shortcut could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DLFileShortcut getDLFileShortcutByUuidAndCompanyId(String uuid,
-		long companyId) throws PortalException, SystemException {
+		long companyId) throws PortalException {
 		return dlFileShortcutPersistence.findByUuid_C_First(uuid, companyId,
 			null);
 	}
@@ -402,11 +380,10 @@ public abstract class DLFileShortcutLocalServiceBaseImpl
 	 * @param groupId the primary key of the group
 	 * @return the matching document library file shortcut
 	 * @throws PortalException if a matching document library file shortcut could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DLFileShortcut getDLFileShortcutByUuidAndGroupId(String uuid,
-		long groupId) throws PortalException, SystemException {
+		long groupId) throws PortalException {
 		return dlFileShortcutPersistence.findByUUID_G(uuid, groupId);
 	}
 
@@ -420,11 +397,9 @@ public abstract class DLFileShortcutLocalServiceBaseImpl
 	 * @param start the lower bound of the range of document library file shortcuts
 	 * @param end the upper bound of the range of document library file shortcuts (not inclusive)
 	 * @return the range of document library file shortcuts
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<DLFileShortcut> getDLFileShortcuts(int start, int end)
-		throws SystemException {
+	public List<DLFileShortcut> getDLFileShortcuts(int start, int end) {
 		return dlFileShortcutPersistence.findAll(start, end);
 	}
 
@@ -432,10 +407,9 @@ public abstract class DLFileShortcutLocalServiceBaseImpl
 	 * Returns the number of document library file shortcuts.
 	 *
 	 * @return the number of document library file shortcuts
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int getDLFileShortcutsCount() throws SystemException {
+	public int getDLFileShortcutsCount() {
 		return dlFileShortcutPersistence.countAll();
 	}
 
@@ -444,12 +418,10 @@ public abstract class DLFileShortcutLocalServiceBaseImpl
 	 *
 	 * @param dlFileShortcut the document library file shortcut
 	 * @return the document library file shortcut that was updated
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public DLFileShortcut updateDLFileShortcut(DLFileShortcut dlFileShortcut)
-		throws SystemException {
+	public DLFileShortcut updateDLFileShortcut(DLFileShortcut dlFileShortcut) {
 		return dlFileShortcutPersistence.update(dlFileShortcut);
 	}
 
@@ -1021,7 +993,7 @@ public abstract class DLFileShortcutLocalServiceBaseImpl
 	 *
 	 * @param sql the sql query
 	 */
-	protected void runSQL(String sql) throws SystemException {
+	protected void runSQL(String sql) {
 		try {
 			DataSource dataSource = dlFileShortcutPersistence.getDataSource();
 

@@ -74,12 +74,10 @@ public abstract class LayoutBranchLocalServiceBaseImpl
 	 *
 	 * @param layoutBranch the layout branch
 	 * @return the layout branch that was added
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public LayoutBranch addLayoutBranch(LayoutBranch layoutBranch)
-		throws SystemException {
+	public LayoutBranch addLayoutBranch(LayoutBranch layoutBranch) {
 		layoutBranch.setNew(true);
 
 		return layoutBranchPersistence.update(layoutBranch);
@@ -102,7 +100,7 @@ public abstract class LayoutBranchLocalServiceBaseImpl
 	 * @param LayoutBranchId the primary key of the layout branch
 	 * @return the layout branch that was removed
 	 * @throws PortalException if a layout branch with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
+	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
@@ -116,12 +114,10 @@ public abstract class LayoutBranchLocalServiceBaseImpl
 	 *
 	 * @param layoutBranch the layout branch
 	 * @return the layout branch that was removed
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public LayoutBranch deleteLayoutBranch(LayoutBranch layoutBranch)
-		throws SystemException {
+	public LayoutBranch deleteLayoutBranch(LayoutBranch layoutBranch) {
 		return layoutBranchPersistence.remove(layoutBranch);
 	}
 
@@ -138,12 +134,10 @@ public abstract class LayoutBranchLocalServiceBaseImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery) {
 		return layoutBranchPersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -158,12 +152,10 @@ public abstract class LayoutBranchLocalServiceBaseImpl
 	 * @param start the lower bound of the range of model instances
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
 		return layoutBranchPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end);
 	}
@@ -180,12 +172,11 @@ public abstract class LayoutBranchLocalServiceBaseImpl
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
 	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		return layoutBranchPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
 	}
@@ -195,11 +186,9 @@ public abstract class LayoutBranchLocalServiceBaseImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public long dynamicQueryCount(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return layoutBranchPersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
@@ -209,18 +198,16 @@ public abstract class LayoutBranchLocalServiceBaseImpl
 	 * @param dynamicQuery the dynamic query
 	 * @param projection the projection to apply to the query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection) throws SystemException {
+		Projection projection) {
 		return layoutBranchPersistence.countWithDynamicQuery(dynamicQuery,
 			projection);
 	}
 
 	@Override
-	public LayoutBranch fetchLayoutBranch(long LayoutBranchId)
-		throws SystemException {
+	public LayoutBranch fetchLayoutBranch(long LayoutBranchId) {
 		return layoutBranchPersistence.fetchByPrimaryKey(LayoutBranchId);
 	}
 
@@ -230,17 +217,15 @@ public abstract class LayoutBranchLocalServiceBaseImpl
 	 * @param LayoutBranchId the primary key of the layout branch
 	 * @return the layout branch
 	 * @throws PortalException if a layout branch with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public LayoutBranch getLayoutBranch(long LayoutBranchId)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return layoutBranchPersistence.findByPrimaryKey(LayoutBranchId);
 	}
 
 	@Override
-	public ActionableDynamicQuery getActionableDynamicQuery()
-		throws SystemException {
+	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.LayoutBranchLocalServiceUtil.getService());
@@ -253,8 +238,7 @@ public abstract class LayoutBranchLocalServiceBaseImpl
 	}
 
 	protected void initActionableDynamicQuery(
-		ActionableDynamicQuery actionableDynamicQuery)
-		throws SystemException {
+		ActionableDynamicQuery actionableDynamicQuery) {
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.LayoutBranchLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(LayoutBranch.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
@@ -264,7 +248,7 @@ public abstract class LayoutBranchLocalServiceBaseImpl
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return layoutBranchPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -278,11 +262,9 @@ public abstract class LayoutBranchLocalServiceBaseImpl
 	 * @param start the lower bound of the range of layout branchs
 	 * @param end the upper bound of the range of layout branchs (not inclusive)
 	 * @return the range of layout branchs
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<LayoutBranch> getLayoutBranchs(int start, int end)
-		throws SystemException {
+	public List<LayoutBranch> getLayoutBranchs(int start, int end) {
 		return layoutBranchPersistence.findAll(start, end);
 	}
 
@@ -290,10 +272,9 @@ public abstract class LayoutBranchLocalServiceBaseImpl
 	 * Returns the number of layout branchs.
 	 *
 	 * @return the number of layout branchs
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int getLayoutBranchsCount() throws SystemException {
+	public int getLayoutBranchsCount() {
 		return layoutBranchPersistence.countAll();
 	}
 
@@ -302,12 +283,10 @@ public abstract class LayoutBranchLocalServiceBaseImpl
 	 *
 	 * @param layoutBranch the layout branch
 	 * @return the layout branch that was updated
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public LayoutBranch updateLayoutBranch(LayoutBranch layoutBranch)
-		throws SystemException {
+	public LayoutBranch updateLayoutBranch(LayoutBranch layoutBranch) {
 		return layoutBranchPersistence.update(layoutBranch);
 	}
 
@@ -618,7 +597,7 @@ public abstract class LayoutBranchLocalServiceBaseImpl
 	 *
 	 * @param sql the sql query
 	 */
-	protected void runSQL(String sql) throws SystemException {
+	protected void runSQL(String sql) {
 		try {
 			DataSource dataSource = layoutBranchPersistence.getDataSource();
 

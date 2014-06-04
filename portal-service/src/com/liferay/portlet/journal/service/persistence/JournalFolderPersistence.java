@@ -45,11 +45,9 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	*
 	* @param uuid the uuid
 	* @return the matching journal folders
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.journal.model.JournalFolder> findByUuid(
-		java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String uuid);
 
 	/**
 	* Returns a range of all the journal folders where uuid = &#63;.
@@ -62,11 +60,9 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param start the lower bound of the range of journal folders
 	* @param end the upper bound of the range of journal folders (not inclusive)
 	* @return the range of matching journal folders
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.journal.model.JournalFolder> findByUuid(
-		java.lang.String uuid, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String uuid, int start, int end);
 
 	/**
 	* Returns an ordered range of all the journal folders where uuid = &#63;.
@@ -80,12 +76,10 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param end the upper bound of the range of journal folders (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching journal folders
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.journal.model.JournalFolder> findByUuid(
 		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first journal folder in the ordered set where uuid = &#63;.
@@ -94,13 +88,11 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching journal folder
 	* @throws com.liferay.portlet.journal.NoSuchFolderException if a matching journal folder could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.journal.model.JournalFolder findByUuid_First(
 		java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.journal.NoSuchFolderException;
+		throws com.liferay.portlet.journal.NoSuchFolderException;
 
 	/**
 	* Returns the first journal folder in the ordered set where uuid = &#63;.
@@ -108,12 +100,10 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching journal folder, or <code>null</code> if a matching journal folder could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.journal.model.JournalFolder fetchByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last journal folder in the ordered set where uuid = &#63;.
@@ -122,13 +112,11 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching journal folder
 	* @throws com.liferay.portlet.journal.NoSuchFolderException if a matching journal folder could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.journal.model.JournalFolder findByUuid_Last(
 		java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.journal.NoSuchFolderException;
+		throws com.liferay.portlet.journal.NoSuchFolderException;
 
 	/**
 	* Returns the last journal folder in the ordered set where uuid = &#63;.
@@ -136,12 +124,10 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching journal folder, or <code>null</code> if a matching journal folder could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.journal.model.JournalFolder fetchByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the journal folders before and after the current journal folder in the ordered set where uuid = &#63;.
@@ -151,32 +137,26 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next journal folder
 	* @throws com.liferay.portlet.journal.NoSuchFolderException if a journal folder with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.journal.model.JournalFolder[] findByUuid_PrevAndNext(
 		long folderId, java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.journal.NoSuchFolderException;
+		throws com.liferay.portlet.journal.NoSuchFolderException;
 
 	/**
 	* Removes all the journal folders where uuid = &#63; from the database.
 	*
 	* @param uuid the uuid
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByUuid(java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeByUuid(java.lang.String uuid);
 
 	/**
 	* Returns the number of journal folders where uuid = &#63;.
 	*
 	* @param uuid the uuid
 	* @return the number of matching journal folders
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countByUuid(java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByUuid(java.lang.String uuid);
 
 	/**
 	* Returns the journal folder where uuid = &#63; and groupId = &#63; or throws a {@link com.liferay.portlet.journal.NoSuchFolderException} if it could not be found.
@@ -185,12 +165,10 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param groupId the group ID
 	* @return the matching journal folder
 	* @throws com.liferay.portlet.journal.NoSuchFolderException if a matching journal folder could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.journal.model.JournalFolder findByUUID_G(
 		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.journal.NoSuchFolderException;
+		throws com.liferay.portlet.journal.NoSuchFolderException;
 
 	/**
 	* Returns the journal folder where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -198,11 +176,9 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the matching journal folder, or <code>null</code> if a matching journal folder could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.journal.model.JournalFolder fetchByUUID_G(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String uuid, long groupId);
 
 	/**
 	* Returns the journal folder where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -211,11 +187,9 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param groupId the group ID
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching journal folder, or <code>null</code> if a matching journal folder could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.journal.model.JournalFolder fetchByUUID_G(
-		java.lang.String uuid, long groupId, boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String uuid, long groupId, boolean retrieveFromCache);
 
 	/**
 	* Removes the journal folder where uuid = &#63; and groupId = &#63; from the database.
@@ -223,12 +197,10 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the journal folder that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.journal.model.JournalFolder removeByUUID_G(
 		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.journal.NoSuchFolderException;
+		throws com.liferay.portlet.journal.NoSuchFolderException;
 
 	/**
 	* Returns the number of journal folders where uuid = &#63; and groupId = &#63;.
@@ -236,10 +208,8 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the number of matching journal folders
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByUUID_G(java.lang.String uuid, long groupId);
 
 	/**
 	* Returns all the journal folders where uuid = &#63; and companyId = &#63;.
@@ -247,11 +217,9 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param uuid the uuid
 	* @param companyId the company ID
 	* @return the matching journal folders
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.journal.model.JournalFolder> findByUuid_C(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String uuid, long companyId);
 
 	/**
 	* Returns a range of all the journal folders where uuid = &#63; and companyId = &#63;.
@@ -265,11 +233,9 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param start the lower bound of the range of journal folders
 	* @param end the upper bound of the range of journal folders (not inclusive)
 	* @return the range of matching journal folders
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.journal.model.JournalFolder> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String uuid, long companyId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the journal folders where uuid = &#63; and companyId = &#63;.
@@ -284,12 +250,10 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param end the upper bound of the range of journal folders (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching journal folders
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.journal.model.JournalFolder> findByUuid_C(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first journal folder in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -299,13 +263,11 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching journal folder
 	* @throws com.liferay.portlet.journal.NoSuchFolderException if a matching journal folder could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.journal.model.JournalFolder findByUuid_C_First(
 		java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.journal.NoSuchFolderException;
+		throws com.liferay.portlet.journal.NoSuchFolderException;
 
 	/**
 	* Returns the first journal folder in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -314,12 +276,10 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching journal folder, or <code>null</code> if a matching journal folder could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.journal.model.JournalFolder fetchByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last journal folder in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -329,13 +289,11 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching journal folder
 	* @throws com.liferay.portlet.journal.NoSuchFolderException if a matching journal folder could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.journal.model.JournalFolder findByUuid_C_Last(
 		java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.journal.NoSuchFolderException;
+		throws com.liferay.portlet.journal.NoSuchFolderException;
 
 	/**
 	* Returns the last journal folder in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -344,12 +302,10 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching journal folder, or <code>null</code> if a matching journal folder could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.journal.model.JournalFolder fetchByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the journal folders before and after the current journal folder in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -360,23 +316,19 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next journal folder
 	* @throws com.liferay.portlet.journal.NoSuchFolderException if a journal folder with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.journal.model.JournalFolder[] findByUuid_C_PrevAndNext(
 		long folderId, java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.journal.NoSuchFolderException;
+		throws com.liferay.portlet.journal.NoSuchFolderException;
 
 	/**
 	* Removes all the journal folders where uuid = &#63; and companyId = &#63; from the database.
 	*
 	* @param uuid the uuid
 	* @param companyId the company ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByUuid_C(java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeByUuid_C(java.lang.String uuid, long companyId);
 
 	/**
 	* Returns the number of journal folders where uuid = &#63; and companyId = &#63;.
@@ -384,21 +336,17 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param uuid the uuid
 	* @param companyId the company ID
 	* @return the number of matching journal folders
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countByUuid_C(java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByUuid_C(java.lang.String uuid, long companyId);
 
 	/**
 	* Returns all the journal folders where groupId = &#63;.
 	*
 	* @param groupId the group ID
 	* @return the matching journal folders
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.journal.model.JournalFolder> findByGroupId(
-		long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long groupId);
 
 	/**
 	* Returns a range of all the journal folders where groupId = &#63;.
@@ -411,11 +359,9 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param start the lower bound of the range of journal folders
 	* @param end the upper bound of the range of journal folders (not inclusive)
 	* @return the range of matching journal folders
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.journal.model.JournalFolder> findByGroupId(
-		long groupId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long groupId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the journal folders where groupId = &#63;.
@@ -429,12 +375,10 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param end the upper bound of the range of journal folders (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching journal folders
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.journal.model.JournalFolder> findByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first journal folder in the ordered set where groupId = &#63;.
@@ -443,13 +387,11 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching journal folder
 	* @throws com.liferay.portlet.journal.NoSuchFolderException if a matching journal folder could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.journal.model.JournalFolder findByGroupId_First(
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.journal.NoSuchFolderException;
+		throws com.liferay.portlet.journal.NoSuchFolderException;
 
 	/**
 	* Returns the first journal folder in the ordered set where groupId = &#63;.
@@ -457,12 +399,10 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching journal folder, or <code>null</code> if a matching journal folder could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.journal.model.JournalFolder fetchByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last journal folder in the ordered set where groupId = &#63;.
@@ -471,13 +411,11 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching journal folder
 	* @throws com.liferay.portlet.journal.NoSuchFolderException if a matching journal folder could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.journal.model.JournalFolder findByGroupId_Last(
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.journal.NoSuchFolderException;
+		throws com.liferay.portlet.journal.NoSuchFolderException;
 
 	/**
 	* Returns the last journal folder in the ordered set where groupId = &#63;.
@@ -485,12 +423,10 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching journal folder, or <code>null</code> if a matching journal folder could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.journal.model.JournalFolder fetchByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the journal folders before and after the current journal folder in the ordered set where groupId = &#63;.
@@ -500,24 +436,20 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next journal folder
 	* @throws com.liferay.portlet.journal.NoSuchFolderException if a journal folder with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.journal.model.JournalFolder[] findByGroupId_PrevAndNext(
 		long folderId, long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.journal.NoSuchFolderException;
+		throws com.liferay.portlet.journal.NoSuchFolderException;
 
 	/**
 	* Returns all the journal folders that the user has permission to view where groupId = &#63;.
 	*
 	* @param groupId the group ID
 	* @return the matching journal folders that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.journal.model.JournalFolder> filterFindByGroupId(
-		long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long groupId);
 
 	/**
 	* Returns a range of all the journal folders that the user has permission to view where groupId = &#63;.
@@ -530,11 +462,9 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param start the lower bound of the range of journal folders
 	* @param end the upper bound of the range of journal folders (not inclusive)
 	* @return the range of matching journal folders that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.journal.model.JournalFolder> filterFindByGroupId(
-		long groupId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long groupId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the journal folders that the user has permissions to view where groupId = &#63;.
@@ -548,12 +478,10 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param end the upper bound of the range of journal folders (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching journal folders that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.journal.model.JournalFolder> filterFindByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the journal folders before and after the current journal folder in the ordered set of journal folders that the user has permission to view where groupId = &#63;.
@@ -563,53 +491,43 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next journal folder
 	* @throws com.liferay.portlet.journal.NoSuchFolderException if a journal folder with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.journal.model.JournalFolder[] filterFindByGroupId_PrevAndNext(
 		long folderId, long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.journal.NoSuchFolderException;
+		throws com.liferay.portlet.journal.NoSuchFolderException;
 
 	/**
 	* Removes all the journal folders where groupId = &#63; from the database.
 	*
 	* @param groupId the group ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByGroupId(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeByGroupId(long groupId);
 
 	/**
 	* Returns the number of journal folders where groupId = &#63;.
 	*
 	* @param groupId the group ID
 	* @return the number of matching journal folders
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countByGroupId(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByGroupId(long groupId);
 
 	/**
 	* Returns the number of journal folders that the user has permission to view where groupId = &#63;.
 	*
 	* @param groupId the group ID
 	* @return the number of matching journal folders that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
-	public int filterCountByGroupId(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int filterCountByGroupId(long groupId);
 
 	/**
 	* Returns all the journal folders where companyId = &#63;.
 	*
 	* @param companyId the company ID
 	* @return the matching journal folders
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.journal.model.JournalFolder> findByCompanyId(
-		long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long companyId);
 
 	/**
 	* Returns a range of all the journal folders where companyId = &#63;.
@@ -622,11 +540,9 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param start the lower bound of the range of journal folders
 	* @param end the upper bound of the range of journal folders (not inclusive)
 	* @return the range of matching journal folders
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.journal.model.JournalFolder> findByCompanyId(
-		long companyId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long companyId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the journal folders where companyId = &#63;.
@@ -640,12 +556,10 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param end the upper bound of the range of journal folders (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching journal folders
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.journal.model.JournalFolder> findByCompanyId(
 		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first journal folder in the ordered set where companyId = &#63;.
@@ -654,13 +568,11 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching journal folder
 	* @throws com.liferay.portlet.journal.NoSuchFolderException if a matching journal folder could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.journal.model.JournalFolder findByCompanyId_First(
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.journal.NoSuchFolderException;
+		throws com.liferay.portlet.journal.NoSuchFolderException;
 
 	/**
 	* Returns the first journal folder in the ordered set where companyId = &#63;.
@@ -668,12 +580,10 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching journal folder, or <code>null</code> if a matching journal folder could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.journal.model.JournalFolder fetchByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last journal folder in the ordered set where companyId = &#63;.
@@ -682,13 +592,11 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching journal folder
 	* @throws com.liferay.portlet.journal.NoSuchFolderException if a matching journal folder could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.journal.model.JournalFolder findByCompanyId_Last(
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.journal.NoSuchFolderException;
+		throws com.liferay.portlet.journal.NoSuchFolderException;
 
 	/**
 	* Returns the last journal folder in the ordered set where companyId = &#63;.
@@ -696,12 +604,10 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching journal folder, or <code>null</code> if a matching journal folder could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.journal.model.JournalFolder fetchByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the journal folders before and after the current journal folder in the ordered set where companyId = &#63;.
@@ -711,32 +617,26 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next journal folder
 	* @throws com.liferay.portlet.journal.NoSuchFolderException if a journal folder with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.journal.model.JournalFolder[] findByCompanyId_PrevAndNext(
 		long folderId, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.journal.NoSuchFolderException;
+		throws com.liferay.portlet.journal.NoSuchFolderException;
 
 	/**
 	* Removes all the journal folders where companyId = &#63; from the database.
 	*
 	* @param companyId the company ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByCompanyId(long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeByCompanyId(long companyId);
 
 	/**
 	* Returns the number of journal folders where companyId = &#63;.
 	*
 	* @param companyId the company ID
 	* @return the number of matching journal folders
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countByCompanyId(long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByCompanyId(long companyId);
 
 	/**
 	* Returns all the journal folders where groupId = &#63; and parentFolderId = &#63;.
@@ -744,11 +644,9 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param groupId the group ID
 	* @param parentFolderId the parent folder ID
 	* @return the matching journal folders
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.journal.model.JournalFolder> findByG_P(
-		long groupId, long parentFolderId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long groupId, long parentFolderId);
 
 	/**
 	* Returns a range of all the journal folders where groupId = &#63; and parentFolderId = &#63;.
@@ -762,11 +660,9 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param start the lower bound of the range of journal folders
 	* @param end the upper bound of the range of journal folders (not inclusive)
 	* @return the range of matching journal folders
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.journal.model.JournalFolder> findByG_P(
-		long groupId, long parentFolderId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long groupId, long parentFolderId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the journal folders where groupId = &#63; and parentFolderId = &#63;.
@@ -781,12 +677,10 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param end the upper bound of the range of journal folders (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching journal folders
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.journal.model.JournalFolder> findByG_P(
 		long groupId, long parentFolderId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first journal folder in the ordered set where groupId = &#63; and parentFolderId = &#63;.
@@ -796,13 +690,11 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching journal folder
 	* @throws com.liferay.portlet.journal.NoSuchFolderException if a matching journal folder could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.journal.model.JournalFolder findByG_P_First(
 		long groupId, long parentFolderId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.journal.NoSuchFolderException;
+		throws com.liferay.portlet.journal.NoSuchFolderException;
 
 	/**
 	* Returns the first journal folder in the ordered set where groupId = &#63; and parentFolderId = &#63;.
@@ -811,12 +703,10 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param parentFolderId the parent folder ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching journal folder, or <code>null</code> if a matching journal folder could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.journal.model.JournalFolder fetchByG_P_First(
 		long groupId, long parentFolderId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last journal folder in the ordered set where groupId = &#63; and parentFolderId = &#63;.
@@ -826,13 +716,11 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching journal folder
 	* @throws com.liferay.portlet.journal.NoSuchFolderException if a matching journal folder could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.journal.model.JournalFolder findByG_P_Last(
 		long groupId, long parentFolderId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.journal.NoSuchFolderException;
+		throws com.liferay.portlet.journal.NoSuchFolderException;
 
 	/**
 	* Returns the last journal folder in the ordered set where groupId = &#63; and parentFolderId = &#63;.
@@ -841,12 +729,10 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param parentFolderId the parent folder ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching journal folder, or <code>null</code> if a matching journal folder could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.journal.model.JournalFolder fetchByG_P_Last(
 		long groupId, long parentFolderId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the journal folders before and after the current journal folder in the ordered set where groupId = &#63; and parentFolderId = &#63;.
@@ -857,13 +743,11 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next journal folder
 	* @throws com.liferay.portlet.journal.NoSuchFolderException if a journal folder with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.journal.model.JournalFolder[] findByG_P_PrevAndNext(
 		long folderId, long groupId, long parentFolderId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.journal.NoSuchFolderException;
+		throws com.liferay.portlet.journal.NoSuchFolderException;
 
 	/**
 	* Returns all the journal folders that the user has permission to view where groupId = &#63; and parentFolderId = &#63;.
@@ -871,11 +755,9 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param groupId the group ID
 	* @param parentFolderId the parent folder ID
 	* @return the matching journal folders that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.journal.model.JournalFolder> filterFindByG_P(
-		long groupId, long parentFolderId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long groupId, long parentFolderId);
 
 	/**
 	* Returns a range of all the journal folders that the user has permission to view where groupId = &#63; and parentFolderId = &#63;.
@@ -889,11 +771,9 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param start the lower bound of the range of journal folders
 	* @param end the upper bound of the range of journal folders (not inclusive)
 	* @return the range of matching journal folders that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.journal.model.JournalFolder> filterFindByG_P(
-		long groupId, long parentFolderId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long groupId, long parentFolderId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the journal folders that the user has permissions to view where groupId = &#63; and parentFolderId = &#63;.
@@ -908,12 +788,10 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param end the upper bound of the range of journal folders (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching journal folders that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.journal.model.JournalFolder> filterFindByG_P(
 		long groupId, long parentFolderId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the journal folders before and after the current journal folder in the ordered set of journal folders that the user has permission to view where groupId = &#63; and parentFolderId = &#63;.
@@ -924,23 +802,19 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next journal folder
 	* @throws com.liferay.portlet.journal.NoSuchFolderException if a journal folder with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.journal.model.JournalFolder[] filterFindByG_P_PrevAndNext(
 		long folderId, long groupId, long parentFolderId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.journal.NoSuchFolderException;
+		throws com.liferay.portlet.journal.NoSuchFolderException;
 
 	/**
 	* Removes all the journal folders where groupId = &#63; and parentFolderId = &#63; from the database.
 	*
 	* @param groupId the group ID
 	* @param parentFolderId the parent folder ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByG_P(long groupId, long parentFolderId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeByG_P(long groupId, long parentFolderId);
 
 	/**
 	* Returns the number of journal folders where groupId = &#63; and parentFolderId = &#63;.
@@ -948,10 +822,8 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param groupId the group ID
 	* @param parentFolderId the parent folder ID
 	* @return the number of matching journal folders
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countByG_P(long groupId, long parentFolderId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByG_P(long groupId, long parentFolderId);
 
 	/**
 	* Returns the number of journal folders that the user has permission to view where groupId = &#63; and parentFolderId = &#63;.
@@ -959,10 +831,8 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param groupId the group ID
 	* @param parentFolderId the parent folder ID
 	* @return the number of matching journal folders that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
-	public int filterCountByG_P(long groupId, long parentFolderId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int filterCountByG_P(long groupId, long parentFolderId);
 
 	/**
 	* Returns the journal folder where groupId = &#63; and name = &#63; or throws a {@link com.liferay.portlet.journal.NoSuchFolderException} if it could not be found.
@@ -971,12 +841,10 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param name the name
 	* @return the matching journal folder
 	* @throws com.liferay.portlet.journal.NoSuchFolderException if a matching journal folder could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.journal.model.JournalFolder findByG_N(
 		long groupId, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.journal.NoSuchFolderException;
+		throws com.liferay.portlet.journal.NoSuchFolderException;
 
 	/**
 	* Returns the journal folder where groupId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -984,11 +852,9 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param groupId the group ID
 	* @param name the name
 	* @return the matching journal folder, or <code>null</code> if a matching journal folder could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.journal.model.JournalFolder fetchByG_N(
-		long groupId, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long groupId, java.lang.String name);
 
 	/**
 	* Returns the journal folder where groupId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -997,11 +863,9 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param name the name
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching journal folder, or <code>null</code> if a matching journal folder could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.journal.model.JournalFolder fetchByG_N(
-		long groupId, java.lang.String name, boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long groupId, java.lang.String name, boolean retrieveFromCache);
 
 	/**
 	* Removes the journal folder where groupId = &#63; and name = &#63; from the database.
@@ -1009,12 +873,10 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param groupId the group ID
 	* @param name the name
 	* @return the journal folder that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.journal.model.JournalFolder removeByG_N(
 		long groupId, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.journal.NoSuchFolderException;
+		throws com.liferay.portlet.journal.NoSuchFolderException;
 
 	/**
 	* Returns the number of journal folders where groupId = &#63; and name = &#63;.
@@ -1022,10 +884,8 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param groupId the group ID
 	* @param name the name
 	* @return the number of matching journal folders
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countByG_N(long groupId, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByG_N(long groupId, java.lang.String name);
 
 	/**
 	* Returns all the journal folders where companyId = &#63; and status &ne; &#63;.
@@ -1033,11 +893,9 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param companyId the company ID
 	* @param status the status
 	* @return the matching journal folders
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.journal.model.JournalFolder> findByC_NotS(
-		long companyId, int status)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long companyId, int status);
 
 	/**
 	* Returns a range of all the journal folders where companyId = &#63; and status &ne; &#63;.
@@ -1051,11 +909,9 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param start the lower bound of the range of journal folders
 	* @param end the upper bound of the range of journal folders (not inclusive)
 	* @return the range of matching journal folders
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.journal.model.JournalFolder> findByC_NotS(
-		long companyId, int status, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long companyId, int status, int start, int end);
 
 	/**
 	* Returns an ordered range of all the journal folders where companyId = &#63; and status &ne; &#63;.
@@ -1070,12 +926,10 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param end the upper bound of the range of journal folders (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching journal folders
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.journal.model.JournalFolder> findByC_NotS(
 		long companyId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first journal folder in the ordered set where companyId = &#63; and status &ne; &#63;.
@@ -1085,13 +939,11 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching journal folder
 	* @throws com.liferay.portlet.journal.NoSuchFolderException if a matching journal folder could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.journal.model.JournalFolder findByC_NotS_First(
 		long companyId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.journal.NoSuchFolderException;
+		throws com.liferay.portlet.journal.NoSuchFolderException;
 
 	/**
 	* Returns the first journal folder in the ordered set where companyId = &#63; and status &ne; &#63;.
@@ -1100,12 +952,10 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching journal folder, or <code>null</code> if a matching journal folder could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.journal.model.JournalFolder fetchByC_NotS_First(
 		long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last journal folder in the ordered set where companyId = &#63; and status &ne; &#63;.
@@ -1115,13 +965,11 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching journal folder
 	* @throws com.liferay.portlet.journal.NoSuchFolderException if a matching journal folder could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.journal.model.JournalFolder findByC_NotS_Last(
 		long companyId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.journal.NoSuchFolderException;
+		throws com.liferay.portlet.journal.NoSuchFolderException;
 
 	/**
 	* Returns the last journal folder in the ordered set where companyId = &#63; and status &ne; &#63;.
@@ -1130,12 +978,10 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching journal folder, or <code>null</code> if a matching journal folder could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.journal.model.JournalFolder fetchByC_NotS_Last(
 		long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the journal folders before and after the current journal folder in the ordered set where companyId = &#63; and status &ne; &#63;.
@@ -1146,23 +992,19 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next journal folder
 	* @throws com.liferay.portlet.journal.NoSuchFolderException if a journal folder with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.journal.model.JournalFolder[] findByC_NotS_PrevAndNext(
 		long folderId, long companyId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.journal.NoSuchFolderException;
+		throws com.liferay.portlet.journal.NoSuchFolderException;
 
 	/**
 	* Removes all the journal folders where companyId = &#63; and status &ne; &#63; from the database.
 	*
 	* @param companyId the company ID
 	* @param status the status
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByC_NotS(long companyId, int status)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeByC_NotS(long companyId, int status);
 
 	/**
 	* Returns the number of journal folders where companyId = &#63; and status &ne; &#63;.
@@ -1170,10 +1012,8 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param companyId the company ID
 	* @param status the status
 	* @return the number of matching journal folders
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countByC_NotS(long companyId, int status)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByC_NotS(long companyId, int status);
 
 	/**
 	* Returns all the journal folders where folderId &gt; &#63; and companyId = &#63; and parentFolderId = &#63; and status &ne; &#63;.
@@ -1183,11 +1023,9 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param parentFolderId the parent folder ID
 	* @param status the status
 	* @return the matching journal folders
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.journal.model.JournalFolder> findByF_C_P_NotS(
-		long folderId, long companyId, long parentFolderId, int status)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long folderId, long companyId, long parentFolderId, int status);
 
 	/**
 	* Returns a range of all the journal folders where folderId &gt; &#63; and companyId = &#63; and parentFolderId = &#63; and status &ne; &#63;.
@@ -1203,12 +1041,10 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param start the lower bound of the range of journal folders
 	* @param end the upper bound of the range of journal folders (not inclusive)
 	* @return the range of matching journal folders
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.journal.model.JournalFolder> findByF_C_P_NotS(
 		long folderId, long companyId, long parentFolderId, int status,
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the journal folders where folderId &gt; &#63; and companyId = &#63; and parentFolderId = &#63; and status &ne; &#63;.
@@ -1225,13 +1061,11 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param end the upper bound of the range of journal folders (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching journal folders
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.journal.model.JournalFolder> findByF_C_P_NotS(
 		long folderId, long companyId, long parentFolderId, int status,
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first journal folder in the ordered set where folderId &gt; &#63; and companyId = &#63; and parentFolderId = &#63; and status &ne; &#63;.
@@ -1243,13 +1077,11 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching journal folder
 	* @throws com.liferay.portlet.journal.NoSuchFolderException if a matching journal folder could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.journal.model.JournalFolder findByF_C_P_NotS_First(
 		long folderId, long companyId, long parentFolderId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.journal.NoSuchFolderException;
+		throws com.liferay.portlet.journal.NoSuchFolderException;
 
 	/**
 	* Returns the first journal folder in the ordered set where folderId &gt; &#63; and companyId = &#63; and parentFolderId = &#63; and status &ne; &#63;.
@@ -1260,12 +1092,10 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching journal folder, or <code>null</code> if a matching journal folder could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.journal.model.JournalFolder fetchByF_C_P_NotS_First(
 		long folderId, long companyId, long parentFolderId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last journal folder in the ordered set where folderId &gt; &#63; and companyId = &#63; and parentFolderId = &#63; and status &ne; &#63;.
@@ -1277,13 +1107,11 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching journal folder
 	* @throws com.liferay.portlet.journal.NoSuchFolderException if a matching journal folder could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.journal.model.JournalFolder findByF_C_P_NotS_Last(
 		long folderId, long companyId, long parentFolderId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.journal.NoSuchFolderException;
+		throws com.liferay.portlet.journal.NoSuchFolderException;
 
 	/**
 	* Returns the last journal folder in the ordered set where folderId &gt; &#63; and companyId = &#63; and parentFolderId = &#63; and status &ne; &#63;.
@@ -1294,12 +1122,10 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching journal folder, or <code>null</code> if a matching journal folder could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.journal.model.JournalFolder fetchByF_C_P_NotS_Last(
 		long folderId, long companyId, long parentFolderId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Removes all the journal folders where folderId &gt; &#63; and companyId = &#63; and parentFolderId = &#63; and status &ne; &#63; from the database.
@@ -1308,11 +1134,9 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param companyId the company ID
 	* @param parentFolderId the parent folder ID
 	* @param status the status
-	* @throws SystemException if a system exception occurred
 	*/
 	public void removeByF_C_P_NotS(long folderId, long companyId,
-		long parentFolderId, int status)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long parentFolderId, int status);
 
 	/**
 	* Returns the number of journal folders where folderId &gt; &#63; and companyId = &#63; and parentFolderId = &#63; and status &ne; &#63;.
@@ -1322,11 +1146,9 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param parentFolderId the parent folder ID
 	* @param status the status
 	* @return the number of matching journal folders
-	* @throws SystemException if a system exception occurred
 	*/
 	public int countByF_C_P_NotS(long folderId, long companyId,
-		long parentFolderId, int status)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long parentFolderId, int status);
 
 	/**
 	* Returns the journal folder where groupId = &#63; and parentFolderId = &#63; and name = &#63; or throws a {@link com.liferay.portlet.journal.NoSuchFolderException} if it could not be found.
@@ -1336,12 +1158,10 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param name the name
 	* @return the matching journal folder
 	* @throws com.liferay.portlet.journal.NoSuchFolderException if a matching journal folder could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.journal.model.JournalFolder findByG_P_N(
 		long groupId, long parentFolderId, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.journal.NoSuchFolderException;
+		throws com.liferay.portlet.journal.NoSuchFolderException;
 
 	/**
 	* Returns the journal folder where groupId = &#63; and parentFolderId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -1350,11 +1170,9 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param parentFolderId the parent folder ID
 	* @param name the name
 	* @return the matching journal folder, or <code>null</code> if a matching journal folder could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.journal.model.JournalFolder fetchByG_P_N(
-		long groupId, long parentFolderId, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long groupId, long parentFolderId, java.lang.String name);
 
 	/**
 	* Returns the journal folder where groupId = &#63; and parentFolderId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -1364,12 +1182,10 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param name the name
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching journal folder, or <code>null</code> if a matching journal folder could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.journal.model.JournalFolder fetchByG_P_N(
 		long groupId, long parentFolderId, java.lang.String name,
-		boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		boolean retrieveFromCache);
 
 	/**
 	* Removes the journal folder where groupId = &#63; and parentFolderId = &#63; and name = &#63; from the database.
@@ -1378,12 +1194,10 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param parentFolderId the parent folder ID
 	* @param name the name
 	* @return the journal folder that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.journal.model.JournalFolder removeByG_P_N(
 		long groupId, long parentFolderId, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.journal.NoSuchFolderException;
+		throws com.liferay.portlet.journal.NoSuchFolderException;
 
 	/**
 	* Returns the number of journal folders where groupId = &#63; and parentFolderId = &#63; and name = &#63;.
@@ -1392,11 +1206,9 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param parentFolderId the parent folder ID
 	* @param name the name
 	* @return the number of matching journal folders
-	* @throws SystemException if a system exception occurred
 	*/
 	public int countByG_P_N(long groupId, long parentFolderId,
-		java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String name);
 
 	/**
 	* Returns all the journal folders where groupId = &#63; and parentFolderId = &#63; and status = &#63;.
@@ -1405,11 +1217,9 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param parentFolderId the parent folder ID
 	* @param status the status
 	* @return the matching journal folders
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.journal.model.JournalFolder> findByG_P_S(
-		long groupId, long parentFolderId, int status)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long groupId, long parentFolderId, int status);
 
 	/**
 	* Returns a range of all the journal folders where groupId = &#63; and parentFolderId = &#63; and status = &#63;.
@@ -1424,11 +1234,9 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param start the lower bound of the range of journal folders
 	* @param end the upper bound of the range of journal folders (not inclusive)
 	* @return the range of matching journal folders
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.journal.model.JournalFolder> findByG_P_S(
-		long groupId, long parentFolderId, int status, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long groupId, long parentFolderId, int status, int start, int end);
 
 	/**
 	* Returns an ordered range of all the journal folders where groupId = &#63; and parentFolderId = &#63; and status = &#63;.
@@ -1444,12 +1252,10 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param end the upper bound of the range of journal folders (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching journal folders
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.journal.model.JournalFolder> findByG_P_S(
 		long groupId, long parentFolderId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first journal folder in the ordered set where groupId = &#63; and parentFolderId = &#63; and status = &#63;.
@@ -1460,13 +1266,11 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching journal folder
 	* @throws com.liferay.portlet.journal.NoSuchFolderException if a matching journal folder could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.journal.model.JournalFolder findByG_P_S_First(
 		long groupId, long parentFolderId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.journal.NoSuchFolderException;
+		throws com.liferay.portlet.journal.NoSuchFolderException;
 
 	/**
 	* Returns the first journal folder in the ordered set where groupId = &#63; and parentFolderId = &#63; and status = &#63;.
@@ -1476,12 +1280,10 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching journal folder, or <code>null</code> if a matching journal folder could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.journal.model.JournalFolder fetchByG_P_S_First(
 		long groupId, long parentFolderId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last journal folder in the ordered set where groupId = &#63; and parentFolderId = &#63; and status = &#63;.
@@ -1492,13 +1294,11 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching journal folder
 	* @throws com.liferay.portlet.journal.NoSuchFolderException if a matching journal folder could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.journal.model.JournalFolder findByG_P_S_Last(
 		long groupId, long parentFolderId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.journal.NoSuchFolderException;
+		throws com.liferay.portlet.journal.NoSuchFolderException;
 
 	/**
 	* Returns the last journal folder in the ordered set where groupId = &#63; and parentFolderId = &#63; and status = &#63;.
@@ -1508,12 +1308,10 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching journal folder, or <code>null</code> if a matching journal folder could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.journal.model.JournalFolder fetchByG_P_S_Last(
 		long groupId, long parentFolderId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the journal folders before and after the current journal folder in the ordered set where groupId = &#63; and parentFolderId = &#63; and status = &#63;.
@@ -1525,13 +1323,11 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next journal folder
 	* @throws com.liferay.portlet.journal.NoSuchFolderException if a journal folder with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.journal.model.JournalFolder[] findByG_P_S_PrevAndNext(
 		long folderId, long groupId, long parentFolderId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.journal.NoSuchFolderException;
+		throws com.liferay.portlet.journal.NoSuchFolderException;
 
 	/**
 	* Returns all the journal folders that the user has permission to view where groupId = &#63; and parentFolderId = &#63; and status = &#63;.
@@ -1540,11 +1336,9 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param parentFolderId the parent folder ID
 	* @param status the status
 	* @return the matching journal folders that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.journal.model.JournalFolder> filterFindByG_P_S(
-		long groupId, long parentFolderId, int status)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long groupId, long parentFolderId, int status);
 
 	/**
 	* Returns a range of all the journal folders that the user has permission to view where groupId = &#63; and parentFolderId = &#63; and status = &#63;.
@@ -1559,11 +1353,9 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param start the lower bound of the range of journal folders
 	* @param end the upper bound of the range of journal folders (not inclusive)
 	* @return the range of matching journal folders that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.journal.model.JournalFolder> filterFindByG_P_S(
-		long groupId, long parentFolderId, int status, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long groupId, long parentFolderId, int status, int start, int end);
 
 	/**
 	* Returns an ordered range of all the journal folders that the user has permissions to view where groupId = &#63; and parentFolderId = &#63; and status = &#63;.
@@ -1579,12 +1371,10 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param end the upper bound of the range of journal folders (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching journal folders that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.journal.model.JournalFolder> filterFindByG_P_S(
 		long groupId, long parentFolderId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the journal folders before and after the current journal folder in the ordered set of journal folders that the user has permission to view where groupId = &#63; and parentFolderId = &#63; and status = &#63;.
@@ -1596,13 +1386,11 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next journal folder
 	* @throws com.liferay.portlet.journal.NoSuchFolderException if a journal folder with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.journal.model.JournalFolder[] filterFindByG_P_S_PrevAndNext(
 		long folderId, long groupId, long parentFolderId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.journal.NoSuchFolderException;
+		throws com.liferay.portlet.journal.NoSuchFolderException;
 
 	/**
 	* Removes all the journal folders where groupId = &#63; and parentFolderId = &#63; and status = &#63; from the database.
@@ -1610,10 +1398,8 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param groupId the group ID
 	* @param parentFolderId the parent folder ID
 	* @param status the status
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByG_P_S(long groupId, long parentFolderId, int status)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeByG_P_S(long groupId, long parentFolderId, int status);
 
 	/**
 	* Returns the number of journal folders where groupId = &#63; and parentFolderId = &#63; and status = &#63;.
@@ -1622,10 +1408,8 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param parentFolderId the parent folder ID
 	* @param status the status
 	* @return the number of matching journal folders
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countByG_P_S(long groupId, long parentFolderId, int status)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByG_P_S(long groupId, long parentFolderId, int status);
 
 	/**
 	* Returns the number of journal folders that the user has permission to view where groupId = &#63; and parentFolderId = &#63; and status = &#63;.
@@ -1634,10 +1418,8 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param parentFolderId the parent folder ID
 	* @param status the status
 	* @return the number of matching journal folders that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
-	public int filterCountByG_P_S(long groupId, long parentFolderId, int status)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int filterCountByG_P_S(long groupId, long parentFolderId, int status);
 
 	/**
 	* Returns all the journal folders where groupId = &#63; and parentFolderId = &#63; and status &ne; &#63;.
@@ -1646,11 +1428,9 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param parentFolderId the parent folder ID
 	* @param status the status
 	* @return the matching journal folders
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.journal.model.JournalFolder> findByG_P_NotS(
-		long groupId, long parentFolderId, int status)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long groupId, long parentFolderId, int status);
 
 	/**
 	* Returns a range of all the journal folders where groupId = &#63; and parentFolderId = &#63; and status &ne; &#63;.
@@ -1665,11 +1445,9 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param start the lower bound of the range of journal folders
 	* @param end the upper bound of the range of journal folders (not inclusive)
 	* @return the range of matching journal folders
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.journal.model.JournalFolder> findByG_P_NotS(
-		long groupId, long parentFolderId, int status, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long groupId, long parentFolderId, int status, int start, int end);
 
 	/**
 	* Returns an ordered range of all the journal folders where groupId = &#63; and parentFolderId = &#63; and status &ne; &#63;.
@@ -1685,12 +1463,10 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param end the upper bound of the range of journal folders (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching journal folders
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.journal.model.JournalFolder> findByG_P_NotS(
 		long groupId, long parentFolderId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first journal folder in the ordered set where groupId = &#63; and parentFolderId = &#63; and status &ne; &#63;.
@@ -1701,13 +1477,11 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching journal folder
 	* @throws com.liferay.portlet.journal.NoSuchFolderException if a matching journal folder could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.journal.model.JournalFolder findByG_P_NotS_First(
 		long groupId, long parentFolderId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.journal.NoSuchFolderException;
+		throws com.liferay.portlet.journal.NoSuchFolderException;
 
 	/**
 	* Returns the first journal folder in the ordered set where groupId = &#63; and parentFolderId = &#63; and status &ne; &#63;.
@@ -1717,12 +1491,10 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching journal folder, or <code>null</code> if a matching journal folder could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.journal.model.JournalFolder fetchByG_P_NotS_First(
 		long groupId, long parentFolderId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last journal folder in the ordered set where groupId = &#63; and parentFolderId = &#63; and status &ne; &#63;.
@@ -1733,13 +1505,11 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching journal folder
 	* @throws com.liferay.portlet.journal.NoSuchFolderException if a matching journal folder could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.journal.model.JournalFolder findByG_P_NotS_Last(
 		long groupId, long parentFolderId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.journal.NoSuchFolderException;
+		throws com.liferay.portlet.journal.NoSuchFolderException;
 
 	/**
 	* Returns the last journal folder in the ordered set where groupId = &#63; and parentFolderId = &#63; and status &ne; &#63;.
@@ -1749,12 +1519,10 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching journal folder, or <code>null</code> if a matching journal folder could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.journal.model.JournalFolder fetchByG_P_NotS_Last(
 		long groupId, long parentFolderId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the journal folders before and after the current journal folder in the ordered set where groupId = &#63; and parentFolderId = &#63; and status &ne; &#63;.
@@ -1766,13 +1534,11 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next journal folder
 	* @throws com.liferay.portlet.journal.NoSuchFolderException if a journal folder with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.journal.model.JournalFolder[] findByG_P_NotS_PrevAndNext(
 		long folderId, long groupId, long parentFolderId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.journal.NoSuchFolderException;
+		throws com.liferay.portlet.journal.NoSuchFolderException;
 
 	/**
 	* Returns all the journal folders that the user has permission to view where groupId = &#63; and parentFolderId = &#63; and status &ne; &#63;.
@@ -1781,11 +1547,9 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param parentFolderId the parent folder ID
 	* @param status the status
 	* @return the matching journal folders that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.journal.model.JournalFolder> filterFindByG_P_NotS(
-		long groupId, long parentFolderId, int status)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long groupId, long parentFolderId, int status);
 
 	/**
 	* Returns a range of all the journal folders that the user has permission to view where groupId = &#63; and parentFolderId = &#63; and status &ne; &#63;.
@@ -1800,11 +1564,9 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param start the lower bound of the range of journal folders
 	* @param end the upper bound of the range of journal folders (not inclusive)
 	* @return the range of matching journal folders that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.journal.model.JournalFolder> filterFindByG_P_NotS(
-		long groupId, long parentFolderId, int status, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long groupId, long parentFolderId, int status, int start, int end);
 
 	/**
 	* Returns an ordered range of all the journal folders that the user has permissions to view where groupId = &#63; and parentFolderId = &#63; and status &ne; &#63;.
@@ -1820,12 +1582,10 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param end the upper bound of the range of journal folders (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching journal folders that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.journal.model.JournalFolder> filterFindByG_P_NotS(
 		long groupId, long parentFolderId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the journal folders before and after the current journal folder in the ordered set of journal folders that the user has permission to view where groupId = &#63; and parentFolderId = &#63; and status &ne; &#63;.
@@ -1837,13 +1597,11 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next journal folder
 	* @throws com.liferay.portlet.journal.NoSuchFolderException if a journal folder with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.journal.model.JournalFolder[] filterFindByG_P_NotS_PrevAndNext(
 		long folderId, long groupId, long parentFolderId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.journal.NoSuchFolderException;
+		throws com.liferay.portlet.journal.NoSuchFolderException;
 
 	/**
 	* Removes all the journal folders where groupId = &#63; and parentFolderId = &#63; and status &ne; &#63; from the database.
@@ -1851,10 +1609,8 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param groupId the group ID
 	* @param parentFolderId the parent folder ID
 	* @param status the status
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByG_P_NotS(long groupId, long parentFolderId, int status)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeByG_P_NotS(long groupId, long parentFolderId, int status);
 
 	/**
 	* Returns the number of journal folders where groupId = &#63; and parentFolderId = &#63; and status &ne; &#63;.
@@ -1863,10 +1619,8 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param parentFolderId the parent folder ID
 	* @param status the status
 	* @return the number of matching journal folders
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countByG_P_NotS(long groupId, long parentFolderId, int status)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByG_P_NotS(long groupId, long parentFolderId, int status);
 
 	/**
 	* Returns the number of journal folders that the user has permission to view where groupId = &#63; and parentFolderId = &#63; and status &ne; &#63;.
@@ -1875,10 +1629,9 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param parentFolderId the parent folder ID
 	* @param status the status
 	* @return the number of matching journal folders that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public int filterCountByG_P_NotS(long groupId, long parentFolderId,
-		int status) throws com.liferay.portal.kernel.exception.SystemException;
+		int status);
 
 	/**
 	* Caches the journal folder in the entity cache if it is enabled.
@@ -1910,15 +1663,12 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param folderId the primary key of the journal folder
 	* @return the journal folder that was removed
 	* @throws com.liferay.portlet.journal.NoSuchFolderException if a journal folder with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.journal.model.JournalFolder remove(long folderId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.journal.NoSuchFolderException;
+		throws com.liferay.portlet.journal.NoSuchFolderException;
 
 	public com.liferay.portlet.journal.model.JournalFolder updateImpl(
-		com.liferay.portlet.journal.model.JournalFolder journalFolder)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portlet.journal.model.JournalFolder journalFolder);
 
 	/**
 	* Returns the journal folder with the primary key or throws a {@link com.liferay.portlet.journal.NoSuchFolderException} if it could not be found.
@@ -1926,32 +1676,25 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param folderId the primary key of the journal folder
 	* @return the journal folder
 	* @throws com.liferay.portlet.journal.NoSuchFolderException if a journal folder with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.journal.model.JournalFolder findByPrimaryKey(
-		long folderId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.journal.NoSuchFolderException;
+		long folderId) throws com.liferay.portlet.journal.NoSuchFolderException;
 
 	/**
 	* Returns the journal folder with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param folderId the primary key of the journal folder
 	* @return the journal folder, or <code>null</code> if a journal folder with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.journal.model.JournalFolder fetchByPrimaryKey(
-		long folderId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long folderId);
 
 	/**
 	* Returns all the journal folders.
 	*
 	* @return the journal folders
-	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portlet.journal.model.JournalFolder> findAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public java.util.List<com.liferay.portlet.journal.model.JournalFolder> findAll();
 
 	/**
 	* Returns a range of all the journal folders.
@@ -1963,11 +1706,9 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param start the lower bound of the range of journal folders
 	* @param end the upper bound of the range of journal folders (not inclusive)
 	* @return the range of journal folders
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.journal.model.JournalFolder> findAll(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the journal folders.
@@ -1980,49 +1721,39 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param end the upper bound of the range of journal folders (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of journal folders
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.journal.model.JournalFolder> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Removes all the journal folders from the database.
-	*
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeAll();
 
 	/**
 	* Returns the number of journal folders.
 	*
 	* @return the number of journal folders
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countAll();
 
 	/**
 	* Returns the primaryKeys of d d m structures associated with the journal folder.
 	*
 	* @param pk the primary key of the journal folder
 	* @return long[] of the primaryKeys of d d m structures associated with the journal folder
-	* @throws SystemException if a system exception occurred
 	*/
-	public long[] getDDMStructurePrimaryKeys(long pk)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public long[] getDDMStructurePrimaryKeys(long pk);
 
 	/**
 	* Returns all the d d m structures associated with the journal folder.
 	*
 	* @param pk the primary key of the journal folder
 	* @return the d d m structures associated with the journal folder
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getDDMStructures(
-		long pk) throws com.liferay.portal.kernel.exception.SystemException;
+		long pk);
 
 	/**
 	* Returns a range of all the d d m structures associated with the journal folder.
@@ -2035,11 +1766,9 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param start the lower bound of the range of journal folders
 	* @param end the upper bound of the range of journal folders (not inclusive)
 	* @return the range of d d m structures associated with the journal folder
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getDDMStructures(
-		long pk, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long pk, int start, int end);
 
 	/**
 	* Returns an ordered range of all the d d m structures associated with the journal folder.
@@ -2053,22 +1782,18 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param end the upper bound of the range of journal folders (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of d d m structures associated with the journal folder
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getDDMStructures(
 		long pk, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the number of d d m structures associated with the journal folder.
 	*
 	* @param pk the primary key of the journal folder
 	* @return the number of d d m structures associated with the journal folder
-	* @throws SystemException if a system exception occurred
 	*/
-	public int getDDMStructuresSize(long pk)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int getDDMStructuresSize(long pk);
 
 	/**
 	* Returns <code>true</code> if the d d m structure is associated with the journal folder.
@@ -2076,132 +1801,106 @@ public interface JournalFolderPersistence extends BasePersistence<JournalFolder>
 	* @param pk the primary key of the journal folder
 	* @param ddmStructurePK the primary key of the d d m structure
 	* @return <code>true</code> if the d d m structure is associated with the journal folder; <code>false</code> otherwise
-	* @throws SystemException if a system exception occurred
 	*/
-	public boolean containsDDMStructure(long pk, long ddmStructurePK)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public boolean containsDDMStructure(long pk, long ddmStructurePK);
 
 	/**
 	* Returns <code>true</code> if the journal folder has any d d m structures associated with it.
 	*
 	* @param pk the primary key of the journal folder to check for associations with d d m structures
 	* @return <code>true</code> if the journal folder has any d d m structures associated with it; <code>false</code> otherwise
-	* @throws SystemException if a system exception occurred
 	*/
-	public boolean containsDDMStructures(long pk)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public boolean containsDDMStructures(long pk);
 
 	/**
 	* Adds an association between the journal folder and the d d m structure. Also notifies the appropriate model listeners and clears the mapping table finder cache.
 	*
 	* @param pk the primary key of the journal folder
 	* @param ddmStructurePK the primary key of the d d m structure
-	* @throws SystemException if a system exception occurred
 	*/
-	public void addDDMStructure(long pk, long ddmStructurePK)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void addDDMStructure(long pk, long ddmStructurePK);
 
 	/**
 	* Adds an association between the journal folder and the d d m structure. Also notifies the appropriate model listeners and clears the mapping table finder cache.
 	*
 	* @param pk the primary key of the journal folder
 	* @param ddmStructure the d d m structure
-	* @throws SystemException if a system exception occurred
 	*/
 	public void addDDMStructure(long pk,
-		com.liferay.portlet.dynamicdatamapping.model.DDMStructure ddmStructure)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portlet.dynamicdatamapping.model.DDMStructure ddmStructure);
 
 	/**
 	* Adds an association between the journal folder and the d d m structures. Also notifies the appropriate model listeners and clears the mapping table finder cache.
 	*
 	* @param pk the primary key of the journal folder
 	* @param ddmStructurePKs the primary keys of the d d m structures
-	* @throws SystemException if a system exception occurred
 	*/
-	public void addDDMStructures(long pk, long[] ddmStructurePKs)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void addDDMStructures(long pk, long[] ddmStructurePKs);
 
 	/**
 	* Adds an association between the journal folder and the d d m structures. Also notifies the appropriate model listeners and clears the mapping table finder cache.
 	*
 	* @param pk the primary key of the journal folder
 	* @param ddmStructures the d d m structures
-	* @throws SystemException if a system exception occurred
 	*/
 	public void addDDMStructures(long pk,
-		java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> ddmStructures)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> ddmStructures);
 
 	/**
 	* Clears all associations between the journal folder and its d d m structures. Also notifies the appropriate model listeners and clears the mapping table finder cache.
 	*
 	* @param pk the primary key of the journal folder to clear the associated d d m structures from
-	* @throws SystemException if a system exception occurred
 	*/
-	public void clearDDMStructures(long pk)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void clearDDMStructures(long pk);
 
 	/**
 	* Removes the association between the journal folder and the d d m structure. Also notifies the appropriate model listeners and clears the mapping table finder cache.
 	*
 	* @param pk the primary key of the journal folder
 	* @param ddmStructurePK the primary key of the d d m structure
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeDDMStructure(long pk, long ddmStructurePK)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeDDMStructure(long pk, long ddmStructurePK);
 
 	/**
 	* Removes the association between the journal folder and the d d m structure. Also notifies the appropriate model listeners and clears the mapping table finder cache.
 	*
 	* @param pk the primary key of the journal folder
 	* @param ddmStructure the d d m structure
-	* @throws SystemException if a system exception occurred
 	*/
 	public void removeDDMStructure(long pk,
-		com.liferay.portlet.dynamicdatamapping.model.DDMStructure ddmStructure)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portlet.dynamicdatamapping.model.DDMStructure ddmStructure);
 
 	/**
 	* Removes the association between the journal folder and the d d m structures. Also notifies the appropriate model listeners and clears the mapping table finder cache.
 	*
 	* @param pk the primary key of the journal folder
 	* @param ddmStructurePKs the primary keys of the d d m structures
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeDDMStructures(long pk, long[] ddmStructurePKs)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeDDMStructures(long pk, long[] ddmStructurePKs);
 
 	/**
 	* Removes the association between the journal folder and the d d m structures. Also notifies the appropriate model listeners and clears the mapping table finder cache.
 	*
 	* @param pk the primary key of the journal folder
 	* @param ddmStructures the d d m structures
-	* @throws SystemException if a system exception occurred
 	*/
 	public void removeDDMStructures(long pk,
-		java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> ddmStructures)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> ddmStructures);
 
 	/**
 	* Sets the d d m structures associated with the journal folder, removing and adding associations as necessary. Also notifies the appropriate model listeners and clears the mapping table finder cache.
 	*
 	* @param pk the primary key of the journal folder
 	* @param ddmStructurePKs the primary keys of the d d m structures to be associated with the journal folder
-	* @throws SystemException if a system exception occurred
 	*/
-	public void setDDMStructures(long pk, long[] ddmStructurePKs)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void setDDMStructures(long pk, long[] ddmStructurePKs);
 
 	/**
 	* Sets the d d m structures associated with the journal folder, removing and adding associations as necessary. Also notifies the appropriate model listeners and clears the mapping table finder cache.
 	*
 	* @param pk the primary key of the journal folder
 	* @param ddmStructures the d d m structures to be associated with the journal folder
-	* @throws SystemException if a system exception occurred
 	*/
 	public void setDDMStructures(long pk,
-		java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> ddmStructures)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> ddmStructures);
 }

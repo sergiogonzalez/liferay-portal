@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -109,11 +108,9 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 	 *
 	 * @param userId the user ID
 	 * @return the matching user notification deliveries
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<UserNotificationDelivery> findByUserId(long userId)
-		throws SystemException {
+	public List<UserNotificationDelivery> findByUserId(long userId) {
 		return findByUserId(userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -128,11 +125,10 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 	 * @param start the lower bound of the range of user notification deliveries
 	 * @param end the upper bound of the range of user notification deliveries (not inclusive)
 	 * @return the range of matching user notification deliveries
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<UserNotificationDelivery> findByUserId(long userId, int start,
-		int end) throws SystemException {
+		int end) {
 		return findByUserId(userId, start, end, null);
 	}
 
@@ -148,11 +144,10 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 	 * @param end the upper bound of the range of user notification deliveries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching user notification deliveries
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<UserNotificationDelivery> findByUserId(long userId, int start,
-		int end, OrderByComparator orderByComparator) throws SystemException {
+		int end, OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -255,12 +250,11 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching user notification delivery
 	 * @throws com.liferay.portal.NoSuchUserNotificationDeliveryException if a matching user notification delivery could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserNotificationDelivery findByUserId_First(long userId,
 		OrderByComparator orderByComparator)
-		throws NoSuchUserNotificationDeliveryException, SystemException {
+		throws NoSuchUserNotificationDeliveryException {
 		UserNotificationDelivery userNotificationDelivery = fetchByUserId_First(userId,
 				orderByComparator);
 
@@ -286,11 +280,10 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 	 * @param userId the user ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching user notification delivery, or <code>null</code> if a matching user notification delivery could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserNotificationDelivery fetchByUserId_First(long userId,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		List<UserNotificationDelivery> list = findByUserId(userId, 0, 1,
 				orderByComparator);
 
@@ -308,12 +301,11 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching user notification delivery
 	 * @throws com.liferay.portal.NoSuchUserNotificationDeliveryException if a matching user notification delivery could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserNotificationDelivery findByUserId_Last(long userId,
 		OrderByComparator orderByComparator)
-		throws NoSuchUserNotificationDeliveryException, SystemException {
+		throws NoSuchUserNotificationDeliveryException {
 		UserNotificationDelivery userNotificationDelivery = fetchByUserId_Last(userId,
 				orderByComparator);
 
@@ -339,11 +331,10 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 	 * @param userId the user ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching user notification delivery, or <code>null</code> if a matching user notification delivery could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserNotificationDelivery fetchByUserId_Last(long userId,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		int count = countByUserId(userId);
 
 		if (count == 0) {
@@ -368,13 +359,12 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next user notification delivery
 	 * @throws com.liferay.portal.NoSuchUserNotificationDeliveryException if a user notification delivery with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserNotificationDelivery[] findByUserId_PrevAndNext(
 		long userNotificationDeliveryId, long userId,
 		OrderByComparator orderByComparator)
-		throws NoSuchUserNotificationDeliveryException, SystemException {
+		throws NoSuchUserNotificationDeliveryException {
 		UserNotificationDelivery userNotificationDelivery = findByPrimaryKey(userNotificationDeliveryId);
 
 		Session session = null;
@@ -511,10 +501,9 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 	 * Removes all the user notification deliveries where userId = &#63; from the database.
 	 *
 	 * @param userId the user ID
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByUserId(long userId) throws SystemException {
+	public void removeByUserId(long userId) {
 		for (UserNotificationDelivery userNotificationDelivery : findByUserId(
 				userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(userNotificationDelivery);
@@ -526,10 +515,9 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 	 *
 	 * @param userId the user ID
 	 * @return the number of matching user notification deliveries
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByUserId(long userId) throws SystemException {
+	public int countByUserId(long userId) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_USERID;
 
 		Object[] finderArgs = new Object[] { userId };
@@ -608,13 +596,11 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 	 * @param deliveryType the delivery type
 	 * @return the matching user notification delivery
 	 * @throws com.liferay.portal.NoSuchUserNotificationDeliveryException if a matching user notification delivery could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserNotificationDelivery findByU_P_C_N_D(long userId,
 		String portletId, long classNameId, int notificationType,
-		int deliveryType)
-		throws NoSuchUserNotificationDeliveryException, SystemException {
+		int deliveryType) throws NoSuchUserNotificationDeliveryException {
 		UserNotificationDelivery userNotificationDelivery = fetchByU_P_C_N_D(userId,
 				portletId, classNameId, notificationType, deliveryType);
 
@@ -659,12 +645,11 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 	 * @param notificationType the notification type
 	 * @param deliveryType the delivery type
 	 * @return the matching user notification delivery, or <code>null</code> if a matching user notification delivery could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserNotificationDelivery fetchByU_P_C_N_D(long userId,
 		String portletId, long classNameId, int notificationType,
-		int deliveryType) throws SystemException {
+		int deliveryType) {
 		return fetchByU_P_C_N_D(userId, portletId, classNameId,
 			notificationType, deliveryType, true);
 	}
@@ -679,12 +664,11 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 	 * @param deliveryType the delivery type
 	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching user notification delivery, or <code>null</code> if a matching user notification delivery could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserNotificationDelivery fetchByU_P_C_N_D(long userId,
 		String portletId, long classNameId, int notificationType,
-		int deliveryType, boolean retrieveFromCache) throws SystemException {
+		int deliveryType, boolean retrieveFromCache) {
 		Object[] finderArgs = new Object[] {
 				userId, portletId, classNameId, notificationType, deliveryType
 			};
@@ -812,13 +796,11 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 	 * @param notificationType the notification type
 	 * @param deliveryType the delivery type
 	 * @return the user notification delivery that was removed
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserNotificationDelivery removeByU_P_C_N_D(long userId,
 		String portletId, long classNameId, int notificationType,
-		int deliveryType)
-		throws NoSuchUserNotificationDeliveryException, SystemException {
+		int deliveryType) throws NoSuchUserNotificationDeliveryException {
 		UserNotificationDelivery userNotificationDelivery = findByU_P_C_N_D(userId,
 				portletId, classNameId, notificationType, deliveryType);
 
@@ -834,12 +816,10 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 	 * @param notificationType the notification type
 	 * @param deliveryType the delivery type
 	 * @return the number of matching user notification deliveries
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public int countByU_P_C_N_D(long userId, String portletId,
-		long classNameId, int notificationType, int deliveryType)
-		throws SystemException {
+		long classNameId, int notificationType, int deliveryType) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_U_P_C_N_D;
 
 		Object[] finderArgs = new Object[] {
@@ -1115,11 +1095,10 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 	 * @param userNotificationDeliveryId the primary key of the user notification delivery
 	 * @return the user notification delivery that was removed
 	 * @throws com.liferay.portal.NoSuchUserNotificationDeliveryException if a user notification delivery with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserNotificationDelivery remove(long userNotificationDeliveryId)
-		throws NoSuchUserNotificationDeliveryException, SystemException {
+		throws NoSuchUserNotificationDeliveryException {
 		return remove((Serializable)userNotificationDeliveryId);
 	}
 
@@ -1129,11 +1108,10 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 	 * @param primaryKey the primary key of the user notification delivery
 	 * @return the user notification delivery that was removed
 	 * @throws com.liferay.portal.NoSuchUserNotificationDeliveryException if a user notification delivery with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserNotificationDelivery remove(Serializable primaryKey)
-		throws NoSuchUserNotificationDeliveryException, SystemException {
+		throws NoSuchUserNotificationDeliveryException {
 		Session session = null;
 
 		try {
@@ -1166,8 +1144,7 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 
 	@Override
 	protected UserNotificationDelivery removeImpl(
-		UserNotificationDelivery userNotificationDelivery)
-		throws SystemException {
+		UserNotificationDelivery userNotificationDelivery) {
 		userNotificationDelivery = toUnwrappedModel(userNotificationDelivery);
 
 		Session session = null;
@@ -1200,8 +1177,7 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 
 	@Override
 	public UserNotificationDelivery updateImpl(
-		com.liferay.portal.model.UserNotificationDelivery userNotificationDelivery)
-		throws SystemException {
+		com.liferay.portal.model.UserNotificationDelivery userNotificationDelivery) {
 		userNotificationDelivery = toUnwrappedModel(userNotificationDelivery);
 
 		boolean isNew = userNotificationDelivery.isNew();
@@ -1299,11 +1275,10 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 	 * @param primaryKey the primary key of the user notification delivery
 	 * @return the user notification delivery
 	 * @throws com.liferay.portal.NoSuchUserNotificationDeliveryException if a user notification delivery with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserNotificationDelivery findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchUserNotificationDeliveryException, SystemException {
+		throws NoSuchUserNotificationDeliveryException {
 		UserNotificationDelivery userNotificationDelivery = fetchByPrimaryKey(primaryKey);
 
 		if (userNotificationDelivery == null) {
@@ -1324,12 +1299,11 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 	 * @param userNotificationDeliveryId the primary key of the user notification delivery
 	 * @return the user notification delivery
 	 * @throws com.liferay.portal.NoSuchUserNotificationDeliveryException if a user notification delivery with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserNotificationDelivery findByPrimaryKey(
 		long userNotificationDeliveryId)
-		throws NoSuchUserNotificationDeliveryException, SystemException {
+		throws NoSuchUserNotificationDeliveryException {
 		return findByPrimaryKey((Serializable)userNotificationDeliveryId);
 	}
 
@@ -1338,11 +1312,9 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 	 *
 	 * @param primaryKey the primary key of the user notification delivery
 	 * @return the user notification delivery, or <code>null</code> if a user notification delivery with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public UserNotificationDelivery fetchByPrimaryKey(Serializable primaryKey)
-		throws SystemException {
+	public UserNotificationDelivery fetchByPrimaryKey(Serializable primaryKey) {
 		UserNotificationDelivery userNotificationDelivery = (UserNotificationDelivery)EntityCacheUtil.getResult(UserNotificationDeliveryModelImpl.ENTITY_CACHE_ENABLED,
 				UserNotificationDeliveryImpl.class, primaryKey);
 
@@ -1387,11 +1359,10 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 	 *
 	 * @param userNotificationDeliveryId the primary key of the user notification delivery
 	 * @return the user notification delivery, or <code>null</code> if a user notification delivery with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserNotificationDelivery fetchByPrimaryKey(
-		long userNotificationDeliveryId) throws SystemException {
+		long userNotificationDeliveryId) {
 		return fetchByPrimaryKey((Serializable)userNotificationDeliveryId);
 	}
 
@@ -1399,10 +1370,9 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 	 * Returns all the user notification deliveries.
 	 *
 	 * @return the user notification deliveries
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<UserNotificationDelivery> findAll() throws SystemException {
+	public List<UserNotificationDelivery> findAll() {
 		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -1416,11 +1386,9 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 	 * @param start the lower bound of the range of user notification deliveries
 	 * @param end the upper bound of the range of user notification deliveries (not inclusive)
 	 * @return the range of user notification deliveries
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<UserNotificationDelivery> findAll(int start, int end)
-		throws SystemException {
+	public List<UserNotificationDelivery> findAll(int start, int end) {
 		return findAll(start, end, null);
 	}
 
@@ -1435,11 +1403,10 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 	 * @param end the upper bound of the range of user notification deliveries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of user notification deliveries
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<UserNotificationDelivery> findAll(int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1521,10 +1488,9 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 	/**
 	 * Removes all the user notification deliveries from the database.
 	 *
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeAll() throws SystemException {
+	public void removeAll() {
 		for (UserNotificationDelivery userNotificationDelivery : findAll()) {
 			remove(userNotificationDelivery);
 		}
@@ -1534,10 +1500,9 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 	 * Returns the number of user notification deliveries.
 	 *
 	 * @return the number of user notification deliveries
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countAll() throws SystemException {
+	public int countAll() {
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
 				FINDER_ARGS_EMPTY, this);
 

@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -116,11 +115,9 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 *
 	 * @param uuid the uuid
 	 * @return the matching announcements entries
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<AnnouncementsEntry> findByUuid(String uuid)
-		throws SystemException {
+	public List<AnnouncementsEntry> findByUuid(String uuid) {
 		return findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -135,11 +132,9 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param start the lower bound of the range of announcements entries
 	 * @param end the upper bound of the range of announcements entries (not inclusive)
 	 * @return the range of matching announcements entries
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<AnnouncementsEntry> findByUuid(String uuid, int start, int end)
-		throws SystemException {
+	public List<AnnouncementsEntry> findByUuid(String uuid, int start, int end) {
 		return findByUuid(uuid, start, end, null);
 	}
 
@@ -155,11 +150,10 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param end the upper bound of the range of announcements entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching announcements entries
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<AnnouncementsEntry> findByUuid(String uuid, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -276,12 +270,10 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching announcements entry
 	 * @throws com.liferay.portlet.announcements.NoSuchEntryException if a matching announcements entry could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnnouncementsEntry findByUuid_First(String uuid,
-		OrderByComparator orderByComparator)
-		throws NoSuchEntryException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchEntryException {
 		AnnouncementsEntry announcementsEntry = fetchByUuid_First(uuid,
 				orderByComparator);
 
@@ -307,11 +299,10 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching announcements entry, or <code>null</code> if a matching announcements entry could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnnouncementsEntry fetchByUuid_First(String uuid,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		List<AnnouncementsEntry> list = findByUuid(uuid, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -328,12 +319,10 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching announcements entry
 	 * @throws com.liferay.portlet.announcements.NoSuchEntryException if a matching announcements entry could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnnouncementsEntry findByUuid_Last(String uuid,
-		OrderByComparator orderByComparator)
-		throws NoSuchEntryException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchEntryException {
 		AnnouncementsEntry announcementsEntry = fetchByUuid_Last(uuid,
 				orderByComparator);
 
@@ -359,11 +348,10 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching announcements entry, or <code>null</code> if a matching announcements entry could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnnouncementsEntry fetchByUuid_Last(String uuid,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		int count = countByUuid(uuid);
 
 		if (count == 0) {
@@ -388,12 +376,11 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next announcements entry
 	 * @throws com.liferay.portlet.announcements.NoSuchEntryException if a announcements entry with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnnouncementsEntry[] findByUuid_PrevAndNext(long entryId,
 		String uuid, OrderByComparator orderByComparator)
-		throws NoSuchEntryException, SystemException {
+		throws NoSuchEntryException {
 		AnnouncementsEntry announcementsEntry = findByPrimaryKey(entryId);
 
 		Session session = null;
@@ -545,11 +532,9 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 *
 	 * @param uuid the uuid
 	 * @return the matching announcements entries that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<AnnouncementsEntry> filterFindByUuid(String uuid)
-		throws SystemException {
+	public List<AnnouncementsEntry> filterFindByUuid(String uuid) {
 		return filterFindByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -564,11 +549,10 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param start the lower bound of the range of announcements entries
 	 * @param end the upper bound of the range of announcements entries (not inclusive)
 	 * @return the range of matching announcements entries that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<AnnouncementsEntry> filterFindByUuid(String uuid, int start,
-		int end) throws SystemException {
+		int end) {
 		return filterFindByUuid(uuid, start, end, null);
 	}
 
@@ -584,11 +568,10 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param end the upper bound of the range of announcements entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching announcements entries that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<AnnouncementsEntry> filterFindByUuid(String uuid, int start,
-		int end, OrderByComparator orderByComparator) throws SystemException {
+		int end, OrderByComparator orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByUuid(uuid, start, end, orderByComparator);
 		}
@@ -690,12 +673,11 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next announcements entry
 	 * @throws com.liferay.portlet.announcements.NoSuchEntryException if a announcements entry with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnnouncementsEntry[] filterFindByUuid_PrevAndNext(long entryId,
 		String uuid, OrderByComparator orderByComparator)
-		throws NoSuchEntryException, SystemException {
+		throws NoSuchEntryException {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByUuid_PrevAndNext(entryId, uuid, orderByComparator);
 		}
@@ -885,10 +867,9 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * Removes all the announcements entries where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByUuid(String uuid) throws SystemException {
+	public void removeByUuid(String uuid) {
 		for (AnnouncementsEntry announcementsEntry : findByUuid(uuid,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(announcementsEntry);
@@ -900,10 +881,9 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 *
 	 * @param uuid the uuid
 	 * @return the number of matching announcements entries
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByUuid(String uuid) throws SystemException {
+	public int countByUuid(String uuid) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_UUID;
 
 		Object[] finderArgs = new Object[] { uuid };
@@ -967,10 +947,9 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 *
 	 * @param uuid the uuid
 	 * @return the number of matching announcements entries that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int filterCountByUuid(String uuid) throws SystemException {
+	public int filterCountByUuid(String uuid) {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return countByUuid(uuid);
 		}
@@ -1062,11 +1041,9 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @return the matching announcements entries
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<AnnouncementsEntry> findByUuid_C(String uuid, long companyId)
-		throws SystemException {
+	public List<AnnouncementsEntry> findByUuid_C(String uuid, long companyId) {
 		return findByUuid_C(uuid, companyId, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
@@ -1083,11 +1060,10 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param start the lower bound of the range of announcements entries
 	 * @param end the upper bound of the range of announcements entries (not inclusive)
 	 * @return the range of matching announcements entries
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<AnnouncementsEntry> findByUuid_C(String uuid, long companyId,
-		int start, int end) throws SystemException {
+		int start, int end) {
 		return findByUuid_C(uuid, companyId, start, end, null);
 	}
 
@@ -1104,12 +1080,10 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param end the upper bound of the range of announcements entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching announcements entries
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<AnnouncementsEntry> findByUuid_C(String uuid, long companyId,
-		int start, int end, OrderByComparator orderByComparator)
-		throws SystemException {
+		int start, int end, OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1236,12 +1210,10 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching announcements entry
 	 * @throws com.liferay.portlet.announcements.NoSuchEntryException if a matching announcements entry could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnnouncementsEntry findByUuid_C_First(String uuid, long companyId,
-		OrderByComparator orderByComparator)
-		throws NoSuchEntryException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchEntryException {
 		AnnouncementsEntry announcementsEntry = fetchByUuid_C_First(uuid,
 				companyId, orderByComparator);
 
@@ -1271,11 +1243,10 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching announcements entry, or <code>null</code> if a matching announcements entry could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnnouncementsEntry fetchByUuid_C_First(String uuid, long companyId,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		List<AnnouncementsEntry> list = findByUuid_C(uuid, companyId, 0, 1,
 				orderByComparator);
 
@@ -1294,12 +1265,10 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching announcements entry
 	 * @throws com.liferay.portlet.announcements.NoSuchEntryException if a matching announcements entry could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnnouncementsEntry findByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator)
-		throws NoSuchEntryException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchEntryException {
 		AnnouncementsEntry announcementsEntry = fetchByUuid_C_Last(uuid,
 				companyId, orderByComparator);
 
@@ -1329,11 +1298,10 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching announcements entry, or <code>null</code> if a matching announcements entry could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnnouncementsEntry fetchByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		int count = countByUuid_C(uuid, companyId);
 
 		if (count == 0) {
@@ -1359,12 +1327,11 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next announcements entry
 	 * @throws com.liferay.portlet.announcements.NoSuchEntryException if a announcements entry with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnnouncementsEntry[] findByUuid_C_PrevAndNext(long entryId,
 		String uuid, long companyId, OrderByComparator orderByComparator)
-		throws NoSuchEntryException, SystemException {
+		throws NoSuchEntryException {
 		AnnouncementsEntry announcementsEntry = findByPrimaryKey(entryId);
 
 		Session session = null;
@@ -1521,11 +1488,10 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @return the matching announcements entries that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<AnnouncementsEntry> filterFindByUuid_C(String uuid,
-		long companyId) throws SystemException {
+		long companyId) {
 		return filterFindByUuid_C(uuid, companyId, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
@@ -1542,11 +1508,10 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param start the lower bound of the range of announcements entries
 	 * @param end the upper bound of the range of announcements entries (not inclusive)
 	 * @return the range of matching announcements entries that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<AnnouncementsEntry> filterFindByUuid_C(String uuid,
-		long companyId, int start, int end) throws SystemException {
+		long companyId, int start, int end) {
 		return filterFindByUuid_C(uuid, companyId, start, end, null);
 	}
 
@@ -1563,12 +1528,10 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param end the upper bound of the range of announcements entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching announcements entries that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<AnnouncementsEntry> filterFindByUuid_C(String uuid,
-		long companyId, int start, int end, OrderByComparator orderByComparator)
-		throws SystemException {
+		long companyId, int start, int end, OrderByComparator orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByUuid_C(uuid, companyId, start, end, orderByComparator);
 		}
@@ -1675,12 +1638,11 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next announcements entry
 	 * @throws com.liferay.portlet.announcements.NoSuchEntryException if a announcements entry with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnnouncementsEntry[] filterFindByUuid_C_PrevAndNext(long entryId,
 		String uuid, long companyId, OrderByComparator orderByComparator)
-		throws NoSuchEntryException, SystemException {
+		throws NoSuchEntryException {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByUuid_C_PrevAndNext(entryId, uuid, companyId,
 				orderByComparator);
@@ -1877,11 +1839,9 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByUuid_C(String uuid, long companyId)
-		throws SystemException {
+	public void removeByUuid_C(String uuid, long companyId) {
 		for (AnnouncementsEntry announcementsEntry : findByUuid_C(uuid,
 				companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(announcementsEntry);
@@ -1894,11 +1854,9 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @return the number of matching announcements entries
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByUuid_C(String uuid, long companyId)
-		throws SystemException {
+	public int countByUuid_C(String uuid, long companyId) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_UUID_C;
 
 		Object[] finderArgs = new Object[] { uuid, companyId };
@@ -1967,11 +1925,9 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @return the number of matching announcements entries that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int filterCountByUuid_C(String uuid, long companyId)
-		throws SystemException {
+	public int filterCountByUuid_C(String uuid, long companyId) {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return countByUuid_C(uuid, companyId);
 		}
@@ -2066,11 +2022,9 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 *
 	 * @param userId the user ID
 	 * @return the matching announcements entries
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<AnnouncementsEntry> findByUserId(long userId)
-		throws SystemException {
+	public List<AnnouncementsEntry> findByUserId(long userId) {
 		return findByUserId(userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -2085,11 +2039,9 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param start the lower bound of the range of announcements entries
 	 * @param end the upper bound of the range of announcements entries (not inclusive)
 	 * @return the range of matching announcements entries
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<AnnouncementsEntry> findByUserId(long userId, int start, int end)
-		throws SystemException {
+	public List<AnnouncementsEntry> findByUserId(long userId, int start, int end) {
 		return findByUserId(userId, start, end, null);
 	}
 
@@ -2105,11 +2057,10 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param end the upper bound of the range of announcements entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching announcements entries
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<AnnouncementsEntry> findByUserId(long userId, int start,
-		int end, OrderByComparator orderByComparator) throws SystemException {
+		int end, OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2212,12 +2163,10 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching announcements entry
 	 * @throws com.liferay.portlet.announcements.NoSuchEntryException if a matching announcements entry could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnnouncementsEntry findByUserId_First(long userId,
-		OrderByComparator orderByComparator)
-		throws NoSuchEntryException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchEntryException {
 		AnnouncementsEntry announcementsEntry = fetchByUserId_First(userId,
 				orderByComparator);
 
@@ -2243,11 +2192,10 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param userId the user ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching announcements entry, or <code>null</code> if a matching announcements entry could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnnouncementsEntry fetchByUserId_First(long userId,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		List<AnnouncementsEntry> list = findByUserId(userId, 0, 1,
 				orderByComparator);
 
@@ -2265,12 +2213,10 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching announcements entry
 	 * @throws com.liferay.portlet.announcements.NoSuchEntryException if a matching announcements entry could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnnouncementsEntry findByUserId_Last(long userId,
-		OrderByComparator orderByComparator)
-		throws NoSuchEntryException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchEntryException {
 		AnnouncementsEntry announcementsEntry = fetchByUserId_Last(userId,
 				orderByComparator);
 
@@ -2296,11 +2242,10 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param userId the user ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching announcements entry, or <code>null</code> if a matching announcements entry could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnnouncementsEntry fetchByUserId_Last(long userId,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		int count = countByUserId(userId);
 
 		if (count == 0) {
@@ -2325,12 +2270,11 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next announcements entry
 	 * @throws com.liferay.portlet.announcements.NoSuchEntryException if a announcements entry with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnnouncementsEntry[] findByUserId_PrevAndNext(long entryId,
 		long userId, OrderByComparator orderByComparator)
-		throws NoSuchEntryException, SystemException {
+		throws NoSuchEntryException {
 		AnnouncementsEntry announcementsEntry = findByPrimaryKey(entryId);
 
 		Session session = null;
@@ -2468,11 +2412,9 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 *
 	 * @param userId the user ID
 	 * @return the matching announcements entries that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<AnnouncementsEntry> filterFindByUserId(long userId)
-		throws SystemException {
+	public List<AnnouncementsEntry> filterFindByUserId(long userId) {
 		return filterFindByUserId(userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			null);
 	}
@@ -2488,11 +2430,10 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param start the lower bound of the range of announcements entries
 	 * @param end the upper bound of the range of announcements entries (not inclusive)
 	 * @return the range of matching announcements entries that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<AnnouncementsEntry> filterFindByUserId(long userId, int start,
-		int end) throws SystemException {
+		int end) {
 		return filterFindByUserId(userId, start, end, null);
 	}
 
@@ -2508,11 +2449,10 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param end the upper bound of the range of announcements entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching announcements entries that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<AnnouncementsEntry> filterFindByUserId(long userId, int start,
-		int end, OrderByComparator orderByComparator) throws SystemException {
+		int end, OrderByComparator orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByUserId(userId, start, end, orderByComparator);
 		}
@@ -2600,12 +2540,11 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next announcements entry
 	 * @throws com.liferay.portlet.announcements.NoSuchEntryException if a announcements entry with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnnouncementsEntry[] filterFindByUserId_PrevAndNext(long entryId,
 		long userId, OrderByComparator orderByComparator)
-		throws NoSuchEntryException, SystemException {
+		throws NoSuchEntryException {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByUserId_PrevAndNext(entryId, userId, orderByComparator);
 		}
@@ -2781,10 +2720,9 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * Removes all the announcements entries where userId = &#63; from the database.
 	 *
 	 * @param userId the user ID
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByUserId(long userId) throws SystemException {
+	public void removeByUserId(long userId) {
 		for (AnnouncementsEntry announcementsEntry : findByUserId(userId,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(announcementsEntry);
@@ -2796,10 +2734,9 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 *
 	 * @param userId the user ID
 	 * @return the number of matching announcements entries
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByUserId(long userId) throws SystemException {
+	public int countByUserId(long userId) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_USERID;
 
 		Object[] finderArgs = new Object[] { userId };
@@ -2849,10 +2786,9 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 *
 	 * @param userId the user ID
 	 * @return the number of matching announcements entries that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int filterCountByUserId(long userId) throws SystemException {
+	public int filterCountByUserId(long userId) {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return countByUserId(userId);
 		}
@@ -2924,11 +2860,9 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @return the matching announcements entries
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<AnnouncementsEntry> findByC_C(long classNameId, long classPK)
-		throws SystemException {
+	public List<AnnouncementsEntry> findByC_C(long classNameId, long classPK) {
 		return findByC_C(classNameId, classPK, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
@@ -2945,11 +2879,10 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param start the lower bound of the range of announcements entries
 	 * @param end the upper bound of the range of announcements entries (not inclusive)
 	 * @return the range of matching announcements entries
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<AnnouncementsEntry> findByC_C(long classNameId, long classPK,
-		int start, int end) throws SystemException {
+		int start, int end) {
 		return findByC_C(classNameId, classPK, start, end, null);
 	}
 
@@ -2966,12 +2899,10 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param end the upper bound of the range of announcements entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching announcements entries
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<AnnouncementsEntry> findByC_C(long classNameId, long classPK,
-		int start, int end, OrderByComparator orderByComparator)
-		throws SystemException {
+		int start, int end, OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -3084,12 +3015,10 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching announcements entry
 	 * @throws com.liferay.portlet.announcements.NoSuchEntryException if a matching announcements entry could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnnouncementsEntry findByC_C_First(long classNameId, long classPK,
-		OrderByComparator orderByComparator)
-		throws NoSuchEntryException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchEntryException {
 		AnnouncementsEntry announcementsEntry = fetchByC_C_First(classNameId,
 				classPK, orderByComparator);
 
@@ -3119,11 +3048,10 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param classPK the class p k
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching announcements entry, or <code>null</code> if a matching announcements entry could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnnouncementsEntry fetchByC_C_First(long classNameId, long classPK,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		List<AnnouncementsEntry> list = findByC_C(classNameId, classPK, 0, 1,
 				orderByComparator);
 
@@ -3142,12 +3070,10 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching announcements entry
 	 * @throws com.liferay.portlet.announcements.NoSuchEntryException if a matching announcements entry could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnnouncementsEntry findByC_C_Last(long classNameId, long classPK,
-		OrderByComparator orderByComparator)
-		throws NoSuchEntryException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchEntryException {
 		AnnouncementsEntry announcementsEntry = fetchByC_C_Last(classNameId,
 				classPK, orderByComparator);
 
@@ -3177,11 +3103,10 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param classPK the class p k
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching announcements entry, or <code>null</code> if a matching announcements entry could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnnouncementsEntry fetchByC_C_Last(long classNameId, long classPK,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		int count = countByC_C(classNameId, classPK);
 
 		if (count == 0) {
@@ -3207,12 +3132,11 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next announcements entry
 	 * @throws com.liferay.portlet.announcements.NoSuchEntryException if a announcements entry with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnnouncementsEntry[] findByC_C_PrevAndNext(long entryId,
 		long classNameId, long classPK, OrderByComparator orderByComparator)
-		throws NoSuchEntryException, SystemException {
+		throws NoSuchEntryException {
 		AnnouncementsEntry announcementsEntry = findByPrimaryKey(entryId);
 
 		Session session = null;
@@ -3355,11 +3279,10 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @return the matching announcements entries that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<AnnouncementsEntry> filterFindByC_C(long classNameId,
-		long classPK) throws SystemException {
+		long classPK) {
 		return filterFindByC_C(classNameId, classPK, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
@@ -3376,11 +3299,10 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param start the lower bound of the range of announcements entries
 	 * @param end the upper bound of the range of announcements entries (not inclusive)
 	 * @return the range of matching announcements entries that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<AnnouncementsEntry> filterFindByC_C(long classNameId,
-		long classPK, int start, int end) throws SystemException {
+		long classPK, int start, int end) {
 		return filterFindByC_C(classNameId, classPK, start, end, null);
 	}
 
@@ -3397,12 +3319,10 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param end the upper bound of the range of announcements entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching announcements entries that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<AnnouncementsEntry> filterFindByC_C(long classNameId,
-		long classPK, int start, int end, OrderByComparator orderByComparator)
-		throws SystemException {
+		long classPK, int start, int end, OrderByComparator orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByC_C(classNameId, classPK, start, end, orderByComparator);
 		}
@@ -3495,12 +3415,11 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next announcements entry
 	 * @throws com.liferay.portlet.announcements.NoSuchEntryException if a announcements entry with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnnouncementsEntry[] filterFindByC_C_PrevAndNext(long entryId,
 		long classNameId, long classPK, OrderByComparator orderByComparator)
-		throws NoSuchEntryException, SystemException {
+		throws NoSuchEntryException {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByC_C_PrevAndNext(entryId, classNameId, classPK,
 				orderByComparator);
@@ -3682,11 +3601,9 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 *
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByC_C(long classNameId, long classPK)
-		throws SystemException {
+	public void removeByC_C(long classNameId, long classPK) {
 		for (AnnouncementsEntry announcementsEntry : findByC_C(classNameId,
 				classPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(announcementsEntry);
@@ -3699,11 +3616,9 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @return the number of matching announcements entries
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByC_C(long classNameId, long classPK)
-		throws SystemException {
+	public int countByC_C(long classNameId, long classPK) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_C;
 
 		Object[] finderArgs = new Object[] { classNameId, classPK };
@@ -3758,11 +3673,9 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @return the number of matching announcements entries that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int filterCountByC_C(long classNameId, long classPK)
-		throws SystemException {
+	public int filterCountByC_C(long classNameId, long classPK) {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return countByC_C(classNameId, classPK);
 		}
@@ -3848,11 +3761,10 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param classPK the class p k
 	 * @param alert the alert
 	 * @return the matching announcements entries
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<AnnouncementsEntry> findByC_C_A(long classNameId, long classPK,
-		boolean alert) throws SystemException {
+		boolean alert) {
 		return findByC_C_A(classNameId, classPK, alert, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
@@ -3870,11 +3782,10 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param start the lower bound of the range of announcements entries
 	 * @param end the upper bound of the range of announcements entries (not inclusive)
 	 * @return the range of matching announcements entries
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<AnnouncementsEntry> findByC_C_A(long classNameId, long classPK,
-		boolean alert, int start, int end) throws SystemException {
+		boolean alert, int start, int end) {
 		return findByC_C_A(classNameId, classPK, alert, start, end, null);
 	}
 
@@ -3892,12 +3803,10 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param end the upper bound of the range of announcements entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching announcements entries
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<AnnouncementsEntry> findByC_C_A(long classNameId, long classPK,
-		boolean alert, int start, int end, OrderByComparator orderByComparator)
-		throws SystemException {
+		boolean alert, int start, int end, OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -4016,12 +3925,11 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching announcements entry
 	 * @throws com.liferay.portlet.announcements.NoSuchEntryException if a matching announcements entry could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnnouncementsEntry findByC_C_A_First(long classNameId, long classPK,
 		boolean alert, OrderByComparator orderByComparator)
-		throws NoSuchEntryException, SystemException {
+		throws NoSuchEntryException {
 		AnnouncementsEntry announcementsEntry = fetchByC_C_A_First(classNameId,
 				classPK, alert, orderByComparator);
 
@@ -4055,12 +3963,10 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param alert the alert
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching announcements entry, or <code>null</code> if a matching announcements entry could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnnouncementsEntry fetchByC_C_A_First(long classNameId,
-		long classPK, boolean alert, OrderByComparator orderByComparator)
-		throws SystemException {
+		long classPK, boolean alert, OrderByComparator orderByComparator) {
 		List<AnnouncementsEntry> list = findByC_C_A(classNameId, classPK,
 				alert, 0, 1, orderByComparator);
 
@@ -4080,12 +3986,11 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching announcements entry
 	 * @throws com.liferay.portlet.announcements.NoSuchEntryException if a matching announcements entry could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnnouncementsEntry findByC_C_A_Last(long classNameId, long classPK,
 		boolean alert, OrderByComparator orderByComparator)
-		throws NoSuchEntryException, SystemException {
+		throws NoSuchEntryException {
 		AnnouncementsEntry announcementsEntry = fetchByC_C_A_Last(classNameId,
 				classPK, alert, orderByComparator);
 
@@ -4119,12 +4024,10 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param alert the alert
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching announcements entry, or <code>null</code> if a matching announcements entry could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnnouncementsEntry fetchByC_C_A_Last(long classNameId, long classPK,
-		boolean alert, OrderByComparator orderByComparator)
-		throws SystemException {
+		boolean alert, OrderByComparator orderByComparator) {
 		int count = countByC_C_A(classNameId, classPK, alert);
 
 		if (count == 0) {
@@ -4151,13 +4054,11 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next announcements entry
 	 * @throws com.liferay.portlet.announcements.NoSuchEntryException if a announcements entry with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnnouncementsEntry[] findByC_C_A_PrevAndNext(long entryId,
 		long classNameId, long classPK, boolean alert,
-		OrderByComparator orderByComparator)
-		throws NoSuchEntryException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchEntryException {
 		AnnouncementsEntry announcementsEntry = findByPrimaryKey(entryId);
 
 		Session session = null;
@@ -4305,11 +4206,10 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param classPK the class p k
 	 * @param alert the alert
 	 * @return the matching announcements entries that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<AnnouncementsEntry> filterFindByC_C_A(long classNameId,
-		long classPK, boolean alert) throws SystemException {
+		long classPK, boolean alert) {
 		return filterFindByC_C_A(classNameId, classPK, alert,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
@@ -4327,12 +4227,10 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param start the lower bound of the range of announcements entries
 	 * @param end the upper bound of the range of announcements entries (not inclusive)
 	 * @return the range of matching announcements entries that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<AnnouncementsEntry> filterFindByC_C_A(long classNameId,
-		long classPK, boolean alert, int start, int end)
-		throws SystemException {
+		long classPK, boolean alert, int start, int end) {
 		return filterFindByC_C_A(classNameId, classPK, alert, start, end, null);
 	}
 
@@ -4350,12 +4248,11 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param end the upper bound of the range of announcements entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching announcements entries that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<AnnouncementsEntry> filterFindByC_C_A(long classNameId,
 		long classPK, boolean alert, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByC_C_A(classNameId, classPK, alert, start, end,
 				orderByComparator);
@@ -4454,13 +4351,11 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next announcements entry
 	 * @throws com.liferay.portlet.announcements.NoSuchEntryException if a announcements entry with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnnouncementsEntry[] filterFindByC_C_A_PrevAndNext(long entryId,
 		long classNameId, long classPK, boolean alert,
-		OrderByComparator orderByComparator)
-		throws NoSuchEntryException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchEntryException {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByC_C_A_PrevAndNext(entryId, classNameId, classPK,
 				alert, orderByComparator);
@@ -4649,11 +4544,9 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param alert the alert
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByC_C_A(long classNameId, long classPK, boolean alert)
-		throws SystemException {
+	public void removeByC_C_A(long classNameId, long classPK, boolean alert) {
 		for (AnnouncementsEntry announcementsEntry : findByC_C_A(classNameId,
 				classPK, alert, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(announcementsEntry);
@@ -4667,11 +4560,9 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param classPK the class p k
 	 * @param alert the alert
 	 * @return the number of matching announcements entries
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByC_C_A(long classNameId, long classPK, boolean alert)
-		throws SystemException {
+	public int countByC_C_A(long classNameId, long classPK, boolean alert) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_C_A;
 
 		Object[] finderArgs = new Object[] { classNameId, classPK, alert };
@@ -4731,11 +4622,9 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param classPK the class p k
 	 * @param alert the alert
 	 * @return the number of matching announcements entries that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int filterCountByC_C_A(long classNameId, long classPK, boolean alert)
-		throws SystemException {
+	public int filterCountByC_C_A(long classNameId, long classPK, boolean alert) {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return countByC_C_A(classNameId, classPK, alert);
 		}
@@ -4899,11 +4788,9 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param entryId the primary key of the announcements entry
 	 * @return the announcements entry that was removed
 	 * @throws com.liferay.portlet.announcements.NoSuchEntryException if a announcements entry with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public AnnouncementsEntry remove(long entryId)
-		throws NoSuchEntryException, SystemException {
+	public AnnouncementsEntry remove(long entryId) throws NoSuchEntryException {
 		return remove((Serializable)entryId);
 	}
 
@@ -4913,11 +4800,10 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param primaryKey the primary key of the announcements entry
 	 * @return the announcements entry that was removed
 	 * @throws com.liferay.portlet.announcements.NoSuchEntryException if a announcements entry with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnnouncementsEntry remove(Serializable primaryKey)
-		throws NoSuchEntryException, SystemException {
+		throws NoSuchEntryException {
 		Session session = null;
 
 		try {
@@ -4950,7 +4836,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 
 	@Override
 	protected AnnouncementsEntry removeImpl(
-		AnnouncementsEntry announcementsEntry) throws SystemException {
+		AnnouncementsEntry announcementsEntry) {
 		announcementsEntry = toUnwrappedModel(announcementsEntry);
 
 		Session session = null;
@@ -4983,8 +4869,7 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 
 	@Override
 	public AnnouncementsEntry updateImpl(
-		com.liferay.portlet.announcements.model.AnnouncementsEntry announcementsEntry)
-		throws SystemException {
+		com.liferay.portlet.announcements.model.AnnouncementsEntry announcementsEntry) {
 		announcementsEntry = toUnwrappedModel(announcementsEntry);
 
 		boolean isNew = announcementsEntry.isNew();
@@ -5172,11 +5057,10 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param primaryKey the primary key of the announcements entry
 	 * @return the announcements entry
 	 * @throws com.liferay.portlet.announcements.NoSuchEntryException if a announcements entry with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnnouncementsEntry findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchEntryException, SystemException {
+		throws NoSuchEntryException {
 		AnnouncementsEntry announcementsEntry = fetchByPrimaryKey(primaryKey);
 
 		if (announcementsEntry == null) {
@@ -5197,11 +5081,10 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param entryId the primary key of the announcements entry
 	 * @return the announcements entry
 	 * @throws com.liferay.portlet.announcements.NoSuchEntryException if a announcements entry with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnnouncementsEntry findByPrimaryKey(long entryId)
-		throws NoSuchEntryException, SystemException {
+		throws NoSuchEntryException {
 		return findByPrimaryKey((Serializable)entryId);
 	}
 
@@ -5210,11 +5093,9 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 *
 	 * @param primaryKey the primary key of the announcements entry
 	 * @return the announcements entry, or <code>null</code> if a announcements entry with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public AnnouncementsEntry fetchByPrimaryKey(Serializable primaryKey)
-		throws SystemException {
+	public AnnouncementsEntry fetchByPrimaryKey(Serializable primaryKey) {
 		AnnouncementsEntry announcementsEntry = (AnnouncementsEntry)EntityCacheUtil.getResult(AnnouncementsEntryModelImpl.ENTITY_CACHE_ENABLED,
 				AnnouncementsEntryImpl.class, primaryKey);
 
@@ -5259,11 +5140,9 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 *
 	 * @param entryId the primary key of the announcements entry
 	 * @return the announcements entry, or <code>null</code> if a announcements entry with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public AnnouncementsEntry fetchByPrimaryKey(long entryId)
-		throws SystemException {
+	public AnnouncementsEntry fetchByPrimaryKey(long entryId) {
 		return fetchByPrimaryKey((Serializable)entryId);
 	}
 
@@ -5271,10 +5150,9 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * Returns all the announcements entries.
 	 *
 	 * @return the announcements entries
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<AnnouncementsEntry> findAll() throws SystemException {
+	public List<AnnouncementsEntry> findAll() {
 		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -5288,11 +5166,9 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param start the lower bound of the range of announcements entries
 	 * @param end the upper bound of the range of announcements entries (not inclusive)
 	 * @return the range of announcements entries
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<AnnouncementsEntry> findAll(int start, int end)
-		throws SystemException {
+	public List<AnnouncementsEntry> findAll(int start, int end) {
 		return findAll(start, end, null);
 	}
 
@@ -5307,11 +5183,10 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * @param end the upper bound of the range of announcements entries (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of announcements entries
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<AnnouncementsEntry> findAll(int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -5393,10 +5268,9 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	/**
 	 * Removes all the announcements entries from the database.
 	 *
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeAll() throws SystemException {
+	public void removeAll() {
 		for (AnnouncementsEntry announcementsEntry : findAll()) {
 			remove(announcementsEntry);
 		}
@@ -5406,10 +5280,9 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	 * Returns the number of announcements entries.
 	 *
 	 * @return the number of announcements entries
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countAll() throws SystemException {
+	public int countAll() {
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
 				FINDER_ARGS_EMPTY, this);
 

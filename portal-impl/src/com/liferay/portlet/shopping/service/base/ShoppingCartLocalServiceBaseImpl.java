@@ -77,12 +77,10 @@ public abstract class ShoppingCartLocalServiceBaseImpl
 	 *
 	 * @param shoppingCart the shopping cart
 	 * @return the shopping cart that was added
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public ShoppingCart addShoppingCart(ShoppingCart shoppingCart)
-		throws SystemException {
+	public ShoppingCart addShoppingCart(ShoppingCart shoppingCart) {
 		shoppingCart.setNew(true);
 
 		return shoppingCartPersistence.update(shoppingCart);
@@ -105,12 +103,11 @@ public abstract class ShoppingCartLocalServiceBaseImpl
 	 * @param cartId the primary key of the shopping cart
 	 * @return the shopping cart that was removed
 	 * @throws PortalException if a shopping cart with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public ShoppingCart deleteShoppingCart(long cartId)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return shoppingCartPersistence.remove(cartId);
 	}
 
@@ -119,12 +116,10 @@ public abstract class ShoppingCartLocalServiceBaseImpl
 	 *
 	 * @param shoppingCart the shopping cart
 	 * @return the shopping cart that was removed
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public ShoppingCart deleteShoppingCart(ShoppingCart shoppingCart)
-		throws SystemException {
+	public ShoppingCart deleteShoppingCart(ShoppingCart shoppingCart) {
 		return shoppingCartPersistence.remove(shoppingCart);
 	}
 
@@ -141,12 +136,10 @@ public abstract class ShoppingCartLocalServiceBaseImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery) {
 		return shoppingCartPersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -161,12 +154,10 @@ public abstract class ShoppingCartLocalServiceBaseImpl
 	 * @param start the lower bound of the range of model instances
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
 		return shoppingCartPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end);
 	}
@@ -183,12 +174,11 @@ public abstract class ShoppingCartLocalServiceBaseImpl
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
 	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		return shoppingCartPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
 	}
@@ -198,11 +188,9 @@ public abstract class ShoppingCartLocalServiceBaseImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public long dynamicQueryCount(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return shoppingCartPersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
@@ -212,18 +200,16 @@ public abstract class ShoppingCartLocalServiceBaseImpl
 	 * @param dynamicQuery the dynamic query
 	 * @param projection the projection to apply to the query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection) throws SystemException {
+		Projection projection) {
 		return shoppingCartPersistence.countWithDynamicQuery(dynamicQuery,
 			projection);
 	}
 
 	@Override
-	public ShoppingCart fetchShoppingCart(long cartId)
-		throws SystemException {
+	public ShoppingCart fetchShoppingCart(long cartId) {
 		return shoppingCartPersistence.fetchByPrimaryKey(cartId);
 	}
 
@@ -233,17 +219,14 @@ public abstract class ShoppingCartLocalServiceBaseImpl
 	 * @param cartId the primary key of the shopping cart
 	 * @return the shopping cart
 	 * @throws PortalException if a shopping cart with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public ShoppingCart getShoppingCart(long cartId)
-		throws PortalException, SystemException {
+	public ShoppingCart getShoppingCart(long cartId) throws PortalException {
 		return shoppingCartPersistence.findByPrimaryKey(cartId);
 	}
 
 	@Override
-	public ActionableDynamicQuery getActionableDynamicQuery()
-		throws SystemException {
+	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.shopping.service.ShoppingCartLocalServiceUtil.getService());
@@ -256,8 +239,7 @@ public abstract class ShoppingCartLocalServiceBaseImpl
 	}
 
 	protected void initActionableDynamicQuery(
-		ActionableDynamicQuery actionableDynamicQuery)
-		throws SystemException {
+		ActionableDynamicQuery actionableDynamicQuery) {
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.shopping.service.ShoppingCartLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(ShoppingCart.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
@@ -267,7 +249,7 @@ public abstract class ShoppingCartLocalServiceBaseImpl
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return shoppingCartPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -281,11 +263,9 @@ public abstract class ShoppingCartLocalServiceBaseImpl
 	 * @param start the lower bound of the range of shopping carts
 	 * @param end the upper bound of the range of shopping carts (not inclusive)
 	 * @return the range of shopping carts
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<ShoppingCart> getShoppingCarts(int start, int end)
-		throws SystemException {
+	public List<ShoppingCart> getShoppingCarts(int start, int end) {
 		return shoppingCartPersistence.findAll(start, end);
 	}
 
@@ -293,10 +273,9 @@ public abstract class ShoppingCartLocalServiceBaseImpl
 	 * Returns the number of shopping carts.
 	 *
 	 * @return the number of shopping carts
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int getShoppingCartsCount() throws SystemException {
+	public int getShoppingCartsCount() {
 		return shoppingCartPersistence.countAll();
 	}
 
@@ -305,12 +284,10 @@ public abstract class ShoppingCartLocalServiceBaseImpl
 	 *
 	 * @param shoppingCart the shopping cart
 	 * @return the shopping cart that was updated
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public ShoppingCart updateShoppingCart(ShoppingCart shoppingCart)
-		throws SystemException {
+	public ShoppingCart updateShoppingCart(ShoppingCart shoppingCart) {
 		return shoppingCartPersistence.update(shoppingCart);
 	}
 
@@ -639,7 +616,7 @@ public abstract class ShoppingCartLocalServiceBaseImpl
 	 *
 	 * @param sql the sql query
 	 */
-	protected void runSQL(String sql) throws SystemException {
+	protected void runSQL(String sql) {
 		try {
 			DataSource dataSource = shoppingCartPersistence.getDataSource();
 

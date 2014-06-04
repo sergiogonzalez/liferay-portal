@@ -16,7 +16,6 @@ package com.liferay.portlet.announcements.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.ServiceContext;
@@ -94,9 +93,8 @@ public interface AnnouncementsFlagModel extends BaseModel<AnnouncementsFlag> {
 	 * Returns the user uuid of this announcements flag.
 	 *
 	 * @return the user uuid of this announcements flag
-	 * @throws SystemException if a system exception occurred
 	 */
-	public String getUserUuid() throws SystemException;
+	public String getUserUuid();
 
 	/**
 	 * Sets the user uuid of this announcements flag.

@@ -15,7 +15,6 @@
 package com.liferay.portal.service.persistence;
 
 import com.liferay.portal.kernel.dao.orm.BaseActionableDynamicQuery;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.model.Phone;
 import com.liferay.portal.service.PhoneLocalServiceUtil;
@@ -28,7 +27,7 @@ import com.liferay.portal.service.PhoneLocalServiceUtil;
 @Deprecated
 public abstract class PhoneActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
-	public PhoneActionableDynamicQuery() throws SystemException {
+	public PhoneActionableDynamicQuery() {
 		setBaseLocalService(PhoneLocalServiceUtil.getService());
 		setClass(Phone.class);
 

@@ -52,11 +52,9 @@ public interface AssetVocabularyLocalService extends BaseLocalService,
 	*
 	* @param assetVocabulary the asset vocabulary
 	* @return the asset vocabulary that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.asset.model.AssetVocabulary addAssetVocabulary(
-		com.liferay.portlet.asset.model.AssetVocabulary assetVocabulary)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portlet.asset.model.AssetVocabulary assetVocabulary);
 
 	/**
 	* Creates a new asset vocabulary with the primary key. Does not add the asset vocabulary to the database.
@@ -73,23 +71,19 @@ public interface AssetVocabularyLocalService extends BaseLocalService,
 	* @param vocabularyId the primary key of the asset vocabulary
 	* @return the asset vocabulary that was removed
 	* @throws PortalException if a asset vocabulary with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.asset.model.AssetVocabulary deleteAssetVocabulary(
 		long vocabularyId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Deletes the asset vocabulary from the database. Also notifies the appropriate model listeners.
 	*
 	* @param assetVocabulary the asset vocabulary
 	* @return the asset vocabulary that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.asset.model.AssetVocabulary deleteAssetVocabulary(
-		com.liferay.portlet.asset.model.AssetVocabulary assetVocabulary)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portlet.asset.model.AssetVocabulary assetVocabulary);
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -98,12 +92,10 @@ public interface AssetVocabularyLocalService extends BaseLocalService,
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -116,12 +108,11 @@ public interface AssetVocabularyLocalService extends BaseLocalService,
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException;
+		int end);
 
 	/**
 	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
@@ -135,25 +126,21 @@ public interface AssetVocabularyLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the number of rows that match the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows that match the dynamic query.
@@ -161,17 +148,14 @@ public interface AssetVocabularyLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.dao.orm.Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.asset.model.AssetVocabulary fetchAssetVocabulary(
-		long vocabularyId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long vocabularyId);
 
 	/**
 	* Returns the asset vocabulary with the matching UUID and company.
@@ -179,12 +163,10 @@ public interface AssetVocabularyLocalService extends BaseLocalService,
 	* @param uuid the asset vocabulary's UUID
 	* @param companyId the primary key of the company
 	* @return the matching asset vocabulary, or <code>null</code> if a matching asset vocabulary could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.asset.model.AssetVocabulary fetchAssetVocabularyByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String uuid, long companyId);
 
 	/**
 	* Returns the asset vocabulary matching the UUID and group.
@@ -192,12 +174,10 @@ public interface AssetVocabularyLocalService extends BaseLocalService,
 	* @param uuid the asset vocabulary's UUID
 	* @param groupId the primary key of the group
 	* @return the matching asset vocabulary, or <code>null</code> if a matching asset vocabulary could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.asset.model.AssetVocabulary fetchAssetVocabularyByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String uuid, long groupId);
 
 	/**
 	* Returns the asset vocabulary with the primary key.
@@ -205,29 +185,24 @@ public interface AssetVocabularyLocalService extends BaseLocalService,
 	* @param vocabularyId the primary key of the asset vocabulary
 	* @return the asset vocabulary
 	* @throws PortalException if a asset vocabulary with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.asset.model.AssetVocabulary getAssetVocabulary(
 		long vocabularyId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext);
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns the asset vocabulary with the matching UUID and company.
@@ -236,13 +211,11 @@ public interface AssetVocabularyLocalService extends BaseLocalService,
 	* @param companyId the primary key of the company
 	* @return the matching asset vocabulary
 	* @throws PortalException if a matching asset vocabulary could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.asset.model.AssetVocabulary getAssetVocabularyByUuidAndCompanyId(
 		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns the asset vocabulary matching the UUID and group.
@@ -251,13 +224,11 @@ public interface AssetVocabularyLocalService extends BaseLocalService,
 	* @param groupId the primary key of the group
 	* @return the matching asset vocabulary
 	* @throws PortalException if a matching asset vocabulary could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.asset.model.AssetVocabulary getAssetVocabularyByUuidAndGroupId(
 		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns a range of all the asset vocabularies.
@@ -269,33 +240,27 @@ public interface AssetVocabularyLocalService extends BaseLocalService,
 	* @param start the lower bound of the range of asset vocabularies
 	* @param end the upper bound of the range of asset vocabularies (not inclusive)
 	* @return the range of asset vocabularies
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.asset.model.AssetVocabulary> getAssetVocabularies(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		int start, int end);
 
 	/**
 	* Returns the number of asset vocabularies.
 	*
 	* @return the number of asset vocabularies
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getAssetVocabulariesCount()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int getAssetVocabulariesCount();
 
 	/**
 	* Updates the asset vocabulary in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param assetVocabulary the asset vocabulary
 	* @return the asset vocabulary that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.asset.model.AssetVocabulary updateAssetVocabulary(
-		com.liferay.portlet.asset.model.AssetVocabulary assetVocabulary)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portlet.asset.model.AssetVocabulary assetVocabulary);
 
 	/**
 	* Returns the Spring bean ID for this bean.

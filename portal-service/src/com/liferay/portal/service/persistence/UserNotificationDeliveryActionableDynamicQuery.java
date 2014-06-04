@@ -15,7 +15,6 @@
 package com.liferay.portal.service.persistence;
 
 import com.liferay.portal.kernel.dao.orm.BaseActionableDynamicQuery;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.model.UserNotificationDelivery;
 import com.liferay.portal.service.UserNotificationDeliveryLocalServiceUtil;
@@ -28,8 +27,7 @@ import com.liferay.portal.service.UserNotificationDeliveryLocalServiceUtil;
 @Deprecated
 public abstract class UserNotificationDeliveryActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
-	public UserNotificationDeliveryActionableDynamicQuery()
-		throws SystemException {
+	public UserNotificationDeliveryActionableDynamicQuery() {
 		setBaseLocalService(UserNotificationDeliveryLocalServiceUtil.getService());
 		setClass(UserNotificationDelivery.class);
 

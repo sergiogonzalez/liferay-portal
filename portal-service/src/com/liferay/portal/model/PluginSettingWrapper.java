@@ -376,8 +376,7 @@ public class PluginSettingWrapper implements PluginSetting,
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void persist() {
 		_pluginSetting.persist();
 	}
 

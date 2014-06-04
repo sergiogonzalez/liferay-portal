@@ -38,12 +38,10 @@ public class AssetTagLocalServiceWrapper implements AssetTagLocalService,
 	*
 	* @param assetTag the asset tag
 	* @return the asset tag that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.asset.model.AssetTag addAssetTag(
-		com.liferay.portlet.asset.model.AssetTag assetTag)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.asset.model.AssetTag assetTag) {
 		return _assetTagLocalService.addAssetTag(assetTag);
 	}
 
@@ -64,12 +62,10 @@ public class AssetTagLocalServiceWrapper implements AssetTagLocalService,
 	* @param tagId the primary key of the asset tag
 	* @return the asset tag that was removed
 	* @throws PortalException if a asset tag with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.asset.model.AssetTag deleteAssetTag(long tagId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetTagLocalService.deleteAssetTag(tagId);
 	}
 
@@ -78,12 +74,10 @@ public class AssetTagLocalServiceWrapper implements AssetTagLocalService,
 	*
 	* @param assetTag the asset tag
 	* @return the asset tag that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.asset.model.AssetTag deleteAssetTag(
-		com.liferay.portlet.asset.model.AssetTag assetTag)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.asset.model.AssetTag assetTag) {
 		return _assetTagLocalService.deleteAssetTag(assetTag);
 	}
 
@@ -97,13 +91,11 @@ public class AssetTagLocalServiceWrapper implements AssetTagLocalService,
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _assetTagLocalService.dynamicQuery(dynamicQuery);
 	}
 
@@ -118,13 +110,12 @@ public class AssetTagLocalServiceWrapper implements AssetTagLocalService,
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return _assetTagLocalService.dynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -140,15 +131,13 @@ public class AssetTagLocalServiceWrapper implements AssetTagLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return _assetTagLocalService.dynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
 	}
@@ -158,12 +147,10 @@ public class AssetTagLocalServiceWrapper implements AssetTagLocalService,
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _assetTagLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
@@ -173,19 +160,16 @@ public class AssetTagLocalServiceWrapper implements AssetTagLocalService,
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return _assetTagLocalService.dynamicQueryCount(dynamicQuery, projection);
 	}
 
 	@Override
-	public com.liferay.portlet.asset.model.AssetTag fetchAssetTag(long tagId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public com.liferay.portlet.asset.model.AssetTag fetchAssetTag(long tagId) {
 		return _assetTagLocalService.fetchAssetTag(tagId);
 	}
 
@@ -195,26 +179,22 @@ public class AssetTagLocalServiceWrapper implements AssetTagLocalService,
 	* @param tagId the primary key of the asset tag
 	* @return the asset tag
 	* @throws PortalException if a asset tag with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.asset.model.AssetTag getAssetTag(long tagId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetTagLocalService.getAssetTag(tagId);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _assetTagLocalService.getActionableDynamicQuery();
 	}
 
 	@Override
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _assetTagLocalService.getPersistedModel(primaryKeyObj);
 	}
 
@@ -228,12 +208,10 @@ public class AssetTagLocalServiceWrapper implements AssetTagLocalService,
 	* @param start the lower bound of the range of asset tags
 	* @param end the upper bound of the range of asset tags (not inclusive)
 	* @return the range of asset tags
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portlet.asset.model.AssetTag> getAssetTags(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return _assetTagLocalService.getAssetTags(start, end);
 	}
 
@@ -241,11 +219,9 @@ public class AssetTagLocalServiceWrapper implements AssetTagLocalService,
 	* Returns the number of asset tags.
 	*
 	* @return the number of asset tags
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public int getAssetTagsCount()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public int getAssetTagsCount() {
 		return _assetTagLocalService.getAssetTagsCount();
 	}
 
@@ -254,97 +230,59 @@ public class AssetTagLocalServiceWrapper implements AssetTagLocalService,
 	*
 	* @param assetTag the asset tag
 	* @return the asset tag that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.asset.model.AssetTag updateAssetTag(
-		com.liferay.portlet.asset.model.AssetTag assetTag)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.asset.model.AssetTag assetTag) {
 		return _assetTagLocalService.updateAssetTag(assetTag);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
-	public void addAssetEntryAssetTag(long entryId, long tagId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void addAssetEntryAssetTag(long entryId, long tagId) {
 		_assetTagLocalService.addAssetEntryAssetTag(entryId, tagId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
 	public void addAssetEntryAssetTag(long entryId,
-		com.liferay.portlet.asset.model.AssetTag assetTag)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.asset.model.AssetTag assetTag) {
 		_assetTagLocalService.addAssetEntryAssetTag(entryId, assetTag);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
-	public void addAssetEntryAssetTags(long entryId, long[] tagIds)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void addAssetEntryAssetTags(long entryId, long[] tagIds) {
 		_assetTagLocalService.addAssetEntryAssetTags(entryId, tagIds);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
 	public void addAssetEntryAssetTags(long entryId,
-		java.util.List<com.liferay.portlet.asset.model.AssetTag> AssetTags)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.util.List<com.liferay.portlet.asset.model.AssetTag> AssetTags) {
 		_assetTagLocalService.addAssetEntryAssetTags(entryId, AssetTags);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
-	public void clearAssetEntryAssetTags(long entryId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void clearAssetEntryAssetTags(long entryId) {
 		_assetTagLocalService.clearAssetEntryAssetTags(entryId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
-	public void deleteAssetEntryAssetTag(long entryId, long tagId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void deleteAssetEntryAssetTag(long entryId, long tagId) {
 		_assetTagLocalService.deleteAssetEntryAssetTag(entryId, tagId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
 	public void deleteAssetEntryAssetTag(long entryId,
-		com.liferay.portlet.asset.model.AssetTag assetTag)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.asset.model.AssetTag assetTag) {
 		_assetTagLocalService.deleteAssetEntryAssetTag(entryId, assetTag);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
-	public void deleteAssetEntryAssetTags(long entryId, long[] tagIds)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void deleteAssetEntryAssetTags(long entryId, long[] tagIds) {
 		_assetTagLocalService.deleteAssetEntryAssetTags(entryId, tagIds);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
 	public void deleteAssetEntryAssetTags(long entryId,
-		java.util.List<com.liferay.portlet.asset.model.AssetTag> AssetTags)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.util.List<com.liferay.portlet.asset.model.AssetTag> AssetTags) {
 		_assetTagLocalService.deleteAssetEntryAssetTags(entryId, AssetTags);
 	}
 
@@ -353,79 +291,49 @@ public class AssetTagLocalServiceWrapper implements AssetTagLocalService,
 	*
 	* @param tagId the tagId of the asset tag
 	* @return long[] the entryIds of asset entries associated with the asset tag
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public long[] getAssetEntryPrimaryKeys(long tagId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public long[] getAssetEntryPrimaryKeys(long tagId) {
 		return _assetTagLocalService.getAssetEntryPrimaryKeys(tagId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
 	public java.util.List<com.liferay.portlet.asset.model.AssetTag> getAssetEntryAssetTags(
-		long entryId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long entryId) {
 		return _assetTagLocalService.getAssetEntryAssetTags(entryId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
 	public java.util.List<com.liferay.portlet.asset.model.AssetTag> getAssetEntryAssetTags(
-		long entryId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long entryId, int start, int end) {
 		return _assetTagLocalService.getAssetEntryAssetTags(entryId, start, end);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
 	public java.util.List<com.liferay.portlet.asset.model.AssetTag> getAssetEntryAssetTags(
 		long entryId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return _assetTagLocalService.getAssetEntryAssetTags(entryId, start,
 			end, orderByComparator);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
-	public int getAssetEntryAssetTagsCount(long entryId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public int getAssetEntryAssetTagsCount(long entryId) {
 		return _assetTagLocalService.getAssetEntryAssetTagsCount(entryId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
-	public boolean hasAssetEntryAssetTag(long entryId, long tagId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public boolean hasAssetEntryAssetTag(long entryId, long tagId) {
 		return _assetTagLocalService.hasAssetEntryAssetTag(entryId, tagId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
-	public boolean hasAssetEntryAssetTags(long entryId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public boolean hasAssetEntryAssetTags(long entryId) {
 		return _assetTagLocalService.hasAssetEntryAssetTags(entryId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
-	public void setAssetEntryAssetTags(long entryId, long[] tagIds)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void setAssetEntryAssetTags(long entryId, long[] tagIds) {
 		_assetTagLocalService.setAssetEntryAssetTags(entryId, tagIds);
 	}
 

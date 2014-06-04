@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -184,11 +183,9 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 	 * @param name the primary key of the counter
 	 * @return the counter that was removed
 	 * @throws com.liferay.counter.NoSuchCounterException if a counter with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Counter remove(String name)
-		throws NoSuchCounterException, SystemException {
+	public Counter remove(String name) throws NoSuchCounterException {
 		return remove((Serializable)name);
 	}
 
@@ -198,11 +195,10 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 	 * @param primaryKey the primary key of the counter
 	 * @return the counter that was removed
 	 * @throws com.liferay.counter.NoSuchCounterException if a counter with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Counter remove(Serializable primaryKey)
-		throws NoSuchCounterException, SystemException {
+		throws NoSuchCounterException {
 		Session session = null;
 
 		try {
@@ -233,7 +229,7 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 	}
 
 	@Override
-	protected Counter removeImpl(Counter counter) throws SystemException {
+	protected Counter removeImpl(Counter counter) {
 		counter = toUnwrappedModel(counter);
 
 		Session session = null;
@@ -265,8 +261,7 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 	}
 
 	@Override
-	public Counter updateImpl(com.liferay.counter.model.Counter counter)
-		throws SystemException {
+	public Counter updateImpl(com.liferay.counter.model.Counter counter) {
 		counter = toUnwrappedModel(counter);
 
 		boolean isNew = counter.isNew();
@@ -328,11 +323,10 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 	 * @param primaryKey the primary key of the counter
 	 * @return the counter
 	 * @throws com.liferay.counter.NoSuchCounterException if a counter with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Counter findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchCounterException, SystemException {
+		throws NoSuchCounterException {
 		Counter counter = fetchByPrimaryKey(primaryKey);
 
 		if (counter == null) {
@@ -353,11 +347,9 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 	 * @param name the primary key of the counter
 	 * @return the counter
 	 * @throws com.liferay.counter.NoSuchCounterException if a counter with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Counter findByPrimaryKey(String name)
-		throws NoSuchCounterException, SystemException {
+	public Counter findByPrimaryKey(String name) throws NoSuchCounterException {
 		return findByPrimaryKey((Serializable)name);
 	}
 
@@ -366,11 +358,9 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 	 *
 	 * @param primaryKey the primary key of the counter
 	 * @return the counter, or <code>null</code> if a counter with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Counter fetchByPrimaryKey(Serializable primaryKey)
-		throws SystemException {
+	public Counter fetchByPrimaryKey(Serializable primaryKey) {
 		Counter counter = (Counter)EntityCacheUtil.getResult(CounterModelImpl.ENTITY_CACHE_ENABLED,
 				CounterImpl.class, primaryKey);
 
@@ -413,10 +403,9 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 	 *
 	 * @param name the primary key of the counter
 	 * @return the counter, or <code>null</code> if a counter with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Counter fetchByPrimaryKey(String name) throws SystemException {
+	public Counter fetchByPrimaryKey(String name) {
 		return fetchByPrimaryKey((Serializable)name);
 	}
 
@@ -424,10 +413,9 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 	 * Returns all the counters.
 	 *
 	 * @return the counters
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Counter> findAll() throws SystemException {
+	public List<Counter> findAll() {
 		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -441,10 +429,9 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 	 * @param start the lower bound of the range of counters
 	 * @param end the upper bound of the range of counters (not inclusive)
 	 * @return the range of counters
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Counter> findAll(int start, int end) throws SystemException {
+	public List<Counter> findAll(int start, int end) {
 		return findAll(start, end, null);
 	}
 
@@ -459,11 +446,10 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 	 * @param end the upper bound of the range of counters (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of counters
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<Counter> findAll(int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -545,10 +531,9 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 	/**
 	 * Removes all the counters from the database.
 	 *
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeAll() throws SystemException {
+	public void removeAll() {
 		for (Counter counter : findAll()) {
 			remove(counter);
 		}
@@ -558,10 +543,9 @@ public class CounterPersistenceImpl extends BasePersistenceImpl<Counter>
 	 * Returns the number of counters.
 	 *
 	 * @return the number of counters
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countAll() throws SystemException {
+	public int countAll() {
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
 				FINDER_ARGS_EMPTY, this);
 

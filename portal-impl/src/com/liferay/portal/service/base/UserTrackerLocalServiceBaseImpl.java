@@ -71,12 +71,10 @@ public abstract class UserTrackerLocalServiceBaseImpl
 	 *
 	 * @param userTracker the user tracker
 	 * @return the user tracker that was added
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public UserTracker addUserTracker(UserTracker userTracker)
-		throws SystemException {
+	public UserTracker addUserTracker(UserTracker userTracker) {
 		userTracker.setNew(true);
 
 		return userTrackerPersistence.update(userTracker);
@@ -99,7 +97,7 @@ public abstract class UserTrackerLocalServiceBaseImpl
 	 * @param userTrackerId the primary key of the user tracker
 	 * @return the user tracker that was removed
 	 * @throws PortalException if a user tracker with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
+	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
@@ -113,7 +111,7 @@ public abstract class UserTrackerLocalServiceBaseImpl
 	 *
 	 * @param userTracker the user tracker
 	 * @return the user tracker that was removed
-	 * @throws SystemException if a system exception occurred
+	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
@@ -135,12 +133,10 @@ public abstract class UserTrackerLocalServiceBaseImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery) {
 		return userTrackerPersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -155,12 +151,10 @@ public abstract class UserTrackerLocalServiceBaseImpl
 	 * @param start the lower bound of the range of model instances
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
 		return userTrackerPersistence.findWithDynamicQuery(dynamicQuery, start,
 			end);
 	}
@@ -177,12 +171,11 @@ public abstract class UserTrackerLocalServiceBaseImpl
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
 	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		return userTrackerPersistence.findWithDynamicQuery(dynamicQuery, start,
 			end, orderByComparator);
 	}
@@ -192,11 +185,9 @@ public abstract class UserTrackerLocalServiceBaseImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public long dynamicQueryCount(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return userTrackerPersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
@@ -206,18 +197,16 @@ public abstract class UserTrackerLocalServiceBaseImpl
 	 * @param dynamicQuery the dynamic query
 	 * @param projection the projection to apply to the query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection) throws SystemException {
+		Projection projection) {
 		return userTrackerPersistence.countWithDynamicQuery(dynamicQuery,
 			projection);
 	}
 
 	@Override
-	public UserTracker fetchUserTracker(long userTrackerId)
-		throws SystemException {
+	public UserTracker fetchUserTracker(long userTrackerId) {
 		return userTrackerPersistence.fetchByPrimaryKey(userTrackerId);
 	}
 
@@ -227,17 +216,15 @@ public abstract class UserTrackerLocalServiceBaseImpl
 	 * @param userTrackerId the primary key of the user tracker
 	 * @return the user tracker
 	 * @throws PortalException if a user tracker with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserTracker getUserTracker(long userTrackerId)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return userTrackerPersistence.findByPrimaryKey(userTrackerId);
 	}
 
 	@Override
-	public ActionableDynamicQuery getActionableDynamicQuery()
-		throws SystemException {
+	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.UserTrackerLocalServiceUtil.getService());
@@ -250,8 +237,7 @@ public abstract class UserTrackerLocalServiceBaseImpl
 	}
 
 	protected void initActionableDynamicQuery(
-		ActionableDynamicQuery actionableDynamicQuery)
-		throws SystemException {
+		ActionableDynamicQuery actionableDynamicQuery) {
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.UserTrackerLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(UserTracker.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
@@ -261,7 +247,7 @@ public abstract class UserTrackerLocalServiceBaseImpl
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return userTrackerPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -275,11 +261,9 @@ public abstract class UserTrackerLocalServiceBaseImpl
 	 * @param start the lower bound of the range of user trackers
 	 * @param end the upper bound of the range of user trackers (not inclusive)
 	 * @return the range of user trackers
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<UserTracker> getUserTrackers(int start, int end)
-		throws SystemException {
+	public List<UserTracker> getUserTrackers(int start, int end) {
 		return userTrackerPersistence.findAll(start, end);
 	}
 
@@ -287,10 +271,9 @@ public abstract class UserTrackerLocalServiceBaseImpl
 	 * Returns the number of user trackers.
 	 *
 	 * @return the number of user trackers
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int getUserTrackersCount() throws SystemException {
+	public int getUserTrackersCount() {
 		return userTrackerPersistence.countAll();
 	}
 
@@ -299,12 +282,10 @@ public abstract class UserTrackerLocalServiceBaseImpl
 	 *
 	 * @param userTracker the user tracker
 	 * @return the user tracker that was updated
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public UserTracker updateUserTracker(UserTracker userTracker)
-		throws SystemException {
+	public UserTracker updateUserTracker(UserTracker userTracker) {
 		return userTrackerPersistence.update(userTracker);
 	}
 
@@ -446,7 +427,7 @@ public abstract class UserTrackerLocalServiceBaseImpl
 	 *
 	 * @param sql the sql query
 	 */
-	protected void runSQL(String sql) throws SystemException {
+	protected void runSQL(String sql) {
 		try {
 			DataSource dataSource = userTrackerPersistence.getDataSource();
 

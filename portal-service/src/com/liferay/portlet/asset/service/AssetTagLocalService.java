@@ -52,11 +52,9 @@ public interface AssetTagLocalService extends BaseLocalService,
 	*
 	* @param assetTag the asset tag
 	* @return the asset tag that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.asset.model.AssetTag addAssetTag(
-		com.liferay.portlet.asset.model.AssetTag assetTag)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portlet.asset.model.AssetTag assetTag);
 
 	/**
 	* Creates a new asset tag with the primary key. Does not add the asset tag to the database.
@@ -72,22 +70,18 @@ public interface AssetTagLocalService extends BaseLocalService,
 	* @param tagId the primary key of the asset tag
 	* @return the asset tag that was removed
 	* @throws PortalException if a asset tag with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.asset.model.AssetTag deleteAssetTag(long tagId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Deletes the asset tag from the database. Also notifies the appropriate model listeners.
 	*
 	* @param assetTag the asset tag
 	* @return the asset tag that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.asset.model.AssetTag deleteAssetTag(
-		com.liferay.portlet.asset.model.AssetTag assetTag)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portlet.asset.model.AssetTag assetTag);
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -96,12 +90,10 @@ public interface AssetTagLocalService extends BaseLocalService,
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -114,12 +106,11 @@ public interface AssetTagLocalService extends BaseLocalService,
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException;
+		int end);
 
 	/**
 	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
@@ -133,25 +124,21 @@ public interface AssetTagLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the number of rows that match the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows that match the dynamic query.
@@ -159,16 +146,13 @@ public interface AssetTagLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.dao.orm.Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.asset.model.AssetTag fetchAssetTag(long tagId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public com.liferay.portlet.asset.model.AssetTag fetchAssetTag(long tagId);
 
 	/**
 	* Returns the asset tag with the primary key.
@@ -176,23 +160,19 @@ public interface AssetTagLocalService extends BaseLocalService,
 	* @param tagId the primary key of the asset tag
 	* @return the asset tag
 	* @throws PortalException if a asset tag with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.asset.model.AssetTag getAssetTag(long tagId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns a range of all the asset tags.
@@ -204,154 +184,82 @@ public interface AssetTagLocalService extends BaseLocalService,
 	* @param start the lower bound of the range of asset tags
 	* @param end the upper bound of the range of asset tags (not inclusive)
 	* @return the range of asset tags
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.asset.model.AssetTag> getAssetTags(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		int start, int end);
 
 	/**
 	* Returns the number of asset tags.
 	*
 	* @return the number of asset tags
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getAssetTagsCount()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int getAssetTagsCount();
 
 	/**
 	* Updates the asset tag in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param assetTag the asset tag
 	* @return the asset tag that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.asset.model.AssetTag updateAssetTag(
-		com.liferay.portlet.asset.model.AssetTag assetTag)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portlet.asset.model.AssetTag assetTag);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	public void addAssetEntryAssetTag(long entryId, long tagId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void addAssetEntryAssetTag(long entryId, long tagId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public void addAssetEntryAssetTag(long entryId,
-		com.liferay.portlet.asset.model.AssetTag assetTag)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portlet.asset.model.AssetTag assetTag);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	public void addAssetEntryAssetTags(long entryId, long[] tagIds)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void addAssetEntryAssetTags(long entryId, long[] tagIds);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public void addAssetEntryAssetTags(long entryId,
-		java.util.List<com.liferay.portlet.asset.model.AssetTag> AssetTags)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.util.List<com.liferay.portlet.asset.model.AssetTag> AssetTags);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	public void clearAssetEntryAssetTags(long entryId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void clearAssetEntryAssetTags(long entryId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	public void deleteAssetEntryAssetTag(long entryId, long tagId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void deleteAssetEntryAssetTag(long entryId, long tagId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public void deleteAssetEntryAssetTag(long entryId,
-		com.liferay.portlet.asset.model.AssetTag assetTag)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portlet.asset.model.AssetTag assetTag);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	public void deleteAssetEntryAssetTags(long entryId, long[] tagIds)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void deleteAssetEntryAssetTags(long entryId, long[] tagIds);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public void deleteAssetEntryAssetTags(long entryId,
-		java.util.List<com.liferay.portlet.asset.model.AssetTag> AssetTags)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.util.List<com.liferay.portlet.asset.model.AssetTag> AssetTags);
 
 	/**
 	* Returns the entryIds of the asset entries associated with the asset tag.
 	*
 	* @param tagId the tagId of the asset tag
 	* @return long[] the entryIds of asset entries associated with the asset tag
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long[] getAssetEntryPrimaryKeys(long tagId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public long[] getAssetEntryPrimaryKeys(long tagId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.asset.model.AssetTag> getAssetEntryAssetTags(
-		long entryId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long entryId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.asset.model.AssetTag> getAssetEntryAssetTags(
-		long entryId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long entryId, int start, int end);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.asset.model.AssetTag> getAssetEntryAssetTags(
 		long entryId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getAssetEntryAssetTagsCount(long entryId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int getAssetEntryAssetTagsCount(long entryId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasAssetEntryAssetTag(long entryId, long tagId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public boolean hasAssetEntryAssetTag(long entryId, long tagId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasAssetEntryAssetTags(long entryId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public boolean hasAssetEntryAssetTags(long entryId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	public void setAssetEntryAssetTags(long entryId, long[] tagIds)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void setAssetEntryAssetTags(long entryId, long[] tagIds);
 
 	/**
 	* Returns the Spring bean ID for this bean.

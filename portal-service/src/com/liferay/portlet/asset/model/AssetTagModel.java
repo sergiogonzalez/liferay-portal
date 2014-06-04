@@ -17,7 +17,6 @@ package com.liferay.portlet.asset.model;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.GroupedModel;
@@ -130,10 +129,9 @@ public interface AssetTagModel extends BaseModel<AssetTag>, GroupedModel {
 	 * Returns the user uuid of this asset tag.
 	 *
 	 * @return the user uuid of this asset tag
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public String getUserUuid() throws SystemException;
+	public String getUserUuid();
 
 	/**
 	 * Sets the user uuid of this asset tag.

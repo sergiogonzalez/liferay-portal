@@ -340,8 +340,7 @@ public class ServiceComponentWrapper implements ServiceComponent,
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void persist() {
 		_serviceComponent.persist();
 	}
 

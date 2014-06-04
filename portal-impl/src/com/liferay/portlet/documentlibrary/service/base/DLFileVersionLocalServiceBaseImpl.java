@@ -85,12 +85,10 @@ public abstract class DLFileVersionLocalServiceBaseImpl
 	 *
 	 * @param dlFileVersion the document library file version
 	 * @return the document library file version that was added
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public DLFileVersion addDLFileVersion(DLFileVersion dlFileVersion)
-		throws SystemException {
+	public DLFileVersion addDLFileVersion(DLFileVersion dlFileVersion) {
 		dlFileVersion.setNew(true);
 
 		return dlFileVersionPersistence.update(dlFileVersion);
@@ -113,12 +111,11 @@ public abstract class DLFileVersionLocalServiceBaseImpl
 	 * @param fileVersionId the primary key of the document library file version
 	 * @return the document library file version that was removed
 	 * @throws PortalException if a document library file version with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public DLFileVersion deleteDLFileVersion(long fileVersionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return dlFileVersionPersistence.remove(fileVersionId);
 	}
 
@@ -127,12 +124,10 @@ public abstract class DLFileVersionLocalServiceBaseImpl
 	 *
 	 * @param dlFileVersion the document library file version
 	 * @return the document library file version that was removed
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public DLFileVersion deleteDLFileVersion(DLFileVersion dlFileVersion)
-		throws SystemException {
+	public DLFileVersion deleteDLFileVersion(DLFileVersion dlFileVersion) {
 		return dlFileVersionPersistence.remove(dlFileVersion);
 	}
 
@@ -149,12 +144,10 @@ public abstract class DLFileVersionLocalServiceBaseImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery) {
 		return dlFileVersionPersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -169,12 +162,10 @@ public abstract class DLFileVersionLocalServiceBaseImpl
 	 * @param start the lower bound of the range of model instances
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
 		return dlFileVersionPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end);
 	}
@@ -191,12 +182,11 @@ public abstract class DLFileVersionLocalServiceBaseImpl
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
 	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		return dlFileVersionPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
 	}
@@ -206,11 +196,9 @@ public abstract class DLFileVersionLocalServiceBaseImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public long dynamicQueryCount(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return dlFileVersionPersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
@@ -220,18 +208,16 @@ public abstract class DLFileVersionLocalServiceBaseImpl
 	 * @param dynamicQuery the dynamic query
 	 * @param projection the projection to apply to the query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection) throws SystemException {
+		Projection projection) {
 		return dlFileVersionPersistence.countWithDynamicQuery(dynamicQuery,
 			projection);
 	}
 
 	@Override
-	public DLFileVersion fetchDLFileVersion(long fileVersionId)
-		throws SystemException {
+	public DLFileVersion fetchDLFileVersion(long fileVersionId) {
 		return dlFileVersionPersistence.fetchByPrimaryKey(fileVersionId);
 	}
 
@@ -241,11 +227,10 @@ public abstract class DLFileVersionLocalServiceBaseImpl
 	 * @param uuid the document library file version's UUID
 	 * @param  companyId the primary key of the company
 	 * @return the matching document library file version, or <code>null</code> if a matching document library file version could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DLFileVersion fetchDLFileVersionByUuidAndCompanyId(String uuid,
-		long companyId) throws SystemException {
+		long companyId) {
 		return dlFileVersionPersistence.fetchByUuid_C_First(uuid, companyId,
 			null);
 	}
@@ -256,11 +241,10 @@ public abstract class DLFileVersionLocalServiceBaseImpl
 	 * @param uuid the document library file version's UUID
 	 * @param groupId the primary key of the group
 	 * @return the matching document library file version, or <code>null</code> if a matching document library file version could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DLFileVersion fetchDLFileVersionByUuidAndGroupId(String uuid,
-		long groupId) throws SystemException {
+		long groupId) {
 		return dlFileVersionPersistence.fetchByUUID_G(uuid, groupId);
 	}
 
@@ -270,17 +254,15 @@ public abstract class DLFileVersionLocalServiceBaseImpl
 	 * @param fileVersionId the primary key of the document library file version
 	 * @return the document library file version
 	 * @throws PortalException if a document library file version with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DLFileVersion getDLFileVersion(long fileVersionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return dlFileVersionPersistence.findByPrimaryKey(fileVersionId);
 	}
 
 	@Override
-	public ActionableDynamicQuery getActionableDynamicQuery()
-		throws SystemException {
+	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil.getService());
@@ -293,8 +275,7 @@ public abstract class DLFileVersionLocalServiceBaseImpl
 	}
 
 	protected void initActionableDynamicQuery(
-		ActionableDynamicQuery actionableDynamicQuery)
-		throws SystemException {
+		ActionableDynamicQuery actionableDynamicQuery) {
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(DLFileVersion.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
@@ -304,11 +285,10 @@ public abstract class DLFileVersionLocalServiceBaseImpl
 
 	@Override
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		final PortletDataContext portletDataContext) throws SystemException {
+		final PortletDataContext portletDataContext) {
 		final ExportActionableDynamicQuery exportActionableDynamicQuery = new ExportActionableDynamicQuery() {
 				@Override
-				public long performCount()
-					throws PortalException, SystemException {
+				public long performCount() throws PortalException {
 					ManifestSummary manifestSummary = portletDataContext.getManifestSummary();
 
 					StagedModelType stagedModelType = getStagedModelType();
@@ -352,9 +332,8 @@ public abstract class DLFileVersionLocalServiceBaseImpl
 
 		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
 				@Override
-				@SuppressWarnings("unused")
 				public void performAction(Object object)
-					throws PortalException, SystemException {
+					throws PortalException {
 					DLFileVersion stagedModel = (DLFileVersion)object;
 
 					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
@@ -369,7 +348,7 @@ public abstract class DLFileVersionLocalServiceBaseImpl
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return dlFileVersionPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -380,11 +359,10 @@ public abstract class DLFileVersionLocalServiceBaseImpl
 	 * @param  companyId the primary key of the company
 	 * @return the matching document library file version
 	 * @throws PortalException if a matching document library file version could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DLFileVersion getDLFileVersionByUuidAndCompanyId(String uuid,
-		long companyId) throws PortalException, SystemException {
+		long companyId) throws PortalException {
 		return dlFileVersionPersistence.findByUuid_C_First(uuid, companyId, null);
 	}
 
@@ -395,11 +373,10 @@ public abstract class DLFileVersionLocalServiceBaseImpl
 	 * @param groupId the primary key of the group
 	 * @return the matching document library file version
 	 * @throws PortalException if a matching document library file version could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DLFileVersion getDLFileVersionByUuidAndGroupId(String uuid,
-		long groupId) throws PortalException, SystemException {
+		long groupId) throws PortalException {
 		return dlFileVersionPersistence.findByUUID_G(uuid, groupId);
 	}
 
@@ -413,11 +390,9 @@ public abstract class DLFileVersionLocalServiceBaseImpl
 	 * @param start the lower bound of the range of document library file versions
 	 * @param end the upper bound of the range of document library file versions (not inclusive)
 	 * @return the range of document library file versions
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<DLFileVersion> getDLFileVersions(int start, int end)
-		throws SystemException {
+	public List<DLFileVersion> getDLFileVersions(int start, int end) {
 		return dlFileVersionPersistence.findAll(start, end);
 	}
 
@@ -425,10 +400,9 @@ public abstract class DLFileVersionLocalServiceBaseImpl
 	 * Returns the number of document library file versions.
 	 *
 	 * @return the number of document library file versions
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int getDLFileVersionsCount() throws SystemException {
+	public int getDLFileVersionsCount() {
 		return dlFileVersionPersistence.countAll();
 	}
 
@@ -437,12 +411,10 @@ public abstract class DLFileVersionLocalServiceBaseImpl
 	 *
 	 * @param dlFileVersion the document library file version
 	 * @return the document library file version that was updated
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public DLFileVersion updateDLFileVersion(DLFileVersion dlFileVersion)
-		throws SystemException {
+	public DLFileVersion updateDLFileVersion(DLFileVersion dlFileVersion) {
 		return dlFileVersionPersistence.update(dlFileVersion);
 	}
 
@@ -714,7 +686,7 @@ public abstract class DLFileVersionLocalServiceBaseImpl
 	 *
 	 * @param sql the sql query
 	 */
-	protected void runSQL(String sql) throws SystemException {
+	protected void runSQL(String sql) {
 		try {
 			DataSource dataSource = dlFileVersionPersistence.getDataSource();
 

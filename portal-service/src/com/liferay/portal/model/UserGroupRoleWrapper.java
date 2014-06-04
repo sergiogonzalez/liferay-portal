@@ -151,11 +151,9 @@ public class UserGroupRoleWrapper implements UserGroupRole,
 	* Returns the user uuid of this user group role.
 	*
 	* @return the user uuid of this user group role
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public java.lang.String getUserUuid()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public java.lang.String getUserUuid() {
 		return _userGroupRole.getUserUuid();
 	}
 
@@ -308,8 +306,7 @@ public class UserGroupRoleWrapper implements UserGroupRole,
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void persist() {
 		_userGroupRole.persist();
 	}
 

@@ -259,11 +259,9 @@ public class LayoutBranchWrapper implements LayoutBranch,
 	* Returns the user uuid of this layout branch.
 	*
 	* @return the user uuid of this layout branch
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public java.lang.String getUserUuid()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public java.lang.String getUserUuid() {
 		return _layoutBranch.getUserUuid();
 	}
 
@@ -506,8 +504,7 @@ public class LayoutBranchWrapper implements LayoutBranch,
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void persist() {
 		_layoutBranch.persist();
 	}
 

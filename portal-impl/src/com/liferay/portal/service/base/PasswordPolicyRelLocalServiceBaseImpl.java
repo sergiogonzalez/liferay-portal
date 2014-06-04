@@ -71,12 +71,11 @@ public abstract class PasswordPolicyRelLocalServiceBaseImpl
 	 *
 	 * @param passwordPolicyRel the password policy rel
 	 * @return the password policy rel that was added
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public PasswordPolicyRel addPasswordPolicyRel(
-		PasswordPolicyRel passwordPolicyRel) throws SystemException {
+		PasswordPolicyRel passwordPolicyRel) {
 		passwordPolicyRel.setNew(true);
 
 		return passwordPolicyRelPersistence.update(passwordPolicyRel);
@@ -99,12 +98,11 @@ public abstract class PasswordPolicyRelLocalServiceBaseImpl
 	 * @param passwordPolicyRelId the primary key of the password policy rel
 	 * @return the password policy rel that was removed
 	 * @throws PortalException if a password policy rel with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public PasswordPolicyRel deletePasswordPolicyRel(long passwordPolicyRelId)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return passwordPolicyRelPersistence.remove(passwordPolicyRelId);
 	}
 
@@ -113,12 +111,11 @@ public abstract class PasswordPolicyRelLocalServiceBaseImpl
 	 *
 	 * @param passwordPolicyRel the password policy rel
 	 * @return the password policy rel that was removed
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public PasswordPolicyRel deletePasswordPolicyRel(
-		PasswordPolicyRel passwordPolicyRel) throws SystemException {
+		PasswordPolicyRel passwordPolicyRel) {
 		return passwordPolicyRelPersistence.remove(passwordPolicyRel);
 	}
 
@@ -135,12 +132,10 @@ public abstract class PasswordPolicyRelLocalServiceBaseImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery) {
 		return passwordPolicyRelPersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -155,12 +150,10 @@ public abstract class PasswordPolicyRelLocalServiceBaseImpl
 	 * @param start the lower bound of the range of model instances
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
 		return passwordPolicyRelPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end);
 	}
@@ -177,12 +170,11 @@ public abstract class PasswordPolicyRelLocalServiceBaseImpl
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
 	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		return passwordPolicyRelPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
 	}
@@ -192,11 +184,9 @@ public abstract class PasswordPolicyRelLocalServiceBaseImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public long dynamicQueryCount(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return passwordPolicyRelPersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
@@ -206,18 +196,16 @@ public abstract class PasswordPolicyRelLocalServiceBaseImpl
 	 * @param dynamicQuery the dynamic query
 	 * @param projection the projection to apply to the query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection) throws SystemException {
+		Projection projection) {
 		return passwordPolicyRelPersistence.countWithDynamicQuery(dynamicQuery,
 			projection);
 	}
 
 	@Override
-	public PasswordPolicyRel fetchPasswordPolicyRel(long passwordPolicyRelId)
-		throws SystemException {
+	public PasswordPolicyRel fetchPasswordPolicyRel(long passwordPolicyRelId) {
 		return passwordPolicyRelPersistence.fetchByPrimaryKey(passwordPolicyRelId);
 	}
 
@@ -227,17 +215,15 @@ public abstract class PasswordPolicyRelLocalServiceBaseImpl
 	 * @param passwordPolicyRelId the primary key of the password policy rel
 	 * @return the password policy rel
 	 * @throws PortalException if a password policy rel with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public PasswordPolicyRel getPasswordPolicyRel(long passwordPolicyRelId)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return passwordPolicyRelPersistence.findByPrimaryKey(passwordPolicyRelId);
 	}
 
 	@Override
-	public ActionableDynamicQuery getActionableDynamicQuery()
-		throws SystemException {
+	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.PasswordPolicyRelLocalServiceUtil.getService());
@@ -250,8 +236,7 @@ public abstract class PasswordPolicyRelLocalServiceBaseImpl
 	}
 
 	protected void initActionableDynamicQuery(
-		ActionableDynamicQuery actionableDynamicQuery)
-		throws SystemException {
+		ActionableDynamicQuery actionableDynamicQuery) {
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.PasswordPolicyRelLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(PasswordPolicyRel.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
@@ -261,7 +246,7 @@ public abstract class PasswordPolicyRelLocalServiceBaseImpl
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return passwordPolicyRelPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -275,11 +260,9 @@ public abstract class PasswordPolicyRelLocalServiceBaseImpl
 	 * @param start the lower bound of the range of password policy rels
 	 * @param end the upper bound of the range of password policy rels (not inclusive)
 	 * @return the range of password policy rels
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<PasswordPolicyRel> getPasswordPolicyRels(int start, int end)
-		throws SystemException {
+	public List<PasswordPolicyRel> getPasswordPolicyRels(int start, int end) {
 		return passwordPolicyRelPersistence.findAll(start, end);
 	}
 
@@ -287,10 +270,9 @@ public abstract class PasswordPolicyRelLocalServiceBaseImpl
 	 * Returns the number of password policy rels.
 	 *
 	 * @return the number of password policy rels
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int getPasswordPolicyRelsCount() throws SystemException {
+	public int getPasswordPolicyRelsCount() {
 		return passwordPolicyRelPersistence.countAll();
 	}
 
@@ -299,12 +281,11 @@ public abstract class PasswordPolicyRelLocalServiceBaseImpl
 	 *
 	 * @param passwordPolicyRel the password policy rel
 	 * @return the password policy rel that was updated
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public PasswordPolicyRel updatePasswordPolicyRel(
-		PasswordPolicyRel passwordPolicyRel) throws SystemException {
+		PasswordPolicyRel passwordPolicyRel) {
 		return passwordPolicyRelPersistence.update(passwordPolicyRel);
 	}
 
@@ -465,7 +446,7 @@ public abstract class PasswordPolicyRelLocalServiceBaseImpl
 	 *
 	 * @param sql the sql query
 	 */
-	protected void runSQL(String sql) throws SystemException {
+	protected void runSQL(String sql) {
 		try {
 			DataSource dataSource = passwordPolicyRelPersistence.getDataSource();
 

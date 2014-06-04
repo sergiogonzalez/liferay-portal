@@ -76,12 +76,10 @@ public abstract class BlogsStatsUserLocalServiceBaseImpl
 	 *
 	 * @param blogsStatsUser the blogs stats user
 	 * @return the blogs stats user that was added
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public BlogsStatsUser addBlogsStatsUser(BlogsStatsUser blogsStatsUser)
-		throws SystemException {
+	public BlogsStatsUser addBlogsStatsUser(BlogsStatsUser blogsStatsUser) {
 		blogsStatsUser.setNew(true);
 
 		return blogsStatsUserPersistence.update(blogsStatsUser);
@@ -104,12 +102,11 @@ public abstract class BlogsStatsUserLocalServiceBaseImpl
 	 * @param statsUserId the primary key of the blogs stats user
 	 * @return the blogs stats user that was removed
 	 * @throws PortalException if a blogs stats user with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public BlogsStatsUser deleteBlogsStatsUser(long statsUserId)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return blogsStatsUserPersistence.remove(statsUserId);
 	}
 
@@ -118,12 +115,10 @@ public abstract class BlogsStatsUserLocalServiceBaseImpl
 	 *
 	 * @param blogsStatsUser the blogs stats user
 	 * @return the blogs stats user that was removed
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public BlogsStatsUser deleteBlogsStatsUser(BlogsStatsUser blogsStatsUser)
-		throws SystemException {
+	public BlogsStatsUser deleteBlogsStatsUser(BlogsStatsUser blogsStatsUser) {
 		return blogsStatsUserPersistence.remove(blogsStatsUser);
 	}
 
@@ -140,12 +135,10 @@ public abstract class BlogsStatsUserLocalServiceBaseImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery) {
 		return blogsStatsUserPersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -160,12 +153,10 @@ public abstract class BlogsStatsUserLocalServiceBaseImpl
 	 * @param start the lower bound of the range of model instances
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
 		return blogsStatsUserPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end);
 	}
@@ -182,12 +173,11 @@ public abstract class BlogsStatsUserLocalServiceBaseImpl
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
 	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		return blogsStatsUserPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
 	}
@@ -197,11 +187,9 @@ public abstract class BlogsStatsUserLocalServiceBaseImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public long dynamicQueryCount(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return blogsStatsUserPersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
@@ -211,18 +199,16 @@ public abstract class BlogsStatsUserLocalServiceBaseImpl
 	 * @param dynamicQuery the dynamic query
 	 * @param projection the projection to apply to the query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection) throws SystemException {
+		Projection projection) {
 		return blogsStatsUserPersistence.countWithDynamicQuery(dynamicQuery,
 			projection);
 	}
 
 	@Override
-	public BlogsStatsUser fetchBlogsStatsUser(long statsUserId)
-		throws SystemException {
+	public BlogsStatsUser fetchBlogsStatsUser(long statsUserId) {
 		return blogsStatsUserPersistence.fetchByPrimaryKey(statsUserId);
 	}
 
@@ -232,17 +218,15 @@ public abstract class BlogsStatsUserLocalServiceBaseImpl
 	 * @param statsUserId the primary key of the blogs stats user
 	 * @return the blogs stats user
 	 * @throws PortalException if a blogs stats user with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public BlogsStatsUser getBlogsStatsUser(long statsUserId)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return blogsStatsUserPersistence.findByPrimaryKey(statsUserId);
 	}
 
 	@Override
-	public ActionableDynamicQuery getActionableDynamicQuery()
-		throws SystemException {
+	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.blogs.service.BlogsStatsUserLocalServiceUtil.getService());
@@ -255,8 +239,7 @@ public abstract class BlogsStatsUserLocalServiceBaseImpl
 	}
 
 	protected void initActionableDynamicQuery(
-		ActionableDynamicQuery actionableDynamicQuery)
-		throws SystemException {
+		ActionableDynamicQuery actionableDynamicQuery) {
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.blogs.service.BlogsStatsUserLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(BlogsStatsUser.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
@@ -266,7 +249,7 @@ public abstract class BlogsStatsUserLocalServiceBaseImpl
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return blogsStatsUserPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -280,11 +263,9 @@ public abstract class BlogsStatsUserLocalServiceBaseImpl
 	 * @param start the lower bound of the range of blogs stats users
 	 * @param end the upper bound of the range of blogs stats users (not inclusive)
 	 * @return the range of blogs stats users
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<BlogsStatsUser> getBlogsStatsUsers(int start, int end)
-		throws SystemException {
+	public List<BlogsStatsUser> getBlogsStatsUsers(int start, int end) {
 		return blogsStatsUserPersistence.findAll(start, end);
 	}
 
@@ -292,10 +273,9 @@ public abstract class BlogsStatsUserLocalServiceBaseImpl
 	 * Returns the number of blogs stats users.
 	 *
 	 * @return the number of blogs stats users
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int getBlogsStatsUsersCount() throws SystemException {
+	public int getBlogsStatsUsersCount() {
 		return blogsStatsUserPersistence.countAll();
 	}
 
@@ -304,12 +284,10 @@ public abstract class BlogsStatsUserLocalServiceBaseImpl
 	 *
 	 * @param blogsStatsUser the blogs stats user
 	 * @return the blogs stats user that was updated
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public BlogsStatsUser updateBlogsStatsUser(BlogsStatsUser blogsStatsUser)
-		throws SystemException {
+	public BlogsStatsUser updateBlogsStatsUser(BlogsStatsUser blogsStatsUser) {
 		return blogsStatsUserPersistence.update(blogsStatsUser);
 	}
 
@@ -581,7 +559,7 @@ public abstract class BlogsStatsUserLocalServiceBaseImpl
 	 *
 	 * @param sql the sql query
 	 */
-	protected void runSQL(String sql) throws SystemException {
+	protected void runSQL(String sql) {
 		try {
 			DataSource dataSource = blogsStatsUserPersistence.getDataSource();
 

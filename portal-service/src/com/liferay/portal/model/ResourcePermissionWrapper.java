@@ -421,8 +421,7 @@ public class ResourcePermissionWrapper implements ResourcePermission,
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void persist() {
 		_resourcePermission.persist();
 	}
 

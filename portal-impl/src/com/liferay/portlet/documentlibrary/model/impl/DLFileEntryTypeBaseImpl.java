@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.documentlibrary.model.impl;
 
-import com.liferay.portal.kernel.exception.SystemException;
-
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 
@@ -39,7 +37,7 @@ public abstract class DLFileEntryTypeBaseImpl extends DLFileEntryTypeModelImpl
 	 * Never modify or reference this class directly. All methods that expect a document library file entry type model instance should use the {@link DLFileEntryType} interface instead.
 	 */
 	@Override
-	public void persist() throws SystemException {
+	public void persist() {
 		if (this.isNew()) {
 			DLFileEntryTypeLocalServiceUtil.addDLFileEntryType(this);
 		}

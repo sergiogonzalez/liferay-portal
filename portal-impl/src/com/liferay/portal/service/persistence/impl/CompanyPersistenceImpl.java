@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -98,11 +97,9 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 	 * @param webId the web ID
 	 * @return the matching company
 	 * @throws com.liferay.portal.NoSuchCompanyException if a matching company could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Company findByWebId(String webId)
-		throws NoSuchCompanyException, SystemException {
+	public Company findByWebId(String webId) throws NoSuchCompanyException {
 		Company company = fetchByWebId(webId);
 
 		if (company == null) {
@@ -130,10 +127,9 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 	 *
 	 * @param webId the web ID
 	 * @return the matching company, or <code>null</code> if a matching company could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Company fetchByWebId(String webId) throws SystemException {
+	public Company fetchByWebId(String webId) {
 		return fetchByWebId(webId, true);
 	}
 
@@ -143,11 +139,9 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 	 * @param webId the web ID
 	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching company, or <code>null</code> if a matching company could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Company fetchByWebId(String webId, boolean retrieveFromCache)
-		throws SystemException {
+	public Company fetchByWebId(String webId, boolean retrieveFromCache) {
 		Object[] finderArgs = new Object[] { webId };
 
 		Object result = null;
@@ -243,11 +237,9 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 	 *
 	 * @param webId the web ID
 	 * @return the company that was removed
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Company removeByWebId(String webId)
-		throws NoSuchCompanyException, SystemException {
+	public Company removeByWebId(String webId) throws NoSuchCompanyException {
 		Company company = findByWebId(webId);
 
 		return remove(company);
@@ -258,10 +250,9 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 	 *
 	 * @param webId the web ID
 	 * @return the number of matching companies
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByWebId(String webId) throws SystemException {
+	public int countByWebId(String webId) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_WEBID;
 
 		Object[] finderArgs = new Object[] { webId };
@@ -339,11 +330,9 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 	 * @param mx the mx
 	 * @return the matching company
 	 * @throws com.liferay.portal.NoSuchCompanyException if a matching company could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Company findByMx(String mx)
-		throws NoSuchCompanyException, SystemException {
+	public Company findByMx(String mx) throws NoSuchCompanyException {
 		Company company = fetchByMx(mx);
 
 		if (company == null) {
@@ -371,10 +360,9 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 	 *
 	 * @param mx the mx
 	 * @return the matching company, or <code>null</code> if a matching company could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Company fetchByMx(String mx) throws SystemException {
+	public Company fetchByMx(String mx) {
 		return fetchByMx(mx, true);
 	}
 
@@ -384,11 +372,9 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 	 * @param mx the mx
 	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching company, or <code>null</code> if a matching company could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Company fetchByMx(String mx, boolean retrieveFromCache)
-		throws SystemException {
+	public Company fetchByMx(String mx, boolean retrieveFromCache) {
 		Object[] finderArgs = new Object[] { mx };
 
 		Object result = null;
@@ -490,11 +476,9 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 	 *
 	 * @param mx the mx
 	 * @return the company that was removed
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Company removeByMx(String mx)
-		throws NoSuchCompanyException, SystemException {
+	public Company removeByMx(String mx) throws NoSuchCompanyException {
 		Company company = findByMx(mx);
 
 		return remove(company);
@@ -505,10 +489,9 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 	 *
 	 * @param mx the mx
 	 * @return the number of matching companies
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByMx(String mx) throws SystemException {
+	public int countByMx(String mx) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_MX;
 
 		Object[] finderArgs = new Object[] { mx };
@@ -586,11 +569,9 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 	 * @param logoId the logo ID
 	 * @return the matching company
 	 * @throws com.liferay.portal.NoSuchCompanyException if a matching company could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Company findByLogoId(long logoId)
-		throws NoSuchCompanyException, SystemException {
+	public Company findByLogoId(long logoId) throws NoSuchCompanyException {
 		Company company = fetchByLogoId(logoId);
 
 		if (company == null) {
@@ -618,10 +599,9 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 	 *
 	 * @param logoId the logo ID
 	 * @return the matching company, or <code>null</code> if a matching company could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Company fetchByLogoId(long logoId) throws SystemException {
+	public Company fetchByLogoId(long logoId) {
 		return fetchByLogoId(logoId, true);
 	}
 
@@ -631,11 +611,9 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 	 * @param logoId the logo ID
 	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching company, or <code>null</code> if a matching company could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Company fetchByLogoId(long logoId, boolean retrieveFromCache)
-		throws SystemException {
+	public Company fetchByLogoId(long logoId, boolean retrieveFromCache) {
 		Object[] finderArgs = new Object[] { logoId };
 
 		Object result = null;
@@ -723,11 +701,9 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 	 *
 	 * @param logoId the logo ID
 	 * @return the company that was removed
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Company removeByLogoId(long logoId)
-		throws NoSuchCompanyException, SystemException {
+	public Company removeByLogoId(long logoId) throws NoSuchCompanyException {
 		Company company = findByLogoId(logoId);
 
 		return remove(company);
@@ -738,10 +714,9 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 	 *
 	 * @param logoId the logo ID
 	 * @return the number of matching companies
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByLogoId(long logoId) throws SystemException {
+	public int countByLogoId(long logoId) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_LOGOID;
 
 		Object[] finderArgs = new Object[] { logoId };
@@ -812,10 +787,9 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 	 *
 	 * @param system the system
 	 * @return the matching companies
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Company> findBySystem(boolean system) throws SystemException {
+	public List<Company> findBySystem(boolean system) {
 		return findBySystem(system, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -830,11 +804,9 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 	 * @param start the lower bound of the range of companies
 	 * @param end the upper bound of the range of companies (not inclusive)
 	 * @return the range of matching companies
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Company> findBySystem(boolean system, int start, int end)
-		throws SystemException {
+	public List<Company> findBySystem(boolean system, int start, int end) {
 		return findBySystem(system, start, end, null);
 	}
 
@@ -850,11 +822,10 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 	 * @param end the upper bound of the range of companies (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching companies
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<Company> findBySystem(boolean system, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -957,12 +928,10 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching company
 	 * @throws com.liferay.portal.NoSuchCompanyException if a matching company could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Company findBySystem_First(boolean system,
-		OrderByComparator orderByComparator)
-		throws NoSuchCompanyException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchCompanyException {
 		Company company = fetchBySystem_First(system, orderByComparator);
 
 		if (company != null) {
@@ -987,11 +956,10 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 	 * @param system the system
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching company, or <code>null</code> if a matching company could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Company fetchBySystem_First(boolean system,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		List<Company> list = findBySystem(system, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -1008,12 +976,10 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching company
 	 * @throws com.liferay.portal.NoSuchCompanyException if a matching company could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Company findBySystem_Last(boolean system,
-		OrderByComparator orderByComparator)
-		throws NoSuchCompanyException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchCompanyException {
 		Company company = fetchBySystem_Last(system, orderByComparator);
 
 		if (company != null) {
@@ -1038,11 +1004,10 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 	 * @param system the system
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching company, or <code>null</code> if a matching company could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Company fetchBySystem_Last(boolean system,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		int count = countBySystem(system);
 
 		if (count == 0) {
@@ -1067,12 +1032,10 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next company
 	 * @throws com.liferay.portal.NoSuchCompanyException if a company with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Company[] findBySystem_PrevAndNext(long companyId, boolean system,
-		OrderByComparator orderByComparator)
-		throws NoSuchCompanyException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchCompanyException {
 		Company company = findByPrimaryKey(companyId);
 
 		Session session = null;
@@ -1208,10 +1171,9 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 	 * Removes all the companies where system = &#63; from the database.
 	 *
 	 * @param system the system
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeBySystem(boolean system) throws SystemException {
+	public void removeBySystem(boolean system) {
 		for (Company company : findBySystem(system, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null)) {
 			remove(company);
@@ -1223,10 +1185,9 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 	 *
 	 * @param system the system
 	 * @return the number of matching companies
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countBySystem(boolean system) throws SystemException {
+	public int countBySystem(boolean system) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_SYSTEM;
 
 		Object[] finderArgs = new Object[] { system };
@@ -1488,11 +1449,9 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 	 * @param companyId the primary key of the company
 	 * @return the company that was removed
 	 * @throws com.liferay.portal.NoSuchCompanyException if a company with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Company remove(long companyId)
-		throws NoSuchCompanyException, SystemException {
+	public Company remove(long companyId) throws NoSuchCompanyException {
 		return remove((Serializable)companyId);
 	}
 
@@ -1502,11 +1461,10 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 	 * @param primaryKey the primary key of the company
 	 * @return the company that was removed
 	 * @throws com.liferay.portal.NoSuchCompanyException if a company with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Company remove(Serializable primaryKey)
-		throws NoSuchCompanyException, SystemException {
+		throws NoSuchCompanyException {
 		Session session = null;
 
 		try {
@@ -1537,7 +1495,7 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 	}
 
 	@Override
-	protected Company removeImpl(Company company) throws SystemException {
+	protected Company removeImpl(Company company) {
 		company = toUnwrappedModel(company);
 
 		Session session = null;
@@ -1569,8 +1527,7 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 	}
 
 	@Override
-	public Company updateImpl(com.liferay.portal.model.Company company)
-		throws SystemException {
+	public Company updateImpl(com.liferay.portal.model.Company company) {
 		company = toUnwrappedModel(company);
 
 		boolean isNew = company.isNew();
@@ -1665,11 +1622,10 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 	 * @param primaryKey the primary key of the company
 	 * @return the company
 	 * @throws com.liferay.portal.NoSuchCompanyException if a company with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Company findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchCompanyException, SystemException {
+		throws NoSuchCompanyException {
 		Company company = fetchByPrimaryKey(primaryKey);
 
 		if (company == null) {
@@ -1690,11 +1646,10 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 	 * @param companyId the primary key of the company
 	 * @return the company
 	 * @throws com.liferay.portal.NoSuchCompanyException if a company with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Company findByPrimaryKey(long companyId)
-		throws NoSuchCompanyException, SystemException {
+		throws NoSuchCompanyException {
 		return findByPrimaryKey((Serializable)companyId);
 	}
 
@@ -1703,11 +1658,9 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 	 *
 	 * @param primaryKey the primary key of the company
 	 * @return the company, or <code>null</code> if a company with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Company fetchByPrimaryKey(Serializable primaryKey)
-		throws SystemException {
+	public Company fetchByPrimaryKey(Serializable primaryKey) {
 		Company company = (Company)EntityCacheUtil.getResult(CompanyModelImpl.ENTITY_CACHE_ENABLED,
 				CompanyImpl.class, primaryKey);
 
@@ -1750,10 +1703,9 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 	 *
 	 * @param companyId the primary key of the company
 	 * @return the company, or <code>null</code> if a company with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Company fetchByPrimaryKey(long companyId) throws SystemException {
+	public Company fetchByPrimaryKey(long companyId) {
 		return fetchByPrimaryKey((Serializable)companyId);
 	}
 
@@ -1761,10 +1713,9 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 	 * Returns all the companies.
 	 *
 	 * @return the companies
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Company> findAll() throws SystemException {
+	public List<Company> findAll() {
 		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -1778,10 +1729,9 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 	 * @param start the lower bound of the range of companies
 	 * @param end the upper bound of the range of companies (not inclusive)
 	 * @return the range of companies
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Company> findAll(int start, int end) throws SystemException {
+	public List<Company> findAll(int start, int end) {
 		return findAll(start, end, null);
 	}
 
@@ -1796,11 +1746,10 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 	 * @param end the upper bound of the range of companies (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of companies
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<Company> findAll(int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1882,10 +1831,9 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 	/**
 	 * Removes all the companies from the database.
 	 *
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeAll() throws SystemException {
+	public void removeAll() {
 		for (Company company : findAll()) {
 			remove(company);
 		}
@@ -1895,10 +1843,9 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 	 * Returns the number of companies.
 	 *
 	 * @return the number of companies
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countAll() throws SystemException {
+	public int countAll() {
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
 				FINDER_ARGS_EMPTY, this);
 

@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.polls.model.impl;
 
-import com.liferay.portal.kernel.exception.SystemException;
-
 import com.liferay.portlet.polls.model.PollsChoice;
 import com.liferay.portlet.polls.service.PollsChoiceLocalServiceUtil;
 
@@ -39,7 +37,7 @@ public abstract class PollsChoiceBaseImpl extends PollsChoiceModelImpl
 	 * Never modify or reference this class directly. All methods that expect a polls choice model instance should use the {@link PollsChoice} interface instead.
 	 */
 	@Override
-	public void persist() throws SystemException {
+	public void persist() {
 		if (this.isNew()) {
 			PollsChoiceLocalServiceUtil.addPollsChoice(this);
 		}

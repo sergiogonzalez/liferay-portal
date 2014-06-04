@@ -46,11 +46,9 @@ public class LayoutSetPrototypeLocalServiceUtil {
 	*
 	* @param layoutSetPrototype the layout set prototype
 	* @return the layout set prototype that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.LayoutSetPrototype addLayoutSetPrototype(
-		com.liferay.portal.model.LayoutSetPrototype layoutSetPrototype)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.LayoutSetPrototype layoutSetPrototype) {
 		return getService().addLayoutSetPrototype(layoutSetPrototype);
 	}
 
@@ -71,7 +69,7 @@ public class LayoutSetPrototypeLocalServiceUtil {
 	* @param layoutSetPrototypeId the primary key of the layout set prototype
 	* @return the layout set prototype that was removed
 	* @throws PortalException if a layout set prototype with the primary key could not be found
-	* @throws SystemException if a system exception occurred
+	* @throws SystemException
 	*/
 	public static com.liferay.portal.model.LayoutSetPrototype deleteLayoutSetPrototype(
 		long layoutSetPrototypeId)
@@ -86,7 +84,7 @@ public class LayoutSetPrototypeLocalServiceUtil {
 	* @param layoutSetPrototype the layout set prototype
 	* @return the layout set prototype that was removed
 	* @throws PortalException
-	* @throws SystemException if a system exception occurred
+	* @throws SystemException
 	*/
 	public static com.liferay.portal.model.LayoutSetPrototype deleteLayoutSetPrototype(
 		com.liferay.portal.model.LayoutSetPrototype layoutSetPrototype)
@@ -104,12 +102,10 @@ public class LayoutSetPrototypeLocalServiceUtil {
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -124,12 +120,11 @@ public class LayoutSetPrototypeLocalServiceUtil {
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -145,14 +140,12 @@ public class LayoutSetPrototypeLocalServiceUtil {
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getService()
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
@@ -162,11 +155,9 @@ public class LayoutSetPrototypeLocalServiceUtil {
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -176,18 +167,15 @@ public class LayoutSetPrototypeLocalServiceUtil {
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public static long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
 	public static com.liferay.portal.model.LayoutSetPrototype fetchLayoutSetPrototype(
-		long layoutSetPrototypeId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long layoutSetPrototypeId) {
 		return getService().fetchLayoutSetPrototype(layoutSetPrototypeId);
 	}
 
@@ -197,11 +185,9 @@ public class LayoutSetPrototypeLocalServiceUtil {
 	* @param uuid the layout set prototype's UUID
 	* @param companyId the primary key of the company
 	* @return the matching layout set prototype, or <code>null</code> if a matching layout set prototype could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.LayoutSetPrototype fetchLayoutSetPrototypeByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long companyId) {
 		return getService()
 				   .fetchLayoutSetPrototypeByUuidAndCompanyId(uuid, companyId);
 	}
@@ -212,30 +198,25 @@ public class LayoutSetPrototypeLocalServiceUtil {
 	* @param layoutSetPrototypeId the primary key of the layout set prototype
 	* @return the layout set prototype
 	* @throws PortalException if a layout set prototype with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.LayoutSetPrototype getLayoutSetPrototype(
 		long layoutSetPrototypeId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getLayoutSetPrototype(layoutSetPrototypeId);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext) {
 		return getService().getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	public static com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
@@ -246,12 +227,10 @@ public class LayoutSetPrototypeLocalServiceUtil {
 	* @param companyId the primary key of the company
 	* @return the matching layout set prototype
 	* @throws PortalException if a matching layout set prototype could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.LayoutSetPrototype getLayoutSetPrototypeByUuidAndCompanyId(
 		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getLayoutSetPrototypeByUuidAndCompanyId(uuid, companyId);
 	}
@@ -266,11 +245,9 @@ public class LayoutSetPrototypeLocalServiceUtil {
 	* @param start the lower bound of the range of layout set prototypes
 	* @param end the upper bound of the range of layout set prototypes (not inclusive)
 	* @return the range of layout set prototypes
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portal.model.LayoutSetPrototype> getLayoutSetPrototypes(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return getService().getLayoutSetPrototypes(start, end);
 	}
 
@@ -278,10 +255,8 @@ public class LayoutSetPrototypeLocalServiceUtil {
 	* Returns the number of layout set prototypes.
 	*
 	* @return the number of layout set prototypes
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int getLayoutSetPrototypesCount()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int getLayoutSetPrototypesCount() {
 		return getService().getLayoutSetPrototypesCount();
 	}
 
@@ -290,11 +265,9 @@ public class LayoutSetPrototypeLocalServiceUtil {
 	*
 	* @param layoutSetPrototype the layout set prototype
 	* @return the layout set prototype that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.LayoutSetPrototype updateLayoutSetPrototype(
-		com.liferay.portal.model.LayoutSetPrototype layoutSetPrototype)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.LayoutSetPrototype layoutSetPrototype) {
 		return getService().updateLayoutSetPrototype(layoutSetPrototype);
 	}
 

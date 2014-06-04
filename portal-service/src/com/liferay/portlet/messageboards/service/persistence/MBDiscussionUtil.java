@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 import com.liferay.portal.service.ServiceContext;
@@ -64,8 +63,7 @@ public class MBDiscussionUtil {
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#countWithDynamicQuery(DynamicQuery)
 	 */
-	public static long countWithDynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public static long countWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return getPersistence().countWithDynamicQuery(dynamicQuery);
 	}
 
@@ -73,7 +71,7 @@ public class MBDiscussionUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery)
 	 */
 	public static List<MBDiscussion> findWithDynamicQuery(
-		DynamicQuery dynamicQuery) throws SystemException {
+		DynamicQuery dynamicQuery) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -81,8 +79,7 @@ public class MBDiscussionUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
 	 */
 	public static List<MBDiscussion> findWithDynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+		DynamicQuery dynamicQuery, int start, int end) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -91,7 +88,7 @@ public class MBDiscussionUtil {
 	 */
 	public static List<MBDiscussion> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -100,8 +97,7 @@ public class MBDiscussionUtil {
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static MBDiscussion update(MBDiscussion mbDiscussion)
-		throws SystemException {
+	public static MBDiscussion update(MBDiscussion mbDiscussion) {
 		return getPersistence().update(mbDiscussion);
 	}
 
@@ -109,7 +105,7 @@ public class MBDiscussionUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
 	public static MBDiscussion update(MBDiscussion mbDiscussion,
-		ServiceContext serviceContext) throws SystemException {
+		ServiceContext serviceContext) {
 		return getPersistence().update(mbDiscussion, serviceContext);
 	}
 
@@ -118,11 +114,9 @@ public class MBDiscussionUtil {
 	*
 	* @param uuid the uuid
 	* @return the matching message boards discussions
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBDiscussion> findByUuid(
-		java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid) {
 		return getPersistence().findByUuid(uuid);
 	}
 
@@ -137,11 +131,9 @@ public class MBDiscussionUtil {
 	* @param start the lower bound of the range of message boards discussions
 	* @param end the upper bound of the range of message boards discussions (not inclusive)
 	* @return the range of matching message boards discussions
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBDiscussion> findByUuid(
-		java.lang.String uuid, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, int start, int end) {
 		return getPersistence().findByUuid(uuid, start, end);
 	}
 
@@ -157,12 +149,10 @@ public class MBDiscussionUtil {
 	* @param end the upper bound of the range of message boards discussions (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching message boards discussions
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBDiscussion> findByUuid(
 		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -173,13 +163,11 @@ public class MBDiscussionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message boards discussion
 	* @throws com.liferay.portlet.messageboards.NoSuchDiscussionException if a matching message boards discussion could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBDiscussion findByUuid_First(
 		java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchDiscussionException {
+		throws com.liferay.portlet.messageboards.NoSuchDiscussionException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
 
@@ -189,12 +177,10 @@ public class MBDiscussionUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message boards discussion, or <code>null</code> if a matching message boards discussion could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBDiscussion fetchByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
 
@@ -205,13 +191,11 @@ public class MBDiscussionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message boards discussion
 	* @throws com.liferay.portlet.messageboards.NoSuchDiscussionException if a matching message boards discussion could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBDiscussion findByUuid_Last(
 		java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchDiscussionException {
+		throws com.liferay.portlet.messageboards.NoSuchDiscussionException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -221,12 +205,10 @@ public class MBDiscussionUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message boards discussion, or <code>null</code> if a matching message boards discussion could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBDiscussion fetchByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -238,13 +220,11 @@ public class MBDiscussionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next message boards discussion
 	* @throws com.liferay.portlet.messageboards.NoSuchDiscussionException if a message boards discussion with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBDiscussion[] findByUuid_PrevAndNext(
 		long discussionId, java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchDiscussionException {
+		throws com.liferay.portlet.messageboards.NoSuchDiscussionException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(discussionId, uuid, orderByComparator);
 	}
@@ -253,10 +233,8 @@ public class MBDiscussionUtil {
 	* Removes all the message boards discussions where uuid = &#63; from the database.
 	*
 	* @param uuid the uuid
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByUuid(java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByUuid(java.lang.String uuid) {
 		getPersistence().removeByUuid(uuid);
 	}
 
@@ -265,10 +243,8 @@ public class MBDiscussionUtil {
 	*
 	* @param uuid the uuid
 	* @return the number of matching message boards discussions
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByUuid(java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByUuid(java.lang.String uuid) {
 		return getPersistence().countByUuid(uuid);
 	}
 
@@ -279,12 +255,10 @@ public class MBDiscussionUtil {
 	* @param groupId the group ID
 	* @return the matching message boards discussion
 	* @throws com.liferay.portlet.messageboards.NoSuchDiscussionException if a matching message boards discussion could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBDiscussion findByUUID_G(
 		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchDiscussionException {
+		throws com.liferay.portlet.messageboards.NoSuchDiscussionException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
 
@@ -294,11 +268,9 @@ public class MBDiscussionUtil {
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the matching message boards discussion, or <code>null</code> if a matching message boards discussion could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBDiscussion fetchByUUID_G(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long groupId) {
 		return getPersistence().fetchByUUID_G(uuid, groupId);
 	}
 
@@ -309,11 +281,9 @@ public class MBDiscussionUtil {
 	* @param groupId the group ID
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching message boards discussion, or <code>null</code> if a matching message boards discussion could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBDiscussion fetchByUUID_G(
-		java.lang.String uuid, long groupId, boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long groupId, boolean retrieveFromCache) {
 		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
 	}
 
@@ -323,12 +293,10 @@ public class MBDiscussionUtil {
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the message boards discussion that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBDiscussion removeByUUID_G(
 		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchDiscussionException {
+		throws com.liferay.portlet.messageboards.NoSuchDiscussionException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
 
@@ -338,10 +306,8 @@ public class MBDiscussionUtil {
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the number of matching message boards discussions
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByUUID_G(java.lang.String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
 	}
 
@@ -351,11 +317,9 @@ public class MBDiscussionUtil {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	* @return the matching message boards discussions
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBDiscussion> findByUuid_C(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long companyId) {
 		return getPersistence().findByUuid_C(uuid, companyId);
 	}
 
@@ -371,11 +335,9 @@ public class MBDiscussionUtil {
 	* @param start the lower bound of the range of message boards discussions
 	* @param end the upper bound of the range of message boards discussions (not inclusive)
 	* @return the range of matching message boards discussions
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBDiscussion> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long companyId, int start, int end) {
 		return getPersistence().findByUuid_C(uuid, companyId, start, end);
 	}
 
@@ -392,12 +354,10 @@ public class MBDiscussionUtil {
 	* @param end the upper bound of the range of message boards discussions (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching message boards discussions
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBDiscussion> findByUuid_C(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
 	}
@@ -410,13 +370,11 @@ public class MBDiscussionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message boards discussion
 	* @throws com.liferay.portlet.messageboards.NoSuchDiscussionException if a matching message boards discussion could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBDiscussion findByUuid_C_First(
 		java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchDiscussionException {
+		throws com.liferay.portlet.messageboards.NoSuchDiscussionException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -428,12 +386,10 @@ public class MBDiscussionUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message boards discussion, or <code>null</code> if a matching message boards discussion could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBDiscussion fetchByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -446,13 +402,11 @@ public class MBDiscussionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message boards discussion
 	* @throws com.liferay.portlet.messageboards.NoSuchDiscussionException if a matching message boards discussion could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBDiscussion findByUuid_C_Last(
 		java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchDiscussionException {
+		throws com.liferay.portlet.messageboards.NoSuchDiscussionException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -464,12 +418,10 @@ public class MBDiscussionUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message boards discussion, or <code>null</code> if a matching message boards discussion could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBDiscussion fetchByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -483,13 +435,11 @@ public class MBDiscussionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next message boards discussion
 	* @throws com.liferay.portlet.messageboards.NoSuchDiscussionException if a message boards discussion with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBDiscussion[] findByUuid_C_PrevAndNext(
 		long discussionId, java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchDiscussionException {
+		throws com.liferay.portlet.messageboards.NoSuchDiscussionException {
 		return getPersistence()
 				   .findByUuid_C_PrevAndNext(discussionId, uuid, companyId,
 			orderByComparator);
@@ -500,10 +450,8 @@ public class MBDiscussionUtil {
 	*
 	* @param uuid the uuid
 	* @param companyId the company ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByUuid_C(java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByUuid_C(java.lang.String uuid, long companyId) {
 		getPersistence().removeByUuid_C(uuid, companyId);
 	}
 
@@ -513,10 +461,8 @@ public class MBDiscussionUtil {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	* @return the number of matching message boards discussions
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByUuid_C(java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByUuid_C(java.lang.String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
@@ -525,11 +471,9 @@ public class MBDiscussionUtil {
 	*
 	* @param classNameId the class name ID
 	* @return the matching message boards discussions
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBDiscussion> findByClassNameId(
-		long classNameId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long classNameId) {
 		return getPersistence().findByClassNameId(classNameId);
 	}
 
@@ -544,11 +488,9 @@ public class MBDiscussionUtil {
 	* @param start the lower bound of the range of message boards discussions
 	* @param end the upper bound of the range of message boards discussions (not inclusive)
 	* @return the range of matching message boards discussions
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBDiscussion> findByClassNameId(
-		long classNameId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long classNameId, int start, int end) {
 		return getPersistence().findByClassNameId(classNameId, start, end);
 	}
 
@@ -564,12 +506,10 @@ public class MBDiscussionUtil {
 	* @param end the upper bound of the range of message boards discussions (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching message boards discussions
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBDiscussion> findByClassNameId(
 		long classNameId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByClassNameId(classNameId, start, end, orderByComparator);
 	}
@@ -581,13 +521,11 @@ public class MBDiscussionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message boards discussion
 	* @throws com.liferay.portlet.messageboards.NoSuchDiscussionException if a matching message boards discussion could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBDiscussion findByClassNameId_First(
 		long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchDiscussionException {
+		throws com.liferay.portlet.messageboards.NoSuchDiscussionException {
 		return getPersistence()
 				   .findByClassNameId_First(classNameId, orderByComparator);
 	}
@@ -598,12 +536,10 @@ public class MBDiscussionUtil {
 	* @param classNameId the class name ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message boards discussion, or <code>null</code> if a matching message boards discussion could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBDiscussion fetchByClassNameId_First(
 		long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByClassNameId_First(classNameId, orderByComparator);
 	}
@@ -615,13 +551,11 @@ public class MBDiscussionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message boards discussion
 	* @throws com.liferay.portlet.messageboards.NoSuchDiscussionException if a matching message boards discussion could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBDiscussion findByClassNameId_Last(
 		long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchDiscussionException {
+		throws com.liferay.portlet.messageboards.NoSuchDiscussionException {
 		return getPersistence()
 				   .findByClassNameId_Last(classNameId, orderByComparator);
 	}
@@ -632,12 +566,10 @@ public class MBDiscussionUtil {
 	* @param classNameId the class name ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message boards discussion, or <code>null</code> if a matching message boards discussion could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBDiscussion fetchByClassNameId_Last(
 		long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByClassNameId_Last(classNameId, orderByComparator);
 	}
@@ -650,13 +582,11 @@ public class MBDiscussionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next message boards discussion
 	* @throws com.liferay.portlet.messageboards.NoSuchDiscussionException if a message boards discussion with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBDiscussion[] findByClassNameId_PrevAndNext(
 		long discussionId, long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchDiscussionException {
+		throws com.liferay.portlet.messageboards.NoSuchDiscussionException {
 		return getPersistence()
 				   .findByClassNameId_PrevAndNext(discussionId, classNameId,
 			orderByComparator);
@@ -666,10 +596,8 @@ public class MBDiscussionUtil {
 	* Removes all the message boards discussions where classNameId = &#63; from the database.
 	*
 	* @param classNameId the class name ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByClassNameId(long classNameId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByClassNameId(long classNameId) {
 		getPersistence().removeByClassNameId(classNameId);
 	}
 
@@ -678,10 +606,8 @@ public class MBDiscussionUtil {
 	*
 	* @param classNameId the class name ID
 	* @return the number of matching message boards discussions
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByClassNameId(long classNameId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByClassNameId(long classNameId) {
 		return getPersistence().countByClassNameId(classNameId);
 	}
 
@@ -691,12 +617,10 @@ public class MBDiscussionUtil {
 	* @param threadId the thread ID
 	* @return the matching message boards discussion
 	* @throws com.liferay.portlet.messageboards.NoSuchDiscussionException if a matching message boards discussion could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBDiscussion findByThreadId(
 		long threadId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchDiscussionException {
+		throws com.liferay.portlet.messageboards.NoSuchDiscussionException {
 		return getPersistence().findByThreadId(threadId);
 	}
 
@@ -705,11 +629,9 @@ public class MBDiscussionUtil {
 	*
 	* @param threadId the thread ID
 	* @return the matching message boards discussion, or <code>null</code> if a matching message boards discussion could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBDiscussion fetchByThreadId(
-		long threadId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long threadId) {
 		return getPersistence().fetchByThreadId(threadId);
 	}
 
@@ -719,11 +641,9 @@ public class MBDiscussionUtil {
 	* @param threadId the thread ID
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching message boards discussion, or <code>null</code> if a matching message boards discussion could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBDiscussion fetchByThreadId(
-		long threadId, boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long threadId, boolean retrieveFromCache) {
 		return getPersistence().fetchByThreadId(threadId, retrieveFromCache);
 	}
 
@@ -732,12 +652,10 @@ public class MBDiscussionUtil {
 	*
 	* @param threadId the thread ID
 	* @return the message boards discussion that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBDiscussion removeByThreadId(
 		long threadId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchDiscussionException {
+		throws com.liferay.portlet.messageboards.NoSuchDiscussionException {
 		return getPersistence().removeByThreadId(threadId);
 	}
 
@@ -746,10 +664,8 @@ public class MBDiscussionUtil {
 	*
 	* @param threadId the thread ID
 	* @return the number of matching message boards discussions
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByThreadId(long threadId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByThreadId(long threadId) {
 		return getPersistence().countByThreadId(threadId);
 	}
 
@@ -760,12 +676,10 @@ public class MBDiscussionUtil {
 	* @param classPK the class p k
 	* @return the matching message boards discussion
 	* @throws com.liferay.portlet.messageboards.NoSuchDiscussionException if a matching message boards discussion could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBDiscussion findByC_C(
 		long classNameId, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchDiscussionException {
+		throws com.liferay.portlet.messageboards.NoSuchDiscussionException {
 		return getPersistence().findByC_C(classNameId, classPK);
 	}
 
@@ -775,11 +689,9 @@ public class MBDiscussionUtil {
 	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @return the matching message boards discussion, or <code>null</code> if a matching message boards discussion could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBDiscussion fetchByC_C(
-		long classNameId, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long classNameId, long classPK) {
 		return getPersistence().fetchByC_C(classNameId, classPK);
 	}
 
@@ -790,11 +702,9 @@ public class MBDiscussionUtil {
 	* @param classPK the class p k
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching message boards discussion, or <code>null</code> if a matching message boards discussion could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBDiscussion fetchByC_C(
-		long classNameId, long classPK, boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long classNameId, long classPK, boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByC_C(classNameId, classPK, retrieveFromCache);
 	}
@@ -805,12 +715,10 @@ public class MBDiscussionUtil {
 	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @return the message boards discussion that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBDiscussion removeByC_C(
 		long classNameId, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchDiscussionException {
+		throws com.liferay.portlet.messageboards.NoSuchDiscussionException {
 		return getPersistence().removeByC_C(classNameId, classPK);
 	}
 
@@ -820,10 +728,8 @@ public class MBDiscussionUtil {
 	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @return the number of matching message boards discussions
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByC_C(long classNameId, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByC_C(long classNameId, long classPK) {
 		return getPersistence().countByC_C(classNameId, classPK);
 	}
 
@@ -864,18 +770,15 @@ public class MBDiscussionUtil {
 	* @param discussionId the primary key of the message boards discussion
 	* @return the message boards discussion that was removed
 	* @throws com.liferay.portlet.messageboards.NoSuchDiscussionException if a message boards discussion with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBDiscussion remove(
 		long discussionId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchDiscussionException {
+		throws com.liferay.portlet.messageboards.NoSuchDiscussionException {
 		return getPersistence().remove(discussionId);
 	}
 
 	public static com.liferay.portlet.messageboards.model.MBDiscussion updateImpl(
-		com.liferay.portlet.messageboards.model.MBDiscussion mbDiscussion)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.messageboards.model.MBDiscussion mbDiscussion) {
 		return getPersistence().updateImpl(mbDiscussion);
 	}
 
@@ -885,12 +788,10 @@ public class MBDiscussionUtil {
 	* @param discussionId the primary key of the message boards discussion
 	* @return the message boards discussion
 	* @throws com.liferay.portlet.messageboards.NoSuchDiscussionException if a message boards discussion with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBDiscussion findByPrimaryKey(
 		long discussionId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchDiscussionException {
+		throws com.liferay.portlet.messageboards.NoSuchDiscussionException {
 		return getPersistence().findByPrimaryKey(discussionId);
 	}
 
@@ -899,11 +800,9 @@ public class MBDiscussionUtil {
 	*
 	* @param discussionId the primary key of the message boards discussion
 	* @return the message boards discussion, or <code>null</code> if a message boards discussion with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBDiscussion fetchByPrimaryKey(
-		long discussionId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long discussionId) {
 		return getPersistence().fetchByPrimaryKey(discussionId);
 	}
 
@@ -911,10 +810,8 @@ public class MBDiscussionUtil {
 	* Returns all the message boards discussions.
 	*
 	* @return the message boards discussions
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.portlet.messageboards.model.MBDiscussion> findAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static java.util.List<com.liferay.portlet.messageboards.model.MBDiscussion> findAll() {
 		return getPersistence().findAll();
 	}
 
@@ -928,11 +825,9 @@ public class MBDiscussionUtil {
 	* @param start the lower bound of the range of message boards discussions
 	* @param end the upper bound of the range of message boards discussions (not inclusive)
 	* @return the range of message boards discussions
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBDiscussion> findAll(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
@@ -947,22 +842,17 @@ public class MBDiscussionUtil {
 	* @param end the upper bound of the range of message boards discussions (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of message boards discussions
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBDiscussion> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
 	/**
 	* Removes all the message boards discussions from the database.
-	*
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeAll() {
 		getPersistence().removeAll();
 	}
 
@@ -970,10 +860,8 @@ public class MBDiscussionUtil {
 	* Returns the number of message boards discussions.
 	*
 	* @return the number of message boards discussions
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countAll() {
 		return getPersistence().countAll();
 	}
 

@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -110,10 +109,9 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 *
 	 * @param uuid the uuid
 	 * @return the matching polls choices
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<PollsChoice> findByUuid(String uuid) throws SystemException {
+	public List<PollsChoice> findByUuid(String uuid) {
 		return findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -128,11 +126,9 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 * @param start the lower bound of the range of polls choices
 	 * @param end the upper bound of the range of polls choices (not inclusive)
 	 * @return the range of matching polls choices
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<PollsChoice> findByUuid(String uuid, int start, int end)
-		throws SystemException {
+	public List<PollsChoice> findByUuid(String uuid, int start, int end) {
 		return findByUuid(uuid, start, end, null);
 	}
 
@@ -148,11 +144,10 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 * @param end the upper bound of the range of polls choices (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching polls choices
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<PollsChoice> findByUuid(String uuid, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -269,12 +264,10 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching polls choice
 	 * @throws com.liferay.portlet.polls.NoSuchChoiceException if a matching polls choice could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public PollsChoice findByUuid_First(String uuid,
-		OrderByComparator orderByComparator)
-		throws NoSuchChoiceException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchChoiceException {
 		PollsChoice pollsChoice = fetchByUuid_First(uuid, orderByComparator);
 
 		if (pollsChoice != null) {
@@ -299,11 +292,10 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching polls choice, or <code>null</code> if a matching polls choice could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public PollsChoice fetchByUuid_First(String uuid,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		List<PollsChoice> list = findByUuid(uuid, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -320,12 +312,10 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching polls choice
 	 * @throws com.liferay.portlet.polls.NoSuchChoiceException if a matching polls choice could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public PollsChoice findByUuid_Last(String uuid,
-		OrderByComparator orderByComparator)
-		throws NoSuchChoiceException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchChoiceException {
 		PollsChoice pollsChoice = fetchByUuid_Last(uuid, orderByComparator);
 
 		if (pollsChoice != null) {
@@ -350,11 +340,10 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching polls choice, or <code>null</code> if a matching polls choice could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public PollsChoice fetchByUuid_Last(String uuid,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		int count = countByUuid(uuid);
 
 		if (count == 0) {
@@ -379,12 +368,10 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next polls choice
 	 * @throws com.liferay.portlet.polls.NoSuchChoiceException if a polls choice with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public PollsChoice[] findByUuid_PrevAndNext(long choiceId, String uuid,
-		OrderByComparator orderByComparator)
-		throws NoSuchChoiceException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchChoiceException {
 		PollsChoice pollsChoice = findByPrimaryKey(choiceId);
 
 		Session session = null;
@@ -535,10 +522,9 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 * Removes all the polls choices where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByUuid(String uuid) throws SystemException {
+	public void removeByUuid(String uuid) {
 		for (PollsChoice pollsChoice : findByUuid(uuid, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null)) {
 			remove(pollsChoice);
@@ -550,10 +536,9 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 *
 	 * @param uuid the uuid
 	 * @return the number of matching polls choices
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByUuid(String uuid) throws SystemException {
+	public int countByUuid(String uuid) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_UUID;
 
 		Object[] finderArgs = new Object[] { uuid };
@@ -633,11 +618,10 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 * @param groupId the group ID
 	 * @return the matching polls choice
 	 * @throws com.liferay.portlet.polls.NoSuchChoiceException if a matching polls choice could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public PollsChoice findByUUID_G(String uuid, long groupId)
-		throws NoSuchChoiceException, SystemException {
+		throws NoSuchChoiceException {
 		PollsChoice pollsChoice = fetchByUUID_G(uuid, groupId);
 
 		if (pollsChoice == null) {
@@ -669,11 +653,9 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 * @param uuid the uuid
 	 * @param groupId the group ID
 	 * @return the matching polls choice, or <code>null</code> if a matching polls choice could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public PollsChoice fetchByUUID_G(String uuid, long groupId)
-		throws SystemException {
+	public PollsChoice fetchByUUID_G(String uuid, long groupId) {
 		return fetchByUUID_G(uuid, groupId, true);
 	}
 
@@ -684,11 +666,10 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 * @param groupId the group ID
 	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching polls choice, or <code>null</code> if a matching polls choice could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public PollsChoice fetchByUUID_G(String uuid, long groupId,
-		boolean retrieveFromCache) throws SystemException {
+		boolean retrieveFromCache) {
 		Object[] finderArgs = new Object[] { uuid, groupId };
 
 		Object result = null;
@@ -791,11 +772,10 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 * @param uuid the uuid
 	 * @param groupId the group ID
 	 * @return the polls choice that was removed
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public PollsChoice removeByUUID_G(String uuid, long groupId)
-		throws NoSuchChoiceException, SystemException {
+		throws NoSuchChoiceException {
 		PollsChoice pollsChoice = findByUUID_G(uuid, groupId);
 
 		return remove(pollsChoice);
@@ -807,11 +787,9 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 * @param uuid the uuid
 	 * @param groupId the group ID
 	 * @return the number of matching polls choices
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByUUID_G(String uuid, long groupId)
-		throws SystemException {
+	public int countByUUID_G(String uuid, long groupId) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_UUID_G;
 
 		Object[] finderArgs = new Object[] { uuid, groupId };
@@ -907,11 +885,9 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @return the matching polls choices
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<PollsChoice> findByUuid_C(String uuid, long companyId)
-		throws SystemException {
+	public List<PollsChoice> findByUuid_C(String uuid, long companyId) {
 		return findByUuid_C(uuid, companyId, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
@@ -928,11 +904,10 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 * @param start the lower bound of the range of polls choices
 	 * @param end the upper bound of the range of polls choices (not inclusive)
 	 * @return the range of matching polls choices
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<PollsChoice> findByUuid_C(String uuid, long companyId,
-		int start, int end) throws SystemException {
+		int start, int end) {
 		return findByUuid_C(uuid, companyId, start, end, null);
 	}
 
@@ -949,12 +924,10 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 * @param end the upper bound of the range of polls choices (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching polls choices
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<PollsChoice> findByUuid_C(String uuid, long companyId,
-		int start, int end, OrderByComparator orderByComparator)
-		throws SystemException {
+		int start, int end, OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1081,12 +1054,10 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching polls choice
 	 * @throws com.liferay.portlet.polls.NoSuchChoiceException if a matching polls choice could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public PollsChoice findByUuid_C_First(String uuid, long companyId,
-		OrderByComparator orderByComparator)
-		throws NoSuchChoiceException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchChoiceException {
 		PollsChoice pollsChoice = fetchByUuid_C_First(uuid, companyId,
 				orderByComparator);
 
@@ -1116,11 +1087,10 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching polls choice, or <code>null</code> if a matching polls choice could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public PollsChoice fetchByUuid_C_First(String uuid, long companyId,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		List<PollsChoice> list = findByUuid_C(uuid, companyId, 0, 1,
 				orderByComparator);
 
@@ -1139,12 +1109,10 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching polls choice
 	 * @throws com.liferay.portlet.polls.NoSuchChoiceException if a matching polls choice could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public PollsChoice findByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator)
-		throws NoSuchChoiceException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchChoiceException {
 		PollsChoice pollsChoice = fetchByUuid_C_Last(uuid, companyId,
 				orderByComparator);
 
@@ -1174,11 +1142,10 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching polls choice, or <code>null</code> if a matching polls choice could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public PollsChoice fetchByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		int count = countByUuid_C(uuid, companyId);
 
 		if (count == 0) {
@@ -1204,12 +1171,11 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next polls choice
 	 * @throws com.liferay.portlet.polls.NoSuchChoiceException if a polls choice with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public PollsChoice[] findByUuid_C_PrevAndNext(long choiceId, String uuid,
 		long companyId, OrderByComparator orderByComparator)
-		throws NoSuchChoiceException, SystemException {
+		throws NoSuchChoiceException {
 		PollsChoice pollsChoice = findByPrimaryKey(choiceId);
 
 		Session session = null;
@@ -1365,11 +1331,9 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByUuid_C(String uuid, long companyId)
-		throws SystemException {
+	public void removeByUuid_C(String uuid, long companyId) {
 		for (PollsChoice pollsChoice : findByUuid_C(uuid, companyId,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(pollsChoice);
@@ -1382,11 +1346,9 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @return the number of matching polls choices
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByUuid_C(String uuid, long companyId)
-		throws SystemException {
+	public int countByUuid_C(String uuid, long companyId) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_UUID_C;
 
 		Object[] finderArgs = new Object[] { uuid, companyId };
@@ -1480,11 +1442,9 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 *
 	 * @param questionId the question ID
 	 * @return the matching polls choices
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<PollsChoice> findByQuestionId(long questionId)
-		throws SystemException {
+	public List<PollsChoice> findByQuestionId(long questionId) {
 		return findByQuestionId(questionId, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
@@ -1500,11 +1460,10 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 * @param start the lower bound of the range of polls choices
 	 * @param end the upper bound of the range of polls choices (not inclusive)
 	 * @return the range of matching polls choices
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<PollsChoice> findByQuestionId(long questionId, int start,
-		int end) throws SystemException {
+		int end) {
 		return findByQuestionId(questionId, start, end, null);
 	}
 
@@ -1520,11 +1479,10 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 * @param end the upper bound of the range of polls choices (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching polls choices
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<PollsChoice> findByQuestionId(long questionId, int start,
-		int end, OrderByComparator orderByComparator) throws SystemException {
+		int end, OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1627,12 +1585,10 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching polls choice
 	 * @throws com.liferay.portlet.polls.NoSuchChoiceException if a matching polls choice could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public PollsChoice findByQuestionId_First(long questionId,
-		OrderByComparator orderByComparator)
-		throws NoSuchChoiceException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchChoiceException {
 		PollsChoice pollsChoice = fetchByQuestionId_First(questionId,
 				orderByComparator);
 
@@ -1658,11 +1614,10 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 * @param questionId the question ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching polls choice, or <code>null</code> if a matching polls choice could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public PollsChoice fetchByQuestionId_First(long questionId,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		List<PollsChoice> list = findByQuestionId(questionId, 0, 1,
 				orderByComparator);
 
@@ -1680,12 +1635,10 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching polls choice
 	 * @throws com.liferay.portlet.polls.NoSuchChoiceException if a matching polls choice could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public PollsChoice findByQuestionId_Last(long questionId,
-		OrderByComparator orderByComparator)
-		throws NoSuchChoiceException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchChoiceException {
 		PollsChoice pollsChoice = fetchByQuestionId_Last(questionId,
 				orderByComparator);
 
@@ -1711,11 +1664,10 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 * @param questionId the question ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching polls choice, or <code>null</code> if a matching polls choice could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public PollsChoice fetchByQuestionId_Last(long questionId,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		int count = countByQuestionId(questionId);
 
 		if (count == 0) {
@@ -1740,12 +1692,11 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next polls choice
 	 * @throws com.liferay.portlet.polls.NoSuchChoiceException if a polls choice with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public PollsChoice[] findByQuestionId_PrevAndNext(long choiceId,
 		long questionId, OrderByComparator orderByComparator)
-		throws NoSuchChoiceException, SystemException {
+		throws NoSuchChoiceException {
 		PollsChoice pollsChoice = findByPrimaryKey(choiceId);
 
 		Session session = null;
@@ -1882,10 +1833,9 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 * Removes all the polls choices where questionId = &#63; from the database.
 	 *
 	 * @param questionId the question ID
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByQuestionId(long questionId) throws SystemException {
+	public void removeByQuestionId(long questionId) {
 		for (PollsChoice pollsChoice : findByQuestionId(questionId,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(pollsChoice);
@@ -1897,10 +1847,9 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 *
 	 * @param questionId the question ID
 	 * @return the number of matching polls choices
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByQuestionId(long questionId) throws SystemException {
+	public int countByQuestionId(long questionId) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_QUESTIONID;
 
 		Object[] finderArgs = new Object[] { questionId };
@@ -1964,11 +1913,10 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 * @param name the name
 	 * @return the matching polls choice
 	 * @throws com.liferay.portlet.polls.NoSuchChoiceException if a matching polls choice could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public PollsChoice findByQ_N(long questionId, String name)
-		throws NoSuchChoiceException, SystemException {
+		throws NoSuchChoiceException {
 		PollsChoice pollsChoice = fetchByQ_N(questionId, name);
 
 		if (pollsChoice == null) {
@@ -2000,11 +1948,9 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 * @param questionId the question ID
 	 * @param name the name
 	 * @return the matching polls choice, or <code>null</code> if a matching polls choice could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public PollsChoice fetchByQ_N(long questionId, String name)
-		throws SystemException {
+	public PollsChoice fetchByQ_N(long questionId, String name) {
 		return fetchByQ_N(questionId, name, true);
 	}
 
@@ -2015,11 +1961,10 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 * @param name the name
 	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching polls choice, or <code>null</code> if a matching polls choice could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public PollsChoice fetchByQ_N(long questionId, String name,
-		boolean retrieveFromCache) throws SystemException {
+		boolean retrieveFromCache) {
 		Object[] finderArgs = new Object[] { questionId, name };
 
 		Object result = null;
@@ -2122,11 +2067,10 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 * @param questionId the question ID
 	 * @param name the name
 	 * @return the polls choice that was removed
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public PollsChoice removeByQ_N(long questionId, String name)
-		throws NoSuchChoiceException, SystemException {
+		throws NoSuchChoiceException {
 		PollsChoice pollsChoice = findByQ_N(questionId, name);
 
 		return remove(pollsChoice);
@@ -2138,11 +2082,9 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 * @param questionId the question ID
 	 * @param name the name
 	 * @return the number of matching polls choices
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByQ_N(long questionId, String name)
-		throws SystemException {
+	public int countByQ_N(long questionId, String name) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_Q_N;
 
 		Object[] finderArgs = new Object[] { questionId, name };
@@ -2418,11 +2360,9 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 * @param choiceId the primary key of the polls choice
 	 * @return the polls choice that was removed
 	 * @throws com.liferay.portlet.polls.NoSuchChoiceException if a polls choice with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public PollsChoice remove(long choiceId)
-		throws NoSuchChoiceException, SystemException {
+	public PollsChoice remove(long choiceId) throws NoSuchChoiceException {
 		return remove((Serializable)choiceId);
 	}
 
@@ -2432,11 +2372,10 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 * @param primaryKey the primary key of the polls choice
 	 * @return the polls choice that was removed
 	 * @throws com.liferay.portlet.polls.NoSuchChoiceException if a polls choice with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public PollsChoice remove(Serializable primaryKey)
-		throws NoSuchChoiceException, SystemException {
+		throws NoSuchChoiceException {
 		Session session = null;
 
 		try {
@@ -2468,8 +2407,7 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	}
 
 	@Override
-	protected PollsChoice removeImpl(PollsChoice pollsChoice)
-		throws SystemException {
+	protected PollsChoice removeImpl(PollsChoice pollsChoice) {
 		pollsChoice = toUnwrappedModel(pollsChoice);
 
 		Session session = null;
@@ -2502,8 +2440,7 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 
 	@Override
 	public PollsChoice updateImpl(
-		com.liferay.portlet.polls.model.PollsChoice pollsChoice)
-		throws SystemException {
+		com.liferay.portlet.polls.model.PollsChoice pollsChoice) {
 		pollsChoice = toUnwrappedModel(pollsChoice);
 
 		boolean isNew = pollsChoice.isNew();
@@ -2645,11 +2582,10 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 * @param primaryKey the primary key of the polls choice
 	 * @return the polls choice
 	 * @throws com.liferay.portlet.polls.NoSuchChoiceException if a polls choice with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public PollsChoice findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchChoiceException, SystemException {
+		throws NoSuchChoiceException {
 		PollsChoice pollsChoice = fetchByPrimaryKey(primaryKey);
 
 		if (pollsChoice == null) {
@@ -2670,11 +2606,10 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 * @param choiceId the primary key of the polls choice
 	 * @return the polls choice
 	 * @throws com.liferay.portlet.polls.NoSuchChoiceException if a polls choice with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public PollsChoice findByPrimaryKey(long choiceId)
-		throws NoSuchChoiceException, SystemException {
+		throws NoSuchChoiceException {
 		return findByPrimaryKey((Serializable)choiceId);
 	}
 
@@ -2683,11 +2618,9 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 *
 	 * @param primaryKey the primary key of the polls choice
 	 * @return the polls choice, or <code>null</code> if a polls choice with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public PollsChoice fetchByPrimaryKey(Serializable primaryKey)
-		throws SystemException {
+	public PollsChoice fetchByPrimaryKey(Serializable primaryKey) {
 		PollsChoice pollsChoice = (PollsChoice)EntityCacheUtil.getResult(PollsChoiceModelImpl.ENTITY_CACHE_ENABLED,
 				PollsChoiceImpl.class, primaryKey);
 
@@ -2731,11 +2664,9 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 *
 	 * @param choiceId the primary key of the polls choice
 	 * @return the polls choice, or <code>null</code> if a polls choice with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public PollsChoice fetchByPrimaryKey(long choiceId)
-		throws SystemException {
+	public PollsChoice fetchByPrimaryKey(long choiceId) {
 		return fetchByPrimaryKey((Serializable)choiceId);
 	}
 
@@ -2743,10 +2674,9 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 * Returns all the polls choices.
 	 *
 	 * @return the polls choices
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<PollsChoice> findAll() throws SystemException {
+	public List<PollsChoice> findAll() {
 		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -2760,11 +2690,9 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 * @param start the lower bound of the range of polls choices
 	 * @param end the upper bound of the range of polls choices (not inclusive)
 	 * @return the range of polls choices
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<PollsChoice> findAll(int start, int end)
-		throws SystemException {
+	public List<PollsChoice> findAll(int start, int end) {
 		return findAll(start, end, null);
 	}
 
@@ -2779,11 +2707,10 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 * @param end the upper bound of the range of polls choices (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of polls choices
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<PollsChoice> findAll(int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2865,10 +2792,9 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	/**
 	 * Removes all the polls choices from the database.
 	 *
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeAll() throws SystemException {
+	public void removeAll() {
 		for (PollsChoice pollsChoice : findAll()) {
 			remove(pollsChoice);
 		}
@@ -2878,10 +2804,9 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 	 * Returns the number of polls choices.
 	 *
 	 * @return the number of polls choices
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countAll() throws SystemException {
+	public int countAll() {
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
 				FINDER_ARGS_EMPTY, this);
 

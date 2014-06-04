@@ -52,11 +52,9 @@ public interface DDMStructureLocalService extends BaseLocalService,
 	*
 	* @param ddmStructure the d d m structure
 	* @return the d d m structure that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure addDDMStructure(
-		com.liferay.portlet.dynamicdatamapping.model.DDMStructure ddmStructure)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portlet.dynamicdatamapping.model.DDMStructure ddmStructure);
 
 	/**
 	* Creates a new d d m structure with the primary key. Does not add the d d m structure to the database.
@@ -73,23 +71,19 @@ public interface DDMStructureLocalService extends BaseLocalService,
 	* @param structureId the primary key of the d d m structure
 	* @return the d d m structure that was removed
 	* @throws PortalException if a d d m structure with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure deleteDDMStructure(
 		long structureId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Deletes the d d m structure from the database. Also notifies the appropriate model listeners.
 	*
 	* @param ddmStructure the d d m structure
 	* @return the d d m structure that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure deleteDDMStructure(
-		com.liferay.portlet.dynamicdatamapping.model.DDMStructure ddmStructure)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portlet.dynamicdatamapping.model.DDMStructure ddmStructure);
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -98,12 +92,10 @@ public interface DDMStructureLocalService extends BaseLocalService,
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -116,12 +108,11 @@ public interface DDMStructureLocalService extends BaseLocalService,
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException;
+		int end);
 
 	/**
 	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
@@ -135,25 +126,21 @@ public interface DDMStructureLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the number of rows that match the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows that match the dynamic query.
@@ -161,17 +148,14 @@ public interface DDMStructureLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.dao.orm.Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure fetchDDMStructure(
-		long structureId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long structureId);
 
 	/**
 	* Returns the d d m structure with the matching UUID and company.
@@ -179,12 +163,10 @@ public interface DDMStructureLocalService extends BaseLocalService,
 	* @param uuid the d d m structure's UUID
 	* @param companyId the primary key of the company
 	* @return the matching d d m structure, or <code>null</code> if a matching d d m structure could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure fetchDDMStructureByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String uuid, long companyId);
 
 	/**
 	* Returns the d d m structure matching the UUID and group.
@@ -192,12 +174,10 @@ public interface DDMStructureLocalService extends BaseLocalService,
 	* @param uuid the d d m structure's UUID
 	* @param groupId the primary key of the group
 	* @return the matching d d m structure, or <code>null</code> if a matching d d m structure could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure fetchDDMStructureByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String uuid, long groupId);
 
 	/**
 	* Returns the d d m structure with the primary key.
@@ -205,29 +185,24 @@ public interface DDMStructureLocalService extends BaseLocalService,
 	* @param structureId the primary key of the d d m structure
 	* @return the d d m structure
 	* @throws PortalException if a d d m structure with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure getDDMStructure(
 		long structureId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext);
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns the d d m structure with the matching UUID and company.
@@ -236,13 +211,11 @@ public interface DDMStructureLocalService extends BaseLocalService,
 	* @param companyId the primary key of the company
 	* @return the matching d d m structure
 	* @throws PortalException if a matching d d m structure could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure getDDMStructureByUuidAndCompanyId(
 		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns the d d m structure matching the UUID and group.
@@ -251,13 +224,11 @@ public interface DDMStructureLocalService extends BaseLocalService,
 	* @param groupId the primary key of the group
 	* @return the matching d d m structure
 	* @throws PortalException if a matching d d m structure could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure getDDMStructureByUuidAndGroupId(
 		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns a range of all the d d m structures.
@@ -269,282 +240,144 @@ public interface DDMStructureLocalService extends BaseLocalService,
 	* @param start the lower bound of the range of d d m structures
 	* @param end the upper bound of the range of d d m structures (not inclusive)
 	* @return the range of d d m structures
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getDDMStructures(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		int start, int end);
 
 	/**
 	* Returns the number of d d m structures.
 	*
 	* @return the number of d d m structures
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getDDMStructuresCount()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int getDDMStructuresCount();
 
 	/**
 	* Updates the d d m structure in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param ddmStructure the d d m structure
 	* @return the d d m structure that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure updateDDMStructure(
-		com.liferay.portlet.dynamicdatamapping.model.DDMStructure ddmStructure)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portlet.dynamicdatamapping.model.DDMStructure ddmStructure);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public void addDLFileEntryTypeDDMStructure(long fileEntryTypeId,
-		long structureId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long structureId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public void addDLFileEntryTypeDDMStructure(long fileEntryTypeId,
-		com.liferay.portlet.dynamicdatamapping.model.DDMStructure ddmStructure)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portlet.dynamicdatamapping.model.DDMStructure ddmStructure);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public void addDLFileEntryTypeDDMStructures(long fileEntryTypeId,
-		long[] structureIds)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long[] structureIds);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public void addDLFileEntryTypeDDMStructures(long fileEntryTypeId,
-		java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> DDMStructures)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> DDMStructures);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	public void clearDLFileEntryTypeDDMStructures(long fileEntryTypeId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void clearDLFileEntryTypeDDMStructures(long fileEntryTypeId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public void deleteDLFileEntryTypeDDMStructure(long fileEntryTypeId,
-		long structureId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long structureId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public void deleteDLFileEntryTypeDDMStructure(long fileEntryTypeId,
-		com.liferay.portlet.dynamicdatamapping.model.DDMStructure ddmStructure)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portlet.dynamicdatamapping.model.DDMStructure ddmStructure);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public void deleteDLFileEntryTypeDDMStructures(long fileEntryTypeId,
-		long[] structureIds)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long[] structureIds);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public void deleteDLFileEntryTypeDDMStructures(long fileEntryTypeId,
-		java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> DDMStructures)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> DDMStructures);
 
 	/**
 	* Returns the fileEntryTypeIds of the document library file entry types associated with the d d m structure.
 	*
 	* @param structureId the structureId of the d d m structure
 	* @return long[] the fileEntryTypeIds of document library file entry types associated with the d d m structure
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long[] getDLFileEntryTypePrimaryKeys(long structureId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public long[] getDLFileEntryTypePrimaryKeys(long structureId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getDLFileEntryTypeDDMStructures(
-		long fileEntryTypeId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long fileEntryTypeId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getDLFileEntryTypeDDMStructures(
-		long fileEntryTypeId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long fileEntryTypeId, int start, int end);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getDLFileEntryTypeDDMStructures(
 		long fileEntryTypeId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getDLFileEntryTypeDDMStructuresCount(long fileEntryTypeId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int getDLFileEntryTypeDDMStructuresCount(long fileEntryTypeId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasDLFileEntryTypeDDMStructure(long fileEntryTypeId,
-		long structureId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long structureId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasDLFileEntryTypeDDMStructures(long fileEntryTypeId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public boolean hasDLFileEntryTypeDDMStructures(long fileEntryTypeId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public void setDLFileEntryTypeDDMStructures(long fileEntryTypeId,
-		long[] structureIds)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long[] structureIds);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	public void addJournalFolderDDMStructure(long folderId, long structureId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void addJournalFolderDDMStructure(long folderId, long structureId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public void addJournalFolderDDMStructure(long folderId,
-		com.liferay.portlet.dynamicdatamapping.model.DDMStructure ddmStructure)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portlet.dynamicdatamapping.model.DDMStructure ddmStructure);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	public void addJournalFolderDDMStructures(long folderId, long[] structureIds)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void addJournalFolderDDMStructures(long folderId, long[] structureIds);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public void addJournalFolderDDMStructures(long folderId,
-		java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> DDMStructures)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> DDMStructures);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	public void clearJournalFolderDDMStructures(long folderId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void clearJournalFolderDDMStructures(long folderId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	public void deleteJournalFolderDDMStructure(long folderId, long structureId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void deleteJournalFolderDDMStructure(long folderId, long structureId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public void deleteJournalFolderDDMStructure(long folderId,
-		com.liferay.portlet.dynamicdatamapping.model.DDMStructure ddmStructure)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portlet.dynamicdatamapping.model.DDMStructure ddmStructure);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public void deleteJournalFolderDDMStructures(long folderId,
-		long[] structureIds)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long[] structureIds);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public void deleteJournalFolderDDMStructures(long folderId,
-		java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> DDMStructures)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> DDMStructures);
 
 	/**
 	* Returns the folderIds of the journal folders associated with the d d m structure.
 	*
 	* @param structureId the structureId of the d d m structure
 	* @return long[] the folderIds of journal folders associated with the d d m structure
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long[] getJournalFolderPrimaryKeys(long structureId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public long[] getJournalFolderPrimaryKeys(long structureId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getJournalFolderDDMStructures(
-		long folderId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long folderId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getJournalFolderDDMStructures(
-		long folderId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long folderId, int start, int end);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getJournalFolderDDMStructures(
 		long folderId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getJournalFolderDDMStructuresCount(long folderId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int getJournalFolderDDMStructuresCount(long folderId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasJournalFolderDDMStructure(long folderId, long structureId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public boolean hasJournalFolderDDMStructure(long folderId, long structureId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasJournalFolderDDMStructures(long folderId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public boolean hasJournalFolderDDMStructures(long folderId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	public void setJournalFolderDDMStructures(long folderId, long[] structureIds)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void setJournalFolderDDMStructures(long folderId, long[] structureIds);
 
 	/**
 	* Returns the Spring bean ID for this bean.

@@ -87,12 +87,10 @@ public abstract class DDLRecordSetLocalServiceBaseImpl
 	 *
 	 * @param ddlRecordSet the d d l record set
 	 * @return the d d l record set that was added
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public DDLRecordSet addDDLRecordSet(DDLRecordSet ddlRecordSet)
-		throws SystemException {
+	public DDLRecordSet addDDLRecordSet(DDLRecordSet ddlRecordSet) {
 		ddlRecordSet.setNew(true);
 
 		return ddlRecordSetPersistence.update(ddlRecordSet);
@@ -115,12 +113,11 @@ public abstract class DDLRecordSetLocalServiceBaseImpl
 	 * @param recordSetId the primary key of the d d l record set
 	 * @return the d d l record set that was removed
 	 * @throws PortalException if a d d l record set with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public DDLRecordSet deleteDDLRecordSet(long recordSetId)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return ddlRecordSetPersistence.remove(recordSetId);
 	}
 
@@ -129,12 +126,10 @@ public abstract class DDLRecordSetLocalServiceBaseImpl
 	 *
 	 * @param ddlRecordSet the d d l record set
 	 * @return the d d l record set that was removed
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public DDLRecordSet deleteDDLRecordSet(DDLRecordSet ddlRecordSet)
-		throws SystemException {
+	public DDLRecordSet deleteDDLRecordSet(DDLRecordSet ddlRecordSet) {
 		return ddlRecordSetPersistence.remove(ddlRecordSet);
 	}
 
@@ -151,12 +146,10 @@ public abstract class DDLRecordSetLocalServiceBaseImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery) {
 		return ddlRecordSetPersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -171,12 +164,10 @@ public abstract class DDLRecordSetLocalServiceBaseImpl
 	 * @param start the lower bound of the range of model instances
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
 		return ddlRecordSetPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end);
 	}
@@ -193,12 +184,11 @@ public abstract class DDLRecordSetLocalServiceBaseImpl
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
 	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		return ddlRecordSetPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
 	}
@@ -208,11 +198,9 @@ public abstract class DDLRecordSetLocalServiceBaseImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public long dynamicQueryCount(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return ddlRecordSetPersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
@@ -222,18 +210,16 @@ public abstract class DDLRecordSetLocalServiceBaseImpl
 	 * @param dynamicQuery the dynamic query
 	 * @param projection the projection to apply to the query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection) throws SystemException {
+		Projection projection) {
 		return ddlRecordSetPersistence.countWithDynamicQuery(dynamicQuery,
 			projection);
 	}
 
 	@Override
-	public DDLRecordSet fetchDDLRecordSet(long recordSetId)
-		throws SystemException {
+	public DDLRecordSet fetchDDLRecordSet(long recordSetId) {
 		return ddlRecordSetPersistence.fetchByPrimaryKey(recordSetId);
 	}
 
@@ -243,11 +229,10 @@ public abstract class DDLRecordSetLocalServiceBaseImpl
 	 * @param uuid the d d l record set's UUID
 	 * @param  companyId the primary key of the company
 	 * @return the matching d d l record set, or <code>null</code> if a matching d d l record set could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDLRecordSet fetchDDLRecordSetByUuidAndCompanyId(String uuid,
-		long companyId) throws SystemException {
+		long companyId) {
 		return ddlRecordSetPersistence.fetchByUuid_C_First(uuid, companyId, null);
 	}
 
@@ -257,11 +242,10 @@ public abstract class DDLRecordSetLocalServiceBaseImpl
 	 * @param uuid the d d l record set's UUID
 	 * @param groupId the primary key of the group
 	 * @return the matching d d l record set, or <code>null</code> if a matching d d l record set could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDLRecordSet fetchDDLRecordSetByUuidAndGroupId(String uuid,
-		long groupId) throws SystemException {
+		long groupId) {
 		return ddlRecordSetPersistence.fetchByUUID_G(uuid, groupId);
 	}
 
@@ -271,17 +255,15 @@ public abstract class DDLRecordSetLocalServiceBaseImpl
 	 * @param recordSetId the primary key of the d d l record set
 	 * @return the d d l record set
 	 * @throws PortalException if a d d l record set with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDLRecordSet getDDLRecordSet(long recordSetId)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return ddlRecordSetPersistence.findByPrimaryKey(recordSetId);
 	}
 
 	@Override
-	public ActionableDynamicQuery getActionableDynamicQuery()
-		throws SystemException {
+	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.dynamicdatalists.service.DDLRecordSetLocalServiceUtil.getService());
@@ -294,8 +276,7 @@ public abstract class DDLRecordSetLocalServiceBaseImpl
 	}
 
 	protected void initActionableDynamicQuery(
-		ActionableDynamicQuery actionableDynamicQuery)
-		throws SystemException {
+		ActionableDynamicQuery actionableDynamicQuery) {
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.dynamicdatalists.service.DDLRecordSetLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(DDLRecordSet.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
@@ -305,11 +286,10 @@ public abstract class DDLRecordSetLocalServiceBaseImpl
 
 	@Override
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		final PortletDataContext portletDataContext) throws SystemException {
+		final PortletDataContext portletDataContext) {
 		final ExportActionableDynamicQuery exportActionableDynamicQuery = new ExportActionableDynamicQuery() {
 				@Override
-				public long performCount()
-					throws PortalException, SystemException {
+				public long performCount() throws PortalException {
 					ManifestSummary manifestSummary = portletDataContext.getManifestSummary();
 
 					StagedModelType stagedModelType = getStagedModelType();
@@ -345,9 +325,8 @@ public abstract class DDLRecordSetLocalServiceBaseImpl
 
 		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
 				@Override
-				@SuppressWarnings("unused")
 				public void performAction(Object object)
-					throws PortalException, SystemException {
+					throws PortalException {
 					DDLRecordSet stagedModel = (DDLRecordSet)object;
 
 					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
@@ -362,7 +341,7 @@ public abstract class DDLRecordSetLocalServiceBaseImpl
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return ddlRecordSetPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -373,11 +352,10 @@ public abstract class DDLRecordSetLocalServiceBaseImpl
 	 * @param  companyId the primary key of the company
 	 * @return the matching d d l record set
 	 * @throws PortalException if a matching d d l record set could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDLRecordSet getDDLRecordSetByUuidAndCompanyId(String uuid,
-		long companyId) throws PortalException, SystemException {
+		long companyId) throws PortalException {
 		return ddlRecordSetPersistence.findByUuid_C_First(uuid, companyId, null);
 	}
 
@@ -388,11 +366,10 @@ public abstract class DDLRecordSetLocalServiceBaseImpl
 	 * @param groupId the primary key of the group
 	 * @return the matching d d l record set
 	 * @throws PortalException if a matching d d l record set could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDLRecordSet getDDLRecordSetByUuidAndGroupId(String uuid,
-		long groupId) throws PortalException, SystemException {
+		long groupId) throws PortalException {
 		return ddlRecordSetPersistence.findByUUID_G(uuid, groupId);
 	}
 
@@ -406,11 +383,9 @@ public abstract class DDLRecordSetLocalServiceBaseImpl
 	 * @param start the lower bound of the range of d d l record sets
 	 * @param end the upper bound of the range of d d l record sets (not inclusive)
 	 * @return the range of d d l record sets
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<DDLRecordSet> getDDLRecordSets(int start, int end)
-		throws SystemException {
+	public List<DDLRecordSet> getDDLRecordSets(int start, int end) {
 		return ddlRecordSetPersistence.findAll(start, end);
 	}
 
@@ -418,10 +393,9 @@ public abstract class DDLRecordSetLocalServiceBaseImpl
 	 * Returns the number of d d l record sets.
 	 *
 	 * @return the number of d d l record sets
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int getDDLRecordSetsCount() throws SystemException {
+	public int getDDLRecordSetsCount() {
 		return ddlRecordSetPersistence.countAll();
 	}
 
@@ -430,12 +404,10 @@ public abstract class DDLRecordSetLocalServiceBaseImpl
 	 *
 	 * @param ddlRecordSet the d d l record set
 	 * @return the d d l record set that was updated
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public DDLRecordSet updateDDLRecordSet(DDLRecordSet ddlRecordSet)
-		throws SystemException {
+	public DDLRecordSet updateDDLRecordSet(DDLRecordSet ddlRecordSet) {
 		return ddlRecordSetPersistence.update(ddlRecordSet);
 	}
 
@@ -952,7 +924,7 @@ public abstract class DDLRecordSetLocalServiceBaseImpl
 	 *
 	 * @param sql the sql query
 	 */
-	protected void runSQL(String sql) throws SystemException {
+	protected void runSQL(String sql) {
 		try {
 			DataSource dataSource = ddlRecordSetPersistence.getDataSource();
 

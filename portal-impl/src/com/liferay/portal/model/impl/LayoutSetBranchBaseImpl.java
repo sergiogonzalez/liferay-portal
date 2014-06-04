@@ -14,7 +14,6 @@
 
 package com.liferay.portal.model.impl;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.LayoutSetBranch;
 import com.liferay.portal.service.LayoutSetBranchLocalServiceUtil;
 
@@ -38,7 +37,7 @@ public abstract class LayoutSetBranchBaseImpl extends LayoutSetBranchModelImpl
 	 * Never modify or reference this class directly. All methods that expect a layout set branch model instance should use the {@link LayoutSetBranch} interface instead.
 	 */
 	@Override
-	public void persist() throws SystemException {
+	public void persist() {
 		if (this.isNew()) {
 			LayoutSetBranchLocalServiceUtil.addLayoutSetBranch(this);
 		}

@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -114,11 +113,9 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	 *
 	 * @param companyId the company ID
 	 * @return the matching asset tag properties
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<AssetTagProperty> findByCompanyId(long companyId)
-		throws SystemException {
+	public List<AssetTagProperty> findByCompanyId(long companyId) {
 		return findByCompanyId(companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			null);
 	}
@@ -134,11 +131,10 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	 * @param start the lower bound of the range of asset tag properties
 	 * @param end the upper bound of the range of asset tag properties (not inclusive)
 	 * @return the range of matching asset tag properties
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<AssetTagProperty> findByCompanyId(long companyId, int start,
-		int end) throws SystemException {
+		int end) {
 		return findByCompanyId(companyId, start, end, null);
 	}
 
@@ -154,11 +150,10 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	 * @param end the upper bound of the range of asset tag properties (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching asset tag properties
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<AssetTagProperty> findByCompanyId(long companyId, int start,
-		int end, OrderByComparator orderByComparator) throws SystemException {
+		int end, OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -261,12 +256,10 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching asset tag property
 	 * @throws com.liferay.portlet.asset.NoSuchTagPropertyException if a matching asset tag property could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AssetTagProperty findByCompanyId_First(long companyId,
-		OrderByComparator orderByComparator)
-		throws NoSuchTagPropertyException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchTagPropertyException {
 		AssetTagProperty assetTagProperty = fetchByCompanyId_First(companyId,
 				orderByComparator);
 
@@ -292,11 +285,10 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching asset tag property, or <code>null</code> if a matching asset tag property could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AssetTagProperty fetchByCompanyId_First(long companyId,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		List<AssetTagProperty> list = findByCompanyId(companyId, 0, 1,
 				orderByComparator);
 
@@ -314,12 +306,10 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching asset tag property
 	 * @throws com.liferay.portlet.asset.NoSuchTagPropertyException if a matching asset tag property could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AssetTagProperty findByCompanyId_Last(long companyId,
-		OrderByComparator orderByComparator)
-		throws NoSuchTagPropertyException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchTagPropertyException {
 		AssetTagProperty assetTagProperty = fetchByCompanyId_Last(companyId,
 				orderByComparator);
 
@@ -345,11 +335,10 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching asset tag property, or <code>null</code> if a matching asset tag property could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AssetTagProperty fetchByCompanyId_Last(long companyId,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		int count = countByCompanyId(companyId);
 
 		if (count == 0) {
@@ -374,12 +363,11 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next asset tag property
 	 * @throws com.liferay.portlet.asset.NoSuchTagPropertyException if a asset tag property with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AssetTagProperty[] findByCompanyId_PrevAndNext(long tagPropertyId,
 		long companyId, OrderByComparator orderByComparator)
-		throws NoSuchTagPropertyException, SystemException {
+		throws NoSuchTagPropertyException {
 		AssetTagProperty assetTagProperty = findByPrimaryKey(tagPropertyId);
 
 		Session session = null;
@@ -516,10 +504,9 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	 * Removes all the asset tag properties where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByCompanyId(long companyId) throws SystemException {
+	public void removeByCompanyId(long companyId) {
 		for (AssetTagProperty assetTagProperty : findByCompanyId(companyId,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(assetTagProperty);
@@ -531,10 +518,9 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	 *
 	 * @param companyId the company ID
 	 * @return the number of matching asset tag properties
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByCompanyId(long companyId) throws SystemException {
+	public int countByCompanyId(long companyId) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_COMPANYID;
 
 		Object[] finderArgs = new Object[] { companyId };
@@ -607,11 +593,9 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	 *
 	 * @param tagId the tag ID
 	 * @return the matching asset tag properties
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<AssetTagProperty> findByTagId(long tagId)
-		throws SystemException {
+	public List<AssetTagProperty> findByTagId(long tagId) {
 		return findByTagId(tagId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -626,11 +610,9 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	 * @param start the lower bound of the range of asset tag properties
 	 * @param end the upper bound of the range of asset tag properties (not inclusive)
 	 * @return the range of matching asset tag properties
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<AssetTagProperty> findByTagId(long tagId, int start, int end)
-		throws SystemException {
+	public List<AssetTagProperty> findByTagId(long tagId, int start, int end) {
 		return findByTagId(tagId, start, end, null);
 	}
 
@@ -646,11 +628,10 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	 * @param end the upper bound of the range of asset tag properties (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching asset tag properties
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<AssetTagProperty> findByTagId(long tagId, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -753,12 +734,10 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching asset tag property
 	 * @throws com.liferay.portlet.asset.NoSuchTagPropertyException if a matching asset tag property could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AssetTagProperty findByTagId_First(long tagId,
-		OrderByComparator orderByComparator)
-		throws NoSuchTagPropertyException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchTagPropertyException {
 		AssetTagProperty assetTagProperty = fetchByTagId_First(tagId,
 				orderByComparator);
 
@@ -784,11 +763,10 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	 * @param tagId the tag ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching asset tag property, or <code>null</code> if a matching asset tag property could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AssetTagProperty fetchByTagId_First(long tagId,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		List<AssetTagProperty> list = findByTagId(tagId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -805,12 +783,10 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching asset tag property
 	 * @throws com.liferay.portlet.asset.NoSuchTagPropertyException if a matching asset tag property could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AssetTagProperty findByTagId_Last(long tagId,
-		OrderByComparator orderByComparator)
-		throws NoSuchTagPropertyException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchTagPropertyException {
 		AssetTagProperty assetTagProperty = fetchByTagId_Last(tagId,
 				orderByComparator);
 
@@ -836,11 +812,10 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	 * @param tagId the tag ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching asset tag property, or <code>null</code> if a matching asset tag property could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AssetTagProperty fetchByTagId_Last(long tagId,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		int count = countByTagId(tagId);
 
 		if (count == 0) {
@@ -865,12 +840,11 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next asset tag property
 	 * @throws com.liferay.portlet.asset.NoSuchTagPropertyException if a asset tag property with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AssetTagProperty[] findByTagId_PrevAndNext(long tagPropertyId,
 		long tagId, OrderByComparator orderByComparator)
-		throws NoSuchTagPropertyException, SystemException {
+		throws NoSuchTagPropertyException {
 		AssetTagProperty assetTagProperty = findByPrimaryKey(tagPropertyId);
 
 		Session session = null;
@@ -1007,10 +981,9 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	 * Removes all the asset tag properties where tagId = &#63; from the database.
 	 *
 	 * @param tagId the tag ID
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByTagId(long tagId) throws SystemException {
+	public void removeByTagId(long tagId) {
 		for (AssetTagProperty assetTagProperty : findByTagId(tagId,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(assetTagProperty);
@@ -1022,10 +995,9 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	 *
 	 * @param tagId the tag ID
 	 * @return the number of matching asset tag properties
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByTagId(long tagId) throws SystemException {
+	public int countByTagId(long tagId) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_TAGID;
 
 		Object[] finderArgs = new Object[] { tagId };
@@ -1099,11 +1071,9 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	 * @param companyId the company ID
 	 * @param key the key
 	 * @return the matching asset tag properties
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<AssetTagProperty> findByC_K(long companyId, String key)
-		throws SystemException {
+	public List<AssetTagProperty> findByC_K(long companyId, String key) {
 		return findByC_K(companyId, key, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			null);
 	}
@@ -1120,11 +1090,10 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	 * @param start the lower bound of the range of asset tag properties
 	 * @param end the upper bound of the range of asset tag properties (not inclusive)
 	 * @return the range of matching asset tag properties
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<AssetTagProperty> findByC_K(long companyId, String key,
-		int start, int end) throws SystemException {
+		int start, int end) {
 		return findByC_K(companyId, key, start, end, null);
 	}
 
@@ -1141,12 +1110,10 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	 * @param end the upper bound of the range of asset tag properties (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching asset tag properties
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<AssetTagProperty> findByC_K(long companyId, String key,
-		int start, int end, OrderByComparator orderByComparator)
-		throws SystemException {
+		int start, int end, OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1273,12 +1240,10 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching asset tag property
 	 * @throws com.liferay.portlet.asset.NoSuchTagPropertyException if a matching asset tag property could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AssetTagProperty findByC_K_First(long companyId, String key,
-		OrderByComparator orderByComparator)
-		throws NoSuchTagPropertyException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchTagPropertyException {
 		AssetTagProperty assetTagProperty = fetchByC_K_First(companyId, key,
 				orderByComparator);
 
@@ -1308,11 +1273,10 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	 * @param key the key
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching asset tag property, or <code>null</code> if a matching asset tag property could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AssetTagProperty fetchByC_K_First(long companyId, String key,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		List<AssetTagProperty> list = findByC_K(companyId, key, 0, 1,
 				orderByComparator);
 
@@ -1331,12 +1295,10 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching asset tag property
 	 * @throws com.liferay.portlet.asset.NoSuchTagPropertyException if a matching asset tag property could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AssetTagProperty findByC_K_Last(long companyId, String key,
-		OrderByComparator orderByComparator)
-		throws NoSuchTagPropertyException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchTagPropertyException {
 		AssetTagProperty assetTagProperty = fetchByC_K_Last(companyId, key,
 				orderByComparator);
 
@@ -1366,11 +1328,10 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	 * @param key the key
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching asset tag property, or <code>null</code> if a matching asset tag property could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AssetTagProperty fetchByC_K_Last(long companyId, String key,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		int count = countByC_K(companyId, key);
 
 		if (count == 0) {
@@ -1396,12 +1357,11 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next asset tag property
 	 * @throws com.liferay.portlet.asset.NoSuchTagPropertyException if a asset tag property with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AssetTagProperty[] findByC_K_PrevAndNext(long tagPropertyId,
 		long companyId, String key, OrderByComparator orderByComparator)
-		throws NoSuchTagPropertyException, SystemException {
+		throws NoSuchTagPropertyException {
 		AssetTagProperty assetTagProperty = findByPrimaryKey(tagPropertyId);
 
 		Session session = null;
@@ -1557,11 +1517,9 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	 *
 	 * @param companyId the company ID
 	 * @param key the key
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByC_K(long companyId, String key)
-		throws SystemException {
+	public void removeByC_K(long companyId, String key) {
 		for (AssetTagProperty assetTagProperty : findByC_K(companyId, key,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(assetTagProperty);
@@ -1574,10 +1532,9 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	 * @param companyId the company ID
 	 * @param key the key
 	 * @return the number of matching asset tag properties
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByC_K(long companyId, String key) throws SystemException {
+	public int countByC_K(long companyId, String key) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_K;
 
 		Object[] finderArgs = new Object[] { companyId, key };
@@ -1662,11 +1619,10 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	 * @param key the key
 	 * @return the matching asset tag property
 	 * @throws com.liferay.portlet.asset.NoSuchTagPropertyException if a matching asset tag property could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AssetTagProperty findByT_K(long tagId, String key)
-		throws NoSuchTagPropertyException, SystemException {
+		throws NoSuchTagPropertyException {
 		AssetTagProperty assetTagProperty = fetchByT_K(tagId, key);
 
 		if (assetTagProperty == null) {
@@ -1698,11 +1654,9 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	 * @param tagId the tag ID
 	 * @param key the key
 	 * @return the matching asset tag property, or <code>null</code> if a matching asset tag property could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public AssetTagProperty fetchByT_K(long tagId, String key)
-		throws SystemException {
+	public AssetTagProperty fetchByT_K(long tagId, String key) {
 		return fetchByT_K(tagId, key, true);
 	}
 
@@ -1713,11 +1667,10 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	 * @param key the key
 	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching asset tag property, or <code>null</code> if a matching asset tag property could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AssetTagProperty fetchByT_K(long tagId, String key,
-		boolean retrieveFromCache) throws SystemException {
+		boolean retrieveFromCache) {
 		Object[] finderArgs = new Object[] { tagId, key };
 
 		Object result = null;
@@ -1820,11 +1773,10 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	 * @param tagId the tag ID
 	 * @param key the key
 	 * @return the asset tag property that was removed
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AssetTagProperty removeByT_K(long tagId, String key)
-		throws NoSuchTagPropertyException, SystemException {
+		throws NoSuchTagPropertyException {
 		AssetTagProperty assetTagProperty = findByT_K(tagId, key);
 
 		return remove(assetTagProperty);
@@ -1836,10 +1788,9 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	 * @param tagId the tag ID
 	 * @param key the key
 	 * @return the number of matching asset tag properties
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByT_K(long tagId, String key) throws SystemException {
+	public int countByT_K(long tagId, String key) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_T_K;
 
 		Object[] finderArgs = new Object[] { tagId, key };
@@ -2072,11 +2023,10 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	 * @param tagPropertyId the primary key of the asset tag property
 	 * @return the asset tag property that was removed
 	 * @throws com.liferay.portlet.asset.NoSuchTagPropertyException if a asset tag property with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AssetTagProperty remove(long tagPropertyId)
-		throws NoSuchTagPropertyException, SystemException {
+		throws NoSuchTagPropertyException {
 		return remove((Serializable)tagPropertyId);
 	}
 
@@ -2086,11 +2036,10 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	 * @param primaryKey the primary key of the asset tag property
 	 * @return the asset tag property that was removed
 	 * @throws com.liferay.portlet.asset.NoSuchTagPropertyException if a asset tag property with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AssetTagProperty remove(Serializable primaryKey)
-		throws NoSuchTagPropertyException, SystemException {
+		throws NoSuchTagPropertyException {
 		Session session = null;
 
 		try {
@@ -2122,8 +2071,7 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	}
 
 	@Override
-	protected AssetTagProperty removeImpl(AssetTagProperty assetTagProperty)
-		throws SystemException {
+	protected AssetTagProperty removeImpl(AssetTagProperty assetTagProperty) {
 		assetTagProperty = toUnwrappedModel(assetTagProperty);
 
 		Session session = null;
@@ -2156,8 +2104,7 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 
 	@Override
 	public AssetTagProperty updateImpl(
-		com.liferay.portlet.asset.model.AssetTagProperty assetTagProperty)
-		throws SystemException {
+		com.liferay.portlet.asset.model.AssetTagProperty assetTagProperty) {
 		assetTagProperty = toUnwrappedModel(assetTagProperty);
 
 		boolean isNew = assetTagProperty.isNew();
@@ -2292,11 +2239,10 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	 * @param primaryKey the primary key of the asset tag property
 	 * @return the asset tag property
 	 * @throws com.liferay.portlet.asset.NoSuchTagPropertyException if a asset tag property with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AssetTagProperty findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchTagPropertyException, SystemException {
+		throws NoSuchTagPropertyException {
 		AssetTagProperty assetTagProperty = fetchByPrimaryKey(primaryKey);
 
 		if (assetTagProperty == null) {
@@ -2317,11 +2263,10 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	 * @param tagPropertyId the primary key of the asset tag property
 	 * @return the asset tag property
 	 * @throws com.liferay.portlet.asset.NoSuchTagPropertyException if a asset tag property with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AssetTagProperty findByPrimaryKey(long tagPropertyId)
-		throws NoSuchTagPropertyException, SystemException {
+		throws NoSuchTagPropertyException {
 		return findByPrimaryKey((Serializable)tagPropertyId);
 	}
 
@@ -2330,11 +2275,9 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	 *
 	 * @param primaryKey the primary key of the asset tag property
 	 * @return the asset tag property, or <code>null</code> if a asset tag property with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public AssetTagProperty fetchByPrimaryKey(Serializable primaryKey)
-		throws SystemException {
+	public AssetTagProperty fetchByPrimaryKey(Serializable primaryKey) {
 		AssetTagProperty assetTagProperty = (AssetTagProperty)EntityCacheUtil.getResult(AssetTagPropertyModelImpl.ENTITY_CACHE_ENABLED,
 				AssetTagPropertyImpl.class, primaryKey);
 
@@ -2379,11 +2322,9 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	 *
 	 * @param tagPropertyId the primary key of the asset tag property
 	 * @return the asset tag property, or <code>null</code> if a asset tag property with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public AssetTagProperty fetchByPrimaryKey(long tagPropertyId)
-		throws SystemException {
+	public AssetTagProperty fetchByPrimaryKey(long tagPropertyId) {
 		return fetchByPrimaryKey((Serializable)tagPropertyId);
 	}
 
@@ -2391,10 +2332,9 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	 * Returns all the asset tag properties.
 	 *
 	 * @return the asset tag properties
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<AssetTagProperty> findAll() throws SystemException {
+	public List<AssetTagProperty> findAll() {
 		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -2408,11 +2348,9 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	 * @param start the lower bound of the range of asset tag properties
 	 * @param end the upper bound of the range of asset tag properties (not inclusive)
 	 * @return the range of asset tag properties
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<AssetTagProperty> findAll(int start, int end)
-		throws SystemException {
+	public List<AssetTagProperty> findAll(int start, int end) {
 		return findAll(start, end, null);
 	}
 
@@ -2427,11 +2365,10 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	 * @param end the upper bound of the range of asset tag properties (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of asset tag properties
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<AssetTagProperty> findAll(int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2513,10 +2450,9 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	/**
 	 * Removes all the asset tag properties from the database.
 	 *
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeAll() throws SystemException {
+	public void removeAll() {
 		for (AssetTagProperty assetTagProperty : findAll()) {
 			remove(assetTagProperty);
 		}
@@ -2526,10 +2462,9 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	 * Returns the number of asset tag properties.
 	 *
 	 * @return the number of asset tag properties
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countAll() throws SystemException {
+	public int countAll() {
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
 				FINDER_ARGS_EMPTY, this);
 

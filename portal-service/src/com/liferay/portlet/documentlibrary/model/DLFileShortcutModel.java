@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
@@ -153,10 +152,9 @@ public interface DLFileShortcutModel extends BaseModel<DLFileShortcut>,
 	 * Returns the user uuid of this document library file shortcut.
 	 *
 	 * @return the user uuid of this document library file shortcut
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public String getUserUuid() throws SystemException;
+	public String getUserUuid();
 
 	/**
 	 * Sets the user uuid of this document library file shortcut.
@@ -329,10 +327,9 @@ public interface DLFileShortcutModel extends BaseModel<DLFileShortcut>,
 	 * Returns the status by user uuid of this document library file shortcut.
 	 *
 	 * @return the status by user uuid of this document library file shortcut
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public String getStatusByUserUuid() throws SystemException;
+	public String getStatusByUserUuid();
 
 	/**
 	 * Sets the status by user uuid of this document library file shortcut.
@@ -379,10 +376,9 @@ public interface DLFileShortcutModel extends BaseModel<DLFileShortcut>,
 	 * Returns the trash entry created when this document library file shortcut was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this document library file shortcut.
 	 *
 	 * @return the trash entry created when this document library file shortcut was moved to the Recycle Bin
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public TrashEntry getTrashEntry() throws PortalException, SystemException;
+	public TrashEntry getTrashEntry() throws PortalException;
 
 	/**
 	 * Returns the class primary key of the trash entry for this document library file shortcut.
@@ -412,16 +408,15 @@ public interface DLFileShortcutModel extends BaseModel<DLFileShortcut>,
 	 * Returns <code>true</code> if the parent of this document library file shortcut is in the Recycle Bin.
 	 *
 	 * @return <code>true</code> if the parent of this document library file shortcut is in the Recycle Bin; <code>false</code> otherwise
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public boolean isInTrashContainer();
 
 	@Override
-	public boolean isInTrashExplicitly() throws SystemException;
+	public boolean isInTrashExplicitly();
 
 	@Override
-	public boolean isInTrashImplicitly() throws SystemException;
+	public boolean isInTrashImplicitly();
 
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #isApproved()}

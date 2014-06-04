@@ -69,12 +69,10 @@ public abstract class ClassNameLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param className the class name
 	 * @return the class name that was added
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public ClassName addClassName(ClassName className)
-		throws SystemException {
+	public ClassName addClassName(ClassName className) {
 		className.setNew(true);
 
 		return classNamePersistence.update(className);
@@ -97,12 +95,11 @@ public abstract class ClassNameLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param classNameId the primary key of the class name
 	 * @return the class name that was removed
 	 * @throws PortalException if a class name with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public ClassName deleteClassName(long classNameId)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return classNamePersistence.remove(classNameId);
 	}
 
@@ -111,12 +108,10 @@ public abstract class ClassNameLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param className the class name
 	 * @return the class name that was removed
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public ClassName deleteClassName(ClassName className)
-		throws SystemException {
+	public ClassName deleteClassName(ClassName className) {
 		return classNamePersistence.remove(className);
 	}
 
@@ -133,12 +128,10 @@ public abstract class ClassNameLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery) {
 		return classNamePersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -153,12 +146,10 @@ public abstract class ClassNameLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param start the lower bound of the range of model instances
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
 		return classNamePersistence.findWithDynamicQuery(dynamicQuery, start,
 			end);
 	}
@@ -175,12 +166,11 @@ public abstract class ClassNameLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
 	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		return classNamePersistence.findWithDynamicQuery(dynamicQuery, start,
 			end, orderByComparator);
 	}
@@ -190,11 +180,9 @@ public abstract class ClassNameLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public long dynamicQueryCount(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return classNamePersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
@@ -204,17 +192,16 @@ public abstract class ClassNameLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param dynamicQuery the dynamic query
 	 * @param projection the projection to apply to the query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection) throws SystemException {
+		Projection projection) {
 		return classNamePersistence.countWithDynamicQuery(dynamicQuery,
 			projection);
 	}
 
 	@Override
-	public ClassName fetchClassName(long classNameId) throws SystemException {
+	public ClassName fetchClassName(long classNameId) {
 		return classNamePersistence.fetchByPrimaryKey(classNameId);
 	}
 
@@ -224,17 +211,14 @@ public abstract class ClassNameLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param classNameId the primary key of the class name
 	 * @return the class name
 	 * @throws PortalException if a class name with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public ClassName getClassName(long classNameId)
-		throws PortalException, SystemException {
+	public ClassName getClassName(long classNameId) throws PortalException {
 		return classNamePersistence.findByPrimaryKey(classNameId);
 	}
 
 	@Override
-	public ActionableDynamicQuery getActionableDynamicQuery()
-		throws SystemException {
+	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.ClassNameLocalServiceUtil.getService());
@@ -247,8 +231,7 @@ public abstract class ClassNameLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	protected void initActionableDynamicQuery(
-		ActionableDynamicQuery actionableDynamicQuery)
-		throws SystemException {
+		ActionableDynamicQuery actionableDynamicQuery) {
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.ClassNameLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(ClassName.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
@@ -258,7 +241,7 @@ public abstract class ClassNameLocalServiceBaseImpl extends BaseLocalServiceImpl
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return classNamePersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -272,11 +255,9 @@ public abstract class ClassNameLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param start the lower bound of the range of class names
 	 * @param end the upper bound of the range of class names (not inclusive)
 	 * @return the range of class names
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<ClassName> getClassNames(int start, int end)
-		throws SystemException {
+	public List<ClassName> getClassNames(int start, int end) {
 		return classNamePersistence.findAll(start, end);
 	}
 
@@ -284,10 +265,9 @@ public abstract class ClassNameLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * Returns the number of class names.
 	 *
 	 * @return the number of class names
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int getClassNamesCount() throws SystemException {
+	public int getClassNamesCount() {
 		return classNamePersistence.countAll();
 	}
 
@@ -296,12 +276,10 @@ public abstract class ClassNameLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param className the class name
 	 * @return the class name that was updated
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public ClassName updateClassName(ClassName className)
-		throws SystemException {
+	public ClassName updateClassName(ClassName className) {
 		return classNamePersistence.update(className);
 	}
 
@@ -424,7 +402,7 @@ public abstract class ClassNameLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param sql the sql query
 	 */
-	protected void runSQL(String sql) throws SystemException {
+	protected void runSQL(String sql) {
 		try {
 			DataSource dataSource = classNamePersistence.getDataSource();
 

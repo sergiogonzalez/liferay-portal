@@ -51,8 +51,7 @@ import com.liferay.portal.service.PortletServiceUtil;
  */
 public class PortletServiceHttp {
 	public static com.liferay.portal.kernel.json.JSONArray getWARPortlets(
-		HttpPrincipal httpPrincipal)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		HttpPrincipal httpPrincipal) {
 		try {
 			MethodKey methodKey = new MethodKey(PortletServiceUtil.class,
 					"getWARPortlets", _getWARPortletsParameterTypes0);

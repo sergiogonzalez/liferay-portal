@@ -39,12 +39,10 @@ public class WikiPageResourceLocalServiceWrapper
 	*
 	* @param wikiPageResource the wiki page resource
 	* @return the wiki page resource that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.wiki.model.WikiPageResource addWikiPageResource(
-		com.liferay.portlet.wiki.model.WikiPageResource wikiPageResource)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.wiki.model.WikiPageResource wikiPageResource) {
 		return _wikiPageResourceLocalService.addWikiPageResource(wikiPageResource);
 	}
 
@@ -66,13 +64,11 @@ public class WikiPageResourceLocalServiceWrapper
 	* @param resourcePrimKey the primary key of the wiki page resource
 	* @return the wiki page resource that was removed
 	* @throws PortalException if a wiki page resource with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.wiki.model.WikiPageResource deleteWikiPageResource(
 		long resourcePrimKey)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiPageResourceLocalService.deleteWikiPageResource(resourcePrimKey);
 	}
 
@@ -81,12 +77,10 @@ public class WikiPageResourceLocalServiceWrapper
 	*
 	* @param wikiPageResource the wiki page resource
 	* @return the wiki page resource that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.wiki.model.WikiPageResource deleteWikiPageResource(
-		com.liferay.portlet.wiki.model.WikiPageResource wikiPageResource)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.wiki.model.WikiPageResource wikiPageResource) {
 		return _wikiPageResourceLocalService.deleteWikiPageResource(wikiPageResource);
 	}
 
@@ -100,13 +94,11 @@ public class WikiPageResourceLocalServiceWrapper
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _wikiPageResourceLocalService.dynamicQuery(dynamicQuery);
 	}
 
@@ -121,13 +113,12 @@ public class WikiPageResourceLocalServiceWrapper
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return _wikiPageResourceLocalService.dynamicQuery(dynamicQuery, start,
 			end);
 	}
@@ -144,15 +135,13 @@ public class WikiPageResourceLocalServiceWrapper
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return _wikiPageResourceLocalService.dynamicQuery(dynamicQuery, start,
 			end, orderByComparator);
 	}
@@ -162,12 +151,10 @@ public class WikiPageResourceLocalServiceWrapper
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _wikiPageResourceLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
@@ -177,21 +164,18 @@ public class WikiPageResourceLocalServiceWrapper
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return _wikiPageResourceLocalService.dynamicQueryCount(dynamicQuery,
 			projection);
 	}
 
 	@Override
 	public com.liferay.portlet.wiki.model.WikiPageResource fetchWikiPageResource(
-		long resourcePrimKey)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long resourcePrimKey) {
 		return _wikiPageResourceLocalService.fetchWikiPageResource(resourcePrimKey);
 	}
 
@@ -201,27 +185,23 @@ public class WikiPageResourceLocalServiceWrapper
 	* @param resourcePrimKey the primary key of the wiki page resource
 	* @return the wiki page resource
 	* @throws PortalException if a wiki page resource with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.wiki.model.WikiPageResource getWikiPageResource(
 		long resourcePrimKey)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiPageResourceLocalService.getWikiPageResource(resourcePrimKey);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _wikiPageResourceLocalService.getActionableDynamicQuery();
 	}
 
 	@Override
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiPageResourceLocalService.getPersistedModel(primaryKeyObj);
 	}
 
@@ -235,12 +215,10 @@ public class WikiPageResourceLocalServiceWrapper
 	* @param start the lower bound of the range of wiki page resources
 	* @param end the upper bound of the range of wiki page resources (not inclusive)
 	* @return the range of wiki page resources
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPageResource> getWikiPageResources(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return _wikiPageResourceLocalService.getWikiPageResources(start, end);
 	}
 
@@ -248,11 +226,9 @@ public class WikiPageResourceLocalServiceWrapper
 	* Returns the number of wiki page resources.
 	*
 	* @return the number of wiki page resources
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public int getWikiPageResourcesCount()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public int getWikiPageResourcesCount() {
 		return _wikiPageResourceLocalService.getWikiPageResourcesCount();
 	}
 
@@ -261,12 +237,10 @@ public class WikiPageResourceLocalServiceWrapper
 	*
 	* @param wikiPageResource the wiki page resource
 	* @return the wiki page resource that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.wiki.model.WikiPageResource updateWikiPageResource(
-		com.liferay.portlet.wiki.model.WikiPageResource wikiPageResource)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.wiki.model.WikiPageResource wikiPageResource) {
 		return _wikiPageResourceLocalService.updateWikiPageResource(wikiPageResource);
 	}
 

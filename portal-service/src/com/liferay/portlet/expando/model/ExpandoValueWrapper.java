@@ -410,8 +410,7 @@ public class ExpandoValueWrapper implements ExpandoValue,
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void persist() {
 		_expandoValue.persist();
 	}
 

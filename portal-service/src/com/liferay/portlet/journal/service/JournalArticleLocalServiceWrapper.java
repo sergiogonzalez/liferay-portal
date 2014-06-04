@@ -39,12 +39,10 @@ public class JournalArticleLocalServiceWrapper
 	*
 	* @param journalArticle the journal article
 	* @return the journal article that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.journal.model.JournalArticle addJournalArticle(
-		com.liferay.portlet.journal.model.JournalArticle journalArticle)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.journal.model.JournalArticle journalArticle) {
 		return _journalArticleLocalService.addJournalArticle(journalArticle);
 	}
 
@@ -66,13 +64,10 @@ public class JournalArticleLocalServiceWrapper
 	* @param id the primary key of the journal article
 	* @return the journal article that was removed
 	* @throws PortalException if a journal article with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.journal.model.JournalArticle deleteJournalArticle(
-		long id)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		long id) throws com.liferay.portal.kernel.exception.PortalException {
 		return _journalArticleLocalService.deleteJournalArticle(id);
 	}
 
@@ -81,12 +76,10 @@ public class JournalArticleLocalServiceWrapper
 	*
 	* @param journalArticle the journal article
 	* @return the journal article that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.journal.model.JournalArticle deleteJournalArticle(
-		com.liferay.portlet.journal.model.JournalArticle journalArticle)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.journal.model.JournalArticle journalArticle) {
 		return _journalArticleLocalService.deleteJournalArticle(journalArticle);
 	}
 
@@ -100,13 +93,11 @@ public class JournalArticleLocalServiceWrapper
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _journalArticleLocalService.dynamicQuery(dynamicQuery);
 	}
 
@@ -121,13 +112,12 @@ public class JournalArticleLocalServiceWrapper
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return _journalArticleLocalService.dynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -143,15 +133,13 @@ public class JournalArticleLocalServiceWrapper
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return _journalArticleLocalService.dynamicQuery(dynamicQuery, start,
 			end, orderByComparator);
 	}
@@ -161,12 +149,10 @@ public class JournalArticleLocalServiceWrapper
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _journalArticleLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
@@ -176,20 +162,18 @@ public class JournalArticleLocalServiceWrapper
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return _journalArticleLocalService.dynamicQueryCount(dynamicQuery,
 			projection);
 	}
 
 	@Override
 	public com.liferay.portlet.journal.model.JournalArticle fetchJournalArticle(
-		long id) throws com.liferay.portal.kernel.exception.SystemException {
+		long id) {
 		return _journalArticleLocalService.fetchJournalArticle(id);
 	}
 
@@ -199,12 +183,10 @@ public class JournalArticleLocalServiceWrapper
 	* @param uuid the journal article's UUID
 	* @param companyId the primary key of the company
 	* @return the matching journal article, or <code>null</code> if a matching journal article could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.journal.model.JournalArticle fetchJournalArticleByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long companyId) {
 		return _journalArticleLocalService.fetchJournalArticleByUuidAndCompanyId(uuid,
 			companyId);
 	}
@@ -215,12 +197,10 @@ public class JournalArticleLocalServiceWrapper
 	* @param uuid the journal article's UUID
 	* @param groupId the primary key of the group
 	* @return the matching journal article, or <code>null</code> if a matching journal article could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.journal.model.JournalArticle fetchJournalArticleByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long groupId) {
 		return _journalArticleLocalService.fetchJournalArticleByUuidAndGroupId(uuid,
 			groupId);
 	}
@@ -231,34 +211,28 @@ public class JournalArticleLocalServiceWrapper
 	* @param id the primary key of the journal article
 	* @return the journal article
 	* @throws PortalException if a journal article with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.journal.model.JournalArticle getJournalArticle(
-		long id)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		long id) throws com.liferay.portal.kernel.exception.PortalException {
 		return _journalArticleLocalService.getJournalArticle(id);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _journalArticleLocalService.getActionableDynamicQuery();
 	}
 
 	@Override
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext) {
 		return _journalArticleLocalService.getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	@Override
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _journalArticleLocalService.getPersistedModel(primaryKeyObj);
 	}
 
@@ -269,13 +243,11 @@ public class JournalArticleLocalServiceWrapper
 	* @param companyId the primary key of the company
 	* @return the matching journal article
 	* @throws PortalException if a matching journal article could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.journal.model.JournalArticle getJournalArticleByUuidAndCompanyId(
 		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _journalArticleLocalService.getJournalArticleByUuidAndCompanyId(uuid,
 			companyId);
 	}
@@ -287,13 +259,11 @@ public class JournalArticleLocalServiceWrapper
 	* @param groupId the primary key of the group
 	* @return the matching journal article
 	* @throws PortalException if a matching journal article could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.journal.model.JournalArticle getJournalArticleByUuidAndGroupId(
 		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _journalArticleLocalService.getJournalArticleByUuidAndGroupId(uuid,
 			groupId);
 	}
@@ -308,12 +278,10 @@ public class JournalArticleLocalServiceWrapper
 	* @param start the lower bound of the range of journal articles
 	* @param end the upper bound of the range of journal articles (not inclusive)
 	* @return the range of journal articles
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> getJournalArticles(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return _journalArticleLocalService.getJournalArticles(start, end);
 	}
 
@@ -321,11 +289,9 @@ public class JournalArticleLocalServiceWrapper
 	* Returns the number of journal articles.
 	*
 	* @return the number of journal articles
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public int getJournalArticlesCount()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public int getJournalArticlesCount() {
 		return _journalArticleLocalService.getJournalArticlesCount();
 	}
 
@@ -334,12 +300,10 @@ public class JournalArticleLocalServiceWrapper
 	*
 	* @param journalArticle the journal article
 	* @return the journal article that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.journal.model.JournalArticle updateJournalArticle(
-		com.liferay.portlet.journal.model.JournalArticle journalArticle)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.journal.model.JournalArticle journalArticle) {
 		return _journalArticleLocalService.updateJournalArticle(journalArticle);
 	}
 

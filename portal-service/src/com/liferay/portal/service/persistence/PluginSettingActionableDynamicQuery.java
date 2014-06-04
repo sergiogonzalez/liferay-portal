@@ -15,7 +15,6 @@
 package com.liferay.portal.service.persistence;
 
 import com.liferay.portal.kernel.dao.orm.BaseActionableDynamicQuery;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.model.PluginSetting;
 import com.liferay.portal.service.PluginSettingLocalServiceUtil;
@@ -28,7 +27,7 @@ import com.liferay.portal.service.PluginSettingLocalServiceUtil;
 @Deprecated
 public abstract class PluginSettingActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
-	public PluginSettingActionableDynamicQuery() throws SystemException {
+	public PluginSettingActionableDynamicQuery() {
 		setBaseLocalService(PluginSettingLocalServiceUtil.getService());
 		setClass(PluginSetting.class);
 

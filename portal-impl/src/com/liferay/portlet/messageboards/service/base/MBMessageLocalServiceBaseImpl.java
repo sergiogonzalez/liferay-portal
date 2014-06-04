@@ -113,12 +113,10 @@ public abstract class MBMessageLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param mbMessage the message-boards message
 	 * @return the message-boards message that was added
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public MBMessage addMBMessage(MBMessage mbMessage)
-		throws SystemException {
+	public MBMessage addMBMessage(MBMessage mbMessage) {
 		mbMessage.setNew(true);
 
 		return mbMessagePersistence.update(mbMessage);
@@ -141,12 +139,10 @@ public abstract class MBMessageLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param messageId the primary key of the message-boards message
 	 * @return the message-boards message that was removed
 	 * @throws PortalException if a message-boards message with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public MBMessage deleteMBMessage(long messageId)
-		throws PortalException, SystemException {
+	public MBMessage deleteMBMessage(long messageId) throws PortalException {
 		return mbMessagePersistence.remove(messageId);
 	}
 
@@ -155,12 +151,10 @@ public abstract class MBMessageLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param mbMessage the message-boards message
 	 * @return the message-boards message that was removed
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public MBMessage deleteMBMessage(MBMessage mbMessage)
-		throws SystemException {
+	public MBMessage deleteMBMessage(MBMessage mbMessage) {
 		return mbMessagePersistence.remove(mbMessage);
 	}
 
@@ -177,12 +171,10 @@ public abstract class MBMessageLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery) {
 		return mbMessagePersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -197,12 +189,10 @@ public abstract class MBMessageLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param start the lower bound of the range of model instances
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
 		return mbMessagePersistence.findWithDynamicQuery(dynamicQuery, start,
 			end);
 	}
@@ -219,12 +209,11 @@ public abstract class MBMessageLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
 	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		return mbMessagePersistence.findWithDynamicQuery(dynamicQuery, start,
 			end, orderByComparator);
 	}
@@ -234,11 +223,9 @@ public abstract class MBMessageLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public long dynamicQueryCount(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return mbMessagePersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
@@ -248,17 +235,16 @@ public abstract class MBMessageLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param dynamicQuery the dynamic query
 	 * @param projection the projection to apply to the query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection) throws SystemException {
+		Projection projection) {
 		return mbMessagePersistence.countWithDynamicQuery(dynamicQuery,
 			projection);
 	}
 
 	@Override
-	public MBMessage fetchMBMessage(long messageId) throws SystemException {
+	public MBMessage fetchMBMessage(long messageId) {
 		return mbMessagePersistence.fetchByPrimaryKey(messageId);
 	}
 
@@ -268,11 +254,10 @@ public abstract class MBMessageLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param uuid the message-boards message's UUID
 	 * @param  companyId the primary key of the company
 	 * @return the matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public MBMessage fetchMBMessageByUuidAndCompanyId(String uuid,
-		long companyId) throws SystemException {
+		long companyId) {
 		return mbMessagePersistence.fetchByUuid_C_First(uuid, companyId, null);
 	}
 
@@ -282,11 +267,9 @@ public abstract class MBMessageLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param uuid the message-boards message's UUID
 	 * @param groupId the primary key of the group
 	 * @return the matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public MBMessage fetchMBMessageByUuidAndGroupId(String uuid, long groupId)
-		throws SystemException {
+	public MBMessage fetchMBMessageByUuidAndGroupId(String uuid, long groupId) {
 		return mbMessagePersistence.fetchByUUID_G(uuid, groupId);
 	}
 
@@ -296,17 +279,14 @@ public abstract class MBMessageLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param messageId the primary key of the message-boards message
 	 * @return the message-boards message
 	 * @throws PortalException if a message-boards message with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public MBMessage getMBMessage(long messageId)
-		throws PortalException, SystemException {
+	public MBMessage getMBMessage(long messageId) throws PortalException {
 		return mbMessagePersistence.findByPrimaryKey(messageId);
 	}
 
 	@Override
-	public ActionableDynamicQuery getActionableDynamicQuery()
-		throws SystemException {
+	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil.getService());
@@ -319,8 +299,7 @@ public abstract class MBMessageLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	protected void initActionableDynamicQuery(
-		ActionableDynamicQuery actionableDynamicQuery)
-		throws SystemException {
+		ActionableDynamicQuery actionableDynamicQuery) {
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(MBMessage.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
@@ -330,11 +309,10 @@ public abstract class MBMessageLocalServiceBaseImpl extends BaseLocalServiceImpl
 
 	@Override
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		final PortletDataContext portletDataContext) throws SystemException {
+		final PortletDataContext portletDataContext) {
 		final ExportActionableDynamicQuery exportActionableDynamicQuery = new ExportActionableDynamicQuery() {
 				@Override
-				public long performCount()
-					throws PortalException, SystemException {
+				public long performCount() throws PortalException {
 					ManifestSummary manifestSummary = portletDataContext.getManifestSummary();
 
 					StagedModelType stagedModelType = getStagedModelType();
@@ -388,9 +366,8 @@ public abstract class MBMessageLocalServiceBaseImpl extends BaseLocalServiceImpl
 
 		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
 				@Override
-				@SuppressWarnings("unused")
 				public void performAction(Object object)
-					throws PortalException, SystemException {
+					throws PortalException {
 					MBMessage stagedModel = (MBMessage)object;
 
 					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
@@ -405,7 +382,7 @@ public abstract class MBMessageLocalServiceBaseImpl extends BaseLocalServiceImpl
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return mbMessagePersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -416,11 +393,10 @@ public abstract class MBMessageLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param  companyId the primary key of the company
 	 * @return the matching message-boards message
 	 * @throws PortalException if a matching message-boards message could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public MBMessage getMBMessageByUuidAndCompanyId(String uuid, long companyId)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return mbMessagePersistence.findByUuid_C_First(uuid, companyId, null);
 	}
 
@@ -431,11 +407,10 @@ public abstract class MBMessageLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param groupId the primary key of the group
 	 * @return the matching message-boards message
 	 * @throws PortalException if a matching message-boards message could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public MBMessage getMBMessageByUuidAndGroupId(String uuid, long groupId)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return mbMessagePersistence.findByUUID_G(uuid, groupId);
 	}
 
@@ -449,11 +424,9 @@ public abstract class MBMessageLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param start the lower bound of the range of message-boards messages
 	 * @param end the upper bound of the range of message-boards messages (not inclusive)
 	 * @return the range of message-boards messages
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<MBMessage> getMBMessages(int start, int end)
-		throws SystemException {
+	public List<MBMessage> getMBMessages(int start, int end) {
 		return mbMessagePersistence.findAll(start, end);
 	}
 
@@ -461,10 +434,9 @@ public abstract class MBMessageLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * Returns the number of message-boards messages.
 	 *
 	 * @return the number of message-boards messages
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int getMBMessagesCount() throws SystemException {
+	public int getMBMessagesCount() {
 		return mbMessagePersistence.countAll();
 	}
 
@@ -473,12 +445,10 @@ public abstract class MBMessageLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param mbMessage the message-boards message
 	 * @return the message-boards message that was updated
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public MBMessage updateMBMessage(MBMessage mbMessage)
-		throws SystemException {
+	public MBMessage updateMBMessage(MBMessage mbMessage) {
 		return mbMessagePersistence.update(mbMessage);
 	}
 
@@ -1855,7 +1825,7 @@ public abstract class MBMessageLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param sql the sql query
 	 */
-	protected void runSQL(String sql) throws SystemException {
+	protected void runSQL(String sql) {
 		try {
 			DataSource dataSource = mbMessagePersistence.getDataSource();
 

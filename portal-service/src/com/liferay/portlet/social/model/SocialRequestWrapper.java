@@ -274,11 +274,9 @@ public class SocialRequestWrapper implements SocialRequest,
 	* Returns the user uuid of this social request.
 	*
 	* @return the user uuid of this social request
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public java.lang.String getUserUuid()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public java.lang.String getUserUuid() {
 		return _socialRequest.getUserUuid();
 	}
 
@@ -451,11 +449,9 @@ public class SocialRequestWrapper implements SocialRequest,
 	* Returns the receiver user uuid of this social request.
 	*
 	* @return the receiver user uuid of this social request
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public java.lang.String getReceiverUserUuid()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public java.lang.String getReceiverUserUuid() {
 		return _socialRequest.getReceiverUserUuid();
 	}
 
@@ -589,8 +585,7 @@ public class SocialRequestWrapper implements SocialRequest,
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void persist() {
 		_socialRequest.persist();
 	}
 

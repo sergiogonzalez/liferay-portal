@@ -15,7 +15,6 @@
 package com.liferay.portlet.journal.model.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
@@ -45,7 +44,7 @@ public abstract class JournalFolderBaseImpl extends JournalFolderModelImpl
 	 * Never modify or reference this class directly. All methods that expect a journal folder model instance should use the {@link JournalFolder} interface instead.
 	 */
 	@Override
-	public void persist() throws SystemException {
+	public void persist() {
 		if (this.isNew()) {
 			JournalFolderLocalServiceUtil.addJournalFolder(this);
 		}
@@ -56,7 +55,7 @@ public abstract class JournalFolderBaseImpl extends JournalFolderModelImpl
 
 	@Override
 	@SuppressWarnings("unused")
-	public String buildTreePath() throws PortalException, SystemException {
+	public String buildTreePath() throws PortalException {
 		List<JournalFolder> journalFolders = new ArrayList<JournalFolder>();
 
 		JournalFolder journalFolder = this;
@@ -82,7 +81,7 @@ public abstract class JournalFolderBaseImpl extends JournalFolderModelImpl
 	}
 
 	@Override
-	public void updateTreePath(String treePath) throws SystemException {
+	public void updateTreePath(String treePath) {
 		JournalFolder journalFolder = this;
 
 		journalFolder.setTreePath(treePath);

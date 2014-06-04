@@ -14,7 +14,6 @@
 
 package com.liferay.portal.model.impl;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Website;
 import com.liferay.portal.service.WebsiteLocalServiceUtil;
 
@@ -38,7 +37,7 @@ public abstract class WebsiteBaseImpl extends WebsiteModelImpl
 	 * Never modify or reference this class directly. All methods that expect a website model instance should use the {@link Website} interface instead.
 	 */
 	@Override
-	public void persist() throws SystemException {
+	public void persist() {
 		if (this.isNew()) {
 			WebsiteLocalServiceUtil.addWebsite(this);
 		}

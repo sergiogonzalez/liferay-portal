@@ -234,11 +234,9 @@ public class ShoppingCategoryWrapper implements ShoppingCategory,
 	* Returns the user uuid of this shopping category.
 	*
 	* @return the user uuid of this shopping category
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public java.lang.String getUserUuid()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public java.lang.String getUserUuid() {
 		return _shoppingCategory.getUserUuid();
 	}
 
@@ -472,8 +470,7 @@ public class ShoppingCategoryWrapper implements ShoppingCategory,
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void persist() {
 		_shoppingCategory.persist();
 	}
 

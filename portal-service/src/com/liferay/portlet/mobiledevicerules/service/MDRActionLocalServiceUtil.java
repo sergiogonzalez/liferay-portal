@@ -46,11 +46,9 @@ public class MDRActionLocalServiceUtil {
 	*
 	* @param mdrAction the m d r action
 	* @return the m d r action that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRAction addMDRAction(
-		com.liferay.portlet.mobiledevicerules.model.MDRAction mdrAction)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.mobiledevicerules.model.MDRAction mdrAction) {
 		return getService().addMDRAction(mdrAction);
 	}
 
@@ -71,12 +69,10 @@ public class MDRActionLocalServiceUtil {
 	* @param actionId the primary key of the m d r action
 	* @return the m d r action that was removed
 	* @throws PortalException if a m d r action with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRAction deleteMDRAction(
 		long actionId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteMDRAction(actionId);
 	}
 
@@ -85,11 +81,9 @@ public class MDRActionLocalServiceUtil {
 	*
 	* @param mdrAction the m d r action
 	* @return the m d r action that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRAction deleteMDRAction(
-		com.liferay.portlet.mobiledevicerules.model.MDRAction mdrAction)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.mobiledevicerules.model.MDRAction mdrAction) {
 		return getService().deleteMDRAction(mdrAction);
 	}
 
@@ -102,12 +96,10 @@ public class MDRActionLocalServiceUtil {
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -122,12 +114,11 @@ public class MDRActionLocalServiceUtil {
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -143,14 +134,12 @@ public class MDRActionLocalServiceUtil {
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getService()
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
@@ -160,11 +149,9 @@ public class MDRActionLocalServiceUtil {
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -174,18 +161,15 @@ public class MDRActionLocalServiceUtil {
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public static long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
 	public static com.liferay.portlet.mobiledevicerules.model.MDRAction fetchMDRAction(
-		long actionId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long actionId) {
 		return getService().fetchMDRAction(actionId);
 	}
 
@@ -195,11 +179,9 @@ public class MDRActionLocalServiceUtil {
 	* @param uuid the m d r action's UUID
 	* @param companyId the primary key of the company
 	* @return the matching m d r action, or <code>null</code> if a matching m d r action could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRAction fetchMDRActionByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long companyId) {
 		return getService().fetchMDRActionByUuidAndCompanyId(uuid, companyId);
 	}
 
@@ -209,11 +191,9 @@ public class MDRActionLocalServiceUtil {
 	* @param uuid the m d r action's UUID
 	* @param groupId the primary key of the group
 	* @return the matching m d r action, or <code>null</code> if a matching m d r action could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRAction fetchMDRActionByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long groupId) {
 		return getService().fetchMDRActionByUuidAndGroupId(uuid, groupId);
 	}
 
@@ -223,30 +203,25 @@ public class MDRActionLocalServiceUtil {
 	* @param actionId the primary key of the m d r action
 	* @return the m d r action
 	* @throws PortalException if a m d r action with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRAction getMDRAction(
 		long actionId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getMDRAction(actionId);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext) {
 		return getService().getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	public static com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
@@ -257,12 +232,10 @@ public class MDRActionLocalServiceUtil {
 	* @param companyId the primary key of the company
 	* @return the matching m d r action
 	* @throws PortalException if a matching m d r action could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRAction getMDRActionByUuidAndCompanyId(
 		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getMDRActionByUuidAndCompanyId(uuid, companyId);
 	}
 
@@ -273,12 +246,10 @@ public class MDRActionLocalServiceUtil {
 	* @param groupId the primary key of the group
 	* @return the matching m d r action
 	* @throws PortalException if a matching m d r action could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRAction getMDRActionByUuidAndGroupId(
 		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getMDRActionByUuidAndGroupId(uuid, groupId);
 	}
 
@@ -292,11 +263,9 @@ public class MDRActionLocalServiceUtil {
 	* @param start the lower bound of the range of m d r actions
 	* @param end the upper bound of the range of m d r actions (not inclusive)
 	* @return the range of m d r actions
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRAction> getMDRActions(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return getService().getMDRActions(start, end);
 	}
 
@@ -304,10 +273,8 @@ public class MDRActionLocalServiceUtil {
 	* Returns the number of m d r actions.
 	*
 	* @return the number of m d r actions
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int getMDRActionsCount()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int getMDRActionsCount() {
 		return getService().getMDRActionsCount();
 	}
 
@@ -316,11 +283,9 @@ public class MDRActionLocalServiceUtil {
 	*
 	* @param mdrAction the m d r action
 	* @return the m d r action that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRAction updateMDRAction(
-		com.liferay.portlet.mobiledevicerules.model.MDRAction mdrAction)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.mobiledevicerules.model.MDRAction mdrAction) {
 		return getService().updateMDRAction(mdrAction);
 	}
 

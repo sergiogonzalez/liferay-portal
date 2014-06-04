@@ -14,7 +14,6 @@
 
 package com.liferay.portal.model.impl;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.LayoutPrototype;
 import com.liferay.portal.service.LayoutPrototypeLocalServiceUtil;
 
@@ -38,7 +37,7 @@ public abstract class LayoutPrototypeBaseImpl extends LayoutPrototypeModelImpl
 	 * Never modify or reference this class directly. All methods that expect a layout prototype model instance should use the {@link LayoutPrototype} interface instead.
 	 */
 	@Override
-	public void persist() throws SystemException {
+	public void persist() {
 		if (this.isNew()) {
 			LayoutPrototypeLocalServiceUtil.addLayoutPrototype(this);
 		}

@@ -16,7 +16,6 @@ package com.liferay.portlet.dynamicdatalists.model.impl;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -407,7 +406,7 @@ public class DDLRecordModelImpl extends BaseModelImpl<DDLRecord>
 	}
 
 	@Override
-	public String getUserUuid() throws SystemException {
+	public String getUserUuid() {
 		try {
 			User user = UserLocalServiceUtil.getUserById(getUserId());
 
@@ -454,7 +453,7 @@ public class DDLRecordModelImpl extends BaseModelImpl<DDLRecord>
 	}
 
 	@Override
-	public String getVersionUserUuid() throws SystemException {
+	public String getVersionUserUuid() {
 		try {
 			User user = UserLocalServiceUtil.getUserById(getVersionUserId());
 

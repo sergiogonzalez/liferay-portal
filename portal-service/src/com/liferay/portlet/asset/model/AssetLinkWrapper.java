@@ -206,11 +206,9 @@ public class AssetLinkWrapper implements AssetLink, ModelWrapper<AssetLink> {
 	* Returns the user uuid of this asset link.
 	*
 	* @return the user uuid of this asset link
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public java.lang.String getUserUuid()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public java.lang.String getUserUuid() {
 		return _assetLink.getUserUuid();
 	}
 
@@ -443,8 +441,7 @@ public class AssetLinkWrapper implements AssetLink, ModelWrapper<AssetLink> {
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void persist() {
 		_assetLink.persist();
 	}
 

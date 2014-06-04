@@ -98,12 +98,10 @@ public abstract class BookmarksFolderLocalServiceBaseImpl
 	 *
 	 * @param bookmarksFolder the bookmarks folder
 	 * @return the bookmarks folder that was added
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public BookmarksFolder addBookmarksFolder(BookmarksFolder bookmarksFolder)
-		throws SystemException {
+	public BookmarksFolder addBookmarksFolder(BookmarksFolder bookmarksFolder) {
 		bookmarksFolder.setNew(true);
 
 		return bookmarksFolderPersistence.update(bookmarksFolder);
@@ -126,12 +124,11 @@ public abstract class BookmarksFolderLocalServiceBaseImpl
 	 * @param folderId the primary key of the bookmarks folder
 	 * @return the bookmarks folder that was removed
 	 * @throws PortalException if a bookmarks folder with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public BookmarksFolder deleteBookmarksFolder(long folderId)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return bookmarksFolderPersistence.remove(folderId);
 	}
 
@@ -140,12 +137,11 @@ public abstract class BookmarksFolderLocalServiceBaseImpl
 	 *
 	 * @param bookmarksFolder the bookmarks folder
 	 * @return the bookmarks folder that was removed
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public BookmarksFolder deleteBookmarksFolder(
-		BookmarksFolder bookmarksFolder) throws SystemException {
+		BookmarksFolder bookmarksFolder) {
 		return bookmarksFolderPersistence.remove(bookmarksFolder);
 	}
 
@@ -162,12 +158,10 @@ public abstract class BookmarksFolderLocalServiceBaseImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery) {
 		return bookmarksFolderPersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -182,12 +176,10 @@ public abstract class BookmarksFolderLocalServiceBaseImpl
 	 * @param start the lower bound of the range of model instances
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
 		return bookmarksFolderPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end);
 	}
@@ -204,12 +196,11 @@ public abstract class BookmarksFolderLocalServiceBaseImpl
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
 	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		return bookmarksFolderPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
 	}
@@ -219,11 +210,9 @@ public abstract class BookmarksFolderLocalServiceBaseImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public long dynamicQueryCount(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return bookmarksFolderPersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
@@ -233,18 +222,16 @@ public abstract class BookmarksFolderLocalServiceBaseImpl
 	 * @param dynamicQuery the dynamic query
 	 * @param projection the projection to apply to the query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection) throws SystemException {
+		Projection projection) {
 		return bookmarksFolderPersistence.countWithDynamicQuery(dynamicQuery,
 			projection);
 	}
 
 	@Override
-	public BookmarksFolder fetchBookmarksFolder(long folderId)
-		throws SystemException {
+	public BookmarksFolder fetchBookmarksFolder(long folderId) {
 		return bookmarksFolderPersistence.fetchByPrimaryKey(folderId);
 	}
 
@@ -254,11 +241,10 @@ public abstract class BookmarksFolderLocalServiceBaseImpl
 	 * @param uuid the bookmarks folder's UUID
 	 * @param  companyId the primary key of the company
 	 * @return the matching bookmarks folder, or <code>null</code> if a matching bookmarks folder could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public BookmarksFolder fetchBookmarksFolderByUuidAndCompanyId(String uuid,
-		long companyId) throws SystemException {
+		long companyId) {
 		return bookmarksFolderPersistence.fetchByUuid_C_First(uuid, companyId,
 			null);
 	}
@@ -269,11 +255,10 @@ public abstract class BookmarksFolderLocalServiceBaseImpl
 	 * @param uuid the bookmarks folder's UUID
 	 * @param groupId the primary key of the group
 	 * @return the matching bookmarks folder, or <code>null</code> if a matching bookmarks folder could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public BookmarksFolder fetchBookmarksFolderByUuidAndGroupId(String uuid,
-		long groupId) throws SystemException {
+		long groupId) {
 		return bookmarksFolderPersistence.fetchByUUID_G(uuid, groupId);
 	}
 
@@ -283,17 +268,15 @@ public abstract class BookmarksFolderLocalServiceBaseImpl
 	 * @param folderId the primary key of the bookmarks folder
 	 * @return the bookmarks folder
 	 * @throws PortalException if a bookmarks folder with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public BookmarksFolder getBookmarksFolder(long folderId)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return bookmarksFolderPersistence.findByPrimaryKey(folderId);
 	}
 
 	@Override
-	public ActionableDynamicQuery getActionableDynamicQuery()
-		throws SystemException {
+	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.bookmarks.service.BookmarksFolderLocalServiceUtil.getService());
@@ -306,8 +289,7 @@ public abstract class BookmarksFolderLocalServiceBaseImpl
 	}
 
 	protected void initActionableDynamicQuery(
-		ActionableDynamicQuery actionableDynamicQuery)
-		throws SystemException {
+		ActionableDynamicQuery actionableDynamicQuery) {
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.bookmarks.service.BookmarksFolderLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(BookmarksFolder.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
@@ -317,11 +299,10 @@ public abstract class BookmarksFolderLocalServiceBaseImpl
 
 	@Override
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		final PortletDataContext portletDataContext) throws SystemException {
+		final PortletDataContext portletDataContext) {
 		final ExportActionableDynamicQuery exportActionableDynamicQuery = new ExportActionableDynamicQuery() {
 				@Override
-				public long performCount()
-					throws PortalException, SystemException {
+				public long performCount() throws PortalException {
 					ManifestSummary manifestSummary = portletDataContext.getManifestSummary();
 
 					StagedModelType stagedModelType = getStagedModelType();
@@ -365,9 +346,8 @@ public abstract class BookmarksFolderLocalServiceBaseImpl
 
 		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
 				@Override
-				@SuppressWarnings("unused")
 				public void performAction(Object object)
-					throws PortalException, SystemException {
+					throws PortalException {
 					BookmarksFolder stagedModel = (BookmarksFolder)object;
 
 					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
@@ -382,7 +362,7 @@ public abstract class BookmarksFolderLocalServiceBaseImpl
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return bookmarksFolderPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -393,11 +373,10 @@ public abstract class BookmarksFolderLocalServiceBaseImpl
 	 * @param  companyId the primary key of the company
 	 * @return the matching bookmarks folder
 	 * @throws PortalException if a matching bookmarks folder could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public BookmarksFolder getBookmarksFolderByUuidAndCompanyId(String uuid,
-		long companyId) throws PortalException, SystemException {
+		long companyId) throws PortalException {
 		return bookmarksFolderPersistence.findByUuid_C_First(uuid, companyId,
 			null);
 	}
@@ -409,11 +388,10 @@ public abstract class BookmarksFolderLocalServiceBaseImpl
 	 * @param groupId the primary key of the group
 	 * @return the matching bookmarks folder
 	 * @throws PortalException if a matching bookmarks folder could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public BookmarksFolder getBookmarksFolderByUuidAndGroupId(String uuid,
-		long groupId) throws PortalException, SystemException {
+		long groupId) throws PortalException {
 		return bookmarksFolderPersistence.findByUUID_G(uuid, groupId);
 	}
 
@@ -427,11 +405,9 @@ public abstract class BookmarksFolderLocalServiceBaseImpl
 	 * @param start the lower bound of the range of bookmarks folders
 	 * @param end the upper bound of the range of bookmarks folders (not inclusive)
 	 * @return the range of bookmarks folders
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<BookmarksFolder> getBookmarksFolders(int start, int end)
-		throws SystemException {
+	public List<BookmarksFolder> getBookmarksFolders(int start, int end) {
 		return bookmarksFolderPersistence.findAll(start, end);
 	}
 
@@ -439,10 +415,9 @@ public abstract class BookmarksFolderLocalServiceBaseImpl
 	 * Returns the number of bookmarks folders.
 	 *
 	 * @return the number of bookmarks folders
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int getBookmarksFoldersCount() throws SystemException {
+	public int getBookmarksFoldersCount() {
 		return bookmarksFolderPersistence.countAll();
 	}
 
@@ -451,12 +426,11 @@ public abstract class BookmarksFolderLocalServiceBaseImpl
 	 *
 	 * @param bookmarksFolder the bookmarks folder
 	 * @return the bookmarks folder that was updated
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public BookmarksFolder updateBookmarksFolder(
-		BookmarksFolder bookmarksFolder) throws SystemException {
+		BookmarksFolder bookmarksFolder) {
 		return bookmarksFolderPersistence.update(bookmarksFolder);
 	}
 
@@ -1258,7 +1232,7 @@ public abstract class BookmarksFolderLocalServiceBaseImpl
 	 *
 	 * @param sql the sql query
 	 */
-	protected void runSQL(String sql) throws SystemException {
+	protected void runSQL(String sql) {
 		try {
 			DataSource dataSource = bookmarksFolderPersistence.getDataSource();
 

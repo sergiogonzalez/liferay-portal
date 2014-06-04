@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -113,11 +112,9 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 	 *
 	 * @param groupId the group ID
 	 * @return the matching shopping coupons
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<ShoppingCoupon> findByGroupId(long groupId)
-		throws SystemException {
+	public List<ShoppingCoupon> findByGroupId(long groupId) {
 		return findByGroupId(groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -132,11 +129,9 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 	 * @param start the lower bound of the range of shopping coupons
 	 * @param end the upper bound of the range of shopping coupons (not inclusive)
 	 * @return the range of matching shopping coupons
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<ShoppingCoupon> findByGroupId(long groupId, int start, int end)
-		throws SystemException {
+	public List<ShoppingCoupon> findByGroupId(long groupId, int start, int end) {
 		return findByGroupId(groupId, start, end, null);
 	}
 
@@ -152,11 +147,10 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 	 * @param end the upper bound of the range of shopping coupons (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching shopping coupons
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<ShoppingCoupon> findByGroupId(long groupId, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -259,12 +253,10 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching shopping coupon
 	 * @throws com.liferay.portlet.shopping.NoSuchCouponException if a matching shopping coupon could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ShoppingCoupon findByGroupId_First(long groupId,
-		OrderByComparator orderByComparator)
-		throws NoSuchCouponException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchCouponException {
 		ShoppingCoupon shoppingCoupon = fetchByGroupId_First(groupId,
 				orderByComparator);
 
@@ -290,11 +282,10 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching shopping coupon, or <code>null</code> if a matching shopping coupon could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ShoppingCoupon fetchByGroupId_First(long groupId,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		List<ShoppingCoupon> list = findByGroupId(groupId, 0, 1,
 				orderByComparator);
 
@@ -312,12 +303,10 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching shopping coupon
 	 * @throws com.liferay.portlet.shopping.NoSuchCouponException if a matching shopping coupon could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ShoppingCoupon findByGroupId_Last(long groupId,
-		OrderByComparator orderByComparator)
-		throws NoSuchCouponException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchCouponException {
 		ShoppingCoupon shoppingCoupon = fetchByGroupId_Last(groupId,
 				orderByComparator);
 
@@ -343,11 +332,10 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching shopping coupon, or <code>null</code> if a matching shopping coupon could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ShoppingCoupon fetchByGroupId_Last(long groupId,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		int count = countByGroupId(groupId);
 
 		if (count == 0) {
@@ -372,12 +360,11 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next shopping coupon
 	 * @throws com.liferay.portlet.shopping.NoSuchCouponException if a shopping coupon with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ShoppingCoupon[] findByGroupId_PrevAndNext(long couponId,
 		long groupId, OrderByComparator orderByComparator)
-		throws NoSuchCouponException, SystemException {
+		throws NoSuchCouponException {
 		ShoppingCoupon shoppingCoupon = findByPrimaryKey(couponId);
 
 		Session session = null;
@@ -514,10 +501,9 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 	 * Removes all the shopping coupons where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByGroupId(long groupId) throws SystemException {
+	public void removeByGroupId(long groupId) {
 		for (ShoppingCoupon shoppingCoupon : findByGroupId(groupId,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(shoppingCoupon);
@@ -529,10 +515,9 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 	 *
 	 * @param groupId the group ID
 	 * @return the number of matching shopping coupons
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByGroupId(long groupId) throws SystemException {
+	public int countByGroupId(long groupId) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_GROUPID;
 
 		Object[] finderArgs = new Object[] { groupId };
@@ -594,11 +579,9 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 	 * @param code the code
 	 * @return the matching shopping coupon
 	 * @throws com.liferay.portlet.shopping.NoSuchCouponException if a matching shopping coupon could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public ShoppingCoupon findByCode(String code)
-		throws NoSuchCouponException, SystemException {
+	public ShoppingCoupon findByCode(String code) throws NoSuchCouponException {
 		ShoppingCoupon shoppingCoupon = fetchByCode(code);
 
 		if (shoppingCoupon == null) {
@@ -626,10 +609,9 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 	 *
 	 * @param code the code
 	 * @return the matching shopping coupon, or <code>null</code> if a matching shopping coupon could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public ShoppingCoupon fetchByCode(String code) throws SystemException {
+	public ShoppingCoupon fetchByCode(String code) {
 		return fetchByCode(code, true);
 	}
 
@@ -639,11 +621,9 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 	 * @param code the code
 	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching shopping coupon, or <code>null</code> if a matching shopping coupon could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public ShoppingCoupon fetchByCode(String code, boolean retrieveFromCache)
-		throws SystemException {
+	public ShoppingCoupon fetchByCode(String code, boolean retrieveFromCache) {
 		Object[] finderArgs = new Object[] { code };
 
 		Object result = null;
@@ -739,11 +719,10 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 	 *
 	 * @param code the code
 	 * @return the shopping coupon that was removed
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ShoppingCoupon removeByCode(String code)
-		throws NoSuchCouponException, SystemException {
+		throws NoSuchCouponException {
 		ShoppingCoupon shoppingCoupon = findByCode(code);
 
 		return remove(shoppingCoupon);
@@ -754,10 +733,9 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 	 *
 	 * @param code the code
 	 * @return the number of matching shopping coupons
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByCode(String code) throws SystemException {
+	public int countByCode(String code) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_CODE;
 
 		Object[] finderArgs = new Object[] { code };
@@ -974,11 +952,9 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 	 * @param couponId the primary key of the shopping coupon
 	 * @return the shopping coupon that was removed
 	 * @throws com.liferay.portlet.shopping.NoSuchCouponException if a shopping coupon with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public ShoppingCoupon remove(long couponId)
-		throws NoSuchCouponException, SystemException {
+	public ShoppingCoupon remove(long couponId) throws NoSuchCouponException {
 		return remove((Serializable)couponId);
 	}
 
@@ -988,11 +964,10 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 	 * @param primaryKey the primary key of the shopping coupon
 	 * @return the shopping coupon that was removed
 	 * @throws com.liferay.portlet.shopping.NoSuchCouponException if a shopping coupon with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ShoppingCoupon remove(Serializable primaryKey)
-		throws NoSuchCouponException, SystemException {
+		throws NoSuchCouponException {
 		Session session = null;
 
 		try {
@@ -1024,8 +999,7 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 	}
 
 	@Override
-	protected ShoppingCoupon removeImpl(ShoppingCoupon shoppingCoupon)
-		throws SystemException {
+	protected ShoppingCoupon removeImpl(ShoppingCoupon shoppingCoupon) {
 		shoppingCoupon = toUnwrappedModel(shoppingCoupon);
 
 		Session session = null;
@@ -1058,8 +1032,7 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 
 	@Override
 	public ShoppingCoupon updateImpl(
-		com.liferay.portlet.shopping.model.ShoppingCoupon shoppingCoupon)
-		throws SystemException {
+		com.liferay.portlet.shopping.model.ShoppingCoupon shoppingCoupon) {
 		shoppingCoupon = toUnwrappedModel(shoppingCoupon);
 
 		boolean isNew = shoppingCoupon.isNew();
@@ -1162,11 +1135,10 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 	 * @param primaryKey the primary key of the shopping coupon
 	 * @return the shopping coupon
 	 * @throws com.liferay.portlet.shopping.NoSuchCouponException if a shopping coupon with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ShoppingCoupon findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchCouponException, SystemException {
+		throws NoSuchCouponException {
 		ShoppingCoupon shoppingCoupon = fetchByPrimaryKey(primaryKey);
 
 		if (shoppingCoupon == null) {
@@ -1187,11 +1159,10 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 	 * @param couponId the primary key of the shopping coupon
 	 * @return the shopping coupon
 	 * @throws com.liferay.portlet.shopping.NoSuchCouponException if a shopping coupon with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ShoppingCoupon findByPrimaryKey(long couponId)
-		throws NoSuchCouponException, SystemException {
+		throws NoSuchCouponException {
 		return findByPrimaryKey((Serializable)couponId);
 	}
 
@@ -1200,11 +1171,9 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 	 *
 	 * @param primaryKey the primary key of the shopping coupon
 	 * @return the shopping coupon, or <code>null</code> if a shopping coupon with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public ShoppingCoupon fetchByPrimaryKey(Serializable primaryKey)
-		throws SystemException {
+	public ShoppingCoupon fetchByPrimaryKey(Serializable primaryKey) {
 		ShoppingCoupon shoppingCoupon = (ShoppingCoupon)EntityCacheUtil.getResult(ShoppingCouponModelImpl.ENTITY_CACHE_ENABLED,
 				ShoppingCouponImpl.class, primaryKey);
 
@@ -1249,11 +1218,9 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 	 *
 	 * @param couponId the primary key of the shopping coupon
 	 * @return the shopping coupon, or <code>null</code> if a shopping coupon with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public ShoppingCoupon fetchByPrimaryKey(long couponId)
-		throws SystemException {
+	public ShoppingCoupon fetchByPrimaryKey(long couponId) {
 		return fetchByPrimaryKey((Serializable)couponId);
 	}
 
@@ -1261,10 +1228,9 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 	 * Returns all the shopping coupons.
 	 *
 	 * @return the shopping coupons
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<ShoppingCoupon> findAll() throws SystemException {
+	public List<ShoppingCoupon> findAll() {
 		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -1278,11 +1244,9 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 	 * @param start the lower bound of the range of shopping coupons
 	 * @param end the upper bound of the range of shopping coupons (not inclusive)
 	 * @return the range of shopping coupons
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<ShoppingCoupon> findAll(int start, int end)
-		throws SystemException {
+	public List<ShoppingCoupon> findAll(int start, int end) {
 		return findAll(start, end, null);
 	}
 
@@ -1297,11 +1261,10 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 	 * @param end the upper bound of the range of shopping coupons (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of shopping coupons
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<ShoppingCoupon> findAll(int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1383,10 +1346,9 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 	/**
 	 * Removes all the shopping coupons from the database.
 	 *
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeAll() throws SystemException {
+	public void removeAll() {
 		for (ShoppingCoupon shoppingCoupon : findAll()) {
 			remove(shoppingCoupon);
 		}
@@ -1396,10 +1358,9 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 	 * Returns the number of shopping coupons.
 	 *
 	 * @return the number of shopping coupons
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countAll() throws SystemException {
+	public int countAll() {
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
 				FINDER_ARGS_EMPTY, this);
 

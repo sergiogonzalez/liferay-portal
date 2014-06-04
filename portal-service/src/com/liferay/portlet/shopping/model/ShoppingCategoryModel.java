@@ -17,7 +17,6 @@ package com.liferay.portlet.shopping.model;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.GroupedModel;
@@ -131,10 +130,9 @@ public interface ShoppingCategoryModel extends BaseModel<ShoppingCategory>,
 	 * Returns the user uuid of this shopping category.
 	 *
 	 * @return the user uuid of this shopping category
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public String getUserUuid() throws SystemException;
+	public String getUserUuid();
 
 	/**
 	 * Sets the user uuid of this shopping category.

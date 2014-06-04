@@ -85,8 +85,7 @@ public class BackgroundTaskServiceHttp {
 	}
 
 	public static java.lang.String getBackgroundTaskStatusJSON(
-		HttpPrincipal httpPrincipal, long backgroundTaskId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		HttpPrincipal httpPrincipal, long backgroundTaskId) {
 		try {
 			MethodKey methodKey = new MethodKey(BackgroundTaskServiceUtil.class,
 					"getBackgroundTaskStatusJSON",

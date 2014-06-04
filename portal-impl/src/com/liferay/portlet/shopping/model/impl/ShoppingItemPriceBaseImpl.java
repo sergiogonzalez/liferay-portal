@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.shopping.model.impl;
 
-import com.liferay.portal.kernel.exception.SystemException;
-
 import com.liferay.portlet.shopping.model.ShoppingItemPrice;
 import com.liferay.portlet.shopping.service.ShoppingItemPriceLocalServiceUtil;
 
@@ -39,7 +37,7 @@ public abstract class ShoppingItemPriceBaseImpl
 	 * Never modify or reference this class directly. All methods that expect a shopping item price model instance should use the {@link ShoppingItemPrice} interface instead.
 	 */
 	@Override
-	public void persist() throws SystemException {
+	public void persist() {
 		if (this.isNew()) {
 			ShoppingItemPriceLocalServiceUtil.addShoppingItemPrice(this);
 		}

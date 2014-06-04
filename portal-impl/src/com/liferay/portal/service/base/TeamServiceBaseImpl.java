@@ -430,7 +430,7 @@ public abstract class TeamServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @param sql the sql query
 	 */
-	protected void runSQL(String sql) throws SystemException {
+	protected void runSQL(String sql) {
 		try {
 			DataSource dataSource = teamPersistence.getDataSource();
 

@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -106,11 +105,9 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 	 *
 	 * @param organizationId the organization ID
 	 * @return the matching org labors
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<OrgLabor> findByOrganizationId(long organizationId)
-		throws SystemException {
+	public List<OrgLabor> findByOrganizationId(long organizationId) {
 		return findByOrganizationId(organizationId, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
@@ -126,11 +123,10 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 	 * @param start the lower bound of the range of org labors
 	 * @param end the upper bound of the range of org labors (not inclusive)
 	 * @return the range of matching org labors
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<OrgLabor> findByOrganizationId(long organizationId, int start,
-		int end) throws SystemException {
+		int end) {
 		return findByOrganizationId(organizationId, start, end, null);
 	}
 
@@ -146,11 +142,10 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 	 * @param end the upper bound of the range of org labors (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching org labors
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<OrgLabor> findByOrganizationId(long organizationId, int start,
-		int end, OrderByComparator orderByComparator) throws SystemException {
+		int end, OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -257,12 +252,10 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching org labor
 	 * @throws com.liferay.portal.NoSuchOrgLaborException if a matching org labor could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public OrgLabor findByOrganizationId_First(long organizationId,
-		OrderByComparator orderByComparator)
-		throws NoSuchOrgLaborException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchOrgLaborException {
 		OrgLabor orgLabor = fetchByOrganizationId_First(organizationId,
 				orderByComparator);
 
@@ -288,11 +281,10 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 	 * @param organizationId the organization ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching org labor, or <code>null</code> if a matching org labor could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public OrgLabor fetchByOrganizationId_First(long organizationId,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		List<OrgLabor> list = findByOrganizationId(organizationId, 0, 1,
 				orderByComparator);
 
@@ -310,12 +302,10 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching org labor
 	 * @throws com.liferay.portal.NoSuchOrgLaborException if a matching org labor could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public OrgLabor findByOrganizationId_Last(long organizationId,
-		OrderByComparator orderByComparator)
-		throws NoSuchOrgLaborException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchOrgLaborException {
 		OrgLabor orgLabor = fetchByOrganizationId_Last(organizationId,
 				orderByComparator);
 
@@ -341,11 +331,10 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 	 * @param organizationId the organization ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching org labor, or <code>null</code> if a matching org labor could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public OrgLabor fetchByOrganizationId_Last(long organizationId,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		int count = countByOrganizationId(organizationId);
 
 		if (count == 0) {
@@ -370,12 +359,11 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next org labor
 	 * @throws com.liferay.portal.NoSuchOrgLaborException if a org labor with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public OrgLabor[] findByOrganizationId_PrevAndNext(long orgLaborId,
 		long organizationId, OrderByComparator orderByComparator)
-		throws NoSuchOrgLaborException, SystemException {
+		throws NoSuchOrgLaborException {
 		OrgLabor orgLabor = findByPrimaryKey(orgLaborId);
 
 		Session session = null;
@@ -512,11 +500,9 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 	 * Removes all the org labors where organizationId = &#63; from the database.
 	 *
 	 * @param organizationId the organization ID
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByOrganizationId(long organizationId)
-		throws SystemException {
+	public void removeByOrganizationId(long organizationId) {
 		for (OrgLabor orgLabor : findByOrganizationId(organizationId,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(orgLabor);
@@ -528,11 +514,9 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 	 *
 	 * @param organizationId the organization ID
 	 * @return the number of matching org labors
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByOrganizationId(long organizationId)
-		throws SystemException {
+	public int countByOrganizationId(long organizationId) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_ORGANIZATIONID;
 
 		Object[] finderArgs = new Object[] { organizationId };
@@ -684,11 +668,9 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 	 * @param orgLaborId the primary key of the org labor
 	 * @return the org labor that was removed
 	 * @throws com.liferay.portal.NoSuchOrgLaborException if a org labor with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public OrgLabor remove(long orgLaborId)
-		throws NoSuchOrgLaborException, SystemException {
+	public OrgLabor remove(long orgLaborId) throws NoSuchOrgLaborException {
 		return remove((Serializable)orgLaborId);
 	}
 
@@ -698,11 +680,10 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 	 * @param primaryKey the primary key of the org labor
 	 * @return the org labor that was removed
 	 * @throws com.liferay.portal.NoSuchOrgLaborException if a org labor with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public OrgLabor remove(Serializable primaryKey)
-		throws NoSuchOrgLaborException, SystemException {
+		throws NoSuchOrgLaborException {
 		Session session = null;
 
 		try {
@@ -734,7 +715,7 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 	}
 
 	@Override
-	protected OrgLabor removeImpl(OrgLabor orgLabor) throws SystemException {
+	protected OrgLabor removeImpl(OrgLabor orgLabor) {
 		orgLabor = toUnwrappedModel(orgLabor);
 
 		Session session = null;
@@ -766,8 +747,7 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 	}
 
 	@Override
-	public OrgLabor updateImpl(com.liferay.portal.model.OrgLabor orgLabor)
-		throws SystemException {
+	public OrgLabor updateImpl(com.liferay.portal.model.OrgLabor orgLabor) {
 		orgLabor = toUnwrappedModel(orgLabor);
 
 		boolean isNew = orgLabor.isNew();
@@ -868,11 +848,10 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 	 * @param primaryKey the primary key of the org labor
 	 * @return the org labor
 	 * @throws com.liferay.portal.NoSuchOrgLaborException if a org labor with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public OrgLabor findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchOrgLaborException, SystemException {
+		throws NoSuchOrgLaborException {
 		OrgLabor orgLabor = fetchByPrimaryKey(primaryKey);
 
 		if (orgLabor == null) {
@@ -893,11 +872,10 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 	 * @param orgLaborId the primary key of the org labor
 	 * @return the org labor
 	 * @throws com.liferay.portal.NoSuchOrgLaborException if a org labor with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public OrgLabor findByPrimaryKey(long orgLaborId)
-		throws NoSuchOrgLaborException, SystemException {
+		throws NoSuchOrgLaborException {
 		return findByPrimaryKey((Serializable)orgLaborId);
 	}
 
@@ -906,11 +884,9 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 	 *
 	 * @param primaryKey the primary key of the org labor
 	 * @return the org labor, or <code>null</code> if a org labor with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public OrgLabor fetchByPrimaryKey(Serializable primaryKey)
-		throws SystemException {
+	public OrgLabor fetchByPrimaryKey(Serializable primaryKey) {
 		OrgLabor orgLabor = (OrgLabor)EntityCacheUtil.getResult(OrgLaborModelImpl.ENTITY_CACHE_ENABLED,
 				OrgLaborImpl.class, primaryKey);
 
@@ -953,11 +929,9 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 	 *
 	 * @param orgLaborId the primary key of the org labor
 	 * @return the org labor, or <code>null</code> if a org labor with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public OrgLabor fetchByPrimaryKey(long orgLaborId)
-		throws SystemException {
+	public OrgLabor fetchByPrimaryKey(long orgLaborId) {
 		return fetchByPrimaryKey((Serializable)orgLaborId);
 	}
 
@@ -965,10 +939,9 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 	 * Returns all the org labors.
 	 *
 	 * @return the org labors
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<OrgLabor> findAll() throws SystemException {
+	public List<OrgLabor> findAll() {
 		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -982,10 +955,9 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 	 * @param start the lower bound of the range of org labors
 	 * @param end the upper bound of the range of org labors (not inclusive)
 	 * @return the range of org labors
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<OrgLabor> findAll(int start, int end) throws SystemException {
+	public List<OrgLabor> findAll(int start, int end) {
 		return findAll(start, end, null);
 	}
 
@@ -1000,11 +972,10 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 	 * @param end the upper bound of the range of org labors (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of org labors
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<OrgLabor> findAll(int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1086,10 +1057,9 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 	/**
 	 * Removes all the org labors from the database.
 	 *
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeAll() throws SystemException {
+	public void removeAll() {
 		for (OrgLabor orgLabor : findAll()) {
 			remove(orgLabor);
 		}
@@ -1099,10 +1069,9 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 	 * Returns the number of org labors.
 	 *
 	 * @return the number of org labors
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countAll() throws SystemException {
+	public int countAll() {
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
 				FINDER_ARGS_EMPTY, this);
 

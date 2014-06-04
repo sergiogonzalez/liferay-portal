@@ -52,11 +52,9 @@ public interface DLContentLocalService extends BaseLocalService,
 	*
 	* @param dlContent the document library content
 	* @return the document library content that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLContent addDLContent(
-		com.liferay.portlet.documentlibrary.model.DLContent dlContent)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portlet.documentlibrary.model.DLContent dlContent);
 
 	/**
 	* Creates a new document library content with the primary key. Does not add the document library content to the database.
@@ -73,23 +71,19 @@ public interface DLContentLocalService extends BaseLocalService,
 	* @param contentId the primary key of the document library content
 	* @return the document library content that was removed
 	* @throws PortalException if a document library content with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLContent deleteDLContent(
 		long contentId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Deletes the document library content from the database. Also notifies the appropriate model listeners.
 	*
 	* @param dlContent the document library content
 	* @return the document library content that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLContent deleteDLContent(
-		com.liferay.portlet.documentlibrary.model.DLContent dlContent)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portlet.documentlibrary.model.DLContent dlContent);
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -98,12 +92,10 @@ public interface DLContentLocalService extends BaseLocalService,
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -116,12 +108,11 @@ public interface DLContentLocalService extends BaseLocalService,
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException;
+		int end);
 
 	/**
 	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
@@ -135,25 +126,21 @@ public interface DLContentLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the number of rows that match the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows that match the dynamic query.
@@ -161,17 +148,14 @@ public interface DLContentLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.dao.orm.Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.documentlibrary.model.DLContent fetchDLContent(
-		long contentId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long contentId);
 
 	/**
 	* Returns the document library content with the primary key.
@@ -179,24 +163,20 @@ public interface DLContentLocalService extends BaseLocalService,
 	* @param contentId the primary key of the document library content
 	* @return the document library content
 	* @throws PortalException if a document library content with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.documentlibrary.model.DLContent getDLContent(
 		long contentId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns a range of all the document library contents.
@@ -208,38 +188,31 @@ public interface DLContentLocalService extends BaseLocalService,
 	* @param start the lower bound of the range of document library contents
 	* @param end the upper bound of the range of document library contents (not inclusive)
 	* @return the range of document library contents
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLContent> getDLContents(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		int start, int end);
 
 	/**
 	* Returns the number of document library contents.
 	*
 	* @return the number of document library contents
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getDLContentsCount()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int getDLContentsCount();
 
 	/**
 	* Updates the document library content in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param dlContent the document library content
 	* @return the document library content that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLContent updateDLContent(
-		com.liferay.portlet.documentlibrary.model.DLContent dlContent)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portlet.documentlibrary.model.DLContent dlContent);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.documentlibrary.model.DLContentDataBlobModel getDataBlobModel(
-		java.io.Serializable primaryKey)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.io.Serializable primaryKey);
 
 	/**
 	* Returns the Spring bean ID for this bean.

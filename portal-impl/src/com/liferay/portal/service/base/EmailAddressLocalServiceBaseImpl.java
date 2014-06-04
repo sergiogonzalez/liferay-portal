@@ -82,12 +82,10 @@ public abstract class EmailAddressLocalServiceBaseImpl
 	 *
 	 * @param emailAddress the email address
 	 * @return the email address that was added
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public EmailAddress addEmailAddress(EmailAddress emailAddress)
-		throws SystemException {
+	public EmailAddress addEmailAddress(EmailAddress emailAddress) {
 		emailAddress.setNew(true);
 
 		return emailAddressPersistence.update(emailAddress);
@@ -110,7 +108,7 @@ public abstract class EmailAddressLocalServiceBaseImpl
 	 * @param emailAddressId the primary key of the email address
 	 * @return the email address that was removed
 	 * @throws PortalException if a email address with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
+	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
@@ -124,7 +122,7 @@ public abstract class EmailAddressLocalServiceBaseImpl
 	 *
 	 * @param emailAddress the email address
 	 * @return the email address that was removed
-	 * @throws SystemException if a system exception occurred
+	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
@@ -146,12 +144,10 @@ public abstract class EmailAddressLocalServiceBaseImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery) {
 		return emailAddressPersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -166,12 +162,10 @@ public abstract class EmailAddressLocalServiceBaseImpl
 	 * @param start the lower bound of the range of model instances
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
 		return emailAddressPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end);
 	}
@@ -188,12 +182,11 @@ public abstract class EmailAddressLocalServiceBaseImpl
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
 	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		return emailAddressPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
 	}
@@ -203,11 +196,9 @@ public abstract class EmailAddressLocalServiceBaseImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public long dynamicQueryCount(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return emailAddressPersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
@@ -217,18 +208,16 @@ public abstract class EmailAddressLocalServiceBaseImpl
 	 * @param dynamicQuery the dynamic query
 	 * @param projection the projection to apply to the query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection) throws SystemException {
+		Projection projection) {
 		return emailAddressPersistence.countWithDynamicQuery(dynamicQuery,
 			projection);
 	}
 
 	@Override
-	public EmailAddress fetchEmailAddress(long emailAddressId)
-		throws SystemException {
+	public EmailAddress fetchEmailAddress(long emailAddressId) {
 		return emailAddressPersistence.fetchByPrimaryKey(emailAddressId);
 	}
 
@@ -238,11 +227,10 @@ public abstract class EmailAddressLocalServiceBaseImpl
 	 * @param uuid the email address's UUID
 	 * @param  companyId the primary key of the company
 	 * @return the matching email address, or <code>null</code> if a matching email address could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public EmailAddress fetchEmailAddressByUuidAndCompanyId(String uuid,
-		long companyId) throws SystemException {
+		long companyId) {
 		return emailAddressPersistence.fetchByUuid_C_First(uuid, companyId, null);
 	}
 
@@ -252,17 +240,15 @@ public abstract class EmailAddressLocalServiceBaseImpl
 	 * @param emailAddressId the primary key of the email address
 	 * @return the email address
 	 * @throws PortalException if a email address with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public EmailAddress getEmailAddress(long emailAddressId)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return emailAddressPersistence.findByPrimaryKey(emailAddressId);
 	}
 
 	@Override
-	public ActionableDynamicQuery getActionableDynamicQuery()
-		throws SystemException {
+	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.EmailAddressLocalServiceUtil.getService());
@@ -275,8 +261,7 @@ public abstract class EmailAddressLocalServiceBaseImpl
 	}
 
 	protected void initActionableDynamicQuery(
-		ActionableDynamicQuery actionableDynamicQuery)
-		throws SystemException {
+		ActionableDynamicQuery actionableDynamicQuery) {
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.EmailAddressLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(EmailAddress.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
@@ -286,11 +271,10 @@ public abstract class EmailAddressLocalServiceBaseImpl
 
 	@Override
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		final PortletDataContext portletDataContext) throws SystemException {
+		final PortletDataContext portletDataContext) {
 		final ExportActionableDynamicQuery exportActionableDynamicQuery = new ExportActionableDynamicQuery() {
 				@Override
-				public long performCount()
-					throws PortalException, SystemException {
+				public long performCount() throws PortalException {
 					ManifestSummary manifestSummary = portletDataContext.getManifestSummary();
 
 					StagedModelType stagedModelType = getStagedModelType();
@@ -334,9 +318,8 @@ public abstract class EmailAddressLocalServiceBaseImpl
 
 		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
 				@Override
-				@SuppressWarnings("unused")
 				public void performAction(Object object)
-					throws PortalException, SystemException {
+					throws PortalException {
 					EmailAddress stagedModel = (EmailAddress)object;
 
 					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
@@ -351,7 +334,7 @@ public abstract class EmailAddressLocalServiceBaseImpl
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return emailAddressPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -362,11 +345,10 @@ public abstract class EmailAddressLocalServiceBaseImpl
 	 * @param  companyId the primary key of the company
 	 * @return the matching email address
 	 * @throws PortalException if a matching email address could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public EmailAddress getEmailAddressByUuidAndCompanyId(String uuid,
-		long companyId) throws PortalException, SystemException {
+		long companyId) throws PortalException {
 		return emailAddressPersistence.findByUuid_C_First(uuid, companyId, null);
 	}
 
@@ -380,11 +362,9 @@ public abstract class EmailAddressLocalServiceBaseImpl
 	 * @param start the lower bound of the range of email addresses
 	 * @param end the upper bound of the range of email addresses (not inclusive)
 	 * @return the range of email addresses
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<EmailAddress> getEmailAddresses(int start, int end)
-		throws SystemException {
+	public List<EmailAddress> getEmailAddresses(int start, int end) {
 		return emailAddressPersistence.findAll(start, end);
 	}
 
@@ -392,10 +372,9 @@ public abstract class EmailAddressLocalServiceBaseImpl
 	 * Returns the number of email addresses.
 	 *
 	 * @return the number of email addresses
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int getEmailAddressesCount() throws SystemException {
+	public int getEmailAddressesCount() {
 		return emailAddressPersistence.countAll();
 	}
 
@@ -404,12 +383,10 @@ public abstract class EmailAddressLocalServiceBaseImpl
 	 *
 	 * @param emailAddress the email address
 	 * @return the email address that was updated
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public EmailAddress updateEmailAddress(EmailAddress emailAddress)
-		throws SystemException {
+	public EmailAddress updateEmailAddress(EmailAddress emailAddress) {
 		return emailAddressPersistence.update(emailAddress);
 	}
 
@@ -700,7 +677,7 @@ public abstract class EmailAddressLocalServiceBaseImpl
 	 *
 	 * @param sql the sql query
 	 */
-	protected void runSQL(String sql) throws SystemException {
+	protected void runSQL(String sql) {
 		try {
 			DataSource dataSource = emailAddressPersistence.getDataSource();
 

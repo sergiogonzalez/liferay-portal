@@ -367,11 +367,9 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	* Returns the user uuid of this document library file version.
 	*
 	* @return the user uuid of this document library file version
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public java.lang.String getUserUuid()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public java.lang.String getUserUuid() {
 		return _dlFileVersion.getUserUuid();
 	}
 
@@ -769,11 +767,9 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	* Returns the status by user uuid of this document library file version.
 	*
 	* @return the status by user uuid of this document library file version
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public java.lang.String getStatusByUserUuid()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public java.lang.String getStatusByUserUuid() {
 		return _dlFileVersion.getStatusByUserUuid();
 	}
 
@@ -1016,14 +1012,12 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void persist() {
 		_dlFileVersion.persist();
 	}
 
 	@Override
-	public void updateTreePath(java.lang.String treePath)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void updateTreePath(java.lang.String treePath) {
 		_dlFileVersion.updateTreePath(treePath);
 	}
 

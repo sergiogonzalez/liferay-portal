@@ -14,7 +14,6 @@
 
 package com.liferay.portal.model.impl;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.LayoutRevision;
 import com.liferay.portal.service.LayoutRevisionLocalServiceUtil;
 
@@ -38,7 +37,7 @@ public abstract class LayoutRevisionBaseImpl extends LayoutRevisionModelImpl
 	 * Never modify or reference this class directly. All methods that expect a layout revision model instance should use the {@link LayoutRevision} interface instead.
 	 */
 	@Override
-	public void persist() throws SystemException {
+	public void persist() {
 		if (this.isNew()) {
 			LayoutRevisionLocalServiceUtil.addLayoutRevision(this);
 		}

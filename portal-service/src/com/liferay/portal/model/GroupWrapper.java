@@ -323,11 +323,9 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	* Returns the creator user uuid of this group.
 	*
 	* @return the creator user uuid of this group
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public java.lang.String getCreatorUserUuid()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public java.lang.String getCreatorUserUuid() {
 		return _group.getCreatorUserUuid();
 	}
 
@@ -785,21 +783,18 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void persist() {
 		_group.persist();
 	}
 
 	@Override
 	public java.lang.String buildTreePath()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _group.buildTreePath();
 	}
 
 	@Override
-	public void updateTreePath(java.lang.String treePath)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void updateTreePath(java.lang.String treePath) {
 		_group.updateTreePath(treePath);
 	}
 

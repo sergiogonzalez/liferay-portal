@@ -46,11 +46,9 @@ public class PhoneLocalServiceUtil {
 	*
 	* @param phone the phone
 	* @return the phone that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Phone addPhone(
-		com.liferay.portal.model.Phone phone)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.Phone phone) {
 		return getService().addPhone(phone);
 	}
 
@@ -70,7 +68,7 @@ public class PhoneLocalServiceUtil {
 	* @param phoneId the primary key of the phone
 	* @return the phone that was removed
 	* @throws PortalException if a phone with the primary key could not be found
-	* @throws SystemException if a system exception occurred
+	* @throws SystemException
 	*/
 	public static com.liferay.portal.model.Phone deletePhone(long phoneId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -83,7 +81,7 @@ public class PhoneLocalServiceUtil {
 	*
 	* @param phone the phone
 	* @return the phone that was removed
-	* @throws SystemException if a system exception occurred
+	* @throws SystemException
 	*/
 	public static com.liferay.portal.model.Phone deletePhone(
 		com.liferay.portal.model.Phone phone)
@@ -100,12 +98,10 @@ public class PhoneLocalServiceUtil {
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -120,12 +116,11 @@ public class PhoneLocalServiceUtil {
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -141,14 +136,12 @@ public class PhoneLocalServiceUtil {
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getService()
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
@@ -158,11 +151,9 @@ public class PhoneLocalServiceUtil {
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -172,17 +163,14 @@ public class PhoneLocalServiceUtil {
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public static long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.portal.model.Phone fetchPhone(long phoneId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static com.liferay.portal.model.Phone fetchPhone(long phoneId) {
 		return getService().fetchPhone(phoneId);
 	}
 
@@ -192,11 +180,9 @@ public class PhoneLocalServiceUtil {
 	* @param uuid the phone's UUID
 	* @param companyId the primary key of the company
 	* @return the matching phone, or <code>null</code> if a matching phone could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Phone fetchPhoneByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long companyId) {
 		return getService().fetchPhoneByUuidAndCompanyId(uuid, companyId);
 	}
 
@@ -206,29 +192,24 @@ public class PhoneLocalServiceUtil {
 	* @param phoneId the primary key of the phone
 	* @return the phone
 	* @throws PortalException if a phone with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Phone getPhone(long phoneId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPhone(phoneId);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext) {
 		return getService().getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	public static com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
@@ -239,12 +220,10 @@ public class PhoneLocalServiceUtil {
 	* @param companyId the primary key of the company
 	* @return the matching phone
 	* @throws PortalException if a matching phone could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Phone getPhoneByUuidAndCompanyId(
 		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPhoneByUuidAndCompanyId(uuid, companyId);
 	}
 
@@ -258,11 +237,9 @@ public class PhoneLocalServiceUtil {
 	* @param start the lower bound of the range of phones
 	* @param end the upper bound of the range of phones (not inclusive)
 	* @return the range of phones
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portal.model.Phone> getPhones(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return getService().getPhones(start, end);
 	}
 
@@ -270,10 +247,8 @@ public class PhoneLocalServiceUtil {
 	* Returns the number of phones.
 	*
 	* @return the number of phones
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int getPhonesCount()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int getPhonesCount() {
 		return getService().getPhonesCount();
 	}
 
@@ -282,11 +257,9 @@ public class PhoneLocalServiceUtil {
 	*
 	* @param phone the phone
 	* @return the phone that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Phone updatePhone(
-		com.liferay.portal.model.Phone phone)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.Phone phone) {
 		return getService().updatePhone(phone);
 	}
 

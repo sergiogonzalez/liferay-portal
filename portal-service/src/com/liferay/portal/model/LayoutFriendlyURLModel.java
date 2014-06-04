@@ -17,7 +17,6 @@ package com.liferay.portal.model;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -161,10 +160,9 @@ public interface LayoutFriendlyURLModel extends BaseModel<LayoutFriendlyURL>,
 	 * Returns the user uuid of this layout friendly u r l.
 	 *
 	 * @return the user uuid of this layout friendly u r l
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public String getUserUuid() throws SystemException;
+	public String getUserUuid();
 
 	/**
 	 * Sets the user uuid of this layout friendly u r l.

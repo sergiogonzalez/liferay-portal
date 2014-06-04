@@ -448,11 +448,9 @@ public class JournalArticleWrapper implements JournalArticle,
 	* Returns the user uuid of this journal article.
 	*
 	* @return the user uuid of this journal article
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public java.lang.String getUserUuid()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public java.lang.String getUserUuid() {
 		return _journalArticle.getUserUuid();
 	}
 
@@ -1267,11 +1265,9 @@ public class JournalArticleWrapper implements JournalArticle,
 	* Returns the status by user uuid of this journal article.
 	*
 	* @return the status by user uuid of this journal article
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public java.lang.String getStatusByUserUuid()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public java.lang.String getStatusByUserUuid() {
 		return _journalArticle.getStatusByUserUuid();
 	}
 
@@ -1329,12 +1325,10 @@ public class JournalArticleWrapper implements JournalArticle,
 	* Returns the trash entry created when this journal article was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this journal article.
 	*
 	* @return the trash entry created when this journal article was moved to the Recycle Bin
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.trash.model.TrashEntry getTrashEntry()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _journalArticle.getTrashEntry();
 	}
 
@@ -1372,7 +1366,6 @@ public class JournalArticleWrapper implements JournalArticle,
 	* Returns <code>true</code> if the parent of this journal article is in the Recycle Bin.
 	*
 	* @return <code>true</code> if the parent of this journal article is in the Recycle Bin; <code>false</code> otherwise
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public boolean isInTrashContainer() {
@@ -1380,14 +1373,12 @@ public class JournalArticleWrapper implements JournalArticle,
 	}
 
 	@Override
-	public boolean isInTrashExplicitly()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public boolean isInTrashExplicitly() {
 		return _journalArticle.isInTrashExplicitly();
 	}
 
 	@Override
-	public boolean isInTrashImplicitly()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public boolean isInTrashImplicitly() {
 		return _journalArticle.isInTrashImplicitly();
 	}
 
@@ -1603,14 +1594,12 @@ public class JournalArticleWrapper implements JournalArticle,
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void persist() {
 		_journalArticle.persist();
 	}
 
 	@Override
-	public void updateTreePath(java.lang.String treePath)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void updateTreePath(java.lang.String treePath) {
 		_journalArticle.updateTreePath(treePath);
 	}
 

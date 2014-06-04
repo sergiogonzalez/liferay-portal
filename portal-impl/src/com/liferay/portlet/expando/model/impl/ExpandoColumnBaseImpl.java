@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.expando.model.impl;
 
-import com.liferay.portal.kernel.exception.SystemException;
-
 import com.liferay.portlet.expando.model.ExpandoColumn;
 import com.liferay.portlet.expando.service.ExpandoColumnLocalServiceUtil;
 
@@ -39,7 +37,7 @@ public abstract class ExpandoColumnBaseImpl extends ExpandoColumnModelImpl
 	 * Never modify or reference this class directly. All methods that expect a expando column model instance should use the {@link ExpandoColumn} interface instead.
 	 */
 	@Override
-	public void persist() throws SystemException {
+	public void persist() {
 		if (this.isNew()) {
 			ExpandoColumnLocalServiceUtil.addExpandoColumn(this);
 		}

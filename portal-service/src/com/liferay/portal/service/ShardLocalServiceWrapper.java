@@ -35,12 +35,10 @@ public class ShardLocalServiceWrapper implements ShardLocalService,
 	*
 	* @param shard the shard
 	* @return the shard that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.Shard addShard(
-		com.liferay.portal.model.Shard shard)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.Shard shard) {
 		return _shardLocalService.addShard(shard);
 	}
 
@@ -61,12 +59,10 @@ public class ShardLocalServiceWrapper implements ShardLocalService,
 	* @param shardId the primary key of the shard
 	* @return the shard that was removed
 	* @throws PortalException if a shard with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.Shard deleteShard(long shardId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _shardLocalService.deleteShard(shardId);
 	}
 
@@ -75,12 +71,10 @@ public class ShardLocalServiceWrapper implements ShardLocalService,
 	*
 	* @param shard the shard
 	* @return the shard that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.Shard deleteShard(
-		com.liferay.portal.model.Shard shard)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.Shard shard) {
 		return _shardLocalService.deleteShard(shard);
 	}
 
@@ -94,13 +88,11 @@ public class ShardLocalServiceWrapper implements ShardLocalService,
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _shardLocalService.dynamicQuery(dynamicQuery);
 	}
 
@@ -115,13 +107,12 @@ public class ShardLocalServiceWrapper implements ShardLocalService,
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return _shardLocalService.dynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -137,15 +128,13 @@ public class ShardLocalServiceWrapper implements ShardLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return _shardLocalService.dynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
 	}
@@ -155,12 +144,10 @@ public class ShardLocalServiceWrapper implements ShardLocalService,
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _shardLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
@@ -170,19 +157,16 @@ public class ShardLocalServiceWrapper implements ShardLocalService,
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return _shardLocalService.dynamicQueryCount(dynamicQuery, projection);
 	}
 
 	@Override
-	public com.liferay.portal.model.Shard fetchShard(long shardId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public com.liferay.portal.model.Shard fetchShard(long shardId) {
 		return _shardLocalService.fetchShard(shardId);
 	}
 
@@ -192,26 +176,22 @@ public class ShardLocalServiceWrapper implements ShardLocalService,
 	* @param shardId the primary key of the shard
 	* @return the shard
 	* @throws PortalException if a shard with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.Shard getShard(long shardId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _shardLocalService.getShard(shardId);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _shardLocalService.getActionableDynamicQuery();
 	}
 
 	@Override
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _shardLocalService.getPersistedModel(primaryKeyObj);
 	}
 
@@ -225,11 +205,10 @@ public class ShardLocalServiceWrapper implements ShardLocalService,
 	* @param start the lower bound of the range of shards
 	* @param end the upper bound of the range of shards (not inclusive)
 	* @return the range of shards
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.model.Shard> getShards(int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return _shardLocalService.getShards(start, end);
 	}
 
@@ -237,11 +216,9 @@ public class ShardLocalServiceWrapper implements ShardLocalService,
 	* Returns the number of shards.
 	*
 	* @return the number of shards
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public int getShardsCount()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public int getShardsCount() {
 		return _shardLocalService.getShardsCount();
 	}
 
@@ -250,12 +227,10 @@ public class ShardLocalServiceWrapper implements ShardLocalService,
 	*
 	* @param shard the shard
 	* @return the shard that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.Shard updateShard(
-		com.liferay.portal.model.Shard shard)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.Shard shard) {
 		return _shardLocalService.updateShard(shard);
 	}
 

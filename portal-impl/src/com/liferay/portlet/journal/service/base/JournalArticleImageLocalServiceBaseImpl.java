@@ -72,12 +72,11 @@ public abstract class JournalArticleImageLocalServiceBaseImpl
 	 *
 	 * @param journalArticleImage the journal article image
 	 * @return the journal article image that was added
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public JournalArticleImage addJournalArticleImage(
-		JournalArticleImage journalArticleImage) throws SystemException {
+		JournalArticleImage journalArticleImage) {
 		journalArticleImage.setNew(true);
 
 		return journalArticleImagePersistence.update(journalArticleImage);
@@ -100,12 +99,11 @@ public abstract class JournalArticleImageLocalServiceBaseImpl
 	 * @param articleImageId the primary key of the journal article image
 	 * @return the journal article image that was removed
 	 * @throws PortalException if a journal article image with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public JournalArticleImage deleteJournalArticleImage(long articleImageId)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return journalArticleImagePersistence.remove(articleImageId);
 	}
 
@@ -114,12 +112,11 @@ public abstract class JournalArticleImageLocalServiceBaseImpl
 	 *
 	 * @param journalArticleImage the journal article image
 	 * @return the journal article image that was removed
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public JournalArticleImage deleteJournalArticleImage(
-		JournalArticleImage journalArticleImage) throws SystemException {
+		JournalArticleImage journalArticleImage) {
 		return journalArticleImagePersistence.remove(journalArticleImage);
 	}
 
@@ -136,12 +133,10 @@ public abstract class JournalArticleImageLocalServiceBaseImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery) {
 		return journalArticleImagePersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -156,12 +151,10 @@ public abstract class JournalArticleImageLocalServiceBaseImpl
 	 * @param start the lower bound of the range of model instances
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
 		return journalArticleImagePersistence.findWithDynamicQuery(dynamicQuery,
 			start, end);
 	}
@@ -178,12 +171,11 @@ public abstract class JournalArticleImageLocalServiceBaseImpl
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
 	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		return journalArticleImagePersistence.findWithDynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
 	}
@@ -193,11 +185,9 @@ public abstract class JournalArticleImageLocalServiceBaseImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public long dynamicQueryCount(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return journalArticleImagePersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
@@ -207,18 +197,16 @@ public abstract class JournalArticleImageLocalServiceBaseImpl
 	 * @param dynamicQuery the dynamic query
 	 * @param projection the projection to apply to the query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection) throws SystemException {
+		Projection projection) {
 		return journalArticleImagePersistence.countWithDynamicQuery(dynamicQuery,
 			projection);
 	}
 
 	@Override
-	public JournalArticleImage fetchJournalArticleImage(long articleImageId)
-		throws SystemException {
+	public JournalArticleImage fetchJournalArticleImage(long articleImageId) {
 		return journalArticleImagePersistence.fetchByPrimaryKey(articleImageId);
 	}
 
@@ -228,17 +216,15 @@ public abstract class JournalArticleImageLocalServiceBaseImpl
 	 * @param articleImageId the primary key of the journal article image
 	 * @return the journal article image
 	 * @throws PortalException if a journal article image with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public JournalArticleImage getJournalArticleImage(long articleImageId)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return journalArticleImagePersistence.findByPrimaryKey(articleImageId);
 	}
 
 	@Override
-	public ActionableDynamicQuery getActionableDynamicQuery()
-		throws SystemException {
+	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.journal.service.JournalArticleImageLocalServiceUtil.getService());
@@ -251,8 +237,7 @@ public abstract class JournalArticleImageLocalServiceBaseImpl
 	}
 
 	protected void initActionableDynamicQuery(
-		ActionableDynamicQuery actionableDynamicQuery)
-		throws SystemException {
+		ActionableDynamicQuery actionableDynamicQuery) {
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.journal.service.JournalArticleImageLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(JournalArticleImage.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
@@ -262,7 +247,7 @@ public abstract class JournalArticleImageLocalServiceBaseImpl
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return journalArticleImagePersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -276,11 +261,9 @@ public abstract class JournalArticleImageLocalServiceBaseImpl
 	 * @param start the lower bound of the range of journal article images
 	 * @param end the upper bound of the range of journal article images (not inclusive)
 	 * @return the range of journal article images
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<JournalArticleImage> getJournalArticleImages(int start, int end)
-		throws SystemException {
+	public List<JournalArticleImage> getJournalArticleImages(int start, int end) {
 		return journalArticleImagePersistence.findAll(start, end);
 	}
 
@@ -288,10 +271,9 @@ public abstract class JournalArticleImageLocalServiceBaseImpl
 	 * Returns the number of journal article images.
 	 *
 	 * @return the number of journal article images
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int getJournalArticleImagesCount() throws SystemException {
+	public int getJournalArticleImagesCount() {
 		return journalArticleImagePersistence.countAll();
 	}
 
@@ -300,12 +282,11 @@ public abstract class JournalArticleImageLocalServiceBaseImpl
 	 *
 	 * @param journalArticleImage the journal article image
 	 * @return the journal article image that was updated
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public JournalArticleImage updateJournalArticleImage(
-		JournalArticleImage journalArticleImage) throws SystemException {
+		JournalArticleImage journalArticleImage) {
 		return journalArticleImagePersistence.update(journalArticleImage);
 	}
 
@@ -465,7 +446,7 @@ public abstract class JournalArticleImageLocalServiceBaseImpl
 	 *
 	 * @param sql the sql query
 	 */
-	protected void runSQL(String sql) throws SystemException {
+	protected void runSQL(String sql) {
 		try {
 			DataSource dataSource = journalArticleImagePersistence.getDataSource();
 

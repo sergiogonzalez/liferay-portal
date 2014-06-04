@@ -72,11 +72,10 @@ public abstract class LockLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param lock the lock
 	 * @return the lock that was added
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public Lock addLock(Lock lock) throws SystemException {
+	public Lock addLock(Lock lock) {
 		lock.setNew(true);
 
 		return lockPersistence.update(lock);
@@ -99,11 +98,10 @@ public abstract class LockLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param lockId the primary key of the lock
 	 * @return the lock that was removed
 	 * @throws PortalException if a lock with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public Lock deleteLock(long lockId) throws PortalException, SystemException {
+	public Lock deleteLock(long lockId) throws PortalException {
 		return lockPersistence.remove(lockId);
 	}
 
@@ -112,11 +110,10 @@ public abstract class LockLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param lock the lock
 	 * @return the lock that was removed
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public Lock deleteLock(Lock lock) throws SystemException {
+	public Lock deleteLock(Lock lock) {
 		return lockPersistence.remove(lock);
 	}
 
@@ -133,12 +130,10 @@ public abstract class LockLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery) {
 		return lockPersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -153,12 +148,10 @@ public abstract class LockLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param start the lower bound of the range of model instances
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
 		return lockPersistence.findWithDynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -174,12 +167,11 @@ public abstract class LockLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
 	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		return lockPersistence.findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
 	}
@@ -189,11 +181,9 @@ public abstract class LockLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public long dynamicQueryCount(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return lockPersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
@@ -203,16 +193,15 @@ public abstract class LockLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param dynamicQuery the dynamic query
 	 * @param projection the projection to apply to the query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection) throws SystemException {
+		Projection projection) {
 		return lockPersistence.countWithDynamicQuery(dynamicQuery, projection);
 	}
 
 	@Override
-	public Lock fetchLock(long lockId) throws SystemException {
+	public Lock fetchLock(long lockId) {
 		return lockPersistence.fetchByPrimaryKey(lockId);
 	}
 
@@ -222,11 +211,9 @@ public abstract class LockLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param uuid the lock's UUID
 	 * @param  companyId the primary key of the company
 	 * @return the matching lock, or <code>null</code> if a matching lock could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Lock fetchLockByUuidAndCompanyId(String uuid, long companyId)
-		throws SystemException {
+	public Lock fetchLockByUuidAndCompanyId(String uuid, long companyId) {
 		return lockPersistence.fetchByUuid_C_First(uuid, companyId, null);
 	}
 
@@ -236,16 +223,14 @@ public abstract class LockLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param lockId the primary key of the lock
 	 * @return the lock
 	 * @throws PortalException if a lock with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Lock getLock(long lockId) throws PortalException, SystemException {
+	public Lock getLock(long lockId) throws PortalException {
 		return lockPersistence.findByPrimaryKey(lockId);
 	}
 
 	@Override
-	public ActionableDynamicQuery getActionableDynamicQuery()
-		throws SystemException {
+	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.LockLocalServiceUtil.getService());
@@ -258,8 +243,7 @@ public abstract class LockLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	protected void initActionableDynamicQuery(
-		ActionableDynamicQuery actionableDynamicQuery)
-		throws SystemException {
+		ActionableDynamicQuery actionableDynamicQuery) {
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.LockLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(Lock.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
@@ -269,7 +253,7 @@ public abstract class LockLocalServiceBaseImpl extends BaseLocalServiceImpl
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return lockPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -280,11 +264,10 @@ public abstract class LockLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param  companyId the primary key of the company
 	 * @return the matching lock
 	 * @throws PortalException if a matching lock could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Lock getLockByUuidAndCompanyId(String uuid, long companyId)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return lockPersistence.findByUuid_C_First(uuid, companyId, null);
 	}
 
@@ -298,10 +281,9 @@ public abstract class LockLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param start the lower bound of the range of locks
 	 * @param end the upper bound of the range of locks (not inclusive)
 	 * @return the range of locks
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Lock> getLocks(int start, int end) throws SystemException {
+	public List<Lock> getLocks(int start, int end) {
 		return lockPersistence.findAll(start, end);
 	}
 
@@ -309,10 +291,9 @@ public abstract class LockLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * Returns the number of locks.
 	 *
 	 * @return the number of locks
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int getLocksCount() throws SystemException {
+	public int getLocksCount() {
 		return lockPersistence.countAll();
 	}
 
@@ -321,11 +302,10 @@ public abstract class LockLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param lock the lock
 	 * @return the lock that was updated
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public Lock updateLock(Lock lock) throws SystemException {
+	public Lock updateLock(Lock lock) {
 		return lockPersistence.update(lock);
 	}
 
@@ -520,7 +500,7 @@ public abstract class LockLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param sql the sql query
 	 */
-	protected void runSQL(String sql) throws SystemException {
+	protected void runSQL(String sql) {
 		try {
 			DataSource dataSource = lockPersistence.getDataSource();
 

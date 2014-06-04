@@ -17,7 +17,6 @@ package com.liferay.portal.model;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -127,10 +126,9 @@ public interface AccountModel extends AuditedModel, BaseModel<Account>, MVCCMode
 	 * Returns the user uuid of this account.
 	 *
 	 * @return the user uuid of this account
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public String getUserUuid() throws SystemException;
+	public String getUserUuid();
 
 	/**
 	 * Sets the user uuid of this account.

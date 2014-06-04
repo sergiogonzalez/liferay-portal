@@ -14,7 +14,6 @@
 
 package com.liferay.portal.model.impl;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.RepositoryEntry;
 import com.liferay.portal.service.RepositoryEntryLocalServiceUtil;
 
@@ -38,7 +37,7 @@ public abstract class RepositoryEntryBaseImpl extends RepositoryEntryModelImpl
 	 * Never modify or reference this class directly. All methods that expect a repository entry model instance should use the {@link RepositoryEntry} interface instead.
 	 */
 	@Override
-	public void persist() throws SystemException {
+	public void persist() {
 		if (this.isNew()) {
 			RepositoryEntryLocalServiceUtil.addRepositoryEntry(this);
 		}

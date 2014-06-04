@@ -340,11 +340,9 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	* Returns the user uuid of this document library folder.
 	*
 	* @return the user uuid of this document library folder
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public java.lang.String getUserUuid()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public java.lang.String getUserUuid() {
 		return _dlFolder.getUserUuid();
 	}
 
@@ -692,11 +690,9 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	* Returns the status by user uuid of this document library folder.
 	*
 	* @return the status by user uuid of this document library folder
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public java.lang.String getStatusByUserUuid()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public java.lang.String getStatusByUserUuid() {
 		return _dlFolder.getStatusByUserUuid();
 	}
 
@@ -754,12 +750,10 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	* Returns the trash entry created when this document library folder was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this document library folder.
 	*
 	* @return the trash entry created when this document library folder was moved to the Recycle Bin
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.trash.model.TrashEntry getTrashEntry()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFolder.getTrashEntry();
 	}
 
@@ -797,7 +791,6 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	* Returns <code>true</code> if the parent of this document library folder is in the Recycle Bin.
 	*
 	* @return <code>true</code> if the parent of this document library folder is in the Recycle Bin; <code>false</code> otherwise
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public boolean isInTrashContainer() {
@@ -805,14 +798,12 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	}
 
 	@Override
-	public boolean isInTrashExplicitly()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public boolean isInTrashExplicitly() {
 		return _dlFolder.isInTrashExplicitly();
 	}
 
 	@Override
-	public boolean isInTrashImplicitly()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public boolean isInTrashImplicitly() {
 		return _dlFolder.isInTrashImplicitly();
 	}
 
@@ -1055,21 +1046,18 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void persist() {
 		_dlFolder.persist();
 	}
 
 	@Override
 	public java.lang.String buildTreePath()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFolder.buildTreePath();
 	}
 
 	@Override
-	public void updateTreePath(java.lang.String treePath)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void updateTreePath(java.lang.String treePath) {
 		_dlFolder.updateTreePath(treePath);
 	}
 

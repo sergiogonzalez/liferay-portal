@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.messageboards.model.impl;
 
-import com.liferay.portal.kernel.exception.SystemException;
-
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 
@@ -39,7 +37,7 @@ public abstract class MBMessageBaseImpl extends MBMessageModelImpl
 	 * Never modify or reference this class directly. All methods that expect a message-boards message model instance should use the {@link MBMessage} interface instead.
 	 */
 	@Override
-	public void persist() throws SystemException {
+	public void persist() {
 		if (this.isNew()) {
 			MBMessageLocalServiceUtil.addMBMessage(this);
 		}

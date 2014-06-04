@@ -347,11 +347,9 @@ public class JournalFeedWrapper implements JournalFeed,
 	* Returns the user uuid of this journal feed.
 	*
 	* @return the user uuid of this journal feed
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public java.lang.String getUserUuid()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public java.lang.String getUserUuid() {
 		return _journalFeed.getUserUuid();
 	}
 
@@ -826,8 +824,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void persist() {
 		_journalFeed.persist();
 	}
 

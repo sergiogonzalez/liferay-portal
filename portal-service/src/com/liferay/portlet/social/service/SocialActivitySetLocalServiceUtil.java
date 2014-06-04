@@ -46,11 +46,9 @@ public class SocialActivitySetLocalServiceUtil {
 	*
 	* @param socialActivitySet the social activity set
 	* @return the social activity set that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySet addSocialActivitySet(
-		com.liferay.portlet.social.model.SocialActivitySet socialActivitySet)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.social.model.SocialActivitySet socialActivitySet) {
 		return getService().addSocialActivitySet(socialActivitySet);
 	}
 
@@ -71,12 +69,10 @@ public class SocialActivitySetLocalServiceUtil {
 	* @param activitySetId the primary key of the social activity set
 	* @return the social activity set that was removed
 	* @throws PortalException if a social activity set with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySet deleteSocialActivitySet(
 		long activitySetId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteSocialActivitySet(activitySetId);
 	}
 
@@ -85,11 +81,9 @@ public class SocialActivitySetLocalServiceUtil {
 	*
 	* @param socialActivitySet the social activity set
 	* @return the social activity set that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySet deleteSocialActivitySet(
-		com.liferay.portlet.social.model.SocialActivitySet socialActivitySet)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.social.model.SocialActivitySet socialActivitySet) {
 		return getService().deleteSocialActivitySet(socialActivitySet);
 	}
 
@@ -102,12 +96,10 @@ public class SocialActivitySetLocalServiceUtil {
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -122,12 +114,11 @@ public class SocialActivitySetLocalServiceUtil {
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -143,14 +134,12 @@ public class SocialActivitySetLocalServiceUtil {
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getService()
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
@@ -160,11 +149,9 @@ public class SocialActivitySetLocalServiceUtil {
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -174,18 +161,15 @@ public class SocialActivitySetLocalServiceUtil {
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public static long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
 	public static com.liferay.portlet.social.model.SocialActivitySet fetchSocialActivitySet(
-		long activitySetId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long activitySetId) {
 		return getService().fetchSocialActivitySet(activitySetId);
 	}
 
@@ -195,24 +179,20 @@ public class SocialActivitySetLocalServiceUtil {
 	* @param activitySetId the primary key of the social activity set
 	* @return the social activity set
 	* @throws PortalException if a social activity set with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySet getSocialActivitySet(
 		long activitySetId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getSocialActivitySet(activitySetId);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}
 
 	public static com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
@@ -226,11 +206,9 @@ public class SocialActivitySetLocalServiceUtil {
 	* @param start the lower bound of the range of social activity sets
 	* @param end the upper bound of the range of social activity sets (not inclusive)
 	* @return the range of social activity sets
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.social.model.SocialActivitySet> getSocialActivitySets(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return getService().getSocialActivitySets(start, end);
 	}
 
@@ -238,10 +216,8 @@ public class SocialActivitySetLocalServiceUtil {
 	* Returns the number of social activity sets.
 	*
 	* @return the number of social activity sets
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int getSocialActivitySetsCount()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int getSocialActivitySetsCount() {
 		return getService().getSocialActivitySetsCount();
 	}
 
@@ -250,11 +226,9 @@ public class SocialActivitySetLocalServiceUtil {
 	*
 	* @param socialActivitySet the social activity set
 	* @return the social activity set that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySet updateSocialActivitySet(
-		com.liferay.portlet.social.model.SocialActivitySet socialActivitySet)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.social.model.SocialActivitySet socialActivitySet) {
 		return getService().updateSocialActivitySet(socialActivitySet);
 	}
 

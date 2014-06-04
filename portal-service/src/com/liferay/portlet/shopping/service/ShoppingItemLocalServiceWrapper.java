@@ -38,12 +38,10 @@ public class ShoppingItemLocalServiceWrapper implements ShoppingItemLocalService
 	*
 	* @param shoppingItem the shopping item
 	* @return the shopping item that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.shopping.model.ShoppingItem addShoppingItem(
-		com.liferay.portlet.shopping.model.ShoppingItem shoppingItem)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.shopping.model.ShoppingItem shoppingItem) {
 		return _shoppingItemLocalService.addShoppingItem(shoppingItem);
 	}
 
@@ -65,13 +63,10 @@ public class ShoppingItemLocalServiceWrapper implements ShoppingItemLocalService
 	* @param itemId the primary key of the shopping item
 	* @return the shopping item that was removed
 	* @throws PortalException if a shopping item with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.shopping.model.ShoppingItem deleteShoppingItem(
-		long itemId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		long itemId) throws com.liferay.portal.kernel.exception.PortalException {
 		return _shoppingItemLocalService.deleteShoppingItem(itemId);
 	}
 
@@ -80,12 +75,10 @@ public class ShoppingItemLocalServiceWrapper implements ShoppingItemLocalService
 	*
 	* @param shoppingItem the shopping item
 	* @return the shopping item that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.shopping.model.ShoppingItem deleteShoppingItem(
-		com.liferay.portlet.shopping.model.ShoppingItem shoppingItem)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.shopping.model.ShoppingItem shoppingItem) {
 		return _shoppingItemLocalService.deleteShoppingItem(shoppingItem);
 	}
 
@@ -99,13 +92,11 @@ public class ShoppingItemLocalServiceWrapper implements ShoppingItemLocalService
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _shoppingItemLocalService.dynamicQuery(dynamicQuery);
 	}
 
@@ -120,13 +111,12 @@ public class ShoppingItemLocalServiceWrapper implements ShoppingItemLocalService
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return _shoppingItemLocalService.dynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -142,15 +132,13 @@ public class ShoppingItemLocalServiceWrapper implements ShoppingItemLocalService
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return _shoppingItemLocalService.dynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
 	}
@@ -160,12 +148,10 @@ public class ShoppingItemLocalServiceWrapper implements ShoppingItemLocalService
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _shoppingItemLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
@@ -175,20 +161,18 @@ public class ShoppingItemLocalServiceWrapper implements ShoppingItemLocalService
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return _shoppingItemLocalService.dynamicQueryCount(dynamicQuery,
 			projection);
 	}
 
 	@Override
 	public com.liferay.portlet.shopping.model.ShoppingItem fetchShoppingItem(
-		long itemId) throws com.liferay.portal.kernel.exception.SystemException {
+		long itemId) {
 		return _shoppingItemLocalService.fetchShoppingItem(itemId);
 	}
 
@@ -198,27 +182,22 @@ public class ShoppingItemLocalServiceWrapper implements ShoppingItemLocalService
 	* @param itemId the primary key of the shopping item
 	* @return the shopping item
 	* @throws PortalException if a shopping item with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.shopping.model.ShoppingItem getShoppingItem(
-		long itemId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		long itemId) throws com.liferay.portal.kernel.exception.PortalException {
 		return _shoppingItemLocalService.getShoppingItem(itemId);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _shoppingItemLocalService.getActionableDynamicQuery();
 	}
 
 	@Override
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _shoppingItemLocalService.getPersistedModel(primaryKeyObj);
 	}
 
@@ -232,12 +211,10 @@ public class ShoppingItemLocalServiceWrapper implements ShoppingItemLocalService
 	* @param start the lower bound of the range of shopping items
 	* @param end the upper bound of the range of shopping items (not inclusive)
 	* @return the range of shopping items
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portlet.shopping.model.ShoppingItem> getShoppingItems(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return _shoppingItemLocalService.getShoppingItems(start, end);
 	}
 
@@ -245,11 +222,9 @@ public class ShoppingItemLocalServiceWrapper implements ShoppingItemLocalService
 	* Returns the number of shopping items.
 	*
 	* @return the number of shopping items
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public int getShoppingItemsCount()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public int getShoppingItemsCount() {
 		return _shoppingItemLocalService.getShoppingItemsCount();
 	}
 
@@ -258,12 +233,10 @@ public class ShoppingItemLocalServiceWrapper implements ShoppingItemLocalService
 	*
 	* @param shoppingItem the shopping item
 	* @return the shopping item that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.shopping.model.ShoppingItem updateShoppingItem(
-		com.liferay.portlet.shopping.model.ShoppingItem shoppingItem)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.shopping.model.ShoppingItem shoppingItem) {
 		return _shoppingItemLocalService.updateShoppingItem(shoppingItem);
 	}
 

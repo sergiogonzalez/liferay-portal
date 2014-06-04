@@ -46,11 +46,9 @@ public class SubscriptionLocalServiceUtil {
 	*
 	* @param subscription the subscription
 	* @return the subscription that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Subscription addSubscription(
-		com.liferay.portal.model.Subscription subscription)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.Subscription subscription) {
 		return getService().addSubscription(subscription);
 	}
 
@@ -71,7 +69,7 @@ public class SubscriptionLocalServiceUtil {
 	* @param subscriptionId the primary key of the subscription
 	* @return the subscription that was removed
 	* @throws PortalException if a subscription with the primary key could not be found
-	* @throws SystemException if a system exception occurred
+	* @throws SystemException
 	*/
 	public static com.liferay.portal.model.Subscription deleteSubscription(
 		long subscriptionId)
@@ -86,7 +84,7 @@ public class SubscriptionLocalServiceUtil {
 	* @param subscription the subscription
 	* @return the subscription that was removed
 	* @throws PortalException
-	* @throws SystemException if a system exception occurred
+	* @throws SystemException
 	*/
 	public static com.liferay.portal.model.Subscription deleteSubscription(
 		com.liferay.portal.model.Subscription subscription)
@@ -104,12 +102,10 @@ public class SubscriptionLocalServiceUtil {
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -124,12 +120,11 @@ public class SubscriptionLocalServiceUtil {
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -145,14 +140,12 @@ public class SubscriptionLocalServiceUtil {
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getService()
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
@@ -162,11 +155,9 @@ public class SubscriptionLocalServiceUtil {
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -176,18 +167,15 @@ public class SubscriptionLocalServiceUtil {
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public static long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
 	public static com.liferay.portal.model.Subscription fetchSubscription(
-		long subscriptionId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long subscriptionId) {
 		return getService().fetchSubscription(subscriptionId);
 	}
 
@@ -197,24 +185,20 @@ public class SubscriptionLocalServiceUtil {
 	* @param subscriptionId the primary key of the subscription
 	* @return the subscription
 	* @throws PortalException if a subscription with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Subscription getSubscription(
 		long subscriptionId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getSubscription(subscriptionId);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}
 
 	public static com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
@@ -228,11 +212,9 @@ public class SubscriptionLocalServiceUtil {
 	* @param start the lower bound of the range of subscriptions
 	* @param end the upper bound of the range of subscriptions (not inclusive)
 	* @return the range of subscriptions
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portal.model.Subscription> getSubscriptions(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return getService().getSubscriptions(start, end);
 	}
 
@@ -240,10 +222,8 @@ public class SubscriptionLocalServiceUtil {
 	* Returns the number of subscriptions.
 	*
 	* @return the number of subscriptions
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int getSubscriptionsCount()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int getSubscriptionsCount() {
 		return getService().getSubscriptionsCount();
 	}
 
@@ -252,11 +232,9 @@ public class SubscriptionLocalServiceUtil {
 	*
 	* @param subscription the subscription
 	* @return the subscription that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Subscription updateSubscription(
-		com.liferay.portal.model.Subscription subscription)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.Subscription subscription) {
 		return getService().updateSubscription(subscription);
 	}
 

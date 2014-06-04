@@ -281,11 +281,9 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 	* Returns the user uuid of this phone.
 	*
 	* @return the user uuid of this phone
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public java.lang.String getUserUuid()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public java.lang.String getUserUuid() {
 		return _phone.getUserUuid();
 	}
 
@@ -603,8 +601,7 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void persist() {
 		_phone.persist();
 	}
 

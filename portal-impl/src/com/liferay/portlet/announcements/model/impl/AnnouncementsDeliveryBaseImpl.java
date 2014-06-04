@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.announcements.model.impl;
 
-import com.liferay.portal.kernel.exception.SystemException;
-
 import com.liferay.portlet.announcements.model.AnnouncementsDelivery;
 import com.liferay.portlet.announcements.service.AnnouncementsDeliveryLocalServiceUtil;
 
@@ -39,7 +37,7 @@ public abstract class AnnouncementsDeliveryBaseImpl
 	 * Never modify or reference this class directly. All methods that expect a announcements delivery model instance should use the {@link AnnouncementsDelivery} interface instead.
 	 */
 	@Override
-	public void persist() throws SystemException {
+	public void persist() {
 		if (this.isNew()) {
 			AnnouncementsDeliveryLocalServiceUtil.addAnnouncementsDelivery(this);
 		}

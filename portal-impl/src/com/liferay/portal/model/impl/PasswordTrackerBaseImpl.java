@@ -14,7 +14,6 @@
 
 package com.liferay.portal.model.impl;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.PasswordTracker;
 import com.liferay.portal.service.PasswordTrackerLocalServiceUtil;
 
@@ -38,7 +37,7 @@ public abstract class PasswordTrackerBaseImpl extends PasswordTrackerModelImpl
 	 * Never modify or reference this class directly. All methods that expect a password tracker model instance should use the {@link PasswordTracker} interface instead.
 	 */
 	@Override
-	public void persist() throws SystemException {
+	public void persist() {
 		if (this.isNew()) {
 			PasswordTrackerLocalServiceUtil.addPasswordTracker(this);
 		}

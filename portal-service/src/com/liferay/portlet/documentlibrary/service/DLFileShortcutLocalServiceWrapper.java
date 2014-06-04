@@ -39,12 +39,10 @@ public class DLFileShortcutLocalServiceWrapper
 	*
 	* @param dlFileShortcut the document library file shortcut
 	* @return the document library file shortcut that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.documentlibrary.model.DLFileShortcut addDLFileShortcut(
-		com.liferay.portlet.documentlibrary.model.DLFileShortcut dlFileShortcut)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.documentlibrary.model.DLFileShortcut dlFileShortcut) {
 		return _dlFileShortcutLocalService.addDLFileShortcut(dlFileShortcut);
 	}
 
@@ -66,13 +64,11 @@ public class DLFileShortcutLocalServiceWrapper
 	* @param fileShortcutId the primary key of the document library file shortcut
 	* @return the document library file shortcut that was removed
 	* @throws PortalException if a document library file shortcut with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.documentlibrary.model.DLFileShortcut deleteDLFileShortcut(
 		long fileShortcutId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFileShortcutLocalService.deleteDLFileShortcut(fileShortcutId);
 	}
 
@@ -81,12 +77,10 @@ public class DLFileShortcutLocalServiceWrapper
 	*
 	* @param dlFileShortcut the document library file shortcut
 	* @return the document library file shortcut that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.documentlibrary.model.DLFileShortcut deleteDLFileShortcut(
-		com.liferay.portlet.documentlibrary.model.DLFileShortcut dlFileShortcut)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.documentlibrary.model.DLFileShortcut dlFileShortcut) {
 		return _dlFileShortcutLocalService.deleteDLFileShortcut(dlFileShortcut);
 	}
 
@@ -100,13 +94,11 @@ public class DLFileShortcutLocalServiceWrapper
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _dlFileShortcutLocalService.dynamicQuery(dynamicQuery);
 	}
 
@@ -121,13 +113,12 @@ public class DLFileShortcutLocalServiceWrapper
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return _dlFileShortcutLocalService.dynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -143,15 +134,13 @@ public class DLFileShortcutLocalServiceWrapper
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return _dlFileShortcutLocalService.dynamicQuery(dynamicQuery, start,
 			end, orderByComparator);
 	}
@@ -161,12 +150,10 @@ public class DLFileShortcutLocalServiceWrapper
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _dlFileShortcutLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
@@ -176,21 +163,18 @@ public class DLFileShortcutLocalServiceWrapper
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return _dlFileShortcutLocalService.dynamicQueryCount(dynamicQuery,
 			projection);
 	}
 
 	@Override
 	public com.liferay.portlet.documentlibrary.model.DLFileShortcut fetchDLFileShortcut(
-		long fileShortcutId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long fileShortcutId) {
 		return _dlFileShortcutLocalService.fetchDLFileShortcut(fileShortcutId);
 	}
 
@@ -200,12 +184,10 @@ public class DLFileShortcutLocalServiceWrapper
 	* @param uuid the document library file shortcut's UUID
 	* @param companyId the primary key of the company
 	* @return the matching document library file shortcut, or <code>null</code> if a matching document library file shortcut could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.documentlibrary.model.DLFileShortcut fetchDLFileShortcutByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long companyId) {
 		return _dlFileShortcutLocalService.fetchDLFileShortcutByUuidAndCompanyId(uuid,
 			companyId);
 	}
@@ -216,12 +198,10 @@ public class DLFileShortcutLocalServiceWrapper
 	* @param uuid the document library file shortcut's UUID
 	* @param groupId the primary key of the group
 	* @return the matching document library file shortcut, or <code>null</code> if a matching document library file shortcut could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.documentlibrary.model.DLFileShortcut fetchDLFileShortcutByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long groupId) {
 		return _dlFileShortcutLocalService.fetchDLFileShortcutByUuidAndGroupId(uuid,
 			groupId);
 	}
@@ -232,34 +212,29 @@ public class DLFileShortcutLocalServiceWrapper
 	* @param fileShortcutId the primary key of the document library file shortcut
 	* @return the document library file shortcut
 	* @throws PortalException if a document library file shortcut with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.documentlibrary.model.DLFileShortcut getDLFileShortcut(
 		long fileShortcutId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFileShortcutLocalService.getDLFileShortcut(fileShortcutId);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _dlFileShortcutLocalService.getActionableDynamicQuery();
 	}
 
 	@Override
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext) {
 		return _dlFileShortcutLocalService.getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	@Override
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFileShortcutLocalService.getPersistedModel(primaryKeyObj);
 	}
 
@@ -270,13 +245,11 @@ public class DLFileShortcutLocalServiceWrapper
 	* @param companyId the primary key of the company
 	* @return the matching document library file shortcut
 	* @throws PortalException if a matching document library file shortcut could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.documentlibrary.model.DLFileShortcut getDLFileShortcutByUuidAndCompanyId(
 		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFileShortcutLocalService.getDLFileShortcutByUuidAndCompanyId(uuid,
 			companyId);
 	}
@@ -288,13 +261,11 @@ public class DLFileShortcutLocalServiceWrapper
 	* @param groupId the primary key of the group
 	* @return the matching document library file shortcut
 	* @throws PortalException if a matching document library file shortcut could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.documentlibrary.model.DLFileShortcut getDLFileShortcutByUuidAndGroupId(
 		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFileShortcutLocalService.getDLFileShortcutByUuidAndGroupId(uuid,
 			groupId);
 	}
@@ -309,12 +280,10 @@ public class DLFileShortcutLocalServiceWrapper
 	* @param start the lower bound of the range of document library file shortcuts
 	* @param end the upper bound of the range of document library file shortcuts (not inclusive)
 	* @return the range of document library file shortcuts
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> getDLFileShortcuts(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return _dlFileShortcutLocalService.getDLFileShortcuts(start, end);
 	}
 
@@ -322,11 +291,9 @@ public class DLFileShortcutLocalServiceWrapper
 	* Returns the number of document library file shortcuts.
 	*
 	* @return the number of document library file shortcuts
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public int getDLFileShortcutsCount()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public int getDLFileShortcutsCount() {
 		return _dlFileShortcutLocalService.getDLFileShortcutsCount();
 	}
 
@@ -335,12 +302,10 @@ public class DLFileShortcutLocalServiceWrapper
 	*
 	* @param dlFileShortcut the document library file shortcut
 	* @return the document library file shortcut that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.documentlibrary.model.DLFileShortcut updateDLFileShortcut(
-		com.liferay.portlet.documentlibrary.model.DLFileShortcut dlFileShortcut)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.documentlibrary.model.DLFileShortcut dlFileShortcut) {
 		return _dlFileShortcutLocalService.updateDLFileShortcut(dlFileShortcut);
 	}
 

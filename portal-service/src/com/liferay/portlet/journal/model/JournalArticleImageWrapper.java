@@ -405,8 +405,7 @@ public class JournalArticleImageWrapper implements JournalArticleImage,
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void persist() {
 		_journalArticleImage.persist();
 	}
 

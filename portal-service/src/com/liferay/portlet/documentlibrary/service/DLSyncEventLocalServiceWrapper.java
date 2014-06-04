@@ -38,12 +38,10 @@ public class DLSyncEventLocalServiceWrapper implements DLSyncEventLocalService,
 	*
 	* @param dlSyncEvent the d l sync event
 	* @return the d l sync event that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.documentlibrary.model.DLSyncEvent addDLSyncEvent(
-		com.liferay.portlet.documentlibrary.model.DLSyncEvent dlSyncEvent)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.documentlibrary.model.DLSyncEvent dlSyncEvent) {
 		return _dlSyncEventLocalService.addDLSyncEvent(dlSyncEvent);
 	}
 
@@ -65,13 +63,11 @@ public class DLSyncEventLocalServiceWrapper implements DLSyncEventLocalService,
 	* @param syncEventId the primary key of the d l sync event
 	* @return the d l sync event that was removed
 	* @throws PortalException if a d l sync event with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.documentlibrary.model.DLSyncEvent deleteDLSyncEvent(
 		long syncEventId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlSyncEventLocalService.deleteDLSyncEvent(syncEventId);
 	}
 
@@ -80,12 +76,10 @@ public class DLSyncEventLocalServiceWrapper implements DLSyncEventLocalService,
 	*
 	* @param dlSyncEvent the d l sync event
 	* @return the d l sync event that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.documentlibrary.model.DLSyncEvent deleteDLSyncEvent(
-		com.liferay.portlet.documentlibrary.model.DLSyncEvent dlSyncEvent)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.documentlibrary.model.DLSyncEvent dlSyncEvent) {
 		return _dlSyncEventLocalService.deleteDLSyncEvent(dlSyncEvent);
 	}
 
@@ -99,13 +93,11 @@ public class DLSyncEventLocalServiceWrapper implements DLSyncEventLocalService,
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _dlSyncEventLocalService.dynamicQuery(dynamicQuery);
 	}
 
@@ -120,13 +112,12 @@ public class DLSyncEventLocalServiceWrapper implements DLSyncEventLocalService,
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return _dlSyncEventLocalService.dynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -142,15 +133,13 @@ public class DLSyncEventLocalServiceWrapper implements DLSyncEventLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return _dlSyncEventLocalService.dynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
 	}
@@ -160,12 +149,10 @@ public class DLSyncEventLocalServiceWrapper implements DLSyncEventLocalService,
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _dlSyncEventLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
@@ -175,21 +162,18 @@ public class DLSyncEventLocalServiceWrapper implements DLSyncEventLocalService,
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return _dlSyncEventLocalService.dynamicQueryCount(dynamicQuery,
 			projection);
 	}
 
 	@Override
 	public com.liferay.portlet.documentlibrary.model.DLSyncEvent fetchDLSyncEvent(
-		long syncEventId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long syncEventId) {
 		return _dlSyncEventLocalService.fetchDLSyncEvent(syncEventId);
 	}
 
@@ -199,27 +183,23 @@ public class DLSyncEventLocalServiceWrapper implements DLSyncEventLocalService,
 	* @param syncEventId the primary key of the d l sync event
 	* @return the d l sync event
 	* @throws PortalException if a d l sync event with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.documentlibrary.model.DLSyncEvent getDLSyncEvent(
 		long syncEventId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlSyncEventLocalService.getDLSyncEvent(syncEventId);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _dlSyncEventLocalService.getActionableDynamicQuery();
 	}
 
 	@Override
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlSyncEventLocalService.getPersistedModel(primaryKeyObj);
 	}
 
@@ -233,12 +213,10 @@ public class DLSyncEventLocalServiceWrapper implements DLSyncEventLocalService,
 	* @param start the lower bound of the range of d l sync events
 	* @param end the upper bound of the range of d l sync events (not inclusive)
 	* @return the range of d l sync events
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLSyncEvent> getDLSyncEvents(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return _dlSyncEventLocalService.getDLSyncEvents(start, end);
 	}
 
@@ -246,11 +224,9 @@ public class DLSyncEventLocalServiceWrapper implements DLSyncEventLocalService,
 	* Returns the number of d l sync events.
 	*
 	* @return the number of d l sync events
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public int getDLSyncEventsCount()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public int getDLSyncEventsCount() {
 		return _dlSyncEventLocalService.getDLSyncEventsCount();
 	}
 
@@ -259,12 +235,10 @@ public class DLSyncEventLocalServiceWrapper implements DLSyncEventLocalService,
 	*
 	* @param dlSyncEvent the d l sync event
 	* @return the d l sync event that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.documentlibrary.model.DLSyncEvent updateDLSyncEvent(
-		com.liferay.portlet.documentlibrary.model.DLSyncEvent dlSyncEvent)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.documentlibrary.model.DLSyncEvent dlSyncEvent) {
 		return _dlSyncEventLocalService.updateDLSyncEvent(dlSyncEvent);
 	}
 

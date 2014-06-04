@@ -35,12 +35,10 @@ public class ImageLocalServiceWrapper implements ImageLocalService,
 	*
 	* @param image the image
 	* @return the image that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.Image addImage(
-		com.liferay.portal.model.Image image)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.Image image) {
 		return _imageLocalService.addImage(image);
 	}
 
@@ -61,7 +59,7 @@ public class ImageLocalServiceWrapper implements ImageLocalService,
 	* @param imageId the primary key of the image
 	* @return the image that was removed
 	* @throws PortalException if a image with the primary key could not be found
-	* @throws SystemException if a system exception occurred
+	* @throws SystemException
 	*/
 	@Override
 	public com.liferay.portal.model.Image deleteImage(long imageId)
@@ -75,12 +73,10 @@ public class ImageLocalServiceWrapper implements ImageLocalService,
 	*
 	* @param image the image
 	* @return the image that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.Image deleteImage(
-		com.liferay.portal.model.Image image)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.Image image) {
 		return _imageLocalService.deleteImage(image);
 	}
 
@@ -94,13 +90,11 @@ public class ImageLocalServiceWrapper implements ImageLocalService,
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _imageLocalService.dynamicQuery(dynamicQuery);
 	}
 
@@ -115,13 +109,12 @@ public class ImageLocalServiceWrapper implements ImageLocalService,
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return _imageLocalService.dynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -137,15 +130,13 @@ public class ImageLocalServiceWrapper implements ImageLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return _imageLocalService.dynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
 	}
@@ -155,12 +146,10 @@ public class ImageLocalServiceWrapper implements ImageLocalService,
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _imageLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
@@ -170,19 +159,16 @@ public class ImageLocalServiceWrapper implements ImageLocalService,
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return _imageLocalService.dynamicQueryCount(dynamicQuery, projection);
 	}
 
 	@Override
-	public com.liferay.portal.model.Image fetchImage(long imageId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public com.liferay.portal.model.Image fetchImage(long imageId) {
 		return _imageLocalService.fetchImage(imageId);
 	}
 
@@ -192,26 +178,22 @@ public class ImageLocalServiceWrapper implements ImageLocalService,
 	* @param imageId the primary key of the image
 	* @return the image
 	* @throws PortalException if a image with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.Image getImage(long imageId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _imageLocalService.getImage(imageId);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _imageLocalService.getActionableDynamicQuery();
 	}
 
 	@Override
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _imageLocalService.getPersistedModel(primaryKeyObj);
 	}
 
@@ -225,11 +207,10 @@ public class ImageLocalServiceWrapper implements ImageLocalService,
 	* @param start the lower bound of the range of images
 	* @param end the upper bound of the range of images (not inclusive)
 	* @return the range of images
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.model.Image> getImages(int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return _imageLocalService.getImages(start, end);
 	}
 
@@ -237,11 +218,9 @@ public class ImageLocalServiceWrapper implements ImageLocalService,
 	* Returns the number of images.
 	*
 	* @return the number of images
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public int getImagesCount()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public int getImagesCount() {
 		return _imageLocalService.getImagesCount();
 	}
 
@@ -250,12 +229,10 @@ public class ImageLocalServiceWrapper implements ImageLocalService,
 	*
 	* @param image the image
 	* @return the image that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.Image updateImage(
-		com.liferay.portal.model.Image image)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.Image image) {
 		return _imageLocalService.updateImage(image);
 	}
 

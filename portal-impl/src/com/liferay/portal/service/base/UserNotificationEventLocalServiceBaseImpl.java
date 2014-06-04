@@ -72,12 +72,11 @@ public abstract class UserNotificationEventLocalServiceBaseImpl
 	 *
 	 * @param userNotificationEvent the user notification event
 	 * @return the user notification event that was added
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public UserNotificationEvent addUserNotificationEvent(
-		UserNotificationEvent userNotificationEvent) throws SystemException {
+		UserNotificationEvent userNotificationEvent) {
 		userNotificationEvent.setNew(true);
 
 		return userNotificationEventPersistence.update(userNotificationEvent);
@@ -101,12 +100,11 @@ public abstract class UserNotificationEventLocalServiceBaseImpl
 	 * @param userNotificationEventId the primary key of the user notification event
 	 * @return the user notification event that was removed
 	 * @throws PortalException if a user notification event with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public UserNotificationEvent deleteUserNotificationEvent(
-		long userNotificationEventId) throws PortalException, SystemException {
+		long userNotificationEventId) throws PortalException {
 		return userNotificationEventPersistence.remove(userNotificationEventId);
 	}
 
@@ -115,12 +113,11 @@ public abstract class UserNotificationEventLocalServiceBaseImpl
 	 *
 	 * @param userNotificationEvent the user notification event
 	 * @return the user notification event that was removed
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public UserNotificationEvent deleteUserNotificationEvent(
-		UserNotificationEvent userNotificationEvent) throws SystemException {
+		UserNotificationEvent userNotificationEvent) {
 		return userNotificationEventPersistence.remove(userNotificationEvent);
 	}
 
@@ -137,12 +134,10 @@ public abstract class UserNotificationEventLocalServiceBaseImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery) {
 		return userNotificationEventPersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -157,12 +152,10 @@ public abstract class UserNotificationEventLocalServiceBaseImpl
 	 * @param start the lower bound of the range of model instances
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
 		return userNotificationEventPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end);
 	}
@@ -179,12 +172,11 @@ public abstract class UserNotificationEventLocalServiceBaseImpl
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
 	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		return userNotificationEventPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
 	}
@@ -194,11 +186,9 @@ public abstract class UserNotificationEventLocalServiceBaseImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public long dynamicQueryCount(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return userNotificationEventPersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
@@ -208,18 +198,17 @@ public abstract class UserNotificationEventLocalServiceBaseImpl
 	 * @param dynamicQuery the dynamic query
 	 * @param projection the projection to apply to the query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection) throws SystemException {
+		Projection projection) {
 		return userNotificationEventPersistence.countWithDynamicQuery(dynamicQuery,
 			projection);
 	}
 
 	@Override
 	public UserNotificationEvent fetchUserNotificationEvent(
-		long userNotificationEventId) throws SystemException {
+		long userNotificationEventId) {
 		return userNotificationEventPersistence.fetchByPrimaryKey(userNotificationEventId);
 	}
 
@@ -229,11 +218,10 @@ public abstract class UserNotificationEventLocalServiceBaseImpl
 	 * @param uuid the user notification event's UUID
 	 * @param  companyId the primary key of the company
 	 * @return the matching user notification event, or <code>null</code> if a matching user notification event could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserNotificationEvent fetchUserNotificationEventByUuidAndCompanyId(
-		String uuid, long companyId) throws SystemException {
+		String uuid, long companyId) {
 		return userNotificationEventPersistence.fetchByUuid_C_First(uuid,
 			companyId, null);
 	}
@@ -244,17 +232,15 @@ public abstract class UserNotificationEventLocalServiceBaseImpl
 	 * @param userNotificationEventId the primary key of the user notification event
 	 * @return the user notification event
 	 * @throws PortalException if a user notification event with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserNotificationEvent getUserNotificationEvent(
-		long userNotificationEventId) throws PortalException, SystemException {
+		long userNotificationEventId) throws PortalException {
 		return userNotificationEventPersistence.findByPrimaryKey(userNotificationEventId);
 	}
 
 	@Override
-	public ActionableDynamicQuery getActionableDynamicQuery()
-		throws SystemException {
+	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.UserNotificationEventLocalServiceUtil.getService());
@@ -268,8 +254,7 @@ public abstract class UserNotificationEventLocalServiceBaseImpl
 	}
 
 	protected void initActionableDynamicQuery(
-		ActionableDynamicQuery actionableDynamicQuery)
-		throws SystemException {
+		ActionableDynamicQuery actionableDynamicQuery) {
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.UserNotificationEventLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(UserNotificationEvent.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
@@ -280,7 +265,7 @@ public abstract class UserNotificationEventLocalServiceBaseImpl
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return userNotificationEventPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -291,11 +276,10 @@ public abstract class UserNotificationEventLocalServiceBaseImpl
 	 * @param  companyId the primary key of the company
 	 * @return the matching user notification event
 	 * @throws PortalException if a matching user notification event could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserNotificationEvent getUserNotificationEventByUuidAndCompanyId(
-		String uuid, long companyId) throws PortalException, SystemException {
+		String uuid, long companyId) throws PortalException {
 		return userNotificationEventPersistence.findByUuid_C_First(uuid,
 			companyId, null);
 	}
@@ -310,11 +294,10 @@ public abstract class UserNotificationEventLocalServiceBaseImpl
 	 * @param start the lower bound of the range of user notification events
 	 * @param end the upper bound of the range of user notification events (not inclusive)
 	 * @return the range of user notification events
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<UserNotificationEvent> getUserNotificationEvents(int start,
-		int end) throws SystemException {
+		int end) {
 		return userNotificationEventPersistence.findAll(start, end);
 	}
 
@@ -322,10 +305,9 @@ public abstract class UserNotificationEventLocalServiceBaseImpl
 	 * Returns the number of user notification events.
 	 *
 	 * @return the number of user notification events
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int getUserNotificationEventsCount() throws SystemException {
+	public int getUserNotificationEventsCount() {
 		return userNotificationEventPersistence.countAll();
 	}
 
@@ -334,12 +316,11 @@ public abstract class UserNotificationEventLocalServiceBaseImpl
 	 *
 	 * @param userNotificationEvent the user notification event
 	 * @return the user notification event that was updated
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public UserNotificationEvent updateUserNotificationEvent(
-		UserNotificationEvent userNotificationEvent) throws SystemException {
+		UserNotificationEvent userNotificationEvent) {
 		return userNotificationEventPersistence.update(userNotificationEvent);
 	}
 
@@ -517,7 +498,7 @@ public abstract class UserNotificationEventLocalServiceBaseImpl
 	 *
 	 * @param sql the sql query
 	 */
-	protected void runSQL(String sql) throws SystemException {
+	protected void runSQL(String sql) {
 		try {
 			DataSource dataSource = userNotificationEventPersistence.getDataSource();
 

@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 import com.liferay.portal.service.ServiceContext;
@@ -64,8 +63,7 @@ public class BlogsStatsUserUtil {
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#countWithDynamicQuery(DynamicQuery)
 	 */
-	public static long countWithDynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public static long countWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return getPersistence().countWithDynamicQuery(dynamicQuery);
 	}
 
@@ -73,7 +71,7 @@ public class BlogsStatsUserUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery)
 	 */
 	public static List<BlogsStatsUser> findWithDynamicQuery(
-		DynamicQuery dynamicQuery) throws SystemException {
+		DynamicQuery dynamicQuery) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -81,8 +79,7 @@ public class BlogsStatsUserUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
 	 */
 	public static List<BlogsStatsUser> findWithDynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+		DynamicQuery dynamicQuery, int start, int end) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -91,7 +88,7 @@ public class BlogsStatsUserUtil {
 	 */
 	public static List<BlogsStatsUser> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -100,8 +97,7 @@ public class BlogsStatsUserUtil {
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static BlogsStatsUser update(BlogsStatsUser blogsStatsUser)
-		throws SystemException {
+	public static BlogsStatsUser update(BlogsStatsUser blogsStatsUser) {
 		return getPersistence().update(blogsStatsUser);
 	}
 
@@ -109,7 +105,7 @@ public class BlogsStatsUserUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
 	public static BlogsStatsUser update(BlogsStatsUser blogsStatsUser,
-		ServiceContext serviceContext) throws SystemException {
+		ServiceContext serviceContext) {
 		return getPersistence().update(blogsStatsUser, serviceContext);
 	}
 
@@ -118,11 +114,9 @@ public class BlogsStatsUserUtil {
 	*
 	* @param groupId the group ID
 	* @return the matching blogs stats users
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.blogs.model.BlogsStatsUser> findByGroupId(
-		long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId) {
 		return getPersistence().findByGroupId(groupId);
 	}
 
@@ -137,11 +131,9 @@ public class BlogsStatsUserUtil {
 	* @param start the lower bound of the range of blogs stats users
 	* @param end the upper bound of the range of blogs stats users (not inclusive)
 	* @return the range of matching blogs stats users
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.blogs.model.BlogsStatsUser> findByGroupId(
-		long groupId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, int start, int end) {
 		return getPersistence().findByGroupId(groupId, start, end);
 	}
 
@@ -157,12 +149,10 @@ public class BlogsStatsUserUtil {
 	* @param end the upper bound of the range of blogs stats users (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching blogs stats users
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.blogs.model.BlogsStatsUser> findByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByGroupId(groupId, start, end, orderByComparator);
 	}
@@ -174,13 +164,11 @@ public class BlogsStatsUserUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching blogs stats user
 	* @throws com.liferay.portlet.blogs.NoSuchStatsUserException if a matching blogs stats user could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.blogs.model.BlogsStatsUser findByGroupId_First(
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.blogs.NoSuchStatsUserException {
+		throws com.liferay.portlet.blogs.NoSuchStatsUserException {
 		return getPersistence().findByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -190,12 +178,10 @@ public class BlogsStatsUserUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching blogs stats user, or <code>null</code> if a matching blogs stats user could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.blogs.model.BlogsStatsUser fetchByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -206,13 +192,11 @@ public class BlogsStatsUserUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching blogs stats user
 	* @throws com.liferay.portlet.blogs.NoSuchStatsUserException if a matching blogs stats user could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.blogs.model.BlogsStatsUser findByGroupId_Last(
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.blogs.NoSuchStatsUserException {
+		throws com.liferay.portlet.blogs.NoSuchStatsUserException {
 		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -222,12 +206,10 @@ public class BlogsStatsUserUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching blogs stats user, or <code>null</code> if a matching blogs stats user could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.blogs.model.BlogsStatsUser fetchByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -239,13 +221,11 @@ public class BlogsStatsUserUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next blogs stats user
 	* @throws com.liferay.portlet.blogs.NoSuchStatsUserException if a blogs stats user with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.blogs.model.BlogsStatsUser[] findByGroupId_PrevAndNext(
 		long statsUserId, long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.blogs.NoSuchStatsUserException {
+		throws com.liferay.portlet.blogs.NoSuchStatsUserException {
 		return getPersistence()
 				   .findByGroupId_PrevAndNext(statsUserId, groupId,
 			orderByComparator);
@@ -255,10 +235,8 @@ public class BlogsStatsUserUtil {
 	* Removes all the blogs stats users where groupId = &#63; from the database.
 	*
 	* @param groupId the group ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByGroupId(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByGroupId(long groupId) {
 		getPersistence().removeByGroupId(groupId);
 	}
 
@@ -267,10 +245,8 @@ public class BlogsStatsUserUtil {
 	*
 	* @param groupId the group ID
 	* @return the number of matching blogs stats users
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByGroupId(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByGroupId(long groupId) {
 		return getPersistence().countByGroupId(groupId);
 	}
 
@@ -279,10 +255,9 @@ public class BlogsStatsUserUtil {
 	*
 	* @param userId the user ID
 	* @return the matching blogs stats users
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.blogs.model.BlogsStatsUser> findByUserId(
-		long userId) throws com.liferay.portal.kernel.exception.SystemException {
+		long userId) {
 		return getPersistence().findByUserId(userId);
 	}
 
@@ -297,11 +272,9 @@ public class BlogsStatsUserUtil {
 	* @param start the lower bound of the range of blogs stats users
 	* @param end the upper bound of the range of blogs stats users (not inclusive)
 	* @return the range of matching blogs stats users
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.blogs.model.BlogsStatsUser> findByUserId(
-		long userId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long userId, int start, int end) {
 		return getPersistence().findByUserId(userId, start, end);
 	}
 
@@ -317,12 +290,10 @@ public class BlogsStatsUserUtil {
 	* @param end the upper bound of the range of blogs stats users (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching blogs stats users
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.blogs.model.BlogsStatsUser> findByUserId(
 		long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByUserId(userId, start, end, orderByComparator);
 	}
@@ -334,13 +305,11 @@ public class BlogsStatsUserUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching blogs stats user
 	* @throws com.liferay.portlet.blogs.NoSuchStatsUserException if a matching blogs stats user could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.blogs.model.BlogsStatsUser findByUserId_First(
 		long userId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.blogs.NoSuchStatsUserException {
+		throws com.liferay.portlet.blogs.NoSuchStatsUserException {
 		return getPersistence().findByUserId_First(userId, orderByComparator);
 	}
 
@@ -350,12 +319,10 @@ public class BlogsStatsUserUtil {
 	* @param userId the user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching blogs stats user, or <code>null</code> if a matching blogs stats user could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.blogs.model.BlogsStatsUser fetchByUserId_First(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByUserId_First(userId, orderByComparator);
 	}
 
@@ -366,13 +333,11 @@ public class BlogsStatsUserUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching blogs stats user
 	* @throws com.liferay.portlet.blogs.NoSuchStatsUserException if a matching blogs stats user could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.blogs.model.BlogsStatsUser findByUserId_Last(
 		long userId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.blogs.NoSuchStatsUserException {
+		throws com.liferay.portlet.blogs.NoSuchStatsUserException {
 		return getPersistence().findByUserId_Last(userId, orderByComparator);
 	}
 
@@ -382,12 +347,10 @@ public class BlogsStatsUserUtil {
 	* @param userId the user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching blogs stats user, or <code>null</code> if a matching blogs stats user could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.blogs.model.BlogsStatsUser fetchByUserId_Last(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByUserId_Last(userId, orderByComparator);
 	}
 
@@ -399,13 +362,11 @@ public class BlogsStatsUserUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next blogs stats user
 	* @throws com.liferay.portlet.blogs.NoSuchStatsUserException if a blogs stats user with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.blogs.model.BlogsStatsUser[] findByUserId_PrevAndNext(
 		long statsUserId, long userId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.blogs.NoSuchStatsUserException {
+		throws com.liferay.portlet.blogs.NoSuchStatsUserException {
 		return getPersistence()
 				   .findByUserId_PrevAndNext(statsUserId, userId,
 			orderByComparator);
@@ -415,10 +376,8 @@ public class BlogsStatsUserUtil {
 	* Removes all the blogs stats users where userId = &#63; from the database.
 	*
 	* @param userId the user ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByUserId(long userId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByUserId(long userId) {
 		getPersistence().removeByUserId(userId);
 	}
 
@@ -427,10 +386,8 @@ public class BlogsStatsUserUtil {
 	*
 	* @param userId the user ID
 	* @return the number of matching blogs stats users
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByUserId(long userId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByUserId(long userId) {
 		return getPersistence().countByUserId(userId);
 	}
 
@@ -441,12 +398,10 @@ public class BlogsStatsUserUtil {
 	* @param userId the user ID
 	* @return the matching blogs stats user
 	* @throws com.liferay.portlet.blogs.NoSuchStatsUserException if a matching blogs stats user could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.blogs.model.BlogsStatsUser findByG_U(
 		long groupId, long userId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.blogs.NoSuchStatsUserException {
+		throws com.liferay.portlet.blogs.NoSuchStatsUserException {
 		return getPersistence().findByG_U(groupId, userId);
 	}
 
@@ -456,11 +411,9 @@ public class BlogsStatsUserUtil {
 	* @param groupId the group ID
 	* @param userId the user ID
 	* @return the matching blogs stats user, or <code>null</code> if a matching blogs stats user could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.blogs.model.BlogsStatsUser fetchByG_U(
-		long groupId, long userId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, long userId) {
 		return getPersistence().fetchByG_U(groupId, userId);
 	}
 
@@ -471,11 +424,9 @@ public class BlogsStatsUserUtil {
 	* @param userId the user ID
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching blogs stats user, or <code>null</code> if a matching blogs stats user could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.blogs.model.BlogsStatsUser fetchByG_U(
-		long groupId, long userId, boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, long userId, boolean retrieveFromCache) {
 		return getPersistence().fetchByG_U(groupId, userId, retrieveFromCache);
 	}
 
@@ -485,12 +436,10 @@ public class BlogsStatsUserUtil {
 	* @param groupId the group ID
 	* @param userId the user ID
 	* @return the blogs stats user that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.blogs.model.BlogsStatsUser removeByG_U(
 		long groupId, long userId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.blogs.NoSuchStatsUserException {
+		throws com.liferay.portlet.blogs.NoSuchStatsUserException {
 		return getPersistence().removeByG_U(groupId, userId);
 	}
 
@@ -500,10 +449,8 @@ public class BlogsStatsUserUtil {
 	* @param groupId the group ID
 	* @param userId the user ID
 	* @return the number of matching blogs stats users
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByG_U(long groupId, long userId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByG_U(long groupId, long userId) {
 		return getPersistence().countByG_U(groupId, userId);
 	}
 
@@ -513,11 +460,9 @@ public class BlogsStatsUserUtil {
 	* @param groupId the group ID
 	* @param entryCount the entry count
 	* @return the matching blogs stats users
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.blogs.model.BlogsStatsUser> findByG_NotE(
-		long groupId, int entryCount)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, int entryCount) {
 		return getPersistence().findByG_NotE(groupId, entryCount);
 	}
 
@@ -533,11 +478,9 @@ public class BlogsStatsUserUtil {
 	* @param start the lower bound of the range of blogs stats users
 	* @param end the upper bound of the range of blogs stats users (not inclusive)
 	* @return the range of matching blogs stats users
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.blogs.model.BlogsStatsUser> findByG_NotE(
-		long groupId, int entryCount, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, int entryCount, int start, int end) {
 		return getPersistence().findByG_NotE(groupId, entryCount, start, end);
 	}
 
@@ -554,12 +497,10 @@ public class BlogsStatsUserUtil {
 	* @param end the upper bound of the range of blogs stats users (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching blogs stats users
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.blogs.model.BlogsStatsUser> findByG_NotE(
 		long groupId, int entryCount, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByG_NotE(groupId, entryCount, start, end,
 			orderByComparator);
@@ -573,13 +514,11 @@ public class BlogsStatsUserUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching blogs stats user
 	* @throws com.liferay.portlet.blogs.NoSuchStatsUserException if a matching blogs stats user could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.blogs.model.BlogsStatsUser findByG_NotE_First(
 		long groupId, int entryCount,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.blogs.NoSuchStatsUserException {
+		throws com.liferay.portlet.blogs.NoSuchStatsUserException {
 		return getPersistence()
 				   .findByG_NotE_First(groupId, entryCount, orderByComparator);
 	}
@@ -591,12 +530,10 @@ public class BlogsStatsUserUtil {
 	* @param entryCount the entry count
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching blogs stats user, or <code>null</code> if a matching blogs stats user could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.blogs.model.BlogsStatsUser fetchByG_NotE_First(
 		long groupId, int entryCount,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByG_NotE_First(groupId, entryCount, orderByComparator);
 	}
@@ -609,13 +546,11 @@ public class BlogsStatsUserUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching blogs stats user
 	* @throws com.liferay.portlet.blogs.NoSuchStatsUserException if a matching blogs stats user could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.blogs.model.BlogsStatsUser findByG_NotE_Last(
 		long groupId, int entryCount,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.blogs.NoSuchStatsUserException {
+		throws com.liferay.portlet.blogs.NoSuchStatsUserException {
 		return getPersistence()
 				   .findByG_NotE_Last(groupId, entryCount, orderByComparator);
 	}
@@ -627,12 +562,10 @@ public class BlogsStatsUserUtil {
 	* @param entryCount the entry count
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching blogs stats user, or <code>null</code> if a matching blogs stats user could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.blogs.model.BlogsStatsUser fetchByG_NotE_Last(
 		long groupId, int entryCount,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByG_NotE_Last(groupId, entryCount, orderByComparator);
 	}
@@ -646,13 +579,11 @@ public class BlogsStatsUserUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next blogs stats user
 	* @throws com.liferay.portlet.blogs.NoSuchStatsUserException if a blogs stats user with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.blogs.model.BlogsStatsUser[] findByG_NotE_PrevAndNext(
 		long statsUserId, long groupId, int entryCount,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.blogs.NoSuchStatsUserException {
+		throws com.liferay.portlet.blogs.NoSuchStatsUserException {
 		return getPersistence()
 				   .findByG_NotE_PrevAndNext(statsUserId, groupId, entryCount,
 			orderByComparator);
@@ -663,10 +594,8 @@ public class BlogsStatsUserUtil {
 	*
 	* @param groupId the group ID
 	* @param entryCount the entry count
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByG_NotE(long groupId, int entryCount)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByG_NotE(long groupId, int entryCount) {
 		getPersistence().removeByG_NotE(groupId, entryCount);
 	}
 
@@ -676,10 +605,8 @@ public class BlogsStatsUserUtil {
 	* @param groupId the group ID
 	* @param entryCount the entry count
 	* @return the number of matching blogs stats users
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByG_NotE(long groupId, int entryCount)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByG_NotE(long groupId, int entryCount) {
 		return getPersistence().countByG_NotE(groupId, entryCount);
 	}
 
@@ -689,11 +616,9 @@ public class BlogsStatsUserUtil {
 	* @param companyId the company ID
 	* @param entryCount the entry count
 	* @return the matching blogs stats users
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.blogs.model.BlogsStatsUser> findByC_NotE(
-		long companyId, int entryCount)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long companyId, int entryCount) {
 		return getPersistence().findByC_NotE(companyId, entryCount);
 	}
 
@@ -709,11 +634,9 @@ public class BlogsStatsUserUtil {
 	* @param start the lower bound of the range of blogs stats users
 	* @param end the upper bound of the range of blogs stats users (not inclusive)
 	* @return the range of matching blogs stats users
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.blogs.model.BlogsStatsUser> findByC_NotE(
-		long companyId, int entryCount, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long companyId, int entryCount, int start, int end) {
 		return getPersistence().findByC_NotE(companyId, entryCount, start, end);
 	}
 
@@ -730,12 +653,10 @@ public class BlogsStatsUserUtil {
 	* @param end the upper bound of the range of blogs stats users (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching blogs stats users
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.blogs.model.BlogsStatsUser> findByC_NotE(
 		long companyId, int entryCount, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByC_NotE(companyId, entryCount, start, end,
 			orderByComparator);
@@ -749,13 +670,11 @@ public class BlogsStatsUserUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching blogs stats user
 	* @throws com.liferay.portlet.blogs.NoSuchStatsUserException if a matching blogs stats user could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.blogs.model.BlogsStatsUser findByC_NotE_First(
 		long companyId, int entryCount,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.blogs.NoSuchStatsUserException {
+		throws com.liferay.portlet.blogs.NoSuchStatsUserException {
 		return getPersistence()
 				   .findByC_NotE_First(companyId, entryCount, orderByComparator);
 	}
@@ -767,12 +686,10 @@ public class BlogsStatsUserUtil {
 	* @param entryCount the entry count
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching blogs stats user, or <code>null</code> if a matching blogs stats user could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.blogs.model.BlogsStatsUser fetchByC_NotE_First(
 		long companyId, int entryCount,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByC_NotE_First(companyId, entryCount, orderByComparator);
 	}
@@ -785,13 +702,11 @@ public class BlogsStatsUserUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching blogs stats user
 	* @throws com.liferay.portlet.blogs.NoSuchStatsUserException if a matching blogs stats user could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.blogs.model.BlogsStatsUser findByC_NotE_Last(
 		long companyId, int entryCount,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.blogs.NoSuchStatsUserException {
+		throws com.liferay.portlet.blogs.NoSuchStatsUserException {
 		return getPersistence()
 				   .findByC_NotE_Last(companyId, entryCount, orderByComparator);
 	}
@@ -803,12 +718,10 @@ public class BlogsStatsUserUtil {
 	* @param entryCount the entry count
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching blogs stats user, or <code>null</code> if a matching blogs stats user could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.blogs.model.BlogsStatsUser fetchByC_NotE_Last(
 		long companyId, int entryCount,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByC_NotE_Last(companyId, entryCount, orderByComparator);
 	}
@@ -822,13 +735,11 @@ public class BlogsStatsUserUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next blogs stats user
 	* @throws com.liferay.portlet.blogs.NoSuchStatsUserException if a blogs stats user with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.blogs.model.BlogsStatsUser[] findByC_NotE_PrevAndNext(
 		long statsUserId, long companyId, int entryCount,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.blogs.NoSuchStatsUserException {
+		throws com.liferay.portlet.blogs.NoSuchStatsUserException {
 		return getPersistence()
 				   .findByC_NotE_PrevAndNext(statsUserId, companyId,
 			entryCount, orderByComparator);
@@ -839,10 +750,8 @@ public class BlogsStatsUserUtil {
 	*
 	* @param companyId the company ID
 	* @param entryCount the entry count
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByC_NotE(long companyId, int entryCount)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByC_NotE(long companyId, int entryCount) {
 		getPersistence().removeByC_NotE(companyId, entryCount);
 	}
 
@@ -852,10 +761,8 @@ public class BlogsStatsUserUtil {
 	* @param companyId the company ID
 	* @param entryCount the entry count
 	* @return the number of matching blogs stats users
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByC_NotE(long companyId, int entryCount)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByC_NotE(long companyId, int entryCount) {
 		return getPersistence().countByC_NotE(companyId, entryCount);
 	}
 
@@ -865,11 +772,9 @@ public class BlogsStatsUserUtil {
 	* @param userId the user ID
 	* @param lastPostDate the last post date
 	* @return the matching blogs stats users
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.blogs.model.BlogsStatsUser> findByU_L(
-		long userId, java.util.Date lastPostDate)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long userId, java.util.Date lastPostDate) {
 		return getPersistence().findByU_L(userId, lastPostDate);
 	}
 
@@ -885,11 +790,9 @@ public class BlogsStatsUserUtil {
 	* @param start the lower bound of the range of blogs stats users
 	* @param end the upper bound of the range of blogs stats users (not inclusive)
 	* @return the range of matching blogs stats users
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.blogs.model.BlogsStatsUser> findByU_L(
-		long userId, java.util.Date lastPostDate, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long userId, java.util.Date lastPostDate, int start, int end) {
 		return getPersistence().findByU_L(userId, lastPostDate, start, end);
 	}
 
@@ -906,12 +809,10 @@ public class BlogsStatsUserUtil {
 	* @param end the upper bound of the range of blogs stats users (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching blogs stats users
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.blogs.model.BlogsStatsUser> findByU_L(
 		long userId, java.util.Date lastPostDate, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByU_L(userId, lastPostDate, start, end,
 			orderByComparator);
@@ -925,13 +826,11 @@ public class BlogsStatsUserUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching blogs stats user
 	* @throws com.liferay.portlet.blogs.NoSuchStatsUserException if a matching blogs stats user could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.blogs.model.BlogsStatsUser findByU_L_First(
 		long userId, java.util.Date lastPostDate,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.blogs.NoSuchStatsUserException {
+		throws com.liferay.portlet.blogs.NoSuchStatsUserException {
 		return getPersistence()
 				   .findByU_L_First(userId, lastPostDate, orderByComparator);
 	}
@@ -943,12 +842,10 @@ public class BlogsStatsUserUtil {
 	* @param lastPostDate the last post date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching blogs stats user, or <code>null</code> if a matching blogs stats user could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.blogs.model.BlogsStatsUser fetchByU_L_First(
 		long userId, java.util.Date lastPostDate,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByU_L_First(userId, lastPostDate, orderByComparator);
 	}
@@ -961,13 +858,11 @@ public class BlogsStatsUserUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching blogs stats user
 	* @throws com.liferay.portlet.blogs.NoSuchStatsUserException if a matching blogs stats user could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.blogs.model.BlogsStatsUser findByU_L_Last(
 		long userId, java.util.Date lastPostDate,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.blogs.NoSuchStatsUserException {
+		throws com.liferay.portlet.blogs.NoSuchStatsUserException {
 		return getPersistence()
 				   .findByU_L_Last(userId, lastPostDate, orderByComparator);
 	}
@@ -979,12 +874,10 @@ public class BlogsStatsUserUtil {
 	* @param lastPostDate the last post date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching blogs stats user, or <code>null</code> if a matching blogs stats user could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.blogs.model.BlogsStatsUser fetchByU_L_Last(
 		long userId, java.util.Date lastPostDate,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByU_L_Last(userId, lastPostDate, orderByComparator);
 	}
@@ -998,13 +891,11 @@ public class BlogsStatsUserUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next blogs stats user
 	* @throws com.liferay.portlet.blogs.NoSuchStatsUserException if a blogs stats user with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.blogs.model.BlogsStatsUser[] findByU_L_PrevAndNext(
 		long statsUserId, long userId, java.util.Date lastPostDate,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.blogs.NoSuchStatsUserException {
+		throws com.liferay.portlet.blogs.NoSuchStatsUserException {
 		return getPersistence()
 				   .findByU_L_PrevAndNext(statsUserId, userId, lastPostDate,
 			orderByComparator);
@@ -1015,10 +906,8 @@ public class BlogsStatsUserUtil {
 	*
 	* @param userId the user ID
 	* @param lastPostDate the last post date
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByU_L(long userId, java.util.Date lastPostDate)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByU_L(long userId, java.util.Date lastPostDate) {
 		getPersistence().removeByU_L(userId, lastPostDate);
 	}
 
@@ -1028,10 +917,8 @@ public class BlogsStatsUserUtil {
 	* @param userId the user ID
 	* @param lastPostDate the last post date
 	* @return the number of matching blogs stats users
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByU_L(long userId, java.util.Date lastPostDate)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByU_L(long userId, java.util.Date lastPostDate) {
 		return getPersistence().countByU_L(userId, lastPostDate);
 	}
 
@@ -1072,18 +959,15 @@ public class BlogsStatsUserUtil {
 	* @param statsUserId the primary key of the blogs stats user
 	* @return the blogs stats user that was removed
 	* @throws com.liferay.portlet.blogs.NoSuchStatsUserException if a blogs stats user with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.blogs.model.BlogsStatsUser remove(
 		long statsUserId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.blogs.NoSuchStatsUserException {
+		throws com.liferay.portlet.blogs.NoSuchStatsUserException {
 		return getPersistence().remove(statsUserId);
 	}
 
 	public static com.liferay.portlet.blogs.model.BlogsStatsUser updateImpl(
-		com.liferay.portlet.blogs.model.BlogsStatsUser blogsStatsUser)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.blogs.model.BlogsStatsUser blogsStatsUser) {
 		return getPersistence().updateImpl(blogsStatsUser);
 	}
 
@@ -1093,12 +977,10 @@ public class BlogsStatsUserUtil {
 	* @param statsUserId the primary key of the blogs stats user
 	* @return the blogs stats user
 	* @throws com.liferay.portlet.blogs.NoSuchStatsUserException if a blogs stats user with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.blogs.model.BlogsStatsUser findByPrimaryKey(
 		long statsUserId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.blogs.NoSuchStatsUserException {
+		throws com.liferay.portlet.blogs.NoSuchStatsUserException {
 		return getPersistence().findByPrimaryKey(statsUserId);
 	}
 
@@ -1107,11 +989,9 @@ public class BlogsStatsUserUtil {
 	*
 	* @param statsUserId the primary key of the blogs stats user
 	* @return the blogs stats user, or <code>null</code> if a blogs stats user with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.blogs.model.BlogsStatsUser fetchByPrimaryKey(
-		long statsUserId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long statsUserId) {
 		return getPersistence().fetchByPrimaryKey(statsUserId);
 	}
 
@@ -1119,10 +999,8 @@ public class BlogsStatsUserUtil {
 	* Returns all the blogs stats users.
 	*
 	* @return the blogs stats users
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.portlet.blogs.model.BlogsStatsUser> findAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static java.util.List<com.liferay.portlet.blogs.model.BlogsStatsUser> findAll() {
 		return getPersistence().findAll();
 	}
 
@@ -1136,11 +1014,9 @@ public class BlogsStatsUserUtil {
 	* @param start the lower bound of the range of blogs stats users
 	* @param end the upper bound of the range of blogs stats users (not inclusive)
 	* @return the range of blogs stats users
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.blogs.model.BlogsStatsUser> findAll(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
@@ -1155,22 +1031,17 @@ public class BlogsStatsUserUtil {
 	* @param end the upper bound of the range of blogs stats users (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of blogs stats users
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.blogs.model.BlogsStatsUser> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
 	/**
 	* Removes all the blogs stats users from the database.
-	*
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeAll() {
 		getPersistence().removeAll();
 	}
 
@@ -1178,10 +1049,8 @@ public class BlogsStatsUserUtil {
 	* Returns the number of blogs stats users.
 	*
 	* @return the number of blogs stats users
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countAll() {
 		return getPersistence().countAll();
 	}
 

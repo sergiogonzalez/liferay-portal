@@ -17,7 +17,6 @@ package com.liferay.portlet.dynamicdatalists.model;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.StagedGroupedModel;
@@ -147,10 +146,9 @@ public interface DDLRecordModel extends BaseModel<DDLRecord>, StagedGroupedModel
 	 * Returns the user uuid of this d d l record.
 	 *
 	 * @return the user uuid of this d d l record
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public String getUserUuid() throws SystemException;
+	public String getUserUuid();
 
 	/**
 	 * Sets the user uuid of this d d l record.
@@ -195,9 +193,8 @@ public interface DDLRecordModel extends BaseModel<DDLRecord>, StagedGroupedModel
 	 * Returns the version user uuid of this d d l record.
 	 *
 	 * @return the version user uuid of this d d l record
-	 * @throws SystemException if a system exception occurred
 	 */
-	public String getVersionUserUuid() throws SystemException;
+	public String getVersionUserUuid();
 
 	/**
 	 * Sets the version user uuid of this d d l record.

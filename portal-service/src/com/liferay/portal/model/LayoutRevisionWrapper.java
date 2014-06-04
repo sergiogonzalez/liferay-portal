@@ -401,11 +401,9 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	* Returns the user uuid of this layout revision.
 	*
 	* @return the user uuid of this layout revision
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public java.lang.String getUserUuid()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public java.lang.String getUserUuid() {
 		return _layoutRevision.getUserUuid();
 	}
 
@@ -1537,11 +1535,9 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	* Returns the status by user uuid of this layout revision.
 	*
 	* @return the status by user uuid of this layout revision
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public java.lang.String getStatusByUserUuid()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public java.lang.String getStatusByUserUuid() {
 		return _layoutRevision.getStatusByUserUuid();
 	}
 
@@ -1806,8 +1802,7 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void persist() {
 		_layoutRevision.persist();
 	}
 

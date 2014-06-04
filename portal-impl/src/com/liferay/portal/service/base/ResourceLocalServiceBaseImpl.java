@@ -348,7 +348,7 @@ public abstract class ResourceLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param sql the sql query
 	 */
-	protected void runSQL(String sql) throws SystemException {
+	protected void runSQL(String sql) {
 		try {
 			DataSource dataSource = InfrastructureUtil.getDataSource();
 

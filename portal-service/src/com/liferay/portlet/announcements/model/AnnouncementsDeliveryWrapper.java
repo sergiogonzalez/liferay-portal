@@ -193,11 +193,9 @@ public class AnnouncementsDeliveryWrapper implements AnnouncementsDelivery,
 	* Returns the user uuid of this announcements delivery.
 	*
 	* @return the user uuid of this announcements delivery
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public java.lang.String getUserUuid()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public java.lang.String getUserUuid() {
 		return _announcementsDelivery.getUserUuid();
 	}
 
@@ -421,8 +419,7 @@ public class AnnouncementsDeliveryWrapper implements AnnouncementsDelivery,
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void persist() {
 		_announcementsDelivery.persist();
 	}
 

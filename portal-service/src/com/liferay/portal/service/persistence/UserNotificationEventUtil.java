@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 import com.liferay.portal.model.UserNotificationEvent;
@@ -63,8 +62,7 @@ public class UserNotificationEventUtil {
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#countWithDynamicQuery(DynamicQuery)
 	 */
-	public static long countWithDynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public static long countWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return getPersistence().countWithDynamicQuery(dynamicQuery);
 	}
 
@@ -72,7 +70,7 @@ public class UserNotificationEventUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery)
 	 */
 	public static List<UserNotificationEvent> findWithDynamicQuery(
-		DynamicQuery dynamicQuery) throws SystemException {
+		DynamicQuery dynamicQuery) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -80,8 +78,7 @@ public class UserNotificationEventUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
 	 */
 	public static List<UserNotificationEvent> findWithDynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+		DynamicQuery dynamicQuery, int start, int end) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -90,7 +87,7 @@ public class UserNotificationEventUtil {
 	 */
 	public static List<UserNotificationEvent> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -100,7 +97,7 @@ public class UserNotificationEventUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
 	public static UserNotificationEvent update(
-		UserNotificationEvent userNotificationEvent) throws SystemException {
+		UserNotificationEvent userNotificationEvent) {
 		return getPersistence().update(userNotificationEvent);
 	}
 
@@ -109,7 +106,7 @@ public class UserNotificationEventUtil {
 	 */
 	public static UserNotificationEvent update(
 		UserNotificationEvent userNotificationEvent,
-		ServiceContext serviceContext) throws SystemException {
+		ServiceContext serviceContext) {
 		return getPersistence().update(userNotificationEvent, serviceContext);
 	}
 
@@ -118,11 +115,9 @@ public class UserNotificationEventUtil {
 	*
 	* @param uuid the uuid
 	* @return the matching user notification events
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portal.model.UserNotificationEvent> findByUuid(
-		java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid) {
 		return getPersistence().findByUuid(uuid);
 	}
 
@@ -137,11 +132,9 @@ public class UserNotificationEventUtil {
 	* @param start the lower bound of the range of user notification events
 	* @param end the upper bound of the range of user notification events (not inclusive)
 	* @return the range of matching user notification events
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portal.model.UserNotificationEvent> findByUuid(
-		java.lang.String uuid, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, int start, int end) {
 		return getPersistence().findByUuid(uuid, start, end);
 	}
 
@@ -157,12 +150,10 @@ public class UserNotificationEventUtil {
 	* @param end the upper bound of the range of user notification events (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching user notification events
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portal.model.UserNotificationEvent> findByUuid(
 		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -173,13 +164,11 @@ public class UserNotificationEventUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching user notification event
 	* @throws com.liferay.portal.NoSuchUserNotificationEventException if a matching user notification event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.UserNotificationEvent findByUuid_First(
 		java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchUserNotificationEventException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.NoSuchUserNotificationEventException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
 
@@ -189,12 +178,10 @@ public class UserNotificationEventUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching user notification event, or <code>null</code> if a matching user notification event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.UserNotificationEvent fetchByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
 
@@ -205,13 +192,11 @@ public class UserNotificationEventUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching user notification event
 	* @throws com.liferay.portal.NoSuchUserNotificationEventException if a matching user notification event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.UserNotificationEvent findByUuid_Last(
 		java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchUserNotificationEventException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.NoSuchUserNotificationEventException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -221,12 +206,10 @@ public class UserNotificationEventUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching user notification event, or <code>null</code> if a matching user notification event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.UserNotificationEvent fetchByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -238,13 +221,11 @@ public class UserNotificationEventUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next user notification event
 	* @throws com.liferay.portal.NoSuchUserNotificationEventException if a user notification event with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.UserNotificationEvent[] findByUuid_PrevAndNext(
 		long userNotificationEventId, java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchUserNotificationEventException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.NoSuchUserNotificationEventException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(userNotificationEventId, uuid,
 			orderByComparator);
@@ -254,10 +235,8 @@ public class UserNotificationEventUtil {
 	* Removes all the user notification events where uuid = &#63; from the database.
 	*
 	* @param uuid the uuid
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByUuid(java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByUuid(java.lang.String uuid) {
 		getPersistence().removeByUuid(uuid);
 	}
 
@@ -266,10 +245,8 @@ public class UserNotificationEventUtil {
 	*
 	* @param uuid the uuid
 	* @return the number of matching user notification events
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByUuid(java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByUuid(java.lang.String uuid) {
 		return getPersistence().countByUuid(uuid);
 	}
 
@@ -279,11 +256,9 @@ public class UserNotificationEventUtil {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	* @return the matching user notification events
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portal.model.UserNotificationEvent> findByUuid_C(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long companyId) {
 		return getPersistence().findByUuid_C(uuid, companyId);
 	}
 
@@ -299,11 +274,9 @@ public class UserNotificationEventUtil {
 	* @param start the lower bound of the range of user notification events
 	* @param end the upper bound of the range of user notification events (not inclusive)
 	* @return the range of matching user notification events
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portal.model.UserNotificationEvent> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long companyId, int start, int end) {
 		return getPersistence().findByUuid_C(uuid, companyId, start, end);
 	}
 
@@ -320,12 +293,10 @@ public class UserNotificationEventUtil {
 	* @param end the upper bound of the range of user notification events (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching user notification events
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portal.model.UserNotificationEvent> findByUuid_C(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
 	}
@@ -338,13 +309,11 @@ public class UserNotificationEventUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching user notification event
 	* @throws com.liferay.portal.NoSuchUserNotificationEventException if a matching user notification event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.UserNotificationEvent findByUuid_C_First(
 		java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchUserNotificationEventException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.NoSuchUserNotificationEventException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -356,12 +325,10 @@ public class UserNotificationEventUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching user notification event, or <code>null</code> if a matching user notification event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.UserNotificationEvent fetchByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -374,13 +341,11 @@ public class UserNotificationEventUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching user notification event
 	* @throws com.liferay.portal.NoSuchUserNotificationEventException if a matching user notification event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.UserNotificationEvent findByUuid_C_Last(
 		java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchUserNotificationEventException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.NoSuchUserNotificationEventException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -392,12 +357,10 @@ public class UserNotificationEventUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching user notification event, or <code>null</code> if a matching user notification event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.UserNotificationEvent fetchByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -411,13 +374,11 @@ public class UserNotificationEventUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next user notification event
 	* @throws com.liferay.portal.NoSuchUserNotificationEventException if a user notification event with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.UserNotificationEvent[] findByUuid_C_PrevAndNext(
 		long userNotificationEventId, java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchUserNotificationEventException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.NoSuchUserNotificationEventException {
 		return getPersistence()
 				   .findByUuid_C_PrevAndNext(userNotificationEventId, uuid,
 			companyId, orderByComparator);
@@ -428,10 +389,8 @@ public class UserNotificationEventUtil {
 	*
 	* @param uuid the uuid
 	* @param companyId the company ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByUuid_C(java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByUuid_C(java.lang.String uuid, long companyId) {
 		getPersistence().removeByUuid_C(uuid, companyId);
 	}
 
@@ -441,10 +400,8 @@ public class UserNotificationEventUtil {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	* @return the number of matching user notification events
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByUuid_C(java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByUuid_C(java.lang.String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
@@ -453,10 +410,9 @@ public class UserNotificationEventUtil {
 	*
 	* @param userId the user ID
 	* @return the matching user notification events
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portal.model.UserNotificationEvent> findByUserId(
-		long userId) throws com.liferay.portal.kernel.exception.SystemException {
+		long userId) {
 		return getPersistence().findByUserId(userId);
 	}
 
@@ -471,11 +427,9 @@ public class UserNotificationEventUtil {
 	* @param start the lower bound of the range of user notification events
 	* @param end the upper bound of the range of user notification events (not inclusive)
 	* @return the range of matching user notification events
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portal.model.UserNotificationEvent> findByUserId(
-		long userId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long userId, int start, int end) {
 		return getPersistence().findByUserId(userId, start, end);
 	}
 
@@ -491,12 +445,10 @@ public class UserNotificationEventUtil {
 	* @param end the upper bound of the range of user notification events (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching user notification events
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portal.model.UserNotificationEvent> findByUserId(
 		long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByUserId(userId, start, end, orderByComparator);
 	}
@@ -508,13 +460,11 @@ public class UserNotificationEventUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching user notification event
 	* @throws com.liferay.portal.NoSuchUserNotificationEventException if a matching user notification event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.UserNotificationEvent findByUserId_First(
 		long userId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchUserNotificationEventException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.NoSuchUserNotificationEventException {
 		return getPersistence().findByUserId_First(userId, orderByComparator);
 	}
 
@@ -524,12 +474,10 @@ public class UserNotificationEventUtil {
 	* @param userId the user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching user notification event, or <code>null</code> if a matching user notification event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.UserNotificationEvent fetchByUserId_First(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByUserId_First(userId, orderByComparator);
 	}
 
@@ -540,13 +488,11 @@ public class UserNotificationEventUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching user notification event
 	* @throws com.liferay.portal.NoSuchUserNotificationEventException if a matching user notification event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.UserNotificationEvent findByUserId_Last(
 		long userId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchUserNotificationEventException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.NoSuchUserNotificationEventException {
 		return getPersistence().findByUserId_Last(userId, orderByComparator);
 	}
 
@@ -556,12 +502,10 @@ public class UserNotificationEventUtil {
 	* @param userId the user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching user notification event, or <code>null</code> if a matching user notification event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.UserNotificationEvent fetchByUserId_Last(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByUserId_Last(userId, orderByComparator);
 	}
 
@@ -573,13 +517,11 @@ public class UserNotificationEventUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next user notification event
 	* @throws com.liferay.portal.NoSuchUserNotificationEventException if a user notification event with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.UserNotificationEvent[] findByUserId_PrevAndNext(
 		long userNotificationEventId, long userId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchUserNotificationEventException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.NoSuchUserNotificationEventException {
 		return getPersistence()
 				   .findByUserId_PrevAndNext(userNotificationEventId, userId,
 			orderByComparator);
@@ -589,10 +531,8 @@ public class UserNotificationEventUtil {
 	* Removes all the user notification events where userId = &#63; from the database.
 	*
 	* @param userId the user ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByUserId(long userId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByUserId(long userId) {
 		getPersistence().removeByUserId(userId);
 	}
 
@@ -601,10 +541,8 @@ public class UserNotificationEventUtil {
 	*
 	* @param userId the user ID
 	* @return the number of matching user notification events
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByUserId(long userId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByUserId(long userId) {
 		return getPersistence().countByUserId(userId);
 	}
 
@@ -614,11 +552,9 @@ public class UserNotificationEventUtil {
 	* @param userId the user ID
 	* @param delivered the delivered
 	* @return the matching user notification events
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portal.model.UserNotificationEvent> findByU_D(
-		long userId, boolean delivered)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long userId, boolean delivered) {
 		return getPersistence().findByU_D(userId, delivered);
 	}
 
@@ -634,11 +570,9 @@ public class UserNotificationEventUtil {
 	* @param start the lower bound of the range of user notification events
 	* @param end the upper bound of the range of user notification events (not inclusive)
 	* @return the range of matching user notification events
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portal.model.UserNotificationEvent> findByU_D(
-		long userId, boolean delivered, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long userId, boolean delivered, int start, int end) {
 		return getPersistence().findByU_D(userId, delivered, start, end);
 	}
 
@@ -655,12 +589,10 @@ public class UserNotificationEventUtil {
 	* @param end the upper bound of the range of user notification events (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching user notification events
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portal.model.UserNotificationEvent> findByU_D(
 		long userId, boolean delivered, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByU_D(userId, delivered, start, end, orderByComparator);
 	}
@@ -673,13 +605,11 @@ public class UserNotificationEventUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching user notification event
 	* @throws com.liferay.portal.NoSuchUserNotificationEventException if a matching user notification event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.UserNotificationEvent findByU_D_First(
 		long userId, boolean delivered,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchUserNotificationEventException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.NoSuchUserNotificationEventException {
 		return getPersistence()
 				   .findByU_D_First(userId, delivered, orderByComparator);
 	}
@@ -691,12 +621,10 @@ public class UserNotificationEventUtil {
 	* @param delivered the delivered
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching user notification event, or <code>null</code> if a matching user notification event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.UserNotificationEvent fetchByU_D_First(
 		long userId, boolean delivered,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByU_D_First(userId, delivered, orderByComparator);
 	}
@@ -709,13 +637,11 @@ public class UserNotificationEventUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching user notification event
 	* @throws com.liferay.portal.NoSuchUserNotificationEventException if a matching user notification event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.UserNotificationEvent findByU_D_Last(
 		long userId, boolean delivered,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchUserNotificationEventException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.NoSuchUserNotificationEventException {
 		return getPersistence()
 				   .findByU_D_Last(userId, delivered, orderByComparator);
 	}
@@ -727,12 +653,10 @@ public class UserNotificationEventUtil {
 	* @param delivered the delivered
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching user notification event, or <code>null</code> if a matching user notification event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.UserNotificationEvent fetchByU_D_Last(
 		long userId, boolean delivered,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByU_D_Last(userId, delivered, orderByComparator);
 	}
@@ -746,13 +670,11 @@ public class UserNotificationEventUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next user notification event
 	* @throws com.liferay.portal.NoSuchUserNotificationEventException if a user notification event with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.UserNotificationEvent[] findByU_D_PrevAndNext(
 		long userNotificationEventId, long userId, boolean delivered,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchUserNotificationEventException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.NoSuchUserNotificationEventException {
 		return getPersistence()
 				   .findByU_D_PrevAndNext(userNotificationEventId, userId,
 			delivered, orderByComparator);
@@ -763,10 +685,8 @@ public class UserNotificationEventUtil {
 	*
 	* @param userId the user ID
 	* @param delivered the delivered
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByU_D(long userId, boolean delivered)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByU_D(long userId, boolean delivered) {
 		getPersistence().removeByU_D(userId, delivered);
 	}
 
@@ -776,10 +696,8 @@ public class UserNotificationEventUtil {
 	* @param userId the user ID
 	* @param delivered the delivered
 	* @return the number of matching user notification events
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByU_D(long userId, boolean delivered)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByU_D(long userId, boolean delivered) {
 		return getPersistence().countByU_D(userId, delivered);
 	}
 
@@ -789,11 +707,9 @@ public class UserNotificationEventUtil {
 	* @param userId the user ID
 	* @param archived the archived
 	* @return the matching user notification events
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portal.model.UserNotificationEvent> findByU_A(
-		long userId, boolean archived)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long userId, boolean archived) {
 		return getPersistence().findByU_A(userId, archived);
 	}
 
@@ -809,11 +725,9 @@ public class UserNotificationEventUtil {
 	* @param start the lower bound of the range of user notification events
 	* @param end the upper bound of the range of user notification events (not inclusive)
 	* @return the range of matching user notification events
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portal.model.UserNotificationEvent> findByU_A(
-		long userId, boolean archived, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long userId, boolean archived, int start, int end) {
 		return getPersistence().findByU_A(userId, archived, start, end);
 	}
 
@@ -830,12 +744,10 @@ public class UserNotificationEventUtil {
 	* @param end the upper bound of the range of user notification events (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching user notification events
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portal.model.UserNotificationEvent> findByU_A(
 		long userId, boolean archived, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByU_A(userId, archived, start, end, orderByComparator);
 	}
@@ -848,13 +760,11 @@ public class UserNotificationEventUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching user notification event
 	* @throws com.liferay.portal.NoSuchUserNotificationEventException if a matching user notification event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.UserNotificationEvent findByU_A_First(
 		long userId, boolean archived,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchUserNotificationEventException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.NoSuchUserNotificationEventException {
 		return getPersistence()
 				   .findByU_A_First(userId, archived, orderByComparator);
 	}
@@ -866,12 +776,10 @@ public class UserNotificationEventUtil {
 	* @param archived the archived
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching user notification event, or <code>null</code> if a matching user notification event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.UserNotificationEvent fetchByU_A_First(
 		long userId, boolean archived,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByU_A_First(userId, archived, orderByComparator);
 	}
@@ -884,13 +792,11 @@ public class UserNotificationEventUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching user notification event
 	* @throws com.liferay.portal.NoSuchUserNotificationEventException if a matching user notification event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.UserNotificationEvent findByU_A_Last(
 		long userId, boolean archived,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchUserNotificationEventException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.NoSuchUserNotificationEventException {
 		return getPersistence()
 				   .findByU_A_Last(userId, archived, orderByComparator);
 	}
@@ -902,12 +808,10 @@ public class UserNotificationEventUtil {
 	* @param archived the archived
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching user notification event, or <code>null</code> if a matching user notification event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.UserNotificationEvent fetchByU_A_Last(
 		long userId, boolean archived,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByU_A_Last(userId, archived, orderByComparator);
 	}
@@ -921,13 +825,11 @@ public class UserNotificationEventUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next user notification event
 	* @throws com.liferay.portal.NoSuchUserNotificationEventException if a user notification event with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.UserNotificationEvent[] findByU_A_PrevAndNext(
 		long userNotificationEventId, long userId, boolean archived,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchUserNotificationEventException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.NoSuchUserNotificationEventException {
 		return getPersistence()
 				   .findByU_A_PrevAndNext(userNotificationEventId, userId,
 			archived, orderByComparator);
@@ -938,10 +840,8 @@ public class UserNotificationEventUtil {
 	*
 	* @param userId the user ID
 	* @param archived the archived
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByU_A(long userId, boolean archived)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByU_A(long userId, boolean archived) {
 		getPersistence().removeByU_A(userId, archived);
 	}
 
@@ -951,10 +851,8 @@ public class UserNotificationEventUtil {
 	* @param userId the user ID
 	* @param archived the archived
 	* @return the number of matching user notification events
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByU_A(long userId, boolean archived)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByU_A(long userId, boolean archived) {
 		return getPersistence().countByU_A(userId, archived);
 	}
 
@@ -995,18 +893,15 @@ public class UserNotificationEventUtil {
 	* @param userNotificationEventId the primary key of the user notification event
 	* @return the user notification event that was removed
 	* @throws com.liferay.portal.NoSuchUserNotificationEventException if a user notification event with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.UserNotificationEvent remove(
 		long userNotificationEventId)
-		throws com.liferay.portal.NoSuchUserNotificationEventException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.NoSuchUserNotificationEventException {
 		return getPersistence().remove(userNotificationEventId);
 	}
 
 	public static com.liferay.portal.model.UserNotificationEvent updateImpl(
-		com.liferay.portal.model.UserNotificationEvent userNotificationEvent)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.UserNotificationEvent userNotificationEvent) {
 		return getPersistence().updateImpl(userNotificationEvent);
 	}
 
@@ -1016,12 +911,10 @@ public class UserNotificationEventUtil {
 	* @param userNotificationEventId the primary key of the user notification event
 	* @return the user notification event
 	* @throws com.liferay.portal.NoSuchUserNotificationEventException if a user notification event with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.UserNotificationEvent findByPrimaryKey(
 		long userNotificationEventId)
-		throws com.liferay.portal.NoSuchUserNotificationEventException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.NoSuchUserNotificationEventException {
 		return getPersistence().findByPrimaryKey(userNotificationEventId);
 	}
 
@@ -1030,11 +923,9 @@ public class UserNotificationEventUtil {
 	*
 	* @param userNotificationEventId the primary key of the user notification event
 	* @return the user notification event, or <code>null</code> if a user notification event with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.UserNotificationEvent fetchByPrimaryKey(
-		long userNotificationEventId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long userNotificationEventId) {
 		return getPersistence().fetchByPrimaryKey(userNotificationEventId);
 	}
 
@@ -1042,10 +933,8 @@ public class UserNotificationEventUtil {
 	* Returns all the user notification events.
 	*
 	* @return the user notification events
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.portal.model.UserNotificationEvent> findAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static java.util.List<com.liferay.portal.model.UserNotificationEvent> findAll() {
 		return getPersistence().findAll();
 	}
 
@@ -1059,11 +948,9 @@ public class UserNotificationEventUtil {
 	* @param start the lower bound of the range of user notification events
 	* @param end the upper bound of the range of user notification events (not inclusive)
 	* @return the range of user notification events
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portal.model.UserNotificationEvent> findAll(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
@@ -1078,22 +965,17 @@ public class UserNotificationEventUtil {
 	* @param end the upper bound of the range of user notification events (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of user notification events
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portal.model.UserNotificationEvent> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
 	/**
 	* Removes all the user notification events from the database.
-	*
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeAll() {
 		getPersistence().removeAll();
 	}
 
@@ -1101,10 +983,8 @@ public class UserNotificationEventUtil {
 	* Returns the number of user notification events.
 	*
 	* @return the number of user notification events
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countAll() {
 		return getPersistence().countAll();
 	}
 

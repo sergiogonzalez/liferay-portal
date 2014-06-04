@@ -262,11 +262,9 @@ public class WorkflowInstanceLinkWrapper implements WorkflowInstanceLink,
 	* Returns the user uuid of this workflow instance link.
 	*
 	* @return the user uuid of this workflow instance link
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public java.lang.String getUserUuid()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public java.lang.String getUserUuid() {
 		return _workflowInstanceLink.getUserUuid();
 	}
 
@@ -515,8 +513,7 @@ public class WorkflowInstanceLinkWrapper implements WorkflowInstanceLink,
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void persist() {
 		_workflowInstanceLink.persist();
 	}
 

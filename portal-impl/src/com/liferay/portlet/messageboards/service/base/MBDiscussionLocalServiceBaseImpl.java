@@ -88,12 +88,10 @@ public abstract class MBDiscussionLocalServiceBaseImpl
 	 *
 	 * @param mbDiscussion the message boards discussion
 	 * @return the message boards discussion that was added
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public MBDiscussion addMBDiscussion(MBDiscussion mbDiscussion)
-		throws SystemException {
+	public MBDiscussion addMBDiscussion(MBDiscussion mbDiscussion) {
 		mbDiscussion.setNew(true);
 
 		return mbDiscussionPersistence.update(mbDiscussion);
@@ -116,12 +114,11 @@ public abstract class MBDiscussionLocalServiceBaseImpl
 	 * @param discussionId the primary key of the message boards discussion
 	 * @return the message boards discussion that was removed
 	 * @throws PortalException if a message boards discussion with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public MBDiscussion deleteMBDiscussion(long discussionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return mbDiscussionPersistence.remove(discussionId);
 	}
 
@@ -130,12 +127,10 @@ public abstract class MBDiscussionLocalServiceBaseImpl
 	 *
 	 * @param mbDiscussion the message boards discussion
 	 * @return the message boards discussion that was removed
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public MBDiscussion deleteMBDiscussion(MBDiscussion mbDiscussion)
-		throws SystemException {
+	public MBDiscussion deleteMBDiscussion(MBDiscussion mbDiscussion) {
 		return mbDiscussionPersistence.remove(mbDiscussion);
 	}
 
@@ -152,12 +147,10 @@ public abstract class MBDiscussionLocalServiceBaseImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery) {
 		return mbDiscussionPersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -172,12 +165,10 @@ public abstract class MBDiscussionLocalServiceBaseImpl
 	 * @param start the lower bound of the range of model instances
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
 		return mbDiscussionPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end);
 	}
@@ -194,12 +185,11 @@ public abstract class MBDiscussionLocalServiceBaseImpl
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
 	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		return mbDiscussionPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
 	}
@@ -209,11 +199,9 @@ public abstract class MBDiscussionLocalServiceBaseImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public long dynamicQueryCount(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return mbDiscussionPersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
@@ -223,18 +211,16 @@ public abstract class MBDiscussionLocalServiceBaseImpl
 	 * @param dynamicQuery the dynamic query
 	 * @param projection the projection to apply to the query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection) throws SystemException {
+		Projection projection) {
 		return mbDiscussionPersistence.countWithDynamicQuery(dynamicQuery,
 			projection);
 	}
 
 	@Override
-	public MBDiscussion fetchMBDiscussion(long discussionId)
-		throws SystemException {
+	public MBDiscussion fetchMBDiscussion(long discussionId) {
 		return mbDiscussionPersistence.fetchByPrimaryKey(discussionId);
 	}
 
@@ -244,11 +230,10 @@ public abstract class MBDiscussionLocalServiceBaseImpl
 	 * @param uuid the message boards discussion's UUID
 	 * @param  companyId the primary key of the company
 	 * @return the matching message boards discussion, or <code>null</code> if a matching message boards discussion could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public MBDiscussion fetchMBDiscussionByUuidAndCompanyId(String uuid,
-		long companyId) throws SystemException {
+		long companyId) {
 		return mbDiscussionPersistence.fetchByUuid_C_First(uuid, companyId, null);
 	}
 
@@ -258,11 +243,10 @@ public abstract class MBDiscussionLocalServiceBaseImpl
 	 * @param uuid the message boards discussion's UUID
 	 * @param groupId the primary key of the group
 	 * @return the matching message boards discussion, or <code>null</code> if a matching message boards discussion could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public MBDiscussion fetchMBDiscussionByUuidAndGroupId(String uuid,
-		long groupId) throws SystemException {
+		long groupId) {
 		return mbDiscussionPersistence.fetchByUUID_G(uuid, groupId);
 	}
 
@@ -272,17 +256,15 @@ public abstract class MBDiscussionLocalServiceBaseImpl
 	 * @param discussionId the primary key of the message boards discussion
 	 * @return the message boards discussion
 	 * @throws PortalException if a message boards discussion with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public MBDiscussion getMBDiscussion(long discussionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return mbDiscussionPersistence.findByPrimaryKey(discussionId);
 	}
 
 	@Override
-	public ActionableDynamicQuery getActionableDynamicQuery()
-		throws SystemException {
+	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.messageboards.service.MBDiscussionLocalServiceUtil.getService());
@@ -295,8 +277,7 @@ public abstract class MBDiscussionLocalServiceBaseImpl
 	}
 
 	protected void initActionableDynamicQuery(
-		ActionableDynamicQuery actionableDynamicQuery)
-		throws SystemException {
+		ActionableDynamicQuery actionableDynamicQuery) {
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.messageboards.service.MBDiscussionLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(MBDiscussion.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
@@ -306,11 +287,10 @@ public abstract class MBDiscussionLocalServiceBaseImpl
 
 	@Override
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		final PortletDataContext portletDataContext) throws SystemException {
+		final PortletDataContext portletDataContext) {
 		final ExportActionableDynamicQuery exportActionableDynamicQuery = new ExportActionableDynamicQuery() {
 				@Override
-				public long performCount()
-					throws PortalException, SystemException {
+				public long performCount() throws PortalException {
 					ManifestSummary manifestSummary = portletDataContext.getManifestSummary();
 
 					StagedModelType stagedModelType = getStagedModelType();
@@ -356,9 +336,8 @@ public abstract class MBDiscussionLocalServiceBaseImpl
 
 		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
 				@Override
-				@SuppressWarnings("unused")
 				public void performAction(Object object)
-					throws PortalException, SystemException {
+					throws PortalException {
 					MBDiscussion stagedModel = (MBDiscussion)object;
 
 					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
@@ -373,7 +352,7 @@ public abstract class MBDiscussionLocalServiceBaseImpl
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return mbDiscussionPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -384,11 +363,10 @@ public abstract class MBDiscussionLocalServiceBaseImpl
 	 * @param  companyId the primary key of the company
 	 * @return the matching message boards discussion
 	 * @throws PortalException if a matching message boards discussion could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public MBDiscussion getMBDiscussionByUuidAndCompanyId(String uuid,
-		long companyId) throws PortalException, SystemException {
+		long companyId) throws PortalException {
 		return mbDiscussionPersistence.findByUuid_C_First(uuid, companyId, null);
 	}
 
@@ -399,11 +377,10 @@ public abstract class MBDiscussionLocalServiceBaseImpl
 	 * @param groupId the primary key of the group
 	 * @return the matching message boards discussion
 	 * @throws PortalException if a matching message boards discussion could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public MBDiscussion getMBDiscussionByUuidAndGroupId(String uuid,
-		long groupId) throws PortalException, SystemException {
+		long groupId) throws PortalException {
 		return mbDiscussionPersistence.findByUUID_G(uuid, groupId);
 	}
 
@@ -417,11 +394,9 @@ public abstract class MBDiscussionLocalServiceBaseImpl
 	 * @param start the lower bound of the range of message boards discussions
 	 * @param end the upper bound of the range of message boards discussions (not inclusive)
 	 * @return the range of message boards discussions
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<MBDiscussion> getMBDiscussions(int start, int end)
-		throws SystemException {
+	public List<MBDiscussion> getMBDiscussions(int start, int end) {
 		return mbDiscussionPersistence.findAll(start, end);
 	}
 
@@ -429,10 +404,9 @@ public abstract class MBDiscussionLocalServiceBaseImpl
 	 * Returns the number of message boards discussions.
 	 *
 	 * @return the number of message boards discussions
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int getMBDiscussionsCount() throws SystemException {
+	public int getMBDiscussionsCount() {
 		return mbDiscussionPersistence.countAll();
 	}
 
@@ -441,12 +415,10 @@ public abstract class MBDiscussionLocalServiceBaseImpl
 	 *
 	 * @param mbDiscussion the message boards discussion
 	 * @return the message boards discussion that was updated
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public MBDiscussion updateMBDiscussion(MBDiscussion mbDiscussion)
-		throws SystemException {
+	public MBDiscussion updateMBDiscussion(MBDiscussion mbDiscussion) {
 		return mbDiscussionPersistence.update(mbDiscussion);
 	}
 
@@ -906,7 +878,7 @@ public abstract class MBDiscussionLocalServiceBaseImpl
 	 *
 	 * @param sql the sql query
 	 */
-	protected void runSQL(String sql) throws SystemException {
+	protected void runSQL(String sql) {
 		try {
 			DataSource dataSource = mbDiscussionPersistence.getDataSource();
 

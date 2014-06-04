@@ -15,7 +15,6 @@
 package com.liferay.portal.service.persistence;
 
 import com.liferay.portal.kernel.dao.orm.BaseActionableDynamicQuery;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.model.Account;
 import com.liferay.portal.service.AccountLocalServiceUtil;
@@ -28,7 +27,7 @@ import com.liferay.portal.service.AccountLocalServiceUtil;
 @Deprecated
 public abstract class AccountActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
-	public AccountActionableDynamicQuery() throws SystemException {
+	public AccountActionableDynamicQuery() {
 		setBaseLocalService(AccountLocalServiceUtil.getService());
 		setClass(Account.class);
 

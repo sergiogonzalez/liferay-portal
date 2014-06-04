@@ -57,8 +57,7 @@ public class FlagsEntryServiceHttp {
 		java.lang.String reporterEmailAddress, long reportedUserId,
 		java.lang.String contentTitle, java.lang.String contentURL,
 		java.lang.String reason,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.service.ServiceContext serviceContext) {
 		try {
 			MethodKey methodKey = new MethodKey(FlagsEntryServiceUtil.class,
 					"addEntry", _addEntryParameterTypes0);

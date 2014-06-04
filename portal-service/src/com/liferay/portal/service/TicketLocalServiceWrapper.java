@@ -35,12 +35,10 @@ public class TicketLocalServiceWrapper implements TicketLocalService,
 	*
 	* @param ticket the ticket
 	* @return the ticket that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.Ticket addTicket(
-		com.liferay.portal.model.Ticket ticket)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.Ticket ticket) {
 		return _ticketLocalService.addTicket(ticket);
 	}
 
@@ -61,12 +59,10 @@ public class TicketLocalServiceWrapper implements TicketLocalService,
 	* @param ticketId the primary key of the ticket
 	* @return the ticket that was removed
 	* @throws PortalException if a ticket with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.Ticket deleteTicket(long ticketId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ticketLocalService.deleteTicket(ticketId);
 	}
 
@@ -75,12 +71,10 @@ public class TicketLocalServiceWrapper implements TicketLocalService,
 	*
 	* @param ticket the ticket
 	* @return the ticket that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.Ticket deleteTicket(
-		com.liferay.portal.model.Ticket ticket)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.Ticket ticket) {
 		return _ticketLocalService.deleteTicket(ticket);
 	}
 
@@ -94,13 +88,11 @@ public class TicketLocalServiceWrapper implements TicketLocalService,
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _ticketLocalService.dynamicQuery(dynamicQuery);
 	}
 
@@ -115,13 +107,12 @@ public class TicketLocalServiceWrapper implements TicketLocalService,
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return _ticketLocalService.dynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -137,15 +128,13 @@ public class TicketLocalServiceWrapper implements TicketLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return _ticketLocalService.dynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
 	}
@@ -155,12 +144,10 @@ public class TicketLocalServiceWrapper implements TicketLocalService,
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _ticketLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
@@ -170,19 +157,16 @@ public class TicketLocalServiceWrapper implements TicketLocalService,
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return _ticketLocalService.dynamicQueryCount(dynamicQuery, projection);
 	}
 
 	@Override
-	public com.liferay.portal.model.Ticket fetchTicket(long ticketId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public com.liferay.portal.model.Ticket fetchTicket(long ticketId) {
 		return _ticketLocalService.fetchTicket(ticketId);
 	}
 
@@ -192,26 +176,22 @@ public class TicketLocalServiceWrapper implements TicketLocalService,
 	* @param ticketId the primary key of the ticket
 	* @return the ticket
 	* @throws PortalException if a ticket with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.Ticket getTicket(long ticketId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ticketLocalService.getTicket(ticketId);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _ticketLocalService.getActionableDynamicQuery();
 	}
 
 	@Override
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ticketLocalService.getPersistedModel(primaryKeyObj);
 	}
 
@@ -225,12 +205,10 @@ public class TicketLocalServiceWrapper implements TicketLocalService,
 	* @param start the lower bound of the range of tickets
 	* @param end the upper bound of the range of tickets (not inclusive)
 	* @return the range of tickets
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.model.Ticket> getTickets(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return _ticketLocalService.getTickets(start, end);
 	}
 
@@ -238,11 +216,9 @@ public class TicketLocalServiceWrapper implements TicketLocalService,
 	* Returns the number of tickets.
 	*
 	* @return the number of tickets
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public int getTicketsCount()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public int getTicketsCount() {
 		return _ticketLocalService.getTicketsCount();
 	}
 
@@ -251,12 +227,10 @@ public class TicketLocalServiceWrapper implements TicketLocalService,
 	*
 	* @param ticket the ticket
 	* @return the ticket that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.Ticket updateTicket(
-		com.liferay.portal.model.Ticket ticket)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.Ticket ticket) {
 		return _ticketLocalService.updateTicket(ticket);
 	}
 

@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.blogs.model.impl;
 
-import com.liferay.portal.kernel.exception.SystemException;
-
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 
@@ -39,7 +37,7 @@ public abstract class BlogsEntryBaseImpl extends BlogsEntryModelImpl
 	 * Never modify or reference this class directly. All methods that expect a blogs entry model instance should use the {@link BlogsEntry} interface instead.
 	 */
 	@Override
-	public void persist() throws SystemException {
+	public void persist() {
 		if (this.isNew()) {
 			BlogsEntryLocalServiceUtil.addBlogsEntry(this);
 		}

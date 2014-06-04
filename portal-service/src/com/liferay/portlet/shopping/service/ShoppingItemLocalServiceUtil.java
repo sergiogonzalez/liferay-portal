@@ -46,11 +46,9 @@ public class ShoppingItemLocalServiceUtil {
 	*
 	* @param shoppingItem the shopping item
 	* @return the shopping item that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.shopping.model.ShoppingItem addShoppingItem(
-		com.liferay.portlet.shopping.model.ShoppingItem shoppingItem)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.shopping.model.ShoppingItem shoppingItem) {
 		return getService().addShoppingItem(shoppingItem);
 	}
 
@@ -71,12 +69,9 @@ public class ShoppingItemLocalServiceUtil {
 	* @param itemId the primary key of the shopping item
 	* @return the shopping item that was removed
 	* @throws PortalException if a shopping item with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.shopping.model.ShoppingItem deleteShoppingItem(
-		long itemId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		long itemId) throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteShoppingItem(itemId);
 	}
 
@@ -85,11 +80,9 @@ public class ShoppingItemLocalServiceUtil {
 	*
 	* @param shoppingItem the shopping item
 	* @return the shopping item that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.shopping.model.ShoppingItem deleteShoppingItem(
-		com.liferay.portlet.shopping.model.ShoppingItem shoppingItem)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.shopping.model.ShoppingItem shoppingItem) {
 		return getService().deleteShoppingItem(shoppingItem);
 	}
 
@@ -102,12 +95,10 @@ public class ShoppingItemLocalServiceUtil {
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -122,12 +113,11 @@ public class ShoppingItemLocalServiceUtil {
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -143,14 +133,12 @@ public class ShoppingItemLocalServiceUtil {
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getService()
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
@@ -160,11 +148,9 @@ public class ShoppingItemLocalServiceUtil {
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -174,17 +160,15 @@ public class ShoppingItemLocalServiceUtil {
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public static long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
 	public static com.liferay.portlet.shopping.model.ShoppingItem fetchShoppingItem(
-		long itemId) throws com.liferay.portal.kernel.exception.SystemException {
+		long itemId) {
 		return getService().fetchShoppingItem(itemId);
 	}
 
@@ -194,24 +178,19 @@ public class ShoppingItemLocalServiceUtil {
 	* @param itemId the primary key of the shopping item
 	* @return the shopping item
 	* @throws PortalException if a shopping item with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.shopping.model.ShoppingItem getShoppingItem(
-		long itemId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		long itemId) throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getShoppingItem(itemId);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}
 
 	public static com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
@@ -225,11 +204,9 @@ public class ShoppingItemLocalServiceUtil {
 	* @param start the lower bound of the range of shopping items
 	* @param end the upper bound of the range of shopping items (not inclusive)
 	* @return the range of shopping items
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.shopping.model.ShoppingItem> getShoppingItems(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return getService().getShoppingItems(start, end);
 	}
 
@@ -237,10 +214,8 @@ public class ShoppingItemLocalServiceUtil {
 	* Returns the number of shopping items.
 	*
 	* @return the number of shopping items
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int getShoppingItemsCount()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int getShoppingItemsCount() {
 		return getService().getShoppingItemsCount();
 	}
 
@@ -249,11 +224,9 @@ public class ShoppingItemLocalServiceUtil {
 	*
 	* @param shoppingItem the shopping item
 	* @return the shopping item that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.shopping.model.ShoppingItem updateShoppingItem(
-		com.liferay.portlet.shopping.model.ShoppingItem shoppingItem)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.shopping.model.ShoppingItem shoppingItem) {
 		return getService().updateShoppingItem(shoppingItem);
 	}
 

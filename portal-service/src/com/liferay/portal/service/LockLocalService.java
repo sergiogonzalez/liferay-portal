@@ -50,11 +50,9 @@ public interface LockLocalService extends BaseLocalService,
 	*
 	* @param lock the lock
 	* @return the lock that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.Lock addLock(
-		com.liferay.portal.model.Lock lock)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.model.Lock lock);
 
 	/**
 	* Creates a new lock with the primary key. Does not add the lock to the database.
@@ -70,22 +68,18 @@ public interface LockLocalService extends BaseLocalService,
 	* @param lockId the primary key of the lock
 	* @return the lock that was removed
 	* @throws PortalException if a lock with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.Lock deleteLock(long lockId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Deletes the lock from the database. Also notifies the appropriate model listeners.
 	*
 	* @param lock the lock
 	* @return the lock that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.Lock deleteLock(
-		com.liferay.portal.model.Lock lock)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.model.Lock lock);
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -94,12 +88,10 @@ public interface LockLocalService extends BaseLocalService,
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -112,12 +104,11 @@ public interface LockLocalService extends BaseLocalService,
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException;
+		int end);
 
 	/**
 	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
@@ -131,25 +122,21 @@ public interface LockLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the number of rows that match the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows that match the dynamic query.
@@ -157,16 +144,13 @@ public interface LockLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.dao.orm.Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Lock fetchLock(long lockId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public com.liferay.portal.model.Lock fetchLock(long lockId);
 
 	/**
 	* Returns the lock with the matching UUID and company.
@@ -174,12 +158,10 @@ public interface LockLocalService extends BaseLocalService,
 	* @param uuid the lock's UUID
 	* @param companyId the primary key of the company
 	* @return the matching lock, or <code>null</code> if a matching lock could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Lock fetchLockByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String uuid, long companyId);
 
 	/**
 	* Returns the lock with the primary key.
@@ -187,23 +169,19 @@ public interface LockLocalService extends BaseLocalService,
 	* @param lockId the primary key of the lock
 	* @return the lock
 	* @throws PortalException if a lock with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Lock getLock(long lockId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns the lock with the matching UUID and company.
@@ -212,13 +190,11 @@ public interface LockLocalService extends BaseLocalService,
 	* @param companyId the primary key of the company
 	* @return the matching lock
 	* @throws PortalException if a matching lock could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Lock getLockByUuidAndCompanyId(
 		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns a range of all the locks.
@@ -230,32 +206,27 @@ public interface LockLocalService extends BaseLocalService,
 	* @param start the lower bound of the range of locks
 	* @param end the upper bound of the range of locks (not inclusive)
 	* @return the range of locks
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Lock> getLocks(int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException;
+		int end);
 
 	/**
 	* Returns the number of locks.
 	*
 	* @return the number of locks
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getLocksCount()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int getLocksCount();
 
 	/**
 	* Updates the lock in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param lock the lock
 	* @return the lock that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.Lock updateLock(
-		com.liferay.portal.model.Lock lock)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.model.Lock lock);
 
 	/**
 	* Returns the Spring bean ID for this bean.

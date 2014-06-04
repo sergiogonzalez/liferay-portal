@@ -15,7 +15,6 @@
 package com.liferay.portlet.softwarecatalog.service.persistence;
 
 import com.liferay.portal.kernel.dao.orm.BaseActionableDynamicQuery;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 
 import com.liferay.portlet.softwarecatalog.model.SCProductScreenshot;
@@ -29,8 +28,7 @@ import com.liferay.portlet.softwarecatalog.service.SCProductScreenshotLocalServi
 @Deprecated
 public abstract class SCProductScreenshotActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
-	public SCProductScreenshotActionableDynamicQuery()
-		throws SystemException {
+	public SCProductScreenshotActionableDynamicQuery() {
 		setBaseLocalService(SCProductScreenshotLocalServiceUtil.getService());
 		setClass(SCProductScreenshot.class);
 

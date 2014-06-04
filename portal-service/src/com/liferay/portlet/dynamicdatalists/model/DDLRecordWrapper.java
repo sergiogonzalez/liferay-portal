@@ -282,11 +282,9 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	* Returns the user uuid of this d d l record.
 	*
 	* @return the user uuid of this d d l record
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public java.lang.String getUserUuid()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public java.lang.String getUserUuid() {
 		return _ddlRecord.getUserUuid();
 	}
 
@@ -344,11 +342,9 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	* Returns the version user uuid of this d d l record.
 	*
 	* @return the version user uuid of this d d l record
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public java.lang.String getVersionUserUuid()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public java.lang.String getVersionUserUuid() {
 		return _ddlRecord.getVersionUserUuid();
 	}
 
@@ -602,8 +598,7 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void persist() {
 		_ddlRecord.persist();
 	}
 

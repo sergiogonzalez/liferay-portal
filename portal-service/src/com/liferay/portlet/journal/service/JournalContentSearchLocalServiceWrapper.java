@@ -39,12 +39,10 @@ public class JournalContentSearchLocalServiceWrapper
 	*
 	* @param journalContentSearch the journal content search
 	* @return the journal content search that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.journal.model.JournalContentSearch addJournalContentSearch(
-		com.liferay.portlet.journal.model.JournalContentSearch journalContentSearch)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.journal.model.JournalContentSearch journalContentSearch) {
 		return _journalContentSearchLocalService.addJournalContentSearch(journalContentSearch);
 	}
 
@@ -66,13 +64,11 @@ public class JournalContentSearchLocalServiceWrapper
 	* @param contentSearchId the primary key of the journal content search
 	* @return the journal content search that was removed
 	* @throws PortalException if a journal content search with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.journal.model.JournalContentSearch deleteJournalContentSearch(
 		long contentSearchId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _journalContentSearchLocalService.deleteJournalContentSearch(contentSearchId);
 	}
 
@@ -81,12 +77,10 @@ public class JournalContentSearchLocalServiceWrapper
 	*
 	* @param journalContentSearch the journal content search
 	* @return the journal content search that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.journal.model.JournalContentSearch deleteJournalContentSearch(
-		com.liferay.portlet.journal.model.JournalContentSearch journalContentSearch)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.journal.model.JournalContentSearch journalContentSearch) {
 		return _journalContentSearchLocalService.deleteJournalContentSearch(journalContentSearch);
 	}
 
@@ -100,13 +94,11 @@ public class JournalContentSearchLocalServiceWrapper
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _journalContentSearchLocalService.dynamicQuery(dynamicQuery);
 	}
 
@@ -121,13 +113,12 @@ public class JournalContentSearchLocalServiceWrapper
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return _journalContentSearchLocalService.dynamicQuery(dynamicQuery,
 			start, end);
 	}
@@ -144,15 +135,13 @@ public class JournalContentSearchLocalServiceWrapper
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return _journalContentSearchLocalService.dynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
 	}
@@ -162,12 +151,10 @@ public class JournalContentSearchLocalServiceWrapper
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _journalContentSearchLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
@@ -177,21 +164,18 @@ public class JournalContentSearchLocalServiceWrapper
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return _journalContentSearchLocalService.dynamicQueryCount(dynamicQuery,
 			projection);
 	}
 
 	@Override
 	public com.liferay.portlet.journal.model.JournalContentSearch fetchJournalContentSearch(
-		long contentSearchId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long contentSearchId) {
 		return _journalContentSearchLocalService.fetchJournalContentSearch(contentSearchId);
 	}
 
@@ -201,27 +185,23 @@ public class JournalContentSearchLocalServiceWrapper
 	* @param contentSearchId the primary key of the journal content search
 	* @return the journal content search
 	* @throws PortalException if a journal content search with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.journal.model.JournalContentSearch getJournalContentSearch(
 		long contentSearchId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _journalContentSearchLocalService.getJournalContentSearch(contentSearchId);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _journalContentSearchLocalService.getActionableDynamicQuery();
 	}
 
 	@Override
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _journalContentSearchLocalService.getPersistedModel(primaryKeyObj);
 	}
 
@@ -235,12 +215,10 @@ public class JournalContentSearchLocalServiceWrapper
 	* @param start the lower bound of the range of journal content searchs
 	* @param end the upper bound of the range of journal content searchs (not inclusive)
 	* @return the range of journal content searchs
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portlet.journal.model.JournalContentSearch> getJournalContentSearchs(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return _journalContentSearchLocalService.getJournalContentSearchs(start,
 			end);
 	}
@@ -249,11 +227,9 @@ public class JournalContentSearchLocalServiceWrapper
 	* Returns the number of journal content searchs.
 	*
 	* @return the number of journal content searchs
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public int getJournalContentSearchsCount()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public int getJournalContentSearchsCount() {
 		return _journalContentSearchLocalService.getJournalContentSearchsCount();
 	}
 
@@ -262,12 +238,10 @@ public class JournalContentSearchLocalServiceWrapper
 	*
 	* @param journalContentSearch the journal content search
 	* @return the journal content search that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.journal.model.JournalContentSearch updateJournalContentSearch(
-		com.liferay.portlet.journal.model.JournalContentSearch journalContentSearch)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.journal.model.JournalContentSearch journalContentSearch) {
 		return _journalContentSearchLocalService.updateJournalContentSearch(journalContentSearch);
 	}
 

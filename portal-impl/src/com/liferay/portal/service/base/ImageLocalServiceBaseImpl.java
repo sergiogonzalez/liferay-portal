@@ -72,11 +72,10 @@ public abstract class ImageLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param image the image
 	 * @return the image that was added
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public Image addImage(Image image) throws SystemException {
+	public Image addImage(Image image) {
 		image.setNew(true);
 
 		return imagePersistence.update(image);
@@ -99,7 +98,7 @@ public abstract class ImageLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param imageId the primary key of the image
 	 * @return the image that was removed
 	 * @throws PortalException if a image with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
+	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
@@ -113,11 +112,10 @@ public abstract class ImageLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param image the image
 	 * @return the image that was removed
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public Image deleteImage(Image image) throws SystemException {
+	public Image deleteImage(Image image) {
 		return imagePersistence.remove(image);
 	}
 
@@ -134,12 +132,10 @@ public abstract class ImageLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery) {
 		return imagePersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -154,12 +150,10 @@ public abstract class ImageLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param start the lower bound of the range of model instances
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
 		return imagePersistence.findWithDynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -175,12 +169,11 @@ public abstract class ImageLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
 	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		return imagePersistence.findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
 	}
@@ -190,11 +183,9 @@ public abstract class ImageLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public long dynamicQueryCount(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return imagePersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
@@ -204,16 +195,15 @@ public abstract class ImageLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param dynamicQuery the dynamic query
 	 * @param projection the projection to apply to the query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection) throws SystemException {
+		Projection projection) {
 		return imagePersistence.countWithDynamicQuery(dynamicQuery, projection);
 	}
 
 	@Override
-	public Image fetchImage(long imageId) throws SystemException {
+	public Image fetchImage(long imageId) {
 		return imagePersistence.fetchByPrimaryKey(imageId);
 	}
 
@@ -223,16 +213,14 @@ public abstract class ImageLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param imageId the primary key of the image
 	 * @return the image
 	 * @throws PortalException if a image with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Image getImage(long imageId) throws PortalException, SystemException {
+	public Image getImage(long imageId) throws PortalException {
 		return imagePersistence.findByPrimaryKey(imageId);
 	}
 
 	@Override
-	public ActionableDynamicQuery getActionableDynamicQuery()
-		throws SystemException {
+	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.ImageLocalServiceUtil.getService());
@@ -245,8 +233,7 @@ public abstract class ImageLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	protected void initActionableDynamicQuery(
-		ActionableDynamicQuery actionableDynamicQuery)
-		throws SystemException {
+		ActionableDynamicQuery actionableDynamicQuery) {
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.ImageLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(Image.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
@@ -256,7 +243,7 @@ public abstract class ImageLocalServiceBaseImpl extends BaseLocalServiceImpl
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return imagePersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -270,10 +257,9 @@ public abstract class ImageLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param start the lower bound of the range of images
 	 * @param end the upper bound of the range of images (not inclusive)
 	 * @return the range of images
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Image> getImages(int start, int end) throws SystemException {
+	public List<Image> getImages(int start, int end) {
 		return imagePersistence.findAll(start, end);
 	}
 
@@ -281,10 +267,9 @@ public abstract class ImageLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * Returns the number of images.
 	 *
 	 * @return the number of images
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int getImagesCount() throws SystemException {
+	public int getImagesCount() {
 		return imagePersistence.countAll();
 	}
 
@@ -293,11 +278,10 @@ public abstract class ImageLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param image the image
 	 * @return the image that was updated
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public Image updateImage(Image image) throws SystemException {
+	public Image updateImage(Image image) {
 		return imagePersistence.update(image);
 	}
 
@@ -494,7 +478,7 @@ public abstract class ImageLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param sql the sql query
 	 */
-	protected void runSQL(String sql) throws SystemException {
+	protected void runSQL(String sql) {
 		try {
 			DataSource dataSource = imagePersistence.getDataSource();
 

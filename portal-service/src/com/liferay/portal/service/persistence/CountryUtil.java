@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 import com.liferay.portal.model.Country;
@@ -63,16 +62,14 @@ public class CountryUtil {
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#countWithDynamicQuery(DynamicQuery)
 	 */
-	public static long countWithDynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public static long countWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return getPersistence().countWithDynamicQuery(dynamicQuery);
 	}
 
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery)
 	 */
-	public static List<Country> findWithDynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public static List<Country> findWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -80,8 +77,7 @@ public class CountryUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
 	 */
 	public static List<Country> findWithDynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+		DynamicQuery dynamicQuery, int start, int end) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -90,7 +86,7 @@ public class CountryUtil {
 	 */
 	public static List<Country> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -99,15 +95,14 @@ public class CountryUtil {
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static Country update(Country country) throws SystemException {
+	public static Country update(Country country) {
 		return getPersistence().update(country);
 	}
 
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
-	public static Country update(Country country, ServiceContext serviceContext)
-		throws SystemException {
+	public static Country update(Country country, ServiceContext serviceContext) {
 		return getPersistence().update(country, serviceContext);
 	}
 
@@ -117,12 +112,9 @@ public class CountryUtil {
 	* @param name the name
 	* @return the matching country
 	* @throws com.liferay.portal.NoSuchCountryException if a matching country could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Country findByName(
-		java.lang.String name)
-		throws com.liferay.portal.NoSuchCountryException,
-			com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String name) throws com.liferay.portal.NoSuchCountryException {
 		return getPersistence().findByName(name);
 	}
 
@@ -131,11 +123,9 @@ public class CountryUtil {
 	*
 	* @param name the name
 	* @return the matching country, or <code>null</code> if a matching country could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Country fetchByName(
-		java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String name) {
 		return getPersistence().fetchByName(name);
 	}
 
@@ -145,11 +135,9 @@ public class CountryUtil {
 	* @param name the name
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching country, or <code>null</code> if a matching country could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Country fetchByName(
-		java.lang.String name, boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String name, boolean retrieveFromCache) {
 		return getPersistence().fetchByName(name, retrieveFromCache);
 	}
 
@@ -158,12 +146,9 @@ public class CountryUtil {
 	*
 	* @param name the name
 	* @return the country that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Country removeByName(
-		java.lang.String name)
-		throws com.liferay.portal.NoSuchCountryException,
-			com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String name) throws com.liferay.portal.NoSuchCountryException {
 		return getPersistence().removeByName(name);
 	}
 
@@ -172,10 +157,8 @@ public class CountryUtil {
 	*
 	* @param name the name
 	* @return the number of matching countries
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByName(java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByName(java.lang.String name) {
 		return getPersistence().countByName(name);
 	}
 
@@ -185,11 +168,9 @@ public class CountryUtil {
 	* @param a2 the a2
 	* @return the matching country
 	* @throws com.liferay.portal.NoSuchCountryException if a matching country could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Country findByA2(java.lang.String a2)
-		throws com.liferay.portal.NoSuchCountryException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.NoSuchCountryException {
 		return getPersistence().findByA2(a2);
 	}
 
@@ -198,11 +179,9 @@ public class CountryUtil {
 	*
 	* @param a2 the a2
 	* @return the matching country, or <code>null</code> if a matching country could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Country fetchByA2(
-		java.lang.String a2)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String a2) {
 		return getPersistence().fetchByA2(a2);
 	}
 
@@ -212,11 +191,9 @@ public class CountryUtil {
 	* @param a2 the a2
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching country, or <code>null</code> if a matching country could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Country fetchByA2(
-		java.lang.String a2, boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String a2, boolean retrieveFromCache) {
 		return getPersistence().fetchByA2(a2, retrieveFromCache);
 	}
 
@@ -225,12 +202,9 @@ public class CountryUtil {
 	*
 	* @param a2 the a2
 	* @return the country that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Country removeByA2(
-		java.lang.String a2)
-		throws com.liferay.portal.NoSuchCountryException,
-			com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String a2) throws com.liferay.portal.NoSuchCountryException {
 		return getPersistence().removeByA2(a2);
 	}
 
@@ -239,10 +213,8 @@ public class CountryUtil {
 	*
 	* @param a2 the a2
 	* @return the number of matching countries
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByA2(java.lang.String a2)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByA2(java.lang.String a2) {
 		return getPersistence().countByA2(a2);
 	}
 
@@ -252,11 +224,9 @@ public class CountryUtil {
 	* @param a3 the a3
 	* @return the matching country
 	* @throws com.liferay.portal.NoSuchCountryException if a matching country could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Country findByA3(java.lang.String a3)
-		throws com.liferay.portal.NoSuchCountryException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.NoSuchCountryException {
 		return getPersistence().findByA3(a3);
 	}
 
@@ -265,11 +235,9 @@ public class CountryUtil {
 	*
 	* @param a3 the a3
 	* @return the matching country, or <code>null</code> if a matching country could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Country fetchByA3(
-		java.lang.String a3)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String a3) {
 		return getPersistence().fetchByA3(a3);
 	}
 
@@ -279,11 +247,9 @@ public class CountryUtil {
 	* @param a3 the a3
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching country, or <code>null</code> if a matching country could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Country fetchByA3(
-		java.lang.String a3, boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String a3, boolean retrieveFromCache) {
 		return getPersistence().fetchByA3(a3, retrieveFromCache);
 	}
 
@@ -292,12 +258,9 @@ public class CountryUtil {
 	*
 	* @param a3 the a3
 	* @return the country that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Country removeByA3(
-		java.lang.String a3)
-		throws com.liferay.portal.NoSuchCountryException,
-			com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String a3) throws com.liferay.portal.NoSuchCountryException {
 		return getPersistence().removeByA3(a3);
 	}
 
@@ -306,10 +269,8 @@ public class CountryUtil {
 	*
 	* @param a3 the a3
 	* @return the number of matching countries
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByA3(java.lang.String a3)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByA3(java.lang.String a3) {
 		return getPersistence().countByA3(a3);
 	}
 
@@ -318,11 +279,9 @@ public class CountryUtil {
 	*
 	* @param active the active
 	* @return the matching countries
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portal.model.Country> findByActive(
-		boolean active)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		boolean active) {
 		return getPersistence().findByActive(active);
 	}
 
@@ -337,11 +296,9 @@ public class CountryUtil {
 	* @param start the lower bound of the range of countries
 	* @param end the upper bound of the range of countries (not inclusive)
 	* @return the range of matching countries
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portal.model.Country> findByActive(
-		boolean active, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		boolean active, int start, int end) {
 		return getPersistence().findByActive(active, start, end);
 	}
 
@@ -357,12 +314,10 @@ public class CountryUtil {
 	* @param end the upper bound of the range of countries (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching countries
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portal.model.Country> findByActive(
 		boolean active, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByActive(active, start, end, orderByComparator);
 	}
@@ -374,13 +329,11 @@ public class CountryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching country
 	* @throws com.liferay.portal.NoSuchCountryException if a matching country could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Country findByActive_First(
 		boolean active,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchCountryException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.NoSuchCountryException {
 		return getPersistence().findByActive_First(active, orderByComparator);
 	}
 
@@ -390,12 +343,10 @@ public class CountryUtil {
 	* @param active the active
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching country, or <code>null</code> if a matching country could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Country fetchByActive_First(
 		boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByActive_First(active, orderByComparator);
 	}
 
@@ -406,13 +357,11 @@ public class CountryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching country
 	* @throws com.liferay.portal.NoSuchCountryException if a matching country could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Country findByActive_Last(
 		boolean active,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchCountryException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.NoSuchCountryException {
 		return getPersistence().findByActive_Last(active, orderByComparator);
 	}
 
@@ -422,12 +371,10 @@ public class CountryUtil {
 	* @param active the active
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching country, or <code>null</code> if a matching country could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Country fetchByActive_Last(
 		boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByActive_Last(active, orderByComparator);
 	}
 
@@ -439,13 +386,11 @@ public class CountryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next country
 	* @throws com.liferay.portal.NoSuchCountryException if a country with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Country[] findByActive_PrevAndNext(
 		long countryId, boolean active,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchCountryException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.NoSuchCountryException {
 		return getPersistence()
 				   .findByActive_PrevAndNext(countryId, active,
 			orderByComparator);
@@ -455,10 +400,8 @@ public class CountryUtil {
 	* Removes all the countries where active = &#63; from the database.
 	*
 	* @param active the active
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByActive(boolean active)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByActive(boolean active) {
 		getPersistence().removeByActive(active);
 	}
 
@@ -467,10 +410,8 @@ public class CountryUtil {
 	*
 	* @param active the active
 	* @return the number of matching countries
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByActive(boolean active)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByActive(boolean active) {
 		return getPersistence().countByActive(active);
 	}
 
@@ -509,17 +450,14 @@ public class CountryUtil {
 	* @param countryId the primary key of the country
 	* @return the country that was removed
 	* @throws com.liferay.portal.NoSuchCountryException if a country with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Country remove(long countryId)
-		throws com.liferay.portal.NoSuchCountryException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.NoSuchCountryException {
 		return getPersistence().remove(countryId);
 	}
 
 	public static com.liferay.portal.model.Country updateImpl(
-		com.liferay.portal.model.Country country)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.Country country) {
 		return getPersistence().updateImpl(country);
 	}
 
@@ -529,12 +467,9 @@ public class CountryUtil {
 	* @param countryId the primary key of the country
 	* @return the country
 	* @throws com.liferay.portal.NoSuchCountryException if a country with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Country findByPrimaryKey(
-		long countryId)
-		throws com.liferay.portal.NoSuchCountryException,
-			com.liferay.portal.kernel.exception.SystemException {
+		long countryId) throws com.liferay.portal.NoSuchCountryException {
 		return getPersistence().findByPrimaryKey(countryId);
 	}
 
@@ -543,11 +478,9 @@ public class CountryUtil {
 	*
 	* @param countryId the primary key of the country
 	* @return the country, or <code>null</code> if a country with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Country fetchByPrimaryKey(
-		long countryId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long countryId) {
 		return getPersistence().fetchByPrimaryKey(countryId);
 	}
 
@@ -555,10 +488,8 @@ public class CountryUtil {
 	* Returns all the countries.
 	*
 	* @return the countries
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.portal.model.Country> findAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static java.util.List<com.liferay.portal.model.Country> findAll() {
 		return getPersistence().findAll();
 	}
 
@@ -572,11 +503,9 @@ public class CountryUtil {
 	* @param start the lower bound of the range of countries
 	* @param end the upper bound of the range of countries (not inclusive)
 	* @return the range of countries
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portal.model.Country> findAll(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
@@ -591,22 +520,17 @@ public class CountryUtil {
 	* @param end the upper bound of the range of countries (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of countries
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portal.model.Country> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
 	/**
 	* Removes all the countries from the database.
-	*
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeAll() {
 		getPersistence().removeAll();
 	}
 
@@ -614,10 +538,8 @@ public class CountryUtil {
 	* Returns the number of countries.
 	*
 	* @return the number of countries
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countAll() {
 		return getPersistence().countAll();
 	}
 

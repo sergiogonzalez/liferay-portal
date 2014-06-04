@@ -288,11 +288,9 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	* Returns the user uuid of this role.
 	*
 	* @return the user uuid of this role
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public java.lang.String getUserUuid()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public java.lang.String getUserUuid() {
 		return _role.getUserUuid();
 	}
 
@@ -885,8 +883,7 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void persist() {
 		_role.persist();
 	}
 

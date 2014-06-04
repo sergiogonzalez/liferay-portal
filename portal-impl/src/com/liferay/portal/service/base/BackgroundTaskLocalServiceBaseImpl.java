@@ -74,12 +74,10 @@ public abstract class BackgroundTaskLocalServiceBaseImpl
 	 *
 	 * @param backgroundTask the background task
 	 * @return the background task that was added
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public BackgroundTask addBackgroundTask(BackgroundTask backgroundTask)
-		throws SystemException {
+	public BackgroundTask addBackgroundTask(BackgroundTask backgroundTask) {
 		backgroundTask.setNew(true);
 
 		return backgroundTaskPersistence.update(backgroundTask);
@@ -102,7 +100,7 @@ public abstract class BackgroundTaskLocalServiceBaseImpl
 	 * @param backgroundTaskId the primary key of the background task
 	 * @return the background task that was removed
 	 * @throws PortalException if a background task with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
+	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
@@ -117,7 +115,7 @@ public abstract class BackgroundTaskLocalServiceBaseImpl
 	 * @param backgroundTask the background task
 	 * @return the background task that was removed
 	 * @throws PortalException
-	 * @throws SystemException if a system exception occurred
+	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
@@ -139,12 +137,10 @@ public abstract class BackgroundTaskLocalServiceBaseImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery) {
 		return backgroundTaskPersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -159,12 +155,10 @@ public abstract class BackgroundTaskLocalServiceBaseImpl
 	 * @param start the lower bound of the range of model instances
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
 		return backgroundTaskPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end);
 	}
@@ -181,12 +175,11 @@ public abstract class BackgroundTaskLocalServiceBaseImpl
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
 	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		return backgroundTaskPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
 	}
@@ -196,11 +189,9 @@ public abstract class BackgroundTaskLocalServiceBaseImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public long dynamicQueryCount(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return backgroundTaskPersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
@@ -210,11 +201,10 @@ public abstract class BackgroundTaskLocalServiceBaseImpl
 	 * @param dynamicQuery the dynamic query
 	 * @param projection the projection to apply to the query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection) throws SystemException {
+		Projection projection) {
 		return backgroundTaskPersistence.countWithDynamicQuery(dynamicQuery,
 			projection);
 	}
@@ -231,7 +221,7 @@ public abstract class BackgroundTaskLocalServiceBaseImpl
 	 * @param backgroundTaskId the primary key of the background task
 	 * @return the background task
 	 * @throws PortalException if a background task with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
+	 * @throws SystemException
 	 */
 	@Override
 	public BackgroundTask getBackgroundTask(long backgroundTaskId)
@@ -240,8 +230,7 @@ public abstract class BackgroundTaskLocalServiceBaseImpl
 	}
 
 	@Override
-	public ActionableDynamicQuery getActionableDynamicQuery()
-		throws SystemException {
+	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.BackgroundTaskLocalServiceUtil.getService());
@@ -254,8 +243,7 @@ public abstract class BackgroundTaskLocalServiceBaseImpl
 	}
 
 	protected void initActionableDynamicQuery(
-		ActionableDynamicQuery actionableDynamicQuery)
-		throws SystemException {
+		ActionableDynamicQuery actionableDynamicQuery) {
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.BackgroundTaskLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(BackgroundTask.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
@@ -265,7 +253,7 @@ public abstract class BackgroundTaskLocalServiceBaseImpl
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return backgroundTaskPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -279,11 +267,9 @@ public abstract class BackgroundTaskLocalServiceBaseImpl
 	 * @param start the lower bound of the range of background tasks
 	 * @param end the upper bound of the range of background tasks (not inclusive)
 	 * @return the range of background tasks
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<BackgroundTask> getBackgroundTasks(int start, int end)
-		throws SystemException {
+	public List<BackgroundTask> getBackgroundTasks(int start, int end) {
 		return backgroundTaskPersistence.findAll(start, end);
 	}
 
@@ -291,10 +277,9 @@ public abstract class BackgroundTaskLocalServiceBaseImpl
 	 * Returns the number of background tasks.
 	 *
 	 * @return the number of background tasks
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int getBackgroundTasksCount() throws SystemException {
+	public int getBackgroundTasksCount() {
 		return backgroundTaskPersistence.countAll();
 	}
 
@@ -303,12 +288,10 @@ public abstract class BackgroundTaskLocalServiceBaseImpl
 	 *
 	 * @param backgroundTask the background task
 	 * @return the background task that was updated
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public BackgroundTask updateBackgroundTask(BackgroundTask backgroundTask)
-		throws SystemException {
+	public BackgroundTask updateBackgroundTask(BackgroundTask backgroundTask) {
 		return backgroundTaskPersistence.update(backgroundTask);
 	}
 
@@ -560,7 +543,7 @@ public abstract class BackgroundTaskLocalServiceBaseImpl
 	 *
 	 * @param sql the sql query
 	 */
-	protected void runSQL(String sql) throws SystemException {
+	protected void runSQL(String sql) {
 		try {
 			DataSource dataSource = backgroundTaskPersistence.getDataSource();
 

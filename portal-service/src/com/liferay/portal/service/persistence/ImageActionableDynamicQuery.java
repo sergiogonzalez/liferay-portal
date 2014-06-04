@@ -15,7 +15,6 @@
 package com.liferay.portal.service.persistence;
 
 import com.liferay.portal.kernel.dao.orm.BaseActionableDynamicQuery;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.model.Image;
 import com.liferay.portal.service.ImageLocalServiceUtil;
@@ -28,7 +27,7 @@ import com.liferay.portal.service.ImageLocalServiceUtil;
 @Deprecated
 public abstract class ImageActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
-	public ImageActionableDynamicQuery() throws SystemException {
+	public ImageActionableDynamicQuery() {
 		setBaseLocalService(ImageLocalServiceUtil.getService());
 		setClass(Image.class);
 

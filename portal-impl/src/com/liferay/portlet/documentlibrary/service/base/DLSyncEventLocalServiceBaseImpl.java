@@ -71,12 +71,10 @@ public abstract class DLSyncEventLocalServiceBaseImpl
 	 *
 	 * @param dlSyncEvent the d l sync event
 	 * @return the d l sync event that was added
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public DLSyncEvent addDLSyncEvent(DLSyncEvent dlSyncEvent)
-		throws SystemException {
+	public DLSyncEvent addDLSyncEvent(DLSyncEvent dlSyncEvent) {
 		dlSyncEvent.setNew(true);
 
 		return dlSyncEventPersistence.update(dlSyncEvent);
@@ -99,12 +97,11 @@ public abstract class DLSyncEventLocalServiceBaseImpl
 	 * @param syncEventId the primary key of the d l sync event
 	 * @return the d l sync event that was removed
 	 * @throws PortalException if a d l sync event with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public DLSyncEvent deleteDLSyncEvent(long syncEventId)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return dlSyncEventPersistence.remove(syncEventId);
 	}
 
@@ -113,12 +110,10 @@ public abstract class DLSyncEventLocalServiceBaseImpl
 	 *
 	 * @param dlSyncEvent the d l sync event
 	 * @return the d l sync event that was removed
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public DLSyncEvent deleteDLSyncEvent(DLSyncEvent dlSyncEvent)
-		throws SystemException {
+	public DLSyncEvent deleteDLSyncEvent(DLSyncEvent dlSyncEvent) {
 		return dlSyncEventPersistence.remove(dlSyncEvent);
 	}
 
@@ -135,12 +130,10 @@ public abstract class DLSyncEventLocalServiceBaseImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery) {
 		return dlSyncEventPersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -155,12 +148,10 @@ public abstract class DLSyncEventLocalServiceBaseImpl
 	 * @param start the lower bound of the range of model instances
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
 		return dlSyncEventPersistence.findWithDynamicQuery(dynamicQuery, start,
 			end);
 	}
@@ -177,12 +168,11 @@ public abstract class DLSyncEventLocalServiceBaseImpl
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
 	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		return dlSyncEventPersistence.findWithDynamicQuery(dynamicQuery, start,
 			end, orderByComparator);
 	}
@@ -192,11 +182,9 @@ public abstract class DLSyncEventLocalServiceBaseImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public long dynamicQueryCount(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return dlSyncEventPersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
@@ -206,18 +194,16 @@ public abstract class DLSyncEventLocalServiceBaseImpl
 	 * @param dynamicQuery the dynamic query
 	 * @param projection the projection to apply to the query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection) throws SystemException {
+		Projection projection) {
 		return dlSyncEventPersistence.countWithDynamicQuery(dynamicQuery,
 			projection);
 	}
 
 	@Override
-	public DLSyncEvent fetchDLSyncEvent(long syncEventId)
-		throws SystemException {
+	public DLSyncEvent fetchDLSyncEvent(long syncEventId) {
 		return dlSyncEventPersistence.fetchByPrimaryKey(syncEventId);
 	}
 
@@ -227,17 +213,15 @@ public abstract class DLSyncEventLocalServiceBaseImpl
 	 * @param syncEventId the primary key of the d l sync event
 	 * @return the d l sync event
 	 * @throws PortalException if a d l sync event with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DLSyncEvent getDLSyncEvent(long syncEventId)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return dlSyncEventPersistence.findByPrimaryKey(syncEventId);
 	}
 
 	@Override
-	public ActionableDynamicQuery getActionableDynamicQuery()
-		throws SystemException {
+	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.documentlibrary.service.DLSyncEventLocalServiceUtil.getService());
@@ -250,8 +234,7 @@ public abstract class DLSyncEventLocalServiceBaseImpl
 	}
 
 	protected void initActionableDynamicQuery(
-		ActionableDynamicQuery actionableDynamicQuery)
-		throws SystemException {
+		ActionableDynamicQuery actionableDynamicQuery) {
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.documentlibrary.service.DLSyncEventLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(DLSyncEvent.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
@@ -261,7 +244,7 @@ public abstract class DLSyncEventLocalServiceBaseImpl
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return dlSyncEventPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -275,11 +258,9 @@ public abstract class DLSyncEventLocalServiceBaseImpl
 	 * @param start the lower bound of the range of d l sync events
 	 * @param end the upper bound of the range of d l sync events (not inclusive)
 	 * @return the range of d l sync events
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<DLSyncEvent> getDLSyncEvents(int start, int end)
-		throws SystemException {
+	public List<DLSyncEvent> getDLSyncEvents(int start, int end) {
 		return dlSyncEventPersistence.findAll(start, end);
 	}
 
@@ -287,10 +268,9 @@ public abstract class DLSyncEventLocalServiceBaseImpl
 	 * Returns the number of d l sync events.
 	 *
 	 * @return the number of d l sync events
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int getDLSyncEventsCount() throws SystemException {
+	public int getDLSyncEventsCount() {
 		return dlSyncEventPersistence.countAll();
 	}
 
@@ -299,12 +279,10 @@ public abstract class DLSyncEventLocalServiceBaseImpl
 	 *
 	 * @param dlSyncEvent the d l sync event
 	 * @return the d l sync event that was updated
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public DLSyncEvent updateDLSyncEvent(DLSyncEvent dlSyncEvent)
-		throws SystemException {
+	public DLSyncEvent updateDLSyncEvent(DLSyncEvent dlSyncEvent) {
 		return dlSyncEventPersistence.update(dlSyncEvent);
 	}
 
@@ -408,7 +386,7 @@ public abstract class DLSyncEventLocalServiceBaseImpl
 	 *
 	 * @param sql the sql query
 	 */
-	protected void runSQL(String sql) throws SystemException {
+	protected void runSQL(String sql) {
 		try {
 			DataSource dataSource = dlSyncEventPersistence.getDataSource();
 

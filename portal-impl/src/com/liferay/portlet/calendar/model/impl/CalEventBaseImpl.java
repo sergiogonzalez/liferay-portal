@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.calendar.model.impl;
 
-import com.liferay.portal.kernel.exception.SystemException;
-
 import com.liferay.portlet.calendar.model.CalEvent;
 import com.liferay.portlet.calendar.service.CalEventLocalServiceUtil;
 
@@ -39,7 +37,7 @@ public abstract class CalEventBaseImpl extends CalEventModelImpl
 	 * Never modify or reference this class directly. All methods that expect a cal event model instance should use the {@link CalEvent} interface instead.
 	 */
 	@Override
-	public void persist() throws SystemException {
+	public void persist() {
 		if (this.isNew()) {
 			CalEventLocalServiceUtil.addCalEvent(this);
 		}

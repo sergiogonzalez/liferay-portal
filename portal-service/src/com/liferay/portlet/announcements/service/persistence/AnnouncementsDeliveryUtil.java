@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 import com.liferay.portal.service.ServiceContext;
@@ -64,8 +63,7 @@ public class AnnouncementsDeliveryUtil {
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#countWithDynamicQuery(DynamicQuery)
 	 */
-	public static long countWithDynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public static long countWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return getPersistence().countWithDynamicQuery(dynamicQuery);
 	}
 
@@ -73,7 +71,7 @@ public class AnnouncementsDeliveryUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery)
 	 */
 	public static List<AnnouncementsDelivery> findWithDynamicQuery(
-		DynamicQuery dynamicQuery) throws SystemException {
+		DynamicQuery dynamicQuery) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -81,8 +79,7 @@ public class AnnouncementsDeliveryUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
 	 */
 	public static List<AnnouncementsDelivery> findWithDynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+		DynamicQuery dynamicQuery, int start, int end) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -91,7 +88,7 @@ public class AnnouncementsDeliveryUtil {
 	 */
 	public static List<AnnouncementsDelivery> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -101,7 +98,7 @@ public class AnnouncementsDeliveryUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
 	public static AnnouncementsDelivery update(
-		AnnouncementsDelivery announcementsDelivery) throws SystemException {
+		AnnouncementsDelivery announcementsDelivery) {
 		return getPersistence().update(announcementsDelivery);
 	}
 
@@ -110,7 +107,7 @@ public class AnnouncementsDeliveryUtil {
 	 */
 	public static AnnouncementsDelivery update(
 		AnnouncementsDelivery announcementsDelivery,
-		ServiceContext serviceContext) throws SystemException {
+		ServiceContext serviceContext) {
 		return getPersistence().update(announcementsDelivery, serviceContext);
 	}
 
@@ -119,10 +116,9 @@ public class AnnouncementsDeliveryUtil {
 	*
 	* @param userId the user ID
 	* @return the matching announcements deliveries
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.announcements.model.AnnouncementsDelivery> findByUserId(
-		long userId) throws com.liferay.portal.kernel.exception.SystemException {
+		long userId) {
 		return getPersistence().findByUserId(userId);
 	}
 
@@ -137,11 +133,9 @@ public class AnnouncementsDeliveryUtil {
 	* @param start the lower bound of the range of announcements deliveries
 	* @param end the upper bound of the range of announcements deliveries (not inclusive)
 	* @return the range of matching announcements deliveries
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.announcements.model.AnnouncementsDelivery> findByUserId(
-		long userId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long userId, int start, int end) {
 		return getPersistence().findByUserId(userId, start, end);
 	}
 
@@ -157,12 +151,10 @@ public class AnnouncementsDeliveryUtil {
 	* @param end the upper bound of the range of announcements deliveries (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching announcements deliveries
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.announcements.model.AnnouncementsDelivery> findByUserId(
 		long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByUserId(userId, start, end, orderByComparator);
 	}
@@ -174,13 +166,11 @@ public class AnnouncementsDeliveryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching announcements delivery
 	* @throws com.liferay.portlet.announcements.NoSuchDeliveryException if a matching announcements delivery could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.announcements.model.AnnouncementsDelivery findByUserId_First(
 		long userId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.announcements.NoSuchDeliveryException {
+		throws com.liferay.portlet.announcements.NoSuchDeliveryException {
 		return getPersistence().findByUserId_First(userId, orderByComparator);
 	}
 
@@ -190,12 +180,10 @@ public class AnnouncementsDeliveryUtil {
 	* @param userId the user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching announcements delivery, or <code>null</code> if a matching announcements delivery could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.announcements.model.AnnouncementsDelivery fetchByUserId_First(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByUserId_First(userId, orderByComparator);
 	}
 
@@ -206,13 +194,11 @@ public class AnnouncementsDeliveryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching announcements delivery
 	* @throws com.liferay.portlet.announcements.NoSuchDeliveryException if a matching announcements delivery could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.announcements.model.AnnouncementsDelivery findByUserId_Last(
 		long userId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.announcements.NoSuchDeliveryException {
+		throws com.liferay.portlet.announcements.NoSuchDeliveryException {
 		return getPersistence().findByUserId_Last(userId, orderByComparator);
 	}
 
@@ -222,12 +208,10 @@ public class AnnouncementsDeliveryUtil {
 	* @param userId the user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching announcements delivery, or <code>null</code> if a matching announcements delivery could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.announcements.model.AnnouncementsDelivery fetchByUserId_Last(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByUserId_Last(userId, orderByComparator);
 	}
 
@@ -239,13 +223,11 @@ public class AnnouncementsDeliveryUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next announcements delivery
 	* @throws com.liferay.portlet.announcements.NoSuchDeliveryException if a announcements delivery with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.announcements.model.AnnouncementsDelivery[] findByUserId_PrevAndNext(
 		long deliveryId, long userId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.announcements.NoSuchDeliveryException {
+		throws com.liferay.portlet.announcements.NoSuchDeliveryException {
 		return getPersistence()
 				   .findByUserId_PrevAndNext(deliveryId, userId,
 			orderByComparator);
@@ -255,10 +237,8 @@ public class AnnouncementsDeliveryUtil {
 	* Removes all the announcements deliveries where userId = &#63; from the database.
 	*
 	* @param userId the user ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByUserId(long userId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByUserId(long userId) {
 		getPersistence().removeByUserId(userId);
 	}
 
@@ -267,10 +247,8 @@ public class AnnouncementsDeliveryUtil {
 	*
 	* @param userId the user ID
 	* @return the number of matching announcements deliveries
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByUserId(long userId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByUserId(long userId) {
 		return getPersistence().countByUserId(userId);
 	}
 
@@ -281,12 +259,10 @@ public class AnnouncementsDeliveryUtil {
 	* @param type the type
 	* @return the matching announcements delivery
 	* @throws com.liferay.portlet.announcements.NoSuchDeliveryException if a matching announcements delivery could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.announcements.model.AnnouncementsDelivery findByU_T(
 		long userId, java.lang.String type)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.announcements.NoSuchDeliveryException {
+		throws com.liferay.portlet.announcements.NoSuchDeliveryException {
 		return getPersistence().findByU_T(userId, type);
 	}
 
@@ -296,11 +272,9 @@ public class AnnouncementsDeliveryUtil {
 	* @param userId the user ID
 	* @param type the type
 	* @return the matching announcements delivery, or <code>null</code> if a matching announcements delivery could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.announcements.model.AnnouncementsDelivery fetchByU_T(
-		long userId, java.lang.String type)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long userId, java.lang.String type) {
 		return getPersistence().fetchByU_T(userId, type);
 	}
 
@@ -311,11 +285,9 @@ public class AnnouncementsDeliveryUtil {
 	* @param type the type
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching announcements delivery, or <code>null</code> if a matching announcements delivery could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.announcements.model.AnnouncementsDelivery fetchByU_T(
-		long userId, java.lang.String type, boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long userId, java.lang.String type, boolean retrieveFromCache) {
 		return getPersistence().fetchByU_T(userId, type, retrieveFromCache);
 	}
 
@@ -325,12 +297,10 @@ public class AnnouncementsDeliveryUtil {
 	* @param userId the user ID
 	* @param type the type
 	* @return the announcements delivery that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.announcements.model.AnnouncementsDelivery removeByU_T(
 		long userId, java.lang.String type)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.announcements.NoSuchDeliveryException {
+		throws com.liferay.portlet.announcements.NoSuchDeliveryException {
 		return getPersistence().removeByU_T(userId, type);
 	}
 
@@ -340,10 +310,8 @@ public class AnnouncementsDeliveryUtil {
 	* @param userId the user ID
 	* @param type the type
 	* @return the number of matching announcements deliveries
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByU_T(long userId, java.lang.String type)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByU_T(long userId, java.lang.String type) {
 		return getPersistence().countByU_T(userId, type);
 	}
 
@@ -384,18 +352,15 @@ public class AnnouncementsDeliveryUtil {
 	* @param deliveryId the primary key of the announcements delivery
 	* @return the announcements delivery that was removed
 	* @throws com.liferay.portlet.announcements.NoSuchDeliveryException if a announcements delivery with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.announcements.model.AnnouncementsDelivery remove(
 		long deliveryId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.announcements.NoSuchDeliveryException {
+		throws com.liferay.portlet.announcements.NoSuchDeliveryException {
 		return getPersistence().remove(deliveryId);
 	}
 
 	public static com.liferay.portlet.announcements.model.AnnouncementsDelivery updateImpl(
-		com.liferay.portlet.announcements.model.AnnouncementsDelivery announcementsDelivery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.announcements.model.AnnouncementsDelivery announcementsDelivery) {
 		return getPersistence().updateImpl(announcementsDelivery);
 	}
 
@@ -405,12 +370,10 @@ public class AnnouncementsDeliveryUtil {
 	* @param deliveryId the primary key of the announcements delivery
 	* @return the announcements delivery
 	* @throws com.liferay.portlet.announcements.NoSuchDeliveryException if a announcements delivery with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.announcements.model.AnnouncementsDelivery findByPrimaryKey(
 		long deliveryId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.announcements.NoSuchDeliveryException {
+		throws com.liferay.portlet.announcements.NoSuchDeliveryException {
 		return getPersistence().findByPrimaryKey(deliveryId);
 	}
 
@@ -419,11 +382,9 @@ public class AnnouncementsDeliveryUtil {
 	*
 	* @param deliveryId the primary key of the announcements delivery
 	* @return the announcements delivery, or <code>null</code> if a announcements delivery with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.announcements.model.AnnouncementsDelivery fetchByPrimaryKey(
-		long deliveryId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long deliveryId) {
 		return getPersistence().fetchByPrimaryKey(deliveryId);
 	}
 
@@ -431,10 +392,8 @@ public class AnnouncementsDeliveryUtil {
 	* Returns all the announcements deliveries.
 	*
 	* @return the announcements deliveries
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.portlet.announcements.model.AnnouncementsDelivery> findAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static java.util.List<com.liferay.portlet.announcements.model.AnnouncementsDelivery> findAll() {
 		return getPersistence().findAll();
 	}
 
@@ -448,11 +407,9 @@ public class AnnouncementsDeliveryUtil {
 	* @param start the lower bound of the range of announcements deliveries
 	* @param end the upper bound of the range of announcements deliveries (not inclusive)
 	* @return the range of announcements deliveries
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.announcements.model.AnnouncementsDelivery> findAll(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
@@ -467,22 +424,17 @@ public class AnnouncementsDeliveryUtil {
 	* @param end the upper bound of the range of announcements deliveries (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of announcements deliveries
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.announcements.model.AnnouncementsDelivery> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
 	/**
 	* Removes all the announcements deliveries from the database.
-	*
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeAll() {
 		getPersistence().removeAll();
 	}
 
@@ -490,10 +442,8 @@ public class AnnouncementsDeliveryUtil {
 	* Returns the number of announcements deliveries.
 	*
 	* @return the number of announcements deliveries
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countAll() {
 		return getPersistence().countAll();
 	}
 

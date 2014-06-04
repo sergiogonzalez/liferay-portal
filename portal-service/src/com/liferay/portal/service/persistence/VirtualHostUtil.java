@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 import com.liferay.portal.model.VirtualHost;
@@ -63,8 +62,7 @@ public class VirtualHostUtil {
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#countWithDynamicQuery(DynamicQuery)
 	 */
-	public static long countWithDynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public static long countWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return getPersistence().countWithDynamicQuery(dynamicQuery);
 	}
 
@@ -72,7 +70,7 @@ public class VirtualHostUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery)
 	 */
 	public static List<VirtualHost> findWithDynamicQuery(
-		DynamicQuery dynamicQuery) throws SystemException {
+		DynamicQuery dynamicQuery) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -80,8 +78,7 @@ public class VirtualHostUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
 	 */
 	public static List<VirtualHost> findWithDynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+		DynamicQuery dynamicQuery, int start, int end) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -90,7 +87,7 @@ public class VirtualHostUtil {
 	 */
 	public static List<VirtualHost> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -99,8 +96,7 @@ public class VirtualHostUtil {
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static VirtualHost update(VirtualHost virtualHost)
-		throws SystemException {
+	public static VirtualHost update(VirtualHost virtualHost) {
 		return getPersistence().update(virtualHost);
 	}
 
@@ -108,7 +104,7 @@ public class VirtualHostUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
 	public static VirtualHost update(VirtualHost virtualHost,
-		ServiceContext serviceContext) throws SystemException {
+		ServiceContext serviceContext) {
 		return getPersistence().update(virtualHost, serviceContext);
 	}
 
@@ -118,12 +114,10 @@ public class VirtualHostUtil {
 	* @param hostname the hostname
 	* @return the matching virtual host
 	* @throws com.liferay.portal.NoSuchVirtualHostException if a matching virtual host could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.VirtualHost findByHostname(
 		java.lang.String hostname)
-		throws com.liferay.portal.NoSuchVirtualHostException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.NoSuchVirtualHostException {
 		return getPersistence().findByHostname(hostname);
 	}
 
@@ -132,11 +126,9 @@ public class VirtualHostUtil {
 	*
 	* @param hostname the hostname
 	* @return the matching virtual host, or <code>null</code> if a matching virtual host could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.VirtualHost fetchByHostname(
-		java.lang.String hostname)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String hostname) {
 		return getPersistence().fetchByHostname(hostname);
 	}
 
@@ -146,11 +138,9 @@ public class VirtualHostUtil {
 	* @param hostname the hostname
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching virtual host, or <code>null</code> if a matching virtual host could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.VirtualHost fetchByHostname(
-		java.lang.String hostname, boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String hostname, boolean retrieveFromCache) {
 		return getPersistence().fetchByHostname(hostname, retrieveFromCache);
 	}
 
@@ -159,12 +149,10 @@ public class VirtualHostUtil {
 	*
 	* @param hostname the hostname
 	* @return the virtual host that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.VirtualHost removeByHostname(
 		java.lang.String hostname)
-		throws com.liferay.portal.NoSuchVirtualHostException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.NoSuchVirtualHostException {
 		return getPersistence().removeByHostname(hostname);
 	}
 
@@ -173,10 +161,8 @@ public class VirtualHostUtil {
 	*
 	* @param hostname the hostname
 	* @return the number of matching virtual hosts
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByHostname(java.lang.String hostname)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByHostname(java.lang.String hostname) {
 		return getPersistence().countByHostname(hostname);
 	}
 
@@ -187,12 +173,10 @@ public class VirtualHostUtil {
 	* @param layoutSetId the layout set ID
 	* @return the matching virtual host
 	* @throws com.liferay.portal.NoSuchVirtualHostException if a matching virtual host could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.VirtualHost findByC_L(
 		long companyId, long layoutSetId)
-		throws com.liferay.portal.NoSuchVirtualHostException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.NoSuchVirtualHostException {
 		return getPersistence().findByC_L(companyId, layoutSetId);
 	}
 
@@ -202,11 +186,9 @@ public class VirtualHostUtil {
 	* @param companyId the company ID
 	* @param layoutSetId the layout set ID
 	* @return the matching virtual host, or <code>null</code> if a matching virtual host could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.VirtualHost fetchByC_L(
-		long companyId, long layoutSetId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long companyId, long layoutSetId) {
 		return getPersistence().fetchByC_L(companyId, layoutSetId);
 	}
 
@@ -217,11 +199,9 @@ public class VirtualHostUtil {
 	* @param layoutSetId the layout set ID
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching virtual host, or <code>null</code> if a matching virtual host could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.VirtualHost fetchByC_L(
-		long companyId, long layoutSetId, boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long companyId, long layoutSetId, boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByC_L(companyId, layoutSetId, retrieveFromCache);
 	}
@@ -232,12 +212,10 @@ public class VirtualHostUtil {
 	* @param companyId the company ID
 	* @param layoutSetId the layout set ID
 	* @return the virtual host that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.VirtualHost removeByC_L(
 		long companyId, long layoutSetId)
-		throws com.liferay.portal.NoSuchVirtualHostException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.NoSuchVirtualHostException {
 		return getPersistence().removeByC_L(companyId, layoutSetId);
 	}
 
@@ -247,10 +225,8 @@ public class VirtualHostUtil {
 	* @param companyId the company ID
 	* @param layoutSetId the layout set ID
 	* @return the number of matching virtual hosts
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByC_L(long companyId, long layoutSetId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByC_L(long companyId, long layoutSetId) {
 		return getPersistence().countByC_L(companyId, layoutSetId);
 	}
 
@@ -291,18 +267,15 @@ public class VirtualHostUtil {
 	* @param virtualHostId the primary key of the virtual host
 	* @return the virtual host that was removed
 	* @throws com.liferay.portal.NoSuchVirtualHostException if a virtual host with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.VirtualHost remove(
 		long virtualHostId)
-		throws com.liferay.portal.NoSuchVirtualHostException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.NoSuchVirtualHostException {
 		return getPersistence().remove(virtualHostId);
 	}
 
 	public static com.liferay.portal.model.VirtualHost updateImpl(
-		com.liferay.portal.model.VirtualHost virtualHost)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.VirtualHost virtualHost) {
 		return getPersistence().updateImpl(virtualHost);
 	}
 
@@ -312,12 +285,10 @@ public class VirtualHostUtil {
 	* @param virtualHostId the primary key of the virtual host
 	* @return the virtual host
 	* @throws com.liferay.portal.NoSuchVirtualHostException if a virtual host with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.VirtualHost findByPrimaryKey(
 		long virtualHostId)
-		throws com.liferay.portal.NoSuchVirtualHostException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.NoSuchVirtualHostException {
 		return getPersistence().findByPrimaryKey(virtualHostId);
 	}
 
@@ -326,11 +297,9 @@ public class VirtualHostUtil {
 	*
 	* @param virtualHostId the primary key of the virtual host
 	* @return the virtual host, or <code>null</code> if a virtual host with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.VirtualHost fetchByPrimaryKey(
-		long virtualHostId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long virtualHostId) {
 		return getPersistence().fetchByPrimaryKey(virtualHostId);
 	}
 
@@ -338,10 +307,8 @@ public class VirtualHostUtil {
 	* Returns all the virtual hosts.
 	*
 	* @return the virtual hosts
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.portal.model.VirtualHost> findAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static java.util.List<com.liferay.portal.model.VirtualHost> findAll() {
 		return getPersistence().findAll();
 	}
 
@@ -355,11 +322,9 @@ public class VirtualHostUtil {
 	* @param start the lower bound of the range of virtual hosts
 	* @param end the upper bound of the range of virtual hosts (not inclusive)
 	* @return the range of virtual hosts
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portal.model.VirtualHost> findAll(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
@@ -374,22 +339,17 @@ public class VirtualHostUtil {
 	* @param end the upper bound of the range of virtual hosts (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of virtual hosts
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portal.model.VirtualHost> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
 	/**
 	* Removes all the virtual hosts from the database.
-	*
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeAll() {
 		getPersistence().removeAll();
 	}
 
@@ -397,10 +357,8 @@ public class VirtualHostUtil {
 	* Returns the number of virtual hosts.
 	*
 	* @return the number of virtual hosts
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countAll() {
 		return getPersistence().countAll();
 	}
 

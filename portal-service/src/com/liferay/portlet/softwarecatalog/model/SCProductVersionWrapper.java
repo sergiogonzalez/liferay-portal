@@ -228,11 +228,9 @@ public class SCProductVersionWrapper implements SCProductVersion,
 	* Returns the user uuid of this s c product version.
 	*
 	* @return the user uuid of this s c product version
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public java.lang.String getUserUuid()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public java.lang.String getUserUuid() {
 		return _scProductVersion.getUserUuid();
 	}
 
@@ -536,8 +534,7 @@ public class SCProductVersionWrapper implements SCProductVersion,
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void persist() {
 		_scProductVersion.persist();
 	}
 

@@ -110,7 +110,6 @@ public class XugglerRawMetadataProcessor extends BaseRawMetadataProcessor {
 	}
 
 	@Override
-	@SuppressWarnings("unused")
 	protected Metadata extractMetadata(
 			String extension, String mimeType, File file)
 		throws SystemException {
@@ -132,7 +131,6 @@ public class XugglerRawMetadataProcessor extends BaseRawMetadataProcessor {
 	}
 
 	@Override
-	@SuppressWarnings("unused")
 	protected Metadata extractMetadata(
 			String extension, String mimeType, InputStream inputStream)
 		throws SystemException {

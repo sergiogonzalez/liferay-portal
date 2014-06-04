@@ -38,12 +38,10 @@ public class JournalFeedLocalServiceWrapper implements JournalFeedLocalService,
 	*
 	* @param journalFeed the journal feed
 	* @return the journal feed that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.journal.model.JournalFeed addJournalFeed(
-		com.liferay.portlet.journal.model.JournalFeed journalFeed)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.journal.model.JournalFeed journalFeed) {
 		return _journalFeedLocalService.addJournalFeed(journalFeed);
 	}
 
@@ -65,13 +63,10 @@ public class JournalFeedLocalServiceWrapper implements JournalFeedLocalService,
 	* @param id the primary key of the journal feed
 	* @return the journal feed that was removed
 	* @throws PortalException if a journal feed with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.journal.model.JournalFeed deleteJournalFeed(
-		long id)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		long id) throws com.liferay.portal.kernel.exception.PortalException {
 		return _journalFeedLocalService.deleteJournalFeed(id);
 	}
 
@@ -80,12 +75,10 @@ public class JournalFeedLocalServiceWrapper implements JournalFeedLocalService,
 	*
 	* @param journalFeed the journal feed
 	* @return the journal feed that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.journal.model.JournalFeed deleteJournalFeed(
-		com.liferay.portlet.journal.model.JournalFeed journalFeed)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.journal.model.JournalFeed journalFeed) {
 		return _journalFeedLocalService.deleteJournalFeed(journalFeed);
 	}
 
@@ -99,13 +92,11 @@ public class JournalFeedLocalServiceWrapper implements JournalFeedLocalService,
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _journalFeedLocalService.dynamicQuery(dynamicQuery);
 	}
 
@@ -120,13 +111,12 @@ public class JournalFeedLocalServiceWrapper implements JournalFeedLocalService,
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return _journalFeedLocalService.dynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -142,15 +132,13 @@ public class JournalFeedLocalServiceWrapper implements JournalFeedLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return _journalFeedLocalService.dynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
 	}
@@ -160,12 +148,10 @@ public class JournalFeedLocalServiceWrapper implements JournalFeedLocalService,
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _journalFeedLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
@@ -175,20 +161,18 @@ public class JournalFeedLocalServiceWrapper implements JournalFeedLocalService,
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return _journalFeedLocalService.dynamicQueryCount(dynamicQuery,
 			projection);
 	}
 
 	@Override
 	public com.liferay.portlet.journal.model.JournalFeed fetchJournalFeed(
-		long id) throws com.liferay.portal.kernel.exception.SystemException {
+		long id) {
 		return _journalFeedLocalService.fetchJournalFeed(id);
 	}
 
@@ -198,12 +182,10 @@ public class JournalFeedLocalServiceWrapper implements JournalFeedLocalService,
 	* @param uuid the journal feed's UUID
 	* @param companyId the primary key of the company
 	* @return the matching journal feed, or <code>null</code> if a matching journal feed could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.journal.model.JournalFeed fetchJournalFeedByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long companyId) {
 		return _journalFeedLocalService.fetchJournalFeedByUuidAndCompanyId(uuid,
 			companyId);
 	}
@@ -214,12 +196,10 @@ public class JournalFeedLocalServiceWrapper implements JournalFeedLocalService,
 	* @param uuid the journal feed's UUID
 	* @param groupId the primary key of the group
 	* @return the matching journal feed, or <code>null</code> if a matching journal feed could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.journal.model.JournalFeed fetchJournalFeedByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long groupId) {
 		return _journalFeedLocalService.fetchJournalFeedByUuidAndGroupId(uuid,
 			groupId);
 	}
@@ -230,33 +210,28 @@ public class JournalFeedLocalServiceWrapper implements JournalFeedLocalService,
 	* @param id the primary key of the journal feed
 	* @return the journal feed
 	* @throws PortalException if a journal feed with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.journal.model.JournalFeed getJournalFeed(long id)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _journalFeedLocalService.getJournalFeed(id);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _journalFeedLocalService.getActionableDynamicQuery();
 	}
 
 	@Override
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext) {
 		return _journalFeedLocalService.getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	@Override
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _journalFeedLocalService.getPersistedModel(primaryKeyObj);
 	}
 
@@ -267,13 +242,11 @@ public class JournalFeedLocalServiceWrapper implements JournalFeedLocalService,
 	* @param companyId the primary key of the company
 	* @return the matching journal feed
 	* @throws PortalException if a matching journal feed could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.journal.model.JournalFeed getJournalFeedByUuidAndCompanyId(
 		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _journalFeedLocalService.getJournalFeedByUuidAndCompanyId(uuid,
 			companyId);
 	}
@@ -285,13 +258,11 @@ public class JournalFeedLocalServiceWrapper implements JournalFeedLocalService,
 	* @param groupId the primary key of the group
 	* @return the matching journal feed
 	* @throws PortalException if a matching journal feed could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.journal.model.JournalFeed getJournalFeedByUuidAndGroupId(
 		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _journalFeedLocalService.getJournalFeedByUuidAndGroupId(uuid,
 			groupId);
 	}
@@ -306,12 +277,10 @@ public class JournalFeedLocalServiceWrapper implements JournalFeedLocalService,
 	* @param start the lower bound of the range of journal feeds
 	* @param end the upper bound of the range of journal feeds (not inclusive)
 	* @return the range of journal feeds
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portlet.journal.model.JournalFeed> getJournalFeeds(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return _journalFeedLocalService.getJournalFeeds(start, end);
 	}
 
@@ -319,11 +288,9 @@ public class JournalFeedLocalServiceWrapper implements JournalFeedLocalService,
 	* Returns the number of journal feeds.
 	*
 	* @return the number of journal feeds
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public int getJournalFeedsCount()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public int getJournalFeedsCount() {
 		return _journalFeedLocalService.getJournalFeedsCount();
 	}
 
@@ -332,12 +299,10 @@ public class JournalFeedLocalServiceWrapper implements JournalFeedLocalService,
 	*
 	* @param journalFeed the journal feed
 	* @return the journal feed that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.journal.model.JournalFeed updateJournalFeed(
-		com.liferay.portlet.journal.model.JournalFeed journalFeed)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.journal.model.JournalFeed journalFeed) {
 		return _journalFeedLocalService.updateJournalFeed(journalFeed);
 	}
 

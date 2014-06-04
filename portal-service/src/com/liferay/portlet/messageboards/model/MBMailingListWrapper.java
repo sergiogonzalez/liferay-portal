@@ -367,11 +367,9 @@ public class MBMailingListWrapper implements MBMailingList,
 	* Returns the user uuid of this message boards mailing list.
 	*
 	* @return the user uuid of this message boards mailing list
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public java.lang.String getUserUuid()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public java.lang.String getUserUuid() {
 		return _mbMailingList.getUserUuid();
 	}
 
@@ -955,8 +953,7 @@ public class MBMailingListWrapper implements MBMailingList,
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void persist() {
 		_mbMailingList.persist();
 	}
 

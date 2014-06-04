@@ -269,11 +269,9 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	* Returns the user uuid of this asset vocabulary.
 	*
 	* @return the user uuid of this asset vocabulary
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public java.lang.String getUserUuid()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public java.lang.String getUserUuid() {
 		return _assetVocabulary.getUserUuid();
 	}
 
@@ -792,8 +790,7 @@ public class AssetVocabularyWrapper implements AssetVocabulary,
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void persist() {
 		_assetVocabulary.persist();
 	}
 

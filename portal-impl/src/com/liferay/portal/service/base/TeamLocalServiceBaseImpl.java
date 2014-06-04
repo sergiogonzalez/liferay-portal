@@ -76,11 +76,10 @@ public abstract class TeamLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param team the team
 	 * @return the team that was added
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public Team addTeam(Team team) throws SystemException {
+	public Team addTeam(Team team) {
 		team.setNew(true);
 
 		return teamPersistence.update(team);
@@ -103,7 +102,7 @@ public abstract class TeamLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param teamId the primary key of the team
 	 * @return the team that was removed
 	 * @throws PortalException if a team with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
+	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
@@ -117,7 +116,7 @@ public abstract class TeamLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param team the team
 	 * @return the team that was removed
 	 * @throws PortalException
-	 * @throws SystemException if a system exception occurred
+	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
@@ -138,12 +137,10 @@ public abstract class TeamLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery) {
 		return teamPersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -158,12 +155,10 @@ public abstract class TeamLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param start the lower bound of the range of model instances
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
 		return teamPersistence.findWithDynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -179,12 +174,11 @@ public abstract class TeamLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
 	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		return teamPersistence.findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
 	}
@@ -194,11 +188,9 @@ public abstract class TeamLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public long dynamicQueryCount(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return teamPersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
@@ -208,16 +200,15 @@ public abstract class TeamLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param dynamicQuery the dynamic query
 	 * @param projection the projection to apply to the query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection) throws SystemException {
+		Projection projection) {
 		return teamPersistence.countWithDynamicQuery(dynamicQuery, projection);
 	}
 
 	@Override
-	public Team fetchTeam(long teamId) throws SystemException {
+	public Team fetchTeam(long teamId) {
 		return teamPersistence.fetchByPrimaryKey(teamId);
 	}
 
@@ -227,16 +218,14 @@ public abstract class TeamLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param teamId the primary key of the team
 	 * @return the team
 	 * @throws PortalException if a team with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Team getTeam(long teamId) throws PortalException, SystemException {
+	public Team getTeam(long teamId) throws PortalException {
 		return teamPersistence.findByPrimaryKey(teamId);
 	}
 
 	@Override
-	public ActionableDynamicQuery getActionableDynamicQuery()
-		throws SystemException {
+	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.TeamLocalServiceUtil.getService());
@@ -249,8 +238,7 @@ public abstract class TeamLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	protected void initActionableDynamicQuery(
-		ActionableDynamicQuery actionableDynamicQuery)
-		throws SystemException {
+		ActionableDynamicQuery actionableDynamicQuery) {
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.TeamLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(Team.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
@@ -260,7 +248,7 @@ public abstract class TeamLocalServiceBaseImpl extends BaseLocalServiceImpl
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return teamPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -274,10 +262,9 @@ public abstract class TeamLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param start the lower bound of the range of teams
 	 * @param end the upper bound of the range of teams (not inclusive)
 	 * @return the range of teams
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Team> getTeams(int start, int end) throws SystemException {
+	public List<Team> getTeams(int start, int end) {
 		return teamPersistence.findAll(start, end);
 	}
 
@@ -285,10 +272,9 @@ public abstract class TeamLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * Returns the number of teams.
 	 *
 	 * @return the number of teams
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int getTeamsCount() throws SystemException {
+	public int getTeamsCount() {
 		return teamPersistence.countAll();
 	}
 
@@ -297,89 +283,73 @@ public abstract class TeamLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param team the team
 	 * @return the team that was updated
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public Team updateTeam(Team team) throws SystemException {
+	public Team updateTeam(Team team) {
 		return teamPersistence.update(team);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void addUserTeam(long userId, long teamId) throws SystemException {
+	public void addUserTeam(long userId, long teamId) {
 		userPersistence.addTeam(userId, teamId);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void addUserTeam(long userId, Team team) throws SystemException {
+	public void addUserTeam(long userId, Team team) {
 		userPersistence.addTeam(userId, team);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void addUserTeams(long userId, long[] teamIds)
-		throws SystemException {
+	public void addUserTeams(long userId, long[] teamIds) {
 		userPersistence.addTeams(userId, teamIds);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void addUserTeams(long userId, List<Team> Teams)
-		throws SystemException {
+	public void addUserTeams(long userId, List<Team> Teams) {
 		userPersistence.addTeams(userId, Teams);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void clearUserTeams(long userId) throws SystemException {
+	public void clearUserTeams(long userId) {
 		userPersistence.clearTeams(userId);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void deleteUserTeam(long userId, long teamId)
-		throws SystemException {
+	public void deleteUserTeam(long userId, long teamId) {
 		userPersistence.removeTeam(userId, teamId);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void deleteUserTeam(long userId, Team team)
-		throws SystemException {
+	public void deleteUserTeam(long userId, Team team) {
 		userPersistence.removeTeam(userId, team);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void deleteUserTeams(long userId, long[] teamIds)
-		throws SystemException {
+	public void deleteUserTeams(long userId, long[] teamIds) {
 		userPersistence.removeTeams(userId, teamIds);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void deleteUserTeams(long userId, List<Team> Teams)
-		throws SystemException {
+	public void deleteUserTeams(long userId, List<Team> Teams) {
 		userPersistence.removeTeams(userId, Teams);
 	}
 
@@ -388,150 +358,122 @@ public abstract class TeamLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param teamId the teamId of the team
 	 * @return long[] the userIds of users associated with the team
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public long[] getUserPrimaryKeys(long teamId) throws SystemException {
+	public long[] getUserPrimaryKeys(long teamId) {
 		return teamPersistence.getUserPrimaryKeys(teamId);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Team> getUserTeams(long userId) throws SystemException {
+	public List<Team> getUserTeams(long userId) {
 		return userPersistence.getTeams(userId);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Team> getUserTeams(long userId, int start, int end)
-		throws SystemException {
+	public List<Team> getUserTeams(long userId, int start, int end) {
 		return userPersistence.getTeams(userId, start, end);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<Team> getUserTeams(long userId, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		return userPersistence.getTeams(userId, start, end, orderByComparator);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int getUserTeamsCount(long userId) throws SystemException {
+	public int getUserTeamsCount(long userId) {
 		return userPersistence.getTeamsSize(userId);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public boolean hasUserTeam(long userId, long teamId)
-		throws SystemException {
+	public boolean hasUserTeam(long userId, long teamId) {
 		return userPersistence.containsTeam(userId, teamId);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public boolean hasUserTeams(long userId) throws SystemException {
+	public boolean hasUserTeams(long userId) {
 		return userPersistence.containsTeams(userId);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void setUserTeams(long userId, long[] teamIds)
-		throws SystemException {
+	public void setUserTeams(long userId, long[] teamIds) {
 		userPersistence.setTeams(userId, teamIds);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void addUserGroupTeam(long userGroupId, long teamId)
-		throws SystemException {
+	public void addUserGroupTeam(long userGroupId, long teamId) {
 		userGroupPersistence.addTeam(userGroupId, teamId);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void addUserGroupTeam(long userGroupId, Team team)
-		throws SystemException {
+	public void addUserGroupTeam(long userGroupId, Team team) {
 		userGroupPersistence.addTeam(userGroupId, team);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void addUserGroupTeams(long userGroupId, long[] teamIds)
-		throws SystemException {
+	public void addUserGroupTeams(long userGroupId, long[] teamIds) {
 		userGroupPersistence.addTeams(userGroupId, teamIds);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void addUserGroupTeams(long userGroupId, List<Team> Teams)
-		throws SystemException {
+	public void addUserGroupTeams(long userGroupId, List<Team> Teams) {
 		userGroupPersistence.addTeams(userGroupId, Teams);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void clearUserGroupTeams(long userGroupId) throws SystemException {
+	public void clearUserGroupTeams(long userGroupId) {
 		userGroupPersistence.clearTeams(userGroupId);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void deleteUserGroupTeam(long userGroupId, long teamId)
-		throws SystemException {
+	public void deleteUserGroupTeam(long userGroupId, long teamId) {
 		userGroupPersistence.removeTeam(userGroupId, teamId);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void deleteUserGroupTeam(long userGroupId, Team team)
-		throws SystemException {
+	public void deleteUserGroupTeam(long userGroupId, Team team) {
 		userGroupPersistence.removeTeam(userGroupId, team);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void deleteUserGroupTeams(long userGroupId, long[] teamIds)
-		throws SystemException {
+	public void deleteUserGroupTeams(long userGroupId, long[] teamIds) {
 		userGroupPersistence.removeTeams(userGroupId, teamIds);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void deleteUserGroupTeams(long userGroupId, List<Team> Teams)
-		throws SystemException {
+	public void deleteUserGroupTeams(long userGroupId, List<Team> Teams) {
 		userGroupPersistence.removeTeams(userGroupId, Teams);
 	}
 
@@ -540,75 +482,60 @@ public abstract class TeamLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param teamId the teamId of the team
 	 * @return long[] the userGroupIds of user groups associated with the team
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public long[] getUserGroupPrimaryKeys(long teamId)
-		throws SystemException {
+	public long[] getUserGroupPrimaryKeys(long teamId) {
 		return teamPersistence.getUserGroupPrimaryKeys(teamId);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Team> getUserGroupTeams(long userGroupId)
-		throws SystemException {
+	public List<Team> getUserGroupTeams(long userGroupId) {
 		return userGroupPersistence.getTeams(userGroupId);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Team> getUserGroupTeams(long userGroupId, int start, int end)
-		throws SystemException {
+	public List<Team> getUserGroupTeams(long userGroupId, int start, int end) {
 		return userGroupPersistence.getTeams(userGroupId, start, end);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<Team> getUserGroupTeams(long userGroupId, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		return userGroupPersistence.getTeams(userGroupId, start, end,
 			orderByComparator);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int getUserGroupTeamsCount(long userGroupId)
-		throws SystemException {
+	public int getUserGroupTeamsCount(long userGroupId) {
 		return userGroupPersistence.getTeamsSize(userGroupId);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public boolean hasUserGroupTeam(long userGroupId, long teamId)
-		throws SystemException {
+	public boolean hasUserGroupTeam(long userGroupId, long teamId) {
 		return userGroupPersistence.containsTeam(userGroupId, teamId);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public boolean hasUserGroupTeams(long userGroupId)
-		throws SystemException {
+	public boolean hasUserGroupTeams(long userGroupId) {
 		return userGroupPersistence.containsTeams(userGroupId);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void setUserGroupTeams(long userGroupId, long[] teamIds)
-		throws SystemException {
+	public void setUserGroupTeams(long userGroupId, long[] teamIds) {
 		userGroupPersistence.setTeams(userGroupId, teamIds);
 	}
 
@@ -990,7 +917,7 @@ public abstract class TeamLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param sql the sql query
 	 */
-	protected void runSQL(String sql) throws SystemException {
+	protected void runSQL(String sql) {
 		try {
 			DataSource dataSource = teamPersistence.getDataSource();
 

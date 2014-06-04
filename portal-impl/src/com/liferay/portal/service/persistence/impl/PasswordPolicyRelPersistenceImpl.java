@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -109,11 +108,9 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 	 *
 	 * @param passwordPolicyId the password policy ID
 	 * @return the matching password policy rels
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<PasswordPolicyRel> findByPasswordPolicyId(long passwordPolicyId)
-		throws SystemException {
+	public List<PasswordPolicyRel> findByPasswordPolicyId(long passwordPolicyId) {
 		return findByPasswordPolicyId(passwordPolicyId, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
@@ -129,11 +126,10 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 	 * @param start the lower bound of the range of password policy rels
 	 * @param end the upper bound of the range of password policy rels (not inclusive)
 	 * @return the range of matching password policy rels
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<PasswordPolicyRel> findByPasswordPolicyId(
-		long passwordPolicyId, int start, int end) throws SystemException {
+		long passwordPolicyId, int start, int end) {
 		return findByPasswordPolicyId(passwordPolicyId, start, end, null);
 	}
 
@@ -149,12 +145,11 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 	 * @param end the upper bound of the range of password policy rels (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching password policy rels
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<PasswordPolicyRel> findByPasswordPolicyId(
 		long passwordPolicyId, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -261,12 +256,11 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching password policy rel
 	 * @throws com.liferay.portal.NoSuchPasswordPolicyRelException if a matching password policy rel could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public PasswordPolicyRel findByPasswordPolicyId_First(
 		long passwordPolicyId, OrderByComparator orderByComparator)
-		throws NoSuchPasswordPolicyRelException, SystemException {
+		throws NoSuchPasswordPolicyRelException {
 		PasswordPolicyRel passwordPolicyRel = fetchByPasswordPolicyId_First(passwordPolicyId,
 				orderByComparator);
 
@@ -292,12 +286,10 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 	 * @param passwordPolicyId the password policy ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching password policy rel, or <code>null</code> if a matching password policy rel could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public PasswordPolicyRel fetchByPasswordPolicyId_First(
-		long passwordPolicyId, OrderByComparator orderByComparator)
-		throws SystemException {
+		long passwordPolicyId, OrderByComparator orderByComparator) {
 		List<PasswordPolicyRel> list = findByPasswordPolicyId(passwordPolicyId,
 				0, 1, orderByComparator);
 
@@ -315,12 +307,11 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching password policy rel
 	 * @throws com.liferay.portal.NoSuchPasswordPolicyRelException if a matching password policy rel could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public PasswordPolicyRel findByPasswordPolicyId_Last(
 		long passwordPolicyId, OrderByComparator orderByComparator)
-		throws NoSuchPasswordPolicyRelException, SystemException {
+		throws NoSuchPasswordPolicyRelException {
 		PasswordPolicyRel passwordPolicyRel = fetchByPasswordPolicyId_Last(passwordPolicyId,
 				orderByComparator);
 
@@ -346,12 +337,10 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 	 * @param passwordPolicyId the password policy ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching password policy rel, or <code>null</code> if a matching password policy rel could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public PasswordPolicyRel fetchByPasswordPolicyId_Last(
-		long passwordPolicyId, OrderByComparator orderByComparator)
-		throws SystemException {
+		long passwordPolicyId, OrderByComparator orderByComparator) {
 		int count = countByPasswordPolicyId(passwordPolicyId);
 
 		if (count == 0) {
@@ -376,13 +365,12 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next password policy rel
 	 * @throws com.liferay.portal.NoSuchPasswordPolicyRelException if a password policy rel with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public PasswordPolicyRel[] findByPasswordPolicyId_PrevAndNext(
 		long passwordPolicyRelId, long passwordPolicyId,
 		OrderByComparator orderByComparator)
-		throws NoSuchPasswordPolicyRelException, SystemException {
+		throws NoSuchPasswordPolicyRelException {
 		PasswordPolicyRel passwordPolicyRel = findByPrimaryKey(passwordPolicyRelId);
 
 		Session session = null;
@@ -521,11 +509,9 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 	 * Removes all the password policy rels where passwordPolicyId = &#63; from the database.
 	 *
 	 * @param passwordPolicyId the password policy ID
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByPasswordPolicyId(long passwordPolicyId)
-		throws SystemException {
+	public void removeByPasswordPolicyId(long passwordPolicyId) {
 		for (PasswordPolicyRel passwordPolicyRel : findByPasswordPolicyId(
 				passwordPolicyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(passwordPolicyRel);
@@ -537,11 +523,9 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 	 *
 	 * @param passwordPolicyId the password policy ID
 	 * @return the number of matching password policy rels
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByPasswordPolicyId(long passwordPolicyId)
-		throws SystemException {
+	public int countByPasswordPolicyId(long passwordPolicyId) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_PASSWORDPOLICYID;
 
 		Object[] finderArgs = new Object[] { passwordPolicyId };
@@ -607,11 +591,10 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 	 * @param classPK the class p k
 	 * @return the matching password policy rel
 	 * @throws com.liferay.portal.NoSuchPasswordPolicyRelException if a matching password policy rel could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public PasswordPolicyRel findByC_C(long classNameId, long classPK)
-		throws NoSuchPasswordPolicyRelException, SystemException {
+		throws NoSuchPasswordPolicyRelException {
 		PasswordPolicyRel passwordPolicyRel = fetchByC_C(classNameId, classPK);
 
 		if (passwordPolicyRel == null) {
@@ -643,11 +626,9 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @return the matching password policy rel, or <code>null</code> if a matching password policy rel could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public PasswordPolicyRel fetchByC_C(long classNameId, long classPK)
-		throws SystemException {
+	public PasswordPolicyRel fetchByC_C(long classNameId, long classPK) {
 		return fetchByC_C(classNameId, classPK, true);
 	}
 
@@ -658,11 +639,10 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 	 * @param classPK the class p k
 	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching password policy rel, or <code>null</code> if a matching password policy rel could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public PasswordPolicyRel fetchByC_C(long classNameId, long classPK,
-		boolean retrieveFromCache) throws SystemException {
+		boolean retrieveFromCache) {
 		Object[] finderArgs = new Object[] { classNameId, classPK };
 
 		Object result = null;
@@ -750,11 +730,10 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @return the password policy rel that was removed
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public PasswordPolicyRel removeByC_C(long classNameId, long classPK)
-		throws NoSuchPasswordPolicyRelException, SystemException {
+		throws NoSuchPasswordPolicyRelException {
 		PasswordPolicyRel passwordPolicyRel = findByC_C(classNameId, classPK);
 
 		return remove(passwordPolicyRel);
@@ -766,11 +745,9 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @return the number of matching password policy rels
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByC_C(long classNameId, long classPK)
-		throws SystemException {
+	public int countByC_C(long classNameId, long classPK) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_C;
 
 		Object[] finderArgs = new Object[] { classNameId, classPK };
@@ -992,11 +969,10 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 	 * @param passwordPolicyRelId the primary key of the password policy rel
 	 * @return the password policy rel that was removed
 	 * @throws com.liferay.portal.NoSuchPasswordPolicyRelException if a password policy rel with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public PasswordPolicyRel remove(long passwordPolicyRelId)
-		throws NoSuchPasswordPolicyRelException, SystemException {
+		throws NoSuchPasswordPolicyRelException {
 		return remove((Serializable)passwordPolicyRelId);
 	}
 
@@ -1006,11 +982,10 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 	 * @param primaryKey the primary key of the password policy rel
 	 * @return the password policy rel that was removed
 	 * @throws com.liferay.portal.NoSuchPasswordPolicyRelException if a password policy rel with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public PasswordPolicyRel remove(Serializable primaryKey)
-		throws NoSuchPasswordPolicyRelException, SystemException {
+		throws NoSuchPasswordPolicyRelException {
 		Session session = null;
 
 		try {
@@ -1042,8 +1017,7 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 	}
 
 	@Override
-	protected PasswordPolicyRel removeImpl(PasswordPolicyRel passwordPolicyRel)
-		throws SystemException {
+	protected PasswordPolicyRel removeImpl(PasswordPolicyRel passwordPolicyRel) {
 		passwordPolicyRel = toUnwrappedModel(passwordPolicyRel);
 
 		Session session = null;
@@ -1076,8 +1050,7 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 
 	@Override
 	public PasswordPolicyRel updateImpl(
-		com.liferay.portal.model.PasswordPolicyRel passwordPolicyRel)
-		throws SystemException {
+		com.liferay.portal.model.PasswordPolicyRel passwordPolicyRel) {
 		passwordPolicyRel = toUnwrappedModel(passwordPolicyRel);
 
 		boolean isNew = passwordPolicyRel.isNew();
@@ -1172,11 +1145,10 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 	 * @param primaryKey the primary key of the password policy rel
 	 * @return the password policy rel
 	 * @throws com.liferay.portal.NoSuchPasswordPolicyRelException if a password policy rel with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public PasswordPolicyRel findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchPasswordPolicyRelException, SystemException {
+		throws NoSuchPasswordPolicyRelException {
 		PasswordPolicyRel passwordPolicyRel = fetchByPrimaryKey(primaryKey);
 
 		if (passwordPolicyRel == null) {
@@ -1197,11 +1169,10 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 	 * @param passwordPolicyRelId the primary key of the password policy rel
 	 * @return the password policy rel
 	 * @throws com.liferay.portal.NoSuchPasswordPolicyRelException if a password policy rel with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public PasswordPolicyRel findByPrimaryKey(long passwordPolicyRelId)
-		throws NoSuchPasswordPolicyRelException, SystemException {
+		throws NoSuchPasswordPolicyRelException {
 		return findByPrimaryKey((Serializable)passwordPolicyRelId);
 	}
 
@@ -1210,11 +1181,9 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 	 *
 	 * @param primaryKey the primary key of the password policy rel
 	 * @return the password policy rel, or <code>null</code> if a password policy rel with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public PasswordPolicyRel fetchByPrimaryKey(Serializable primaryKey)
-		throws SystemException {
+	public PasswordPolicyRel fetchByPrimaryKey(Serializable primaryKey) {
 		PasswordPolicyRel passwordPolicyRel = (PasswordPolicyRel)EntityCacheUtil.getResult(PasswordPolicyRelModelImpl.ENTITY_CACHE_ENABLED,
 				PasswordPolicyRelImpl.class, primaryKey);
 
@@ -1259,11 +1228,9 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 	 *
 	 * @param passwordPolicyRelId the primary key of the password policy rel
 	 * @return the password policy rel, or <code>null</code> if a password policy rel with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public PasswordPolicyRel fetchByPrimaryKey(long passwordPolicyRelId)
-		throws SystemException {
+	public PasswordPolicyRel fetchByPrimaryKey(long passwordPolicyRelId) {
 		return fetchByPrimaryKey((Serializable)passwordPolicyRelId);
 	}
 
@@ -1271,10 +1238,9 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 	 * Returns all the password policy rels.
 	 *
 	 * @return the password policy rels
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<PasswordPolicyRel> findAll() throws SystemException {
+	public List<PasswordPolicyRel> findAll() {
 		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -1288,11 +1254,9 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 	 * @param start the lower bound of the range of password policy rels
 	 * @param end the upper bound of the range of password policy rels (not inclusive)
 	 * @return the range of password policy rels
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<PasswordPolicyRel> findAll(int start, int end)
-		throws SystemException {
+	public List<PasswordPolicyRel> findAll(int start, int end) {
 		return findAll(start, end, null);
 	}
 
@@ -1307,11 +1271,10 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 	 * @param end the upper bound of the range of password policy rels (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of password policy rels
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<PasswordPolicyRel> findAll(int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1393,10 +1356,9 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 	/**
 	 * Removes all the password policy rels from the database.
 	 *
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeAll() throws SystemException {
+	public void removeAll() {
 		for (PasswordPolicyRel passwordPolicyRel : findAll()) {
 			remove(passwordPolicyRel);
 		}
@@ -1406,10 +1368,9 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 	 * Returns the number of password policy rels.
 	 *
 	 * @return the number of password policy rels
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countAll() throws SystemException {
+	public int countAll() {
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
 				FINDER_ARGS_EMPTY, this);
 

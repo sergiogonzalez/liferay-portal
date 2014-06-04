@@ -314,8 +314,7 @@ public class UserTrackerPathWrapper implements UserTrackerPath,
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void persist() {
 		_userTrackerPath.persist();
 	}
 

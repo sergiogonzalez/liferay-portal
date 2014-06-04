@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 import com.liferay.portal.model.PluginSetting;
@@ -63,8 +62,7 @@ public class PluginSettingUtil {
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#countWithDynamicQuery(DynamicQuery)
 	 */
-	public static long countWithDynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public static long countWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return getPersistence().countWithDynamicQuery(dynamicQuery);
 	}
 
@@ -72,7 +70,7 @@ public class PluginSettingUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery)
 	 */
 	public static List<PluginSetting> findWithDynamicQuery(
-		DynamicQuery dynamicQuery) throws SystemException {
+		DynamicQuery dynamicQuery) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -80,8 +78,7 @@ public class PluginSettingUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
 	 */
 	public static List<PluginSetting> findWithDynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+		DynamicQuery dynamicQuery, int start, int end) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -90,7 +87,7 @@ public class PluginSettingUtil {
 	 */
 	public static List<PluginSetting> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -99,8 +96,7 @@ public class PluginSettingUtil {
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static PluginSetting update(PluginSetting pluginSetting)
-		throws SystemException {
+	public static PluginSetting update(PluginSetting pluginSetting) {
 		return getPersistence().update(pluginSetting);
 	}
 
@@ -108,7 +104,7 @@ public class PluginSettingUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
 	public static PluginSetting update(PluginSetting pluginSetting,
-		ServiceContext serviceContext) throws SystemException {
+		ServiceContext serviceContext) {
 		return getPersistence().update(pluginSetting, serviceContext);
 	}
 
@@ -117,11 +113,9 @@ public class PluginSettingUtil {
 	*
 	* @param companyId the company ID
 	* @return the matching plugin settings
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portal.model.PluginSetting> findByCompanyId(
-		long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long companyId) {
 		return getPersistence().findByCompanyId(companyId);
 	}
 
@@ -136,11 +130,9 @@ public class PluginSettingUtil {
 	* @param start the lower bound of the range of plugin settings
 	* @param end the upper bound of the range of plugin settings (not inclusive)
 	* @return the range of matching plugin settings
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portal.model.PluginSetting> findByCompanyId(
-		long companyId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long companyId, int start, int end) {
 		return getPersistence().findByCompanyId(companyId, start, end);
 	}
 
@@ -156,12 +148,10 @@ public class PluginSettingUtil {
 	* @param end the upper bound of the range of plugin settings (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching plugin settings
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portal.model.PluginSetting> findByCompanyId(
 		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByCompanyId(companyId, start, end, orderByComparator);
 	}
@@ -173,13 +163,11 @@ public class PluginSettingUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching plugin setting
 	* @throws com.liferay.portal.NoSuchPluginSettingException if a matching plugin setting could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.PluginSetting findByCompanyId_First(
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchPluginSettingException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.NoSuchPluginSettingException {
 		return getPersistence()
 				   .findByCompanyId_First(companyId, orderByComparator);
 	}
@@ -190,12 +178,10 @@ public class PluginSettingUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching plugin setting, or <code>null</code> if a matching plugin setting could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.PluginSetting fetchByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByCompanyId_First(companyId, orderByComparator);
 	}
@@ -207,13 +193,11 @@ public class PluginSettingUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching plugin setting
 	* @throws com.liferay.portal.NoSuchPluginSettingException if a matching plugin setting could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.PluginSetting findByCompanyId_Last(
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchPluginSettingException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.NoSuchPluginSettingException {
 		return getPersistence()
 				   .findByCompanyId_Last(companyId, orderByComparator);
 	}
@@ -224,12 +208,10 @@ public class PluginSettingUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching plugin setting, or <code>null</code> if a matching plugin setting could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.PluginSetting fetchByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByCompanyId_Last(companyId, orderByComparator);
 	}
@@ -242,13 +224,11 @@ public class PluginSettingUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next plugin setting
 	* @throws com.liferay.portal.NoSuchPluginSettingException if a plugin setting with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.PluginSetting[] findByCompanyId_PrevAndNext(
 		long pluginSettingId, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchPluginSettingException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.NoSuchPluginSettingException {
 		return getPersistence()
 				   .findByCompanyId_PrevAndNext(pluginSettingId, companyId,
 			orderByComparator);
@@ -258,10 +238,8 @@ public class PluginSettingUtil {
 	* Removes all the plugin settings where companyId = &#63; from the database.
 	*
 	* @param companyId the company ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByCompanyId(long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByCompanyId(long companyId) {
 		getPersistence().removeByCompanyId(companyId);
 	}
 
@@ -270,10 +248,8 @@ public class PluginSettingUtil {
 	*
 	* @param companyId the company ID
 	* @return the number of matching plugin settings
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByCompanyId(long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByCompanyId(long companyId) {
 		return getPersistence().countByCompanyId(companyId);
 	}
 
@@ -285,12 +261,10 @@ public class PluginSettingUtil {
 	* @param pluginType the plugin type
 	* @return the matching plugin setting
 	* @throws com.liferay.portal.NoSuchPluginSettingException if a matching plugin setting could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.PluginSetting findByC_I_T(
 		long companyId, java.lang.String pluginId, java.lang.String pluginType)
-		throws com.liferay.portal.NoSuchPluginSettingException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.NoSuchPluginSettingException {
 		return getPersistence().findByC_I_T(companyId, pluginId, pluginType);
 	}
 
@@ -301,11 +275,9 @@ public class PluginSettingUtil {
 	* @param pluginId the plugin ID
 	* @param pluginType the plugin type
 	* @return the matching plugin setting, or <code>null</code> if a matching plugin setting could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.PluginSetting fetchByC_I_T(
-		long companyId, java.lang.String pluginId, java.lang.String pluginType)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long companyId, java.lang.String pluginId, java.lang.String pluginType) {
 		return getPersistence().fetchByC_I_T(companyId, pluginId, pluginType);
 	}
 
@@ -317,12 +289,10 @@ public class PluginSettingUtil {
 	* @param pluginType the plugin type
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching plugin setting, or <code>null</code> if a matching plugin setting could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.PluginSetting fetchByC_I_T(
 		long companyId, java.lang.String pluginId, java.lang.String pluginType,
-		boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByC_I_T(companyId, pluginId, pluginType,
 			retrieveFromCache);
@@ -335,12 +305,10 @@ public class PluginSettingUtil {
 	* @param pluginId the plugin ID
 	* @param pluginType the plugin type
 	* @return the plugin setting that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.PluginSetting removeByC_I_T(
 		long companyId, java.lang.String pluginId, java.lang.String pluginType)
-		throws com.liferay.portal.NoSuchPluginSettingException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.NoSuchPluginSettingException {
 		return getPersistence().removeByC_I_T(companyId, pluginId, pluginType);
 	}
 
@@ -351,11 +319,9 @@ public class PluginSettingUtil {
 	* @param pluginId the plugin ID
 	* @param pluginType the plugin type
 	* @return the number of matching plugin settings
-	* @throws SystemException if a system exception occurred
 	*/
 	public static int countByC_I_T(long companyId, java.lang.String pluginId,
-		java.lang.String pluginType)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String pluginType) {
 		return getPersistence().countByC_I_T(companyId, pluginId, pluginType);
 	}
 
@@ -396,18 +362,15 @@ public class PluginSettingUtil {
 	* @param pluginSettingId the primary key of the plugin setting
 	* @return the plugin setting that was removed
 	* @throws com.liferay.portal.NoSuchPluginSettingException if a plugin setting with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.PluginSetting remove(
 		long pluginSettingId)
-		throws com.liferay.portal.NoSuchPluginSettingException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.NoSuchPluginSettingException {
 		return getPersistence().remove(pluginSettingId);
 	}
 
 	public static com.liferay.portal.model.PluginSetting updateImpl(
-		com.liferay.portal.model.PluginSetting pluginSetting)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.PluginSetting pluginSetting) {
 		return getPersistence().updateImpl(pluginSetting);
 	}
 
@@ -417,12 +380,10 @@ public class PluginSettingUtil {
 	* @param pluginSettingId the primary key of the plugin setting
 	* @return the plugin setting
 	* @throws com.liferay.portal.NoSuchPluginSettingException if a plugin setting with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.PluginSetting findByPrimaryKey(
 		long pluginSettingId)
-		throws com.liferay.portal.NoSuchPluginSettingException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.NoSuchPluginSettingException {
 		return getPersistence().findByPrimaryKey(pluginSettingId);
 	}
 
@@ -431,11 +392,9 @@ public class PluginSettingUtil {
 	*
 	* @param pluginSettingId the primary key of the plugin setting
 	* @return the plugin setting, or <code>null</code> if a plugin setting with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.PluginSetting fetchByPrimaryKey(
-		long pluginSettingId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long pluginSettingId) {
 		return getPersistence().fetchByPrimaryKey(pluginSettingId);
 	}
 
@@ -443,10 +402,8 @@ public class PluginSettingUtil {
 	* Returns all the plugin settings.
 	*
 	* @return the plugin settings
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.portal.model.PluginSetting> findAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static java.util.List<com.liferay.portal.model.PluginSetting> findAll() {
 		return getPersistence().findAll();
 	}
 
@@ -460,11 +417,9 @@ public class PluginSettingUtil {
 	* @param start the lower bound of the range of plugin settings
 	* @param end the upper bound of the range of plugin settings (not inclusive)
 	* @return the range of plugin settings
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portal.model.PluginSetting> findAll(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
@@ -479,22 +434,17 @@ public class PluginSettingUtil {
 	* @param end the upper bound of the range of plugin settings (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of plugin settings
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portal.model.PluginSetting> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
 	/**
 	* Removes all the plugin settings from the database.
-	*
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeAll() {
 		getPersistence().removeAll();
 	}
 
@@ -502,10 +452,8 @@ public class PluginSettingUtil {
 	* Returns the number of plugin settings.
 	*
 	* @return the number of plugin settings
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countAll() {
 		return getPersistence().countAll();
 	}
 

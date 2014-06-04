@@ -67,15 +67,12 @@ public interface ClusterGroupPersistence extends BasePersistence<ClusterGroup> {
 	* @param clusterGroupId the primary key of the cluster group
 	* @return the cluster group that was removed
 	* @throws com.liferay.portal.NoSuchClusterGroupException if a cluster group with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.ClusterGroup remove(long clusterGroupId)
-		throws com.liferay.portal.NoSuchClusterGroupException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.NoSuchClusterGroupException;
 
 	public com.liferay.portal.model.ClusterGroup updateImpl(
-		com.liferay.portal.model.ClusterGroup clusterGroup)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.model.ClusterGroup clusterGroup);
 
 	/**
 	* Returns the cluster group with the primary key or throws a {@link com.liferay.portal.NoSuchClusterGroupException} if it could not be found.
@@ -83,32 +80,26 @@ public interface ClusterGroupPersistence extends BasePersistence<ClusterGroup> {
 	* @param clusterGroupId the primary key of the cluster group
 	* @return the cluster group
 	* @throws com.liferay.portal.NoSuchClusterGroupException if a cluster group with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.ClusterGroup findByPrimaryKey(
 		long clusterGroupId)
-		throws com.liferay.portal.NoSuchClusterGroupException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.NoSuchClusterGroupException;
 
 	/**
 	* Returns the cluster group with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param clusterGroupId the primary key of the cluster group
 	* @return the cluster group, or <code>null</code> if a cluster group with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.ClusterGroup fetchByPrimaryKey(
-		long clusterGroupId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long clusterGroupId);
 
 	/**
 	* Returns all the cluster groups.
 	*
 	* @return the cluster groups
-	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portal.model.ClusterGroup> findAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public java.util.List<com.liferay.portal.model.ClusterGroup> findAll();
 
 	/**
 	* Returns a range of all the cluster groups.
@@ -120,11 +111,9 @@ public interface ClusterGroupPersistence extends BasePersistence<ClusterGroup> {
 	* @param start the lower bound of the range of cluster groups
 	* @param end the upper bound of the range of cluster groups (not inclusive)
 	* @return the range of cluster groups
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portal.model.ClusterGroup> findAll(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the cluster groups.
@@ -137,27 +126,20 @@ public interface ClusterGroupPersistence extends BasePersistence<ClusterGroup> {
 	* @param end the upper bound of the range of cluster groups (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of cluster groups
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portal.model.ClusterGroup> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Removes all the cluster groups from the database.
-	*
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeAll();
 
 	/**
 	* Returns the number of cluster groups.
 	*
 	* @return the number of cluster groups
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countAll();
 }

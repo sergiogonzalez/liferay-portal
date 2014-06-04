@@ -356,8 +356,7 @@ public class RatingsStatsWrapper implements RatingsStats,
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void persist() {
 		_ratingsStats.persist();
 	}
 

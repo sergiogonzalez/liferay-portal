@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 import com.liferay.portal.service.ServiceContext;
@@ -64,8 +63,7 @@ public class ShoppingItemFieldUtil {
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#countWithDynamicQuery(DynamicQuery)
 	 */
-	public static long countWithDynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public static long countWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return getPersistence().countWithDynamicQuery(dynamicQuery);
 	}
 
@@ -73,7 +71,7 @@ public class ShoppingItemFieldUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery)
 	 */
 	public static List<ShoppingItemField> findWithDynamicQuery(
-		DynamicQuery dynamicQuery) throws SystemException {
+		DynamicQuery dynamicQuery) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -81,8 +79,7 @@ public class ShoppingItemFieldUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
 	 */
 	public static List<ShoppingItemField> findWithDynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+		DynamicQuery dynamicQuery, int start, int end) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -91,7 +88,7 @@ public class ShoppingItemFieldUtil {
 	 */
 	public static List<ShoppingItemField> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -100,8 +97,7 @@ public class ShoppingItemFieldUtil {
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static ShoppingItemField update(ShoppingItemField shoppingItemField)
-		throws SystemException {
+	public static ShoppingItemField update(ShoppingItemField shoppingItemField) {
 		return getPersistence().update(shoppingItemField);
 	}
 
@@ -109,8 +105,7 @@ public class ShoppingItemFieldUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
 	public static ShoppingItemField update(
-		ShoppingItemField shoppingItemField, ServiceContext serviceContext)
-		throws SystemException {
+		ShoppingItemField shoppingItemField, ServiceContext serviceContext) {
 		return getPersistence().update(shoppingItemField, serviceContext);
 	}
 
@@ -119,10 +114,9 @@ public class ShoppingItemFieldUtil {
 	*
 	* @param itemId the item ID
 	* @return the matching shopping item fields
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.shopping.model.ShoppingItemField> findByItemId(
-		long itemId) throws com.liferay.portal.kernel.exception.SystemException {
+		long itemId) {
 		return getPersistence().findByItemId(itemId);
 	}
 
@@ -137,11 +131,9 @@ public class ShoppingItemFieldUtil {
 	* @param start the lower bound of the range of shopping item fields
 	* @param end the upper bound of the range of shopping item fields (not inclusive)
 	* @return the range of matching shopping item fields
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.shopping.model.ShoppingItemField> findByItemId(
-		long itemId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long itemId, int start, int end) {
 		return getPersistence().findByItemId(itemId, start, end);
 	}
 
@@ -157,12 +149,10 @@ public class ShoppingItemFieldUtil {
 	* @param end the upper bound of the range of shopping item fields (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching shopping item fields
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.shopping.model.ShoppingItemField> findByItemId(
 		long itemId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByItemId(itemId, start, end, orderByComparator);
 	}
@@ -174,13 +164,11 @@ public class ShoppingItemFieldUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching shopping item field
 	* @throws com.liferay.portlet.shopping.NoSuchItemFieldException if a matching shopping item field could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.shopping.model.ShoppingItemField findByItemId_First(
 		long itemId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.shopping.NoSuchItemFieldException {
+		throws com.liferay.portlet.shopping.NoSuchItemFieldException {
 		return getPersistence().findByItemId_First(itemId, orderByComparator);
 	}
 
@@ -190,12 +178,10 @@ public class ShoppingItemFieldUtil {
 	* @param itemId the item ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching shopping item field, or <code>null</code> if a matching shopping item field could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.shopping.model.ShoppingItemField fetchByItemId_First(
 		long itemId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByItemId_First(itemId, orderByComparator);
 	}
 
@@ -206,13 +192,11 @@ public class ShoppingItemFieldUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching shopping item field
 	* @throws com.liferay.portlet.shopping.NoSuchItemFieldException if a matching shopping item field could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.shopping.model.ShoppingItemField findByItemId_Last(
 		long itemId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.shopping.NoSuchItemFieldException {
+		throws com.liferay.portlet.shopping.NoSuchItemFieldException {
 		return getPersistence().findByItemId_Last(itemId, orderByComparator);
 	}
 
@@ -222,12 +206,10 @@ public class ShoppingItemFieldUtil {
 	* @param itemId the item ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching shopping item field, or <code>null</code> if a matching shopping item field could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.shopping.model.ShoppingItemField fetchByItemId_Last(
 		long itemId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByItemId_Last(itemId, orderByComparator);
 	}
 
@@ -239,13 +221,11 @@ public class ShoppingItemFieldUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next shopping item field
 	* @throws com.liferay.portlet.shopping.NoSuchItemFieldException if a shopping item field with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.shopping.model.ShoppingItemField[] findByItemId_PrevAndNext(
 		long itemFieldId, long itemId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.shopping.NoSuchItemFieldException {
+		throws com.liferay.portlet.shopping.NoSuchItemFieldException {
 		return getPersistence()
 				   .findByItemId_PrevAndNext(itemFieldId, itemId,
 			orderByComparator);
@@ -255,10 +235,8 @@ public class ShoppingItemFieldUtil {
 	* Removes all the shopping item fields where itemId = &#63; from the database.
 	*
 	* @param itemId the item ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByItemId(long itemId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByItemId(long itemId) {
 		getPersistence().removeByItemId(itemId);
 	}
 
@@ -267,10 +245,8 @@ public class ShoppingItemFieldUtil {
 	*
 	* @param itemId the item ID
 	* @return the number of matching shopping item fields
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByItemId(long itemId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByItemId(long itemId) {
 		return getPersistence().countByItemId(itemId);
 	}
 
@@ -311,18 +287,15 @@ public class ShoppingItemFieldUtil {
 	* @param itemFieldId the primary key of the shopping item field
 	* @return the shopping item field that was removed
 	* @throws com.liferay.portlet.shopping.NoSuchItemFieldException if a shopping item field with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.shopping.model.ShoppingItemField remove(
 		long itemFieldId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.shopping.NoSuchItemFieldException {
+		throws com.liferay.portlet.shopping.NoSuchItemFieldException {
 		return getPersistence().remove(itemFieldId);
 	}
 
 	public static com.liferay.portlet.shopping.model.ShoppingItemField updateImpl(
-		com.liferay.portlet.shopping.model.ShoppingItemField shoppingItemField)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.shopping.model.ShoppingItemField shoppingItemField) {
 		return getPersistence().updateImpl(shoppingItemField);
 	}
 
@@ -332,12 +305,10 @@ public class ShoppingItemFieldUtil {
 	* @param itemFieldId the primary key of the shopping item field
 	* @return the shopping item field
 	* @throws com.liferay.portlet.shopping.NoSuchItemFieldException if a shopping item field with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.shopping.model.ShoppingItemField findByPrimaryKey(
 		long itemFieldId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.shopping.NoSuchItemFieldException {
+		throws com.liferay.portlet.shopping.NoSuchItemFieldException {
 		return getPersistence().findByPrimaryKey(itemFieldId);
 	}
 
@@ -346,11 +317,9 @@ public class ShoppingItemFieldUtil {
 	*
 	* @param itemFieldId the primary key of the shopping item field
 	* @return the shopping item field, or <code>null</code> if a shopping item field with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.shopping.model.ShoppingItemField fetchByPrimaryKey(
-		long itemFieldId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long itemFieldId) {
 		return getPersistence().fetchByPrimaryKey(itemFieldId);
 	}
 
@@ -358,10 +327,8 @@ public class ShoppingItemFieldUtil {
 	* Returns all the shopping item fields.
 	*
 	* @return the shopping item fields
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.portlet.shopping.model.ShoppingItemField> findAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static java.util.List<com.liferay.portlet.shopping.model.ShoppingItemField> findAll() {
 		return getPersistence().findAll();
 	}
 
@@ -375,11 +342,9 @@ public class ShoppingItemFieldUtil {
 	* @param start the lower bound of the range of shopping item fields
 	* @param end the upper bound of the range of shopping item fields (not inclusive)
 	* @return the range of shopping item fields
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.shopping.model.ShoppingItemField> findAll(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
@@ -394,22 +359,17 @@ public class ShoppingItemFieldUtil {
 	* @param end the upper bound of the range of shopping item fields (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of shopping item fields
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.shopping.model.ShoppingItemField> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
 	/**
 	* Removes all the shopping item fields from the database.
-	*
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeAll() {
 		getPersistence().removeAll();
 	}
 
@@ -417,10 +377,8 @@ public class ShoppingItemFieldUtil {
 	* Returns the number of shopping item fields.
 	*
 	* @return the number of shopping item fields
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countAll() {
 		return getPersistence().countAll();
 	}
 

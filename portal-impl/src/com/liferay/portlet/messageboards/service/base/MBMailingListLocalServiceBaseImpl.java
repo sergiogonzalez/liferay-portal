@@ -79,12 +79,10 @@ public abstract class MBMailingListLocalServiceBaseImpl
 	 *
 	 * @param mbMailingList the message boards mailing list
 	 * @return the message boards mailing list that was added
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public MBMailingList addMBMailingList(MBMailingList mbMailingList)
-		throws SystemException {
+	public MBMailingList addMBMailingList(MBMailingList mbMailingList) {
 		mbMailingList.setNew(true);
 
 		return mbMailingListPersistence.update(mbMailingList);
@@ -107,12 +105,11 @@ public abstract class MBMailingListLocalServiceBaseImpl
 	 * @param mailingListId the primary key of the message boards mailing list
 	 * @return the message boards mailing list that was removed
 	 * @throws PortalException if a message boards mailing list with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public MBMailingList deleteMBMailingList(long mailingListId)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return mbMailingListPersistence.remove(mailingListId);
 	}
 
@@ -121,12 +118,10 @@ public abstract class MBMailingListLocalServiceBaseImpl
 	 *
 	 * @param mbMailingList the message boards mailing list
 	 * @return the message boards mailing list that was removed
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public MBMailingList deleteMBMailingList(MBMailingList mbMailingList)
-		throws SystemException {
+	public MBMailingList deleteMBMailingList(MBMailingList mbMailingList) {
 		return mbMailingListPersistence.remove(mbMailingList);
 	}
 
@@ -143,12 +138,10 @@ public abstract class MBMailingListLocalServiceBaseImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery) {
 		return mbMailingListPersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -163,12 +156,10 @@ public abstract class MBMailingListLocalServiceBaseImpl
 	 * @param start the lower bound of the range of model instances
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
 		return mbMailingListPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end);
 	}
@@ -185,12 +176,11 @@ public abstract class MBMailingListLocalServiceBaseImpl
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
 	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		return mbMailingListPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
 	}
@@ -200,11 +190,9 @@ public abstract class MBMailingListLocalServiceBaseImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public long dynamicQueryCount(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return mbMailingListPersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
@@ -214,18 +202,16 @@ public abstract class MBMailingListLocalServiceBaseImpl
 	 * @param dynamicQuery the dynamic query
 	 * @param projection the projection to apply to the query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection) throws SystemException {
+		Projection projection) {
 		return mbMailingListPersistence.countWithDynamicQuery(dynamicQuery,
 			projection);
 	}
 
 	@Override
-	public MBMailingList fetchMBMailingList(long mailingListId)
-		throws SystemException {
+	public MBMailingList fetchMBMailingList(long mailingListId) {
 		return mbMailingListPersistence.fetchByPrimaryKey(mailingListId);
 	}
 
@@ -235,11 +221,10 @@ public abstract class MBMailingListLocalServiceBaseImpl
 	 * @param uuid the message boards mailing list's UUID
 	 * @param  companyId the primary key of the company
 	 * @return the matching message boards mailing list, or <code>null</code> if a matching message boards mailing list could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public MBMailingList fetchMBMailingListByUuidAndCompanyId(String uuid,
-		long companyId) throws SystemException {
+		long companyId) {
 		return mbMailingListPersistence.fetchByUuid_C_First(uuid, companyId,
 			null);
 	}
@@ -250,11 +235,10 @@ public abstract class MBMailingListLocalServiceBaseImpl
 	 * @param uuid the message boards mailing list's UUID
 	 * @param groupId the primary key of the group
 	 * @return the matching message boards mailing list, or <code>null</code> if a matching message boards mailing list could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public MBMailingList fetchMBMailingListByUuidAndGroupId(String uuid,
-		long groupId) throws SystemException {
+		long groupId) {
 		return mbMailingListPersistence.fetchByUUID_G(uuid, groupId);
 	}
 
@@ -264,17 +248,15 @@ public abstract class MBMailingListLocalServiceBaseImpl
 	 * @param mailingListId the primary key of the message boards mailing list
 	 * @return the message boards mailing list
 	 * @throws PortalException if a message boards mailing list with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public MBMailingList getMBMailingList(long mailingListId)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return mbMailingListPersistence.findByPrimaryKey(mailingListId);
 	}
 
 	@Override
-	public ActionableDynamicQuery getActionableDynamicQuery()
-		throws SystemException {
+	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.messageboards.service.MBMailingListLocalServiceUtil.getService());
@@ -287,8 +269,7 @@ public abstract class MBMailingListLocalServiceBaseImpl
 	}
 
 	protected void initActionableDynamicQuery(
-		ActionableDynamicQuery actionableDynamicQuery)
-		throws SystemException {
+		ActionableDynamicQuery actionableDynamicQuery) {
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.messageboards.service.MBMailingListLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(MBMailingList.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
@@ -298,11 +279,10 @@ public abstract class MBMailingListLocalServiceBaseImpl
 
 	@Override
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		final PortletDataContext portletDataContext) throws SystemException {
+		final PortletDataContext portletDataContext) {
 		final ExportActionableDynamicQuery exportActionableDynamicQuery = new ExportActionableDynamicQuery() {
 				@Override
-				public long performCount()
-					throws PortalException, SystemException {
+				public long performCount() throws PortalException {
 					ManifestSummary manifestSummary = portletDataContext.getManifestSummary();
 
 					StagedModelType stagedModelType = getStagedModelType();
@@ -338,9 +318,8 @@ public abstract class MBMailingListLocalServiceBaseImpl
 
 		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
 				@Override
-				@SuppressWarnings("unused")
 				public void performAction(Object object)
-					throws PortalException, SystemException {
+					throws PortalException {
 					MBMailingList stagedModel = (MBMailingList)object;
 
 					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
@@ -355,7 +334,7 @@ public abstract class MBMailingListLocalServiceBaseImpl
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return mbMailingListPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -366,11 +345,10 @@ public abstract class MBMailingListLocalServiceBaseImpl
 	 * @param  companyId the primary key of the company
 	 * @return the matching message boards mailing list
 	 * @throws PortalException if a matching message boards mailing list could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public MBMailingList getMBMailingListByUuidAndCompanyId(String uuid,
-		long companyId) throws PortalException, SystemException {
+		long companyId) throws PortalException {
 		return mbMailingListPersistence.findByUuid_C_First(uuid, companyId, null);
 	}
 
@@ -381,11 +359,10 @@ public abstract class MBMailingListLocalServiceBaseImpl
 	 * @param groupId the primary key of the group
 	 * @return the matching message boards mailing list
 	 * @throws PortalException if a matching message boards mailing list could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public MBMailingList getMBMailingListByUuidAndGroupId(String uuid,
-		long groupId) throws PortalException, SystemException {
+		long groupId) throws PortalException {
 		return mbMailingListPersistence.findByUUID_G(uuid, groupId);
 	}
 
@@ -399,11 +376,9 @@ public abstract class MBMailingListLocalServiceBaseImpl
 	 * @param start the lower bound of the range of message boards mailing lists
 	 * @param end the upper bound of the range of message boards mailing lists (not inclusive)
 	 * @return the range of message boards mailing lists
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<MBMailingList> getMBMailingLists(int start, int end)
-		throws SystemException {
+	public List<MBMailingList> getMBMailingLists(int start, int end) {
 		return mbMailingListPersistence.findAll(start, end);
 	}
 
@@ -411,10 +386,9 @@ public abstract class MBMailingListLocalServiceBaseImpl
 	 * Returns the number of message boards mailing lists.
 	 *
 	 * @return the number of message boards mailing lists
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int getMBMailingListsCount() throws SystemException {
+	public int getMBMailingListsCount() {
 		return mbMailingListPersistence.countAll();
 	}
 
@@ -423,12 +397,10 @@ public abstract class MBMailingListLocalServiceBaseImpl
 	 *
 	 * @param mbMailingList the message boards mailing list
 	 * @return the message boards mailing list that was updated
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public MBMailingList updateMBMailingList(MBMailingList mbMailingList)
-		throws SystemException {
+	public MBMailingList updateMBMailingList(MBMailingList mbMailingList) {
 		return mbMailingListPersistence.update(mbMailingList);
 	}
 
@@ -606,7 +578,7 @@ public abstract class MBMailingListLocalServiceBaseImpl
 	 *
 	 * @param sql the sql query
 	 */
-	protected void runSQL(String sql) throws SystemException {
+	protected void runSQL(String sql) {
 		try {
 			DataSource dataSource = mbMailingListPersistence.getDataSource();
 

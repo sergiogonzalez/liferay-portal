@@ -287,8 +287,7 @@ public class UserGroupGroupRoleWrapper implements UserGroupGroupRole,
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void persist() {
 		_userGroupGroupRole.persist();
 	}
 

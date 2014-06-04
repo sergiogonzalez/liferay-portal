@@ -17,7 +17,6 @@ package com.liferay.portal.model;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -110,9 +109,8 @@ public interface PasswordTrackerModel extends BaseModel<PasswordTracker>,
 	 * Returns the user uuid of this password tracker.
 	 *
 	 * @return the user uuid of this password tracker
-	 * @throws SystemException if a system exception occurred
 	 */
-	public String getUserUuid() throws SystemException;
+	public String getUserUuid();
 
 	/**
 	 * Sets the user uuid of this password tracker.

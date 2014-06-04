@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
@@ -115,10 +114,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 *
 	 * @param uuid the uuid
 	 * @return the matching organizations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Organization> findByUuid(String uuid) throws SystemException {
+	public List<Organization> findByUuid(String uuid) {
 		return findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -133,11 +131,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param start the lower bound of the range of organizations
 	 * @param end the upper bound of the range of organizations (not inclusive)
 	 * @return the range of matching organizations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Organization> findByUuid(String uuid, int start, int end)
-		throws SystemException {
+	public List<Organization> findByUuid(String uuid, int start, int end) {
 		return findByUuid(uuid, start, end, null);
 	}
 
@@ -153,11 +149,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param end the upper bound of the range of organizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching organizations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<Organization> findByUuid(String uuid, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -274,12 +269,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching organization
 	 * @throws com.liferay.portal.NoSuchOrganizationException if a matching organization could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Organization findByUuid_First(String uuid,
-		OrderByComparator orderByComparator)
-		throws NoSuchOrganizationException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchOrganizationException {
 		Organization organization = fetchByUuid_First(uuid, orderByComparator);
 
 		if (organization != null) {
@@ -304,11 +297,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching organization, or <code>null</code> if a matching organization could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Organization fetchByUuid_First(String uuid,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		List<Organization> list = findByUuid(uuid, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -325,12 +317,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching organization
 	 * @throws com.liferay.portal.NoSuchOrganizationException if a matching organization could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Organization findByUuid_Last(String uuid,
-		OrderByComparator orderByComparator)
-		throws NoSuchOrganizationException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchOrganizationException {
 		Organization organization = fetchByUuid_Last(uuid, orderByComparator);
 
 		if (organization != null) {
@@ -355,11 +345,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching organization, or <code>null</code> if a matching organization could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Organization fetchByUuid_Last(String uuid,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		int count = countByUuid(uuid);
 
 		if (count == 0) {
@@ -384,12 +373,11 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next organization
 	 * @throws com.liferay.portal.NoSuchOrganizationException if a organization with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Organization[] findByUuid_PrevAndNext(long organizationId,
 		String uuid, OrderByComparator orderByComparator)
-		throws NoSuchOrganizationException, SystemException {
+		throws NoSuchOrganizationException {
 		Organization organization = findByPrimaryKey(organizationId);
 
 		Session session = null;
@@ -541,11 +529,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 *
 	 * @param uuid the uuid
 	 * @return the matching organizations that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Organization> filterFindByUuid(String uuid)
-		throws SystemException {
+	public List<Organization> filterFindByUuid(String uuid) {
 		return filterFindByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -560,11 +546,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param start the lower bound of the range of organizations
 	 * @param end the upper bound of the range of organizations (not inclusive)
 	 * @return the range of matching organizations that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Organization> filterFindByUuid(String uuid, int start, int end)
-		throws SystemException {
+	public List<Organization> filterFindByUuid(String uuid, int start, int end) {
 		return filterFindByUuid(uuid, start, end, null);
 	}
 
@@ -580,11 +564,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param end the upper bound of the range of organizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching organizations that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<Organization> filterFindByUuid(String uuid, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByUuid(uuid, start, end, orderByComparator);
 		}
@@ -686,12 +669,11 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next organization
 	 * @throws com.liferay.portal.NoSuchOrganizationException if a organization with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Organization[] filterFindByUuid_PrevAndNext(long organizationId,
 		String uuid, OrderByComparator orderByComparator)
-		throws NoSuchOrganizationException, SystemException {
+		throws NoSuchOrganizationException {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByUuid_PrevAndNext(organizationId, uuid,
 				orderByComparator);
@@ -882,10 +864,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * Removes all the organizations where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByUuid(String uuid) throws SystemException {
+	public void removeByUuid(String uuid) {
 		for (Organization organization : findByUuid(uuid, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null)) {
 			remove(organization);
@@ -897,10 +878,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 *
 	 * @param uuid the uuid
 	 * @return the number of matching organizations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByUuid(String uuid) throws SystemException {
+	public int countByUuid(String uuid) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_UUID;
 
 		Object[] finderArgs = new Object[] { uuid };
@@ -964,10 +944,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 *
 	 * @param uuid the uuid
 	 * @return the number of matching organizations that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int filterCountByUuid(String uuid) throws SystemException {
+	public int filterCountByUuid(String uuid) {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return countByUuid(uuid);
 		}
@@ -1056,11 +1035,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @return the matching organizations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Organization> findByUuid_C(String uuid, long companyId)
-		throws SystemException {
+	public List<Organization> findByUuid_C(String uuid, long companyId) {
 		return findByUuid_C(uuid, companyId, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
@@ -1077,11 +1054,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param start the lower bound of the range of organizations
 	 * @param end the upper bound of the range of organizations (not inclusive)
 	 * @return the range of matching organizations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<Organization> findByUuid_C(String uuid, long companyId,
-		int start, int end) throws SystemException {
+		int start, int end) {
 		return findByUuid_C(uuid, companyId, start, end, null);
 	}
 
@@ -1098,12 +1074,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param end the upper bound of the range of organizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching organizations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<Organization> findByUuid_C(String uuid, long companyId,
-		int start, int end, OrderByComparator orderByComparator)
-		throws SystemException {
+		int start, int end, OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1230,12 +1204,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching organization
 	 * @throws com.liferay.portal.NoSuchOrganizationException if a matching organization could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Organization findByUuid_C_First(String uuid, long companyId,
-		OrderByComparator orderByComparator)
-		throws NoSuchOrganizationException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchOrganizationException {
 		Organization organization = fetchByUuid_C_First(uuid, companyId,
 				orderByComparator);
 
@@ -1265,11 +1237,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching organization, or <code>null</code> if a matching organization could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Organization fetchByUuid_C_First(String uuid, long companyId,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		List<Organization> list = findByUuid_C(uuid, companyId, 0, 1,
 				orderByComparator);
 
@@ -1288,12 +1259,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching organization
 	 * @throws com.liferay.portal.NoSuchOrganizationException if a matching organization could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Organization findByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator)
-		throws NoSuchOrganizationException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchOrganizationException {
 		Organization organization = fetchByUuid_C_Last(uuid, companyId,
 				orderByComparator);
 
@@ -1323,11 +1292,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching organization, or <code>null</code> if a matching organization could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Organization fetchByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		int count = countByUuid_C(uuid, companyId);
 
 		if (count == 0) {
@@ -1353,12 +1321,11 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next organization
 	 * @throws com.liferay.portal.NoSuchOrganizationException if a organization with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Organization[] findByUuid_C_PrevAndNext(long organizationId,
 		String uuid, long companyId, OrderByComparator orderByComparator)
-		throws NoSuchOrganizationException, SystemException {
+		throws NoSuchOrganizationException {
 		Organization organization = findByPrimaryKey(organizationId);
 
 		Session session = null;
@@ -1515,11 +1482,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @return the matching organizations that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Organization> filterFindByUuid_C(String uuid, long companyId)
-		throws SystemException {
+	public List<Organization> filterFindByUuid_C(String uuid, long companyId) {
 		return filterFindByUuid_C(uuid, companyId, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
@@ -1536,11 +1501,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param start the lower bound of the range of organizations
 	 * @param end the upper bound of the range of organizations (not inclusive)
 	 * @return the range of matching organizations that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<Organization> filterFindByUuid_C(String uuid, long companyId,
-		int start, int end) throws SystemException {
+		int start, int end) {
 		return filterFindByUuid_C(uuid, companyId, start, end, null);
 	}
 
@@ -1557,12 +1521,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param end the upper bound of the range of organizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching organizations that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<Organization> filterFindByUuid_C(String uuid, long companyId,
-		int start, int end, OrderByComparator orderByComparator)
-		throws SystemException {
+		int start, int end, OrderByComparator orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByUuid_C(uuid, companyId, start, end, orderByComparator);
 		}
@@ -1669,12 +1631,11 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next organization
 	 * @throws com.liferay.portal.NoSuchOrganizationException if a organization with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Organization[] filterFindByUuid_C_PrevAndNext(long organizationId,
 		String uuid, long companyId, OrderByComparator orderByComparator)
-		throws NoSuchOrganizationException, SystemException {
+		throws NoSuchOrganizationException {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByUuid_C_PrevAndNext(organizationId, uuid, companyId,
 				orderByComparator);
@@ -1870,11 +1831,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByUuid_C(String uuid, long companyId)
-		throws SystemException {
+	public void removeByUuid_C(String uuid, long companyId) {
 		for (Organization organization : findByUuid_C(uuid, companyId,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(organization);
@@ -1887,11 +1846,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @return the number of matching organizations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByUuid_C(String uuid, long companyId)
-		throws SystemException {
+	public int countByUuid_C(String uuid, long companyId) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_UUID_C;
 
 		Object[] finderArgs = new Object[] { uuid, companyId };
@@ -1960,11 +1917,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @return the number of matching organizations that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int filterCountByUuid_C(String uuid, long companyId)
-		throws SystemException {
+	public int filterCountByUuid_C(String uuid, long companyId) {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return countByUuid_C(uuid, companyId);
 		}
@@ -2057,11 +2012,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 *
 	 * @param companyId the company ID
 	 * @return the matching organizations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Organization> findByCompanyId(long companyId)
-		throws SystemException {
+	public List<Organization> findByCompanyId(long companyId) {
 		return findByCompanyId(companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			null);
 	}
@@ -2077,11 +2030,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param start the lower bound of the range of organizations
 	 * @param end the upper bound of the range of organizations (not inclusive)
 	 * @return the range of matching organizations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Organization> findByCompanyId(long companyId, int start, int end)
-		throws SystemException {
+	public List<Organization> findByCompanyId(long companyId, int start, int end) {
 		return findByCompanyId(companyId, start, end, null);
 	}
 
@@ -2097,11 +2048,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param end the upper bound of the range of organizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching organizations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<Organization> findByCompanyId(long companyId, int start,
-		int end, OrderByComparator orderByComparator) throws SystemException {
+		int end, OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2204,12 +2154,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching organization
 	 * @throws com.liferay.portal.NoSuchOrganizationException if a matching organization could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Organization findByCompanyId_First(long companyId,
-		OrderByComparator orderByComparator)
-		throws NoSuchOrganizationException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchOrganizationException {
 		Organization organization = fetchByCompanyId_First(companyId,
 				orderByComparator);
 
@@ -2235,11 +2183,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching organization, or <code>null</code> if a matching organization could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Organization fetchByCompanyId_First(long companyId,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		List<Organization> list = findByCompanyId(companyId, 0, 1,
 				orderByComparator);
 
@@ -2257,12 +2204,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching organization
 	 * @throws com.liferay.portal.NoSuchOrganizationException if a matching organization could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Organization findByCompanyId_Last(long companyId,
-		OrderByComparator orderByComparator)
-		throws NoSuchOrganizationException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchOrganizationException {
 		Organization organization = fetchByCompanyId_Last(companyId,
 				orderByComparator);
 
@@ -2288,11 +2233,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching organization, or <code>null</code> if a matching organization could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Organization fetchByCompanyId_Last(long companyId,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		int count = countByCompanyId(companyId);
 
 		if (count == 0) {
@@ -2317,12 +2261,11 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next organization
 	 * @throws com.liferay.portal.NoSuchOrganizationException if a organization with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Organization[] findByCompanyId_PrevAndNext(long organizationId,
 		long companyId, OrderByComparator orderByComparator)
-		throws NoSuchOrganizationException, SystemException {
+		throws NoSuchOrganizationException {
 		Organization organization = findByPrimaryKey(organizationId);
 
 		Session session = null;
@@ -2460,11 +2403,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 *
 	 * @param companyId the company ID
 	 * @return the matching organizations that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Organization> filterFindByCompanyId(long companyId)
-		throws SystemException {
+	public List<Organization> filterFindByCompanyId(long companyId) {
 		return filterFindByCompanyId(companyId, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
@@ -2480,11 +2421,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param start the lower bound of the range of organizations
 	 * @param end the upper bound of the range of organizations (not inclusive)
 	 * @return the range of matching organizations that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<Organization> filterFindByCompanyId(long companyId, int start,
-		int end) throws SystemException {
+		int end) {
 		return filterFindByCompanyId(companyId, start, end, null);
 	}
 
@@ -2500,11 +2440,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param end the upper bound of the range of organizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching organizations that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<Organization> filterFindByCompanyId(long companyId, int start,
-		int end, OrderByComparator orderByComparator) throws SystemException {
+		int end, OrderByComparator orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByCompanyId(companyId, start, end, orderByComparator);
 		}
@@ -2592,12 +2531,11 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next organization
 	 * @throws com.liferay.portal.NoSuchOrganizationException if a organization with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Organization[] filterFindByCompanyId_PrevAndNext(
 		long organizationId, long companyId, OrderByComparator orderByComparator)
-		throws NoSuchOrganizationException, SystemException {
+		throws NoSuchOrganizationException {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByCompanyId_PrevAndNext(organizationId, companyId,
 				orderByComparator);
@@ -2774,10 +2712,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * Removes all the organizations where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByCompanyId(long companyId) throws SystemException {
+	public void removeByCompanyId(long companyId) {
 		for (Organization organization : findByCompanyId(companyId,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(organization);
@@ -2789,10 +2726,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 *
 	 * @param companyId the company ID
 	 * @return the number of matching organizations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByCompanyId(long companyId) throws SystemException {
+	public int countByCompanyId(long companyId) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_COMPANYID;
 
 		Object[] finderArgs = new Object[] { companyId };
@@ -2842,10 +2778,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 *
 	 * @param companyId the company ID
 	 * @return the number of matching organizations that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int filterCountByCompanyId(long companyId) throws SystemException {
+	public int filterCountByCompanyId(long companyId) {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return countByCompanyId(companyId);
 		}
@@ -2914,11 +2849,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 *
 	 * @param companyId the company ID
 	 * @return the matching organizations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Organization> findByLocations(long companyId)
-		throws SystemException {
+	public List<Organization> findByLocations(long companyId) {
 		return findByLocations(companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			null);
 	}
@@ -2934,11 +2867,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param start the lower bound of the range of organizations
 	 * @param end the upper bound of the range of organizations (not inclusive)
 	 * @return the range of matching organizations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Organization> findByLocations(long companyId, int start, int end)
-		throws SystemException {
+	public List<Organization> findByLocations(long companyId, int start, int end) {
 		return findByLocations(companyId, start, end, null);
 	}
 
@@ -2954,11 +2885,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param end the upper bound of the range of organizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching organizations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<Organization> findByLocations(long companyId, int start,
-		int end, OrderByComparator orderByComparator) throws SystemException {
+		int end, OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -3061,12 +2991,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching organization
 	 * @throws com.liferay.portal.NoSuchOrganizationException if a matching organization could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Organization findByLocations_First(long companyId,
-		OrderByComparator orderByComparator)
-		throws NoSuchOrganizationException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchOrganizationException {
 		Organization organization = fetchByLocations_First(companyId,
 				orderByComparator);
 
@@ -3092,11 +3020,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching organization, or <code>null</code> if a matching organization could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Organization fetchByLocations_First(long companyId,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		List<Organization> list = findByLocations(companyId, 0, 1,
 				orderByComparator);
 
@@ -3114,12 +3041,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching organization
 	 * @throws com.liferay.portal.NoSuchOrganizationException if a matching organization could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Organization findByLocations_Last(long companyId,
-		OrderByComparator orderByComparator)
-		throws NoSuchOrganizationException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchOrganizationException {
 		Organization organization = fetchByLocations_Last(companyId,
 				orderByComparator);
 
@@ -3145,11 +3070,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching organization, or <code>null</code> if a matching organization could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Organization fetchByLocations_Last(long companyId,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		int count = countByLocations(companyId);
 
 		if (count == 0) {
@@ -3174,12 +3098,11 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next organization
 	 * @throws com.liferay.portal.NoSuchOrganizationException if a organization with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Organization[] findByLocations_PrevAndNext(long organizationId,
 		long companyId, OrderByComparator orderByComparator)
-		throws NoSuchOrganizationException, SystemException {
+		throws NoSuchOrganizationException {
 		Organization organization = findByPrimaryKey(organizationId);
 
 		Session session = null;
@@ -3317,11 +3240,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 *
 	 * @param companyId the company ID
 	 * @return the matching organizations that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Organization> filterFindByLocations(long companyId)
-		throws SystemException {
+	public List<Organization> filterFindByLocations(long companyId) {
 		return filterFindByLocations(companyId, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
@@ -3337,11 +3258,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param start the lower bound of the range of organizations
 	 * @param end the upper bound of the range of organizations (not inclusive)
 	 * @return the range of matching organizations that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<Organization> filterFindByLocations(long companyId, int start,
-		int end) throws SystemException {
+		int end) {
 		return filterFindByLocations(companyId, start, end, null);
 	}
 
@@ -3357,11 +3277,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param end the upper bound of the range of organizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching organizations that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<Organization> filterFindByLocations(long companyId, int start,
-		int end, OrderByComparator orderByComparator) throws SystemException {
+		int end, OrderByComparator orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByLocations(companyId, start, end, orderByComparator);
 		}
@@ -3449,12 +3368,11 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next organization
 	 * @throws com.liferay.portal.NoSuchOrganizationException if a organization with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Organization[] filterFindByLocations_PrevAndNext(
 		long organizationId, long companyId, OrderByComparator orderByComparator)
-		throws NoSuchOrganizationException, SystemException {
+		throws NoSuchOrganizationException {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByLocations_PrevAndNext(organizationId, companyId,
 				orderByComparator);
@@ -3631,10 +3549,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * Removes all the organizations where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByLocations(long companyId) throws SystemException {
+	public void removeByLocations(long companyId) {
 		for (Organization organization : findByLocations(companyId,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(organization);
@@ -3646,10 +3563,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 *
 	 * @param companyId the company ID
 	 * @return the number of matching organizations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByLocations(long companyId) throws SystemException {
+	public int countByLocations(long companyId) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_LOCATIONS;
 
 		Object[] finderArgs = new Object[] { companyId };
@@ -3699,10 +3615,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 *
 	 * @param companyId the company ID
 	 * @return the number of matching organizations that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int filterCountByLocations(long companyId) throws SystemException {
+	public int filterCountByLocations(long companyId) {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return countByLocations(companyId);
 		}
@@ -3771,11 +3686,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param companyId the company ID
 	 * @param parentOrganizationId the parent organization ID
 	 * @return the matching organizations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<Organization> findByC_P(long companyId,
-		long parentOrganizationId) throws SystemException {
+		long parentOrganizationId) {
 		return findByC_P(companyId, parentOrganizationId, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
@@ -3792,12 +3706,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param start the lower bound of the range of organizations
 	 * @param end the upper bound of the range of organizations (not inclusive)
 	 * @return the range of matching organizations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<Organization> findByC_P(long companyId,
-		long parentOrganizationId, int start, int end)
-		throws SystemException {
+		long parentOrganizationId, int start, int end) {
 		return findByC_P(companyId, parentOrganizationId, start, end, null);
 	}
 
@@ -3814,12 +3726,11 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param end the upper bound of the range of organizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching organizations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<Organization> findByC_P(long companyId,
 		long parentOrganizationId, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -3932,12 +3843,11 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching organization
 	 * @throws com.liferay.portal.NoSuchOrganizationException if a matching organization could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Organization findByC_P_First(long companyId,
 		long parentOrganizationId, OrderByComparator orderByComparator)
-		throws NoSuchOrganizationException, SystemException {
+		throws NoSuchOrganizationException {
 		Organization organization = fetchByC_P_First(companyId,
 				parentOrganizationId, orderByComparator);
 
@@ -3967,12 +3877,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param parentOrganizationId the parent organization ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching organization, or <code>null</code> if a matching organization could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Organization fetchByC_P_First(long companyId,
-		long parentOrganizationId, OrderByComparator orderByComparator)
-		throws SystemException {
+		long parentOrganizationId, OrderByComparator orderByComparator) {
 		List<Organization> list = findByC_P(companyId, parentOrganizationId, 0,
 				1, orderByComparator);
 
@@ -3991,12 +3899,11 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching organization
 	 * @throws com.liferay.portal.NoSuchOrganizationException if a matching organization could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Organization findByC_P_Last(long companyId,
 		long parentOrganizationId, OrderByComparator orderByComparator)
-		throws NoSuchOrganizationException, SystemException {
+		throws NoSuchOrganizationException {
 		Organization organization = fetchByC_P_Last(companyId,
 				parentOrganizationId, orderByComparator);
 
@@ -4026,12 +3933,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param parentOrganizationId the parent organization ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching organization, or <code>null</code> if a matching organization could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Organization fetchByC_P_Last(long companyId,
-		long parentOrganizationId, OrderByComparator orderByComparator)
-		throws SystemException {
+		long parentOrganizationId, OrderByComparator orderByComparator) {
 		int count = countByC_P(companyId, parentOrganizationId);
 
 		if (count == 0) {
@@ -4057,13 +3962,11 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next organization
 	 * @throws com.liferay.portal.NoSuchOrganizationException if a organization with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Organization[] findByC_P_PrevAndNext(long organizationId,
 		long companyId, long parentOrganizationId,
-		OrderByComparator orderByComparator)
-		throws NoSuchOrganizationException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchOrganizationException {
 		Organization organization = findByPrimaryKey(organizationId);
 
 		Session session = null;
@@ -4206,11 +4109,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param companyId the company ID
 	 * @param parentOrganizationId the parent organization ID
 	 * @return the matching organizations that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<Organization> filterFindByC_P(long companyId,
-		long parentOrganizationId) throws SystemException {
+		long parentOrganizationId) {
 		return filterFindByC_P(companyId, parentOrganizationId,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
@@ -4227,12 +4129,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param start the lower bound of the range of organizations
 	 * @param end the upper bound of the range of organizations (not inclusive)
 	 * @return the range of matching organizations that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<Organization> filterFindByC_P(long companyId,
-		long parentOrganizationId, int start, int end)
-		throws SystemException {
+		long parentOrganizationId, int start, int end) {
 		return filterFindByC_P(companyId, parentOrganizationId, start, end, null);
 	}
 
@@ -4249,12 +4149,11 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param end the upper bound of the range of organizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching organizations that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<Organization> filterFindByC_P(long companyId,
 		long parentOrganizationId, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByC_P(companyId, parentOrganizationId, start, end,
 				orderByComparator);
@@ -4348,13 +4247,11 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next organization
 	 * @throws com.liferay.portal.NoSuchOrganizationException if a organization with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Organization[] filterFindByC_P_PrevAndNext(long organizationId,
 		long companyId, long parentOrganizationId,
-		OrderByComparator orderByComparator)
-		throws NoSuchOrganizationException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchOrganizationException {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByC_P_PrevAndNext(organizationId, companyId,
 				parentOrganizationId, orderByComparator);
@@ -4536,11 +4433,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 *
 	 * @param companyId the company ID
 	 * @param parentOrganizationId the parent organization ID
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByC_P(long companyId, long parentOrganizationId)
-		throws SystemException {
+	public void removeByC_P(long companyId, long parentOrganizationId) {
 		for (Organization organization : findByC_P(companyId,
 				parentOrganizationId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(organization);
@@ -4553,11 +4448,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param companyId the company ID
 	 * @param parentOrganizationId the parent organization ID
 	 * @return the number of matching organizations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByC_P(long companyId, long parentOrganizationId)
-		throws SystemException {
+	public int countByC_P(long companyId, long parentOrganizationId) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_P;
 
 		Object[] finderArgs = new Object[] { companyId, parentOrganizationId };
@@ -4612,11 +4505,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param companyId the company ID
 	 * @param parentOrganizationId the parent organization ID
 	 * @return the number of matching organizations that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int filterCountByC_P(long companyId, long parentOrganizationId)
-		throws SystemException {
+	public int filterCountByC_P(long companyId, long parentOrganizationId) {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return countByC_P(companyId, parentOrganizationId);
 		}
@@ -4683,11 +4574,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param companyId the company ID
 	 * @param treePath the tree path
 	 * @return the matching organizations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Organization> findByC_T(long companyId, String treePath)
-		throws SystemException {
+	public List<Organization> findByC_T(long companyId, String treePath) {
 		return findByC_T(companyId, treePath, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
@@ -4704,11 +4593,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param start the lower bound of the range of organizations
 	 * @param end the upper bound of the range of organizations (not inclusive)
 	 * @return the range of matching organizations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<Organization> findByC_T(long companyId, String treePath,
-		int start, int end) throws SystemException {
+		int start, int end) {
 		return findByC_T(companyId, treePath, start, end, null);
 	}
 
@@ -4725,12 +4613,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param end the upper bound of the range of organizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching organizations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<Organization> findByC_T(long companyId, String treePath,
-		int start, int end, OrderByComparator orderByComparator)
-		throws SystemException {
+		int start, int end, OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -4852,12 +4738,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching organization
 	 * @throws com.liferay.portal.NoSuchOrganizationException if a matching organization could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Organization findByC_T_First(long companyId, String treePath,
-		OrderByComparator orderByComparator)
-		throws NoSuchOrganizationException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchOrganizationException {
 		Organization organization = fetchByC_T_First(companyId, treePath,
 				orderByComparator);
 
@@ -4887,11 +4771,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param treePath the tree path
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching organization, or <code>null</code> if a matching organization could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Organization fetchByC_T_First(long companyId, String treePath,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		List<Organization> list = findByC_T(companyId, treePath, 0, 1,
 				orderByComparator);
 
@@ -4910,12 +4793,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching organization
 	 * @throws com.liferay.portal.NoSuchOrganizationException if a matching organization could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Organization findByC_T_Last(long companyId, String treePath,
-		OrderByComparator orderByComparator)
-		throws NoSuchOrganizationException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchOrganizationException {
 		Organization organization = fetchByC_T_Last(companyId, treePath,
 				orderByComparator);
 
@@ -4945,11 +4826,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param treePath the tree path
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching organization, or <code>null</code> if a matching organization could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Organization fetchByC_T_Last(long companyId, String treePath,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		int count = countByC_T(companyId, treePath);
 
 		if (count == 0) {
@@ -4975,12 +4855,11 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next organization
 	 * @throws com.liferay.portal.NoSuchOrganizationException if a organization with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Organization[] findByC_T_PrevAndNext(long organizationId,
 		long companyId, String treePath, OrderByComparator orderByComparator)
-		throws NoSuchOrganizationException, SystemException {
+		throws NoSuchOrganizationException {
 		Organization organization = findByPrimaryKey(organizationId);
 
 		Session session = null;
@@ -5137,11 +5016,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param companyId the company ID
 	 * @param treePath the tree path
 	 * @return the matching organizations that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Organization> filterFindByC_T(long companyId, String treePath)
-		throws SystemException {
+	public List<Organization> filterFindByC_T(long companyId, String treePath) {
 		return filterFindByC_T(companyId, treePath, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
@@ -5158,11 +5035,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param start the lower bound of the range of organizations
 	 * @param end the upper bound of the range of organizations (not inclusive)
 	 * @return the range of matching organizations that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<Organization> filterFindByC_T(long companyId, String treePath,
-		int start, int end) throws SystemException {
+		int start, int end) {
 		return filterFindByC_T(companyId, treePath, start, end, null);
 	}
 
@@ -5179,12 +5055,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param end the upper bound of the range of organizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching organizations that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<Organization> filterFindByC_T(long companyId, String treePath,
-		int start, int end, OrderByComparator orderByComparator)
-		throws SystemException {
+		int start, int end, OrderByComparator orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByC_T(companyId, treePath, start, end, orderByComparator);
 		}
@@ -5291,12 +5165,11 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next organization
 	 * @throws com.liferay.portal.NoSuchOrganizationException if a organization with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Organization[] filterFindByC_T_PrevAndNext(long organizationId,
 		long companyId, String treePath, OrderByComparator orderByComparator)
-		throws NoSuchOrganizationException, SystemException {
+		throws NoSuchOrganizationException {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByC_T_PrevAndNext(organizationId, companyId, treePath,
 				orderByComparator);
@@ -5492,11 +5365,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 *
 	 * @param companyId the company ID
 	 * @param treePath the tree path
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByC_T(long companyId, String treePath)
-		throws SystemException {
+	public void removeByC_T(long companyId, String treePath) {
 		for (Organization organization : findByC_T(companyId, treePath,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(organization);
@@ -5509,11 +5380,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param companyId the company ID
 	 * @param treePath the tree path
 	 * @return the number of matching organizations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByC_T(long companyId, String treePath)
-		throws SystemException {
+	public int countByC_T(long companyId, String treePath) {
 		FinderPath finderPath = FINDER_PATH_WITH_PAGINATION_COUNT_BY_C_T;
 
 		Object[] finderArgs = new Object[] { companyId, treePath };
@@ -5582,11 +5451,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param companyId the company ID
 	 * @param treePath the tree path
 	 * @return the number of matching organizations that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int filterCountByC_T(long companyId, String treePath)
-		throws SystemException {
+	public int filterCountByC_T(long companyId, String treePath) {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return countByC_T(companyId, treePath);
 		}
@@ -5667,11 +5534,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param name the name
 	 * @return the matching organization
 	 * @throws com.liferay.portal.NoSuchOrganizationException if a matching organization could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Organization findByC_N(long companyId, String name)
-		throws NoSuchOrganizationException, SystemException {
+		throws NoSuchOrganizationException {
 		Organization organization = fetchByC_N(companyId, name);
 
 		if (organization == null) {
@@ -5703,11 +5569,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param companyId the company ID
 	 * @param name the name
 	 * @return the matching organization, or <code>null</code> if a matching organization could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Organization fetchByC_N(long companyId, String name)
-		throws SystemException {
+	public Organization fetchByC_N(long companyId, String name) {
 		return fetchByC_N(companyId, name, true);
 	}
 
@@ -5718,11 +5582,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param name the name
 	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching organization, or <code>null</code> if a matching organization could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Organization fetchByC_N(long companyId, String name,
-		boolean retrieveFromCache) throws SystemException {
+		boolean retrieveFromCache) {
 		Object[] finderArgs = new Object[] { companyId, name };
 
 		Object result = null;
@@ -5825,11 +5688,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param companyId the company ID
 	 * @param name the name
 	 * @return the organization that was removed
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Organization removeByC_N(long companyId, String name)
-		throws NoSuchOrganizationException, SystemException {
+		throws NoSuchOrganizationException {
 		Organization organization = findByC_N(companyId, name);
 
 		return remove(organization);
@@ -5841,11 +5703,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param companyId the company ID
 	 * @param name the name
 	 * @return the number of matching organizations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByC_N(long companyId, String name)
-		throws SystemException {
+	public int countByC_N(long companyId, String name) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_N;
 
 		Object[] finderArgs = new Object[] { companyId, name };
@@ -5935,11 +5795,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param companyId the company ID
 	 * @param parentOrganizationId the parent organization ID
 	 * @return the matching organizations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<Organization> findByO_C_P(long organizationId, long companyId,
-		long parentOrganizationId) throws SystemException {
+		long parentOrganizationId) {
 		return findByO_C_P(organizationId, companyId, parentOrganizationId,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
@@ -5957,12 +5816,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param start the lower bound of the range of organizations
 	 * @param end the upper bound of the range of organizations (not inclusive)
 	 * @return the range of matching organizations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<Organization> findByO_C_P(long organizationId, long companyId,
-		long parentOrganizationId, int start, int end)
-		throws SystemException {
+		long parentOrganizationId, int start, int end) {
 		return findByO_C_P(organizationId, companyId, parentOrganizationId,
 			start, end, null);
 	}
@@ -5981,12 +5838,11 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param end the upper bound of the range of organizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching organizations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<Organization> findByO_C_P(long organizationId, long companyId,
 		long parentOrganizationId, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -6097,12 +5953,11 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching organization
 	 * @throws com.liferay.portal.NoSuchOrganizationException if a matching organization could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Organization findByO_C_P_First(long organizationId, long companyId,
 		long parentOrganizationId, OrderByComparator orderByComparator)
-		throws NoSuchOrganizationException, SystemException {
+		throws NoSuchOrganizationException {
 		Organization organization = fetchByO_C_P_First(organizationId,
 				companyId, parentOrganizationId, orderByComparator);
 
@@ -6136,12 +5991,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param parentOrganizationId the parent organization ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching organization, or <code>null</code> if a matching organization could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Organization fetchByO_C_P_First(long organizationId, long companyId,
-		long parentOrganizationId, OrderByComparator orderByComparator)
-		throws SystemException {
+		long parentOrganizationId, OrderByComparator orderByComparator) {
 		List<Organization> list = findByO_C_P(organizationId, companyId,
 				parentOrganizationId, 0, 1, orderByComparator);
 
@@ -6161,12 +6014,11 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching organization
 	 * @throws com.liferay.portal.NoSuchOrganizationException if a matching organization could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Organization findByO_C_P_Last(long organizationId, long companyId,
 		long parentOrganizationId, OrderByComparator orderByComparator)
-		throws NoSuchOrganizationException, SystemException {
+		throws NoSuchOrganizationException {
 		Organization organization = fetchByO_C_P_Last(organizationId,
 				companyId, parentOrganizationId, orderByComparator);
 
@@ -6200,12 +6052,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param parentOrganizationId the parent organization ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching organization, or <code>null</code> if a matching organization could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Organization fetchByO_C_P_Last(long organizationId, long companyId,
-		long parentOrganizationId, OrderByComparator orderByComparator)
-		throws SystemException {
+		long parentOrganizationId, OrderByComparator orderByComparator) {
 		int count = countByO_C_P(organizationId, companyId, parentOrganizationId);
 
 		if (count == 0) {
@@ -6229,11 +6079,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param companyId the company ID
 	 * @param parentOrganizationId the parent organization ID
 	 * @return the matching organizations that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<Organization> filterFindByO_C_P(long organizationId,
-		long companyId, long parentOrganizationId) throws SystemException {
+		long companyId, long parentOrganizationId) {
 		return filterFindByO_C_P(organizationId, companyId,
 			parentOrganizationId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
@@ -6251,12 +6100,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param start the lower bound of the range of organizations
 	 * @param end the upper bound of the range of organizations (not inclusive)
 	 * @return the range of matching organizations that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<Organization> filterFindByO_C_P(long organizationId,
-		long companyId, long parentOrganizationId, int start, int end)
-		throws SystemException {
+		long companyId, long parentOrganizationId, int start, int end) {
 		return filterFindByO_C_P(organizationId, companyId,
 			parentOrganizationId, start, end, null);
 	}
@@ -6275,12 +6122,11 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param end the upper bound of the range of organizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching organizations that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<Organization> filterFindByO_C_P(long organizationId,
 		long companyId, long parentOrganizationId, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByO_C_P(organizationId, companyId, parentOrganizationId,
 				start, end, orderByComparator);
@@ -6375,11 +6221,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param organizationId the organization ID
 	 * @param companyId the company ID
 	 * @param parentOrganizationId the parent organization ID
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public void removeByO_C_P(long organizationId, long companyId,
-		long parentOrganizationId) throws SystemException {
+		long parentOrganizationId) {
 		for (Organization organization : findByO_C_P(organizationId, companyId,
 				parentOrganizationId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(organization);
@@ -6393,11 +6238,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param companyId the company ID
 	 * @param parentOrganizationId the parent organization ID
 	 * @return the number of matching organizations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public int countByO_C_P(long organizationId, long companyId,
-		long parentOrganizationId) throws SystemException {
+		long parentOrganizationId) {
 		FinderPath finderPath = FINDER_PATH_WITH_PAGINATION_COUNT_BY_O_C_P;
 
 		Object[] finderArgs = new Object[] {
@@ -6459,11 +6303,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param companyId the company ID
 	 * @param parentOrganizationId the parent organization ID
 	 * @return the number of matching organizations that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public int filterCountByO_C_P(long organizationId, long companyId,
-		long parentOrganizationId) throws SystemException {
+		long parentOrganizationId) {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return countByO_C_P(organizationId, companyId, parentOrganizationId);
 		}
@@ -6683,11 +6526,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param organizationId the primary key of the organization
 	 * @return the organization that was removed
 	 * @throws com.liferay.portal.NoSuchOrganizationException if a organization with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Organization remove(long organizationId)
-		throws NoSuchOrganizationException, SystemException {
+		throws NoSuchOrganizationException {
 		return remove((Serializable)organizationId);
 	}
 
@@ -6697,11 +6539,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param primaryKey the primary key of the organization
 	 * @return the organization that was removed
 	 * @throws com.liferay.portal.NoSuchOrganizationException if a organization with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Organization remove(Serializable primaryKey)
-		throws NoSuchOrganizationException, SystemException {
+		throws NoSuchOrganizationException {
 		Session session = null;
 
 		try {
@@ -6733,8 +6574,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	}
 
 	@Override
-	protected Organization removeImpl(Organization organization)
-		throws SystemException {
+	protected Organization removeImpl(Organization organization) {
 		organization = toUnwrappedModel(organization);
 
 		organizationToGroupTableMapper.deleteLeftPrimaryKeyTableMappings(organization.getPrimaryKey());
@@ -6771,8 +6611,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 
 	@Override
 	public Organization updateImpl(
-		com.liferay.portal.model.Organization organization)
-		throws SystemException {
+		com.liferay.portal.model.Organization organization) {
 		organization = toUnwrappedModel(organization);
 
 		boolean isNew = organization.isNew();
@@ -6961,11 +6800,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param primaryKey the primary key of the organization
 	 * @return the organization
 	 * @throws com.liferay.portal.NoSuchOrganizationException if a organization with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Organization findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchOrganizationException, SystemException {
+		throws NoSuchOrganizationException {
 		Organization organization = fetchByPrimaryKey(primaryKey);
 
 		if (organization == null) {
@@ -6986,11 +6824,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param organizationId the primary key of the organization
 	 * @return the organization
 	 * @throws com.liferay.portal.NoSuchOrganizationException if a organization with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Organization findByPrimaryKey(long organizationId)
-		throws NoSuchOrganizationException, SystemException {
+		throws NoSuchOrganizationException {
 		return findByPrimaryKey((Serializable)organizationId);
 	}
 
@@ -6999,11 +6836,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 *
 	 * @param primaryKey the primary key of the organization
 	 * @return the organization, or <code>null</code> if a organization with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Organization fetchByPrimaryKey(Serializable primaryKey)
-		throws SystemException {
+	public Organization fetchByPrimaryKey(Serializable primaryKey) {
 		Organization organization = (Organization)EntityCacheUtil.getResult(OrganizationModelImpl.ENTITY_CACHE_ENABLED,
 				OrganizationImpl.class, primaryKey);
 
@@ -7047,11 +6882,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 *
 	 * @param organizationId the primary key of the organization
 	 * @return the organization, or <code>null</code> if a organization with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Organization fetchByPrimaryKey(long organizationId)
-		throws SystemException {
+	public Organization fetchByPrimaryKey(long organizationId) {
 		return fetchByPrimaryKey((Serializable)organizationId);
 	}
 
@@ -7059,10 +6892,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * Returns all the organizations.
 	 *
 	 * @return the organizations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Organization> findAll() throws SystemException {
+	public List<Organization> findAll() {
 		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -7076,11 +6908,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param start the lower bound of the range of organizations
 	 * @param end the upper bound of the range of organizations (not inclusive)
 	 * @return the range of organizations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Organization> findAll(int start, int end)
-		throws SystemException {
+	public List<Organization> findAll(int start, int end) {
 		return findAll(start, end, null);
 	}
 
@@ -7095,11 +6925,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param end the upper bound of the range of organizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of organizations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<Organization> findAll(int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -7181,10 +7010,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	/**
 	 * Removes all the organizations from the database.
 	 *
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeAll() throws SystemException {
+	public void removeAll() {
 		for (Organization organization : findAll()) {
 			remove(organization);
 		}
@@ -7194,10 +7022,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * Returns the number of organizations.
 	 *
 	 * @return the number of organizations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countAll() throws SystemException {
+	public int countAll() {
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
 				FINDER_ARGS_EMPTY, this);
 
@@ -7233,10 +7060,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 *
 	 * @param pk the primary key of the organization
 	 * @return long[] of the primaryKeys of groups associated with the organization
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public long[] getGroupPrimaryKeys(long pk) throws SystemException {
+	public long[] getGroupPrimaryKeys(long pk) {
 		long[] pks = organizationToGroupTableMapper.getRightPrimaryKeys(pk);
 
 		return pks.clone();
@@ -7247,11 +7073,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 *
 	 * @param pk the primary key of the organization
 	 * @return the groups associated with the organization
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<com.liferay.portal.model.Group> getGroups(long pk)
-		throws SystemException {
+	public List<com.liferay.portal.model.Group> getGroups(long pk) {
 		return getGroups(pk, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
@@ -7266,11 +7090,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param start the lower bound of the range of organizations
 	 * @param end the upper bound of the range of organizations (not inclusive)
 	 * @return the range of groups associated with the organization
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<com.liferay.portal.model.Group> getGroups(long pk, int start,
-		int end) throws SystemException {
+		int end) {
 		return getGroups(pk, start, end, null);
 	}
 
@@ -7286,11 +7109,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param end the upper bound of the range of organizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of groups associated with the organization
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<com.liferay.portal.model.Group> getGroups(long pk, int start,
-		int end, OrderByComparator orderByComparator) throws SystemException {
+		int end, OrderByComparator orderByComparator) {
 		return organizationToGroupTableMapper.getRightBaseModels(pk, start,
 			end, orderByComparator);
 	}
@@ -7300,10 +7122,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 *
 	 * @param pk the primary key of the organization
 	 * @return the number of groups associated with the organization
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int getGroupsSize(long pk) throws SystemException {
+	public int getGroupsSize(long pk) {
 		long[] pks = organizationToGroupTableMapper.getRightPrimaryKeys(pk);
 
 		return pks.length;
@@ -7315,11 +7136,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param pk the primary key of the organization
 	 * @param groupPK the primary key of the group
 	 * @return <code>true</code> if the group is associated with the organization; <code>false</code> otherwise
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public boolean containsGroup(long pk, long groupPK)
-		throws SystemException {
+	public boolean containsGroup(long pk, long groupPK) {
 		return organizationToGroupTableMapper.containsTableMapping(pk, groupPK);
 	}
 
@@ -7328,10 +7147,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 *
 	 * @param pk the primary key of the organization to check for associations with groups
 	 * @return <code>true</code> if the organization has any groups associated with it; <code>false</code> otherwise
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public boolean containsGroups(long pk) throws SystemException {
+	public boolean containsGroups(long pk) {
 		if (getGroupsSize(pk) > 0) {
 			return true;
 		}
@@ -7345,10 +7163,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 *
 	 * @param pk the primary key of the organization
 	 * @param groupPK the primary key of the group
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void addGroup(long pk, long groupPK) throws SystemException {
+	public void addGroup(long pk, long groupPK) {
 		organizationToGroupTableMapper.addTableMapping(pk, groupPK);
 	}
 
@@ -7357,11 +7174,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 *
 	 * @param pk the primary key of the organization
 	 * @param group the group
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void addGroup(long pk, com.liferay.portal.model.Group group)
-		throws SystemException {
+	public void addGroup(long pk, com.liferay.portal.model.Group group) {
 		organizationToGroupTableMapper.addTableMapping(pk, group.getPrimaryKey());
 	}
 
@@ -7370,10 +7185,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 *
 	 * @param pk the primary key of the organization
 	 * @param groupPKs the primary keys of the groups
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void addGroups(long pk, long[] groupPKs) throws SystemException {
+	public void addGroups(long pk, long[] groupPKs) {
 		for (long groupPK : groupPKs) {
 			organizationToGroupTableMapper.addTableMapping(pk, groupPK);
 		}
@@ -7384,11 +7198,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 *
 	 * @param pk the primary key of the organization
 	 * @param groups the groups
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void addGroups(long pk, List<com.liferay.portal.model.Group> groups)
-		throws SystemException {
+	public void addGroups(long pk, List<com.liferay.portal.model.Group> groups) {
 		for (com.liferay.portal.model.Group group : groups) {
 			organizationToGroupTableMapper.addTableMapping(pk,
 				group.getPrimaryKey());
@@ -7399,10 +7211,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * Clears all associations between the organization and its groups. Also notifies the appropriate model listeners and clears the mapping table finder cache.
 	 *
 	 * @param pk the primary key of the organization to clear the associated groups from
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void clearGroups(long pk) throws SystemException {
+	public void clearGroups(long pk) {
 		organizationToGroupTableMapper.deleteLeftPrimaryKeyTableMappings(pk);
 	}
 
@@ -7411,10 +7222,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 *
 	 * @param pk the primary key of the organization
 	 * @param groupPK the primary key of the group
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeGroup(long pk, long groupPK) throws SystemException {
+	public void removeGroup(long pk, long groupPK) {
 		organizationToGroupTableMapper.deleteTableMapping(pk, groupPK);
 	}
 
@@ -7423,11 +7233,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 *
 	 * @param pk the primary key of the organization
 	 * @param group the group
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeGroup(long pk, com.liferay.portal.model.Group group)
-		throws SystemException {
+	public void removeGroup(long pk, com.liferay.portal.model.Group group) {
 		organizationToGroupTableMapper.deleteTableMapping(pk,
 			group.getPrimaryKey());
 	}
@@ -7437,11 +7245,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 *
 	 * @param pk the primary key of the organization
 	 * @param groupPKs the primary keys of the groups
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeGroups(long pk, long[] groupPKs)
-		throws SystemException {
+	public void removeGroups(long pk, long[] groupPKs) {
 		for (long groupPK : groupPKs) {
 			organizationToGroupTableMapper.deleteTableMapping(pk, groupPK);
 		}
@@ -7452,11 +7258,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 *
 	 * @param pk the primary key of the organization
 	 * @param groups the groups
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public void removeGroups(long pk,
-		List<com.liferay.portal.model.Group> groups) throws SystemException {
+		List<com.liferay.portal.model.Group> groups) {
 		for (com.liferay.portal.model.Group group : groups) {
 			organizationToGroupTableMapper.deleteTableMapping(pk,
 				group.getPrimaryKey());
@@ -7468,10 +7273,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 *
 	 * @param pk the primary key of the organization
 	 * @param groupPKs the primary keys of the groups to be associated with the organization
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void setGroups(long pk, long[] groupPKs) throws SystemException {
+	public void setGroups(long pk, long[] groupPKs) {
 		Set<Long> newGroupPKsSet = SetUtil.fromArray(groupPKs);
 		Set<Long> oldGroupPKsSet = SetUtil.fromArray(organizationToGroupTableMapper.getRightPrimaryKeys(
 					pk));
@@ -7496,11 +7300,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 *
 	 * @param pk the primary key of the organization
 	 * @param groups the groups to be associated with the organization
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void setGroups(long pk, List<com.liferay.portal.model.Group> groups)
-		throws SystemException {
+	public void setGroups(long pk, List<com.liferay.portal.model.Group> groups) {
 		try {
 			long[] groupPKs = new long[groups.size()];
 
@@ -7522,10 +7324,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 *
 	 * @param pk the primary key of the organization
 	 * @return long[] of the primaryKeys of users associated with the organization
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public long[] getUserPrimaryKeys(long pk) throws SystemException {
+	public long[] getUserPrimaryKeys(long pk) {
 		long[] pks = organizationToUserTableMapper.getRightPrimaryKeys(pk);
 
 		return pks.clone();
@@ -7536,11 +7337,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 *
 	 * @param pk the primary key of the organization
 	 * @return the users associated with the organization
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<com.liferay.portal.model.User> getUsers(long pk)
-		throws SystemException {
+	public List<com.liferay.portal.model.User> getUsers(long pk) {
 		return getUsers(pk, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
@@ -7555,11 +7354,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param start the lower bound of the range of organizations
 	 * @param end the upper bound of the range of organizations (not inclusive)
 	 * @return the range of users associated with the organization
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<com.liferay.portal.model.User> getUsers(long pk, int start,
-		int end) throws SystemException {
+		int end) {
 		return getUsers(pk, start, end, null);
 	}
 
@@ -7575,11 +7373,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param end the upper bound of the range of organizations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of users associated with the organization
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<com.liferay.portal.model.User> getUsers(long pk, int start,
-		int end, OrderByComparator orderByComparator) throws SystemException {
+		int end, OrderByComparator orderByComparator) {
 		return organizationToUserTableMapper.getRightBaseModels(pk, start, end,
 			orderByComparator);
 	}
@@ -7589,10 +7386,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 *
 	 * @param pk the primary key of the organization
 	 * @return the number of users associated with the organization
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int getUsersSize(long pk) throws SystemException {
+	public int getUsersSize(long pk) {
 		long[] pks = organizationToUserTableMapper.getRightPrimaryKeys(pk);
 
 		return pks.length;
@@ -7604,10 +7400,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * @param pk the primary key of the organization
 	 * @param userPK the primary key of the user
 	 * @return <code>true</code> if the user is associated with the organization; <code>false</code> otherwise
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public boolean containsUser(long pk, long userPK) throws SystemException {
+	public boolean containsUser(long pk, long userPK) {
 		return organizationToUserTableMapper.containsTableMapping(pk, userPK);
 	}
 
@@ -7616,10 +7411,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 *
 	 * @param pk the primary key of the organization to check for associations with users
 	 * @return <code>true</code> if the organization has any users associated with it; <code>false</code> otherwise
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public boolean containsUsers(long pk) throws SystemException {
+	public boolean containsUsers(long pk) {
 		if (getUsersSize(pk) > 0) {
 			return true;
 		}
@@ -7633,10 +7427,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 *
 	 * @param pk the primary key of the organization
 	 * @param userPK the primary key of the user
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void addUser(long pk, long userPK) throws SystemException {
+	public void addUser(long pk, long userPK) {
 		organizationToUserTableMapper.addTableMapping(pk, userPK);
 	}
 
@@ -7645,11 +7438,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 *
 	 * @param pk the primary key of the organization
 	 * @param user the user
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void addUser(long pk, com.liferay.portal.model.User user)
-		throws SystemException {
+	public void addUser(long pk, com.liferay.portal.model.User user) {
 		organizationToUserTableMapper.addTableMapping(pk, user.getPrimaryKey());
 	}
 
@@ -7658,10 +7449,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 *
 	 * @param pk the primary key of the organization
 	 * @param userPKs the primary keys of the users
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void addUsers(long pk, long[] userPKs) throws SystemException {
+	public void addUsers(long pk, long[] userPKs) {
 		for (long userPK : userPKs) {
 			organizationToUserTableMapper.addTableMapping(pk, userPK);
 		}
@@ -7672,11 +7462,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 *
 	 * @param pk the primary key of the organization
 	 * @param users the users
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void addUsers(long pk, List<com.liferay.portal.model.User> users)
-		throws SystemException {
+	public void addUsers(long pk, List<com.liferay.portal.model.User> users) {
 		for (com.liferay.portal.model.User user : users) {
 			organizationToUserTableMapper.addTableMapping(pk,
 				user.getPrimaryKey());
@@ -7687,10 +7475,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 * Clears all associations between the organization and its users. Also notifies the appropriate model listeners and clears the mapping table finder cache.
 	 *
 	 * @param pk the primary key of the organization to clear the associated users from
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void clearUsers(long pk) throws SystemException {
+	public void clearUsers(long pk) {
 		organizationToUserTableMapper.deleteLeftPrimaryKeyTableMappings(pk);
 	}
 
@@ -7699,10 +7486,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 *
 	 * @param pk the primary key of the organization
 	 * @param userPK the primary key of the user
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeUser(long pk, long userPK) throws SystemException {
+	public void removeUser(long pk, long userPK) {
 		organizationToUserTableMapper.deleteTableMapping(pk, userPK);
 	}
 
@@ -7711,11 +7497,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 *
 	 * @param pk the primary key of the organization
 	 * @param user the user
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeUser(long pk, com.liferay.portal.model.User user)
-		throws SystemException {
+	public void removeUser(long pk, com.liferay.portal.model.User user) {
 		organizationToUserTableMapper.deleteTableMapping(pk,
 			user.getPrimaryKey());
 	}
@@ -7725,10 +7509,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 *
 	 * @param pk the primary key of the organization
 	 * @param userPKs the primary keys of the users
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeUsers(long pk, long[] userPKs) throws SystemException {
+	public void removeUsers(long pk, long[] userPKs) {
 		for (long userPK : userPKs) {
 			organizationToUserTableMapper.deleteTableMapping(pk, userPK);
 		}
@@ -7739,11 +7522,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 *
 	 * @param pk the primary key of the organization
 	 * @param users the users
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeUsers(long pk, List<com.liferay.portal.model.User> users)
-		throws SystemException {
+	public void removeUsers(long pk, List<com.liferay.portal.model.User> users) {
 		for (com.liferay.portal.model.User user : users) {
 			organizationToUserTableMapper.deleteTableMapping(pk,
 				user.getPrimaryKey());
@@ -7755,10 +7536,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 *
 	 * @param pk the primary key of the organization
 	 * @param userPKs the primary keys of the users to be associated with the organization
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void setUsers(long pk, long[] userPKs) throws SystemException {
+	public void setUsers(long pk, long[] userPKs) {
 		Set<Long> newUserPKsSet = SetUtil.fromArray(userPKs);
 		Set<Long> oldUserPKsSet = SetUtil.fromArray(organizationToUserTableMapper.getRightPrimaryKeys(
 					pk));
@@ -7783,11 +7563,9 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	 *
 	 * @param pk the primary key of the organization
 	 * @param users the users to be associated with the organization
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void setUsers(long pk, List<com.liferay.portal.model.User> users)
-		throws SystemException {
+	public void setUsers(long pk, List<com.liferay.portal.model.User> users) {
 		try {
 			long[] userPKs = new long[users.size()];
 

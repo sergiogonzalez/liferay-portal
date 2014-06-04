@@ -312,8 +312,7 @@ public class VirtualHostWrapper implements VirtualHost,
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void persist() {
 		_virtualHost.persist();
 	}
 

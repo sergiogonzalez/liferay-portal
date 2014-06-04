@@ -46,11 +46,9 @@ public class MBMessageLocalServiceUtil {
 	*
 	* @param mbMessage the message-boards message
 	* @return the message-boards message that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage addMBMessage(
-		com.liferay.portlet.messageboards.model.MBMessage mbMessage)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.messageboards.model.MBMessage mbMessage) {
 		return getService().addMBMessage(mbMessage);
 	}
 
@@ -71,12 +69,10 @@ public class MBMessageLocalServiceUtil {
 	* @param messageId the primary key of the message-boards message
 	* @return the message-boards message that was removed
 	* @throws PortalException if a message-boards message with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage deleteMBMessage(
 		long messageId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteMBMessage(messageId);
 	}
 
@@ -85,11 +81,9 @@ public class MBMessageLocalServiceUtil {
 	*
 	* @param mbMessage the message-boards message
 	* @return the message-boards message that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage deleteMBMessage(
-		com.liferay.portlet.messageboards.model.MBMessage mbMessage)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.messageboards.model.MBMessage mbMessage) {
 		return getService().deleteMBMessage(mbMessage);
 	}
 
@@ -102,12 +96,10 @@ public class MBMessageLocalServiceUtil {
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -122,12 +114,11 @@ public class MBMessageLocalServiceUtil {
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -143,14 +134,12 @@ public class MBMessageLocalServiceUtil {
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getService()
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
@@ -160,11 +149,9 @@ public class MBMessageLocalServiceUtil {
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -174,18 +161,15 @@ public class MBMessageLocalServiceUtil {
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public static long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
 	public static com.liferay.portlet.messageboards.model.MBMessage fetchMBMessage(
-		long messageId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long messageId) {
 		return getService().fetchMBMessage(messageId);
 	}
 
@@ -195,11 +179,9 @@ public class MBMessageLocalServiceUtil {
 	* @param uuid the message-boards message's UUID
 	* @param companyId the primary key of the company
 	* @return the matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage fetchMBMessageByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long companyId) {
 		return getService().fetchMBMessageByUuidAndCompanyId(uuid, companyId);
 	}
 
@@ -209,11 +191,9 @@ public class MBMessageLocalServiceUtil {
 	* @param uuid the message-boards message's UUID
 	* @param groupId the primary key of the group
 	* @return the matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage fetchMBMessageByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long groupId) {
 		return getService().fetchMBMessageByUuidAndGroupId(uuid, groupId);
 	}
 
@@ -223,30 +203,25 @@ public class MBMessageLocalServiceUtil {
 	* @param messageId the primary key of the message-boards message
 	* @return the message-boards message
 	* @throws PortalException if a message-boards message with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage getMBMessage(
 		long messageId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getMBMessage(messageId);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext) {
 		return getService().getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	public static com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
@@ -257,12 +232,10 @@ public class MBMessageLocalServiceUtil {
 	* @param companyId the primary key of the company
 	* @return the matching message-boards message
 	* @throws PortalException if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage getMBMessageByUuidAndCompanyId(
 		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getMBMessageByUuidAndCompanyId(uuid, companyId);
 	}
 
@@ -273,12 +246,10 @@ public class MBMessageLocalServiceUtil {
 	* @param groupId the primary key of the group
 	* @return the matching message-boards message
 	* @throws PortalException if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage getMBMessageByUuidAndGroupId(
 		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getMBMessageByUuidAndGroupId(uuid, groupId);
 	}
 
@@ -292,11 +263,9 @@ public class MBMessageLocalServiceUtil {
 	* @param start the lower bound of the range of message-boards messages
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @return the range of message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> getMBMessages(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return getService().getMBMessages(start, end);
 	}
 
@@ -304,10 +273,8 @@ public class MBMessageLocalServiceUtil {
 	* Returns the number of message-boards messages.
 	*
 	* @return the number of message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int getMBMessagesCount()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int getMBMessagesCount() {
 		return getService().getMBMessagesCount();
 	}
 
@@ -316,11 +283,9 @@ public class MBMessageLocalServiceUtil {
 	*
 	* @param mbMessage the message-boards message
 	* @return the message-boards message that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage updateMBMessage(
-		com.liferay.portlet.messageboards.model.MBMessage mbMessage)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.messageboards.model.MBMessage mbMessage) {
 		return getService().updateMBMessage(mbMessage);
 	}
 

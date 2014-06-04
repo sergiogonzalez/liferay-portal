@@ -45,11 +45,9 @@ public interface AnnouncementsFlagPersistence extends BasePersistence<Announceme
 	*
 	* @param entryId the entry ID
 	* @return the matching announcements flags
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.announcements.model.AnnouncementsFlag> findByEntryId(
-		long entryId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long entryId);
 
 	/**
 	* Returns a range of all the announcements flags where entryId = &#63;.
@@ -62,11 +60,9 @@ public interface AnnouncementsFlagPersistence extends BasePersistence<Announceme
 	* @param start the lower bound of the range of announcements flags
 	* @param end the upper bound of the range of announcements flags (not inclusive)
 	* @return the range of matching announcements flags
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.announcements.model.AnnouncementsFlag> findByEntryId(
-		long entryId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long entryId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the announcements flags where entryId = &#63;.
@@ -80,12 +76,10 @@ public interface AnnouncementsFlagPersistence extends BasePersistence<Announceme
 	* @param end the upper bound of the range of announcements flags (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching announcements flags
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.announcements.model.AnnouncementsFlag> findByEntryId(
 		long entryId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first announcements flag in the ordered set where entryId = &#63;.
@@ -94,13 +88,11 @@ public interface AnnouncementsFlagPersistence extends BasePersistence<Announceme
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching announcements flag
 	* @throws com.liferay.portlet.announcements.NoSuchFlagException if a matching announcements flag could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsFlag findByEntryId_First(
 		long entryId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.announcements.NoSuchFlagException;
+		throws com.liferay.portlet.announcements.NoSuchFlagException;
 
 	/**
 	* Returns the first announcements flag in the ordered set where entryId = &#63;.
@@ -108,12 +100,10 @@ public interface AnnouncementsFlagPersistence extends BasePersistence<Announceme
 	* @param entryId the entry ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching announcements flag, or <code>null</code> if a matching announcements flag could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsFlag fetchByEntryId_First(
 		long entryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last announcements flag in the ordered set where entryId = &#63;.
@@ -122,13 +112,11 @@ public interface AnnouncementsFlagPersistence extends BasePersistence<Announceme
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching announcements flag
 	* @throws com.liferay.portlet.announcements.NoSuchFlagException if a matching announcements flag could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsFlag findByEntryId_Last(
 		long entryId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.announcements.NoSuchFlagException;
+		throws com.liferay.portlet.announcements.NoSuchFlagException;
 
 	/**
 	* Returns the last announcements flag in the ordered set where entryId = &#63;.
@@ -136,12 +124,10 @@ public interface AnnouncementsFlagPersistence extends BasePersistence<Announceme
 	* @param entryId the entry ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching announcements flag, or <code>null</code> if a matching announcements flag could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsFlag fetchByEntryId_Last(
 		long entryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the announcements flags before and after the current announcements flag in the ordered set where entryId = &#63;.
@@ -151,32 +137,26 @@ public interface AnnouncementsFlagPersistence extends BasePersistence<Announceme
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next announcements flag
 	* @throws com.liferay.portlet.announcements.NoSuchFlagException if a announcements flag with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsFlag[] findByEntryId_PrevAndNext(
 		long flagId, long entryId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.announcements.NoSuchFlagException;
+		throws com.liferay.portlet.announcements.NoSuchFlagException;
 
 	/**
 	* Removes all the announcements flags where entryId = &#63; from the database.
 	*
 	* @param entryId the entry ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByEntryId(long entryId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeByEntryId(long entryId);
 
 	/**
 	* Returns the number of announcements flags where entryId = &#63;.
 	*
 	* @param entryId the entry ID
 	* @return the number of matching announcements flags
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countByEntryId(long entryId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByEntryId(long entryId);
 
 	/**
 	* Returns the announcements flag where userId = &#63; and entryId = &#63; and value = &#63; or throws a {@link com.liferay.portlet.announcements.NoSuchFlagException} if it could not be found.
@@ -186,12 +166,10 @@ public interface AnnouncementsFlagPersistence extends BasePersistence<Announceme
 	* @param value the value
 	* @return the matching announcements flag
 	* @throws com.liferay.portlet.announcements.NoSuchFlagException if a matching announcements flag could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsFlag findByU_E_V(
 		long userId, long entryId, int value)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.announcements.NoSuchFlagException;
+		throws com.liferay.portlet.announcements.NoSuchFlagException;
 
 	/**
 	* Returns the announcements flag where userId = &#63; and entryId = &#63; and value = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -200,11 +178,9 @@ public interface AnnouncementsFlagPersistence extends BasePersistence<Announceme
 	* @param entryId the entry ID
 	* @param value the value
 	* @return the matching announcements flag, or <code>null</code> if a matching announcements flag could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsFlag fetchByU_E_V(
-		long userId, long entryId, int value)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long userId, long entryId, int value);
 
 	/**
 	* Returns the announcements flag where userId = &#63; and entryId = &#63; and value = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -214,11 +190,9 @@ public interface AnnouncementsFlagPersistence extends BasePersistence<Announceme
 	* @param value the value
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching announcements flag, or <code>null</code> if a matching announcements flag could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsFlag fetchByU_E_V(
-		long userId, long entryId, int value, boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long userId, long entryId, int value, boolean retrieveFromCache);
 
 	/**
 	* Removes the announcements flag where userId = &#63; and entryId = &#63; and value = &#63; from the database.
@@ -227,12 +201,10 @@ public interface AnnouncementsFlagPersistence extends BasePersistence<Announceme
 	* @param entryId the entry ID
 	* @param value the value
 	* @return the announcements flag that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsFlag removeByU_E_V(
 		long userId, long entryId, int value)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.announcements.NoSuchFlagException;
+		throws com.liferay.portlet.announcements.NoSuchFlagException;
 
 	/**
 	* Returns the number of announcements flags where userId = &#63; and entryId = &#63; and value = &#63;.
@@ -241,10 +213,8 @@ public interface AnnouncementsFlagPersistence extends BasePersistence<Announceme
 	* @param entryId the entry ID
 	* @param value the value
 	* @return the number of matching announcements flags
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countByU_E_V(long userId, long entryId, int value)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByU_E_V(long userId, long entryId, int value);
 
 	/**
 	* Caches the announcements flag in the entity cache if it is enabled.
@@ -277,16 +247,13 @@ public interface AnnouncementsFlagPersistence extends BasePersistence<Announceme
 	* @param flagId the primary key of the announcements flag
 	* @return the announcements flag that was removed
 	* @throws com.liferay.portlet.announcements.NoSuchFlagException if a announcements flag with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsFlag remove(
 		long flagId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.announcements.NoSuchFlagException;
+		throws com.liferay.portlet.announcements.NoSuchFlagException;
 
 	public com.liferay.portlet.announcements.model.AnnouncementsFlag updateImpl(
-		com.liferay.portlet.announcements.model.AnnouncementsFlag announcementsFlag)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portlet.announcements.model.AnnouncementsFlag announcementsFlag);
 
 	/**
 	* Returns the announcements flag with the primary key or throws a {@link com.liferay.portlet.announcements.NoSuchFlagException} if it could not be found.
@@ -294,31 +261,26 @@ public interface AnnouncementsFlagPersistence extends BasePersistence<Announceme
 	* @param flagId the primary key of the announcements flag
 	* @return the announcements flag
 	* @throws com.liferay.portlet.announcements.NoSuchFlagException if a announcements flag with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsFlag findByPrimaryKey(
 		long flagId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.announcements.NoSuchFlagException;
+		throws com.liferay.portlet.announcements.NoSuchFlagException;
 
 	/**
 	* Returns the announcements flag with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param flagId the primary key of the announcements flag
 	* @return the announcements flag, or <code>null</code> if a announcements flag with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsFlag fetchByPrimaryKey(
-		long flagId) throws com.liferay.portal.kernel.exception.SystemException;
+		long flagId);
 
 	/**
 	* Returns all the announcements flags.
 	*
 	* @return the announcements flags
-	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portlet.announcements.model.AnnouncementsFlag> findAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public java.util.List<com.liferay.portlet.announcements.model.AnnouncementsFlag> findAll();
 
 	/**
 	* Returns a range of all the announcements flags.
@@ -330,11 +292,9 @@ public interface AnnouncementsFlagPersistence extends BasePersistence<Announceme
 	* @param start the lower bound of the range of announcements flags
 	* @param end the upper bound of the range of announcements flags (not inclusive)
 	* @return the range of announcements flags
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.announcements.model.AnnouncementsFlag> findAll(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the announcements flags.
@@ -347,27 +307,20 @@ public interface AnnouncementsFlagPersistence extends BasePersistence<Announceme
 	* @param end the upper bound of the range of announcements flags (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of announcements flags
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.announcements.model.AnnouncementsFlag> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Removes all the announcements flags from the database.
-	*
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeAll();
 
 	/**
 	* Returns the number of announcements flags.
 	*
 	* @return the number of announcements flags
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countAll();
 }

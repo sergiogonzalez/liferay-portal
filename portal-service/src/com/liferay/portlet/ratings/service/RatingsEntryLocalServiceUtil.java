@@ -46,11 +46,9 @@ public class RatingsEntryLocalServiceUtil {
 	*
 	* @param ratingsEntry the ratings entry
 	* @return the ratings entry that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.ratings.model.RatingsEntry addRatingsEntry(
-		com.liferay.portlet.ratings.model.RatingsEntry ratingsEntry)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.ratings.model.RatingsEntry ratingsEntry) {
 		return getService().addRatingsEntry(ratingsEntry);
 	}
 
@@ -71,12 +69,10 @@ public class RatingsEntryLocalServiceUtil {
 	* @param entryId the primary key of the ratings entry
 	* @return the ratings entry that was removed
 	* @throws PortalException if a ratings entry with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.ratings.model.RatingsEntry deleteRatingsEntry(
 		long entryId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteRatingsEntry(entryId);
 	}
 
@@ -85,11 +81,9 @@ public class RatingsEntryLocalServiceUtil {
 	*
 	* @param ratingsEntry the ratings entry
 	* @return the ratings entry that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.ratings.model.RatingsEntry deleteRatingsEntry(
-		com.liferay.portlet.ratings.model.RatingsEntry ratingsEntry)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.ratings.model.RatingsEntry ratingsEntry) {
 		return getService().deleteRatingsEntry(ratingsEntry);
 	}
 
@@ -102,12 +96,10 @@ public class RatingsEntryLocalServiceUtil {
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -122,12 +114,11 @@ public class RatingsEntryLocalServiceUtil {
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -143,14 +134,12 @@ public class RatingsEntryLocalServiceUtil {
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getService()
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
@@ -160,11 +149,9 @@ public class RatingsEntryLocalServiceUtil {
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -174,18 +161,15 @@ public class RatingsEntryLocalServiceUtil {
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public static long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
 	public static com.liferay.portlet.ratings.model.RatingsEntry fetchRatingsEntry(
-		long entryId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long entryId) {
 		return getService().fetchRatingsEntry(entryId);
 	}
 
@@ -195,11 +179,9 @@ public class RatingsEntryLocalServiceUtil {
 	* @param uuid the ratings entry's UUID
 	* @param companyId the primary key of the company
 	* @return the matching ratings entry, or <code>null</code> if a matching ratings entry could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.ratings.model.RatingsEntry fetchRatingsEntryByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long companyId) {
 		return getService().fetchRatingsEntryByUuidAndCompanyId(uuid, companyId);
 	}
 
@@ -209,30 +191,25 @@ public class RatingsEntryLocalServiceUtil {
 	* @param entryId the primary key of the ratings entry
 	* @return the ratings entry
 	* @throws PortalException if a ratings entry with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.ratings.model.RatingsEntry getRatingsEntry(
 		long entryId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getRatingsEntry(entryId);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext) {
 		return getService().getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	public static com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
@@ -243,12 +220,10 @@ public class RatingsEntryLocalServiceUtil {
 	* @param companyId the primary key of the company
 	* @return the matching ratings entry
 	* @throws PortalException if a matching ratings entry could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.ratings.model.RatingsEntry getRatingsEntryByUuidAndCompanyId(
 		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getRatingsEntryByUuidAndCompanyId(uuid, companyId);
 	}
 
@@ -262,11 +237,9 @@ public class RatingsEntryLocalServiceUtil {
 	* @param start the lower bound of the range of ratings entries
 	* @param end the upper bound of the range of ratings entries (not inclusive)
 	* @return the range of ratings entries
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.ratings.model.RatingsEntry> getRatingsEntries(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return getService().getRatingsEntries(start, end);
 	}
 
@@ -274,10 +247,8 @@ public class RatingsEntryLocalServiceUtil {
 	* Returns the number of ratings entries.
 	*
 	* @return the number of ratings entries
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int getRatingsEntriesCount()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int getRatingsEntriesCount() {
 		return getService().getRatingsEntriesCount();
 	}
 
@@ -286,11 +257,9 @@ public class RatingsEntryLocalServiceUtil {
 	*
 	* @param ratingsEntry the ratings entry
 	* @return the ratings entry that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.ratings.model.RatingsEntry updateRatingsEntry(
-		com.liferay.portlet.ratings.model.RatingsEntry ratingsEntry)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.ratings.model.RatingsEntry ratingsEntry) {
 		return getService().updateRatingsEntry(ratingsEntry);
 	}
 

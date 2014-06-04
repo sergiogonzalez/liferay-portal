@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.messageboards.model.impl;
 
-import com.liferay.portal.kernel.exception.SystemException;
-
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
 
@@ -39,7 +37,7 @@ public abstract class MBCategoryBaseImpl extends MBCategoryModelImpl
 	 * Never modify or reference this class directly. All methods that expect a message boards category model instance should use the {@link MBCategory} interface instead.
 	 */
 	@Override
-	public void persist() throws SystemException {
+	public void persist() {
 		if (this.isNew()) {
 			MBCategoryLocalServiceUtil.addMBCategory(this);
 		}

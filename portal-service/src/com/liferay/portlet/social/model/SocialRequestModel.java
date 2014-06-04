@@ -17,7 +17,6 @@ package com.liferay.portlet.social.model;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.AttachedModel;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
@@ -138,9 +137,8 @@ public interface SocialRequestModel extends AttachedModel,
 	 * Returns the user uuid of this social request.
 	 *
 	 * @return the user uuid of this social request
-	 * @throws SystemException if a system exception occurred
 	 */
-	public String getUserUuid() throws SystemException;
+	public String getUserUuid();
 
 	/**
 	 * Sets the user uuid of this social request.
@@ -266,9 +264,8 @@ public interface SocialRequestModel extends AttachedModel,
 	 * Returns the receiver user uuid of this social request.
 	 *
 	 * @return the receiver user uuid of this social request
-	 * @throws SystemException if a system exception occurred
 	 */
-	public String getReceiverUserUuid() throws SystemException;
+	public String getReceiverUserUuid();
 
 	/**
 	 * Sets the receiver user uuid of this social request.

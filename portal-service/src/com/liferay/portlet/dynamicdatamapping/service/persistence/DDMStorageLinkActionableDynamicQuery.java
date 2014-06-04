@@ -15,7 +15,6 @@
 package com.liferay.portlet.dynamicdatamapping.service.persistence;
 
 import com.liferay.portal.kernel.dao.orm.BaseActionableDynamicQuery;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 
 import com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink;
@@ -29,7 +28,7 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMStorageLinkLocalService
 @Deprecated
 public abstract class DDMStorageLinkActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
-	public DDMStorageLinkActionableDynamicQuery() throws SystemException {
+	public DDMStorageLinkActionableDynamicQuery() {
 		setBaseLocalService(DDMStorageLinkLocalServiceUtil.getService());
 		setClass(DDMStorageLink.class);
 

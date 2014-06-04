@@ -14,7 +14,6 @@
 
 package com.liferay.portal.model.impl;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.ClassName;
 import com.liferay.portal.service.ClassNameLocalServiceUtil;
 
@@ -38,7 +37,7 @@ public abstract class ClassNameBaseImpl extends ClassNameModelImpl
 	 * Never modify or reference this class directly. All methods that expect a class name model instance should use the {@link ClassName} interface instead.
 	 */
 	@Override
-	public void persist() throws SystemException {
+	public void persist() {
 		if (this.isNew()) {
 			ClassNameLocalServiceUtil.addClassName(this);
 		}

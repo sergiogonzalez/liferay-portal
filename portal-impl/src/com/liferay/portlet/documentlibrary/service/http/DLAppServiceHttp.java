@@ -3469,8 +3469,7 @@ public class DLAppServiceHttp {
 	public static com.liferay.portal.kernel.search.Hits search(
 		HttpPrincipal httpPrincipal, long repositoryId,
 		com.liferay.portal.kernel.search.SearchContext searchContext)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portal.kernel.search.SearchException {
+		throws com.liferay.portal.kernel.search.SearchException {
 		try {
 			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"search", _searchParameterTypes91);
@@ -3504,8 +3503,7 @@ public class DLAppServiceHttp {
 		HttpPrincipal httpPrincipal, long repositoryId,
 		com.liferay.portal.kernel.search.SearchContext searchContext,
 		com.liferay.portal.kernel.search.Query query)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portal.kernel.search.SearchException {
+		throws com.liferay.portal.kernel.search.SearchException {
 		try {
 			MethodKey methodKey = new MethodKey(DLAppServiceUtil.class,
 					"search", _searchParameterTypes92);

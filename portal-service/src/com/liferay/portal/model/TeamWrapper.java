@@ -232,11 +232,9 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 	* Returns the user uuid of this team.
 	*
 	* @return the user uuid of this team
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public java.lang.String getUserUuid()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public java.lang.String getUserUuid() {
 		return _team.getUserUuid();
 	}
 
@@ -469,8 +467,7 @@ public class TeamWrapper implements Team, ModelWrapper<Team> {
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void persist() {
 		_team.persist();
 	}
 

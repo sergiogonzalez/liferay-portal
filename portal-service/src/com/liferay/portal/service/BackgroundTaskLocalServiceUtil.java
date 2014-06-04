@@ -46,11 +46,9 @@ public class BackgroundTaskLocalServiceUtil {
 	*
 	* @param backgroundTask the background task
 	* @return the background task that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.BackgroundTask addBackgroundTask(
-		com.liferay.portal.model.BackgroundTask backgroundTask)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.BackgroundTask backgroundTask) {
 		return getService().addBackgroundTask(backgroundTask);
 	}
 
@@ -71,7 +69,7 @@ public class BackgroundTaskLocalServiceUtil {
 	* @param backgroundTaskId the primary key of the background task
 	* @return the background task that was removed
 	* @throws PortalException if a background task with the primary key could not be found
-	* @throws SystemException if a system exception occurred
+	* @throws SystemException
 	*/
 	public static com.liferay.portal.model.BackgroundTask deleteBackgroundTask(
 		long backgroundTaskId)
@@ -86,7 +84,7 @@ public class BackgroundTaskLocalServiceUtil {
 	* @param backgroundTask the background task
 	* @return the background task that was removed
 	* @throws PortalException
-	* @throws SystemException if a system exception occurred
+	* @throws SystemException
 	*/
 	public static com.liferay.portal.model.BackgroundTask deleteBackgroundTask(
 		com.liferay.portal.model.BackgroundTask backgroundTask)
@@ -104,12 +102,10 @@ public class BackgroundTaskLocalServiceUtil {
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -124,12 +120,11 @@ public class BackgroundTaskLocalServiceUtil {
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -145,14 +140,12 @@ public class BackgroundTaskLocalServiceUtil {
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getService()
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
@@ -162,11 +155,9 @@ public class BackgroundTaskLocalServiceUtil {
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -176,12 +167,10 @@ public class BackgroundTaskLocalServiceUtil {
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public static long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
@@ -197,7 +186,7 @@ public class BackgroundTaskLocalServiceUtil {
 	* @param backgroundTaskId the primary key of the background task
 	* @return the background task
 	* @throws PortalException if a background task with the primary key could not be found
-	* @throws SystemException if a system exception occurred
+	* @throws SystemException
 	*/
 	public static com.liferay.portal.model.BackgroundTask getBackgroundTask(
 		long backgroundTaskId)
@@ -206,15 +195,13 @@ public class BackgroundTaskLocalServiceUtil {
 		return getService().getBackgroundTask(backgroundTaskId);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}
 
 	public static com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
@@ -228,11 +215,9 @@ public class BackgroundTaskLocalServiceUtil {
 	* @param start the lower bound of the range of background tasks
 	* @param end the upper bound of the range of background tasks (not inclusive)
 	* @return the range of background tasks
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portal.model.BackgroundTask> getBackgroundTasks(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return getService().getBackgroundTasks(start, end);
 	}
 
@@ -240,10 +225,8 @@ public class BackgroundTaskLocalServiceUtil {
 	* Returns the number of background tasks.
 	*
 	* @return the number of background tasks
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int getBackgroundTasksCount()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int getBackgroundTasksCount() {
 		return getService().getBackgroundTasksCount();
 	}
 
@@ -252,11 +235,9 @@ public class BackgroundTaskLocalServiceUtil {
 	*
 	* @param backgroundTask the background task
 	* @return the background task that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.BackgroundTask updateBackgroundTask(
-		com.liferay.portal.model.BackgroundTask backgroundTask)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.BackgroundTask backgroundTask) {
 		return getService().updateBackgroundTask(backgroundTask);
 	}
 

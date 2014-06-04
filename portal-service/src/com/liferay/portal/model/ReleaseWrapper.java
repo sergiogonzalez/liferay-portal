@@ -457,8 +457,7 @@ public class ReleaseWrapper implements Release, ModelWrapper<Release> {
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void persist() {
 		_release.persist();
 	}
 

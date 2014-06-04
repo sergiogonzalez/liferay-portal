@@ -43,10 +43,8 @@ public interface ImagePersistence extends BasePersistence<Image> {
 	*
 	* @param size the size
 	* @return the matching images
-	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portal.model.Image> findByLtSize(int size)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public java.util.List<com.liferay.portal.model.Image> findByLtSize(int size);
 
 	/**
 	* Returns a range of all the images where size &lt; &#63;.
@@ -59,11 +57,9 @@ public interface ImagePersistence extends BasePersistence<Image> {
 	* @param start the lower bound of the range of images
 	* @param end the upper bound of the range of images (not inclusive)
 	* @return the range of matching images
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portal.model.Image> findByLtSize(
-		int size, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		int size, int start, int end);
 
 	/**
 	* Returns an ordered range of all the images where size &lt; &#63;.
@@ -77,12 +73,10 @@ public interface ImagePersistence extends BasePersistence<Image> {
 	* @param end the upper bound of the range of images (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching images
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portal.model.Image> findByLtSize(
 		int size, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first image in the ordered set where size &lt; &#63;.
@@ -91,12 +85,10 @@ public interface ImagePersistence extends BasePersistence<Image> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching image
 	* @throws com.liferay.portal.NoSuchImageException if a matching image could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.Image findByLtSize_First(int size,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchImageException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.NoSuchImageException;
 
 	/**
 	* Returns the first image in the ordered set where size &lt; &#63;.
@@ -104,11 +96,9 @@ public interface ImagePersistence extends BasePersistence<Image> {
 	* @param size the size
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching image, or <code>null</code> if a matching image could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.Image fetchByLtSize_First(int size,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last image in the ordered set where size &lt; &#63;.
@@ -117,12 +107,10 @@ public interface ImagePersistence extends BasePersistence<Image> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching image
 	* @throws com.liferay.portal.NoSuchImageException if a matching image could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.Image findByLtSize_Last(int size,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchImageException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.NoSuchImageException;
 
 	/**
 	* Returns the last image in the ordered set where size &lt; &#63;.
@@ -130,11 +118,9 @@ public interface ImagePersistence extends BasePersistence<Image> {
 	* @param size the size
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching image, or <code>null</code> if a matching image could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.Image fetchByLtSize_Last(int size,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the images before and after the current image in the ordered set where size &lt; &#63;.
@@ -144,32 +130,26 @@ public interface ImagePersistence extends BasePersistence<Image> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next image
 	* @throws com.liferay.portal.NoSuchImageException if a image with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.Image[] findByLtSize_PrevAndNext(
 		long imageId, int size,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchImageException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.NoSuchImageException;
 
 	/**
 	* Removes all the images where size &lt; &#63; from the database.
 	*
 	* @param size the size
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByLtSize(int size)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeByLtSize(int size);
 
 	/**
 	* Returns the number of images where size &lt; &#63;.
 	*
 	* @param size the size
 	* @return the number of matching images
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countByLtSize(int size)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByLtSize(int size);
 
 	/**
 	* Caches the image in the entity cache if it is enabled.
@@ -200,15 +180,12 @@ public interface ImagePersistence extends BasePersistence<Image> {
 	* @param imageId the primary key of the image
 	* @return the image that was removed
 	* @throws com.liferay.portal.NoSuchImageException if a image with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.Image remove(long imageId)
-		throws com.liferay.portal.NoSuchImageException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.NoSuchImageException;
 
 	public com.liferay.portal.model.Image updateImpl(
-		com.liferay.portal.model.Image image)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.model.Image image);
 
 	/**
 	* Returns the image with the primary key or throws a {@link com.liferay.portal.NoSuchImageException} if it could not be found.
@@ -216,30 +193,24 @@ public interface ImagePersistence extends BasePersistence<Image> {
 	* @param imageId the primary key of the image
 	* @return the image
 	* @throws com.liferay.portal.NoSuchImageException if a image with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.Image findByPrimaryKey(long imageId)
-		throws com.liferay.portal.NoSuchImageException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.NoSuchImageException;
 
 	/**
 	* Returns the image with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param imageId the primary key of the image
 	* @return the image, or <code>null</code> if a image with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portal.model.Image fetchByPrimaryKey(long imageId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public com.liferay.portal.model.Image fetchByPrimaryKey(long imageId);
 
 	/**
 	* Returns all the images.
 	*
 	* @return the images
-	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portal.model.Image> findAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public java.util.List<com.liferay.portal.model.Image> findAll();
 
 	/**
 	* Returns a range of all the images.
@@ -251,10 +222,9 @@ public interface ImagePersistence extends BasePersistence<Image> {
 	* @param start the lower bound of the range of images
 	* @param end the upper bound of the range of images (not inclusive)
 	* @return the range of images
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portal.model.Image> findAll(int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException;
+		int end);
 
 	/**
 	* Returns an ordered range of all the images.
@@ -267,27 +237,20 @@ public interface ImagePersistence extends BasePersistence<Image> {
 	* @param end the upper bound of the range of images (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of images
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portal.model.Image> findAll(int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Removes all the images from the database.
-	*
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeAll();
 
 	/**
 	* Returns the number of images.
 	*
 	* @return the number of images
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countAll();
 }

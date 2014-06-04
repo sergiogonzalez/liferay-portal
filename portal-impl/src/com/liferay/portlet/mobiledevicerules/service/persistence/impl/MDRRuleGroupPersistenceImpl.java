@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -110,10 +109,9 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 	 *
 	 * @param uuid the uuid
 	 * @return the matching m d r rule groups
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<MDRRuleGroup> findByUuid(String uuid) throws SystemException {
+	public List<MDRRuleGroup> findByUuid(String uuid) {
 		return findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -128,11 +126,9 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 	 * @param start the lower bound of the range of m d r rule groups
 	 * @param end the upper bound of the range of m d r rule groups (not inclusive)
 	 * @return the range of matching m d r rule groups
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<MDRRuleGroup> findByUuid(String uuid, int start, int end)
-		throws SystemException {
+	public List<MDRRuleGroup> findByUuid(String uuid, int start, int end) {
 		return findByUuid(uuid, start, end, null);
 	}
 
@@ -148,11 +144,10 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 	 * @param end the upper bound of the range of m d r rule groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching m d r rule groups
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<MDRRuleGroup> findByUuid(String uuid, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -269,12 +264,10 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching m d r rule group
 	 * @throws com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupException if a matching m d r rule group could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public MDRRuleGroup findByUuid_First(String uuid,
-		OrderByComparator orderByComparator)
-		throws NoSuchRuleGroupException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchRuleGroupException {
 		MDRRuleGroup mdrRuleGroup = fetchByUuid_First(uuid, orderByComparator);
 
 		if (mdrRuleGroup != null) {
@@ -299,11 +292,10 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching m d r rule group, or <code>null</code> if a matching m d r rule group could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public MDRRuleGroup fetchByUuid_First(String uuid,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		List<MDRRuleGroup> list = findByUuid(uuid, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -320,12 +312,10 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching m d r rule group
 	 * @throws com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupException if a matching m d r rule group could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public MDRRuleGroup findByUuid_Last(String uuid,
-		OrderByComparator orderByComparator)
-		throws NoSuchRuleGroupException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchRuleGroupException {
 		MDRRuleGroup mdrRuleGroup = fetchByUuid_Last(uuid, orderByComparator);
 
 		if (mdrRuleGroup != null) {
@@ -350,11 +340,10 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching m d r rule group, or <code>null</code> if a matching m d r rule group could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public MDRRuleGroup fetchByUuid_Last(String uuid,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		int count = countByUuid(uuid);
 
 		if (count == 0) {
@@ -379,12 +368,10 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next m d r rule group
 	 * @throws com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupException if a m d r rule group with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public MDRRuleGroup[] findByUuid_PrevAndNext(long ruleGroupId, String uuid,
-		OrderByComparator orderByComparator)
-		throws NoSuchRuleGroupException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchRuleGroupException {
 		MDRRuleGroup mdrRuleGroup = findByPrimaryKey(ruleGroupId);
 
 		Session session = null;
@@ -535,10 +522,9 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 	 * Removes all the m d r rule groups where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByUuid(String uuid) throws SystemException {
+	public void removeByUuid(String uuid) {
 		for (MDRRuleGroup mdrRuleGroup : findByUuid(uuid, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null)) {
 			remove(mdrRuleGroup);
@@ -550,10 +536,9 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 	 *
 	 * @param uuid the uuid
 	 * @return the number of matching m d r rule groups
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByUuid(String uuid) throws SystemException {
+	public int countByUuid(String uuid) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_UUID;
 
 		Object[] finderArgs = new Object[] { uuid };
@@ -633,11 +618,10 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 	 * @param groupId the group ID
 	 * @return the matching m d r rule group
 	 * @throws com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupException if a matching m d r rule group could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public MDRRuleGroup findByUUID_G(String uuid, long groupId)
-		throws NoSuchRuleGroupException, SystemException {
+		throws NoSuchRuleGroupException {
 		MDRRuleGroup mdrRuleGroup = fetchByUUID_G(uuid, groupId);
 
 		if (mdrRuleGroup == null) {
@@ -669,11 +653,9 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 	 * @param uuid the uuid
 	 * @param groupId the group ID
 	 * @return the matching m d r rule group, or <code>null</code> if a matching m d r rule group could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public MDRRuleGroup fetchByUUID_G(String uuid, long groupId)
-		throws SystemException {
+	public MDRRuleGroup fetchByUUID_G(String uuid, long groupId) {
 		return fetchByUUID_G(uuid, groupId, true);
 	}
 
@@ -684,11 +666,10 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 	 * @param groupId the group ID
 	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching m d r rule group, or <code>null</code> if a matching m d r rule group could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public MDRRuleGroup fetchByUUID_G(String uuid, long groupId,
-		boolean retrieveFromCache) throws SystemException {
+		boolean retrieveFromCache) {
 		Object[] finderArgs = new Object[] { uuid, groupId };
 
 		Object result = null;
@@ -791,11 +772,10 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 	 * @param uuid the uuid
 	 * @param groupId the group ID
 	 * @return the m d r rule group that was removed
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public MDRRuleGroup removeByUUID_G(String uuid, long groupId)
-		throws NoSuchRuleGroupException, SystemException {
+		throws NoSuchRuleGroupException {
 		MDRRuleGroup mdrRuleGroup = findByUUID_G(uuid, groupId);
 
 		return remove(mdrRuleGroup);
@@ -807,11 +787,9 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 	 * @param uuid the uuid
 	 * @param groupId the group ID
 	 * @return the number of matching m d r rule groups
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByUUID_G(String uuid, long groupId)
-		throws SystemException {
+	public int countByUUID_G(String uuid, long groupId) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_UUID_G;
 
 		Object[] finderArgs = new Object[] { uuid, groupId };
@@ -905,11 +883,9 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @return the matching m d r rule groups
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<MDRRuleGroup> findByUuid_C(String uuid, long companyId)
-		throws SystemException {
+	public List<MDRRuleGroup> findByUuid_C(String uuid, long companyId) {
 		return findByUuid_C(uuid, companyId, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
@@ -926,11 +902,10 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 	 * @param start the lower bound of the range of m d r rule groups
 	 * @param end the upper bound of the range of m d r rule groups (not inclusive)
 	 * @return the range of matching m d r rule groups
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<MDRRuleGroup> findByUuid_C(String uuid, long companyId,
-		int start, int end) throws SystemException {
+		int start, int end) {
 		return findByUuid_C(uuid, companyId, start, end, null);
 	}
 
@@ -947,12 +922,10 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 	 * @param end the upper bound of the range of m d r rule groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching m d r rule groups
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<MDRRuleGroup> findByUuid_C(String uuid, long companyId,
-		int start, int end, OrderByComparator orderByComparator)
-		throws SystemException {
+		int start, int end, OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1079,12 +1052,10 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching m d r rule group
 	 * @throws com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupException if a matching m d r rule group could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public MDRRuleGroup findByUuid_C_First(String uuid, long companyId,
-		OrderByComparator orderByComparator)
-		throws NoSuchRuleGroupException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchRuleGroupException {
 		MDRRuleGroup mdrRuleGroup = fetchByUuid_C_First(uuid, companyId,
 				orderByComparator);
 
@@ -1114,11 +1085,10 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching m d r rule group, or <code>null</code> if a matching m d r rule group could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public MDRRuleGroup fetchByUuid_C_First(String uuid, long companyId,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		List<MDRRuleGroup> list = findByUuid_C(uuid, companyId, 0, 1,
 				orderByComparator);
 
@@ -1137,12 +1107,10 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching m d r rule group
 	 * @throws com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupException if a matching m d r rule group could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public MDRRuleGroup findByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator)
-		throws NoSuchRuleGroupException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchRuleGroupException {
 		MDRRuleGroup mdrRuleGroup = fetchByUuid_C_Last(uuid, companyId,
 				orderByComparator);
 
@@ -1172,11 +1140,10 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching m d r rule group, or <code>null</code> if a matching m d r rule group could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public MDRRuleGroup fetchByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		int count = countByUuid_C(uuid, companyId);
 
 		if (count == 0) {
@@ -1202,12 +1169,11 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next m d r rule group
 	 * @throws com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupException if a m d r rule group with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public MDRRuleGroup[] findByUuid_C_PrevAndNext(long ruleGroupId,
 		String uuid, long companyId, OrderByComparator orderByComparator)
-		throws NoSuchRuleGroupException, SystemException {
+		throws NoSuchRuleGroupException {
 		MDRRuleGroup mdrRuleGroup = findByPrimaryKey(ruleGroupId);
 
 		Session session = null;
@@ -1363,11 +1329,9 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByUuid_C(String uuid, long companyId)
-		throws SystemException {
+	public void removeByUuid_C(String uuid, long companyId) {
 		for (MDRRuleGroup mdrRuleGroup : findByUuid_C(uuid, companyId,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(mdrRuleGroup);
@@ -1380,11 +1344,9 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @return the number of matching m d r rule groups
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByUuid_C(String uuid, long companyId)
-		throws SystemException {
+	public int countByUuid_C(String uuid, long companyId) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_UUID_C;
 
 		Object[] finderArgs = new Object[] { uuid, companyId };
@@ -1476,11 +1438,9 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 	 *
 	 * @param groupId the group ID
 	 * @return the matching m d r rule groups
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<MDRRuleGroup> findByGroupId(long groupId)
-		throws SystemException {
+	public List<MDRRuleGroup> findByGroupId(long groupId) {
 		return findByGroupId(groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -1495,11 +1455,9 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 	 * @param start the lower bound of the range of m d r rule groups
 	 * @param end the upper bound of the range of m d r rule groups (not inclusive)
 	 * @return the range of matching m d r rule groups
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<MDRRuleGroup> findByGroupId(long groupId, int start, int end)
-		throws SystemException {
+	public List<MDRRuleGroup> findByGroupId(long groupId, int start, int end) {
 		return findByGroupId(groupId, start, end, null);
 	}
 
@@ -1515,11 +1473,10 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 	 * @param end the upper bound of the range of m d r rule groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching m d r rule groups
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<MDRRuleGroup> findByGroupId(long groupId, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1622,12 +1579,10 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching m d r rule group
 	 * @throws com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupException if a matching m d r rule group could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public MDRRuleGroup findByGroupId_First(long groupId,
-		OrderByComparator orderByComparator)
-		throws NoSuchRuleGroupException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchRuleGroupException {
 		MDRRuleGroup mdrRuleGroup = fetchByGroupId_First(groupId,
 				orderByComparator);
 
@@ -1653,11 +1608,10 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching m d r rule group, or <code>null</code> if a matching m d r rule group could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public MDRRuleGroup fetchByGroupId_First(long groupId,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		List<MDRRuleGroup> list = findByGroupId(groupId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -1674,12 +1628,10 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching m d r rule group
 	 * @throws com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupException if a matching m d r rule group could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public MDRRuleGroup findByGroupId_Last(long groupId,
-		OrderByComparator orderByComparator)
-		throws NoSuchRuleGroupException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchRuleGroupException {
 		MDRRuleGroup mdrRuleGroup = fetchByGroupId_Last(groupId,
 				orderByComparator);
 
@@ -1705,11 +1657,10 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching m d r rule group, or <code>null</code> if a matching m d r rule group could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public MDRRuleGroup fetchByGroupId_Last(long groupId,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		int count = countByGroupId(groupId);
 
 		if (count == 0) {
@@ -1734,12 +1685,11 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next m d r rule group
 	 * @throws com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupException if a m d r rule group with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public MDRRuleGroup[] findByGroupId_PrevAndNext(long ruleGroupId,
 		long groupId, OrderByComparator orderByComparator)
-		throws NoSuchRuleGroupException, SystemException {
+		throws NoSuchRuleGroupException {
 		MDRRuleGroup mdrRuleGroup = findByPrimaryKey(ruleGroupId);
 
 		Session session = null;
@@ -1877,11 +1827,9 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 	 *
 	 * @param groupId the group ID
 	 * @return the matching m d r rule groups that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<MDRRuleGroup> filterFindByGroupId(long groupId)
-		throws SystemException {
+	public List<MDRRuleGroup> filterFindByGroupId(long groupId) {
 		return filterFindByGroupId(groupId, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
@@ -1897,11 +1845,10 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 	 * @param start the lower bound of the range of m d r rule groups
 	 * @param end the upper bound of the range of m d r rule groups (not inclusive)
 	 * @return the range of matching m d r rule groups that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<MDRRuleGroup> filterFindByGroupId(long groupId, int start,
-		int end) throws SystemException {
+		int end) {
 		return filterFindByGroupId(groupId, start, end, null);
 	}
 
@@ -1917,11 +1864,10 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 	 * @param end the upper bound of the range of m d r rule groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching m d r rule groups that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<MDRRuleGroup> filterFindByGroupId(long groupId, int start,
-		int end, OrderByComparator orderByComparator) throws SystemException {
+		int end, OrderByComparator orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByGroupId(groupId, start, end, orderByComparator);
 		}
@@ -2009,12 +1955,11 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next m d r rule group
 	 * @throws com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupException if a m d r rule group with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public MDRRuleGroup[] filterFindByGroupId_PrevAndNext(long ruleGroupId,
 		long groupId, OrderByComparator orderByComparator)
-		throws NoSuchRuleGroupException, SystemException {
+		throws NoSuchRuleGroupException {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByGroupId_PrevAndNext(ruleGroupId, groupId,
 				orderByComparator);
@@ -2191,10 +2136,9 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 	 * Removes all the m d r rule groups where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByGroupId(long groupId) throws SystemException {
+	public void removeByGroupId(long groupId) {
 		for (MDRRuleGroup mdrRuleGroup : findByGroupId(groupId,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(mdrRuleGroup);
@@ -2206,10 +2150,9 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 	 *
 	 * @param groupId the group ID
 	 * @return the number of matching m d r rule groups
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByGroupId(long groupId) throws SystemException {
+	public int countByGroupId(long groupId) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_GROUPID;
 
 		Object[] finderArgs = new Object[] { groupId };
@@ -2259,10 +2202,9 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 	 *
 	 * @param groupId the group ID
 	 * @return the number of matching m d r rule groups that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int filterCountByGroupId(long groupId) throws SystemException {
+	public int filterCountByGroupId(long groupId) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return countByGroupId(groupId);
 		}
@@ -2472,11 +2414,10 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 	 * @param ruleGroupId the primary key of the m d r rule group
 	 * @return the m d r rule group that was removed
 	 * @throws com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupException if a m d r rule group with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public MDRRuleGroup remove(long ruleGroupId)
-		throws NoSuchRuleGroupException, SystemException {
+		throws NoSuchRuleGroupException {
 		return remove((Serializable)ruleGroupId);
 	}
 
@@ -2486,11 +2427,10 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 	 * @param primaryKey the primary key of the m d r rule group
 	 * @return the m d r rule group that was removed
 	 * @throws com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupException if a m d r rule group with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public MDRRuleGroup remove(Serializable primaryKey)
-		throws NoSuchRuleGroupException, SystemException {
+		throws NoSuchRuleGroupException {
 		Session session = null;
 
 		try {
@@ -2522,8 +2462,7 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 	}
 
 	@Override
-	protected MDRRuleGroup removeImpl(MDRRuleGroup mdrRuleGroup)
-		throws SystemException {
+	protected MDRRuleGroup removeImpl(MDRRuleGroup mdrRuleGroup) {
 		mdrRuleGroup = toUnwrappedModel(mdrRuleGroup);
 
 		Session session = null;
@@ -2556,8 +2495,7 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 
 	@Override
 	public MDRRuleGroup updateImpl(
-		com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup mdrRuleGroup)
-		throws SystemException {
+		com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup mdrRuleGroup) {
 		mdrRuleGroup = toUnwrappedModel(mdrRuleGroup);
 
 		boolean isNew = mdrRuleGroup.isNew();
@@ -2696,11 +2634,10 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 	 * @param primaryKey the primary key of the m d r rule group
 	 * @return the m d r rule group
 	 * @throws com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupException if a m d r rule group with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public MDRRuleGroup findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchRuleGroupException, SystemException {
+		throws NoSuchRuleGroupException {
 		MDRRuleGroup mdrRuleGroup = fetchByPrimaryKey(primaryKey);
 
 		if (mdrRuleGroup == null) {
@@ -2721,11 +2658,10 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 	 * @param ruleGroupId the primary key of the m d r rule group
 	 * @return the m d r rule group
 	 * @throws com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupException if a m d r rule group with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public MDRRuleGroup findByPrimaryKey(long ruleGroupId)
-		throws NoSuchRuleGroupException, SystemException {
+		throws NoSuchRuleGroupException {
 		return findByPrimaryKey((Serializable)ruleGroupId);
 	}
 
@@ -2734,11 +2670,9 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 	 *
 	 * @param primaryKey the primary key of the m d r rule group
 	 * @return the m d r rule group, or <code>null</code> if a m d r rule group with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public MDRRuleGroup fetchByPrimaryKey(Serializable primaryKey)
-		throws SystemException {
+	public MDRRuleGroup fetchByPrimaryKey(Serializable primaryKey) {
 		MDRRuleGroup mdrRuleGroup = (MDRRuleGroup)EntityCacheUtil.getResult(MDRRuleGroupModelImpl.ENTITY_CACHE_ENABLED,
 				MDRRuleGroupImpl.class, primaryKey);
 
@@ -2782,11 +2716,9 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 	 *
 	 * @param ruleGroupId the primary key of the m d r rule group
 	 * @return the m d r rule group, or <code>null</code> if a m d r rule group with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public MDRRuleGroup fetchByPrimaryKey(long ruleGroupId)
-		throws SystemException {
+	public MDRRuleGroup fetchByPrimaryKey(long ruleGroupId) {
 		return fetchByPrimaryKey((Serializable)ruleGroupId);
 	}
 
@@ -2794,10 +2726,9 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 	 * Returns all the m d r rule groups.
 	 *
 	 * @return the m d r rule groups
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<MDRRuleGroup> findAll() throws SystemException {
+	public List<MDRRuleGroup> findAll() {
 		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -2811,11 +2742,9 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 	 * @param start the lower bound of the range of m d r rule groups
 	 * @param end the upper bound of the range of m d r rule groups (not inclusive)
 	 * @return the range of m d r rule groups
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<MDRRuleGroup> findAll(int start, int end)
-		throws SystemException {
+	public List<MDRRuleGroup> findAll(int start, int end) {
 		return findAll(start, end, null);
 	}
 
@@ -2830,11 +2759,10 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 	 * @param end the upper bound of the range of m d r rule groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of m d r rule groups
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<MDRRuleGroup> findAll(int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2916,10 +2844,9 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 	/**
 	 * Removes all the m d r rule groups from the database.
 	 *
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeAll() throws SystemException {
+	public void removeAll() {
 		for (MDRRuleGroup mdrRuleGroup : findAll()) {
 			remove(mdrRuleGroup);
 		}
@@ -2929,10 +2856,9 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 	 * Returns the number of m d r rule groups.
 	 *
 	 * @return the number of m d r rule groups
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countAll() throws SystemException {
+	public int countAll() {
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
 				FINDER_ARGS_EMPTY, this);
 

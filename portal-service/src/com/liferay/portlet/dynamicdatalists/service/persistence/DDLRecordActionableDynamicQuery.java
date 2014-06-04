@@ -15,7 +15,6 @@
 package com.liferay.portlet.dynamicdatalists.service.persistence;
 
 import com.liferay.portal.kernel.dao.orm.BaseActionableDynamicQuery;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 
 import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
@@ -29,7 +28,7 @@ import com.liferay.portlet.dynamicdatalists.service.DDLRecordLocalServiceUtil;
 @Deprecated
 public abstract class DDLRecordActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
-	public DDLRecordActionableDynamicQuery() throws SystemException {
+	public DDLRecordActionableDynamicQuery() {
 		setBaseLocalService(DDLRecordLocalServiceUtil.getService());
 		setClass(DDLRecord.class);
 

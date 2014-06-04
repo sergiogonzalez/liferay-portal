@@ -266,11 +266,9 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 	* Returns the user uuid of this lock.
 	*
 	* @return the user uuid of this lock
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public java.lang.String getUserUuid()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public java.lang.String getUserUuid() {
 		return _lock.getUserUuid();
 	}
 
@@ -533,8 +531,7 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void persist() {
 		_lock.persist();
 	}
 

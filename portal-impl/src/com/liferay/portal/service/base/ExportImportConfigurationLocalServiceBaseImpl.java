@@ -74,13 +74,11 @@ public abstract class ExportImportConfigurationLocalServiceBaseImpl
 	 *
 	 * @param exportImportConfiguration the export import configuration
 	 * @return the export import configuration that was added
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ExportImportConfiguration addExportImportConfiguration(
-		ExportImportConfiguration exportImportConfiguration)
-		throws SystemException {
+		ExportImportConfiguration exportImportConfiguration) {
 		exportImportConfiguration.setNew(true);
 
 		return exportImportConfigurationPersistence.update(exportImportConfiguration);
@@ -104,7 +102,7 @@ public abstract class ExportImportConfigurationLocalServiceBaseImpl
 	 * @param exportImportConfigurationId the primary key of the export import configuration
 	 * @return the export import configuration that was removed
 	 * @throws PortalException if a export import configuration with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
+	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
@@ -120,7 +118,7 @@ public abstract class ExportImportConfigurationLocalServiceBaseImpl
 	 * @param exportImportConfiguration the export import configuration
 	 * @return the export import configuration that was removed
 	 * @throws PortalException
-	 * @throws SystemException if a system exception occurred
+	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
@@ -143,12 +141,10 @@ public abstract class ExportImportConfigurationLocalServiceBaseImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery) {
 		return exportImportConfigurationPersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -163,12 +159,10 @@ public abstract class ExportImportConfigurationLocalServiceBaseImpl
 	 * @param start the lower bound of the range of model instances
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
 		return exportImportConfigurationPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end);
 	}
@@ -185,12 +179,11 @@ public abstract class ExportImportConfigurationLocalServiceBaseImpl
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
 	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		return exportImportConfigurationPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
 	}
@@ -200,11 +193,9 @@ public abstract class ExportImportConfigurationLocalServiceBaseImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public long dynamicQueryCount(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return exportImportConfigurationPersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
@@ -214,18 +205,17 @@ public abstract class ExportImportConfigurationLocalServiceBaseImpl
 	 * @param dynamicQuery the dynamic query
 	 * @param projection the projection to apply to the query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection) throws SystemException {
+		Projection projection) {
 		return exportImportConfigurationPersistence.countWithDynamicQuery(dynamicQuery,
 			projection);
 	}
 
 	@Override
 	public ExportImportConfiguration fetchExportImportConfiguration(
-		long exportImportConfigurationId) throws SystemException {
+		long exportImportConfigurationId) {
 		return exportImportConfigurationPersistence.fetchByPrimaryKey(exportImportConfigurationId);
 	}
 
@@ -235,18 +225,15 @@ public abstract class ExportImportConfigurationLocalServiceBaseImpl
 	 * @param exportImportConfigurationId the primary key of the export import configuration
 	 * @return the export import configuration
 	 * @throws PortalException if a export import configuration with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ExportImportConfiguration getExportImportConfiguration(
-		long exportImportConfigurationId)
-		throws PortalException, SystemException {
+		long exportImportConfigurationId) throws PortalException {
 		return exportImportConfigurationPersistence.findByPrimaryKey(exportImportConfigurationId);
 	}
 
 	@Override
-	public ActionableDynamicQuery getActionableDynamicQuery()
-		throws SystemException {
+	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.ExportImportConfigurationLocalServiceUtil.getService());
@@ -260,8 +247,7 @@ public abstract class ExportImportConfigurationLocalServiceBaseImpl
 	}
 
 	protected void initActionableDynamicQuery(
-		ActionableDynamicQuery actionableDynamicQuery)
-		throws SystemException {
+		ActionableDynamicQuery actionableDynamicQuery) {
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.ExportImportConfigurationLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(ExportImportConfiguration.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
@@ -272,7 +258,7 @@ public abstract class ExportImportConfigurationLocalServiceBaseImpl
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return exportImportConfigurationPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -286,11 +272,10 @@ public abstract class ExportImportConfigurationLocalServiceBaseImpl
 	 * @param start the lower bound of the range of export import configurations
 	 * @param end the upper bound of the range of export import configurations (not inclusive)
 	 * @return the range of export import configurations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<ExportImportConfiguration> getExportImportConfigurations(
-		int start, int end) throws SystemException {
+		int start, int end) {
 		return exportImportConfigurationPersistence.findAll(start, end);
 	}
 
@@ -298,10 +283,9 @@ public abstract class ExportImportConfigurationLocalServiceBaseImpl
 	 * Returns the number of export import configurations.
 	 *
 	 * @return the number of export import configurations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int getExportImportConfigurationsCount() throws SystemException {
+	public int getExportImportConfigurationsCount() {
 		return exportImportConfigurationPersistence.countAll();
 	}
 
@@ -310,13 +294,11 @@ public abstract class ExportImportConfigurationLocalServiceBaseImpl
 	 *
 	 * @param exportImportConfiguration the export import configuration
 	 * @return the export import configuration that was updated
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ExportImportConfiguration updateExportImportConfiguration(
-		ExportImportConfiguration exportImportConfiguration)
-		throws SystemException {
+		ExportImportConfiguration exportImportConfiguration) {
 		return exportImportConfigurationPersistence.update(exportImportConfiguration);
 	}
 
@@ -570,7 +552,7 @@ public abstract class ExportImportConfigurationLocalServiceBaseImpl
 	 *
 	 * @param sql the sql query
 	 */
-	protected void runSQL(String sql) throws SystemException {
+	protected void runSQL(String sql) {
 		try {
 			DataSource dataSource = exportImportConfigurationPersistence.getDataSource();
 

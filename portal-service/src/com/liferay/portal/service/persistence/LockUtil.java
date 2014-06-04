@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 import com.liferay.portal.model.Lock;
@@ -63,16 +62,14 @@ public class LockUtil {
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#countWithDynamicQuery(DynamicQuery)
 	 */
-	public static long countWithDynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public static long countWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return getPersistence().countWithDynamicQuery(dynamicQuery);
 	}
 
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery)
 	 */
-	public static List<Lock> findWithDynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public static List<Lock> findWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -80,7 +77,7 @@ public class LockUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
 	 */
 	public static List<Lock> findWithDynamicQuery(DynamicQuery dynamicQuery,
-		int start, int end) throws SystemException {
+		int start, int end) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -88,8 +85,7 @@ public class LockUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int, OrderByComparator)
 	 */
 	public static List<Lock> findWithDynamicQuery(DynamicQuery dynamicQuery,
-		int start, int end, OrderByComparator orderByComparator)
-		throws SystemException {
+		int start, int end, OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -98,15 +94,14 @@ public class LockUtil {
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static Lock update(Lock lock) throws SystemException {
+	public static Lock update(Lock lock) {
 		return getPersistence().update(lock);
 	}
 
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
-	public static Lock update(Lock lock, ServiceContext serviceContext)
-		throws SystemException {
+	public static Lock update(Lock lock, ServiceContext serviceContext) {
 		return getPersistence().update(lock, serviceContext);
 	}
 
@@ -115,11 +110,9 @@ public class LockUtil {
 	*
 	* @param uuid the uuid
 	* @return the matching locks
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portal.model.Lock> findByUuid(
-		java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid) {
 		return getPersistence().findByUuid(uuid);
 	}
 
@@ -134,11 +127,9 @@ public class LockUtil {
 	* @param start the lower bound of the range of locks
 	* @param end the upper bound of the range of locks (not inclusive)
 	* @return the range of matching locks
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portal.model.Lock> findByUuid(
-		java.lang.String uuid, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, int start, int end) {
 		return getPersistence().findByUuid(uuid, start, end);
 	}
 
@@ -154,12 +145,10 @@ public class LockUtil {
 	* @param end the upper bound of the range of locks (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching locks
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portal.model.Lock> findByUuid(
 		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -170,13 +159,11 @@ public class LockUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching lock
 	* @throws com.liferay.portal.NoSuchLockException if a matching lock could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Lock findByUuid_First(
 		java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchLockException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.NoSuchLockException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
 
@@ -186,12 +173,10 @@ public class LockUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching lock, or <code>null</code> if a matching lock could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Lock fetchByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
 
@@ -202,13 +187,11 @@ public class LockUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching lock
 	* @throws com.liferay.portal.NoSuchLockException if a matching lock could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Lock findByUuid_Last(
 		java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchLockException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.NoSuchLockException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -218,12 +201,10 @@ public class LockUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching lock, or <code>null</code> if a matching lock could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Lock fetchByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -235,13 +216,11 @@ public class LockUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next lock
 	* @throws com.liferay.portal.NoSuchLockException if a lock with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Lock[] findByUuid_PrevAndNext(
 		long lockId, java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchLockException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.NoSuchLockException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(lockId, uuid, orderByComparator);
 	}
@@ -250,10 +229,8 @@ public class LockUtil {
 	* Removes all the locks where uuid = &#63; from the database.
 	*
 	* @param uuid the uuid
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByUuid(java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByUuid(java.lang.String uuid) {
 		getPersistence().removeByUuid(uuid);
 	}
 
@@ -262,10 +239,8 @@ public class LockUtil {
 	*
 	* @param uuid the uuid
 	* @return the number of matching locks
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByUuid(java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByUuid(java.lang.String uuid) {
 		return getPersistence().countByUuid(uuid);
 	}
 
@@ -275,11 +250,9 @@ public class LockUtil {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	* @return the matching locks
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portal.model.Lock> findByUuid_C(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long companyId) {
 		return getPersistence().findByUuid_C(uuid, companyId);
 	}
 
@@ -295,11 +268,9 @@ public class LockUtil {
 	* @param start the lower bound of the range of locks
 	* @param end the upper bound of the range of locks (not inclusive)
 	* @return the range of matching locks
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portal.model.Lock> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long companyId, int start, int end) {
 		return getPersistence().findByUuid_C(uuid, companyId, start, end);
 	}
 
@@ -316,12 +287,10 @@ public class LockUtil {
 	* @param end the upper bound of the range of locks (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching locks
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portal.model.Lock> findByUuid_C(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
 	}
@@ -334,13 +303,11 @@ public class LockUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching lock
 	* @throws com.liferay.portal.NoSuchLockException if a matching lock could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Lock findByUuid_C_First(
 		java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchLockException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.NoSuchLockException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -352,12 +319,10 @@ public class LockUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching lock, or <code>null</code> if a matching lock could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Lock fetchByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -370,13 +335,11 @@ public class LockUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching lock
 	* @throws com.liferay.portal.NoSuchLockException if a matching lock could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Lock findByUuid_C_Last(
 		java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchLockException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.NoSuchLockException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -388,12 +351,10 @@ public class LockUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching lock, or <code>null</code> if a matching lock could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Lock fetchByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -407,13 +368,11 @@ public class LockUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next lock
 	* @throws com.liferay.portal.NoSuchLockException if a lock with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Lock[] findByUuid_C_PrevAndNext(
 		long lockId, java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchLockException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.NoSuchLockException {
 		return getPersistence()
 				   .findByUuid_C_PrevAndNext(lockId, uuid, companyId,
 			orderByComparator);
@@ -424,10 +383,8 @@ public class LockUtil {
 	*
 	* @param uuid the uuid
 	* @param companyId the company ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByUuid_C(java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByUuid_C(java.lang.String uuid, long companyId) {
 		getPersistence().removeByUuid_C(uuid, companyId);
 	}
 
@@ -437,10 +394,8 @@ public class LockUtil {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	* @return the number of matching locks
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByUuid_C(java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByUuid_C(java.lang.String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
@@ -449,11 +404,9 @@ public class LockUtil {
 	*
 	* @param expirationDate the expiration date
 	* @return the matching locks
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portal.model.Lock> findByLtExpirationDate(
-		java.util.Date expirationDate)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.util.Date expirationDate) {
 		return getPersistence().findByLtExpirationDate(expirationDate);
 	}
 
@@ -468,11 +421,9 @@ public class LockUtil {
 	* @param start the lower bound of the range of locks
 	* @param end the upper bound of the range of locks (not inclusive)
 	* @return the range of matching locks
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portal.model.Lock> findByLtExpirationDate(
-		java.util.Date expirationDate, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.util.Date expirationDate, int start, int end) {
 		return getPersistence()
 				   .findByLtExpirationDate(expirationDate, start, end);
 	}
@@ -489,12 +440,10 @@ public class LockUtil {
 	* @param end the upper bound of the range of locks (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching locks
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portal.model.Lock> findByLtExpirationDate(
 		java.util.Date expirationDate, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByLtExpirationDate(expirationDate, start, end,
 			orderByComparator);
@@ -507,13 +456,11 @@ public class LockUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching lock
 	* @throws com.liferay.portal.NoSuchLockException if a matching lock could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Lock findByLtExpirationDate_First(
 		java.util.Date expirationDate,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchLockException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.NoSuchLockException {
 		return getPersistence()
 				   .findByLtExpirationDate_First(expirationDate,
 			orderByComparator);
@@ -525,12 +472,10 @@ public class LockUtil {
 	* @param expirationDate the expiration date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching lock, or <code>null</code> if a matching lock could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Lock fetchByLtExpirationDate_First(
 		java.util.Date expirationDate,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByLtExpirationDate_First(expirationDate,
 			orderByComparator);
@@ -543,13 +488,11 @@ public class LockUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching lock
 	* @throws com.liferay.portal.NoSuchLockException if a matching lock could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Lock findByLtExpirationDate_Last(
 		java.util.Date expirationDate,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchLockException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.NoSuchLockException {
 		return getPersistence()
 				   .findByLtExpirationDate_Last(expirationDate,
 			orderByComparator);
@@ -561,12 +504,10 @@ public class LockUtil {
 	* @param expirationDate the expiration date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching lock, or <code>null</code> if a matching lock could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Lock fetchByLtExpirationDate_Last(
 		java.util.Date expirationDate,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByLtExpirationDate_Last(expirationDate,
 			orderByComparator);
@@ -580,13 +521,11 @@ public class LockUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next lock
 	* @throws com.liferay.portal.NoSuchLockException if a lock with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Lock[] findByLtExpirationDate_PrevAndNext(
 		long lockId, java.util.Date expirationDate,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchLockException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.NoSuchLockException {
 		return getPersistence()
 				   .findByLtExpirationDate_PrevAndNext(lockId, expirationDate,
 			orderByComparator);
@@ -596,10 +535,8 @@ public class LockUtil {
 	* Removes all the locks where expirationDate &lt; &#63; from the database.
 	*
 	* @param expirationDate the expiration date
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByLtExpirationDate(java.util.Date expirationDate)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByLtExpirationDate(java.util.Date expirationDate) {
 		getPersistence().removeByLtExpirationDate(expirationDate);
 	}
 
@@ -608,10 +545,8 @@ public class LockUtil {
 	*
 	* @param expirationDate the expiration date
 	* @return the number of matching locks
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByLtExpirationDate(java.util.Date expirationDate)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByLtExpirationDate(java.util.Date expirationDate) {
 		return getPersistence().countByLtExpirationDate(expirationDate);
 	}
 
@@ -622,12 +557,10 @@ public class LockUtil {
 	* @param key the key
 	* @return the matching lock
 	* @throws com.liferay.portal.NoSuchLockException if a matching lock could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Lock findByC_K(
 		java.lang.String className, java.lang.String key)
-		throws com.liferay.portal.NoSuchLockException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.NoSuchLockException {
 		return getPersistence().findByC_K(className, key);
 	}
 
@@ -637,11 +570,9 @@ public class LockUtil {
 	* @param className the class name
 	* @param key the key
 	* @return the matching lock, or <code>null</code> if a matching lock could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Lock fetchByC_K(
-		java.lang.String className, java.lang.String key)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String className, java.lang.String key) {
 		return getPersistence().fetchByC_K(className, key);
 	}
 
@@ -652,12 +583,10 @@ public class LockUtil {
 	* @param key the key
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching lock, or <code>null</code> if a matching lock could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Lock fetchByC_K(
 		java.lang.String className, java.lang.String key,
-		boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		boolean retrieveFromCache) {
 		return getPersistence().fetchByC_K(className, key, retrieveFromCache);
 	}
 
@@ -667,12 +596,10 @@ public class LockUtil {
 	* @param className the class name
 	* @param key the key
 	* @return the lock that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Lock removeByC_K(
 		java.lang.String className, java.lang.String key)
-		throws com.liferay.portal.NoSuchLockException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.NoSuchLockException {
 		return getPersistence().removeByC_K(className, key);
 	}
 
@@ -682,11 +609,9 @@ public class LockUtil {
 	* @param className the class name
 	* @param key the key
 	* @return the number of matching locks
-	* @throws SystemException if a system exception occurred
 	*/
 	public static int countByC_K(java.lang.String className,
-		java.lang.String key)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String key) {
 		return getPersistence().countByC_K(className, key);
 	}
 
@@ -725,17 +650,14 @@ public class LockUtil {
 	* @param lockId the primary key of the lock
 	* @return the lock that was removed
 	* @throws com.liferay.portal.NoSuchLockException if a lock with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Lock remove(long lockId)
-		throws com.liferay.portal.NoSuchLockException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.NoSuchLockException {
 		return getPersistence().remove(lockId);
 	}
 
 	public static com.liferay.portal.model.Lock updateImpl(
-		com.liferay.portal.model.Lock lock)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.Lock lock) {
 		return getPersistence().updateImpl(lock);
 	}
 
@@ -745,11 +667,9 @@ public class LockUtil {
 	* @param lockId the primary key of the lock
 	* @return the lock
 	* @throws com.liferay.portal.NoSuchLockException if a lock with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Lock findByPrimaryKey(long lockId)
-		throws com.liferay.portal.NoSuchLockException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.NoSuchLockException {
 		return getPersistence().findByPrimaryKey(lockId);
 	}
 
@@ -758,10 +678,8 @@ public class LockUtil {
 	*
 	* @param lockId the primary key of the lock
 	* @return the lock, or <code>null</code> if a lock with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portal.model.Lock fetchByPrimaryKey(long lockId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static com.liferay.portal.model.Lock fetchByPrimaryKey(long lockId) {
 		return getPersistence().fetchByPrimaryKey(lockId);
 	}
 
@@ -769,10 +687,8 @@ public class LockUtil {
 	* Returns all the locks.
 	*
 	* @return the locks
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.portal.model.Lock> findAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static java.util.List<com.liferay.portal.model.Lock> findAll() {
 		return getPersistence().findAll();
 	}
 
@@ -786,11 +702,9 @@ public class LockUtil {
 	* @param start the lower bound of the range of locks
 	* @param end the upper bound of the range of locks (not inclusive)
 	* @return the range of locks
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portal.model.Lock> findAll(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
@@ -805,22 +719,17 @@ public class LockUtil {
 	* @param end the upper bound of the range of locks (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of locks
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portal.model.Lock> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
 	/**
 	* Removes all the locks from the database.
-	*
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeAll() {
 		getPersistence().removeAll();
 	}
 
@@ -828,10 +737,8 @@ public class LockUtil {
 	* Returns the number of locks.
 	*
 	* @return the number of locks
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countAll() {
 		return getPersistence().countAll();
 	}
 

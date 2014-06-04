@@ -78,12 +78,11 @@ public abstract class LayoutFriendlyURLLocalServiceBaseImpl
 	 *
 	 * @param layoutFriendlyURL the layout friendly u r l
 	 * @return the layout friendly u r l that was added
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public LayoutFriendlyURL addLayoutFriendlyURL(
-		LayoutFriendlyURL layoutFriendlyURL) throws SystemException {
+		LayoutFriendlyURL layoutFriendlyURL) {
 		layoutFriendlyURL.setNew(true);
 
 		return layoutFriendlyURLPersistence.update(layoutFriendlyURL);
@@ -106,12 +105,11 @@ public abstract class LayoutFriendlyURLLocalServiceBaseImpl
 	 * @param layoutFriendlyURLId the primary key of the layout friendly u r l
 	 * @return the layout friendly u r l that was removed
 	 * @throws PortalException if a layout friendly u r l with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public LayoutFriendlyURL deleteLayoutFriendlyURL(long layoutFriendlyURLId)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return layoutFriendlyURLPersistence.remove(layoutFriendlyURLId);
 	}
 
@@ -120,7 +118,7 @@ public abstract class LayoutFriendlyURLLocalServiceBaseImpl
 	 *
 	 * @param layoutFriendlyURL the layout friendly u r l
 	 * @return the layout friendly u r l that was removed
-	 * @throws SystemException if a system exception occurred
+	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
@@ -142,12 +140,10 @@ public abstract class LayoutFriendlyURLLocalServiceBaseImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery) {
 		return layoutFriendlyURLPersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -162,12 +158,10 @@ public abstract class LayoutFriendlyURLLocalServiceBaseImpl
 	 * @param start the lower bound of the range of model instances
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
 		return layoutFriendlyURLPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end);
 	}
@@ -184,12 +178,11 @@ public abstract class LayoutFriendlyURLLocalServiceBaseImpl
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
 	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		return layoutFriendlyURLPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
 	}
@@ -199,11 +192,9 @@ public abstract class LayoutFriendlyURLLocalServiceBaseImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public long dynamicQueryCount(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return layoutFriendlyURLPersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
@@ -213,18 +204,16 @@ public abstract class LayoutFriendlyURLLocalServiceBaseImpl
 	 * @param dynamicQuery the dynamic query
 	 * @param projection the projection to apply to the query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection) throws SystemException {
+		Projection projection) {
 		return layoutFriendlyURLPersistence.countWithDynamicQuery(dynamicQuery,
 			projection);
 	}
 
 	@Override
-	public LayoutFriendlyURL fetchLayoutFriendlyURL(long layoutFriendlyURLId)
-		throws SystemException {
+	public LayoutFriendlyURL fetchLayoutFriendlyURL(long layoutFriendlyURLId) {
 		return layoutFriendlyURLPersistence.fetchByPrimaryKey(layoutFriendlyURLId);
 	}
 
@@ -234,11 +223,10 @@ public abstract class LayoutFriendlyURLLocalServiceBaseImpl
 	 * @param uuid the layout friendly u r l's UUID
 	 * @param  companyId the primary key of the company
 	 * @return the matching layout friendly u r l, or <code>null</code> if a matching layout friendly u r l could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public LayoutFriendlyURL fetchLayoutFriendlyURLByUuidAndCompanyId(
-		String uuid, long companyId) throws SystemException {
+		String uuid, long companyId) {
 		return layoutFriendlyURLPersistence.fetchByUuid_C_First(uuid,
 			companyId, null);
 	}
@@ -249,11 +237,10 @@ public abstract class LayoutFriendlyURLLocalServiceBaseImpl
 	 * @param uuid the layout friendly u r l's UUID
 	 * @param groupId the primary key of the group
 	 * @return the matching layout friendly u r l, or <code>null</code> if a matching layout friendly u r l could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public LayoutFriendlyURL fetchLayoutFriendlyURLByUuidAndGroupId(
-		String uuid, long groupId) throws SystemException {
+		String uuid, long groupId) {
 		return layoutFriendlyURLPersistence.fetchByUUID_G(uuid, groupId);
 	}
 
@@ -263,17 +250,15 @@ public abstract class LayoutFriendlyURLLocalServiceBaseImpl
 	 * @param layoutFriendlyURLId the primary key of the layout friendly u r l
 	 * @return the layout friendly u r l
 	 * @throws PortalException if a layout friendly u r l with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public LayoutFriendlyURL getLayoutFriendlyURL(long layoutFriendlyURLId)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return layoutFriendlyURLPersistence.findByPrimaryKey(layoutFriendlyURLId);
 	}
 
 	@Override
-	public ActionableDynamicQuery getActionableDynamicQuery()
-		throws SystemException {
+	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.LayoutFriendlyURLLocalServiceUtil.getService());
@@ -286,8 +271,7 @@ public abstract class LayoutFriendlyURLLocalServiceBaseImpl
 	}
 
 	protected void initActionableDynamicQuery(
-		ActionableDynamicQuery actionableDynamicQuery)
-		throws SystemException {
+		ActionableDynamicQuery actionableDynamicQuery) {
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.LayoutFriendlyURLLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(LayoutFriendlyURL.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
@@ -297,11 +281,10 @@ public abstract class LayoutFriendlyURLLocalServiceBaseImpl
 
 	@Override
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		final PortletDataContext portletDataContext) throws SystemException {
+		final PortletDataContext portletDataContext) {
 		final ExportActionableDynamicQuery exportActionableDynamicQuery = new ExportActionableDynamicQuery() {
 				@Override
-				public long performCount()
-					throws PortalException, SystemException {
+				public long performCount() throws PortalException {
 					ManifestSummary manifestSummary = portletDataContext.getManifestSummary();
 
 					StagedModelType stagedModelType = getStagedModelType();
@@ -337,9 +320,8 @@ public abstract class LayoutFriendlyURLLocalServiceBaseImpl
 
 		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
 				@Override
-				@SuppressWarnings("unused")
 				public void performAction(Object object)
-					throws PortalException, SystemException {
+					throws PortalException {
 					LayoutFriendlyURL stagedModel = (LayoutFriendlyURL)object;
 
 					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
@@ -354,7 +336,7 @@ public abstract class LayoutFriendlyURLLocalServiceBaseImpl
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return layoutFriendlyURLPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -365,11 +347,10 @@ public abstract class LayoutFriendlyURLLocalServiceBaseImpl
 	 * @param  companyId the primary key of the company
 	 * @return the matching layout friendly u r l
 	 * @throws PortalException if a matching layout friendly u r l could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public LayoutFriendlyURL getLayoutFriendlyURLByUuidAndCompanyId(
-		String uuid, long companyId) throws PortalException, SystemException {
+		String uuid, long companyId) throws PortalException {
 		return layoutFriendlyURLPersistence.findByUuid_C_First(uuid, companyId,
 			null);
 	}
@@ -381,11 +362,10 @@ public abstract class LayoutFriendlyURLLocalServiceBaseImpl
 	 * @param groupId the primary key of the group
 	 * @return the matching layout friendly u r l
 	 * @throws PortalException if a matching layout friendly u r l could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public LayoutFriendlyURL getLayoutFriendlyURLByUuidAndGroupId(String uuid,
-		long groupId) throws PortalException, SystemException {
+		long groupId) throws PortalException {
 		return layoutFriendlyURLPersistence.findByUUID_G(uuid, groupId);
 	}
 
@@ -399,11 +379,9 @@ public abstract class LayoutFriendlyURLLocalServiceBaseImpl
 	 * @param start the lower bound of the range of layout friendly u r ls
 	 * @param end the upper bound of the range of layout friendly u r ls (not inclusive)
 	 * @return the range of layout friendly u r ls
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<LayoutFriendlyURL> getLayoutFriendlyURLs(int start, int end)
-		throws SystemException {
+	public List<LayoutFriendlyURL> getLayoutFriendlyURLs(int start, int end) {
 		return layoutFriendlyURLPersistence.findAll(start, end);
 	}
 
@@ -411,10 +389,9 @@ public abstract class LayoutFriendlyURLLocalServiceBaseImpl
 	 * Returns the number of layout friendly u r ls.
 	 *
 	 * @return the number of layout friendly u r ls
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int getLayoutFriendlyURLsCount() throws SystemException {
+	public int getLayoutFriendlyURLsCount() {
 		return layoutFriendlyURLPersistence.countAll();
 	}
 
@@ -423,12 +400,11 @@ public abstract class LayoutFriendlyURLLocalServiceBaseImpl
 	 *
 	 * @param layoutFriendlyURL the layout friendly u r l
 	 * @return the layout friendly u r l that was updated
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public LayoutFriendlyURL updateLayoutFriendlyURL(
-		LayoutFriendlyURL layoutFriendlyURL) throws SystemException {
+		LayoutFriendlyURL layoutFriendlyURL) {
 		return layoutFriendlyURLPersistence.update(layoutFriendlyURL);
 	}
 
@@ -606,7 +582,7 @@ public abstract class LayoutFriendlyURLLocalServiceBaseImpl
 	 *
 	 * @param sql the sql query
 	 */
-	protected void runSQL(String sql) throws SystemException {
+	protected void runSQL(String sql) {
 		try {
 			DataSource dataSource = layoutFriendlyURLPersistence.getDataSource();
 

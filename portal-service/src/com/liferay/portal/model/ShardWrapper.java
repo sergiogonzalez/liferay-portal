@@ -326,8 +326,7 @@ public class ShardWrapper implements Shard, ModelWrapper<Shard> {
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void persist() {
 		_shard.persist();
 	}
 

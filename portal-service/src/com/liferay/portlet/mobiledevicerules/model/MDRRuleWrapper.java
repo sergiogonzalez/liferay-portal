@@ -275,11 +275,9 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	* Returns the user uuid of this m d r rule.
 	*
 	* @return the user uuid of this m d r rule
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public java.lang.String getUserUuid()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public java.lang.String getUserUuid() {
 		return _mdrRule.getUserUuid();
 	}
 
@@ -818,8 +816,7 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void persist() {
 		_mdrRule.persist();
 	}
 

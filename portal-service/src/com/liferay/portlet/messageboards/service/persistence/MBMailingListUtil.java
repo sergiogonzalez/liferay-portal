@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 import com.liferay.portal.service.ServiceContext;
@@ -64,8 +63,7 @@ public class MBMailingListUtil {
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#countWithDynamicQuery(DynamicQuery)
 	 */
-	public static long countWithDynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public static long countWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return getPersistence().countWithDynamicQuery(dynamicQuery);
 	}
 
@@ -73,7 +71,7 @@ public class MBMailingListUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery)
 	 */
 	public static List<MBMailingList> findWithDynamicQuery(
-		DynamicQuery dynamicQuery) throws SystemException {
+		DynamicQuery dynamicQuery) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -81,8 +79,7 @@ public class MBMailingListUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
 	 */
 	public static List<MBMailingList> findWithDynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+		DynamicQuery dynamicQuery, int start, int end) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -91,7 +88,7 @@ public class MBMailingListUtil {
 	 */
 	public static List<MBMailingList> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -100,8 +97,7 @@ public class MBMailingListUtil {
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static MBMailingList update(MBMailingList mbMailingList)
-		throws SystemException {
+	public static MBMailingList update(MBMailingList mbMailingList) {
 		return getPersistence().update(mbMailingList);
 	}
 
@@ -109,7 +105,7 @@ public class MBMailingListUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
 	public static MBMailingList update(MBMailingList mbMailingList,
-		ServiceContext serviceContext) throws SystemException {
+		ServiceContext serviceContext) {
 		return getPersistence().update(mbMailingList, serviceContext);
 	}
 
@@ -118,11 +114,9 @@ public class MBMailingListUtil {
 	*
 	* @param uuid the uuid
 	* @return the matching message boards mailing lists
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMailingList> findByUuid(
-		java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid) {
 		return getPersistence().findByUuid(uuid);
 	}
 
@@ -137,11 +131,9 @@ public class MBMailingListUtil {
 	* @param start the lower bound of the range of message boards mailing lists
 	* @param end the upper bound of the range of message boards mailing lists (not inclusive)
 	* @return the range of matching message boards mailing lists
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMailingList> findByUuid(
-		java.lang.String uuid, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, int start, int end) {
 		return getPersistence().findByUuid(uuid, start, end);
 	}
 
@@ -157,12 +149,10 @@ public class MBMailingListUtil {
 	* @param end the upper bound of the range of message boards mailing lists (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching message boards mailing lists
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMailingList> findByUuid(
 		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -173,13 +163,11 @@ public class MBMailingListUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message boards mailing list
 	* @throws com.liferay.portlet.messageboards.NoSuchMailingListException if a matching message boards mailing list could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMailingList findByUuid_First(
 		java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMailingListException {
+		throws com.liferay.portlet.messageboards.NoSuchMailingListException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
 
@@ -189,12 +177,10 @@ public class MBMailingListUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message boards mailing list, or <code>null</code> if a matching message boards mailing list could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMailingList fetchByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
 
@@ -205,13 +191,11 @@ public class MBMailingListUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message boards mailing list
 	* @throws com.liferay.portlet.messageboards.NoSuchMailingListException if a matching message boards mailing list could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMailingList findByUuid_Last(
 		java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMailingListException {
+		throws com.liferay.portlet.messageboards.NoSuchMailingListException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -221,12 +205,10 @@ public class MBMailingListUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message boards mailing list, or <code>null</code> if a matching message boards mailing list could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMailingList fetchByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -238,13 +220,11 @@ public class MBMailingListUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next message boards mailing list
 	* @throws com.liferay.portlet.messageboards.NoSuchMailingListException if a message boards mailing list with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMailingList[] findByUuid_PrevAndNext(
 		long mailingListId, java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMailingListException {
+		throws com.liferay.portlet.messageboards.NoSuchMailingListException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(mailingListId, uuid,
 			orderByComparator);
@@ -254,10 +234,8 @@ public class MBMailingListUtil {
 	* Removes all the message boards mailing lists where uuid = &#63; from the database.
 	*
 	* @param uuid the uuid
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByUuid(java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByUuid(java.lang.String uuid) {
 		getPersistence().removeByUuid(uuid);
 	}
 
@@ -266,10 +244,8 @@ public class MBMailingListUtil {
 	*
 	* @param uuid the uuid
 	* @return the number of matching message boards mailing lists
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByUuid(java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByUuid(java.lang.String uuid) {
 		return getPersistence().countByUuid(uuid);
 	}
 
@@ -280,12 +256,10 @@ public class MBMailingListUtil {
 	* @param groupId the group ID
 	* @return the matching message boards mailing list
 	* @throws com.liferay.portlet.messageboards.NoSuchMailingListException if a matching message boards mailing list could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMailingList findByUUID_G(
 		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMailingListException {
+		throws com.liferay.portlet.messageboards.NoSuchMailingListException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
 
@@ -295,11 +269,9 @@ public class MBMailingListUtil {
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the matching message boards mailing list, or <code>null</code> if a matching message boards mailing list could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMailingList fetchByUUID_G(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long groupId) {
 		return getPersistence().fetchByUUID_G(uuid, groupId);
 	}
 
@@ -310,11 +282,9 @@ public class MBMailingListUtil {
 	* @param groupId the group ID
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching message boards mailing list, or <code>null</code> if a matching message boards mailing list could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMailingList fetchByUUID_G(
-		java.lang.String uuid, long groupId, boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long groupId, boolean retrieveFromCache) {
 		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
 	}
 
@@ -324,12 +294,10 @@ public class MBMailingListUtil {
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the message boards mailing list that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMailingList removeByUUID_G(
 		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMailingListException {
+		throws com.liferay.portlet.messageboards.NoSuchMailingListException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
 
@@ -339,10 +307,8 @@ public class MBMailingListUtil {
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the number of matching message boards mailing lists
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByUUID_G(java.lang.String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
 	}
 
@@ -352,11 +318,9 @@ public class MBMailingListUtil {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	* @return the matching message boards mailing lists
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMailingList> findByUuid_C(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long companyId) {
 		return getPersistence().findByUuid_C(uuid, companyId);
 	}
 
@@ -372,11 +336,9 @@ public class MBMailingListUtil {
 	* @param start the lower bound of the range of message boards mailing lists
 	* @param end the upper bound of the range of message boards mailing lists (not inclusive)
 	* @return the range of matching message boards mailing lists
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMailingList> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long companyId, int start, int end) {
 		return getPersistence().findByUuid_C(uuid, companyId, start, end);
 	}
 
@@ -393,12 +355,10 @@ public class MBMailingListUtil {
 	* @param end the upper bound of the range of message boards mailing lists (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching message boards mailing lists
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMailingList> findByUuid_C(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
 	}
@@ -411,13 +371,11 @@ public class MBMailingListUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message boards mailing list
 	* @throws com.liferay.portlet.messageboards.NoSuchMailingListException if a matching message boards mailing list could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMailingList findByUuid_C_First(
 		java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMailingListException {
+		throws com.liferay.portlet.messageboards.NoSuchMailingListException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -429,12 +387,10 @@ public class MBMailingListUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message boards mailing list, or <code>null</code> if a matching message boards mailing list could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMailingList fetchByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -447,13 +403,11 @@ public class MBMailingListUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message boards mailing list
 	* @throws com.liferay.portlet.messageboards.NoSuchMailingListException if a matching message boards mailing list could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMailingList findByUuid_C_Last(
 		java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMailingListException {
+		throws com.liferay.portlet.messageboards.NoSuchMailingListException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -465,12 +419,10 @@ public class MBMailingListUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message boards mailing list, or <code>null</code> if a matching message boards mailing list could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMailingList fetchByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -484,13 +436,11 @@ public class MBMailingListUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next message boards mailing list
 	* @throws com.liferay.portlet.messageboards.NoSuchMailingListException if a message boards mailing list with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMailingList[] findByUuid_C_PrevAndNext(
 		long mailingListId, java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMailingListException {
+		throws com.liferay.portlet.messageboards.NoSuchMailingListException {
 		return getPersistence()
 				   .findByUuid_C_PrevAndNext(mailingListId, uuid, companyId,
 			orderByComparator);
@@ -501,10 +451,8 @@ public class MBMailingListUtil {
 	*
 	* @param uuid the uuid
 	* @param companyId the company ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByUuid_C(java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByUuid_C(java.lang.String uuid, long companyId) {
 		getPersistence().removeByUuid_C(uuid, companyId);
 	}
 
@@ -514,10 +462,8 @@ public class MBMailingListUtil {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	* @return the number of matching message boards mailing lists
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByUuid_C(java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByUuid_C(java.lang.String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
@@ -526,11 +472,9 @@ public class MBMailingListUtil {
 	*
 	* @param active the active
 	* @return the matching message boards mailing lists
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMailingList> findByActive(
-		boolean active)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		boolean active) {
 		return getPersistence().findByActive(active);
 	}
 
@@ -545,11 +489,9 @@ public class MBMailingListUtil {
 	* @param start the lower bound of the range of message boards mailing lists
 	* @param end the upper bound of the range of message boards mailing lists (not inclusive)
 	* @return the range of matching message boards mailing lists
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMailingList> findByActive(
-		boolean active, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		boolean active, int start, int end) {
 		return getPersistence().findByActive(active, start, end);
 	}
 
@@ -565,12 +507,10 @@ public class MBMailingListUtil {
 	* @param end the upper bound of the range of message boards mailing lists (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching message boards mailing lists
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMailingList> findByActive(
 		boolean active, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByActive(active, start, end, orderByComparator);
 	}
@@ -582,13 +522,11 @@ public class MBMailingListUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message boards mailing list
 	* @throws com.liferay.portlet.messageboards.NoSuchMailingListException if a matching message boards mailing list could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMailingList findByActive_First(
 		boolean active,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMailingListException {
+		throws com.liferay.portlet.messageboards.NoSuchMailingListException {
 		return getPersistence().findByActive_First(active, orderByComparator);
 	}
 
@@ -598,12 +536,10 @@ public class MBMailingListUtil {
 	* @param active the active
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message boards mailing list, or <code>null</code> if a matching message boards mailing list could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMailingList fetchByActive_First(
 		boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByActive_First(active, orderByComparator);
 	}
 
@@ -614,13 +550,11 @@ public class MBMailingListUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message boards mailing list
 	* @throws com.liferay.portlet.messageboards.NoSuchMailingListException if a matching message boards mailing list could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMailingList findByActive_Last(
 		boolean active,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMailingListException {
+		throws com.liferay.portlet.messageboards.NoSuchMailingListException {
 		return getPersistence().findByActive_Last(active, orderByComparator);
 	}
 
@@ -630,12 +564,10 @@ public class MBMailingListUtil {
 	* @param active the active
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message boards mailing list, or <code>null</code> if a matching message boards mailing list could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMailingList fetchByActive_Last(
 		boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByActive_Last(active, orderByComparator);
 	}
 
@@ -647,13 +579,11 @@ public class MBMailingListUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next message boards mailing list
 	* @throws com.liferay.portlet.messageboards.NoSuchMailingListException if a message boards mailing list with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMailingList[] findByActive_PrevAndNext(
 		long mailingListId, boolean active,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMailingListException {
+		throws com.liferay.portlet.messageboards.NoSuchMailingListException {
 		return getPersistence()
 				   .findByActive_PrevAndNext(mailingListId, active,
 			orderByComparator);
@@ -663,10 +593,8 @@ public class MBMailingListUtil {
 	* Removes all the message boards mailing lists where active = &#63; from the database.
 	*
 	* @param active the active
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByActive(boolean active)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByActive(boolean active) {
 		getPersistence().removeByActive(active);
 	}
 
@@ -675,10 +603,8 @@ public class MBMailingListUtil {
 	*
 	* @param active the active
 	* @return the number of matching message boards mailing lists
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByActive(boolean active)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByActive(boolean active) {
 		return getPersistence().countByActive(active);
 	}
 
@@ -689,12 +615,10 @@ public class MBMailingListUtil {
 	* @param categoryId the category ID
 	* @return the matching message boards mailing list
 	* @throws com.liferay.portlet.messageboards.NoSuchMailingListException if a matching message boards mailing list could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMailingList findByG_C(
 		long groupId, long categoryId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMailingListException {
+		throws com.liferay.portlet.messageboards.NoSuchMailingListException {
 		return getPersistence().findByG_C(groupId, categoryId);
 	}
 
@@ -704,11 +628,9 @@ public class MBMailingListUtil {
 	* @param groupId the group ID
 	* @param categoryId the category ID
 	* @return the matching message boards mailing list, or <code>null</code> if a matching message boards mailing list could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMailingList fetchByG_C(
-		long groupId, long categoryId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, long categoryId) {
 		return getPersistence().fetchByG_C(groupId, categoryId);
 	}
 
@@ -719,11 +641,9 @@ public class MBMailingListUtil {
 	* @param categoryId the category ID
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching message boards mailing list, or <code>null</code> if a matching message boards mailing list could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMailingList fetchByG_C(
-		long groupId, long categoryId, boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, long categoryId, boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByG_C(groupId, categoryId, retrieveFromCache);
 	}
@@ -734,12 +654,10 @@ public class MBMailingListUtil {
 	* @param groupId the group ID
 	* @param categoryId the category ID
 	* @return the message boards mailing list that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMailingList removeByG_C(
 		long groupId, long categoryId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMailingListException {
+		throws com.liferay.portlet.messageboards.NoSuchMailingListException {
 		return getPersistence().removeByG_C(groupId, categoryId);
 	}
 
@@ -749,10 +667,8 @@ public class MBMailingListUtil {
 	* @param groupId the group ID
 	* @param categoryId the category ID
 	* @return the number of matching message boards mailing lists
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByG_C(long groupId, long categoryId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByG_C(long groupId, long categoryId) {
 		return getPersistence().countByG_C(groupId, categoryId);
 	}
 
@@ -793,18 +709,15 @@ public class MBMailingListUtil {
 	* @param mailingListId the primary key of the message boards mailing list
 	* @return the message boards mailing list that was removed
 	* @throws com.liferay.portlet.messageboards.NoSuchMailingListException if a message boards mailing list with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMailingList remove(
 		long mailingListId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMailingListException {
+		throws com.liferay.portlet.messageboards.NoSuchMailingListException {
 		return getPersistence().remove(mailingListId);
 	}
 
 	public static com.liferay.portlet.messageboards.model.MBMailingList updateImpl(
-		com.liferay.portlet.messageboards.model.MBMailingList mbMailingList)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.messageboards.model.MBMailingList mbMailingList) {
 		return getPersistence().updateImpl(mbMailingList);
 	}
 
@@ -814,12 +727,10 @@ public class MBMailingListUtil {
 	* @param mailingListId the primary key of the message boards mailing list
 	* @return the message boards mailing list
 	* @throws com.liferay.portlet.messageboards.NoSuchMailingListException if a message boards mailing list with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMailingList findByPrimaryKey(
 		long mailingListId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMailingListException {
+		throws com.liferay.portlet.messageboards.NoSuchMailingListException {
 		return getPersistence().findByPrimaryKey(mailingListId);
 	}
 
@@ -828,11 +739,9 @@ public class MBMailingListUtil {
 	*
 	* @param mailingListId the primary key of the message boards mailing list
 	* @return the message boards mailing list, or <code>null</code> if a message boards mailing list with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMailingList fetchByPrimaryKey(
-		long mailingListId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long mailingListId) {
 		return getPersistence().fetchByPrimaryKey(mailingListId);
 	}
 
@@ -840,10 +749,8 @@ public class MBMailingListUtil {
 	* Returns all the message boards mailing lists.
 	*
 	* @return the message boards mailing lists
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.portlet.messageboards.model.MBMailingList> findAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static java.util.List<com.liferay.portlet.messageboards.model.MBMailingList> findAll() {
 		return getPersistence().findAll();
 	}
 
@@ -857,11 +764,9 @@ public class MBMailingListUtil {
 	* @param start the lower bound of the range of message boards mailing lists
 	* @param end the upper bound of the range of message boards mailing lists (not inclusive)
 	* @return the range of message boards mailing lists
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMailingList> findAll(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
@@ -876,22 +781,17 @@ public class MBMailingListUtil {
 	* @param end the upper bound of the range of message boards mailing lists (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of message boards mailing lists
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMailingList> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
 	/**
 	* Removes all the message boards mailing lists from the database.
-	*
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeAll() {
 		getPersistence().removeAll();
 	}
 
@@ -899,10 +799,8 @@ public class MBMailingListUtil {
 	* Returns the number of message boards mailing lists.
 	*
 	* @return the number of message boards mailing lists
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countAll() {
 		return getPersistence().countAll();
 	}
 

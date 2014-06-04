@@ -71,13 +71,11 @@ public abstract class JournalArticleResourceLocalServiceBaseImpl
 	 *
 	 * @param journalArticleResource the journal article resource
 	 * @return the journal article resource that was added
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public JournalArticleResource addJournalArticleResource(
-		JournalArticleResource journalArticleResource)
-		throws SystemException {
+		JournalArticleResource journalArticleResource) {
 		journalArticleResource.setNew(true);
 
 		return journalArticleResourcePersistence.update(journalArticleResource);
@@ -101,12 +99,11 @@ public abstract class JournalArticleResourceLocalServiceBaseImpl
 	 * @param resourcePrimKey the primary key of the journal article resource
 	 * @return the journal article resource that was removed
 	 * @throws PortalException if a journal article resource with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public JournalArticleResource deleteJournalArticleResource(
-		long resourcePrimKey) throws PortalException, SystemException {
+		long resourcePrimKey) throws PortalException {
 		return journalArticleResourcePersistence.remove(resourcePrimKey);
 	}
 
@@ -115,13 +112,11 @@ public abstract class JournalArticleResourceLocalServiceBaseImpl
 	 *
 	 * @param journalArticleResource the journal article resource
 	 * @return the journal article resource that was removed
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public JournalArticleResource deleteJournalArticleResource(
-		JournalArticleResource journalArticleResource)
-		throws SystemException {
+		JournalArticleResource journalArticleResource) {
 		return journalArticleResourcePersistence.remove(journalArticleResource);
 	}
 
@@ -138,12 +133,10 @@ public abstract class JournalArticleResourceLocalServiceBaseImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery) {
 		return journalArticleResourcePersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -158,12 +151,10 @@ public abstract class JournalArticleResourceLocalServiceBaseImpl
 	 * @param start the lower bound of the range of model instances
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
 		return journalArticleResourcePersistence.findWithDynamicQuery(dynamicQuery,
 			start, end);
 	}
@@ -180,12 +171,11 @@ public abstract class JournalArticleResourceLocalServiceBaseImpl
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
 	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		return journalArticleResourcePersistence.findWithDynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
 	}
@@ -195,11 +185,9 @@ public abstract class JournalArticleResourceLocalServiceBaseImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public long dynamicQueryCount(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return journalArticleResourcePersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
@@ -209,18 +197,17 @@ public abstract class JournalArticleResourceLocalServiceBaseImpl
 	 * @param dynamicQuery the dynamic query
 	 * @param projection the projection to apply to the query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection) throws SystemException {
+		Projection projection) {
 		return journalArticleResourcePersistence.countWithDynamicQuery(dynamicQuery,
 			projection);
 	}
 
 	@Override
 	public JournalArticleResource fetchJournalArticleResource(
-		long resourcePrimKey) throws SystemException {
+		long resourcePrimKey) {
 		return journalArticleResourcePersistence.fetchByPrimaryKey(resourcePrimKey);
 	}
 
@@ -230,11 +217,10 @@ public abstract class JournalArticleResourceLocalServiceBaseImpl
 	 * @param uuid the journal article resource's UUID
 	 * @param groupId the primary key of the group
 	 * @return the matching journal article resource, or <code>null</code> if a matching journal article resource could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public JournalArticleResource fetchJournalArticleResourceByUuidAndGroupId(
-		String uuid, long groupId) throws SystemException {
+		String uuid, long groupId) {
 		return journalArticleResourcePersistence.fetchByUUID_G(uuid, groupId);
 	}
 
@@ -244,17 +230,15 @@ public abstract class JournalArticleResourceLocalServiceBaseImpl
 	 * @param resourcePrimKey the primary key of the journal article resource
 	 * @return the journal article resource
 	 * @throws PortalException if a journal article resource with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public JournalArticleResource getJournalArticleResource(
-		long resourcePrimKey) throws PortalException, SystemException {
+		long resourcePrimKey) throws PortalException {
 		return journalArticleResourcePersistence.findByPrimaryKey(resourcePrimKey);
 	}
 
 	@Override
-	public ActionableDynamicQuery getActionableDynamicQuery()
-		throws SystemException {
+	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.journal.service.JournalArticleResourceLocalServiceUtil.getService());
@@ -267,8 +251,7 @@ public abstract class JournalArticleResourceLocalServiceBaseImpl
 	}
 
 	protected void initActionableDynamicQuery(
-		ActionableDynamicQuery actionableDynamicQuery)
-		throws SystemException {
+		ActionableDynamicQuery actionableDynamicQuery) {
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.journal.service.JournalArticleResourceLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(JournalArticleResource.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
@@ -278,7 +261,7 @@ public abstract class JournalArticleResourceLocalServiceBaseImpl
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return journalArticleResourcePersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -289,11 +272,10 @@ public abstract class JournalArticleResourceLocalServiceBaseImpl
 	 * @param groupId the primary key of the group
 	 * @return the matching journal article resource
 	 * @throws PortalException if a matching journal article resource could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public JournalArticleResource getJournalArticleResourceByUuidAndGroupId(
-		String uuid, long groupId) throws PortalException, SystemException {
+		String uuid, long groupId) throws PortalException {
 		return journalArticleResourcePersistence.findByUUID_G(uuid, groupId);
 	}
 
@@ -307,11 +289,10 @@ public abstract class JournalArticleResourceLocalServiceBaseImpl
 	 * @param start the lower bound of the range of journal article resources
 	 * @param end the upper bound of the range of journal article resources (not inclusive)
 	 * @return the range of journal article resources
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<JournalArticleResource> getJournalArticleResources(int start,
-		int end) throws SystemException {
+		int end) {
 		return journalArticleResourcePersistence.findAll(start, end);
 	}
 
@@ -319,10 +300,9 @@ public abstract class JournalArticleResourceLocalServiceBaseImpl
 	 * Returns the number of journal article resources.
 	 *
 	 * @return the number of journal article resources
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int getJournalArticleResourcesCount() throws SystemException {
+	public int getJournalArticleResourcesCount() {
 		return journalArticleResourcePersistence.countAll();
 	}
 
@@ -331,13 +311,11 @@ public abstract class JournalArticleResourceLocalServiceBaseImpl
 	 *
 	 * @param journalArticleResource the journal article resource
 	 * @return the journal article resource that was updated
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public JournalArticleResource updateJournalArticleResource(
-		JournalArticleResource journalArticleResource)
-		throws SystemException {
+		JournalArticleResource journalArticleResource) {
 		return journalArticleResourcePersistence.update(journalArticleResource);
 	}
 
@@ -441,7 +419,7 @@ public abstract class JournalArticleResourceLocalServiceBaseImpl
 	 *
 	 * @param sql the sql query
 	 */
-	protected void runSQL(String sql) throws SystemException {
+	protected void runSQL(String sql) {
 		try {
 			DataSource dataSource = journalArticleResourcePersistence.getDataSource();
 

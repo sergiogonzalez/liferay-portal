@@ -16,7 +16,6 @@ package com.liferay.portlet.messageboards.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.service.ServiceContext;
@@ -80,9 +79,8 @@ public interface MBStatsUserModel extends BaseModel<MBStatsUser> {
 	 * Returns the stats user uuid of this message boards stats user.
 	 *
 	 * @return the stats user uuid of this message boards stats user
-	 * @throws SystemException if a system exception occurred
 	 */
-	public String getStatsUserUuid() throws SystemException;
+	public String getStatsUserUuid();
 
 	/**
 	 * Sets the stats user uuid of this message boards stats user.
@@ -123,9 +121,8 @@ public interface MBStatsUserModel extends BaseModel<MBStatsUser> {
 	 * Returns the user uuid of this message boards stats user.
 	 *
 	 * @return the user uuid of this message boards stats user
-	 * @throws SystemException if a system exception occurred
 	 */
-	public String getUserUuid() throws SystemException;
+	public String getUserUuid();
 
 	/**
 	 * Sets the user uuid of this message boards stats user.

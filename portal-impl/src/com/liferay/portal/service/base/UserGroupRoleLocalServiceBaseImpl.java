@@ -78,12 +78,10 @@ public abstract class UserGroupRoleLocalServiceBaseImpl
 	 *
 	 * @param userGroupRole the user group role
 	 * @return the user group role that was added
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public UserGroupRole addUserGroupRole(UserGroupRole userGroupRole)
-		throws SystemException {
+	public UserGroupRole addUserGroupRole(UserGroupRole userGroupRole) {
 		userGroupRole.setNew(true);
 
 		return userGroupRolePersistence.update(userGroupRole);
@@ -106,12 +104,11 @@ public abstract class UserGroupRoleLocalServiceBaseImpl
 	 * @param userGroupRolePK the primary key of the user group role
 	 * @return the user group role that was removed
 	 * @throws PortalException if a user group role with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public UserGroupRole deleteUserGroupRole(UserGroupRolePK userGroupRolePK)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return userGroupRolePersistence.remove(userGroupRolePK);
 	}
 
@@ -120,7 +117,7 @@ public abstract class UserGroupRoleLocalServiceBaseImpl
 	 *
 	 * @param userGroupRole the user group role
 	 * @return the user group role that was removed
-	 * @throws SystemException if a system exception occurred
+	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
@@ -142,12 +139,10 @@ public abstract class UserGroupRoleLocalServiceBaseImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery) {
 		return userGroupRolePersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -162,12 +157,10 @@ public abstract class UserGroupRoleLocalServiceBaseImpl
 	 * @param start the lower bound of the range of model instances
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
 		return userGroupRolePersistence.findWithDynamicQuery(dynamicQuery,
 			start, end);
 	}
@@ -184,12 +177,11 @@ public abstract class UserGroupRoleLocalServiceBaseImpl
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
 	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		return userGroupRolePersistence.findWithDynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
 	}
@@ -199,11 +191,9 @@ public abstract class UserGroupRoleLocalServiceBaseImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public long dynamicQueryCount(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return userGroupRolePersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
@@ -213,18 +203,16 @@ public abstract class UserGroupRoleLocalServiceBaseImpl
 	 * @param dynamicQuery the dynamic query
 	 * @param projection the projection to apply to the query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection) throws SystemException {
+		Projection projection) {
 		return userGroupRolePersistence.countWithDynamicQuery(dynamicQuery,
 			projection);
 	}
 
 	@Override
-	public UserGroupRole fetchUserGroupRole(UserGroupRolePK userGroupRolePK)
-		throws SystemException {
+	public UserGroupRole fetchUserGroupRole(UserGroupRolePK userGroupRolePK) {
 		return userGroupRolePersistence.fetchByPrimaryKey(userGroupRolePK);
 	}
 
@@ -234,17 +222,15 @@ public abstract class UserGroupRoleLocalServiceBaseImpl
 	 * @param userGroupRolePK the primary key of the user group role
 	 * @return the user group role
 	 * @throws PortalException if a user group role with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserGroupRole getUserGroupRole(UserGroupRolePK userGroupRolePK)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return userGroupRolePersistence.findByPrimaryKey(userGroupRolePK);
 	}
 
 	@Override
-	public ActionableDynamicQuery getActionableDynamicQuery()
-		throws SystemException {
+	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.UserGroupRoleLocalServiceUtil.getService());
@@ -259,8 +245,7 @@ public abstract class UserGroupRoleLocalServiceBaseImpl
 	}
 
 	protected void initActionableDynamicQuery(
-		ActionableDynamicQuery actionableDynamicQuery)
-		throws SystemException {
+		ActionableDynamicQuery actionableDynamicQuery) {
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.UserGroupRoleLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(UserGroupRole.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
@@ -272,7 +257,7 @@ public abstract class UserGroupRoleLocalServiceBaseImpl
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return userGroupRolePersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -286,11 +271,9 @@ public abstract class UserGroupRoleLocalServiceBaseImpl
 	 * @param start the lower bound of the range of user group roles
 	 * @param end the upper bound of the range of user group roles (not inclusive)
 	 * @return the range of user group roles
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<UserGroupRole> getUserGroupRoles(int start, int end)
-		throws SystemException {
+	public List<UserGroupRole> getUserGroupRoles(int start, int end) {
 		return userGroupRolePersistence.findAll(start, end);
 	}
 
@@ -298,10 +281,9 @@ public abstract class UserGroupRoleLocalServiceBaseImpl
 	 * Returns the number of user group roles.
 	 *
 	 * @return the number of user group roles
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int getUserGroupRolesCount() throws SystemException {
+	public int getUserGroupRolesCount() {
 		return userGroupRolePersistence.countAll();
 	}
 
@@ -310,12 +292,10 @@ public abstract class UserGroupRoleLocalServiceBaseImpl
 	 *
 	 * @param userGroupRole the user group role
 	 * @return the user group role that was updated
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public UserGroupRole updateUserGroupRole(UserGroupRole userGroupRole)
-		throws SystemException {
+	public UserGroupRole updateUserGroupRole(UserGroupRole userGroupRole) {
 		return userGroupRolePersistence.update(userGroupRole);
 	}
 
@@ -678,7 +658,7 @@ public abstract class UserGroupRoleLocalServiceBaseImpl
 	 *
 	 * @param sql the sql query
 	 */
-	protected void runSQL(String sql) throws SystemException {
+	protected void runSQL(String sql) {
 		try {
 			DataSource dataSource = userGroupRolePersistence.getDataSource();
 

@@ -38,12 +38,10 @@ public class DDLRecordSetLocalServiceWrapper implements DDLRecordSetLocalService
 	*
 	* @param ddlRecordSet the d d l record set
 	* @return the d d l record set that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecordSet addDDLRecordSet(
-		com.liferay.portlet.dynamicdatalists.model.DDLRecordSet ddlRecordSet)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.dynamicdatalists.model.DDLRecordSet ddlRecordSet) {
 		return _ddlRecordSetLocalService.addDDLRecordSet(ddlRecordSet);
 	}
 
@@ -65,13 +63,11 @@ public class DDLRecordSetLocalServiceWrapper implements DDLRecordSetLocalService
 	* @param recordSetId the primary key of the d d l record set
 	* @return the d d l record set that was removed
 	* @throws PortalException if a d d l record set with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecordSet deleteDDLRecordSet(
 		long recordSetId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddlRecordSetLocalService.deleteDDLRecordSet(recordSetId);
 	}
 
@@ -80,12 +76,10 @@ public class DDLRecordSetLocalServiceWrapper implements DDLRecordSetLocalService
 	*
 	* @param ddlRecordSet the d d l record set
 	* @return the d d l record set that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecordSet deleteDDLRecordSet(
-		com.liferay.portlet.dynamicdatalists.model.DDLRecordSet ddlRecordSet)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.dynamicdatalists.model.DDLRecordSet ddlRecordSet) {
 		return _ddlRecordSetLocalService.deleteDDLRecordSet(ddlRecordSet);
 	}
 
@@ -99,13 +93,11 @@ public class DDLRecordSetLocalServiceWrapper implements DDLRecordSetLocalService
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _ddlRecordSetLocalService.dynamicQuery(dynamicQuery);
 	}
 
@@ -120,13 +112,12 @@ public class DDLRecordSetLocalServiceWrapper implements DDLRecordSetLocalService
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return _ddlRecordSetLocalService.dynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -142,15 +133,13 @@ public class DDLRecordSetLocalServiceWrapper implements DDLRecordSetLocalService
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return _ddlRecordSetLocalService.dynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
 	}
@@ -160,12 +149,10 @@ public class DDLRecordSetLocalServiceWrapper implements DDLRecordSetLocalService
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _ddlRecordSetLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
@@ -175,21 +162,18 @@ public class DDLRecordSetLocalServiceWrapper implements DDLRecordSetLocalService
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return _ddlRecordSetLocalService.dynamicQueryCount(dynamicQuery,
 			projection);
 	}
 
 	@Override
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecordSet fetchDDLRecordSet(
-		long recordSetId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long recordSetId) {
 		return _ddlRecordSetLocalService.fetchDDLRecordSet(recordSetId);
 	}
 
@@ -199,12 +183,10 @@ public class DDLRecordSetLocalServiceWrapper implements DDLRecordSetLocalService
 	* @param uuid the d d l record set's UUID
 	* @param companyId the primary key of the company
 	* @return the matching d d l record set, or <code>null</code> if a matching d d l record set could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecordSet fetchDDLRecordSetByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long companyId) {
 		return _ddlRecordSetLocalService.fetchDDLRecordSetByUuidAndCompanyId(uuid,
 			companyId);
 	}
@@ -215,12 +197,10 @@ public class DDLRecordSetLocalServiceWrapper implements DDLRecordSetLocalService
 	* @param uuid the d d l record set's UUID
 	* @param groupId the primary key of the group
 	* @return the matching d d l record set, or <code>null</code> if a matching d d l record set could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecordSet fetchDDLRecordSetByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long groupId) {
 		return _ddlRecordSetLocalService.fetchDDLRecordSetByUuidAndGroupId(uuid,
 			groupId);
 	}
@@ -231,34 +211,29 @@ public class DDLRecordSetLocalServiceWrapper implements DDLRecordSetLocalService
 	* @param recordSetId the primary key of the d d l record set
 	* @return the d d l record set
 	* @throws PortalException if a d d l record set with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecordSet getDDLRecordSet(
 		long recordSetId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddlRecordSetLocalService.getDDLRecordSet(recordSetId);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _ddlRecordSetLocalService.getActionableDynamicQuery();
 	}
 
 	@Override
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext) {
 		return _ddlRecordSetLocalService.getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	@Override
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddlRecordSetLocalService.getPersistedModel(primaryKeyObj);
 	}
 
@@ -269,13 +244,11 @@ public class DDLRecordSetLocalServiceWrapper implements DDLRecordSetLocalService
 	* @param companyId the primary key of the company
 	* @return the matching d d l record set
 	* @throws PortalException if a matching d d l record set could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecordSet getDDLRecordSetByUuidAndCompanyId(
 		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddlRecordSetLocalService.getDDLRecordSetByUuidAndCompanyId(uuid,
 			companyId);
 	}
@@ -287,13 +260,11 @@ public class DDLRecordSetLocalServiceWrapper implements DDLRecordSetLocalService
 	* @param groupId the primary key of the group
 	* @return the matching d d l record set
 	* @throws PortalException if a matching d d l record set could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecordSet getDDLRecordSetByUuidAndGroupId(
 		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddlRecordSetLocalService.getDDLRecordSetByUuidAndGroupId(uuid,
 			groupId);
 	}
@@ -308,12 +279,10 @@ public class DDLRecordSetLocalServiceWrapper implements DDLRecordSetLocalService
 	* @param start the lower bound of the range of d d l record sets
 	* @param end the upper bound of the range of d d l record sets (not inclusive)
 	* @return the range of d d l record sets
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordSet> getDDLRecordSets(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return _ddlRecordSetLocalService.getDDLRecordSets(start, end);
 	}
 
@@ -321,11 +290,9 @@ public class DDLRecordSetLocalServiceWrapper implements DDLRecordSetLocalService
 	* Returns the number of d d l record sets.
 	*
 	* @return the number of d d l record sets
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public int getDDLRecordSetsCount()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public int getDDLRecordSetsCount() {
 		return _ddlRecordSetLocalService.getDDLRecordSetsCount();
 	}
 
@@ -334,12 +301,10 @@ public class DDLRecordSetLocalServiceWrapper implements DDLRecordSetLocalService
 	*
 	* @param ddlRecordSet the d d l record set
 	* @return the d d l record set that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecordSet updateDDLRecordSet(
-		com.liferay.portlet.dynamicdatalists.model.DDLRecordSet ddlRecordSet)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.dynamicdatalists.model.DDLRecordSet ddlRecordSet) {
 		return _ddlRecordSetLocalService.updateDDLRecordSet(ddlRecordSet);
 	}
 

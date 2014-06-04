@@ -38,12 +38,10 @@ public class MBCategoryLocalServiceWrapper implements MBCategoryLocalService,
 	*
 	* @param mbCategory the message boards category
 	* @return the message boards category that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.messageboards.model.MBCategory addMBCategory(
-		com.liferay.portlet.messageboards.model.MBCategory mbCategory)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.messageboards.model.MBCategory mbCategory) {
 		return _mbCategoryLocalService.addMBCategory(mbCategory);
 	}
 
@@ -65,13 +63,11 @@ public class MBCategoryLocalServiceWrapper implements MBCategoryLocalService,
 	* @param categoryId the primary key of the message boards category
 	* @return the message boards category that was removed
 	* @throws PortalException if a message boards category with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.messageboards.model.MBCategory deleteMBCategory(
 		long categoryId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbCategoryLocalService.deleteMBCategory(categoryId);
 	}
 
@@ -80,12 +76,10 @@ public class MBCategoryLocalServiceWrapper implements MBCategoryLocalService,
 	*
 	* @param mbCategory the message boards category
 	* @return the message boards category that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.messageboards.model.MBCategory deleteMBCategory(
-		com.liferay.portlet.messageboards.model.MBCategory mbCategory)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.messageboards.model.MBCategory mbCategory) {
 		return _mbCategoryLocalService.deleteMBCategory(mbCategory);
 	}
 
@@ -99,13 +93,11 @@ public class MBCategoryLocalServiceWrapper implements MBCategoryLocalService,
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _mbCategoryLocalService.dynamicQuery(dynamicQuery);
 	}
 
@@ -120,13 +112,12 @@ public class MBCategoryLocalServiceWrapper implements MBCategoryLocalService,
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return _mbCategoryLocalService.dynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -142,15 +133,13 @@ public class MBCategoryLocalServiceWrapper implements MBCategoryLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return _mbCategoryLocalService.dynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
 	}
@@ -160,12 +149,10 @@ public class MBCategoryLocalServiceWrapper implements MBCategoryLocalService,
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _mbCategoryLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
@@ -175,21 +162,18 @@ public class MBCategoryLocalServiceWrapper implements MBCategoryLocalService,
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return _mbCategoryLocalService.dynamicQueryCount(dynamicQuery,
 			projection);
 	}
 
 	@Override
 	public com.liferay.portlet.messageboards.model.MBCategory fetchMBCategory(
-		long categoryId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long categoryId) {
 		return _mbCategoryLocalService.fetchMBCategory(categoryId);
 	}
 
@@ -199,12 +183,10 @@ public class MBCategoryLocalServiceWrapper implements MBCategoryLocalService,
 	* @param uuid the message boards category's UUID
 	* @param companyId the primary key of the company
 	* @return the matching message boards category, or <code>null</code> if a matching message boards category could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.messageboards.model.MBCategory fetchMBCategoryByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long companyId) {
 		return _mbCategoryLocalService.fetchMBCategoryByUuidAndCompanyId(uuid,
 			companyId);
 	}
@@ -215,12 +197,10 @@ public class MBCategoryLocalServiceWrapper implements MBCategoryLocalService,
 	* @param uuid the message boards category's UUID
 	* @param groupId the primary key of the group
 	* @return the matching message boards category, or <code>null</code> if a matching message boards category could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.messageboards.model.MBCategory fetchMBCategoryByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long groupId) {
 		return _mbCategoryLocalService.fetchMBCategoryByUuidAndGroupId(uuid,
 			groupId);
 	}
@@ -231,34 +211,29 @@ public class MBCategoryLocalServiceWrapper implements MBCategoryLocalService,
 	* @param categoryId the primary key of the message boards category
 	* @return the message boards category
 	* @throws PortalException if a message boards category with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.messageboards.model.MBCategory getMBCategory(
 		long categoryId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbCategoryLocalService.getMBCategory(categoryId);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _mbCategoryLocalService.getActionableDynamicQuery();
 	}
 
 	@Override
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext) {
 		return _mbCategoryLocalService.getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	@Override
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbCategoryLocalService.getPersistedModel(primaryKeyObj);
 	}
 
@@ -269,13 +244,11 @@ public class MBCategoryLocalServiceWrapper implements MBCategoryLocalService,
 	* @param companyId the primary key of the company
 	* @return the matching message boards category
 	* @throws PortalException if a matching message boards category could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.messageboards.model.MBCategory getMBCategoryByUuidAndCompanyId(
 		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbCategoryLocalService.getMBCategoryByUuidAndCompanyId(uuid,
 			companyId);
 	}
@@ -287,13 +260,11 @@ public class MBCategoryLocalServiceWrapper implements MBCategoryLocalService,
 	* @param groupId the primary key of the group
 	* @return the matching message boards category
 	* @throws PortalException if a matching message boards category could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.messageboards.model.MBCategory getMBCategoryByUuidAndGroupId(
 		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbCategoryLocalService.getMBCategoryByUuidAndGroupId(uuid,
 			groupId);
 	}
@@ -308,12 +279,10 @@ public class MBCategoryLocalServiceWrapper implements MBCategoryLocalService,
 	* @param start the lower bound of the range of message boards categories
 	* @param end the upper bound of the range of message boards categories (not inclusive)
 	* @return the range of message boards categories
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portlet.messageboards.model.MBCategory> getMBCategories(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return _mbCategoryLocalService.getMBCategories(start, end);
 	}
 
@@ -321,11 +290,9 @@ public class MBCategoryLocalServiceWrapper implements MBCategoryLocalService,
 	* Returns the number of message boards categories.
 	*
 	* @return the number of message boards categories
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public int getMBCategoriesCount()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public int getMBCategoriesCount() {
 		return _mbCategoryLocalService.getMBCategoriesCount();
 	}
 
@@ -334,12 +301,10 @@ public class MBCategoryLocalServiceWrapper implements MBCategoryLocalService,
 	*
 	* @param mbCategory the message boards category
 	* @return the message boards category that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.messageboards.model.MBCategory updateMBCategory(
-		com.liferay.portlet.messageboards.model.MBCategory mbCategory)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.messageboards.model.MBCategory mbCategory) {
 		return _mbCategoryLocalService.updateMBCategory(mbCategory);
 	}
 

@@ -95,12 +95,11 @@ public abstract class AnnouncementsEntryLocalServiceBaseImpl
 	 *
 	 * @param announcementsEntry the announcements entry
 	 * @return the announcements entry that was added
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public AnnouncementsEntry addAnnouncementsEntry(
-		AnnouncementsEntry announcementsEntry) throws SystemException {
+		AnnouncementsEntry announcementsEntry) {
 		announcementsEntry.setNew(true);
 
 		return announcementsEntryPersistence.update(announcementsEntry);
@@ -123,12 +122,11 @@ public abstract class AnnouncementsEntryLocalServiceBaseImpl
 	 * @param entryId the primary key of the announcements entry
 	 * @return the announcements entry that was removed
 	 * @throws PortalException if a announcements entry with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public AnnouncementsEntry deleteAnnouncementsEntry(long entryId)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return announcementsEntryPersistence.remove(entryId);
 	}
 
@@ -137,12 +135,11 @@ public abstract class AnnouncementsEntryLocalServiceBaseImpl
 	 *
 	 * @param announcementsEntry the announcements entry
 	 * @return the announcements entry that was removed
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public AnnouncementsEntry deleteAnnouncementsEntry(
-		AnnouncementsEntry announcementsEntry) throws SystemException {
+		AnnouncementsEntry announcementsEntry) {
 		return announcementsEntryPersistence.remove(announcementsEntry);
 	}
 
@@ -159,12 +156,10 @@ public abstract class AnnouncementsEntryLocalServiceBaseImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery) {
 		return announcementsEntryPersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -179,12 +174,10 @@ public abstract class AnnouncementsEntryLocalServiceBaseImpl
 	 * @param start the lower bound of the range of model instances
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
 		return announcementsEntryPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end);
 	}
@@ -201,12 +194,11 @@ public abstract class AnnouncementsEntryLocalServiceBaseImpl
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
 	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		return announcementsEntryPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
 	}
@@ -216,11 +208,9 @@ public abstract class AnnouncementsEntryLocalServiceBaseImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public long dynamicQueryCount(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return announcementsEntryPersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
@@ -230,18 +220,16 @@ public abstract class AnnouncementsEntryLocalServiceBaseImpl
 	 * @param dynamicQuery the dynamic query
 	 * @param projection the projection to apply to the query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection) throws SystemException {
+		Projection projection) {
 		return announcementsEntryPersistence.countWithDynamicQuery(dynamicQuery,
 			projection);
 	}
 
 	@Override
-	public AnnouncementsEntry fetchAnnouncementsEntry(long entryId)
-		throws SystemException {
+	public AnnouncementsEntry fetchAnnouncementsEntry(long entryId) {
 		return announcementsEntryPersistence.fetchByPrimaryKey(entryId);
 	}
 
@@ -251,11 +239,10 @@ public abstract class AnnouncementsEntryLocalServiceBaseImpl
 	 * @param uuid the announcements entry's UUID
 	 * @param  companyId the primary key of the company
 	 * @return the matching announcements entry, or <code>null</code> if a matching announcements entry could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnnouncementsEntry fetchAnnouncementsEntryByUuidAndCompanyId(
-		String uuid, long companyId) throws SystemException {
+		String uuid, long companyId) {
 		return announcementsEntryPersistence.fetchByUuid_C_First(uuid,
 			companyId, null);
 	}
@@ -266,17 +253,15 @@ public abstract class AnnouncementsEntryLocalServiceBaseImpl
 	 * @param entryId the primary key of the announcements entry
 	 * @return the announcements entry
 	 * @throws PortalException if a announcements entry with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnnouncementsEntry getAnnouncementsEntry(long entryId)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return announcementsEntryPersistence.findByPrimaryKey(entryId);
 	}
 
 	@Override
-	public ActionableDynamicQuery getActionableDynamicQuery()
-		throws SystemException {
+	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.announcements.service.AnnouncementsEntryLocalServiceUtil.getService());
@@ -289,8 +274,7 @@ public abstract class AnnouncementsEntryLocalServiceBaseImpl
 	}
 
 	protected void initActionableDynamicQuery(
-		ActionableDynamicQuery actionableDynamicQuery)
-		throws SystemException {
+		ActionableDynamicQuery actionableDynamicQuery) {
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.announcements.service.AnnouncementsEntryLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(AnnouncementsEntry.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
@@ -300,11 +284,10 @@ public abstract class AnnouncementsEntryLocalServiceBaseImpl
 
 	@Override
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		final PortletDataContext portletDataContext) throws SystemException {
+		final PortletDataContext portletDataContext) {
 		final ExportActionableDynamicQuery exportActionableDynamicQuery = new ExportActionableDynamicQuery() {
 				@Override
-				public long performCount()
-					throws PortalException, SystemException {
+				public long performCount() throws PortalException {
 					ManifestSummary manifestSummary = portletDataContext.getManifestSummary();
 
 					StagedModelType stagedModelType = getStagedModelType();
@@ -348,9 +331,8 @@ public abstract class AnnouncementsEntryLocalServiceBaseImpl
 
 		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
 				@Override
-				@SuppressWarnings("unused")
 				public void performAction(Object object)
-					throws PortalException, SystemException {
+					throws PortalException {
 					AnnouncementsEntry stagedModel = (AnnouncementsEntry)object;
 
 					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
@@ -365,7 +347,7 @@ public abstract class AnnouncementsEntryLocalServiceBaseImpl
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return announcementsEntryPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -376,11 +358,10 @@ public abstract class AnnouncementsEntryLocalServiceBaseImpl
 	 * @param  companyId the primary key of the company
 	 * @return the matching announcements entry
 	 * @throws PortalException if a matching announcements entry could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnnouncementsEntry getAnnouncementsEntryByUuidAndCompanyId(
-		String uuid, long companyId) throws PortalException, SystemException {
+		String uuid, long companyId) throws PortalException {
 		return announcementsEntryPersistence.findByUuid_C_First(uuid,
 			companyId, null);
 	}
@@ -395,11 +376,9 @@ public abstract class AnnouncementsEntryLocalServiceBaseImpl
 	 * @param start the lower bound of the range of announcements entries
 	 * @param end the upper bound of the range of announcements entries (not inclusive)
 	 * @return the range of announcements entries
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<AnnouncementsEntry> getAnnouncementsEntries(int start, int end)
-		throws SystemException {
+	public List<AnnouncementsEntry> getAnnouncementsEntries(int start, int end) {
 		return announcementsEntryPersistence.findAll(start, end);
 	}
 
@@ -407,10 +386,9 @@ public abstract class AnnouncementsEntryLocalServiceBaseImpl
 	 * Returns the number of announcements entries.
 	 *
 	 * @return the number of announcements entries
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int getAnnouncementsEntriesCount() throws SystemException {
+	public int getAnnouncementsEntriesCount() {
 		return announcementsEntryPersistence.countAll();
 	}
 
@@ -419,12 +397,11 @@ public abstract class AnnouncementsEntryLocalServiceBaseImpl
 	 *
 	 * @param announcementsEntry the announcements entry
 	 * @return the announcements entry that was updated
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public AnnouncementsEntry updateAnnouncementsEntry(
-		AnnouncementsEntry announcementsEntry) throws SystemException {
+		AnnouncementsEntry announcementsEntry) {
 		return announcementsEntryPersistence.update(announcementsEntry);
 	}
 
@@ -1219,7 +1196,7 @@ public abstract class AnnouncementsEntryLocalServiceBaseImpl
 	 *
 	 * @param sql the sql query
 	 */
-	protected void runSQL(String sql) throws SystemException {
+	protected void runSQL(String sql) {
 		try {
 			DataSource dataSource = announcementsEntryPersistence.getDataSource();
 

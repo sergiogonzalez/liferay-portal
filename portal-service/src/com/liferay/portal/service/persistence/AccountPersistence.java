@@ -67,15 +67,12 @@ public interface AccountPersistence extends BasePersistence<Account> {
 	* @param accountId the primary key of the account
 	* @return the account that was removed
 	* @throws com.liferay.portal.NoSuchAccountException if a account with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.Account remove(long accountId)
-		throws com.liferay.portal.NoSuchAccountException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.NoSuchAccountException;
 
 	public com.liferay.portal.model.Account updateImpl(
-		com.liferay.portal.model.Account account)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.model.Account account);
 
 	/**
 	* Returns the account with the primary key or throws a {@link com.liferay.portal.NoSuchAccountException} if it could not be found.
@@ -83,30 +80,24 @@ public interface AccountPersistence extends BasePersistence<Account> {
 	* @param accountId the primary key of the account
 	* @return the account
 	* @throws com.liferay.portal.NoSuchAccountException if a account with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.Account findByPrimaryKey(long accountId)
-		throws com.liferay.portal.NoSuchAccountException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.NoSuchAccountException;
 
 	/**
 	* Returns the account with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param accountId the primary key of the account
 	* @return the account, or <code>null</code> if a account with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portal.model.Account fetchByPrimaryKey(long accountId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public com.liferay.portal.model.Account fetchByPrimaryKey(long accountId);
 
 	/**
 	* Returns all the accounts.
 	*
 	* @return the accounts
-	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portal.model.Account> findAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public java.util.List<com.liferay.portal.model.Account> findAll();
 
 	/**
 	* Returns a range of all the accounts.
@@ -118,10 +109,9 @@ public interface AccountPersistence extends BasePersistence<Account> {
 	* @param start the lower bound of the range of accounts
 	* @param end the upper bound of the range of accounts (not inclusive)
 	* @return the range of accounts
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portal.model.Account> findAll(int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException;
+		int end);
 
 	/**
 	* Returns an ordered range of all the accounts.
@@ -134,27 +124,20 @@ public interface AccountPersistence extends BasePersistence<Account> {
 	* @param end the upper bound of the range of accounts (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of accounts
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portal.model.Account> findAll(int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Removes all the accounts from the database.
-	*
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeAll();
 
 	/**
 	* Returns the number of accounts.
 	*
 	* @return the number of accounts
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countAll();
 }

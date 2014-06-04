@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -110,11 +109,9 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	 * @param companyId the company ID
 	 * @param name the name
 	 * @return the matching resource blocks
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<ResourceBlock> findByC_N(long companyId, String name)
-		throws SystemException {
+	public List<ResourceBlock> findByC_N(long companyId, String name) {
 		return findByC_N(companyId, name, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			null);
 	}
@@ -131,11 +128,10 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	 * @param start the lower bound of the range of resource blocks
 	 * @param end the upper bound of the range of resource blocks (not inclusive)
 	 * @return the range of matching resource blocks
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<ResourceBlock> findByC_N(long companyId, String name,
-		int start, int end) throws SystemException {
+		int start, int end) {
 		return findByC_N(companyId, name, start, end, null);
 	}
 
@@ -152,12 +148,10 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	 * @param end the upper bound of the range of resource blocks (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching resource blocks
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<ResourceBlock> findByC_N(long companyId, String name,
-		int start, int end, OrderByComparator orderByComparator)
-		throws SystemException {
+		int start, int end, OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -284,12 +278,11 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching resource block
 	 * @throws com.liferay.portal.NoSuchResourceBlockException if a matching resource block could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ResourceBlock findByC_N_First(long companyId, String name,
 		OrderByComparator orderByComparator)
-		throws NoSuchResourceBlockException, SystemException {
+		throws NoSuchResourceBlockException {
 		ResourceBlock resourceBlock = fetchByC_N_First(companyId, name,
 				orderByComparator);
 
@@ -319,11 +312,10 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	 * @param name the name
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching resource block, or <code>null</code> if a matching resource block could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ResourceBlock fetchByC_N_First(long companyId, String name,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		List<ResourceBlock> list = findByC_N(companyId, name, 0, 1,
 				orderByComparator);
 
@@ -342,12 +334,11 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching resource block
 	 * @throws com.liferay.portal.NoSuchResourceBlockException if a matching resource block could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ResourceBlock findByC_N_Last(long companyId, String name,
 		OrderByComparator orderByComparator)
-		throws NoSuchResourceBlockException, SystemException {
+		throws NoSuchResourceBlockException {
 		ResourceBlock resourceBlock = fetchByC_N_Last(companyId, name,
 				orderByComparator);
 
@@ -377,11 +368,10 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	 * @param name the name
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching resource block, or <code>null</code> if a matching resource block could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ResourceBlock fetchByC_N_Last(long companyId, String name,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		int count = countByC_N(companyId, name);
 
 		if (count == 0) {
@@ -407,12 +397,11 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next resource block
 	 * @throws com.liferay.portal.NoSuchResourceBlockException if a resource block with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ResourceBlock[] findByC_N_PrevAndNext(long resourceBlockId,
 		long companyId, String name, OrderByComparator orderByComparator)
-		throws NoSuchResourceBlockException, SystemException {
+		throws NoSuchResourceBlockException {
 		ResourceBlock resourceBlock = findByPrimaryKey(resourceBlockId);
 
 		Session session = null;
@@ -568,11 +557,9 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	 *
 	 * @param companyId the company ID
 	 * @param name the name
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByC_N(long companyId, String name)
-		throws SystemException {
+	public void removeByC_N(long companyId, String name) {
 		for (ResourceBlock resourceBlock : findByC_N(companyId, name,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(resourceBlock);
@@ -585,11 +572,9 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	 * @param companyId the company ID
 	 * @param name the name
 	 * @return the number of matching resource blocks
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByC_N(long companyId, String name)
-		throws SystemException {
+	public int countByC_N(long companyId, String name) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_N;
 
 		Object[] finderArgs = new Object[] { companyId, name };
@@ -693,11 +678,10 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	 * @param groupId the group ID
 	 * @param name the name
 	 * @return the matching resource blocks
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<ResourceBlock> findByC_G_N(long companyId, long groupId,
-		String name) throws SystemException {
+		String name) {
 		return findByC_G_N(companyId, groupId, name, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
@@ -715,11 +699,10 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	 * @param start the lower bound of the range of resource blocks
 	 * @param end the upper bound of the range of resource blocks (not inclusive)
 	 * @return the range of matching resource blocks
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<ResourceBlock> findByC_G_N(long companyId, long groupId,
-		String name, int start, int end) throws SystemException {
+		String name, int start, int end) {
 		return findByC_G_N(companyId, groupId, name, start, end, null);
 	}
 
@@ -737,12 +720,10 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	 * @param end the upper bound of the range of resource blocks (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching resource blocks
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<ResourceBlock> findByC_G_N(long companyId, long groupId,
-		String name, int start, int end, OrderByComparator orderByComparator)
-		throws SystemException {
+		String name, int start, int end, OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -875,12 +856,11 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching resource block
 	 * @throws com.liferay.portal.NoSuchResourceBlockException if a matching resource block could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ResourceBlock findByC_G_N_First(long companyId, long groupId,
 		String name, OrderByComparator orderByComparator)
-		throws NoSuchResourceBlockException, SystemException {
+		throws NoSuchResourceBlockException {
 		ResourceBlock resourceBlock = fetchByC_G_N_First(companyId, groupId,
 				name, orderByComparator);
 
@@ -914,12 +894,10 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	 * @param name the name
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching resource block, or <code>null</code> if a matching resource block could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ResourceBlock fetchByC_G_N_First(long companyId, long groupId,
-		String name, OrderByComparator orderByComparator)
-		throws SystemException {
+		String name, OrderByComparator orderByComparator) {
 		List<ResourceBlock> list = findByC_G_N(companyId, groupId, name, 0, 1,
 				orderByComparator);
 
@@ -939,12 +917,11 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching resource block
 	 * @throws com.liferay.portal.NoSuchResourceBlockException if a matching resource block could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ResourceBlock findByC_G_N_Last(long companyId, long groupId,
 		String name, OrderByComparator orderByComparator)
-		throws NoSuchResourceBlockException, SystemException {
+		throws NoSuchResourceBlockException {
 		ResourceBlock resourceBlock = fetchByC_G_N_Last(companyId, groupId,
 				name, orderByComparator);
 
@@ -978,12 +955,10 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	 * @param name the name
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching resource block, or <code>null</code> if a matching resource block could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ResourceBlock fetchByC_G_N_Last(long companyId, long groupId,
-		String name, OrderByComparator orderByComparator)
-		throws SystemException {
+		String name, OrderByComparator orderByComparator) {
 		int count = countByC_G_N(companyId, groupId, name);
 
 		if (count == 0) {
@@ -1010,13 +985,12 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next resource block
 	 * @throws com.liferay.portal.NoSuchResourceBlockException if a resource block with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ResourceBlock[] findByC_G_N_PrevAndNext(long resourceBlockId,
 		long companyId, long groupId, String name,
 		OrderByComparator orderByComparator)
-		throws NoSuchResourceBlockException, SystemException {
+		throws NoSuchResourceBlockException {
 		ResourceBlock resourceBlock = findByPrimaryKey(resourceBlockId);
 
 		Session session = null;
@@ -1177,11 +1151,9 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	 * @param companyId the company ID
 	 * @param groupId the group ID
 	 * @param name the name
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByC_G_N(long companyId, long groupId, String name)
-		throws SystemException {
+	public void removeByC_G_N(long companyId, long groupId, String name) {
 		for (ResourceBlock resourceBlock : findByC_G_N(companyId, groupId,
 				name, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(resourceBlock);
@@ -1195,11 +1167,9 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	 * @param groupId the group ID
 	 * @param name the name
 	 * @return the number of matching resource blocks
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByC_G_N(long companyId, long groupId, String name)
-		throws SystemException {
+	public int countByC_G_N(long companyId, long groupId, String name) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_G_N;
 
 		Object[] finderArgs = new Object[] { companyId, groupId, name };
@@ -1300,12 +1270,11 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	 * @param permissionsHash the permissions hash
 	 * @return the matching resource block
 	 * @throws com.liferay.portal.NoSuchResourceBlockException if a matching resource block could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ResourceBlock findByC_G_N_P(long companyId, long groupId,
 		String name, String permissionsHash)
-		throws NoSuchResourceBlockException, SystemException {
+		throws NoSuchResourceBlockException {
 		ResourceBlock resourceBlock = fetchByC_G_N_P(companyId, groupId, name,
 				permissionsHash);
 
@@ -1346,11 +1315,10 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	 * @param name the name
 	 * @param permissionsHash the permissions hash
 	 * @return the matching resource block, or <code>null</code> if a matching resource block could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ResourceBlock fetchByC_G_N_P(long companyId, long groupId,
-		String name, String permissionsHash) throws SystemException {
+		String name, String permissionsHash) {
 		return fetchByC_G_N_P(companyId, groupId, name, permissionsHash, true);
 	}
 
@@ -1363,12 +1331,10 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	 * @param permissionsHash the permissions hash
 	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching resource block, or <code>null</code> if a matching resource block could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ResourceBlock fetchByC_G_N_P(long companyId, long groupId,
-		String name, String permissionsHash, boolean retrieveFromCache)
-		throws SystemException {
+		String name, String permissionsHash, boolean retrieveFromCache) {
 		Object[] finderArgs = new Object[] {
 				companyId, groupId, name, permissionsHash
 			};
@@ -1504,12 +1470,11 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	 * @param name the name
 	 * @param permissionsHash the permissions hash
 	 * @return the resource block that was removed
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ResourceBlock removeByC_G_N_P(long companyId, long groupId,
 		String name, String permissionsHash)
-		throws NoSuchResourceBlockException, SystemException {
+		throws NoSuchResourceBlockException {
 		ResourceBlock resourceBlock = findByC_G_N_P(companyId, groupId, name,
 				permissionsHash);
 
@@ -1524,11 +1489,10 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	 * @param name the name
 	 * @param permissionsHash the permissions hash
 	 * @return the number of matching resource blocks
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public int countByC_G_N_P(long companyId, long groupId, String name,
-		String permissionsHash) throws SystemException {
+		String permissionsHash) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_G_N_P;
 
 		Object[] finderArgs = new Object[] {
@@ -1796,11 +1760,10 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	 * @param resourceBlockId the primary key of the resource block
 	 * @return the resource block that was removed
 	 * @throws com.liferay.portal.NoSuchResourceBlockException if a resource block with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ResourceBlock remove(long resourceBlockId)
-		throws NoSuchResourceBlockException, SystemException {
+		throws NoSuchResourceBlockException {
 		return remove((Serializable)resourceBlockId);
 	}
 
@@ -1810,11 +1773,10 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	 * @param primaryKey the primary key of the resource block
 	 * @return the resource block that was removed
 	 * @throws com.liferay.portal.NoSuchResourceBlockException if a resource block with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ResourceBlock remove(Serializable primaryKey)
-		throws NoSuchResourceBlockException, SystemException {
+		throws NoSuchResourceBlockException {
 		Session session = null;
 
 		try {
@@ -1846,8 +1808,7 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	}
 
 	@Override
-	protected ResourceBlock removeImpl(ResourceBlock resourceBlock)
-		throws SystemException {
+	protected ResourceBlock removeImpl(ResourceBlock resourceBlock) {
 		resourceBlock = toUnwrappedModel(resourceBlock);
 
 		Session session = null;
@@ -1880,8 +1841,7 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 
 	@Override
 	public ResourceBlock updateImpl(
-		com.liferay.portal.model.ResourceBlock resourceBlock)
-		throws SystemException {
+		com.liferay.portal.model.ResourceBlock resourceBlock) {
 		resourceBlock = toUnwrappedModel(resourceBlock);
 
 		boolean isNew = resourceBlock.isNew();
@@ -2000,11 +1960,10 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	 * @param primaryKey the primary key of the resource block
 	 * @return the resource block
 	 * @throws com.liferay.portal.NoSuchResourceBlockException if a resource block with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ResourceBlock findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchResourceBlockException, SystemException {
+		throws NoSuchResourceBlockException {
 		ResourceBlock resourceBlock = fetchByPrimaryKey(primaryKey);
 
 		if (resourceBlock == null) {
@@ -2025,11 +1984,10 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	 * @param resourceBlockId the primary key of the resource block
 	 * @return the resource block
 	 * @throws com.liferay.portal.NoSuchResourceBlockException if a resource block with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ResourceBlock findByPrimaryKey(long resourceBlockId)
-		throws NoSuchResourceBlockException, SystemException {
+		throws NoSuchResourceBlockException {
 		return findByPrimaryKey((Serializable)resourceBlockId);
 	}
 
@@ -2038,11 +1996,9 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	 *
 	 * @param primaryKey the primary key of the resource block
 	 * @return the resource block, or <code>null</code> if a resource block with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public ResourceBlock fetchByPrimaryKey(Serializable primaryKey)
-		throws SystemException {
+	public ResourceBlock fetchByPrimaryKey(Serializable primaryKey) {
 		ResourceBlock resourceBlock = (ResourceBlock)EntityCacheUtil.getResult(ResourceBlockModelImpl.ENTITY_CACHE_ENABLED,
 				ResourceBlockImpl.class, primaryKey);
 
@@ -2086,11 +2042,9 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	 *
 	 * @param resourceBlockId the primary key of the resource block
 	 * @return the resource block, or <code>null</code> if a resource block with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public ResourceBlock fetchByPrimaryKey(long resourceBlockId)
-		throws SystemException {
+	public ResourceBlock fetchByPrimaryKey(long resourceBlockId) {
 		return fetchByPrimaryKey((Serializable)resourceBlockId);
 	}
 
@@ -2098,10 +2052,9 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	 * Returns all the resource blocks.
 	 *
 	 * @return the resource blocks
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<ResourceBlock> findAll() throws SystemException {
+	public List<ResourceBlock> findAll() {
 		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -2115,11 +2068,9 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	 * @param start the lower bound of the range of resource blocks
 	 * @param end the upper bound of the range of resource blocks (not inclusive)
 	 * @return the range of resource blocks
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<ResourceBlock> findAll(int start, int end)
-		throws SystemException {
+	public List<ResourceBlock> findAll(int start, int end) {
 		return findAll(start, end, null);
 	}
 
@@ -2134,11 +2085,10 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	 * @param end the upper bound of the range of resource blocks (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of resource blocks
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<ResourceBlock> findAll(int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2220,10 +2170,9 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	/**
 	 * Removes all the resource blocks from the database.
 	 *
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeAll() throws SystemException {
+	public void removeAll() {
 		for (ResourceBlock resourceBlock : findAll()) {
 			remove(resourceBlock);
 		}
@@ -2233,10 +2182,9 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	 * Returns the number of resource blocks.
 	 *
 	 * @return the number of resource blocks
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countAll() throws SystemException {
+	public int countAll() {
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
 				FINDER_ARGS_EMPTY, this);
 

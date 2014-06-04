@@ -914,7 +914,7 @@ public abstract class MBCategoryServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @param sql the sql query
 	 */
-	protected void runSQL(String sql) throws SystemException {
+	protected void runSQL(String sql) {
 		try {
 			DataSource dataSource = mbCategoryPersistence.getDataSource();
 

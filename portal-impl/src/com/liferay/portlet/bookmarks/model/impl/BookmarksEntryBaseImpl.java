@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.bookmarks.model.impl;
 
-import com.liferay.portal.kernel.exception.SystemException;
-
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.bookmarks.service.BookmarksEntryLocalServiceUtil;
 
@@ -39,7 +37,7 @@ public abstract class BookmarksEntryBaseImpl extends BookmarksEntryModelImpl
 	 * Never modify or reference this class directly. All methods that expect a bookmarks entry model instance should use the {@link BookmarksEntry} interface instead.
 	 */
 	@Override
-	public void persist() throws SystemException {
+	public void persist() {
 		if (this.isNew()) {
 			BookmarksEntryLocalServiceUtil.addBookmarksEntry(this);
 		}
@@ -49,7 +47,7 @@ public abstract class BookmarksEntryBaseImpl extends BookmarksEntryModelImpl
 	}
 
 	@Override
-	public void updateTreePath(String treePath) throws SystemException {
+	public void updateTreePath(String treePath) {
 		BookmarksEntry bookmarksEntry = this;
 
 		bookmarksEntry.setTreePath(treePath);

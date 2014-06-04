@@ -17,7 +17,6 @@ package com.liferay.portlet.softwarecatalog.model;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.AuditedModel;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
@@ -115,10 +114,9 @@ public interface SCProductVersionModel extends AuditedModel,
 	 * Returns the user uuid of this s c product version.
 	 *
 	 * @return the user uuid of this s c product version
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public String getUserUuid() throws SystemException;
+	public String getUserUuid();
 
 	/**
 	 * Sets the user uuid of this s c product version.

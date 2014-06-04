@@ -76,12 +76,10 @@ public abstract class DLFileRankLocalServiceBaseImpl
 	 *
 	 * @param dlFileRank the document library file rank
 	 * @return the document library file rank that was added
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public DLFileRank addDLFileRank(DLFileRank dlFileRank)
-		throws SystemException {
+	public DLFileRank addDLFileRank(DLFileRank dlFileRank) {
 		dlFileRank.setNew(true);
 
 		return dlFileRankPersistence.update(dlFileRank);
@@ -104,12 +102,11 @@ public abstract class DLFileRankLocalServiceBaseImpl
 	 * @param fileRankId the primary key of the document library file rank
 	 * @return the document library file rank that was removed
 	 * @throws PortalException if a document library file rank with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public DLFileRank deleteDLFileRank(long fileRankId)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return dlFileRankPersistence.remove(fileRankId);
 	}
 
@@ -118,12 +115,10 @@ public abstract class DLFileRankLocalServiceBaseImpl
 	 *
 	 * @param dlFileRank the document library file rank
 	 * @return the document library file rank that was removed
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public DLFileRank deleteDLFileRank(DLFileRank dlFileRank)
-		throws SystemException {
+	public DLFileRank deleteDLFileRank(DLFileRank dlFileRank) {
 		return dlFileRankPersistence.remove(dlFileRank);
 	}
 
@@ -140,12 +135,10 @@ public abstract class DLFileRankLocalServiceBaseImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery) {
 		return dlFileRankPersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -160,12 +153,10 @@ public abstract class DLFileRankLocalServiceBaseImpl
 	 * @param start the lower bound of the range of model instances
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
 		return dlFileRankPersistence.findWithDynamicQuery(dynamicQuery, start,
 			end);
 	}
@@ -182,12 +173,11 @@ public abstract class DLFileRankLocalServiceBaseImpl
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
 	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		return dlFileRankPersistence.findWithDynamicQuery(dynamicQuery, start,
 			end, orderByComparator);
 	}
@@ -197,11 +187,9 @@ public abstract class DLFileRankLocalServiceBaseImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public long dynamicQueryCount(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return dlFileRankPersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
@@ -211,18 +199,16 @@ public abstract class DLFileRankLocalServiceBaseImpl
 	 * @param dynamicQuery the dynamic query
 	 * @param projection the projection to apply to the query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection) throws SystemException {
+		Projection projection) {
 		return dlFileRankPersistence.countWithDynamicQuery(dynamicQuery,
 			projection);
 	}
 
 	@Override
-	public DLFileRank fetchDLFileRank(long fileRankId)
-		throws SystemException {
+	public DLFileRank fetchDLFileRank(long fileRankId) {
 		return dlFileRankPersistence.fetchByPrimaryKey(fileRankId);
 	}
 
@@ -232,17 +218,14 @@ public abstract class DLFileRankLocalServiceBaseImpl
 	 * @param fileRankId the primary key of the document library file rank
 	 * @return the document library file rank
 	 * @throws PortalException if a document library file rank with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public DLFileRank getDLFileRank(long fileRankId)
-		throws PortalException, SystemException {
+	public DLFileRank getDLFileRank(long fileRankId) throws PortalException {
 		return dlFileRankPersistence.findByPrimaryKey(fileRankId);
 	}
 
 	@Override
-	public ActionableDynamicQuery getActionableDynamicQuery()
-		throws SystemException {
+	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.documentlibrary.service.DLFileRankLocalServiceUtil.getService());
@@ -255,8 +238,7 @@ public abstract class DLFileRankLocalServiceBaseImpl
 	}
 
 	protected void initActionableDynamicQuery(
-		ActionableDynamicQuery actionableDynamicQuery)
-		throws SystemException {
+		ActionableDynamicQuery actionableDynamicQuery) {
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.documentlibrary.service.DLFileRankLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(DLFileRank.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
@@ -266,7 +248,7 @@ public abstract class DLFileRankLocalServiceBaseImpl
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return dlFileRankPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -280,11 +262,9 @@ public abstract class DLFileRankLocalServiceBaseImpl
 	 * @param start the lower bound of the range of document library file ranks
 	 * @param end the upper bound of the range of document library file ranks (not inclusive)
 	 * @return the range of document library file ranks
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<DLFileRank> getDLFileRanks(int start, int end)
-		throws SystemException {
+	public List<DLFileRank> getDLFileRanks(int start, int end) {
 		return dlFileRankPersistence.findAll(start, end);
 	}
 
@@ -292,10 +272,9 @@ public abstract class DLFileRankLocalServiceBaseImpl
 	 * Returns the number of document library file ranks.
 	 *
 	 * @return the number of document library file ranks
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int getDLFileRanksCount() throws SystemException {
+	public int getDLFileRanksCount() {
 		return dlFileRankPersistence.countAll();
 	}
 
@@ -304,12 +283,10 @@ public abstract class DLFileRankLocalServiceBaseImpl
 	 *
 	 * @param dlFileRank the document library file rank
 	 * @return the document library file rank that was updated
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public DLFileRank updateDLFileRank(DLFileRank dlFileRank)
-		throws SystemException {
+	public DLFileRank updateDLFileRank(DLFileRank dlFileRank) {
 		return dlFileRankPersistence.update(dlFileRank);
 	}
 
@@ -579,7 +556,7 @@ public abstract class DLFileRankLocalServiceBaseImpl
 	 *
 	 * @param sql the sql query
 	 */
-	protected void runSQL(String sql) throws SystemException {
+	protected void runSQL(String sql) {
 		try {
 			DataSource dataSource = dlFileRankPersistence.getDataSource();
 

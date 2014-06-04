@@ -1294,7 +1294,7 @@ public abstract class OrganizationServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @param sql the sql query
 	 */
-	protected void runSQL(String sql) throws SystemException {
+	protected void runSQL(String sql) {
 		try {
 			DataSource dataSource = organizationPersistence.getDataSource();
 

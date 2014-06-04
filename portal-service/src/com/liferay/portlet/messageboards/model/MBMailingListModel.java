@@ -17,7 +17,6 @@ package com.liferay.portlet.messageboards.model;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.StagedGroupedModel;
@@ -148,10 +147,9 @@ public interface MBMailingListModel extends BaseModel<MBMailingList>,
 	 * Returns the user uuid of this message boards mailing list.
 	 *
 	 * @return the user uuid of this message boards mailing list
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public String getUserUuid() throws SystemException;
+	public String getUserUuid();
 
 	/**
 	 * Sets the user uuid of this message boards mailing list.

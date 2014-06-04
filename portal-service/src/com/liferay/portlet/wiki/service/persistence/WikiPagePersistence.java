@@ -45,11 +45,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	*
 	* @param uuid the uuid
 	* @return the matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByUuid(
-		java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String uuid);
 
 	/**
 	* Returns a range of all the wiki pages where uuid = &#63;.
@@ -62,11 +60,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param start the lower bound of the range of wiki pages
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByUuid(
-		java.lang.String uuid, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String uuid, int start, int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages where uuid = &#63;.
@@ -80,12 +76,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByUuid(
 		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first wiki page in the ordered set where uuid = &#63;.
@@ -94,13 +88,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage findByUuid_First(
 		java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns the first wiki page in the ordered set where uuid = &#63;.
@@ -108,12 +100,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage fetchByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last wiki page in the ordered set where uuid = &#63;.
@@ -122,13 +112,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage findByUuid_Last(
 		java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns the last wiki page in the ordered set where uuid = &#63;.
@@ -136,12 +124,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage fetchByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the wiki pages before and after the current wiki page in the ordered set where uuid = &#63;.
@@ -151,32 +137,26 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a wiki page with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage[] findByUuid_PrevAndNext(
 		long pageId, java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Removes all the wiki pages where uuid = &#63; from the database.
 	*
 	* @param uuid the uuid
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByUuid(java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeByUuid(java.lang.String uuid);
 
 	/**
 	* Returns the number of wiki pages where uuid = &#63;.
 	*
 	* @param uuid the uuid
 	* @return the number of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countByUuid(java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByUuid(java.lang.String uuid);
 
 	/**
 	* Returns the wiki page where uuid = &#63; and groupId = &#63; or throws a {@link com.liferay.portlet.wiki.NoSuchPageException} if it could not be found.
@@ -185,12 +165,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param groupId the group ID
 	* @return the matching wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage findByUUID_G(
 		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns the wiki page where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -198,11 +176,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage fetchByUUID_G(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String uuid, long groupId);
 
 	/**
 	* Returns the wiki page where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -211,11 +187,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param groupId the group ID
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage fetchByUUID_G(
-		java.lang.String uuid, long groupId, boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String uuid, long groupId, boolean retrieveFromCache);
 
 	/**
 	* Removes the wiki page where uuid = &#63; and groupId = &#63; from the database.
@@ -223,12 +197,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the wiki page that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage removeByUUID_G(
 		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns the number of wiki pages where uuid = &#63; and groupId = &#63;.
@@ -236,10 +208,8 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the number of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByUUID_G(java.lang.String uuid, long groupId);
 
 	/**
 	* Returns all the wiki pages where uuid = &#63; and companyId = &#63;.
@@ -247,11 +217,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	* @return the matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByUuid_C(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String uuid, long companyId);
 
 	/**
 	* Returns a range of all the wiki pages where uuid = &#63; and companyId = &#63;.
@@ -265,11 +233,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param start the lower bound of the range of wiki pages
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String uuid, long companyId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages where uuid = &#63; and companyId = &#63;.
@@ -284,12 +250,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByUuid_C(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first wiki page in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -299,13 +263,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage findByUuid_C_First(
 		java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns the first wiki page in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -314,12 +276,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage fetchByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last wiki page in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -329,13 +289,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage findByUuid_C_Last(
 		java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns the last wiki page in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -344,12 +302,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage fetchByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the wiki pages before and after the current wiki page in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -360,23 +316,19 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a wiki page with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage[] findByUuid_C_PrevAndNext(
 		long pageId, java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Removes all the wiki pages where uuid = &#63; and companyId = &#63; from the database.
 	*
 	* @param uuid the uuid
 	* @param companyId the company ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByUuid_C(java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeByUuid_C(java.lang.String uuid, long companyId);
 
 	/**
 	* Returns the number of wiki pages where uuid = &#63; and companyId = &#63;.
@@ -384,21 +336,17 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	* @return the number of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countByUuid_C(java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByUuid_C(java.lang.String uuid, long companyId);
 
 	/**
 	* Returns all the wiki pages where resourcePrimKey = &#63;.
 	*
 	* @param resourcePrimKey the resource prim key
 	* @return the matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByResourcePrimKey(
-		long resourcePrimKey)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long resourcePrimKey);
 
 	/**
 	* Returns a range of all the wiki pages where resourcePrimKey = &#63;.
@@ -411,11 +359,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param start the lower bound of the range of wiki pages
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByResourcePrimKey(
-		long resourcePrimKey, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long resourcePrimKey, int start, int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages where resourcePrimKey = &#63;.
@@ -429,12 +375,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByResourcePrimKey(
 		long resourcePrimKey, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first wiki page in the ordered set where resourcePrimKey = &#63;.
@@ -443,13 +387,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage findByResourcePrimKey_First(
 		long resourcePrimKey,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns the first wiki page in the ordered set where resourcePrimKey = &#63;.
@@ -457,12 +399,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param resourcePrimKey the resource prim key
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage fetchByResourcePrimKey_First(
 		long resourcePrimKey,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last wiki page in the ordered set where resourcePrimKey = &#63;.
@@ -471,13 +411,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage findByResourcePrimKey_Last(
 		long resourcePrimKey,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns the last wiki page in the ordered set where resourcePrimKey = &#63;.
@@ -485,12 +423,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param resourcePrimKey the resource prim key
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage fetchByResourcePrimKey_Last(
 		long resourcePrimKey,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the wiki pages before and after the current wiki page in the ordered set where resourcePrimKey = &#63;.
@@ -500,42 +436,35 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a wiki page with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage[] findByResourcePrimKey_PrevAndNext(
 		long pageId, long resourcePrimKey,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Removes all the wiki pages where resourcePrimKey = &#63; from the database.
 	*
 	* @param resourcePrimKey the resource prim key
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByResourcePrimKey(long resourcePrimKey)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeByResourcePrimKey(long resourcePrimKey);
 
 	/**
 	* Returns the number of wiki pages where resourcePrimKey = &#63;.
 	*
 	* @param resourcePrimKey the resource prim key
 	* @return the number of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countByResourcePrimKey(long resourcePrimKey)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByResourcePrimKey(long resourcePrimKey);
 
 	/**
 	* Returns all the wiki pages where nodeId = &#63;.
 	*
 	* @param nodeId the node ID
 	* @return the matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByNodeId(
-		long nodeId) throws com.liferay.portal.kernel.exception.SystemException;
+		long nodeId);
 
 	/**
 	* Returns a range of all the wiki pages where nodeId = &#63;.
@@ -548,11 +477,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param start the lower bound of the range of wiki pages
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByNodeId(
-		long nodeId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long nodeId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages where nodeId = &#63;.
@@ -566,12 +493,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByNodeId(
 		long nodeId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first wiki page in the ordered set where nodeId = &#63;.
@@ -580,13 +505,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage findByNodeId_First(
 		long nodeId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns the first wiki page in the ordered set where nodeId = &#63;.
@@ -594,12 +517,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param nodeId the node ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage fetchByNodeId_First(
 		long nodeId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last wiki page in the ordered set where nodeId = &#63;.
@@ -608,13 +529,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage findByNodeId_Last(
 		long nodeId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns the last wiki page in the ordered set where nodeId = &#63;.
@@ -622,12 +541,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param nodeId the node ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage fetchByNodeId_Last(
 		long nodeId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the wiki pages before and after the current wiki page in the ordered set where nodeId = &#63;.
@@ -637,43 +554,35 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a wiki page with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage[] findByNodeId_PrevAndNext(
 		long pageId, long nodeId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Removes all the wiki pages where nodeId = &#63; from the database.
 	*
 	* @param nodeId the node ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByNodeId(long nodeId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeByNodeId(long nodeId);
 
 	/**
 	* Returns the number of wiki pages where nodeId = &#63;.
 	*
 	* @param nodeId the node ID
 	* @return the number of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countByNodeId(long nodeId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByNodeId(long nodeId);
 
 	/**
 	* Returns all the wiki pages where format = &#63;.
 	*
 	* @param format the format
 	* @return the matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByFormat(
-		java.lang.String format)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String format);
 
 	/**
 	* Returns a range of all the wiki pages where format = &#63;.
@@ -686,11 +595,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param start the lower bound of the range of wiki pages
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByFormat(
-		java.lang.String format, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String format, int start, int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages where format = &#63;.
@@ -704,12 +611,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByFormat(
 		java.lang.String format, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first wiki page in the ordered set where format = &#63;.
@@ -718,13 +623,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage findByFormat_First(
 		java.lang.String format,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns the first wiki page in the ordered set where format = &#63;.
@@ -732,12 +635,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param format the format
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage fetchByFormat_First(
 		java.lang.String format,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last wiki page in the ordered set where format = &#63;.
@@ -746,13 +647,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage findByFormat_Last(
 		java.lang.String format,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns the last wiki page in the ordered set where format = &#63;.
@@ -760,12 +659,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param format the format
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage fetchByFormat_Last(
 		java.lang.String format,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the wiki pages before and after the current wiki page in the ordered set where format = &#63;.
@@ -775,32 +672,26 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a wiki page with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage[] findByFormat_PrevAndNext(
 		long pageId, java.lang.String format,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Removes all the wiki pages where format = &#63; from the database.
 	*
 	* @param format the format
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByFormat(java.lang.String format)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeByFormat(java.lang.String format);
 
 	/**
 	* Returns the number of wiki pages where format = &#63;.
 	*
 	* @param format the format
 	* @return the number of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countByFormat(java.lang.String format)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByFormat(java.lang.String format);
 
 	/**
 	* Returns all the wiki pages where resourcePrimKey = &#63; and nodeId = &#63;.
@@ -808,11 +699,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param resourcePrimKey the resource prim key
 	* @param nodeId the node ID
 	* @return the matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByR_N(
-		long resourcePrimKey, long nodeId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long resourcePrimKey, long nodeId);
 
 	/**
 	* Returns a range of all the wiki pages where resourcePrimKey = &#63; and nodeId = &#63;.
@@ -826,11 +715,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param start the lower bound of the range of wiki pages
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByR_N(
-		long resourcePrimKey, long nodeId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long resourcePrimKey, long nodeId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages where resourcePrimKey = &#63; and nodeId = &#63;.
@@ -845,12 +732,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByR_N(
 		long resourcePrimKey, long nodeId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first wiki page in the ordered set where resourcePrimKey = &#63; and nodeId = &#63;.
@@ -860,13 +745,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage findByR_N_First(
 		long resourcePrimKey, long nodeId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns the first wiki page in the ordered set where resourcePrimKey = &#63; and nodeId = &#63;.
@@ -875,12 +758,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param nodeId the node ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage fetchByR_N_First(
 		long resourcePrimKey, long nodeId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last wiki page in the ordered set where resourcePrimKey = &#63; and nodeId = &#63;.
@@ -890,13 +771,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage findByR_N_Last(
 		long resourcePrimKey, long nodeId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns the last wiki page in the ordered set where resourcePrimKey = &#63; and nodeId = &#63;.
@@ -905,12 +784,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param nodeId the node ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage fetchByR_N_Last(
 		long resourcePrimKey, long nodeId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the wiki pages before and after the current wiki page in the ordered set where resourcePrimKey = &#63; and nodeId = &#63;.
@@ -921,23 +798,19 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a wiki page with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage[] findByR_N_PrevAndNext(
 		long pageId, long resourcePrimKey, long nodeId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Removes all the wiki pages where resourcePrimKey = &#63; and nodeId = &#63; from the database.
 	*
 	* @param resourcePrimKey the resource prim key
 	* @param nodeId the node ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByR_N(long resourcePrimKey, long nodeId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeByR_N(long resourcePrimKey, long nodeId);
 
 	/**
 	* Returns the number of wiki pages where resourcePrimKey = &#63; and nodeId = &#63;.
@@ -945,10 +818,8 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param resourcePrimKey the resource prim key
 	* @param nodeId the node ID
 	* @return the number of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countByR_N(long resourcePrimKey, long nodeId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByR_N(long resourcePrimKey, long nodeId);
 
 	/**
 	* Returns all the wiki pages where resourcePrimKey = &#63; and status = &#63;.
@@ -956,11 +827,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param resourcePrimKey the resource prim key
 	* @param status the status
 	* @return the matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByR_S(
-		long resourcePrimKey, int status)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long resourcePrimKey, int status);
 
 	/**
 	* Returns a range of all the wiki pages where resourcePrimKey = &#63; and status = &#63;.
@@ -974,11 +843,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param start the lower bound of the range of wiki pages
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByR_S(
-		long resourcePrimKey, int status, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long resourcePrimKey, int status, int start, int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages where resourcePrimKey = &#63; and status = &#63;.
@@ -993,12 +860,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByR_S(
 		long resourcePrimKey, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first wiki page in the ordered set where resourcePrimKey = &#63; and status = &#63;.
@@ -1008,13 +873,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage findByR_S_First(
 		long resourcePrimKey, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns the first wiki page in the ordered set where resourcePrimKey = &#63; and status = &#63;.
@@ -1023,12 +886,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage fetchByR_S_First(
 		long resourcePrimKey, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last wiki page in the ordered set where resourcePrimKey = &#63; and status = &#63;.
@@ -1038,13 +899,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage findByR_S_Last(
 		long resourcePrimKey, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns the last wiki page in the ordered set where resourcePrimKey = &#63; and status = &#63;.
@@ -1053,12 +912,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage fetchByR_S_Last(
 		long resourcePrimKey, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the wiki pages before and after the current wiki page in the ordered set where resourcePrimKey = &#63; and status = &#63;.
@@ -1069,23 +926,19 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a wiki page with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage[] findByR_S_PrevAndNext(
 		long pageId, long resourcePrimKey, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Removes all the wiki pages where resourcePrimKey = &#63; and status = &#63; from the database.
 	*
 	* @param resourcePrimKey the resource prim key
 	* @param status the status
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByR_S(long resourcePrimKey, int status)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeByR_S(long resourcePrimKey, int status);
 
 	/**
 	* Returns the number of wiki pages where resourcePrimKey = &#63; and status = &#63;.
@@ -1093,10 +946,8 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param resourcePrimKey the resource prim key
 	* @param status the status
 	* @return the number of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countByR_S(long resourcePrimKey, int status)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByR_S(long resourcePrimKey, int status);
 
 	/**
 	* Returns all the wiki pages where nodeId = &#63; and title = &#63;.
@@ -1104,11 +955,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param nodeId the node ID
 	* @param title the title
 	* @return the matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByN_T(
-		long nodeId, java.lang.String title)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long nodeId, java.lang.String title);
 
 	/**
 	* Returns a range of all the wiki pages where nodeId = &#63; and title = &#63;.
@@ -1122,11 +971,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param start the lower bound of the range of wiki pages
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByN_T(
-		long nodeId, java.lang.String title, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long nodeId, java.lang.String title, int start, int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages where nodeId = &#63; and title = &#63;.
@@ -1141,12 +988,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByN_T(
 		long nodeId, java.lang.String title, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first wiki page in the ordered set where nodeId = &#63; and title = &#63;.
@@ -1156,13 +1001,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage findByN_T_First(
 		long nodeId, java.lang.String title,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns the first wiki page in the ordered set where nodeId = &#63; and title = &#63;.
@@ -1171,12 +1014,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param title the title
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage fetchByN_T_First(
 		long nodeId, java.lang.String title,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last wiki page in the ordered set where nodeId = &#63; and title = &#63;.
@@ -1186,13 +1027,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage findByN_T_Last(long nodeId,
 		java.lang.String title,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns the last wiki page in the ordered set where nodeId = &#63; and title = &#63;.
@@ -1201,12 +1040,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param title the title
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage fetchByN_T_Last(
 		long nodeId, java.lang.String title,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the wiki pages before and after the current wiki page in the ordered set where nodeId = &#63; and title = &#63;.
@@ -1217,23 +1054,19 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a wiki page with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage[] findByN_T_PrevAndNext(
 		long pageId, long nodeId, java.lang.String title,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Removes all the wiki pages where nodeId = &#63; and title = &#63; from the database.
 	*
 	* @param nodeId the node ID
 	* @param title the title
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByN_T(long nodeId, java.lang.String title)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeByN_T(long nodeId, java.lang.String title);
 
 	/**
 	* Returns the number of wiki pages where nodeId = &#63; and title = &#63;.
@@ -1241,10 +1074,8 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param nodeId the node ID
 	* @param title the title
 	* @return the number of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countByN_T(long nodeId, java.lang.String title)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByN_T(long nodeId, java.lang.String title);
 
 	/**
 	* Returns all the wiki pages where nodeId = &#63; and head = &#63;.
@@ -1252,11 +1083,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param nodeId the node ID
 	* @param head the head
 	* @return the matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByN_H(
-		long nodeId, boolean head)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long nodeId, boolean head);
 
 	/**
 	* Returns a range of all the wiki pages where nodeId = &#63; and head = &#63;.
@@ -1270,11 +1099,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param start the lower bound of the range of wiki pages
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByN_H(
-		long nodeId, boolean head, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long nodeId, boolean head, int start, int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages where nodeId = &#63; and head = &#63;.
@@ -1289,12 +1116,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByN_H(
 		long nodeId, boolean head, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first wiki page in the ordered set where nodeId = &#63; and head = &#63;.
@@ -1304,13 +1129,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage findByN_H_First(
 		long nodeId, boolean head,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns the first wiki page in the ordered set where nodeId = &#63; and head = &#63;.
@@ -1319,12 +1142,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param head the head
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage fetchByN_H_First(
 		long nodeId, boolean head,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last wiki page in the ordered set where nodeId = &#63; and head = &#63;.
@@ -1334,13 +1155,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage findByN_H_Last(long nodeId,
 		boolean head,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns the last wiki page in the ordered set where nodeId = &#63; and head = &#63;.
@@ -1349,12 +1168,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param head the head
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage fetchByN_H_Last(
 		long nodeId, boolean head,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the wiki pages before and after the current wiki page in the ordered set where nodeId = &#63; and head = &#63;.
@@ -1365,23 +1182,19 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a wiki page with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage[] findByN_H_PrevAndNext(
 		long pageId, long nodeId, boolean head,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Removes all the wiki pages where nodeId = &#63; and head = &#63; from the database.
 	*
 	* @param nodeId the node ID
 	* @param head the head
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByN_H(long nodeId, boolean head)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeByN_H(long nodeId, boolean head);
 
 	/**
 	* Returns the number of wiki pages where nodeId = &#63; and head = &#63;.
@@ -1389,10 +1202,8 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param nodeId the node ID
 	* @param head the head
 	* @return the number of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countByN_H(long nodeId, boolean head)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByN_H(long nodeId, boolean head);
 
 	/**
 	* Returns all the wiki pages where nodeId = &#63; and parentTitle = &#63;.
@@ -1400,11 +1211,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param nodeId the node ID
 	* @param parentTitle the parent title
 	* @return the matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByN_P(
-		long nodeId, java.lang.String parentTitle)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long nodeId, java.lang.String parentTitle);
 
 	/**
 	* Returns a range of all the wiki pages where nodeId = &#63; and parentTitle = &#63;.
@@ -1418,11 +1227,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param start the lower bound of the range of wiki pages
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByN_P(
-		long nodeId, java.lang.String parentTitle, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long nodeId, java.lang.String parentTitle, int start, int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages where nodeId = &#63; and parentTitle = &#63;.
@@ -1437,12 +1244,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByN_P(
 		long nodeId, java.lang.String parentTitle, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first wiki page in the ordered set where nodeId = &#63; and parentTitle = &#63;.
@@ -1452,13 +1257,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage findByN_P_First(
 		long nodeId, java.lang.String parentTitle,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns the first wiki page in the ordered set where nodeId = &#63; and parentTitle = &#63;.
@@ -1467,12 +1270,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param parentTitle the parent title
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage fetchByN_P_First(
 		long nodeId, java.lang.String parentTitle,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last wiki page in the ordered set where nodeId = &#63; and parentTitle = &#63;.
@@ -1482,13 +1283,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage findByN_P_Last(long nodeId,
 		java.lang.String parentTitle,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns the last wiki page in the ordered set where nodeId = &#63; and parentTitle = &#63;.
@@ -1497,12 +1296,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param parentTitle the parent title
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage fetchByN_P_Last(
 		long nodeId, java.lang.String parentTitle,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the wiki pages before and after the current wiki page in the ordered set where nodeId = &#63; and parentTitle = &#63;.
@@ -1513,23 +1310,19 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a wiki page with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage[] findByN_P_PrevAndNext(
 		long pageId, long nodeId, java.lang.String parentTitle,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Removes all the wiki pages where nodeId = &#63; and parentTitle = &#63; from the database.
 	*
 	* @param nodeId the node ID
 	* @param parentTitle the parent title
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByN_P(long nodeId, java.lang.String parentTitle)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeByN_P(long nodeId, java.lang.String parentTitle);
 
 	/**
 	* Returns the number of wiki pages where nodeId = &#63; and parentTitle = &#63;.
@@ -1537,10 +1330,8 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param nodeId the node ID
 	* @param parentTitle the parent title
 	* @return the number of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countByN_P(long nodeId, java.lang.String parentTitle)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByN_P(long nodeId, java.lang.String parentTitle);
 
 	/**
 	* Returns all the wiki pages where nodeId = &#63; and redirectTitle = &#63;.
@@ -1548,11 +1339,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param nodeId the node ID
 	* @param redirectTitle the redirect title
 	* @return the matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByN_R(
-		long nodeId, java.lang.String redirectTitle)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long nodeId, java.lang.String redirectTitle);
 
 	/**
 	* Returns a range of all the wiki pages where nodeId = &#63; and redirectTitle = &#63;.
@@ -1566,11 +1355,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param start the lower bound of the range of wiki pages
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByN_R(
-		long nodeId, java.lang.String redirectTitle, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long nodeId, java.lang.String redirectTitle, int start, int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages where nodeId = &#63; and redirectTitle = &#63;.
@@ -1585,12 +1372,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByN_R(
 		long nodeId, java.lang.String redirectTitle, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first wiki page in the ordered set where nodeId = &#63; and redirectTitle = &#63;.
@@ -1600,13 +1385,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage findByN_R_First(
 		long nodeId, java.lang.String redirectTitle,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns the first wiki page in the ordered set where nodeId = &#63; and redirectTitle = &#63;.
@@ -1615,12 +1398,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param redirectTitle the redirect title
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage fetchByN_R_First(
 		long nodeId, java.lang.String redirectTitle,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last wiki page in the ordered set where nodeId = &#63; and redirectTitle = &#63;.
@@ -1630,13 +1411,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage findByN_R_Last(long nodeId,
 		java.lang.String redirectTitle,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns the last wiki page in the ordered set where nodeId = &#63; and redirectTitle = &#63;.
@@ -1645,12 +1424,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param redirectTitle the redirect title
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage fetchByN_R_Last(
 		long nodeId, java.lang.String redirectTitle,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the wiki pages before and after the current wiki page in the ordered set where nodeId = &#63; and redirectTitle = &#63;.
@@ -1661,23 +1438,19 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a wiki page with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage[] findByN_R_PrevAndNext(
 		long pageId, long nodeId, java.lang.String redirectTitle,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Removes all the wiki pages where nodeId = &#63; and redirectTitle = &#63; from the database.
 	*
 	* @param nodeId the node ID
 	* @param redirectTitle the redirect title
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByN_R(long nodeId, java.lang.String redirectTitle)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeByN_R(long nodeId, java.lang.String redirectTitle);
 
 	/**
 	* Returns the number of wiki pages where nodeId = &#63; and redirectTitle = &#63;.
@@ -1685,10 +1458,8 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param nodeId the node ID
 	* @param redirectTitle the redirect title
 	* @return the number of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countByN_R(long nodeId, java.lang.String redirectTitle)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByN_R(long nodeId, java.lang.String redirectTitle);
 
 	/**
 	* Returns all the wiki pages where nodeId = &#63; and status = &#63;.
@@ -1696,11 +1467,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param nodeId the node ID
 	* @param status the status
 	* @return the matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByN_S(
-		long nodeId, int status)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long nodeId, int status);
 
 	/**
 	* Returns a range of all the wiki pages where nodeId = &#63; and status = &#63;.
@@ -1714,11 +1483,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param start the lower bound of the range of wiki pages
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByN_S(
-		long nodeId, int status, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long nodeId, int status, int start, int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages where nodeId = &#63; and status = &#63;.
@@ -1733,12 +1500,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByN_S(
 		long nodeId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first wiki page in the ordered set where nodeId = &#63; and status = &#63;.
@@ -1748,13 +1513,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage findByN_S_First(
 		long nodeId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns the first wiki page in the ordered set where nodeId = &#63; and status = &#63;.
@@ -1763,12 +1526,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage fetchByN_S_First(
 		long nodeId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last wiki page in the ordered set where nodeId = &#63; and status = &#63;.
@@ -1778,13 +1539,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage findByN_S_Last(long nodeId,
 		int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns the last wiki page in the ordered set where nodeId = &#63; and status = &#63;.
@@ -1793,12 +1552,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage fetchByN_S_Last(
 		long nodeId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the wiki pages before and after the current wiki page in the ordered set where nodeId = &#63; and status = &#63;.
@@ -1809,23 +1566,19 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a wiki page with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage[] findByN_S_PrevAndNext(
 		long pageId, long nodeId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Removes all the wiki pages where nodeId = &#63; and status = &#63; from the database.
 	*
 	* @param nodeId the node ID
 	* @param status the status
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByN_S(long nodeId, int status)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeByN_S(long nodeId, int status);
 
 	/**
 	* Returns the number of wiki pages where nodeId = &#63; and status = &#63;.
@@ -1833,10 +1586,8 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param nodeId the node ID
 	* @param status the status
 	* @return the number of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countByN_S(long nodeId, int status)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByN_S(long nodeId, int status);
 
 	/**
 	* Returns the wiki page where resourcePrimKey = &#63; and nodeId = &#63; and version = &#63; or throws a {@link com.liferay.portlet.wiki.NoSuchPageException} if it could not be found.
@@ -1846,12 +1597,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param version the version
 	* @return the matching wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage findByR_N_V(
 		long resourcePrimKey, long nodeId, double version)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns the wiki page where resourcePrimKey = &#63; and nodeId = &#63; and version = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -1860,11 +1609,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param nodeId the node ID
 	* @param version the version
 	* @return the matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage fetchByR_N_V(
-		long resourcePrimKey, long nodeId, double version)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long resourcePrimKey, long nodeId, double version);
 
 	/**
 	* Returns the wiki page where resourcePrimKey = &#63; and nodeId = &#63; and version = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -1874,12 +1621,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param version the version
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage fetchByR_N_V(
 		long resourcePrimKey, long nodeId, double version,
-		boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		boolean retrieveFromCache);
 
 	/**
 	* Removes the wiki page where resourcePrimKey = &#63; and nodeId = &#63; and version = &#63; from the database.
@@ -1888,12 +1633,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param nodeId the node ID
 	* @param version the version
 	* @return the wiki page that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage removeByR_N_V(
 		long resourcePrimKey, long nodeId, double version)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns the number of wiki pages where resourcePrimKey = &#63; and nodeId = &#63; and version = &#63;.
@@ -1902,10 +1645,8 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param nodeId the node ID
 	* @param version the version
 	* @return the number of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countByR_N_V(long resourcePrimKey, long nodeId, double version)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByR_N_V(long resourcePrimKey, long nodeId, double version);
 
 	/**
 	* Returns all the wiki pages where resourcePrimKey = &#63; and nodeId = &#63; and head = &#63;.
@@ -1914,11 +1655,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param nodeId the node ID
 	* @param head the head
 	* @return the matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByR_N_H(
-		long resourcePrimKey, long nodeId, boolean head)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long resourcePrimKey, long nodeId, boolean head);
 
 	/**
 	* Returns a range of all the wiki pages where resourcePrimKey = &#63; and nodeId = &#63; and head = &#63;.
@@ -1933,11 +1672,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param start the lower bound of the range of wiki pages
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByR_N_H(
-		long resourcePrimKey, long nodeId, boolean head, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long resourcePrimKey, long nodeId, boolean head, int start, int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages where resourcePrimKey = &#63; and nodeId = &#63; and head = &#63;.
@@ -1953,12 +1690,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByR_N_H(
 		long resourcePrimKey, long nodeId, boolean head, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first wiki page in the ordered set where resourcePrimKey = &#63; and nodeId = &#63; and head = &#63;.
@@ -1969,13 +1704,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage findByR_N_H_First(
 		long resourcePrimKey, long nodeId, boolean head,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns the first wiki page in the ordered set where resourcePrimKey = &#63; and nodeId = &#63; and head = &#63;.
@@ -1985,12 +1718,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param head the head
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage fetchByR_N_H_First(
 		long resourcePrimKey, long nodeId, boolean head,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last wiki page in the ordered set where resourcePrimKey = &#63; and nodeId = &#63; and head = &#63;.
@@ -2001,13 +1732,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage findByR_N_H_Last(
 		long resourcePrimKey, long nodeId, boolean head,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns the last wiki page in the ordered set where resourcePrimKey = &#63; and nodeId = &#63; and head = &#63;.
@@ -2017,12 +1746,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param head the head
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage fetchByR_N_H_Last(
 		long resourcePrimKey, long nodeId, boolean head,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the wiki pages before and after the current wiki page in the ordered set where resourcePrimKey = &#63; and nodeId = &#63; and head = &#63;.
@@ -2034,13 +1761,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a wiki page with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage[] findByR_N_H_PrevAndNext(
 		long pageId, long resourcePrimKey, long nodeId, boolean head,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Removes all the wiki pages where resourcePrimKey = &#63; and nodeId = &#63; and head = &#63; from the database.
@@ -2048,10 +1773,8 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param resourcePrimKey the resource prim key
 	* @param nodeId the node ID
 	* @param head the head
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByR_N_H(long resourcePrimKey, long nodeId, boolean head)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeByR_N_H(long resourcePrimKey, long nodeId, boolean head);
 
 	/**
 	* Returns the number of wiki pages where resourcePrimKey = &#63; and nodeId = &#63; and head = &#63;.
@@ -2060,10 +1783,8 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param nodeId the node ID
 	* @param head the head
 	* @return the number of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countByR_N_H(long resourcePrimKey, long nodeId, boolean head)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByR_N_H(long resourcePrimKey, long nodeId, boolean head);
 
 	/**
 	* Returns all the wiki pages where resourcePrimKey = &#63; and nodeId = &#63; and status = &#63;.
@@ -2072,11 +1793,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param nodeId the node ID
 	* @param status the status
 	* @return the matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByR_N_S(
-		long resourcePrimKey, long nodeId, int status)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long resourcePrimKey, long nodeId, int status);
 
 	/**
 	* Returns a range of all the wiki pages where resourcePrimKey = &#63; and nodeId = &#63; and status = &#63;.
@@ -2091,11 +1810,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param start the lower bound of the range of wiki pages
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByR_N_S(
-		long resourcePrimKey, long nodeId, int status, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long resourcePrimKey, long nodeId, int status, int start, int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages where resourcePrimKey = &#63; and nodeId = &#63; and status = &#63;.
@@ -2111,12 +1828,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByR_N_S(
 		long resourcePrimKey, long nodeId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first wiki page in the ordered set where resourcePrimKey = &#63; and nodeId = &#63; and status = &#63;.
@@ -2127,13 +1842,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage findByR_N_S_First(
 		long resourcePrimKey, long nodeId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns the first wiki page in the ordered set where resourcePrimKey = &#63; and nodeId = &#63; and status = &#63;.
@@ -2143,12 +1856,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage fetchByR_N_S_First(
 		long resourcePrimKey, long nodeId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last wiki page in the ordered set where resourcePrimKey = &#63; and nodeId = &#63; and status = &#63;.
@@ -2159,13 +1870,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage findByR_N_S_Last(
 		long resourcePrimKey, long nodeId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns the last wiki page in the ordered set where resourcePrimKey = &#63; and nodeId = &#63; and status = &#63;.
@@ -2175,12 +1884,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage fetchByR_N_S_Last(
 		long resourcePrimKey, long nodeId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the wiki pages before and after the current wiki page in the ordered set where resourcePrimKey = &#63; and nodeId = &#63; and status = &#63;.
@@ -2192,13 +1899,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a wiki page with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage[] findByR_N_S_PrevAndNext(
 		long pageId, long resourcePrimKey, long nodeId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Removes all the wiki pages where resourcePrimKey = &#63; and nodeId = &#63; and status = &#63; from the database.
@@ -2206,10 +1911,8 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param resourcePrimKey the resource prim key
 	* @param nodeId the node ID
 	* @param status the status
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByR_N_S(long resourcePrimKey, long nodeId, int status)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeByR_N_S(long resourcePrimKey, long nodeId, int status);
 
 	/**
 	* Returns the number of wiki pages where resourcePrimKey = &#63; and nodeId = &#63; and status = &#63;.
@@ -2218,10 +1921,8 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param nodeId the node ID
 	* @param status the status
 	* @return the number of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countByR_N_S(long resourcePrimKey, long nodeId, int status)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByR_N_S(long resourcePrimKey, long nodeId, int status);
 
 	/**
 	* Returns all the wiki pages where groupId = &#63; and nodeId = &#63; and head = &#63;.
@@ -2230,11 +1931,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param nodeId the node ID
 	* @param head the head
 	* @return the matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByG_N_H(
-		long groupId, long nodeId, boolean head)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long groupId, long nodeId, boolean head);
 
 	/**
 	* Returns a range of all the wiki pages where groupId = &#63; and nodeId = &#63; and head = &#63;.
@@ -2249,11 +1948,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param start the lower bound of the range of wiki pages
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByG_N_H(
-		long groupId, long nodeId, boolean head, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long groupId, long nodeId, boolean head, int start, int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages where groupId = &#63; and nodeId = &#63; and head = &#63;.
@@ -2269,12 +1966,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByG_N_H(
 		long groupId, long nodeId, boolean head, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first wiki page in the ordered set where groupId = &#63; and nodeId = &#63; and head = &#63;.
@@ -2285,13 +1980,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage findByG_N_H_First(
 		long groupId, long nodeId, boolean head,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns the first wiki page in the ordered set where groupId = &#63; and nodeId = &#63; and head = &#63;.
@@ -2301,12 +1994,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param head the head
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage fetchByG_N_H_First(
 		long groupId, long nodeId, boolean head,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last wiki page in the ordered set where groupId = &#63; and nodeId = &#63; and head = &#63;.
@@ -2317,13 +2008,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage findByG_N_H_Last(
 		long groupId, long nodeId, boolean head,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns the last wiki page in the ordered set where groupId = &#63; and nodeId = &#63; and head = &#63;.
@@ -2333,12 +2022,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param head the head
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage fetchByG_N_H_Last(
 		long groupId, long nodeId, boolean head,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the wiki pages before and after the current wiki page in the ordered set where groupId = &#63; and nodeId = &#63; and head = &#63;.
@@ -2350,13 +2037,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a wiki page with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage[] findByG_N_H_PrevAndNext(
 		long pageId, long groupId, long nodeId, boolean head,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns all the wiki pages that the user has permission to view where groupId = &#63; and nodeId = &#63; and head = &#63;.
@@ -2365,11 +2050,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param nodeId the node ID
 	* @param head the head
 	* @return the matching wiki pages that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> filterFindByG_N_H(
-		long groupId, long nodeId, boolean head)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long groupId, long nodeId, boolean head);
 
 	/**
 	* Returns a range of all the wiki pages that the user has permission to view where groupId = &#63; and nodeId = &#63; and head = &#63;.
@@ -2384,11 +2067,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param start the lower bound of the range of wiki pages
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of matching wiki pages that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> filterFindByG_N_H(
-		long groupId, long nodeId, boolean head, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long groupId, long nodeId, boolean head, int start, int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages that the user has permissions to view where groupId = &#63; and nodeId = &#63; and head = &#63;.
@@ -2404,12 +2085,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki pages that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> filterFindByG_N_H(
 		long groupId, long nodeId, boolean head, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the wiki pages before and after the current wiki page in the ordered set of wiki pages that the user has permission to view where groupId = &#63; and nodeId = &#63; and head = &#63;.
@@ -2421,13 +2100,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a wiki page with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage[] filterFindByG_N_H_PrevAndNext(
 		long pageId, long groupId, long nodeId, boolean head,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Removes all the wiki pages where groupId = &#63; and nodeId = &#63; and head = &#63; from the database.
@@ -2435,10 +2112,8 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param groupId the group ID
 	* @param nodeId the node ID
 	* @param head the head
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByG_N_H(long groupId, long nodeId, boolean head)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeByG_N_H(long groupId, long nodeId, boolean head);
 
 	/**
 	* Returns the number of wiki pages where groupId = &#63; and nodeId = &#63; and head = &#63;.
@@ -2447,10 +2122,8 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param nodeId the node ID
 	* @param head the head
 	* @return the number of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countByG_N_H(long groupId, long nodeId, boolean head)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByG_N_H(long groupId, long nodeId, boolean head);
 
 	/**
 	* Returns the number of wiki pages that the user has permission to view where groupId = &#63; and nodeId = &#63; and head = &#63;.
@@ -2459,10 +2132,8 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param nodeId the node ID
 	* @param head the head
 	* @return the number of matching wiki pages that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
-	public int filterCountByG_N_H(long groupId, long nodeId, boolean head)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int filterCountByG_N_H(long groupId, long nodeId, boolean head);
 
 	/**
 	* Returns all the wiki pages where groupId = &#63; and nodeId = &#63; and status = &#63;.
@@ -2471,11 +2142,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param nodeId the node ID
 	* @param status the status
 	* @return the matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByG_N_S(
-		long groupId, long nodeId, int status)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long groupId, long nodeId, int status);
 
 	/**
 	* Returns a range of all the wiki pages where groupId = &#63; and nodeId = &#63; and status = &#63;.
@@ -2490,11 +2159,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param start the lower bound of the range of wiki pages
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByG_N_S(
-		long groupId, long nodeId, int status, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long groupId, long nodeId, int status, int start, int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages where groupId = &#63; and nodeId = &#63; and status = &#63;.
@@ -2510,12 +2177,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByG_N_S(
 		long groupId, long nodeId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first wiki page in the ordered set where groupId = &#63; and nodeId = &#63; and status = &#63;.
@@ -2526,13 +2191,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage findByG_N_S_First(
 		long groupId, long nodeId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns the first wiki page in the ordered set where groupId = &#63; and nodeId = &#63; and status = &#63;.
@@ -2542,12 +2205,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage fetchByG_N_S_First(
 		long groupId, long nodeId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last wiki page in the ordered set where groupId = &#63; and nodeId = &#63; and status = &#63;.
@@ -2558,13 +2219,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage findByG_N_S_Last(
 		long groupId, long nodeId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns the last wiki page in the ordered set where groupId = &#63; and nodeId = &#63; and status = &#63;.
@@ -2574,12 +2233,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage fetchByG_N_S_Last(
 		long groupId, long nodeId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the wiki pages before and after the current wiki page in the ordered set where groupId = &#63; and nodeId = &#63; and status = &#63;.
@@ -2591,13 +2248,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a wiki page with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage[] findByG_N_S_PrevAndNext(
 		long pageId, long groupId, long nodeId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns all the wiki pages that the user has permission to view where groupId = &#63; and nodeId = &#63; and status = &#63;.
@@ -2606,11 +2261,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param nodeId the node ID
 	* @param status the status
 	* @return the matching wiki pages that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> filterFindByG_N_S(
-		long groupId, long nodeId, int status)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long groupId, long nodeId, int status);
 
 	/**
 	* Returns a range of all the wiki pages that the user has permission to view where groupId = &#63; and nodeId = &#63; and status = &#63;.
@@ -2625,11 +2278,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param start the lower bound of the range of wiki pages
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of matching wiki pages that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> filterFindByG_N_S(
-		long groupId, long nodeId, int status, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long groupId, long nodeId, int status, int start, int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages that the user has permissions to view where groupId = &#63; and nodeId = &#63; and status = &#63;.
@@ -2645,12 +2296,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki pages that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> filterFindByG_N_S(
 		long groupId, long nodeId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the wiki pages before and after the current wiki page in the ordered set of wiki pages that the user has permission to view where groupId = &#63; and nodeId = &#63; and status = &#63;.
@@ -2662,13 +2311,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a wiki page with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage[] filterFindByG_N_S_PrevAndNext(
 		long pageId, long groupId, long nodeId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Removes all the wiki pages where groupId = &#63; and nodeId = &#63; and status = &#63; from the database.
@@ -2676,10 +2323,8 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param groupId the group ID
 	* @param nodeId the node ID
 	* @param status the status
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByG_N_S(long groupId, long nodeId, int status)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeByG_N_S(long groupId, long nodeId, int status);
 
 	/**
 	* Returns the number of wiki pages where groupId = &#63; and nodeId = &#63; and status = &#63;.
@@ -2688,10 +2333,8 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param nodeId the node ID
 	* @param status the status
 	* @return the number of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countByG_N_S(long groupId, long nodeId, int status)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByG_N_S(long groupId, long nodeId, int status);
 
 	/**
 	* Returns the number of wiki pages that the user has permission to view where groupId = &#63; and nodeId = &#63; and status = &#63;.
@@ -2700,10 +2343,8 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param nodeId the node ID
 	* @param status the status
 	* @return the number of matching wiki pages that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
-	public int filterCountByG_N_S(long groupId, long nodeId, int status)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int filterCountByG_N_S(long groupId, long nodeId, int status);
 
 	/**
 	* Returns all the wiki pages where userId = &#63; and nodeId = &#63; and status = &#63;.
@@ -2712,11 +2353,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param nodeId the node ID
 	* @param status the status
 	* @return the matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByU_N_S(
-		long userId, long nodeId, int status)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long userId, long nodeId, int status);
 
 	/**
 	* Returns a range of all the wiki pages where userId = &#63; and nodeId = &#63; and status = &#63;.
@@ -2731,11 +2370,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param start the lower bound of the range of wiki pages
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByU_N_S(
-		long userId, long nodeId, int status, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long userId, long nodeId, int status, int start, int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages where userId = &#63; and nodeId = &#63; and status = &#63;.
@@ -2751,12 +2388,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByU_N_S(
 		long userId, long nodeId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first wiki page in the ordered set where userId = &#63; and nodeId = &#63; and status = &#63;.
@@ -2767,13 +2402,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage findByU_N_S_First(
 		long userId, long nodeId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns the first wiki page in the ordered set where userId = &#63; and nodeId = &#63; and status = &#63;.
@@ -2783,12 +2416,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage fetchByU_N_S_First(
 		long userId, long nodeId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last wiki page in the ordered set where userId = &#63; and nodeId = &#63; and status = &#63;.
@@ -2799,13 +2430,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage findByU_N_S_Last(
 		long userId, long nodeId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns the last wiki page in the ordered set where userId = &#63; and nodeId = &#63; and status = &#63;.
@@ -2815,12 +2444,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage fetchByU_N_S_Last(
 		long userId, long nodeId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the wiki pages before and after the current wiki page in the ordered set where userId = &#63; and nodeId = &#63; and status = &#63;.
@@ -2832,13 +2459,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a wiki page with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage[] findByU_N_S_PrevAndNext(
 		long pageId, long userId, long nodeId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Removes all the wiki pages where userId = &#63; and nodeId = &#63; and status = &#63; from the database.
@@ -2846,10 +2471,8 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param userId the user ID
 	* @param nodeId the node ID
 	* @param status the status
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByU_N_S(long userId, long nodeId, int status)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeByU_N_S(long userId, long nodeId, int status);
 
 	/**
 	* Returns the number of wiki pages where userId = &#63; and nodeId = &#63; and status = &#63;.
@@ -2858,10 +2481,8 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param nodeId the node ID
 	* @param status the status
 	* @return the number of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countByU_N_S(long userId, long nodeId, int status)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByU_N_S(long userId, long nodeId, int status);
 
 	/**
 	* Returns the wiki page where nodeId = &#63; and title = &#63; and version = &#63; or throws a {@link com.liferay.portlet.wiki.NoSuchPageException} if it could not be found.
@@ -2871,12 +2492,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param version the version
 	* @return the matching wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage findByN_T_V(long nodeId,
 		java.lang.String title, double version)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns the wiki page where nodeId = &#63; and title = &#63; and version = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -2885,11 +2504,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param title the title
 	* @param version the version
 	* @return the matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage fetchByN_T_V(long nodeId,
-		java.lang.String title, double version)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String title, double version);
 
 	/**
 	* Returns the wiki page where nodeId = &#63; and title = &#63; and version = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -2899,11 +2516,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param version the version
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage fetchByN_T_V(long nodeId,
-		java.lang.String title, double version, boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String title, double version, boolean retrieveFromCache);
 
 	/**
 	* Removes the wiki page where nodeId = &#63; and title = &#63; and version = &#63; from the database.
@@ -2912,12 +2527,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param title the title
 	* @param version the version
 	* @return the wiki page that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage removeByN_T_V(long nodeId,
 		java.lang.String title, double version)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns the number of wiki pages where nodeId = &#63; and title = &#63; and version = &#63;.
@@ -2926,10 +2539,8 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param title the title
 	* @param version the version
 	* @return the number of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countByN_T_V(long nodeId, java.lang.String title, double version)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByN_T_V(long nodeId, java.lang.String title, double version);
 
 	/**
 	* Returns all the wiki pages where nodeId = &#63; and title = &#63; and head = &#63;.
@@ -2938,11 +2549,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param title the title
 	* @param head the head
 	* @return the matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByN_T_H(
-		long nodeId, java.lang.String title, boolean head)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long nodeId, java.lang.String title, boolean head);
 
 	/**
 	* Returns a range of all the wiki pages where nodeId = &#63; and title = &#63; and head = &#63;.
@@ -2957,11 +2566,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param start the lower bound of the range of wiki pages
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByN_T_H(
-		long nodeId, java.lang.String title, boolean head, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long nodeId, java.lang.String title, boolean head, int start, int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages where nodeId = &#63; and title = &#63; and head = &#63;.
@@ -2977,12 +2584,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByN_T_H(
 		long nodeId, java.lang.String title, boolean head, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first wiki page in the ordered set where nodeId = &#63; and title = &#63; and head = &#63;.
@@ -2993,13 +2598,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage findByN_T_H_First(
 		long nodeId, java.lang.String title, boolean head,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns the first wiki page in the ordered set where nodeId = &#63; and title = &#63; and head = &#63;.
@@ -3009,12 +2612,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param head the head
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage fetchByN_T_H_First(
 		long nodeId, java.lang.String title, boolean head,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last wiki page in the ordered set where nodeId = &#63; and title = &#63; and head = &#63;.
@@ -3025,13 +2626,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage findByN_T_H_Last(
 		long nodeId, java.lang.String title, boolean head,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns the last wiki page in the ordered set where nodeId = &#63; and title = &#63; and head = &#63;.
@@ -3041,12 +2640,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param head the head
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage fetchByN_T_H_Last(
 		long nodeId, java.lang.String title, boolean head,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the wiki pages before and after the current wiki page in the ordered set where nodeId = &#63; and title = &#63; and head = &#63;.
@@ -3058,13 +2655,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a wiki page with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage[] findByN_T_H_PrevAndNext(
 		long pageId, long nodeId, java.lang.String title, boolean head,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Removes all the wiki pages where nodeId = &#63; and title = &#63; and head = &#63; from the database.
@@ -3072,10 +2667,8 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param nodeId the node ID
 	* @param title the title
 	* @param head the head
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByN_T_H(long nodeId, java.lang.String title, boolean head)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeByN_T_H(long nodeId, java.lang.String title, boolean head);
 
 	/**
 	* Returns the number of wiki pages where nodeId = &#63; and title = &#63; and head = &#63;.
@@ -3084,10 +2677,8 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param title the title
 	* @param head the head
 	* @return the number of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countByN_T_H(long nodeId, java.lang.String title, boolean head)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByN_T_H(long nodeId, java.lang.String title, boolean head);
 
 	/**
 	* Returns all the wiki pages where nodeId = &#63; and title = &#63; and status = &#63;.
@@ -3096,11 +2687,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param title the title
 	* @param status the status
 	* @return the matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByN_T_S(
-		long nodeId, java.lang.String title, int status)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long nodeId, java.lang.String title, int status);
 
 	/**
 	* Returns a range of all the wiki pages where nodeId = &#63; and title = &#63; and status = &#63;.
@@ -3115,11 +2704,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param start the lower bound of the range of wiki pages
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByN_T_S(
-		long nodeId, java.lang.String title, int status, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long nodeId, java.lang.String title, int status, int start, int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages where nodeId = &#63; and title = &#63; and status = &#63;.
@@ -3135,12 +2722,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByN_T_S(
 		long nodeId, java.lang.String title, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first wiki page in the ordered set where nodeId = &#63; and title = &#63; and status = &#63;.
@@ -3151,13 +2736,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage findByN_T_S_First(
 		long nodeId, java.lang.String title, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns the first wiki page in the ordered set where nodeId = &#63; and title = &#63; and status = &#63;.
@@ -3167,12 +2750,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage fetchByN_T_S_First(
 		long nodeId, java.lang.String title, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last wiki page in the ordered set where nodeId = &#63; and title = &#63; and status = &#63;.
@@ -3183,13 +2764,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage findByN_T_S_Last(
 		long nodeId, java.lang.String title, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns the last wiki page in the ordered set where nodeId = &#63; and title = &#63; and status = &#63;.
@@ -3199,12 +2778,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage fetchByN_T_S_Last(
 		long nodeId, java.lang.String title, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the wiki pages before and after the current wiki page in the ordered set where nodeId = &#63; and title = &#63; and status = &#63;.
@@ -3216,13 +2793,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a wiki page with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage[] findByN_T_S_PrevAndNext(
 		long pageId, long nodeId, java.lang.String title, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Removes all the wiki pages where nodeId = &#63; and title = &#63; and status = &#63; from the database.
@@ -3230,10 +2805,8 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param nodeId the node ID
 	* @param title the title
 	* @param status the status
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByN_T_S(long nodeId, java.lang.String title, int status)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeByN_T_S(long nodeId, java.lang.String title, int status);
 
 	/**
 	* Returns the number of wiki pages where nodeId = &#63; and title = &#63; and status = &#63;.
@@ -3242,10 +2815,8 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param title the title
 	* @param status the status
 	* @return the number of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countByN_T_S(long nodeId, java.lang.String title, int status)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByN_T_S(long nodeId, java.lang.String title, int status);
 
 	/**
 	* Returns all the wiki pages where nodeId = &#63; and head = &#63; and parentTitle = &#63;.
@@ -3254,11 +2825,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param head the head
 	* @param parentTitle the parent title
 	* @return the matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByN_H_P(
-		long nodeId, boolean head, java.lang.String parentTitle)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long nodeId, boolean head, java.lang.String parentTitle);
 
 	/**
 	* Returns a range of all the wiki pages where nodeId = &#63; and head = &#63; and parentTitle = &#63;.
@@ -3273,11 +2842,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param start the lower bound of the range of wiki pages
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByN_H_P(
 		long nodeId, boolean head, java.lang.String parentTitle, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException;
+		int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages where nodeId = &#63; and head = &#63; and parentTitle = &#63;.
@@ -3293,13 +2861,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByN_H_P(
 		long nodeId, boolean head, java.lang.String parentTitle, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first wiki page in the ordered set where nodeId = &#63; and head = &#63; and parentTitle = &#63;.
@@ -3310,13 +2876,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage findByN_H_P_First(
 		long nodeId, boolean head, java.lang.String parentTitle,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns the first wiki page in the ordered set where nodeId = &#63; and head = &#63; and parentTitle = &#63;.
@@ -3326,12 +2890,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param parentTitle the parent title
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage fetchByN_H_P_First(
 		long nodeId, boolean head, java.lang.String parentTitle,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last wiki page in the ordered set where nodeId = &#63; and head = &#63; and parentTitle = &#63;.
@@ -3342,13 +2904,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage findByN_H_P_Last(
 		long nodeId, boolean head, java.lang.String parentTitle,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns the last wiki page in the ordered set where nodeId = &#63; and head = &#63; and parentTitle = &#63;.
@@ -3358,12 +2918,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param parentTitle the parent title
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage fetchByN_H_P_Last(
 		long nodeId, boolean head, java.lang.String parentTitle,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the wiki pages before and after the current wiki page in the ordered set where nodeId = &#63; and head = &#63; and parentTitle = &#63;.
@@ -3375,13 +2933,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a wiki page with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage[] findByN_H_P_PrevAndNext(
 		long pageId, long nodeId, boolean head, java.lang.String parentTitle,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Removes all the wiki pages where nodeId = &#63; and head = &#63; and parentTitle = &#63; from the database.
@@ -3389,11 +2945,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param nodeId the node ID
 	* @param head the head
 	* @param parentTitle the parent title
-	* @throws SystemException if a system exception occurred
 	*/
 	public void removeByN_H_P(long nodeId, boolean head,
-		java.lang.String parentTitle)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String parentTitle);
 
 	/**
 	* Returns the number of wiki pages where nodeId = &#63; and head = &#63; and parentTitle = &#63;.
@@ -3402,11 +2956,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param head the head
 	* @param parentTitle the parent title
 	* @return the number of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public int countByN_H_P(long nodeId, boolean head,
-		java.lang.String parentTitle)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String parentTitle);
 
 	/**
 	* Returns all the wiki pages where nodeId = &#63; and head = &#63; and redirectTitle = &#63;.
@@ -3415,11 +2967,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param head the head
 	* @param redirectTitle the redirect title
 	* @return the matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByN_H_R(
-		long nodeId, boolean head, java.lang.String redirectTitle)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long nodeId, boolean head, java.lang.String redirectTitle);
 
 	/**
 	* Returns a range of all the wiki pages where nodeId = &#63; and head = &#63; and redirectTitle = &#63;.
@@ -3434,11 +2984,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param start the lower bound of the range of wiki pages
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByN_H_R(
 		long nodeId, boolean head, java.lang.String redirectTitle, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException;
+		int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages where nodeId = &#63; and head = &#63; and redirectTitle = &#63;.
@@ -3454,13 +3003,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByN_H_R(
 		long nodeId, boolean head, java.lang.String redirectTitle, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first wiki page in the ordered set where nodeId = &#63; and head = &#63; and redirectTitle = &#63;.
@@ -3471,13 +3018,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage findByN_H_R_First(
 		long nodeId, boolean head, java.lang.String redirectTitle,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns the first wiki page in the ordered set where nodeId = &#63; and head = &#63; and redirectTitle = &#63;.
@@ -3487,12 +3032,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param redirectTitle the redirect title
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage fetchByN_H_R_First(
 		long nodeId, boolean head, java.lang.String redirectTitle,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last wiki page in the ordered set where nodeId = &#63; and head = &#63; and redirectTitle = &#63;.
@@ -3503,13 +3046,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage findByN_H_R_Last(
 		long nodeId, boolean head, java.lang.String redirectTitle,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns the last wiki page in the ordered set where nodeId = &#63; and head = &#63; and redirectTitle = &#63;.
@@ -3519,12 +3060,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param redirectTitle the redirect title
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage fetchByN_H_R_Last(
 		long nodeId, boolean head, java.lang.String redirectTitle,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the wiki pages before and after the current wiki page in the ordered set where nodeId = &#63; and head = &#63; and redirectTitle = &#63;.
@@ -3536,13 +3075,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a wiki page with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage[] findByN_H_R_PrevAndNext(
 		long pageId, long nodeId, boolean head, java.lang.String redirectTitle,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Removes all the wiki pages where nodeId = &#63; and head = &#63; and redirectTitle = &#63; from the database.
@@ -3550,11 +3087,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param nodeId the node ID
 	* @param head the head
 	* @param redirectTitle the redirect title
-	* @throws SystemException if a system exception occurred
 	*/
 	public void removeByN_H_R(long nodeId, boolean head,
-		java.lang.String redirectTitle)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String redirectTitle);
 
 	/**
 	* Returns the number of wiki pages where nodeId = &#63; and head = &#63; and redirectTitle = &#63;.
@@ -3563,11 +3098,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param head the head
 	* @param redirectTitle the redirect title
 	* @return the number of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public int countByN_H_R(long nodeId, boolean head,
-		java.lang.String redirectTitle)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String redirectTitle);
 
 	/**
 	* Returns all the wiki pages where nodeId = &#63; and head = &#63; and status = &#63;.
@@ -3576,11 +3109,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param head the head
 	* @param status the status
 	* @return the matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByN_H_S(
-		long nodeId, boolean head, int status)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long nodeId, boolean head, int status);
 
 	/**
 	* Returns a range of all the wiki pages where nodeId = &#63; and head = &#63; and status = &#63;.
@@ -3595,11 +3126,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param start the lower bound of the range of wiki pages
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByN_H_S(
-		long nodeId, boolean head, int status, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long nodeId, boolean head, int status, int start, int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages where nodeId = &#63; and head = &#63; and status = &#63;.
@@ -3615,12 +3144,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByN_H_S(
 		long nodeId, boolean head, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first wiki page in the ordered set where nodeId = &#63; and head = &#63; and status = &#63;.
@@ -3631,13 +3158,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage findByN_H_S_First(
 		long nodeId, boolean head, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns the first wiki page in the ordered set where nodeId = &#63; and head = &#63; and status = &#63;.
@@ -3647,12 +3172,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage fetchByN_H_S_First(
 		long nodeId, boolean head, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last wiki page in the ordered set where nodeId = &#63; and head = &#63; and status = &#63;.
@@ -3663,13 +3186,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage findByN_H_S_Last(
 		long nodeId, boolean head, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns the last wiki page in the ordered set where nodeId = &#63; and head = &#63; and status = &#63;.
@@ -3679,12 +3200,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage fetchByN_H_S_Last(
 		long nodeId, boolean head, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the wiki pages before and after the current wiki page in the ordered set where nodeId = &#63; and head = &#63; and status = &#63;.
@@ -3696,13 +3215,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a wiki page with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage[] findByN_H_S_PrevAndNext(
 		long pageId, long nodeId, boolean head, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Removes all the wiki pages where nodeId = &#63; and head = &#63; and status = &#63; from the database.
@@ -3710,10 +3227,8 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param nodeId the node ID
 	* @param head the head
 	* @param status the status
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByN_H_S(long nodeId, boolean head, int status)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeByN_H_S(long nodeId, boolean head, int status);
 
 	/**
 	* Returns the number of wiki pages where nodeId = &#63; and head = &#63; and status = &#63;.
@@ -3722,10 +3237,8 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param head the head
 	* @param status the status
 	* @return the number of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countByN_H_S(long nodeId, boolean head, int status)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByN_H_S(long nodeId, boolean head, int status);
 
 	/**
 	* Returns all the wiki pages where nodeId = &#63; and head = &#63; and status &ne; &#63;.
@@ -3734,11 +3247,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param head the head
 	* @param status the status
 	* @return the matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByN_H_NotS(
-		long nodeId, boolean head, int status)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long nodeId, boolean head, int status);
 
 	/**
 	* Returns a range of all the wiki pages where nodeId = &#63; and head = &#63; and status &ne; &#63;.
@@ -3753,11 +3264,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param start the lower bound of the range of wiki pages
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByN_H_NotS(
-		long nodeId, boolean head, int status, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long nodeId, boolean head, int status, int start, int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages where nodeId = &#63; and head = &#63; and status &ne; &#63;.
@@ -3773,12 +3282,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByN_H_NotS(
 		long nodeId, boolean head, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first wiki page in the ordered set where nodeId = &#63; and head = &#63; and status &ne; &#63;.
@@ -3789,13 +3296,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage findByN_H_NotS_First(
 		long nodeId, boolean head, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns the first wiki page in the ordered set where nodeId = &#63; and head = &#63; and status &ne; &#63;.
@@ -3805,12 +3310,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage fetchByN_H_NotS_First(
 		long nodeId, boolean head, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last wiki page in the ordered set where nodeId = &#63; and head = &#63; and status &ne; &#63;.
@@ -3821,13 +3324,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage findByN_H_NotS_Last(
 		long nodeId, boolean head, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns the last wiki page in the ordered set where nodeId = &#63; and head = &#63; and status &ne; &#63;.
@@ -3837,12 +3338,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage fetchByN_H_NotS_Last(
 		long nodeId, boolean head, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the wiki pages before and after the current wiki page in the ordered set where nodeId = &#63; and head = &#63; and status &ne; &#63;.
@@ -3854,13 +3353,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a wiki page with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage[] findByN_H_NotS_PrevAndNext(
 		long pageId, long nodeId, boolean head, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Removes all the wiki pages where nodeId = &#63; and head = &#63; and status &ne; &#63; from the database.
@@ -3868,10 +3365,8 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param nodeId the node ID
 	* @param head the head
 	* @param status the status
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByN_H_NotS(long nodeId, boolean head, int status)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeByN_H_NotS(long nodeId, boolean head, int status);
 
 	/**
 	* Returns the number of wiki pages where nodeId = &#63; and head = &#63; and status &ne; &#63;.
@@ -3880,10 +3375,8 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param head the head
 	* @param status the status
 	* @return the number of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countByN_H_NotS(long nodeId, boolean head, int status)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByN_H_NotS(long nodeId, boolean head, int status);
 
 	/**
 	* Returns all the wiki pages where groupId = &#63; and userId = &#63; and nodeId = &#63; and status = &#63;.
@@ -3893,11 +3386,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param nodeId the node ID
 	* @param status the status
 	* @return the matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByG_U_N_S(
-		long groupId, long userId, long nodeId, int status)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long groupId, long userId, long nodeId, int status);
 
 	/**
 	* Returns a range of all the wiki pages where groupId = &#63; and userId = &#63; and nodeId = &#63; and status = &#63;.
@@ -3913,11 +3404,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param start the lower bound of the range of wiki pages
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByG_U_N_S(
-		long groupId, long userId, long nodeId, int status, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long groupId, long userId, long nodeId, int status, int start, int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages where groupId = &#63; and userId = &#63; and nodeId = &#63; and status = &#63;.
@@ -3934,12 +3423,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByG_U_N_S(
 		long groupId, long userId, long nodeId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first wiki page in the ordered set where groupId = &#63; and userId = &#63; and nodeId = &#63; and status = &#63;.
@@ -3951,13 +3438,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage findByG_U_N_S_First(
 		long groupId, long userId, long nodeId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns the first wiki page in the ordered set where groupId = &#63; and userId = &#63; and nodeId = &#63; and status = &#63;.
@@ -3968,12 +3453,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage fetchByG_U_N_S_First(
 		long groupId, long userId, long nodeId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last wiki page in the ordered set where groupId = &#63; and userId = &#63; and nodeId = &#63; and status = &#63;.
@@ -3985,13 +3468,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage findByG_U_N_S_Last(
 		long groupId, long userId, long nodeId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns the last wiki page in the ordered set where groupId = &#63; and userId = &#63; and nodeId = &#63; and status = &#63;.
@@ -4002,12 +3483,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage fetchByG_U_N_S_Last(
 		long groupId, long userId, long nodeId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the wiki pages before and after the current wiki page in the ordered set where groupId = &#63; and userId = &#63; and nodeId = &#63; and status = &#63;.
@@ -4020,13 +3499,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a wiki page with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage[] findByG_U_N_S_PrevAndNext(
 		long pageId, long groupId, long userId, long nodeId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns all the wiki pages that the user has permission to view where groupId = &#63; and userId = &#63; and nodeId = &#63; and status = &#63;.
@@ -4036,11 +3513,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param nodeId the node ID
 	* @param status the status
 	* @return the matching wiki pages that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> filterFindByG_U_N_S(
-		long groupId, long userId, long nodeId, int status)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long groupId, long userId, long nodeId, int status);
 
 	/**
 	* Returns a range of all the wiki pages that the user has permission to view where groupId = &#63; and userId = &#63; and nodeId = &#63; and status = &#63;.
@@ -4056,11 +3531,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param start the lower bound of the range of wiki pages
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of matching wiki pages that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> filterFindByG_U_N_S(
-		long groupId, long userId, long nodeId, int status, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long groupId, long userId, long nodeId, int status, int start, int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages that the user has permissions to view where groupId = &#63; and userId = &#63; and nodeId = &#63; and status = &#63;.
@@ -4077,12 +3550,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki pages that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> filterFindByG_U_N_S(
 		long groupId, long userId, long nodeId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the wiki pages before and after the current wiki page in the ordered set of wiki pages that the user has permission to view where groupId = &#63; and userId = &#63; and nodeId = &#63; and status = &#63;.
@@ -4095,13 +3566,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a wiki page with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage[] filterFindByG_U_N_S_PrevAndNext(
 		long pageId, long groupId, long userId, long nodeId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Removes all the wiki pages where groupId = &#63; and userId = &#63; and nodeId = &#63; and status = &#63; from the database.
@@ -4110,10 +3579,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param userId the user ID
 	* @param nodeId the node ID
 	* @param status the status
-	* @throws SystemException if a system exception occurred
 	*/
 	public void removeByG_U_N_S(long groupId, long userId, long nodeId,
-		int status) throws com.liferay.portal.kernel.exception.SystemException;
+		int status);
 
 	/**
 	* Returns the number of wiki pages where groupId = &#63; and userId = &#63; and nodeId = &#63; and status = &#63;.
@@ -4123,10 +3591,8 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param nodeId the node ID
 	* @param status the status
 	* @return the number of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countByG_U_N_S(long groupId, long userId, long nodeId, int status)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByG_U_N_S(long groupId, long userId, long nodeId, int status);
 
 	/**
 	* Returns the number of wiki pages that the user has permission to view where groupId = &#63; and userId = &#63; and nodeId = &#63; and status = &#63;.
@@ -4136,10 +3602,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param nodeId the node ID
 	* @param status the status
 	* @return the number of matching wiki pages that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public int filterCountByG_U_N_S(long groupId, long userId, long nodeId,
-		int status) throws com.liferay.portal.kernel.exception.SystemException;
+		int status);
 
 	/**
 	* Returns all the wiki pages where groupId = &#63; and nodeId = &#63; and title = &#63; and head = &#63;.
@@ -4149,11 +3614,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param title the title
 	* @param head the head
 	* @return the matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByG_N_T_H(
-		long groupId, long nodeId, java.lang.String title, boolean head)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long groupId, long nodeId, java.lang.String title, boolean head);
 
 	/**
 	* Returns a range of all the wiki pages where groupId = &#63; and nodeId = &#63; and title = &#63; and head = &#63;.
@@ -4169,12 +3632,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param start the lower bound of the range of wiki pages
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByG_N_T_H(
 		long groupId, long nodeId, java.lang.String title, boolean head,
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages where groupId = &#63; and nodeId = &#63; and title = &#63; and head = &#63;.
@@ -4191,13 +3652,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByG_N_T_H(
 		long groupId, long nodeId, java.lang.String title, boolean head,
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first wiki page in the ordered set where groupId = &#63; and nodeId = &#63; and title = &#63; and head = &#63;.
@@ -4209,13 +3668,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage findByG_N_T_H_First(
 		long groupId, long nodeId, java.lang.String title, boolean head,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns the first wiki page in the ordered set where groupId = &#63; and nodeId = &#63; and title = &#63; and head = &#63;.
@@ -4226,12 +3683,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param head the head
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage fetchByG_N_T_H_First(
 		long groupId, long nodeId, java.lang.String title, boolean head,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last wiki page in the ordered set where groupId = &#63; and nodeId = &#63; and title = &#63; and head = &#63;.
@@ -4243,13 +3698,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage findByG_N_T_H_Last(
 		long groupId, long nodeId, java.lang.String title, boolean head,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns the last wiki page in the ordered set where groupId = &#63; and nodeId = &#63; and title = &#63; and head = &#63;.
@@ -4260,12 +3713,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param head the head
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage fetchByG_N_T_H_Last(
 		long groupId, long nodeId, java.lang.String title, boolean head,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the wiki pages before and after the current wiki page in the ordered set where groupId = &#63; and nodeId = &#63; and title = &#63; and head = &#63;.
@@ -4278,14 +3729,12 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a wiki page with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage[] findByG_N_T_H_PrevAndNext(
 		long pageId, long groupId, long nodeId, java.lang.String title,
 		boolean head,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns all the wiki pages that the user has permission to view where groupId = &#63; and nodeId = &#63; and title = &#63; and head = &#63;.
@@ -4295,11 +3744,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param title the title
 	* @param head the head
 	* @return the matching wiki pages that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> filterFindByG_N_T_H(
-		long groupId, long nodeId, java.lang.String title, boolean head)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long groupId, long nodeId, java.lang.String title, boolean head);
 
 	/**
 	* Returns a range of all the wiki pages that the user has permission to view where groupId = &#63; and nodeId = &#63; and title = &#63; and head = &#63;.
@@ -4315,12 +3762,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param start the lower bound of the range of wiki pages
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of matching wiki pages that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> filterFindByG_N_T_H(
 		long groupId, long nodeId, java.lang.String title, boolean head,
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages that the user has permissions to view where groupId = &#63; and nodeId = &#63; and title = &#63; and head = &#63;.
@@ -4337,13 +3782,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki pages that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> filterFindByG_N_T_H(
 		long groupId, long nodeId, java.lang.String title, boolean head,
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the wiki pages before and after the current wiki page in the ordered set of wiki pages that the user has permission to view where groupId = &#63; and nodeId = &#63; and title = &#63; and head = &#63;.
@@ -4356,14 +3799,12 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a wiki page with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage[] filterFindByG_N_T_H_PrevAndNext(
 		long pageId, long groupId, long nodeId, java.lang.String title,
 		boolean head,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Removes all the wiki pages where groupId = &#63; and nodeId = &#63; and title = &#63; and head = &#63; from the database.
@@ -4372,11 +3813,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param nodeId the node ID
 	* @param title the title
 	* @param head the head
-	* @throws SystemException if a system exception occurred
 	*/
 	public void removeByG_N_T_H(long groupId, long nodeId,
-		java.lang.String title, boolean head)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String title, boolean head);
 
 	/**
 	* Returns the number of wiki pages where groupId = &#63; and nodeId = &#63; and title = &#63; and head = &#63;.
@@ -4386,11 +3825,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param title the title
 	* @param head the head
 	* @return the number of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public int countByG_N_T_H(long groupId, long nodeId,
-		java.lang.String title, boolean head)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String title, boolean head);
 
 	/**
 	* Returns the number of wiki pages that the user has permission to view where groupId = &#63; and nodeId = &#63; and title = &#63; and head = &#63;.
@@ -4400,11 +3837,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param title the title
 	* @param head the head
 	* @return the number of matching wiki pages that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public int filterCountByG_N_T_H(long groupId, long nodeId,
-		java.lang.String title, boolean head)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String title, boolean head);
 
 	/**
 	* Returns all the wiki pages where groupId = &#63; and nodeId = &#63; and head = &#63; and status = &#63;.
@@ -4414,11 +3849,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param head the head
 	* @param status the status
 	* @return the matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByG_N_H_S(
-		long groupId, long nodeId, boolean head, int status)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long groupId, long nodeId, boolean head, int status);
 
 	/**
 	* Returns a range of all the wiki pages where groupId = &#63; and nodeId = &#63; and head = &#63; and status = &#63;.
@@ -4434,11 +3867,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param start the lower bound of the range of wiki pages
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByG_N_H_S(
-		long groupId, long nodeId, boolean head, int status, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long groupId, long nodeId, boolean head, int status, int start, int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages where groupId = &#63; and nodeId = &#63; and head = &#63; and status = &#63;.
@@ -4455,13 +3886,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByG_N_H_S(
 		long groupId, long nodeId, boolean head, int status, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first wiki page in the ordered set where groupId = &#63; and nodeId = &#63; and head = &#63; and status = &#63;.
@@ -4473,13 +3902,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage findByG_N_H_S_First(
 		long groupId, long nodeId, boolean head, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns the first wiki page in the ordered set where groupId = &#63; and nodeId = &#63; and head = &#63; and status = &#63;.
@@ -4490,12 +3917,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage fetchByG_N_H_S_First(
 		long groupId, long nodeId, boolean head, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last wiki page in the ordered set where groupId = &#63; and nodeId = &#63; and head = &#63; and status = &#63;.
@@ -4507,13 +3932,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage findByG_N_H_S_Last(
 		long groupId, long nodeId, boolean head, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns the last wiki page in the ordered set where groupId = &#63; and nodeId = &#63; and head = &#63; and status = &#63;.
@@ -4524,12 +3947,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage fetchByG_N_H_S_Last(
 		long groupId, long nodeId, boolean head, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the wiki pages before and after the current wiki page in the ordered set where groupId = &#63; and nodeId = &#63; and head = &#63; and status = &#63;.
@@ -4542,13 +3963,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a wiki page with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage[] findByG_N_H_S_PrevAndNext(
 		long pageId, long groupId, long nodeId, boolean head, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns all the wiki pages that the user has permission to view where groupId = &#63; and nodeId = &#63; and head = &#63; and status = &#63;.
@@ -4558,11 +3977,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param head the head
 	* @param status the status
 	* @return the matching wiki pages that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> filterFindByG_N_H_S(
-		long groupId, long nodeId, boolean head, int status)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long groupId, long nodeId, boolean head, int status);
 
 	/**
 	* Returns a range of all the wiki pages that the user has permission to view where groupId = &#63; and nodeId = &#63; and head = &#63; and status = &#63;.
@@ -4578,11 +3995,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param start the lower bound of the range of wiki pages
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of matching wiki pages that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> filterFindByG_N_H_S(
-		long groupId, long nodeId, boolean head, int status, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long groupId, long nodeId, boolean head, int status, int start, int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages that the user has permissions to view where groupId = &#63; and nodeId = &#63; and head = &#63; and status = &#63;.
@@ -4599,13 +4014,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki pages that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> filterFindByG_N_H_S(
 		long groupId, long nodeId, boolean head, int status, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the wiki pages before and after the current wiki page in the ordered set of wiki pages that the user has permission to view where groupId = &#63; and nodeId = &#63; and head = &#63; and status = &#63;.
@@ -4618,13 +4031,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a wiki page with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage[] filterFindByG_N_H_S_PrevAndNext(
 		long pageId, long groupId, long nodeId, boolean head, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Removes all the wiki pages where groupId = &#63; and nodeId = &#63; and head = &#63; and status = &#63; from the database.
@@ -4633,10 +4044,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param nodeId the node ID
 	* @param head the head
 	* @param status the status
-	* @throws SystemException if a system exception occurred
 	*/
 	public void removeByG_N_H_S(long groupId, long nodeId, boolean head,
-		int status) throws com.liferay.portal.kernel.exception.SystemException;
+		int status);
 
 	/**
 	* Returns the number of wiki pages where groupId = &#63; and nodeId = &#63; and head = &#63; and status = &#63;.
@@ -4646,10 +4056,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param head the head
 	* @param status the status
 	* @return the number of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public int countByG_N_H_S(long groupId, long nodeId, boolean head,
-		int status) throws com.liferay.portal.kernel.exception.SystemException;
+		int status);
 
 	/**
 	* Returns the number of wiki pages that the user has permission to view where groupId = &#63; and nodeId = &#63; and head = &#63; and status = &#63;.
@@ -4659,10 +4068,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param head the head
 	* @param status the status
 	* @return the number of matching wiki pages that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public int filterCountByG_N_H_S(long groupId, long nodeId, boolean head,
-		int status) throws com.liferay.portal.kernel.exception.SystemException;
+		int status);
 
 	/**
 	* Returns all the wiki pages where nodeId = &#63; and head = &#63; and parentTitle = &#63; and status = &#63;.
@@ -4672,11 +4080,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param parentTitle the parent title
 	* @param status the status
 	* @return the matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByN_H_P_S(
-		long nodeId, boolean head, java.lang.String parentTitle, int status)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long nodeId, boolean head, java.lang.String parentTitle, int status);
 
 	/**
 	* Returns a range of all the wiki pages where nodeId = &#63; and head = &#63; and parentTitle = &#63; and status = &#63;.
@@ -4692,12 +4098,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param start the lower bound of the range of wiki pages
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByN_H_P_S(
 		long nodeId, boolean head, java.lang.String parentTitle, int status,
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages where nodeId = &#63; and head = &#63; and parentTitle = &#63; and status = &#63;.
@@ -4714,13 +4118,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByN_H_P_S(
 		long nodeId, boolean head, java.lang.String parentTitle, int status,
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first wiki page in the ordered set where nodeId = &#63; and head = &#63; and parentTitle = &#63; and status = &#63;.
@@ -4732,13 +4134,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage findByN_H_P_S_First(
 		long nodeId, boolean head, java.lang.String parentTitle, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns the first wiki page in the ordered set where nodeId = &#63; and head = &#63; and parentTitle = &#63; and status = &#63;.
@@ -4749,12 +4149,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage fetchByN_H_P_S_First(
 		long nodeId, boolean head, java.lang.String parentTitle, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last wiki page in the ordered set where nodeId = &#63; and head = &#63; and parentTitle = &#63; and status = &#63;.
@@ -4766,13 +4164,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage findByN_H_P_S_Last(
 		long nodeId, boolean head, java.lang.String parentTitle, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns the last wiki page in the ordered set where nodeId = &#63; and head = &#63; and parentTitle = &#63; and status = &#63;.
@@ -4783,12 +4179,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage fetchByN_H_P_S_Last(
 		long nodeId, boolean head, java.lang.String parentTitle, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the wiki pages before and after the current wiki page in the ordered set where nodeId = &#63; and head = &#63; and parentTitle = &#63; and status = &#63;.
@@ -4801,14 +4195,12 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a wiki page with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage[] findByN_H_P_S_PrevAndNext(
 		long pageId, long nodeId, boolean head, java.lang.String parentTitle,
 		int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Removes all the wiki pages where nodeId = &#63; and head = &#63; and parentTitle = &#63; and status = &#63; from the database.
@@ -4817,11 +4209,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param head the head
 	* @param parentTitle the parent title
 	* @param status the status
-	* @throws SystemException if a system exception occurred
 	*/
 	public void removeByN_H_P_S(long nodeId, boolean head,
-		java.lang.String parentTitle, int status)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String parentTitle, int status);
 
 	/**
 	* Returns the number of wiki pages where nodeId = &#63; and head = &#63; and parentTitle = &#63; and status = &#63;.
@@ -4831,11 +4221,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param parentTitle the parent title
 	* @param status the status
 	* @return the number of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public int countByN_H_P_S(long nodeId, boolean head,
-		java.lang.String parentTitle, int status)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String parentTitle, int status);
 
 	/**
 	* Returns all the wiki pages where nodeId = &#63; and head = &#63; and parentTitle = &#63; and status &ne; &#63;.
@@ -4845,11 +4233,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param parentTitle the parent title
 	* @param status the status
 	* @return the matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByN_H_P_NotS(
-		long nodeId, boolean head, java.lang.String parentTitle, int status)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long nodeId, boolean head, java.lang.String parentTitle, int status);
 
 	/**
 	* Returns a range of all the wiki pages where nodeId = &#63; and head = &#63; and parentTitle = &#63; and status &ne; &#63;.
@@ -4865,12 +4251,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param start the lower bound of the range of wiki pages
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByN_H_P_NotS(
 		long nodeId, boolean head, java.lang.String parentTitle, int status,
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages where nodeId = &#63; and head = &#63; and parentTitle = &#63; and status &ne; &#63;.
@@ -4887,13 +4271,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByN_H_P_NotS(
 		long nodeId, boolean head, java.lang.String parentTitle, int status,
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first wiki page in the ordered set where nodeId = &#63; and head = &#63; and parentTitle = &#63; and status &ne; &#63;.
@@ -4905,13 +4287,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage findByN_H_P_NotS_First(
 		long nodeId, boolean head, java.lang.String parentTitle, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns the first wiki page in the ordered set where nodeId = &#63; and head = &#63; and parentTitle = &#63; and status &ne; &#63;.
@@ -4922,12 +4302,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage fetchByN_H_P_NotS_First(
 		long nodeId, boolean head, java.lang.String parentTitle, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last wiki page in the ordered set where nodeId = &#63; and head = &#63; and parentTitle = &#63; and status &ne; &#63;.
@@ -4939,13 +4317,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage findByN_H_P_NotS_Last(
 		long nodeId, boolean head, java.lang.String parentTitle, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns the last wiki page in the ordered set where nodeId = &#63; and head = &#63; and parentTitle = &#63; and status &ne; &#63;.
@@ -4956,12 +4332,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage fetchByN_H_P_NotS_Last(
 		long nodeId, boolean head, java.lang.String parentTitle, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the wiki pages before and after the current wiki page in the ordered set where nodeId = &#63; and head = &#63; and parentTitle = &#63; and status &ne; &#63;.
@@ -4974,14 +4348,12 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a wiki page with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage[] findByN_H_P_NotS_PrevAndNext(
 		long pageId, long nodeId, boolean head, java.lang.String parentTitle,
 		int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Removes all the wiki pages where nodeId = &#63; and head = &#63; and parentTitle = &#63; and status &ne; &#63; from the database.
@@ -4990,11 +4362,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param head the head
 	* @param parentTitle the parent title
 	* @param status the status
-	* @throws SystemException if a system exception occurred
 	*/
 	public void removeByN_H_P_NotS(long nodeId, boolean head,
-		java.lang.String parentTitle, int status)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String parentTitle, int status);
 
 	/**
 	* Returns the number of wiki pages where nodeId = &#63; and head = &#63; and parentTitle = &#63; and status &ne; &#63;.
@@ -5004,11 +4374,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param parentTitle the parent title
 	* @param status the status
 	* @return the number of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public int countByN_H_P_NotS(long nodeId, boolean head,
-		java.lang.String parentTitle, int status)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String parentTitle, int status);
 
 	/**
 	* Returns all the wiki pages where nodeId = &#63; and head = &#63; and redirectTitle = &#63; and status = &#63;.
@@ -5018,11 +4386,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param redirectTitle the redirect title
 	* @param status the status
 	* @return the matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByN_H_R_S(
-		long nodeId, boolean head, java.lang.String redirectTitle, int status)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long nodeId, boolean head, java.lang.String redirectTitle, int status);
 
 	/**
 	* Returns a range of all the wiki pages where nodeId = &#63; and head = &#63; and redirectTitle = &#63; and status = &#63;.
@@ -5038,12 +4404,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param start the lower bound of the range of wiki pages
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByN_H_R_S(
 		long nodeId, boolean head, java.lang.String redirectTitle, int status,
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages where nodeId = &#63; and head = &#63; and redirectTitle = &#63; and status = &#63;.
@@ -5060,13 +4424,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByN_H_R_S(
 		long nodeId, boolean head, java.lang.String redirectTitle, int status,
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first wiki page in the ordered set where nodeId = &#63; and head = &#63; and redirectTitle = &#63; and status = &#63;.
@@ -5078,13 +4440,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage findByN_H_R_S_First(
 		long nodeId, boolean head, java.lang.String redirectTitle, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns the first wiki page in the ordered set where nodeId = &#63; and head = &#63; and redirectTitle = &#63; and status = &#63;.
@@ -5095,12 +4455,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage fetchByN_H_R_S_First(
 		long nodeId, boolean head, java.lang.String redirectTitle, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last wiki page in the ordered set where nodeId = &#63; and head = &#63; and redirectTitle = &#63; and status = &#63;.
@@ -5112,13 +4470,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage findByN_H_R_S_Last(
 		long nodeId, boolean head, java.lang.String redirectTitle, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns the last wiki page in the ordered set where nodeId = &#63; and head = &#63; and redirectTitle = &#63; and status = &#63;.
@@ -5129,12 +4485,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage fetchByN_H_R_S_Last(
 		long nodeId, boolean head, java.lang.String redirectTitle, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the wiki pages before and after the current wiki page in the ordered set where nodeId = &#63; and head = &#63; and redirectTitle = &#63; and status = &#63;.
@@ -5147,14 +4501,12 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a wiki page with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage[] findByN_H_R_S_PrevAndNext(
 		long pageId, long nodeId, boolean head, java.lang.String redirectTitle,
 		int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Removes all the wiki pages where nodeId = &#63; and head = &#63; and redirectTitle = &#63; and status = &#63; from the database.
@@ -5163,11 +4515,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param head the head
 	* @param redirectTitle the redirect title
 	* @param status the status
-	* @throws SystemException if a system exception occurred
 	*/
 	public void removeByN_H_R_S(long nodeId, boolean head,
-		java.lang.String redirectTitle, int status)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String redirectTitle, int status);
 
 	/**
 	* Returns the number of wiki pages where nodeId = &#63; and head = &#63; and redirectTitle = &#63; and status = &#63;.
@@ -5177,11 +4527,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param redirectTitle the redirect title
 	* @param status the status
 	* @return the number of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public int countByN_H_R_S(long nodeId, boolean head,
-		java.lang.String redirectTitle, int status)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String redirectTitle, int status);
 
 	/**
 	* Returns all the wiki pages where nodeId = &#63; and head = &#63; and redirectTitle = &#63; and status &ne; &#63;.
@@ -5191,11 +4539,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param redirectTitle the redirect title
 	* @param status the status
 	* @return the matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByN_H_R_NotS(
-		long nodeId, boolean head, java.lang.String redirectTitle, int status)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long nodeId, boolean head, java.lang.String redirectTitle, int status);
 
 	/**
 	* Returns a range of all the wiki pages where nodeId = &#63; and head = &#63; and redirectTitle = &#63; and status &ne; &#63;.
@@ -5211,12 +4557,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param start the lower bound of the range of wiki pages
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByN_H_R_NotS(
 		long nodeId, boolean head, java.lang.String redirectTitle, int status,
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages where nodeId = &#63; and head = &#63; and redirectTitle = &#63; and status &ne; &#63;.
@@ -5233,13 +4577,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByN_H_R_NotS(
 		long nodeId, boolean head, java.lang.String redirectTitle, int status,
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first wiki page in the ordered set where nodeId = &#63; and head = &#63; and redirectTitle = &#63; and status &ne; &#63;.
@@ -5251,13 +4593,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage findByN_H_R_NotS_First(
 		long nodeId, boolean head, java.lang.String redirectTitle, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns the first wiki page in the ordered set where nodeId = &#63; and head = &#63; and redirectTitle = &#63; and status &ne; &#63;.
@@ -5268,12 +4608,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage fetchByN_H_R_NotS_First(
 		long nodeId, boolean head, java.lang.String redirectTitle, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last wiki page in the ordered set where nodeId = &#63; and head = &#63; and redirectTitle = &#63; and status &ne; &#63;.
@@ -5285,13 +4623,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage findByN_H_R_NotS_Last(
 		long nodeId, boolean head, java.lang.String redirectTitle, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns the last wiki page in the ordered set where nodeId = &#63; and head = &#63; and redirectTitle = &#63; and status &ne; &#63;.
@@ -5302,12 +4638,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage fetchByN_H_R_NotS_Last(
 		long nodeId, boolean head, java.lang.String redirectTitle, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the wiki pages before and after the current wiki page in the ordered set where nodeId = &#63; and head = &#63; and redirectTitle = &#63; and status &ne; &#63;.
@@ -5320,14 +4654,12 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a wiki page with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage[] findByN_H_R_NotS_PrevAndNext(
 		long pageId, long nodeId, boolean head, java.lang.String redirectTitle,
 		int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Removes all the wiki pages where nodeId = &#63; and head = &#63; and redirectTitle = &#63; and status &ne; &#63; from the database.
@@ -5336,11 +4668,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param head the head
 	* @param redirectTitle the redirect title
 	* @param status the status
-	* @throws SystemException if a system exception occurred
 	*/
 	public void removeByN_H_R_NotS(long nodeId, boolean head,
-		java.lang.String redirectTitle, int status)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String redirectTitle, int status);
 
 	/**
 	* Returns the number of wiki pages where nodeId = &#63; and head = &#63; and redirectTitle = &#63; and status &ne; &#63;.
@@ -5350,11 +4680,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param redirectTitle the redirect title
 	* @param status the status
 	* @return the number of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public int countByN_H_R_NotS(long nodeId, boolean head,
-		java.lang.String redirectTitle, int status)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String redirectTitle, int status);
 
 	/**
 	* Returns all the wiki pages where groupId = &#63; and nodeId = &#63; and head = &#63; and parentTitle = &#63; and status = &#63;.
@@ -5365,11 +4693,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param parentTitle the parent title
 	* @param status the status
 	* @return the matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByG_N_H_P_S(
 		long groupId, long nodeId, boolean head, java.lang.String parentTitle,
-		int status) throws com.liferay.portal.kernel.exception.SystemException;
+		int status);
 
 	/**
 	* Returns a range of all the wiki pages where groupId = &#63; and nodeId = &#63; and head = &#63; and parentTitle = &#63; and status = &#63;.
@@ -5386,12 +4713,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param start the lower bound of the range of wiki pages
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByG_N_H_P_S(
 		long groupId, long nodeId, boolean head, java.lang.String parentTitle,
-		int status, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		int status, int start, int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages where groupId = &#63; and nodeId = &#63; and head = &#63; and parentTitle = &#63; and status = &#63;.
@@ -5409,13 +4734,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findByG_N_H_P_S(
 		long groupId, long nodeId, boolean head, java.lang.String parentTitle,
 		int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first wiki page in the ordered set where groupId = &#63; and nodeId = &#63; and head = &#63; and parentTitle = &#63; and status = &#63;.
@@ -5428,14 +4751,12 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage findByG_N_H_P_S_First(
 		long groupId, long nodeId, boolean head, java.lang.String parentTitle,
 		int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns the first wiki page in the ordered set where groupId = &#63; and nodeId = &#63; and head = &#63; and parentTitle = &#63; and status = &#63;.
@@ -5447,13 +4768,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage fetchByG_N_H_P_S_First(
 		long groupId, long nodeId, boolean head, java.lang.String parentTitle,
 		int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last wiki page in the ordered set where groupId = &#63; and nodeId = &#63; and head = &#63; and parentTitle = &#63; and status = &#63;.
@@ -5466,14 +4785,12 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage findByG_N_H_P_S_Last(
 		long groupId, long nodeId, boolean head, java.lang.String parentTitle,
 		int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns the last wiki page in the ordered set where groupId = &#63; and nodeId = &#63; and head = &#63; and parentTitle = &#63; and status = &#63;.
@@ -5485,13 +4802,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage fetchByG_N_H_P_S_Last(
 		long groupId, long nodeId, boolean head, java.lang.String parentTitle,
 		int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the wiki pages before and after the current wiki page in the ordered set where groupId = &#63; and nodeId = &#63; and head = &#63; and parentTitle = &#63; and status = &#63;.
@@ -5505,14 +4820,12 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a wiki page with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage[] findByG_N_H_P_S_PrevAndNext(
 		long pageId, long groupId, long nodeId, boolean head,
 		java.lang.String parentTitle, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns all the wiki pages that the user has permission to view where groupId = &#63; and nodeId = &#63; and head = &#63; and parentTitle = &#63; and status = &#63;.
@@ -5523,11 +4836,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param parentTitle the parent title
 	* @param status the status
 	* @return the matching wiki pages that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> filterFindByG_N_H_P_S(
 		long groupId, long nodeId, boolean head, java.lang.String parentTitle,
-		int status) throws com.liferay.portal.kernel.exception.SystemException;
+		int status);
 
 	/**
 	* Returns a range of all the wiki pages that the user has permission to view where groupId = &#63; and nodeId = &#63; and head = &#63; and parentTitle = &#63; and status = &#63;.
@@ -5544,12 +4856,10 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param start the lower bound of the range of wiki pages
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of matching wiki pages that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> filterFindByG_N_H_P_S(
 		long groupId, long nodeId, boolean head, java.lang.String parentTitle,
-		int status, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		int status, int start, int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages that the user has permissions to view where groupId = &#63; and nodeId = &#63; and head = &#63; and parentTitle = &#63; and status = &#63;.
@@ -5567,13 +4877,11 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching wiki pages that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> filterFindByG_N_H_P_S(
 		long groupId, long nodeId, boolean head, java.lang.String parentTitle,
 		int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the wiki pages before and after the current wiki page in the ordered set of wiki pages that the user has permission to view where groupId = &#63; and nodeId = &#63; and head = &#63; and parentTitle = &#63; and status = &#63;.
@@ -5587,14 +4895,12 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a wiki page with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage[] filterFindByG_N_H_P_S_PrevAndNext(
 		long pageId, long groupId, long nodeId, boolean head,
 		java.lang.String parentTitle, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Removes all the wiki pages where groupId = &#63; and nodeId = &#63; and head = &#63; and parentTitle = &#63; and status = &#63; from the database.
@@ -5604,11 +4910,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param head the head
 	* @param parentTitle the parent title
 	* @param status the status
-	* @throws SystemException if a system exception occurred
 	*/
 	public void removeByG_N_H_P_S(long groupId, long nodeId, boolean head,
-		java.lang.String parentTitle, int status)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String parentTitle, int status);
 
 	/**
 	* Returns the number of wiki pages where groupId = &#63; and nodeId = &#63; and head = &#63; and parentTitle = &#63; and status = &#63;.
@@ -5619,11 +4923,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param parentTitle the parent title
 	* @param status the status
 	* @return the number of matching wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public int countByG_N_H_P_S(long groupId, long nodeId, boolean head,
-		java.lang.String parentTitle, int status)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String parentTitle, int status);
 
 	/**
 	* Returns the number of wiki pages that the user has permission to view where groupId = &#63; and nodeId = &#63; and head = &#63; and parentTitle = &#63; and status = &#63;.
@@ -5634,11 +4936,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param parentTitle the parent title
 	* @param status the status
 	* @return the number of matching wiki pages that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public int filterCountByG_N_H_P_S(long groupId, long nodeId, boolean head,
-		java.lang.String parentTitle, int status)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String parentTitle, int status);
 
 	/**
 	* Caches the wiki page in the entity cache if it is enabled.
@@ -5669,15 +4969,12 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param pageId the primary key of the wiki page
 	* @return the wiki page that was removed
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a wiki page with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage remove(long pageId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	public com.liferay.portlet.wiki.model.WikiPage updateImpl(
-		com.liferay.portlet.wiki.model.WikiPage wikiPage)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portlet.wiki.model.WikiPage wikiPage);
 
 	/**
 	* Returns the wiki page with the primary key or throws a {@link com.liferay.portlet.wiki.NoSuchPageException} if it could not be found.
@@ -5685,30 +4982,25 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param pageId the primary key of the wiki page
 	* @return the wiki page
 	* @throws com.liferay.portlet.wiki.NoSuchPageException if a wiki page with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage findByPrimaryKey(long pageId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.wiki.NoSuchPageException;
+		throws com.liferay.portlet.wiki.NoSuchPageException;
 
 	/**
 	* Returns the wiki page with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param pageId the primary key of the wiki page
 	* @return the wiki page, or <code>null</code> if a wiki page with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.wiki.model.WikiPage fetchByPrimaryKey(
-		long pageId) throws com.liferay.portal.kernel.exception.SystemException;
+		long pageId);
 
 	/**
 	* Returns all the wiki pages.
 	*
 	* @return the wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findAll();
 
 	/**
 	* Returns a range of all the wiki pages.
@@ -5720,11 +5012,9 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param start the lower bound of the range of wiki pages
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findAll(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the wiki pages.
@@ -5737,27 +5027,20 @@ public interface WikiPagePersistence extends BasePersistence<WikiPage> {
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Removes all the wiki pages from the database.
-	*
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeAll();
 
 	/**
 	* Returns the number of wiki pages.
 	*
 	* @return the number of wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countAll();
 }

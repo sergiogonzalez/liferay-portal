@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 import com.liferay.portal.service.ServiceContext;
@@ -64,16 +63,14 @@ public class CalEventUtil {
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#countWithDynamicQuery(DynamicQuery)
 	 */
-	public static long countWithDynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public static long countWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return getPersistence().countWithDynamicQuery(dynamicQuery);
 	}
 
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery)
 	 */
-	public static List<CalEvent> findWithDynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public static List<CalEvent> findWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -81,8 +78,7 @@ public class CalEventUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
 	 */
 	public static List<CalEvent> findWithDynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+		DynamicQuery dynamicQuery, int start, int end) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -91,7 +87,7 @@ public class CalEventUtil {
 	 */
 	public static List<CalEvent> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -100,7 +96,7 @@ public class CalEventUtil {
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static CalEvent update(CalEvent calEvent) throws SystemException {
+	public static CalEvent update(CalEvent calEvent) {
 		return getPersistence().update(calEvent);
 	}
 
@@ -108,7 +104,7 @@ public class CalEventUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
 	public static CalEvent update(CalEvent calEvent,
-		ServiceContext serviceContext) throws SystemException {
+		ServiceContext serviceContext) {
 		return getPersistence().update(calEvent, serviceContext);
 	}
 
@@ -117,11 +113,9 @@ public class CalEventUtil {
 	*
 	* @param uuid the uuid
 	* @return the matching cal events
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByUuid(
-		java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid) {
 		return getPersistence().findByUuid(uuid);
 	}
 
@@ -136,11 +130,9 @@ public class CalEventUtil {
 	* @param start the lower bound of the range of cal events
 	* @param end the upper bound of the range of cal events (not inclusive)
 	* @return the range of matching cal events
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByUuid(
-		java.lang.String uuid, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, int start, int end) {
 		return getPersistence().findByUuid(uuid, start, end);
 	}
 
@@ -156,12 +148,10 @@ public class CalEventUtil {
 	* @param end the upper bound of the range of cal events (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching cal events
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByUuid(
 		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -172,13 +162,11 @@ public class CalEventUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cal event
 	* @throws com.liferay.portlet.calendar.NoSuchEventException if a matching cal event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent findByUuid_First(
 		java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.calendar.NoSuchEventException {
+		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
 
@@ -188,12 +176,10 @@ public class CalEventUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cal event, or <code>null</code> if a matching cal event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent fetchByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
 
@@ -204,13 +190,11 @@ public class CalEventUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cal event
 	* @throws com.liferay.portlet.calendar.NoSuchEventException if a matching cal event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent findByUuid_Last(
 		java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.calendar.NoSuchEventException {
+		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -220,12 +204,10 @@ public class CalEventUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cal event, or <code>null</code> if a matching cal event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent fetchByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -237,13 +219,11 @@ public class CalEventUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next cal event
 	* @throws com.liferay.portlet.calendar.NoSuchEventException if a cal event with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent[] findByUuid_PrevAndNext(
 		long eventId, java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.calendar.NoSuchEventException {
+		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(eventId, uuid, orderByComparator);
 	}
@@ -252,10 +232,8 @@ public class CalEventUtil {
 	* Removes all the cal events where uuid = &#63; from the database.
 	*
 	* @param uuid the uuid
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByUuid(java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByUuid(java.lang.String uuid) {
 		getPersistence().removeByUuid(uuid);
 	}
 
@@ -264,10 +242,8 @@ public class CalEventUtil {
 	*
 	* @param uuid the uuid
 	* @return the number of matching cal events
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByUuid(java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByUuid(java.lang.String uuid) {
 		return getPersistence().countByUuid(uuid);
 	}
 
@@ -278,12 +254,10 @@ public class CalEventUtil {
 	* @param groupId the group ID
 	* @return the matching cal event
 	* @throws com.liferay.portlet.calendar.NoSuchEventException if a matching cal event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent findByUUID_G(
 		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.calendar.NoSuchEventException {
+		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
 
@@ -293,11 +267,9 @@ public class CalEventUtil {
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the matching cal event, or <code>null</code> if a matching cal event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent fetchByUUID_G(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long groupId) {
 		return getPersistence().fetchByUUID_G(uuid, groupId);
 	}
 
@@ -308,11 +280,9 @@ public class CalEventUtil {
 	* @param groupId the group ID
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching cal event, or <code>null</code> if a matching cal event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent fetchByUUID_G(
-		java.lang.String uuid, long groupId, boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long groupId, boolean retrieveFromCache) {
 		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
 	}
 
@@ -322,12 +292,10 @@ public class CalEventUtil {
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the cal event that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent removeByUUID_G(
 		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.calendar.NoSuchEventException {
+		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
 
@@ -337,10 +305,8 @@ public class CalEventUtil {
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the number of matching cal events
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByUUID_G(java.lang.String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
 	}
 
@@ -350,11 +316,9 @@ public class CalEventUtil {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	* @return the matching cal events
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByUuid_C(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long companyId) {
 		return getPersistence().findByUuid_C(uuid, companyId);
 	}
 
@@ -370,11 +334,9 @@ public class CalEventUtil {
 	* @param start the lower bound of the range of cal events
 	* @param end the upper bound of the range of cal events (not inclusive)
 	* @return the range of matching cal events
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long companyId, int start, int end) {
 		return getPersistence().findByUuid_C(uuid, companyId, start, end);
 	}
 
@@ -391,12 +353,10 @@ public class CalEventUtil {
 	* @param end the upper bound of the range of cal events (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching cal events
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByUuid_C(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
 	}
@@ -409,13 +369,11 @@ public class CalEventUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cal event
 	* @throws com.liferay.portlet.calendar.NoSuchEventException if a matching cal event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent findByUuid_C_First(
 		java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.calendar.NoSuchEventException {
+		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -427,12 +385,10 @@ public class CalEventUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cal event, or <code>null</code> if a matching cal event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent fetchByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -445,13 +401,11 @@ public class CalEventUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cal event
 	* @throws com.liferay.portlet.calendar.NoSuchEventException if a matching cal event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent findByUuid_C_Last(
 		java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.calendar.NoSuchEventException {
+		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -463,12 +417,10 @@ public class CalEventUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cal event, or <code>null</code> if a matching cal event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent fetchByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -482,13 +434,11 @@ public class CalEventUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next cal event
 	* @throws com.liferay.portlet.calendar.NoSuchEventException if a cal event with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent[] findByUuid_C_PrevAndNext(
 		long eventId, java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.calendar.NoSuchEventException {
+		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence()
 				   .findByUuid_C_PrevAndNext(eventId, uuid, companyId,
 			orderByComparator);
@@ -499,10 +449,8 @@ public class CalEventUtil {
 	*
 	* @param uuid the uuid
 	* @param companyId the company ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByUuid_C(java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByUuid_C(java.lang.String uuid, long companyId) {
 		getPersistence().removeByUuid_C(uuid, companyId);
 	}
 
@@ -512,10 +460,8 @@ public class CalEventUtil {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	* @return the number of matching cal events
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByUuid_C(java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByUuid_C(java.lang.String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
@@ -524,11 +470,9 @@ public class CalEventUtil {
 	*
 	* @param companyId the company ID
 	* @return the matching cal events
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByCompanyId(
-		long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long companyId) {
 		return getPersistence().findByCompanyId(companyId);
 	}
 
@@ -543,11 +487,9 @@ public class CalEventUtil {
 	* @param start the lower bound of the range of cal events
 	* @param end the upper bound of the range of cal events (not inclusive)
 	* @return the range of matching cal events
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByCompanyId(
-		long companyId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long companyId, int start, int end) {
 		return getPersistence().findByCompanyId(companyId, start, end);
 	}
 
@@ -563,12 +505,10 @@ public class CalEventUtil {
 	* @param end the upper bound of the range of cal events (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching cal events
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByCompanyId(
 		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByCompanyId(companyId, start, end, orderByComparator);
 	}
@@ -580,13 +520,11 @@ public class CalEventUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cal event
 	* @throws com.liferay.portlet.calendar.NoSuchEventException if a matching cal event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent findByCompanyId_First(
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.calendar.NoSuchEventException {
+		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence()
 				   .findByCompanyId_First(companyId, orderByComparator);
 	}
@@ -597,12 +535,10 @@ public class CalEventUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cal event, or <code>null</code> if a matching cal event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent fetchByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByCompanyId_First(companyId, orderByComparator);
 	}
@@ -614,13 +550,11 @@ public class CalEventUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cal event
 	* @throws com.liferay.portlet.calendar.NoSuchEventException if a matching cal event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent findByCompanyId_Last(
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.calendar.NoSuchEventException {
+		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence()
 				   .findByCompanyId_Last(companyId, orderByComparator);
 	}
@@ -631,12 +565,10 @@ public class CalEventUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cal event, or <code>null</code> if a matching cal event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent fetchByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByCompanyId_Last(companyId, orderByComparator);
 	}
@@ -649,13 +581,11 @@ public class CalEventUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next cal event
 	* @throws com.liferay.portlet.calendar.NoSuchEventException if a cal event with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent[] findByCompanyId_PrevAndNext(
 		long eventId, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.calendar.NoSuchEventException {
+		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence()
 				   .findByCompanyId_PrevAndNext(eventId, companyId,
 			orderByComparator);
@@ -665,10 +595,8 @@ public class CalEventUtil {
 	* Removes all the cal events where companyId = &#63; from the database.
 	*
 	* @param companyId the company ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByCompanyId(long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByCompanyId(long companyId) {
 		getPersistence().removeByCompanyId(companyId);
 	}
 
@@ -677,10 +605,8 @@ public class CalEventUtil {
 	*
 	* @param companyId the company ID
 	* @return the number of matching cal events
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByCompanyId(long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByCompanyId(long companyId) {
 		return getPersistence().countByCompanyId(companyId);
 	}
 
@@ -689,11 +615,9 @@ public class CalEventUtil {
 	*
 	* @param groupId the group ID
 	* @return the matching cal events
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByGroupId(
-		long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId) {
 		return getPersistence().findByGroupId(groupId);
 	}
 
@@ -708,11 +632,9 @@ public class CalEventUtil {
 	* @param start the lower bound of the range of cal events
 	* @param end the upper bound of the range of cal events (not inclusive)
 	* @return the range of matching cal events
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByGroupId(
-		long groupId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, int start, int end) {
 		return getPersistence().findByGroupId(groupId, start, end);
 	}
 
@@ -728,12 +650,10 @@ public class CalEventUtil {
 	* @param end the upper bound of the range of cal events (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching cal events
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByGroupId(groupId, start, end, orderByComparator);
 	}
@@ -745,13 +665,11 @@ public class CalEventUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cal event
 	* @throws com.liferay.portlet.calendar.NoSuchEventException if a matching cal event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent findByGroupId_First(
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.calendar.NoSuchEventException {
+		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence().findByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -761,12 +679,10 @@ public class CalEventUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cal event, or <code>null</code> if a matching cal event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent fetchByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -777,13 +693,11 @@ public class CalEventUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cal event
 	* @throws com.liferay.portlet.calendar.NoSuchEventException if a matching cal event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent findByGroupId_Last(
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.calendar.NoSuchEventException {
+		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -793,12 +707,10 @@ public class CalEventUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cal event, or <code>null</code> if a matching cal event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent fetchByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -810,13 +722,11 @@ public class CalEventUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next cal event
 	* @throws com.liferay.portlet.calendar.NoSuchEventException if a cal event with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent[] findByGroupId_PrevAndNext(
 		long eventId, long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.calendar.NoSuchEventException {
+		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence()
 				   .findByGroupId_PrevAndNext(eventId, groupId,
 			orderByComparator);
@@ -827,11 +737,9 @@ public class CalEventUtil {
 	*
 	* @param groupId the group ID
 	* @return the matching cal events that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> filterFindByGroupId(
-		long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId) {
 		return getPersistence().filterFindByGroupId(groupId);
 	}
 
@@ -846,11 +754,9 @@ public class CalEventUtil {
 	* @param start the lower bound of the range of cal events
 	* @param end the upper bound of the range of cal events (not inclusive)
 	* @return the range of matching cal events that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> filterFindByGroupId(
-		long groupId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, int start, int end) {
 		return getPersistence().filterFindByGroupId(groupId, start, end);
 	}
 
@@ -866,12 +772,10 @@ public class CalEventUtil {
 	* @param end the upper bound of the range of cal events (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching cal events that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> filterFindByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .filterFindByGroupId(groupId, start, end, orderByComparator);
 	}
@@ -884,13 +788,11 @@ public class CalEventUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next cal event
 	* @throws com.liferay.portlet.calendar.NoSuchEventException if a cal event with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent[] filterFindByGroupId_PrevAndNext(
 		long eventId, long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.calendar.NoSuchEventException {
+		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence()
 				   .filterFindByGroupId_PrevAndNext(eventId, groupId,
 			orderByComparator);
@@ -900,10 +802,8 @@ public class CalEventUtil {
 	* Removes all the cal events where groupId = &#63; from the database.
 	*
 	* @param groupId the group ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByGroupId(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByGroupId(long groupId) {
 		getPersistence().removeByGroupId(groupId);
 	}
 
@@ -912,10 +812,8 @@ public class CalEventUtil {
 	*
 	* @param groupId the group ID
 	* @return the number of matching cal events
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByGroupId(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByGroupId(long groupId) {
 		return getPersistence().countByGroupId(groupId);
 	}
 
@@ -924,10 +822,8 @@ public class CalEventUtil {
 	*
 	* @param groupId the group ID
 	* @return the number of matching cal events that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int filterCountByGroupId(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int filterCountByGroupId(long groupId) {
 		return getPersistence().filterCountByGroupId(groupId);
 	}
 
@@ -936,11 +832,9 @@ public class CalEventUtil {
 	*
 	* @param remindBy the remind by
 	* @return the matching cal events
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByNotRemindBy(
-		int remindBy)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int remindBy) {
 		return getPersistence().findByNotRemindBy(remindBy);
 	}
 
@@ -955,11 +849,9 @@ public class CalEventUtil {
 	* @param start the lower bound of the range of cal events
 	* @param end the upper bound of the range of cal events (not inclusive)
 	* @return the range of matching cal events
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByNotRemindBy(
-		int remindBy, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int remindBy, int start, int end) {
 		return getPersistence().findByNotRemindBy(remindBy, start, end);
 	}
 
@@ -975,12 +867,10 @@ public class CalEventUtil {
 	* @param end the upper bound of the range of cal events (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching cal events
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByNotRemindBy(
 		int remindBy, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByNotRemindBy(remindBy, start, end, orderByComparator);
 	}
@@ -992,13 +882,11 @@ public class CalEventUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cal event
 	* @throws com.liferay.portlet.calendar.NoSuchEventException if a matching cal event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent findByNotRemindBy_First(
 		int remindBy,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.calendar.NoSuchEventException {
+		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence()
 				   .findByNotRemindBy_First(remindBy, orderByComparator);
 	}
@@ -1009,12 +897,10 @@ public class CalEventUtil {
 	* @param remindBy the remind by
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cal event, or <code>null</code> if a matching cal event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent fetchByNotRemindBy_First(
 		int remindBy,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByNotRemindBy_First(remindBy, orderByComparator);
 	}
@@ -1026,13 +912,11 @@ public class CalEventUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cal event
 	* @throws com.liferay.portlet.calendar.NoSuchEventException if a matching cal event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent findByNotRemindBy_Last(
 		int remindBy,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.calendar.NoSuchEventException {
+		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence()
 				   .findByNotRemindBy_Last(remindBy, orderByComparator);
 	}
@@ -1043,12 +927,10 @@ public class CalEventUtil {
 	* @param remindBy the remind by
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cal event, or <code>null</code> if a matching cal event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent fetchByNotRemindBy_Last(
 		int remindBy,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByNotRemindBy_Last(remindBy, orderByComparator);
 	}
@@ -1061,13 +943,11 @@ public class CalEventUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next cal event
 	* @throws com.liferay.portlet.calendar.NoSuchEventException if a cal event with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent[] findByNotRemindBy_PrevAndNext(
 		long eventId, int remindBy,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.calendar.NoSuchEventException {
+		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence()
 				   .findByNotRemindBy_PrevAndNext(eventId, remindBy,
 			orderByComparator);
@@ -1077,10 +957,8 @@ public class CalEventUtil {
 	* Removes all the cal events where remindBy &ne; &#63; from the database.
 	*
 	* @param remindBy the remind by
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByNotRemindBy(int remindBy)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByNotRemindBy(int remindBy) {
 		getPersistence().removeByNotRemindBy(remindBy);
 	}
 
@@ -1089,10 +967,8 @@ public class CalEventUtil {
 	*
 	* @param remindBy the remind by
 	* @return the number of matching cal events
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByNotRemindBy(int remindBy)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByNotRemindBy(int remindBy) {
 		return getPersistence().countByNotRemindBy(remindBy);
 	}
 
@@ -1102,11 +978,9 @@ public class CalEventUtil {
 	* @param groupId the group ID
 	* @param type the type
 	* @return the matching cal events
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByG_T(
-		long groupId, java.lang.String type)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, java.lang.String type) {
 		return getPersistence().findByG_T(groupId, type);
 	}
 
@@ -1122,11 +996,9 @@ public class CalEventUtil {
 	* @param start the lower bound of the range of cal events
 	* @param end the upper bound of the range of cal events (not inclusive)
 	* @return the range of matching cal events
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByG_T(
-		long groupId, java.lang.String type, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, java.lang.String type, int start, int end) {
 		return getPersistence().findByG_T(groupId, type, start, end);
 	}
 
@@ -1143,12 +1015,10 @@ public class CalEventUtil {
 	* @param end the upper bound of the range of cal events (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching cal events
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByG_T(
 		long groupId, java.lang.String type, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByG_T(groupId, type, start, end, orderByComparator);
 	}
@@ -1161,13 +1031,11 @@ public class CalEventUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cal event
 	* @throws com.liferay.portlet.calendar.NoSuchEventException if a matching cal event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent findByG_T_First(
 		long groupId, java.lang.String type,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.calendar.NoSuchEventException {
+		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence().findByG_T_First(groupId, type, orderByComparator);
 	}
 
@@ -1178,12 +1046,10 @@ public class CalEventUtil {
 	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cal event, or <code>null</code> if a matching cal event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent fetchByG_T_First(
 		long groupId, java.lang.String type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByG_T_First(groupId, type, orderByComparator);
 	}
@@ -1196,13 +1062,11 @@ public class CalEventUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cal event
 	* @throws com.liferay.portlet.calendar.NoSuchEventException if a matching cal event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent findByG_T_Last(
 		long groupId, java.lang.String type,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.calendar.NoSuchEventException {
+		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence().findByG_T_Last(groupId, type, orderByComparator);
 	}
 
@@ -1213,12 +1077,10 @@ public class CalEventUtil {
 	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cal event, or <code>null</code> if a matching cal event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent fetchByG_T_Last(
 		long groupId, java.lang.String type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByG_T_Last(groupId, type, orderByComparator);
 	}
 
@@ -1231,13 +1093,11 @@ public class CalEventUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next cal event
 	* @throws com.liferay.portlet.calendar.NoSuchEventException if a cal event with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent[] findByG_T_PrevAndNext(
 		long eventId, long groupId, java.lang.String type,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.calendar.NoSuchEventException {
+		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence()
 				   .findByG_T_PrevAndNext(eventId, groupId, type,
 			orderByComparator);
@@ -1249,11 +1109,9 @@ public class CalEventUtil {
 	* @param groupId the group ID
 	* @param type the type
 	* @return the matching cal events that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> filterFindByG_T(
-		long groupId, java.lang.String type)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, java.lang.String type) {
 		return getPersistence().filterFindByG_T(groupId, type);
 	}
 
@@ -1269,11 +1127,9 @@ public class CalEventUtil {
 	* @param start the lower bound of the range of cal events
 	* @param end the upper bound of the range of cal events (not inclusive)
 	* @return the range of matching cal events that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> filterFindByG_T(
-		long groupId, java.lang.String type, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, java.lang.String type, int start, int end) {
 		return getPersistence().filterFindByG_T(groupId, type, start, end);
 	}
 
@@ -1290,12 +1146,10 @@ public class CalEventUtil {
 	* @param end the upper bound of the range of cal events (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching cal events that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> filterFindByG_T(
 		long groupId, java.lang.String type, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_T(groupId, type, start, end, orderByComparator);
 	}
@@ -1309,13 +1163,11 @@ public class CalEventUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next cal event
 	* @throws com.liferay.portlet.calendar.NoSuchEventException if a cal event with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent[] filterFindByG_T_PrevAndNext(
 		long eventId, long groupId, java.lang.String type,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.calendar.NoSuchEventException {
+		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence()
 				   .filterFindByG_T_PrevAndNext(eventId, groupId, type,
 			orderByComparator);
@@ -1327,11 +1179,9 @@ public class CalEventUtil {
 	* @param groupId the group ID
 	* @param types the types
 	* @return the matching cal events that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> filterFindByG_T(
-		long groupId, java.lang.String[] types)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, java.lang.String[] types) {
 		return getPersistence().filterFindByG_T(groupId, types);
 	}
 
@@ -1347,11 +1197,9 @@ public class CalEventUtil {
 	* @param start the lower bound of the range of cal events
 	* @param end the upper bound of the range of cal events (not inclusive)
 	* @return the range of matching cal events that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> filterFindByG_T(
-		long groupId, java.lang.String[] types, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, java.lang.String[] types, int start, int end) {
 		return getPersistence().filterFindByG_T(groupId, types, start, end);
 	}
 
@@ -1368,12 +1216,10 @@ public class CalEventUtil {
 	* @param end the upper bound of the range of cal events (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching cal events that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> filterFindByG_T(
 		long groupId, java.lang.String[] types, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_T(groupId, types, start, end,
 			orderByComparator);
@@ -1389,11 +1235,9 @@ public class CalEventUtil {
 	* @param groupId the group ID
 	* @param types the types
 	* @return the matching cal events
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByG_T(
-		long groupId, java.lang.String[] types)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, java.lang.String[] types) {
 		return getPersistence().findByG_T(groupId, types);
 	}
 
@@ -1409,11 +1253,9 @@ public class CalEventUtil {
 	* @param start the lower bound of the range of cal events
 	* @param end the upper bound of the range of cal events (not inclusive)
 	* @return the range of matching cal events
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByG_T(
-		long groupId, java.lang.String[] types, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, java.lang.String[] types, int start, int end) {
 		return getPersistence().findByG_T(groupId, types, start, end);
 	}
 
@@ -1430,12 +1272,10 @@ public class CalEventUtil {
 	* @param end the upper bound of the range of cal events (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching cal events
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByG_T(
 		long groupId, java.lang.String[] types, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByG_T(groupId, types, start, end, orderByComparator);
 	}
@@ -1445,10 +1285,8 @@ public class CalEventUtil {
 	*
 	* @param groupId the group ID
 	* @param type the type
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByG_T(long groupId, java.lang.String type)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByG_T(long groupId, java.lang.String type) {
 		getPersistence().removeByG_T(groupId, type);
 	}
 
@@ -1458,10 +1296,8 @@ public class CalEventUtil {
 	* @param groupId the group ID
 	* @param type the type
 	* @return the number of matching cal events
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByG_T(long groupId, java.lang.String type)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByG_T(long groupId, java.lang.String type) {
 		return getPersistence().countByG_T(groupId, type);
 	}
 
@@ -1471,10 +1307,8 @@ public class CalEventUtil {
 	* @param groupId the group ID
 	* @param types the types
 	* @return the number of matching cal events
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByG_T(long groupId, java.lang.String[] types)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByG_T(long groupId, java.lang.String[] types) {
 		return getPersistence().countByG_T(groupId, types);
 	}
 
@@ -1484,10 +1318,8 @@ public class CalEventUtil {
 	* @param groupId the group ID
 	* @param type the type
 	* @return the number of matching cal events that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int filterCountByG_T(long groupId, java.lang.String type)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int filterCountByG_T(long groupId, java.lang.String type) {
 		return getPersistence().filterCountByG_T(groupId, type);
 	}
 
@@ -1497,10 +1329,8 @@ public class CalEventUtil {
 	* @param groupId the group ID
 	* @param types the types
 	* @return the number of matching cal events that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int filterCountByG_T(long groupId, java.lang.String[] types)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int filterCountByG_T(long groupId, java.lang.String[] types) {
 		return getPersistence().filterCountByG_T(groupId, types);
 	}
 
@@ -1510,11 +1340,9 @@ public class CalEventUtil {
 	* @param groupId the group ID
 	* @param repeating the repeating
 	* @return the matching cal events
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByG_R(
-		long groupId, boolean repeating)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, boolean repeating) {
 		return getPersistence().findByG_R(groupId, repeating);
 	}
 
@@ -1530,11 +1358,9 @@ public class CalEventUtil {
 	* @param start the lower bound of the range of cal events
 	* @param end the upper bound of the range of cal events (not inclusive)
 	* @return the range of matching cal events
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByG_R(
-		long groupId, boolean repeating, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, boolean repeating, int start, int end) {
 		return getPersistence().findByG_R(groupId, repeating, start, end);
 	}
 
@@ -1551,12 +1377,10 @@ public class CalEventUtil {
 	* @param end the upper bound of the range of cal events (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching cal events
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByG_R(
 		long groupId, boolean repeating, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByG_R(groupId, repeating, start, end, orderByComparator);
 	}
@@ -1569,13 +1393,11 @@ public class CalEventUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cal event
 	* @throws com.liferay.portlet.calendar.NoSuchEventException if a matching cal event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent findByG_R_First(
 		long groupId, boolean repeating,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.calendar.NoSuchEventException {
+		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence()
 				   .findByG_R_First(groupId, repeating, orderByComparator);
 	}
@@ -1587,12 +1409,10 @@ public class CalEventUtil {
 	* @param repeating the repeating
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cal event, or <code>null</code> if a matching cal event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent fetchByG_R_First(
 		long groupId, boolean repeating,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByG_R_First(groupId, repeating, orderByComparator);
 	}
@@ -1605,13 +1425,11 @@ public class CalEventUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cal event
 	* @throws com.liferay.portlet.calendar.NoSuchEventException if a matching cal event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent findByG_R_Last(
 		long groupId, boolean repeating,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.calendar.NoSuchEventException {
+		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence()
 				   .findByG_R_Last(groupId, repeating, orderByComparator);
 	}
@@ -1623,12 +1441,10 @@ public class CalEventUtil {
 	* @param repeating the repeating
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cal event, or <code>null</code> if a matching cal event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent fetchByG_R_Last(
 		long groupId, boolean repeating,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByG_R_Last(groupId, repeating, orderByComparator);
 	}
@@ -1642,13 +1458,11 @@ public class CalEventUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next cal event
 	* @throws com.liferay.portlet.calendar.NoSuchEventException if a cal event with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent[] findByG_R_PrevAndNext(
 		long eventId, long groupId, boolean repeating,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.calendar.NoSuchEventException {
+		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence()
 				   .findByG_R_PrevAndNext(eventId, groupId, repeating,
 			orderByComparator);
@@ -1660,11 +1474,9 @@ public class CalEventUtil {
 	* @param groupId the group ID
 	* @param repeating the repeating
 	* @return the matching cal events that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> filterFindByG_R(
-		long groupId, boolean repeating)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, boolean repeating) {
 		return getPersistence().filterFindByG_R(groupId, repeating);
 	}
 
@@ -1680,11 +1492,9 @@ public class CalEventUtil {
 	* @param start the lower bound of the range of cal events
 	* @param end the upper bound of the range of cal events (not inclusive)
 	* @return the range of matching cal events that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> filterFindByG_R(
-		long groupId, boolean repeating, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, boolean repeating, int start, int end) {
 		return getPersistence().filterFindByG_R(groupId, repeating, start, end);
 	}
 
@@ -1701,12 +1511,10 @@ public class CalEventUtil {
 	* @param end the upper bound of the range of cal events (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching cal events that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> filterFindByG_R(
 		long groupId, boolean repeating, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_R(groupId, repeating, start, end,
 			orderByComparator);
@@ -1721,13 +1529,11 @@ public class CalEventUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next cal event
 	* @throws com.liferay.portlet.calendar.NoSuchEventException if a cal event with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent[] filterFindByG_R_PrevAndNext(
 		long eventId, long groupId, boolean repeating,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.calendar.NoSuchEventException {
+		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence()
 				   .filterFindByG_R_PrevAndNext(eventId, groupId, repeating,
 			orderByComparator);
@@ -1738,10 +1544,8 @@ public class CalEventUtil {
 	*
 	* @param groupId the group ID
 	* @param repeating the repeating
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByG_R(long groupId, boolean repeating)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByG_R(long groupId, boolean repeating) {
 		getPersistence().removeByG_R(groupId, repeating);
 	}
 
@@ -1751,10 +1555,8 @@ public class CalEventUtil {
 	* @param groupId the group ID
 	* @param repeating the repeating
 	* @return the number of matching cal events
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByG_R(long groupId, boolean repeating)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByG_R(long groupId, boolean repeating) {
 		return getPersistence().countByG_R(groupId, repeating);
 	}
 
@@ -1764,10 +1566,8 @@ public class CalEventUtil {
 	* @param groupId the group ID
 	* @param repeating the repeating
 	* @return the number of matching cal events that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int filterCountByG_R(long groupId, boolean repeating)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int filterCountByG_R(long groupId, boolean repeating) {
 		return getPersistence().filterCountByG_R(groupId, repeating);
 	}
 
@@ -1778,11 +1578,9 @@ public class CalEventUtil {
 	* @param type the type
 	* @param repeating the repeating
 	* @return the matching cal events
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByG_T_R(
-		long groupId, java.lang.String type, boolean repeating)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, java.lang.String type, boolean repeating) {
 		return getPersistence().findByG_T_R(groupId, type, repeating);
 	}
 
@@ -1799,11 +1597,10 @@ public class CalEventUtil {
 	* @param start the lower bound of the range of cal events
 	* @param end the upper bound of the range of cal events (not inclusive)
 	* @return the range of matching cal events
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByG_T_R(
 		long groupId, java.lang.String type, boolean repeating, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return getPersistence().findByG_T_R(groupId, type, repeating, start, end);
 	}
 
@@ -1821,13 +1618,11 @@ public class CalEventUtil {
 	* @param end the upper bound of the range of cal events (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching cal events
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByG_T_R(
 		long groupId, java.lang.String type, boolean repeating, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByG_T_R(groupId, type, repeating, start, end,
 			orderByComparator);
@@ -1842,13 +1637,11 @@ public class CalEventUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cal event
 	* @throws com.liferay.portlet.calendar.NoSuchEventException if a matching cal event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent findByG_T_R_First(
 		long groupId, java.lang.String type, boolean repeating,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.calendar.NoSuchEventException {
+		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence()
 				   .findByG_T_R_First(groupId, type, repeating,
 			orderByComparator);
@@ -1862,12 +1655,10 @@ public class CalEventUtil {
 	* @param repeating the repeating
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cal event, or <code>null</code> if a matching cal event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent fetchByG_T_R_First(
 		long groupId, java.lang.String type, boolean repeating,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByG_T_R_First(groupId, type, repeating,
 			orderByComparator);
@@ -1882,13 +1673,11 @@ public class CalEventUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cal event
 	* @throws com.liferay.portlet.calendar.NoSuchEventException if a matching cal event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent findByG_T_R_Last(
 		long groupId, java.lang.String type, boolean repeating,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.calendar.NoSuchEventException {
+		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence()
 				   .findByG_T_R_Last(groupId, type, repeating, orderByComparator);
 	}
@@ -1901,12 +1690,10 @@ public class CalEventUtil {
 	* @param repeating the repeating
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cal event, or <code>null</code> if a matching cal event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent fetchByG_T_R_Last(
 		long groupId, java.lang.String type, boolean repeating,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByG_T_R_Last(groupId, type, repeating,
 			orderByComparator);
@@ -1922,13 +1709,11 @@ public class CalEventUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next cal event
 	* @throws com.liferay.portlet.calendar.NoSuchEventException if a cal event with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent[] findByG_T_R_PrevAndNext(
 		long eventId, long groupId, java.lang.String type, boolean repeating,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.calendar.NoSuchEventException {
+		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence()
 				   .findByG_T_R_PrevAndNext(eventId, groupId, type, repeating,
 			orderByComparator);
@@ -1941,11 +1726,9 @@ public class CalEventUtil {
 	* @param type the type
 	* @param repeating the repeating
 	* @return the matching cal events that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> filterFindByG_T_R(
-		long groupId, java.lang.String type, boolean repeating)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, java.lang.String type, boolean repeating) {
 		return getPersistence().filterFindByG_T_R(groupId, type, repeating);
 	}
 
@@ -1962,11 +1745,10 @@ public class CalEventUtil {
 	* @param start the lower bound of the range of cal events
 	* @param end the upper bound of the range of cal events (not inclusive)
 	* @return the range of matching cal events that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> filterFindByG_T_R(
 		long groupId, java.lang.String type, boolean repeating, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return getPersistence()
 				   .filterFindByG_T_R(groupId, type, repeating, start, end);
 	}
@@ -1985,13 +1767,11 @@ public class CalEventUtil {
 	* @param end the upper bound of the range of cal events (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching cal events that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> filterFindByG_T_R(
 		long groupId, java.lang.String type, boolean repeating, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_T_R(groupId, type, repeating, start, end,
 			orderByComparator);
@@ -2007,13 +1787,11 @@ public class CalEventUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next cal event
 	* @throws com.liferay.portlet.calendar.NoSuchEventException if a cal event with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent[] filterFindByG_T_R_PrevAndNext(
 		long eventId, long groupId, java.lang.String type, boolean repeating,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.calendar.NoSuchEventException {
+		throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence()
 				   .filterFindByG_T_R_PrevAndNext(eventId, groupId, type,
 			repeating, orderByComparator);
@@ -2026,11 +1804,9 @@ public class CalEventUtil {
 	* @param types the types
 	* @param repeating the repeating
 	* @return the matching cal events that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> filterFindByG_T_R(
-		long groupId, java.lang.String[] types, boolean repeating)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, java.lang.String[] types, boolean repeating) {
 		return getPersistence().filterFindByG_T_R(groupId, types, repeating);
 	}
 
@@ -2047,11 +1823,10 @@ public class CalEventUtil {
 	* @param start the lower bound of the range of cal events
 	* @param end the upper bound of the range of cal events (not inclusive)
 	* @return the range of matching cal events that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> filterFindByG_T_R(
 		long groupId, java.lang.String[] types, boolean repeating, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return getPersistence()
 				   .filterFindByG_T_R(groupId, types, repeating, start, end);
 	}
@@ -2070,13 +1845,11 @@ public class CalEventUtil {
 	* @param end the upper bound of the range of cal events (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching cal events that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> filterFindByG_T_R(
 		long groupId, java.lang.String[] types, boolean repeating, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_T_R(groupId, types, repeating, start, end,
 			orderByComparator);
@@ -2093,11 +1866,9 @@ public class CalEventUtil {
 	* @param types the types
 	* @param repeating the repeating
 	* @return the matching cal events
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByG_T_R(
-		long groupId, java.lang.String[] types, boolean repeating)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, java.lang.String[] types, boolean repeating) {
 		return getPersistence().findByG_T_R(groupId, types, repeating);
 	}
 
@@ -2114,11 +1885,10 @@ public class CalEventUtil {
 	* @param start the lower bound of the range of cal events
 	* @param end the upper bound of the range of cal events (not inclusive)
 	* @return the range of matching cal events
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByG_T_R(
 		long groupId, java.lang.String[] types, boolean repeating, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return getPersistence()
 				   .findByG_T_R(groupId, types, repeating, start, end);
 	}
@@ -2137,13 +1907,11 @@ public class CalEventUtil {
 	* @param end the upper bound of the range of cal events (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching cal events
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findByG_T_R(
 		long groupId, java.lang.String[] types, boolean repeating, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByG_T_R(groupId, types, repeating, start, end,
 			orderByComparator);
@@ -2155,11 +1923,9 @@ public class CalEventUtil {
 	* @param groupId the group ID
 	* @param type the type
 	* @param repeating the repeating
-	* @throws SystemException if a system exception occurred
 	*/
 	public static void removeByG_T_R(long groupId, java.lang.String type,
-		boolean repeating)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		boolean repeating) {
 		getPersistence().removeByG_T_R(groupId, type, repeating);
 	}
 
@@ -2170,11 +1936,9 @@ public class CalEventUtil {
 	* @param type the type
 	* @param repeating the repeating
 	* @return the number of matching cal events
-	* @throws SystemException if a system exception occurred
 	*/
 	public static int countByG_T_R(long groupId, java.lang.String type,
-		boolean repeating)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		boolean repeating) {
 		return getPersistence().countByG_T_R(groupId, type, repeating);
 	}
 
@@ -2185,11 +1949,9 @@ public class CalEventUtil {
 	* @param types the types
 	* @param repeating the repeating
 	* @return the number of matching cal events
-	* @throws SystemException if a system exception occurred
 	*/
 	public static int countByG_T_R(long groupId, java.lang.String[] types,
-		boolean repeating)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		boolean repeating) {
 		return getPersistence().countByG_T_R(groupId, types, repeating);
 	}
 
@@ -2200,11 +1962,9 @@ public class CalEventUtil {
 	* @param type the type
 	* @param repeating the repeating
 	* @return the number of matching cal events that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static int filterCountByG_T_R(long groupId, java.lang.String type,
-		boolean repeating)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		boolean repeating) {
 		return getPersistence().filterCountByG_T_R(groupId, type, repeating);
 	}
 
@@ -2215,11 +1975,9 @@ public class CalEventUtil {
 	* @param types the types
 	* @param repeating the repeating
 	* @return the number of matching cal events that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static int filterCountByG_T_R(long groupId,
-		java.lang.String[] types, boolean repeating)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String[] types, boolean repeating) {
 		return getPersistence().filterCountByG_T_R(groupId, types, repeating);
 	}
 
@@ -2260,18 +2018,14 @@ public class CalEventUtil {
 	* @param eventId the primary key of the cal event
 	* @return the cal event that was removed
 	* @throws com.liferay.portlet.calendar.NoSuchEventException if a cal event with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent remove(
-		long eventId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.calendar.NoSuchEventException {
+		long eventId) throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence().remove(eventId);
 	}
 
 	public static com.liferay.portlet.calendar.model.CalEvent updateImpl(
-		com.liferay.portlet.calendar.model.CalEvent calEvent)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.calendar.model.CalEvent calEvent) {
 		return getPersistence().updateImpl(calEvent);
 	}
 
@@ -2281,12 +2035,9 @@ public class CalEventUtil {
 	* @param eventId the primary key of the cal event
 	* @return the cal event
 	* @throws com.liferay.portlet.calendar.NoSuchEventException if a cal event with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent findByPrimaryKey(
-		long eventId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.calendar.NoSuchEventException {
+		long eventId) throws com.liferay.portlet.calendar.NoSuchEventException {
 		return getPersistence().findByPrimaryKey(eventId);
 	}
 
@@ -2295,11 +2046,9 @@ public class CalEventUtil {
 	*
 	* @param eventId the primary key of the cal event
 	* @return the cal event, or <code>null</code> if a cal event with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent fetchByPrimaryKey(
-		long eventId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long eventId) {
 		return getPersistence().fetchByPrimaryKey(eventId);
 	}
 
@@ -2307,10 +2056,8 @@ public class CalEventUtil {
 	* Returns all the cal events.
 	*
 	* @return the cal events
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findAll() {
 		return getPersistence().findAll();
 	}
 
@@ -2324,11 +2071,9 @@ public class CalEventUtil {
 	* @param start the lower bound of the range of cal events
 	* @param end the upper bound of the range of cal events (not inclusive)
 	* @return the range of cal events
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findAll(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
@@ -2343,22 +2088,17 @@ public class CalEventUtil {
 	* @param end the upper bound of the range of cal events (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of cal events
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
 	/**
 	* Removes all the cal events from the database.
-	*
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeAll() {
 		getPersistence().removeAll();
 	}
 
@@ -2366,10 +2106,8 @@ public class CalEventUtil {
 	* Returns the number of cal events.
 	*
 	* @return the number of cal events
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countAll() {
 		return getPersistence().countAll();
 	}
 

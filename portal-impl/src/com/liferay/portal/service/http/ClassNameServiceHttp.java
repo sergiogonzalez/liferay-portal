@@ -82,8 +82,7 @@ public class ClassNameServiceHttp {
 	}
 
 	public static long fetchClassNameId(HttpPrincipal httpPrincipal,
-		java.lang.Class<?> clazz)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.Class<?> clazz) {
 		try {
 			MethodKey methodKey = new MethodKey(ClassNameServiceUtil.class,
 					"fetchClassNameId", _fetchClassNameIdParameterTypes1);
@@ -109,8 +108,7 @@ public class ClassNameServiceHttp {
 	}
 
 	public static long fetchClassNameId(HttpPrincipal httpPrincipal,
-		java.lang.String value)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String value) {
 		try {
 			MethodKey methodKey = new MethodKey(ClassNameServiceUtil.class,
 					"fetchClassNameId", _fetchClassNameIdParameterTypes2);

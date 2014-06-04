@@ -52,11 +52,9 @@ public interface JournalFolderLocalService extends BaseLocalService,
 	*
 	* @param journalFolder the journal folder
 	* @return the journal folder that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.journal.model.JournalFolder addJournalFolder(
-		com.liferay.portlet.journal.model.JournalFolder journalFolder)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portlet.journal.model.JournalFolder journalFolder);
 
 	/**
 	* Creates a new journal folder with the primary key. Does not add the journal folder to the database.
@@ -73,23 +71,19 @@ public interface JournalFolderLocalService extends BaseLocalService,
 	* @param folderId the primary key of the journal folder
 	* @return the journal folder that was removed
 	* @throws PortalException if a journal folder with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.journal.model.JournalFolder deleteJournalFolder(
 		long folderId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Deletes the journal folder from the database. Also notifies the appropriate model listeners.
 	*
 	* @param journalFolder the journal folder
 	* @return the journal folder that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.journal.model.JournalFolder deleteJournalFolder(
-		com.liferay.portlet.journal.model.JournalFolder journalFolder)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portlet.journal.model.JournalFolder journalFolder);
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -98,12 +92,10 @@ public interface JournalFolderLocalService extends BaseLocalService,
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -116,12 +108,11 @@ public interface JournalFolderLocalService extends BaseLocalService,
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException;
+		int end);
 
 	/**
 	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
@@ -135,25 +126,21 @@ public interface JournalFolderLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the number of rows that match the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows that match the dynamic query.
@@ -161,17 +148,14 @@ public interface JournalFolderLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.dao.orm.Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.journal.model.JournalFolder fetchJournalFolder(
-		long folderId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long folderId);
 
 	/**
 	* Returns the journal folder with the matching UUID and company.
@@ -179,12 +163,10 @@ public interface JournalFolderLocalService extends BaseLocalService,
 	* @param uuid the journal folder's UUID
 	* @param companyId the primary key of the company
 	* @return the matching journal folder, or <code>null</code> if a matching journal folder could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.journal.model.JournalFolder fetchJournalFolderByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String uuid, long companyId);
 
 	/**
 	* Returns the journal folder matching the UUID and group.
@@ -192,12 +174,10 @@ public interface JournalFolderLocalService extends BaseLocalService,
 	* @param uuid the journal folder's UUID
 	* @param groupId the primary key of the group
 	* @return the matching journal folder, or <code>null</code> if a matching journal folder could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.journal.model.JournalFolder fetchJournalFolderByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String uuid, long groupId);
 
 	/**
 	* Returns the journal folder with the primary key.
@@ -205,29 +185,24 @@ public interface JournalFolderLocalService extends BaseLocalService,
 	* @param folderId the primary key of the journal folder
 	* @return the journal folder
 	* @throws PortalException if a journal folder with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.journal.model.JournalFolder getJournalFolder(
 		long folderId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext);
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns the journal folder with the matching UUID and company.
@@ -236,13 +211,11 @@ public interface JournalFolderLocalService extends BaseLocalService,
 	* @param companyId the primary key of the company
 	* @return the matching journal folder
 	* @throws PortalException if a matching journal folder could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.journal.model.JournalFolder getJournalFolderByUuidAndCompanyId(
 		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns the journal folder matching the UUID and group.
@@ -251,13 +224,11 @@ public interface JournalFolderLocalService extends BaseLocalService,
 	* @param groupId the primary key of the group
 	* @return the matching journal folder
 	* @throws PortalException if a matching journal folder could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.journal.model.JournalFolder getJournalFolderByUuidAndGroupId(
 		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns a range of all the journal folders.
@@ -269,155 +240,83 @@ public interface JournalFolderLocalService extends BaseLocalService,
 	* @param start the lower bound of the range of journal folders
 	* @param end the upper bound of the range of journal folders (not inclusive)
 	* @return the range of journal folders
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.journal.model.JournalFolder> getJournalFolders(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		int start, int end);
 
 	/**
 	* Returns the number of journal folders.
 	*
 	* @return the number of journal folders
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getJournalFoldersCount()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int getJournalFoldersCount();
 
 	/**
 	* Updates the journal folder in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param journalFolder the journal folder
 	* @return the journal folder that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.journal.model.JournalFolder updateJournalFolder(
-		com.liferay.portlet.journal.model.JournalFolder journalFolder)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portlet.journal.model.JournalFolder journalFolder);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	public void addDDMStructureJournalFolder(long structureId, long folderId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void addDDMStructureJournalFolder(long structureId, long folderId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public void addDDMStructureJournalFolder(long structureId,
-		com.liferay.portlet.journal.model.JournalFolder journalFolder)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portlet.journal.model.JournalFolder journalFolder);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	public void addDDMStructureJournalFolders(long structureId, long[] folderIds)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void addDDMStructureJournalFolders(long structureId, long[] folderIds);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public void addDDMStructureJournalFolders(long structureId,
-		java.util.List<com.liferay.portlet.journal.model.JournalFolder> JournalFolders)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.util.List<com.liferay.portlet.journal.model.JournalFolder> JournalFolders);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	public void clearDDMStructureJournalFolders(long structureId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void clearDDMStructureJournalFolders(long structureId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	public void deleteDDMStructureJournalFolder(long structureId, long folderId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void deleteDDMStructureJournalFolder(long structureId, long folderId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public void deleteDDMStructureJournalFolder(long structureId,
-		com.liferay.portlet.journal.model.JournalFolder journalFolder)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portlet.journal.model.JournalFolder journalFolder);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public void deleteDDMStructureJournalFolders(long structureId,
-		long[] folderIds)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long[] folderIds);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public void deleteDDMStructureJournalFolders(long structureId,
-		java.util.List<com.liferay.portlet.journal.model.JournalFolder> JournalFolders)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.util.List<com.liferay.portlet.journal.model.JournalFolder> JournalFolders);
 
 	/**
 	* Returns the structureIds of the d d m structures associated with the journal folder.
 	*
 	* @param folderId the folderId of the journal folder
 	* @return long[] the structureIds of d d m structures associated with the journal folder
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long[] getDDMStructurePrimaryKeys(long folderId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public long[] getDDMStructurePrimaryKeys(long folderId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.journal.model.JournalFolder> getDDMStructureJournalFolders(
-		long structureId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long structureId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.journal.model.JournalFolder> getDDMStructureJournalFolders(
-		long structureId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long structureId, int start, int end);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.journal.model.JournalFolder> getDDMStructureJournalFolders(
 		long structureId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getDDMStructureJournalFoldersCount(long structureId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int getDDMStructureJournalFoldersCount(long structureId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasDDMStructureJournalFolder(long structureId, long folderId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public boolean hasDDMStructureJournalFolder(long structureId, long folderId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasDDMStructureJournalFolders(long structureId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public boolean hasDDMStructureJournalFolders(long structureId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	public void setDDMStructureJournalFolders(long structureId, long[] folderIds)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void setDDMStructureJournalFolders(long structureId, long[] folderIds);
 
 	/**
 	* Returns the Spring bean ID for this bean.

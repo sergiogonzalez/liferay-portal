@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 import com.liferay.portal.service.ServiceContext;
@@ -64,8 +63,7 @@ public class JournalArticleImageUtil {
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#countWithDynamicQuery(DynamicQuery)
 	 */
-	public static long countWithDynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public static long countWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return getPersistence().countWithDynamicQuery(dynamicQuery);
 	}
 
@@ -73,7 +71,7 @@ public class JournalArticleImageUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery)
 	 */
 	public static List<JournalArticleImage> findWithDynamicQuery(
-		DynamicQuery dynamicQuery) throws SystemException {
+		DynamicQuery dynamicQuery) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -81,8 +79,7 @@ public class JournalArticleImageUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
 	 */
 	public static List<JournalArticleImage> findWithDynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+		DynamicQuery dynamicQuery, int start, int end) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -91,7 +88,7 @@ public class JournalArticleImageUtil {
 	 */
 	public static List<JournalArticleImage> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -101,7 +98,7 @@ public class JournalArticleImageUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
 	public static JournalArticleImage update(
-		JournalArticleImage journalArticleImage) throws SystemException {
+		JournalArticleImage journalArticleImage) {
 		return getPersistence().update(journalArticleImage);
 	}
 
@@ -109,8 +106,7 @@ public class JournalArticleImageUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
 	public static JournalArticleImage update(
-		JournalArticleImage journalArticleImage, ServiceContext serviceContext)
-		throws SystemException {
+		JournalArticleImage journalArticleImage, ServiceContext serviceContext) {
 		return getPersistence().update(journalArticleImage, serviceContext);
 	}
 
@@ -119,11 +115,9 @@ public class JournalArticleImageUtil {
 	*
 	* @param groupId the group ID
 	* @return the matching journal article images
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticleImage> findByGroupId(
-		long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId) {
 		return getPersistence().findByGroupId(groupId);
 	}
 
@@ -138,11 +132,9 @@ public class JournalArticleImageUtil {
 	* @param start the lower bound of the range of journal article images
 	* @param end the upper bound of the range of journal article images (not inclusive)
 	* @return the range of matching journal article images
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticleImage> findByGroupId(
-		long groupId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, int start, int end) {
 		return getPersistence().findByGroupId(groupId, start, end);
 	}
 
@@ -158,12 +150,10 @@ public class JournalArticleImageUtil {
 	* @param end the upper bound of the range of journal article images (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching journal article images
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticleImage> findByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByGroupId(groupId, start, end, orderByComparator);
 	}
@@ -175,13 +165,11 @@ public class JournalArticleImageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching journal article image
 	* @throws com.liferay.portlet.journal.NoSuchArticleImageException if a matching journal article image could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticleImage findByGroupId_First(
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.journal.NoSuchArticleImageException {
+		throws com.liferay.portlet.journal.NoSuchArticleImageException {
 		return getPersistence().findByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -191,12 +179,10 @@ public class JournalArticleImageUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching journal article image, or <code>null</code> if a matching journal article image could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticleImage fetchByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -207,13 +193,11 @@ public class JournalArticleImageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching journal article image
 	* @throws com.liferay.portlet.journal.NoSuchArticleImageException if a matching journal article image could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticleImage findByGroupId_Last(
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.journal.NoSuchArticleImageException {
+		throws com.liferay.portlet.journal.NoSuchArticleImageException {
 		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -223,12 +207,10 @@ public class JournalArticleImageUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching journal article image, or <code>null</code> if a matching journal article image could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticleImage fetchByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -240,13 +222,11 @@ public class JournalArticleImageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next journal article image
 	* @throws com.liferay.portlet.journal.NoSuchArticleImageException if a journal article image with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticleImage[] findByGroupId_PrevAndNext(
 		long articleImageId, long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.journal.NoSuchArticleImageException {
+		throws com.liferay.portlet.journal.NoSuchArticleImageException {
 		return getPersistence()
 				   .findByGroupId_PrevAndNext(articleImageId, groupId,
 			orderByComparator);
@@ -256,10 +236,8 @@ public class JournalArticleImageUtil {
 	* Removes all the journal article images where groupId = &#63; from the database.
 	*
 	* @param groupId the group ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByGroupId(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByGroupId(long groupId) {
 		getPersistence().removeByGroupId(groupId);
 	}
 
@@ -268,10 +246,8 @@ public class JournalArticleImageUtil {
 	*
 	* @param groupId the group ID
 	* @return the number of matching journal article images
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByGroupId(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByGroupId(long groupId) {
 		return getPersistence().countByGroupId(groupId);
 	}
 
@@ -280,11 +256,9 @@ public class JournalArticleImageUtil {
 	*
 	* @param tempImage the temp image
 	* @return the matching journal article images
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticleImage> findByTempImage(
-		boolean tempImage)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		boolean tempImage) {
 		return getPersistence().findByTempImage(tempImage);
 	}
 
@@ -299,11 +273,9 @@ public class JournalArticleImageUtil {
 	* @param start the lower bound of the range of journal article images
 	* @param end the upper bound of the range of journal article images (not inclusive)
 	* @return the range of matching journal article images
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticleImage> findByTempImage(
-		boolean tempImage, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		boolean tempImage, int start, int end) {
 		return getPersistence().findByTempImage(tempImage, start, end);
 	}
 
@@ -319,12 +291,10 @@ public class JournalArticleImageUtil {
 	* @param end the upper bound of the range of journal article images (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching journal article images
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticleImage> findByTempImage(
 		boolean tempImage, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByTempImage(tempImage, start, end, orderByComparator);
 	}
@@ -336,13 +306,11 @@ public class JournalArticleImageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching journal article image
 	* @throws com.liferay.portlet.journal.NoSuchArticleImageException if a matching journal article image could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticleImage findByTempImage_First(
 		boolean tempImage,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.journal.NoSuchArticleImageException {
+		throws com.liferay.portlet.journal.NoSuchArticleImageException {
 		return getPersistence()
 				   .findByTempImage_First(tempImage, orderByComparator);
 	}
@@ -353,12 +321,10 @@ public class JournalArticleImageUtil {
 	* @param tempImage the temp image
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching journal article image, or <code>null</code> if a matching journal article image could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticleImage fetchByTempImage_First(
 		boolean tempImage,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByTempImage_First(tempImage, orderByComparator);
 	}
@@ -370,13 +336,11 @@ public class JournalArticleImageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching journal article image
 	* @throws com.liferay.portlet.journal.NoSuchArticleImageException if a matching journal article image could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticleImage findByTempImage_Last(
 		boolean tempImage,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.journal.NoSuchArticleImageException {
+		throws com.liferay.portlet.journal.NoSuchArticleImageException {
 		return getPersistence()
 				   .findByTempImage_Last(tempImage, orderByComparator);
 	}
@@ -387,12 +351,10 @@ public class JournalArticleImageUtil {
 	* @param tempImage the temp image
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching journal article image, or <code>null</code> if a matching journal article image could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticleImage fetchByTempImage_Last(
 		boolean tempImage,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByTempImage_Last(tempImage, orderByComparator);
 	}
@@ -405,13 +367,11 @@ public class JournalArticleImageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next journal article image
 	* @throws com.liferay.portlet.journal.NoSuchArticleImageException if a journal article image with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticleImage[] findByTempImage_PrevAndNext(
 		long articleImageId, boolean tempImage,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.journal.NoSuchArticleImageException {
+		throws com.liferay.portlet.journal.NoSuchArticleImageException {
 		return getPersistence()
 				   .findByTempImage_PrevAndNext(articleImageId, tempImage,
 			orderByComparator);
@@ -421,10 +381,8 @@ public class JournalArticleImageUtil {
 	* Removes all the journal article images where tempImage = &#63; from the database.
 	*
 	* @param tempImage the temp image
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByTempImage(boolean tempImage)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByTempImage(boolean tempImage) {
 		getPersistence().removeByTempImage(tempImage);
 	}
 
@@ -433,10 +391,8 @@ public class JournalArticleImageUtil {
 	*
 	* @param tempImage the temp image
 	* @return the number of matching journal article images
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByTempImage(boolean tempImage)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByTempImage(boolean tempImage) {
 		return getPersistence().countByTempImage(tempImage);
 	}
 
@@ -447,11 +403,9 @@ public class JournalArticleImageUtil {
 	* @param articleId the article ID
 	* @param version the version
 	* @return the matching journal article images
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticleImage> findByG_A_V(
-		long groupId, java.lang.String articleId, double version)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, java.lang.String articleId, double version) {
 		return getPersistence().findByG_A_V(groupId, articleId, version);
 	}
 
@@ -468,11 +422,10 @@ public class JournalArticleImageUtil {
 	* @param start the lower bound of the range of journal article images
 	* @param end the upper bound of the range of journal article images (not inclusive)
 	* @return the range of matching journal article images
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticleImage> findByG_A_V(
 		long groupId, java.lang.String articleId, double version, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return getPersistence()
 				   .findByG_A_V(groupId, articleId, version, start, end);
 	}
@@ -491,13 +444,11 @@ public class JournalArticleImageUtil {
 	* @param end the upper bound of the range of journal article images (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching journal article images
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticleImage> findByG_A_V(
 		long groupId, java.lang.String articleId, double version, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByG_A_V(groupId, articleId, version, start, end,
 			orderByComparator);
@@ -512,13 +463,11 @@ public class JournalArticleImageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching journal article image
 	* @throws com.liferay.portlet.journal.NoSuchArticleImageException if a matching journal article image could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticleImage findByG_A_V_First(
 		long groupId, java.lang.String articleId, double version,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.journal.NoSuchArticleImageException {
+		throws com.liferay.portlet.journal.NoSuchArticleImageException {
 		return getPersistence()
 				   .findByG_A_V_First(groupId, articleId, version,
 			orderByComparator);
@@ -532,12 +481,10 @@ public class JournalArticleImageUtil {
 	* @param version the version
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching journal article image, or <code>null</code> if a matching journal article image could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticleImage fetchByG_A_V_First(
 		long groupId, java.lang.String articleId, double version,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByG_A_V_First(groupId, articleId, version,
 			orderByComparator);
@@ -552,13 +499,11 @@ public class JournalArticleImageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching journal article image
 	* @throws com.liferay.portlet.journal.NoSuchArticleImageException if a matching journal article image could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticleImage findByG_A_V_Last(
 		long groupId, java.lang.String articleId, double version,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.journal.NoSuchArticleImageException {
+		throws com.liferay.portlet.journal.NoSuchArticleImageException {
 		return getPersistence()
 				   .findByG_A_V_Last(groupId, articleId, version,
 			orderByComparator);
@@ -572,12 +517,10 @@ public class JournalArticleImageUtil {
 	* @param version the version
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching journal article image, or <code>null</code> if a matching journal article image could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticleImage fetchByG_A_V_Last(
 		long groupId, java.lang.String articleId, double version,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByG_A_V_Last(groupId, articleId, version,
 			orderByComparator);
@@ -593,14 +536,12 @@ public class JournalArticleImageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next journal article image
 	* @throws com.liferay.portlet.journal.NoSuchArticleImageException if a journal article image with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticleImage[] findByG_A_V_PrevAndNext(
 		long articleImageId, long groupId, java.lang.String articleId,
 		double version,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.journal.NoSuchArticleImageException {
+		throws com.liferay.portlet.journal.NoSuchArticleImageException {
 		return getPersistence()
 				   .findByG_A_V_PrevAndNext(articleImageId, groupId, articleId,
 			version, orderByComparator);
@@ -612,11 +553,9 @@ public class JournalArticleImageUtil {
 	* @param groupId the group ID
 	* @param articleId the article ID
 	* @param version the version
-	* @throws SystemException if a system exception occurred
 	*/
 	public static void removeByG_A_V(long groupId, java.lang.String articleId,
-		double version)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		double version) {
 		getPersistence().removeByG_A_V(groupId, articleId, version);
 	}
 
@@ -627,11 +566,9 @@ public class JournalArticleImageUtil {
 	* @param articleId the article ID
 	* @param version the version
 	* @return the number of matching journal article images
-	* @throws SystemException if a system exception occurred
 	*/
 	public static int countByG_A_V(long groupId, java.lang.String articleId,
-		double version)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		double version) {
 		return getPersistence().countByG_A_V(groupId, articleId, version);
 	}
 
@@ -646,14 +583,12 @@ public class JournalArticleImageUtil {
 	* @param languageId the language ID
 	* @return the matching journal article image
 	* @throws com.liferay.portlet.journal.NoSuchArticleImageException if a matching journal article image could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticleImage findByG_A_V_E_E_L(
 		long groupId, java.lang.String articleId, double version,
 		java.lang.String elInstanceId, java.lang.String elName,
 		java.lang.String languageId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.journal.NoSuchArticleImageException {
+		throws com.liferay.portlet.journal.NoSuchArticleImageException {
 		return getPersistence()
 				   .findByG_A_V_E_E_L(groupId, articleId, version,
 			elInstanceId, elName, languageId);
@@ -669,13 +604,11 @@ public class JournalArticleImageUtil {
 	* @param elName the el name
 	* @param languageId the language ID
 	* @return the matching journal article image, or <code>null</code> if a matching journal article image could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticleImage fetchByG_A_V_E_E_L(
 		long groupId, java.lang.String articleId, double version,
 		java.lang.String elInstanceId, java.lang.String elName,
-		java.lang.String languageId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String languageId) {
 		return getPersistence()
 				   .fetchByG_A_V_E_E_L(groupId, articleId, version,
 			elInstanceId, elName, languageId);
@@ -692,13 +625,11 @@ public class JournalArticleImageUtil {
 	* @param languageId the language ID
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching journal article image, or <code>null</code> if a matching journal article image could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticleImage fetchByG_A_V_E_E_L(
 		long groupId, java.lang.String articleId, double version,
 		java.lang.String elInstanceId, java.lang.String elName,
-		java.lang.String languageId, boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String languageId, boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByG_A_V_E_E_L(groupId, articleId, version,
 			elInstanceId, elName, languageId, retrieveFromCache);
@@ -714,14 +645,12 @@ public class JournalArticleImageUtil {
 	* @param elName the el name
 	* @param languageId the language ID
 	* @return the journal article image that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticleImage removeByG_A_V_E_E_L(
 		long groupId, java.lang.String articleId, double version,
 		java.lang.String elInstanceId, java.lang.String elName,
 		java.lang.String languageId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.journal.NoSuchArticleImageException {
+		throws com.liferay.portlet.journal.NoSuchArticleImageException {
 		return getPersistence()
 				   .removeByG_A_V_E_E_L(groupId, articleId, version,
 			elInstanceId, elName, languageId);
@@ -737,13 +666,11 @@ public class JournalArticleImageUtil {
 	* @param elName the el name
 	* @param languageId the language ID
 	* @return the number of matching journal article images
-	* @throws SystemException if a system exception occurred
 	*/
 	public static int countByG_A_V_E_E_L(long groupId,
 		java.lang.String articleId, double version,
 		java.lang.String elInstanceId, java.lang.String elName,
-		java.lang.String languageId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String languageId) {
 		return getPersistence()
 				   .countByG_A_V_E_E_L(groupId, articleId, version,
 			elInstanceId, elName, languageId);
@@ -786,18 +713,15 @@ public class JournalArticleImageUtil {
 	* @param articleImageId the primary key of the journal article image
 	* @return the journal article image that was removed
 	* @throws com.liferay.portlet.journal.NoSuchArticleImageException if a journal article image with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticleImage remove(
 		long articleImageId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.journal.NoSuchArticleImageException {
+		throws com.liferay.portlet.journal.NoSuchArticleImageException {
 		return getPersistence().remove(articleImageId);
 	}
 
 	public static com.liferay.portlet.journal.model.JournalArticleImage updateImpl(
-		com.liferay.portlet.journal.model.JournalArticleImage journalArticleImage)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.journal.model.JournalArticleImage journalArticleImage) {
 		return getPersistence().updateImpl(journalArticleImage);
 	}
 
@@ -807,12 +731,10 @@ public class JournalArticleImageUtil {
 	* @param articleImageId the primary key of the journal article image
 	* @return the journal article image
 	* @throws com.liferay.portlet.journal.NoSuchArticleImageException if a journal article image with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticleImage findByPrimaryKey(
 		long articleImageId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.journal.NoSuchArticleImageException {
+		throws com.liferay.portlet.journal.NoSuchArticleImageException {
 		return getPersistence().findByPrimaryKey(articleImageId);
 	}
 
@@ -821,11 +743,9 @@ public class JournalArticleImageUtil {
 	*
 	* @param articleImageId the primary key of the journal article image
 	* @return the journal article image, or <code>null</code> if a journal article image with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.journal.model.JournalArticleImage fetchByPrimaryKey(
-		long articleImageId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long articleImageId) {
 		return getPersistence().fetchByPrimaryKey(articleImageId);
 	}
 
@@ -833,10 +753,8 @@ public class JournalArticleImageUtil {
 	* Returns all the journal article images.
 	*
 	* @return the journal article images
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.portlet.journal.model.JournalArticleImage> findAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticleImage> findAll() {
 		return getPersistence().findAll();
 	}
 
@@ -850,11 +768,9 @@ public class JournalArticleImageUtil {
 	* @param start the lower bound of the range of journal article images
 	* @param end the upper bound of the range of journal article images (not inclusive)
 	* @return the range of journal article images
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticleImage> findAll(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
@@ -869,22 +785,17 @@ public class JournalArticleImageUtil {
 	* @param end the upper bound of the range of journal article images (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of journal article images
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticleImage> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
 	/**
 	* Removes all the journal article images from the database.
-	*
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeAll() {
 		getPersistence().removeAll();
 	}
 
@@ -892,10 +803,8 @@ public class JournalArticleImageUtil {
 	* Returns the number of journal article images.
 	*
 	* @return the number of journal article images
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countAll() {
 		return getPersistence().countAll();
 	}
 

@@ -316,8 +316,7 @@ public class ResourceBlockPermissionWrapper implements ResourceBlockPermission,
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void persist() {
 		_resourceBlockPermission.persist();
 	}
 

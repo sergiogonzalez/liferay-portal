@@ -46,11 +46,9 @@ public class DLSyncEventLocalServiceUtil {
 	*
 	* @param dlSyncEvent the d l sync event
 	* @return the d l sync event that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLSyncEvent addDLSyncEvent(
-		com.liferay.portlet.documentlibrary.model.DLSyncEvent dlSyncEvent)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.documentlibrary.model.DLSyncEvent dlSyncEvent) {
 		return getService().addDLSyncEvent(dlSyncEvent);
 	}
 
@@ -71,12 +69,10 @@ public class DLSyncEventLocalServiceUtil {
 	* @param syncEventId the primary key of the d l sync event
 	* @return the d l sync event that was removed
 	* @throws PortalException if a d l sync event with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLSyncEvent deleteDLSyncEvent(
 		long syncEventId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteDLSyncEvent(syncEventId);
 	}
 
@@ -85,11 +81,9 @@ public class DLSyncEventLocalServiceUtil {
 	*
 	* @param dlSyncEvent the d l sync event
 	* @return the d l sync event that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLSyncEvent deleteDLSyncEvent(
-		com.liferay.portlet.documentlibrary.model.DLSyncEvent dlSyncEvent)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.documentlibrary.model.DLSyncEvent dlSyncEvent) {
 		return getService().deleteDLSyncEvent(dlSyncEvent);
 	}
 
@@ -102,12 +96,10 @@ public class DLSyncEventLocalServiceUtil {
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -122,12 +114,11 @@ public class DLSyncEventLocalServiceUtil {
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -143,14 +134,12 @@ public class DLSyncEventLocalServiceUtil {
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getService()
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
@@ -160,11 +149,9 @@ public class DLSyncEventLocalServiceUtil {
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -174,18 +161,15 @@ public class DLSyncEventLocalServiceUtil {
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public static long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
 	public static com.liferay.portlet.documentlibrary.model.DLSyncEvent fetchDLSyncEvent(
-		long syncEventId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long syncEventId) {
 		return getService().fetchDLSyncEvent(syncEventId);
 	}
 
@@ -195,24 +179,20 @@ public class DLSyncEventLocalServiceUtil {
 	* @param syncEventId the primary key of the d l sync event
 	* @return the d l sync event
 	* @throws PortalException if a d l sync event with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLSyncEvent getDLSyncEvent(
 		long syncEventId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getDLSyncEvent(syncEventId);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}
 
 	public static com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
@@ -226,11 +206,9 @@ public class DLSyncEventLocalServiceUtil {
 	* @param start the lower bound of the range of d l sync events
 	* @param end the upper bound of the range of d l sync events (not inclusive)
 	* @return the range of d l sync events
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLSyncEvent> getDLSyncEvents(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return getService().getDLSyncEvents(start, end);
 	}
 
@@ -238,10 +216,8 @@ public class DLSyncEventLocalServiceUtil {
 	* Returns the number of d l sync events.
 	*
 	* @return the number of d l sync events
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int getDLSyncEventsCount()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int getDLSyncEventsCount() {
 		return getService().getDLSyncEventsCount();
 	}
 
@@ -250,11 +226,9 @@ public class DLSyncEventLocalServiceUtil {
 	*
 	* @param dlSyncEvent the d l sync event
 	* @return the d l sync event that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLSyncEvent updateDLSyncEvent(
-		com.liferay.portlet.documentlibrary.model.DLSyncEvent dlSyncEvent)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.documentlibrary.model.DLSyncEvent dlSyncEvent) {
 		return getService().updateDLSyncEvent(dlSyncEvent);
 	}
 

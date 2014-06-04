@@ -15,7 +15,6 @@
 package com.liferay.portlet.shopping.service.persistence;
 
 import com.liferay.portal.kernel.dao.orm.BaseActionableDynamicQuery;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 
 import com.liferay.portlet.shopping.model.ShoppingOrder;
@@ -29,7 +28,7 @@ import com.liferay.portlet.shopping.service.ShoppingOrderLocalServiceUtil;
 @Deprecated
 public abstract class ShoppingOrderActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
-	public ShoppingOrderActionableDynamicQuery() throws SystemException {
+	public ShoppingOrderActionableDynamicQuery() {
 		setBaseLocalService(ShoppingOrderLocalServiceUtil.getService());
 		setClass(ShoppingOrder.class);
 

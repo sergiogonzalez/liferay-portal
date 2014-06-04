@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 import com.liferay.portal.service.ServiceContext;
@@ -64,8 +63,7 @@ public class MBMessageUtil {
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#countWithDynamicQuery(DynamicQuery)
 	 */
-	public static long countWithDynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public static long countWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return getPersistence().countWithDynamicQuery(dynamicQuery);
 	}
 
@@ -73,7 +71,7 @@ public class MBMessageUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery)
 	 */
 	public static List<MBMessage> findWithDynamicQuery(
-		DynamicQuery dynamicQuery) throws SystemException {
+		DynamicQuery dynamicQuery) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -81,8 +79,7 @@ public class MBMessageUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
 	 */
 	public static List<MBMessage> findWithDynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+		DynamicQuery dynamicQuery, int start, int end) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -91,7 +88,7 @@ public class MBMessageUtil {
 	 */
 	public static List<MBMessage> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -100,8 +97,7 @@ public class MBMessageUtil {
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static MBMessage update(MBMessage mbMessage)
-		throws SystemException {
+	public static MBMessage update(MBMessage mbMessage) {
 		return getPersistence().update(mbMessage);
 	}
 
@@ -109,7 +105,7 @@ public class MBMessageUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
 	public static MBMessage update(MBMessage mbMessage,
-		ServiceContext serviceContext) throws SystemException {
+		ServiceContext serviceContext) {
 		return getPersistence().update(mbMessage, serviceContext);
 	}
 
@@ -118,11 +114,9 @@ public class MBMessageUtil {
 	*
 	* @param uuid the uuid
 	* @return the matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByUuid(
-		java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid) {
 		return getPersistence().findByUuid(uuid);
 	}
 
@@ -137,11 +131,9 @@ public class MBMessageUtil {
 	* @param start the lower bound of the range of message-boards messages
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @return the range of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByUuid(
-		java.lang.String uuid, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, int start, int end) {
 		return getPersistence().findByUuid(uuid, start, end);
 	}
 
@@ -157,12 +149,10 @@ public class MBMessageUtil {
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByUuid(
 		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -173,13 +163,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage findByUuid_First(
 		java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
 
@@ -189,12 +177,10 @@ public class MBMessageUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage fetchByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
 
@@ -205,13 +191,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage findByUuid_Last(
 		java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -221,12 +205,10 @@ public class MBMessageUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage fetchByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -238,13 +220,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a message-boards message with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage[] findByUuid_PrevAndNext(
 		long messageId, java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(messageId, uuid, orderByComparator);
 	}
@@ -253,10 +233,8 @@ public class MBMessageUtil {
 	* Removes all the message-boards messages where uuid = &#63; from the database.
 	*
 	* @param uuid the uuid
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByUuid(java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByUuid(java.lang.String uuid) {
 		getPersistence().removeByUuid(uuid);
 	}
 
@@ -265,10 +243,8 @@ public class MBMessageUtil {
 	*
 	* @param uuid the uuid
 	* @return the number of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByUuid(java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByUuid(java.lang.String uuid) {
 		return getPersistence().countByUuid(uuid);
 	}
 
@@ -279,12 +255,10 @@ public class MBMessageUtil {
 	* @param groupId the group ID
 	* @return the matching message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage findByUUID_G(
 		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
 
@@ -294,11 +268,9 @@ public class MBMessageUtil {
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage fetchByUUID_G(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long groupId) {
 		return getPersistence().fetchByUUID_G(uuid, groupId);
 	}
 
@@ -309,11 +281,9 @@ public class MBMessageUtil {
 	* @param groupId the group ID
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage fetchByUUID_G(
-		java.lang.String uuid, long groupId, boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long groupId, boolean retrieveFromCache) {
 		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
 	}
 
@@ -323,12 +293,10 @@ public class MBMessageUtil {
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the message-boards message that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage removeByUUID_G(
 		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
 
@@ -338,10 +306,8 @@ public class MBMessageUtil {
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the number of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByUUID_G(java.lang.String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
 	}
 
@@ -351,11 +317,9 @@ public class MBMessageUtil {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	* @return the matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByUuid_C(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long companyId) {
 		return getPersistence().findByUuid_C(uuid, companyId);
 	}
 
@@ -371,11 +335,9 @@ public class MBMessageUtil {
 	* @param start the lower bound of the range of message-boards messages
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @return the range of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long companyId, int start, int end) {
 		return getPersistence().findByUuid_C(uuid, companyId, start, end);
 	}
 
@@ -392,12 +354,10 @@ public class MBMessageUtil {
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByUuid_C(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
 	}
@@ -410,13 +370,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage findByUuid_C_First(
 		java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -428,12 +386,10 @@ public class MBMessageUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage fetchByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -446,13 +402,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage findByUuid_C_Last(
 		java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -464,12 +418,10 @@ public class MBMessageUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage fetchByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -483,13 +435,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a message-boards message with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage[] findByUuid_C_PrevAndNext(
 		long messageId, java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .findByUuid_C_PrevAndNext(messageId, uuid, companyId,
 			orderByComparator);
@@ -500,10 +450,8 @@ public class MBMessageUtil {
 	*
 	* @param uuid the uuid
 	* @param companyId the company ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByUuid_C(java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByUuid_C(java.lang.String uuid, long companyId) {
 		getPersistence().removeByUuid_C(uuid, companyId);
 	}
 
@@ -513,10 +461,8 @@ public class MBMessageUtil {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	* @return the number of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByUuid_C(java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByUuid_C(java.lang.String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
@@ -525,11 +471,9 @@ public class MBMessageUtil {
 	*
 	* @param groupId the group ID
 	* @return the matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByGroupId(
-		long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId) {
 		return getPersistence().findByGroupId(groupId);
 	}
 
@@ -544,11 +488,9 @@ public class MBMessageUtil {
 	* @param start the lower bound of the range of message-boards messages
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @return the range of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByGroupId(
-		long groupId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, int start, int end) {
 		return getPersistence().findByGroupId(groupId, start, end);
 	}
 
@@ -564,12 +506,10 @@ public class MBMessageUtil {
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByGroupId(groupId, start, end, orderByComparator);
 	}
@@ -581,13 +521,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage findByGroupId_First(
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence().findByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -597,12 +535,10 @@ public class MBMessageUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage fetchByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -613,13 +549,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage findByGroupId_Last(
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -629,12 +563,10 @@ public class MBMessageUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage fetchByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -646,13 +578,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a message-boards message with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage[] findByGroupId_PrevAndNext(
 		long messageId, long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .findByGroupId_PrevAndNext(messageId, groupId,
 			orderByComparator);
@@ -663,11 +593,9 @@ public class MBMessageUtil {
 	*
 	* @param groupId the group ID
 	* @return the matching message-boards messages that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> filterFindByGroupId(
-		long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId) {
 		return getPersistence().filterFindByGroupId(groupId);
 	}
 
@@ -682,11 +610,9 @@ public class MBMessageUtil {
 	* @param start the lower bound of the range of message-boards messages
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @return the range of matching message-boards messages that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> filterFindByGroupId(
-		long groupId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, int start, int end) {
 		return getPersistence().filterFindByGroupId(groupId, start, end);
 	}
 
@@ -702,12 +628,10 @@ public class MBMessageUtil {
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching message-boards messages that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> filterFindByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .filterFindByGroupId(groupId, start, end, orderByComparator);
 	}
@@ -720,13 +644,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a message-boards message with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage[] filterFindByGroupId_PrevAndNext(
 		long messageId, long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .filterFindByGroupId_PrevAndNext(messageId, groupId,
 			orderByComparator);
@@ -736,10 +658,8 @@ public class MBMessageUtil {
 	* Removes all the message-boards messages where groupId = &#63; from the database.
 	*
 	* @param groupId the group ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByGroupId(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByGroupId(long groupId) {
 		getPersistence().removeByGroupId(groupId);
 	}
 
@@ -748,10 +668,8 @@ public class MBMessageUtil {
 	*
 	* @param groupId the group ID
 	* @return the number of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByGroupId(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByGroupId(long groupId) {
 		return getPersistence().countByGroupId(groupId);
 	}
 
@@ -760,10 +678,8 @@ public class MBMessageUtil {
 	*
 	* @param groupId the group ID
 	* @return the number of matching message-boards messages that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int filterCountByGroupId(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int filterCountByGroupId(long groupId) {
 		return getPersistence().filterCountByGroupId(groupId);
 	}
 
@@ -772,11 +688,9 @@ public class MBMessageUtil {
 	*
 	* @param companyId the company ID
 	* @return the matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByCompanyId(
-		long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long companyId) {
 		return getPersistence().findByCompanyId(companyId);
 	}
 
@@ -791,11 +705,9 @@ public class MBMessageUtil {
 	* @param start the lower bound of the range of message-boards messages
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @return the range of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByCompanyId(
-		long companyId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long companyId, int start, int end) {
 		return getPersistence().findByCompanyId(companyId, start, end);
 	}
 
@@ -811,12 +723,10 @@ public class MBMessageUtil {
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByCompanyId(
 		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByCompanyId(companyId, start, end, orderByComparator);
 	}
@@ -828,13 +738,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage findByCompanyId_First(
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .findByCompanyId_First(companyId, orderByComparator);
 	}
@@ -845,12 +753,10 @@ public class MBMessageUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage fetchByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByCompanyId_First(companyId, orderByComparator);
 	}
@@ -862,13 +768,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage findByCompanyId_Last(
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .findByCompanyId_Last(companyId, orderByComparator);
 	}
@@ -879,12 +783,10 @@ public class MBMessageUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage fetchByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByCompanyId_Last(companyId, orderByComparator);
 	}
@@ -897,13 +799,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a message-boards message with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage[] findByCompanyId_PrevAndNext(
 		long messageId, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .findByCompanyId_PrevAndNext(messageId, companyId,
 			orderByComparator);
@@ -913,10 +813,8 @@ public class MBMessageUtil {
 	* Removes all the message-boards messages where companyId = &#63; from the database.
 	*
 	* @param companyId the company ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByCompanyId(long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByCompanyId(long companyId) {
 		getPersistence().removeByCompanyId(companyId);
 	}
 
@@ -925,10 +823,8 @@ public class MBMessageUtil {
 	*
 	* @param companyId the company ID
 	* @return the number of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByCompanyId(long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByCompanyId(long companyId) {
 		return getPersistence().countByCompanyId(companyId);
 	}
 
@@ -937,11 +833,9 @@ public class MBMessageUtil {
 	*
 	* @param threadId the thread ID
 	* @return the matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByThreadId(
-		long threadId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long threadId) {
 		return getPersistence().findByThreadId(threadId);
 	}
 
@@ -956,11 +850,9 @@ public class MBMessageUtil {
 	* @param start the lower bound of the range of message-boards messages
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @return the range of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByThreadId(
-		long threadId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long threadId, int start, int end) {
 		return getPersistence().findByThreadId(threadId, start, end);
 	}
 
@@ -976,12 +868,10 @@ public class MBMessageUtil {
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByThreadId(
 		long threadId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByThreadId(threadId, start, end, orderByComparator);
 	}
@@ -993,13 +883,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage findByThreadId_First(
 		long threadId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence().findByThreadId_First(threadId, orderByComparator);
 	}
 
@@ -1009,12 +897,10 @@ public class MBMessageUtil {
 	* @param threadId the thread ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage fetchByThreadId_First(
 		long threadId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByThreadId_First(threadId, orderByComparator);
 	}
@@ -1026,13 +912,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage findByThreadId_Last(
 		long threadId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence().findByThreadId_Last(threadId, orderByComparator);
 	}
 
@@ -1042,12 +926,10 @@ public class MBMessageUtil {
 	* @param threadId the thread ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage fetchByThreadId_Last(
 		long threadId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByThreadId_Last(threadId, orderByComparator);
 	}
 
@@ -1059,13 +941,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a message-boards message with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage[] findByThreadId_PrevAndNext(
 		long messageId, long threadId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .findByThreadId_PrevAndNext(messageId, threadId,
 			orderByComparator);
@@ -1075,10 +955,8 @@ public class MBMessageUtil {
 	* Removes all the message-boards messages where threadId = &#63; from the database.
 	*
 	* @param threadId the thread ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByThreadId(long threadId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByThreadId(long threadId) {
 		getPersistence().removeByThreadId(threadId);
 	}
 
@@ -1087,10 +965,8 @@ public class MBMessageUtil {
 	*
 	* @param threadId the thread ID
 	* @return the number of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByThreadId(long threadId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByThreadId(long threadId) {
 		return getPersistence().countByThreadId(threadId);
 	}
 
@@ -1099,11 +975,9 @@ public class MBMessageUtil {
 	*
 	* @param threadId the thread ID
 	* @return the matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByThreadReplies(
-		long threadId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long threadId) {
 		return getPersistence().findByThreadReplies(threadId);
 	}
 
@@ -1118,11 +992,9 @@ public class MBMessageUtil {
 	* @param start the lower bound of the range of message-boards messages
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @return the range of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByThreadReplies(
-		long threadId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long threadId, int start, int end) {
 		return getPersistence().findByThreadReplies(threadId, start, end);
 	}
 
@@ -1138,12 +1010,10 @@ public class MBMessageUtil {
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByThreadReplies(
 		long threadId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByThreadReplies(threadId, start, end, orderByComparator);
 	}
@@ -1155,13 +1025,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage findByThreadReplies_First(
 		long threadId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .findByThreadReplies_First(threadId, orderByComparator);
 	}
@@ -1172,12 +1040,10 @@ public class MBMessageUtil {
 	* @param threadId the thread ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage fetchByThreadReplies_First(
 		long threadId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByThreadReplies_First(threadId, orderByComparator);
 	}
@@ -1189,13 +1055,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage findByThreadReplies_Last(
 		long threadId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .findByThreadReplies_Last(threadId, orderByComparator);
 	}
@@ -1206,12 +1070,10 @@ public class MBMessageUtil {
 	* @param threadId the thread ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage fetchByThreadReplies_Last(
 		long threadId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByThreadReplies_Last(threadId, orderByComparator);
 	}
@@ -1224,13 +1086,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a message-boards message with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage[] findByThreadReplies_PrevAndNext(
 		long messageId, long threadId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .findByThreadReplies_PrevAndNext(messageId, threadId,
 			orderByComparator);
@@ -1240,10 +1100,8 @@ public class MBMessageUtil {
 	* Removes all the message-boards messages where threadId = &#63; from the database.
 	*
 	* @param threadId the thread ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByThreadReplies(long threadId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByThreadReplies(long threadId) {
 		getPersistence().removeByThreadReplies(threadId);
 	}
 
@@ -1252,10 +1110,8 @@ public class MBMessageUtil {
 	*
 	* @param threadId the thread ID
 	* @return the number of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByThreadReplies(long threadId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByThreadReplies(long threadId) {
 		return getPersistence().countByThreadReplies(threadId);
 	}
 
@@ -1264,10 +1120,9 @@ public class MBMessageUtil {
 	*
 	* @param userId the user ID
 	* @return the matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByUserId(
-		long userId) throws com.liferay.portal.kernel.exception.SystemException {
+		long userId) {
 		return getPersistence().findByUserId(userId);
 	}
 
@@ -1282,11 +1137,9 @@ public class MBMessageUtil {
 	* @param start the lower bound of the range of message-boards messages
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @return the range of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByUserId(
-		long userId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long userId, int start, int end) {
 		return getPersistence().findByUserId(userId, start, end);
 	}
 
@@ -1302,12 +1155,10 @@ public class MBMessageUtil {
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByUserId(
 		long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByUserId(userId, start, end, orderByComparator);
 	}
@@ -1319,13 +1170,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage findByUserId_First(
 		long userId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence().findByUserId_First(userId, orderByComparator);
 	}
 
@@ -1335,12 +1184,10 @@ public class MBMessageUtil {
 	* @param userId the user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage fetchByUserId_First(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByUserId_First(userId, orderByComparator);
 	}
 
@@ -1351,13 +1198,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage findByUserId_Last(
 		long userId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence().findByUserId_Last(userId, orderByComparator);
 	}
 
@@ -1367,12 +1212,10 @@ public class MBMessageUtil {
 	* @param userId the user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage fetchByUserId_Last(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByUserId_Last(userId, orderByComparator);
 	}
 
@@ -1384,13 +1227,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a message-boards message with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage[] findByUserId_PrevAndNext(
 		long messageId, long userId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .findByUserId_PrevAndNext(messageId, userId,
 			orderByComparator);
@@ -1400,10 +1241,8 @@ public class MBMessageUtil {
 	* Removes all the message-boards messages where userId = &#63; from the database.
 	*
 	* @param userId the user ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByUserId(long userId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByUserId(long userId) {
 		getPersistence().removeByUserId(userId);
 	}
 
@@ -1412,10 +1251,8 @@ public class MBMessageUtil {
 	*
 	* @param userId the user ID
 	* @return the number of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByUserId(long userId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByUserId(long userId) {
 		return getPersistence().countByUserId(userId);
 	}
 
@@ -1425,11 +1262,9 @@ public class MBMessageUtil {
 	* @param groupId the group ID
 	* @param userId the user ID
 	* @return the matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByG_U(
-		long groupId, long userId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, long userId) {
 		return getPersistence().findByG_U(groupId, userId);
 	}
 
@@ -1445,11 +1280,9 @@ public class MBMessageUtil {
 	* @param start the lower bound of the range of message-boards messages
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @return the range of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByG_U(
-		long groupId, long userId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, long userId, int start, int end) {
 		return getPersistence().findByG_U(groupId, userId, start, end);
 	}
 
@@ -1466,12 +1299,10 @@ public class MBMessageUtil {
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByG_U(
 		long groupId, long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByG_U(groupId, userId, start, end, orderByComparator);
 	}
@@ -1484,13 +1315,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage findByG_U_First(
 		long groupId, long userId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .findByG_U_First(groupId, userId, orderByComparator);
 	}
@@ -1502,12 +1331,10 @@ public class MBMessageUtil {
 	* @param userId the user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage fetchByG_U_First(
 		long groupId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByG_U_First(groupId, userId, orderByComparator);
 	}
@@ -1520,13 +1347,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage findByG_U_Last(
 		long groupId, long userId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .findByG_U_Last(groupId, userId, orderByComparator);
 	}
@@ -1538,12 +1363,10 @@ public class MBMessageUtil {
 	* @param userId the user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage fetchByG_U_Last(
 		long groupId, long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByG_U_Last(groupId, userId, orderByComparator);
 	}
@@ -1557,13 +1380,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a message-boards message with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage[] findByG_U_PrevAndNext(
 		long messageId, long groupId, long userId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .findByG_U_PrevAndNext(messageId, groupId, userId,
 			orderByComparator);
@@ -1575,11 +1396,9 @@ public class MBMessageUtil {
 	* @param groupId the group ID
 	* @param userId the user ID
 	* @return the matching message-boards messages that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> filterFindByG_U(
-		long groupId, long userId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, long userId) {
 		return getPersistence().filterFindByG_U(groupId, userId);
 	}
 
@@ -1595,11 +1414,9 @@ public class MBMessageUtil {
 	* @param start the lower bound of the range of message-boards messages
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @return the range of matching message-boards messages that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> filterFindByG_U(
-		long groupId, long userId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, long userId, int start, int end) {
 		return getPersistence().filterFindByG_U(groupId, userId, start, end);
 	}
 
@@ -1616,12 +1433,10 @@ public class MBMessageUtil {
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching message-boards messages that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> filterFindByG_U(
 		long groupId, long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_U(groupId, userId, start, end,
 			orderByComparator);
@@ -1636,13 +1451,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a message-boards message with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage[] filterFindByG_U_PrevAndNext(
 		long messageId, long groupId, long userId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .filterFindByG_U_PrevAndNext(messageId, groupId, userId,
 			orderByComparator);
@@ -1653,10 +1466,8 @@ public class MBMessageUtil {
 	*
 	* @param groupId the group ID
 	* @param userId the user ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByG_U(long groupId, long userId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByG_U(long groupId, long userId) {
 		getPersistence().removeByG_U(groupId, userId);
 	}
 
@@ -1666,10 +1477,8 @@ public class MBMessageUtil {
 	* @param groupId the group ID
 	* @param userId the user ID
 	* @return the number of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByG_U(long groupId, long userId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByG_U(long groupId, long userId) {
 		return getPersistence().countByG_U(groupId, userId);
 	}
 
@@ -1679,10 +1488,8 @@ public class MBMessageUtil {
 	* @param groupId the group ID
 	* @param userId the user ID
 	* @return the number of matching message-boards messages that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int filterCountByG_U(long groupId, long userId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int filterCountByG_U(long groupId, long userId) {
 		return getPersistence().filterCountByG_U(groupId, userId);
 	}
 
@@ -1692,11 +1499,9 @@ public class MBMessageUtil {
 	* @param groupId the group ID
 	* @param categoryId the category ID
 	* @return the matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByG_C(
-		long groupId, long categoryId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, long categoryId) {
 		return getPersistence().findByG_C(groupId, categoryId);
 	}
 
@@ -1712,11 +1517,9 @@ public class MBMessageUtil {
 	* @param start the lower bound of the range of message-boards messages
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @return the range of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByG_C(
-		long groupId, long categoryId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, long categoryId, int start, int end) {
 		return getPersistence().findByG_C(groupId, categoryId, start, end);
 	}
 
@@ -1733,12 +1536,10 @@ public class MBMessageUtil {
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByG_C(
 		long groupId, long categoryId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByG_C(groupId, categoryId, start, end, orderByComparator);
 	}
@@ -1751,13 +1552,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage findByG_C_First(
 		long groupId, long categoryId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .findByG_C_First(groupId, categoryId, orderByComparator);
 	}
@@ -1769,12 +1568,10 @@ public class MBMessageUtil {
 	* @param categoryId the category ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage fetchByG_C_First(
 		long groupId, long categoryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByG_C_First(groupId, categoryId, orderByComparator);
 	}
@@ -1787,13 +1584,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage findByG_C_Last(
 		long groupId, long categoryId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .findByG_C_Last(groupId, categoryId, orderByComparator);
 	}
@@ -1805,12 +1600,10 @@ public class MBMessageUtil {
 	* @param categoryId the category ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage fetchByG_C_Last(
 		long groupId, long categoryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByG_C_Last(groupId, categoryId, orderByComparator);
 	}
@@ -1824,13 +1617,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a message-boards message with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage[] findByG_C_PrevAndNext(
 		long messageId, long groupId, long categoryId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .findByG_C_PrevAndNext(messageId, groupId, categoryId,
 			orderByComparator);
@@ -1842,11 +1633,9 @@ public class MBMessageUtil {
 	* @param groupId the group ID
 	* @param categoryId the category ID
 	* @return the matching message-boards messages that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> filterFindByG_C(
-		long groupId, long categoryId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, long categoryId) {
 		return getPersistence().filterFindByG_C(groupId, categoryId);
 	}
 
@@ -1862,11 +1651,9 @@ public class MBMessageUtil {
 	* @param start the lower bound of the range of message-boards messages
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @return the range of matching message-boards messages that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> filterFindByG_C(
-		long groupId, long categoryId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, long categoryId, int start, int end) {
 		return getPersistence().filterFindByG_C(groupId, categoryId, start, end);
 	}
 
@@ -1883,12 +1670,10 @@ public class MBMessageUtil {
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching message-boards messages that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> filterFindByG_C(
 		long groupId, long categoryId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_C(groupId, categoryId, start, end,
 			orderByComparator);
@@ -1903,13 +1688,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a message-boards message with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage[] filterFindByG_C_PrevAndNext(
 		long messageId, long groupId, long categoryId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .filterFindByG_C_PrevAndNext(messageId, groupId, categoryId,
 			orderByComparator);
@@ -1920,10 +1703,8 @@ public class MBMessageUtil {
 	*
 	* @param groupId the group ID
 	* @param categoryId the category ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByG_C(long groupId, long categoryId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByG_C(long groupId, long categoryId) {
 		getPersistence().removeByG_C(groupId, categoryId);
 	}
 
@@ -1933,10 +1714,8 @@ public class MBMessageUtil {
 	* @param groupId the group ID
 	* @param categoryId the category ID
 	* @return the number of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByG_C(long groupId, long categoryId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByG_C(long groupId, long categoryId) {
 		return getPersistence().countByG_C(groupId, categoryId);
 	}
 
@@ -1946,10 +1725,8 @@ public class MBMessageUtil {
 	* @param groupId the group ID
 	* @param categoryId the category ID
 	* @return the number of matching message-boards messages that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int filterCountByG_C(long groupId, long categoryId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int filterCountByG_C(long groupId, long categoryId) {
 		return getPersistence().filterCountByG_C(groupId, categoryId);
 	}
 
@@ -1959,11 +1736,9 @@ public class MBMessageUtil {
 	* @param groupId the group ID
 	* @param status the status
 	* @return the matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByG_S(
-		long groupId, int status)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, int status) {
 		return getPersistence().findByG_S(groupId, status);
 	}
 
@@ -1979,11 +1754,9 @@ public class MBMessageUtil {
 	* @param start the lower bound of the range of message-boards messages
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @return the range of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByG_S(
-		long groupId, int status, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, int status, int start, int end) {
 		return getPersistence().findByG_S(groupId, status, start, end);
 	}
 
@@ -2000,12 +1773,10 @@ public class MBMessageUtil {
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByG_S(
 		long groupId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByG_S(groupId, status, start, end, orderByComparator);
 	}
@@ -2018,13 +1789,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage findByG_S_First(
 		long groupId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .findByG_S_First(groupId, status, orderByComparator);
 	}
@@ -2036,12 +1805,10 @@ public class MBMessageUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage fetchByG_S_First(
 		long groupId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByG_S_First(groupId, status, orderByComparator);
 	}
@@ -2054,13 +1821,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage findByG_S_Last(
 		long groupId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .findByG_S_Last(groupId, status, orderByComparator);
 	}
@@ -2072,12 +1837,10 @@ public class MBMessageUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage fetchByG_S_Last(
 		long groupId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByG_S_Last(groupId, status, orderByComparator);
 	}
@@ -2091,13 +1854,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a message-boards message with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage[] findByG_S_PrevAndNext(
 		long messageId, long groupId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .findByG_S_PrevAndNext(messageId, groupId, status,
 			orderByComparator);
@@ -2109,11 +1870,9 @@ public class MBMessageUtil {
 	* @param groupId the group ID
 	* @param status the status
 	* @return the matching message-boards messages that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> filterFindByG_S(
-		long groupId, int status)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, int status) {
 		return getPersistence().filterFindByG_S(groupId, status);
 	}
 
@@ -2129,11 +1888,9 @@ public class MBMessageUtil {
 	* @param start the lower bound of the range of message-boards messages
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @return the range of matching message-boards messages that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> filterFindByG_S(
-		long groupId, int status, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, int status, int start, int end) {
 		return getPersistence().filterFindByG_S(groupId, status, start, end);
 	}
 
@@ -2150,12 +1907,10 @@ public class MBMessageUtil {
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching message-boards messages that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> filterFindByG_S(
 		long groupId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_S(groupId, status, start, end,
 			orderByComparator);
@@ -2170,13 +1925,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a message-boards message with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage[] filterFindByG_S_PrevAndNext(
 		long messageId, long groupId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .filterFindByG_S_PrevAndNext(messageId, groupId, status,
 			orderByComparator);
@@ -2187,10 +1940,8 @@ public class MBMessageUtil {
 	*
 	* @param groupId the group ID
 	* @param status the status
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByG_S(long groupId, int status)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByG_S(long groupId, int status) {
 		getPersistence().removeByG_S(groupId, status);
 	}
 
@@ -2200,10 +1951,8 @@ public class MBMessageUtil {
 	* @param groupId the group ID
 	* @param status the status
 	* @return the number of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByG_S(long groupId, int status)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByG_S(long groupId, int status) {
 		return getPersistence().countByG_S(groupId, status);
 	}
 
@@ -2213,10 +1962,8 @@ public class MBMessageUtil {
 	* @param groupId the group ID
 	* @param status the status
 	* @return the number of matching message-boards messages that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int filterCountByG_S(long groupId, int status)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int filterCountByG_S(long groupId, int status) {
 		return getPersistence().filterCountByG_S(groupId, status);
 	}
 
@@ -2226,11 +1973,9 @@ public class MBMessageUtil {
 	* @param companyId the company ID
 	* @param status the status
 	* @return the matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByC_S(
-		long companyId, int status)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long companyId, int status) {
 		return getPersistence().findByC_S(companyId, status);
 	}
 
@@ -2246,11 +1991,9 @@ public class MBMessageUtil {
 	* @param start the lower bound of the range of message-boards messages
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @return the range of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByC_S(
-		long companyId, int status, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long companyId, int status, int start, int end) {
 		return getPersistence().findByC_S(companyId, status, start, end);
 	}
 
@@ -2267,12 +2010,10 @@ public class MBMessageUtil {
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByC_S(
 		long companyId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByC_S(companyId, status, start, end, orderByComparator);
 	}
@@ -2285,13 +2026,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage findByC_S_First(
 		long companyId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .findByC_S_First(companyId, status, orderByComparator);
 	}
@@ -2303,12 +2042,10 @@ public class MBMessageUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage fetchByC_S_First(
 		long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByC_S_First(companyId, status, orderByComparator);
 	}
@@ -2321,13 +2058,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage findByC_S_Last(
 		long companyId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .findByC_S_Last(companyId, status, orderByComparator);
 	}
@@ -2339,12 +2074,10 @@ public class MBMessageUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage fetchByC_S_Last(
 		long companyId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByC_S_Last(companyId, status, orderByComparator);
 	}
@@ -2358,13 +2091,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a message-boards message with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage[] findByC_S_PrevAndNext(
 		long messageId, long companyId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .findByC_S_PrevAndNext(messageId, companyId, status,
 			orderByComparator);
@@ -2375,10 +2106,8 @@ public class MBMessageUtil {
 	*
 	* @param companyId the company ID
 	* @param status the status
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByC_S(long companyId, int status)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByC_S(long companyId, int status) {
 		getPersistence().removeByC_S(companyId, status);
 	}
 
@@ -2388,10 +2117,8 @@ public class MBMessageUtil {
 	* @param companyId the company ID
 	* @param status the status
 	* @return the number of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByC_S(long companyId, int status)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByC_S(long companyId, int status) {
 		return getPersistence().countByC_S(companyId, status);
 	}
 
@@ -2401,11 +2128,9 @@ public class MBMessageUtil {
 	* @param userId the user ID
 	* @param classNameId the class name ID
 	* @return the matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByU_C(
-		long userId, long classNameId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long userId, long classNameId) {
 		return getPersistence().findByU_C(userId, classNameId);
 	}
 
@@ -2421,11 +2146,9 @@ public class MBMessageUtil {
 	* @param start the lower bound of the range of message-boards messages
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @return the range of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByU_C(
-		long userId, long classNameId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long userId, long classNameId, int start, int end) {
 		return getPersistence().findByU_C(userId, classNameId, start, end);
 	}
 
@@ -2442,12 +2165,10 @@ public class MBMessageUtil {
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByU_C(
 		long userId, long classNameId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByU_C(userId, classNameId, start, end, orderByComparator);
 	}
@@ -2460,13 +2181,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage findByU_C_First(
 		long userId, long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .findByU_C_First(userId, classNameId, orderByComparator);
 	}
@@ -2478,12 +2197,10 @@ public class MBMessageUtil {
 	* @param classNameId the class name ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage fetchByU_C_First(
 		long userId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByU_C_First(userId, classNameId, orderByComparator);
 	}
@@ -2496,13 +2213,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage findByU_C_Last(
 		long userId, long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .findByU_C_Last(userId, classNameId, orderByComparator);
 	}
@@ -2514,12 +2229,10 @@ public class MBMessageUtil {
 	* @param classNameId the class name ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage fetchByU_C_Last(
 		long userId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByU_C_Last(userId, classNameId, orderByComparator);
 	}
@@ -2533,13 +2246,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a message-boards message with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage[] findByU_C_PrevAndNext(
 		long messageId, long userId, long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .findByU_C_PrevAndNext(messageId, userId, classNameId,
 			orderByComparator);
@@ -2555,11 +2266,9 @@ public class MBMessageUtil {
 	* @param userId the user ID
 	* @param classNameIds the class name IDs
 	* @return the matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByU_C(
-		long userId, long[] classNameIds)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long userId, long[] classNameIds) {
 		return getPersistence().findByU_C(userId, classNameIds);
 	}
 
@@ -2575,11 +2284,9 @@ public class MBMessageUtil {
 	* @param start the lower bound of the range of message-boards messages
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @return the range of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByU_C(
-		long userId, long[] classNameIds, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long userId, long[] classNameIds, int start, int end) {
 		return getPersistence().findByU_C(userId, classNameIds, start, end);
 	}
 
@@ -2596,12 +2303,10 @@ public class MBMessageUtil {
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByU_C(
 		long userId, long[] classNameIds, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByU_C(userId, classNameIds, start, end,
 			orderByComparator);
@@ -2612,10 +2317,8 @@ public class MBMessageUtil {
 	*
 	* @param userId the user ID
 	* @param classNameId the class name ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByU_C(long userId, long classNameId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByU_C(long userId, long classNameId) {
 		getPersistence().removeByU_C(userId, classNameId);
 	}
 
@@ -2625,10 +2328,8 @@ public class MBMessageUtil {
 	* @param userId the user ID
 	* @param classNameId the class name ID
 	* @return the number of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByU_C(long userId, long classNameId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByU_C(long userId, long classNameId) {
 		return getPersistence().countByU_C(userId, classNameId);
 	}
 
@@ -2638,10 +2339,8 @@ public class MBMessageUtil {
 	* @param userId the user ID
 	* @param classNameIds the class name IDs
 	* @return the number of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByU_C(long userId, long[] classNameIds)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByU_C(long userId, long[] classNameIds) {
 		return getPersistence().countByU_C(userId, classNameIds);
 	}
 
@@ -2651,11 +2350,9 @@ public class MBMessageUtil {
 	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @return the matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByC_C(
-		long classNameId, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long classNameId, long classPK) {
 		return getPersistence().findByC_C(classNameId, classPK);
 	}
 
@@ -2671,11 +2368,9 @@ public class MBMessageUtil {
 	* @param start the lower bound of the range of message-boards messages
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @return the range of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByC_C(
-		long classNameId, long classPK, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long classNameId, long classPK, int start, int end) {
 		return getPersistence().findByC_C(classNameId, classPK, start, end);
 	}
 
@@ -2692,12 +2387,10 @@ public class MBMessageUtil {
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByC_C(
 		long classNameId, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByC_C(classNameId, classPK, start, end,
 			orderByComparator);
@@ -2711,13 +2404,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage findByC_C_First(
 		long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .findByC_C_First(classNameId, classPK, orderByComparator);
 	}
@@ -2729,12 +2420,10 @@ public class MBMessageUtil {
 	* @param classPK the class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage fetchByC_C_First(
 		long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByC_C_First(classNameId, classPK, orderByComparator);
 	}
@@ -2747,13 +2436,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage findByC_C_Last(
 		long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .findByC_C_Last(classNameId, classPK, orderByComparator);
 	}
@@ -2765,12 +2452,10 @@ public class MBMessageUtil {
 	* @param classPK the class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage fetchByC_C_Last(
 		long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByC_C_Last(classNameId, classPK, orderByComparator);
 	}
@@ -2784,13 +2469,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a message-boards message with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage[] findByC_C_PrevAndNext(
 		long messageId, long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .findByC_C_PrevAndNext(messageId, classNameId, classPK,
 			orderByComparator);
@@ -2801,10 +2484,8 @@ public class MBMessageUtil {
 	*
 	* @param classNameId the class name ID
 	* @param classPK the class p k
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByC_C(long classNameId, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByC_C(long classNameId, long classPK) {
 		getPersistence().removeByC_C(classNameId, classPK);
 	}
 
@@ -2814,10 +2495,8 @@ public class MBMessageUtil {
 	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @return the number of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByC_C(long classNameId, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByC_C(long classNameId, long classPK) {
 		return getPersistence().countByC_C(classNameId, classPK);
 	}
 
@@ -2827,11 +2506,9 @@ public class MBMessageUtil {
 	* @param threadId the thread ID
 	* @param parentMessageId the parent message ID
 	* @return the matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByT_P(
-		long threadId, long parentMessageId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long threadId, long parentMessageId) {
 		return getPersistence().findByT_P(threadId, parentMessageId);
 	}
 
@@ -2847,11 +2524,9 @@ public class MBMessageUtil {
 	* @param start the lower bound of the range of message-boards messages
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @return the range of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByT_P(
-		long threadId, long parentMessageId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long threadId, long parentMessageId, int start, int end) {
 		return getPersistence().findByT_P(threadId, parentMessageId, start, end);
 	}
 
@@ -2868,12 +2543,10 @@ public class MBMessageUtil {
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByT_P(
 		long threadId, long parentMessageId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByT_P(threadId, parentMessageId, start, end,
 			orderByComparator);
@@ -2887,13 +2560,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage findByT_P_First(
 		long threadId, long parentMessageId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .findByT_P_First(threadId, parentMessageId, orderByComparator);
 	}
@@ -2905,12 +2576,10 @@ public class MBMessageUtil {
 	* @param parentMessageId the parent message ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage fetchByT_P_First(
 		long threadId, long parentMessageId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByT_P_First(threadId, parentMessageId,
 			orderByComparator);
@@ -2924,13 +2593,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage findByT_P_Last(
 		long threadId, long parentMessageId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .findByT_P_Last(threadId, parentMessageId, orderByComparator);
 	}
@@ -2942,12 +2609,10 @@ public class MBMessageUtil {
 	* @param parentMessageId the parent message ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage fetchByT_P_Last(
 		long threadId, long parentMessageId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByT_P_Last(threadId, parentMessageId, orderByComparator);
 	}
@@ -2961,13 +2626,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a message-boards message with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage[] findByT_P_PrevAndNext(
 		long messageId, long threadId, long parentMessageId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .findByT_P_PrevAndNext(messageId, threadId, parentMessageId,
 			orderByComparator);
@@ -2978,10 +2641,8 @@ public class MBMessageUtil {
 	*
 	* @param threadId the thread ID
 	* @param parentMessageId the parent message ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByT_P(long threadId, long parentMessageId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByT_P(long threadId, long parentMessageId) {
 		getPersistence().removeByT_P(threadId, parentMessageId);
 	}
 
@@ -2991,10 +2652,8 @@ public class MBMessageUtil {
 	* @param threadId the thread ID
 	* @param parentMessageId the parent message ID
 	* @return the number of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByT_P(long threadId, long parentMessageId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByT_P(long threadId, long parentMessageId) {
 		return getPersistence().countByT_P(threadId, parentMessageId);
 	}
 
@@ -3004,11 +2663,9 @@ public class MBMessageUtil {
 	* @param threadId the thread ID
 	* @param answer the answer
 	* @return the matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByT_A(
-		long threadId, boolean answer)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long threadId, boolean answer) {
 		return getPersistence().findByT_A(threadId, answer);
 	}
 
@@ -3024,11 +2681,9 @@ public class MBMessageUtil {
 	* @param start the lower bound of the range of message-boards messages
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @return the range of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByT_A(
-		long threadId, boolean answer, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long threadId, boolean answer, int start, int end) {
 		return getPersistence().findByT_A(threadId, answer, start, end);
 	}
 
@@ -3045,12 +2700,10 @@ public class MBMessageUtil {
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByT_A(
 		long threadId, boolean answer, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByT_A(threadId, answer, start, end, orderByComparator);
 	}
@@ -3063,13 +2716,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage findByT_A_First(
 		long threadId, boolean answer,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .findByT_A_First(threadId, answer, orderByComparator);
 	}
@@ -3081,12 +2732,10 @@ public class MBMessageUtil {
 	* @param answer the answer
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage fetchByT_A_First(
 		long threadId, boolean answer,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByT_A_First(threadId, answer, orderByComparator);
 	}
@@ -3099,13 +2748,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage findByT_A_Last(
 		long threadId, boolean answer,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .findByT_A_Last(threadId, answer, orderByComparator);
 	}
@@ -3117,12 +2764,10 @@ public class MBMessageUtil {
 	* @param answer the answer
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage fetchByT_A_Last(
 		long threadId, boolean answer,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByT_A_Last(threadId, answer, orderByComparator);
 	}
@@ -3136,13 +2781,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a message-boards message with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage[] findByT_A_PrevAndNext(
 		long messageId, long threadId, boolean answer,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .findByT_A_PrevAndNext(messageId, threadId, answer,
 			orderByComparator);
@@ -3153,10 +2796,8 @@ public class MBMessageUtil {
 	*
 	* @param threadId the thread ID
 	* @param answer the answer
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByT_A(long threadId, boolean answer)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByT_A(long threadId, boolean answer) {
 		getPersistence().removeByT_A(threadId, answer);
 	}
 
@@ -3166,10 +2807,8 @@ public class MBMessageUtil {
 	* @param threadId the thread ID
 	* @param answer the answer
 	* @return the number of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByT_A(long threadId, boolean answer)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByT_A(long threadId, boolean answer) {
 		return getPersistence().countByT_A(threadId, answer);
 	}
 
@@ -3179,11 +2818,9 @@ public class MBMessageUtil {
 	* @param threadId the thread ID
 	* @param status the status
 	* @return the matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByT_S(
-		long threadId, int status)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long threadId, int status) {
 		return getPersistence().findByT_S(threadId, status);
 	}
 
@@ -3199,11 +2836,9 @@ public class MBMessageUtil {
 	* @param start the lower bound of the range of message-boards messages
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @return the range of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByT_S(
-		long threadId, int status, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long threadId, int status, int start, int end) {
 		return getPersistence().findByT_S(threadId, status, start, end);
 	}
 
@@ -3220,12 +2855,10 @@ public class MBMessageUtil {
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByT_S(
 		long threadId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByT_S(threadId, status, start, end, orderByComparator);
 	}
@@ -3238,13 +2871,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage findByT_S_First(
 		long threadId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .findByT_S_First(threadId, status, orderByComparator);
 	}
@@ -3256,12 +2887,10 @@ public class MBMessageUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage fetchByT_S_First(
 		long threadId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByT_S_First(threadId, status, orderByComparator);
 	}
@@ -3274,13 +2903,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage findByT_S_Last(
 		long threadId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .findByT_S_Last(threadId, status, orderByComparator);
 	}
@@ -3292,12 +2919,10 @@ public class MBMessageUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage fetchByT_S_Last(
 		long threadId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByT_S_Last(threadId, status, orderByComparator);
 	}
@@ -3311,13 +2936,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a message-boards message with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage[] findByT_S_PrevAndNext(
 		long messageId, long threadId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .findByT_S_PrevAndNext(messageId, threadId, status,
 			orderByComparator);
@@ -3328,10 +2951,8 @@ public class MBMessageUtil {
 	*
 	* @param threadId the thread ID
 	* @param status the status
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByT_S(long threadId, int status)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByT_S(long threadId, int status) {
 		getPersistence().removeByT_S(threadId, status);
 	}
 
@@ -3341,10 +2962,8 @@ public class MBMessageUtil {
 	* @param threadId the thread ID
 	* @param status the status
 	* @return the number of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByT_S(long threadId, int status)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByT_S(long threadId, int status) {
 		return getPersistence().countByT_S(threadId, status);
 	}
 
@@ -3354,11 +2973,9 @@ public class MBMessageUtil {
 	* @param threadId the thread ID
 	* @param status the status
 	* @return the matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByTR_S(
-		long threadId, int status)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long threadId, int status) {
 		return getPersistence().findByTR_S(threadId, status);
 	}
 
@@ -3374,11 +2991,9 @@ public class MBMessageUtil {
 	* @param start the lower bound of the range of message-boards messages
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @return the range of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByTR_S(
-		long threadId, int status, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long threadId, int status, int start, int end) {
 		return getPersistence().findByTR_S(threadId, status, start, end);
 	}
 
@@ -3395,12 +3010,10 @@ public class MBMessageUtil {
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByTR_S(
 		long threadId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByTR_S(threadId, status, start, end, orderByComparator);
 	}
@@ -3413,13 +3026,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage findByTR_S_First(
 		long threadId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .findByTR_S_First(threadId, status, orderByComparator);
 	}
@@ -3431,12 +3042,10 @@ public class MBMessageUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage fetchByTR_S_First(
 		long threadId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByTR_S_First(threadId, status, orderByComparator);
 	}
@@ -3449,13 +3058,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage findByTR_S_Last(
 		long threadId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .findByTR_S_Last(threadId, status, orderByComparator);
 	}
@@ -3467,12 +3074,10 @@ public class MBMessageUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage fetchByTR_S_Last(
 		long threadId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByTR_S_Last(threadId, status, orderByComparator);
 	}
@@ -3486,13 +3091,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a message-boards message with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage[] findByTR_S_PrevAndNext(
 		long messageId, long threadId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .findByTR_S_PrevAndNext(messageId, threadId, status,
 			orderByComparator);
@@ -3503,10 +3106,8 @@ public class MBMessageUtil {
 	*
 	* @param threadId the thread ID
 	* @param status the status
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByTR_S(long threadId, int status)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByTR_S(long threadId, int status) {
 		getPersistence().removeByTR_S(threadId, status);
 	}
 
@@ -3516,10 +3117,8 @@ public class MBMessageUtil {
 	* @param threadId the thread ID
 	* @param status the status
 	* @return the number of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByTR_S(long threadId, int status)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByTR_S(long threadId, int status) {
 		return getPersistence().countByTR_S(threadId, status);
 	}
 
@@ -3530,11 +3129,9 @@ public class MBMessageUtil {
 	* @param userId the user ID
 	* @param status the status
 	* @return the matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByG_U_S(
-		long groupId, long userId, int status)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, long userId, int status) {
 		return getPersistence().findByG_U_S(groupId, userId, status);
 	}
 
@@ -3551,11 +3148,9 @@ public class MBMessageUtil {
 	* @param start the lower bound of the range of message-boards messages
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @return the range of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByG_U_S(
-		long groupId, long userId, int status, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, long userId, int status, int start, int end) {
 		return getPersistence().findByG_U_S(groupId, userId, status, start, end);
 	}
 
@@ -3573,12 +3168,10 @@ public class MBMessageUtil {
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByG_U_S(
 		long groupId, long userId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByG_U_S(groupId, userId, status, start, end,
 			orderByComparator);
@@ -3593,13 +3186,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage findByG_U_S_First(
 		long groupId, long userId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .findByG_U_S_First(groupId, userId, status, orderByComparator);
 	}
@@ -3612,12 +3203,10 @@ public class MBMessageUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage fetchByG_U_S_First(
 		long groupId, long userId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByG_U_S_First(groupId, userId, status,
 			orderByComparator);
@@ -3632,13 +3221,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage findByG_U_S_Last(
 		long groupId, long userId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .findByG_U_S_Last(groupId, userId, status, orderByComparator);
 	}
@@ -3651,12 +3238,10 @@ public class MBMessageUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage fetchByG_U_S_Last(
 		long groupId, long userId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByG_U_S_Last(groupId, userId, status, orderByComparator);
 	}
@@ -3671,13 +3256,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a message-boards message with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage[] findByG_U_S_PrevAndNext(
 		long messageId, long groupId, long userId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .findByG_U_S_PrevAndNext(messageId, groupId, userId, status,
 			orderByComparator);
@@ -3690,11 +3273,9 @@ public class MBMessageUtil {
 	* @param userId the user ID
 	* @param status the status
 	* @return the matching message-boards messages that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> filterFindByG_U_S(
-		long groupId, long userId, int status)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, long userId, int status) {
 		return getPersistence().filterFindByG_U_S(groupId, userId, status);
 	}
 
@@ -3711,11 +3292,9 @@ public class MBMessageUtil {
 	* @param start the lower bound of the range of message-boards messages
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @return the range of matching message-boards messages that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> filterFindByG_U_S(
-		long groupId, long userId, int status, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, long userId, int status, int start, int end) {
 		return getPersistence()
 				   .filterFindByG_U_S(groupId, userId, status, start, end);
 	}
@@ -3734,12 +3313,10 @@ public class MBMessageUtil {
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching message-boards messages that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> filterFindByG_U_S(
 		long groupId, long userId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_U_S(groupId, userId, status, start, end,
 			orderByComparator);
@@ -3755,13 +3332,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a message-boards message with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage[] filterFindByG_U_S_PrevAndNext(
 		long messageId, long groupId, long userId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .filterFindByG_U_S_PrevAndNext(messageId, groupId, userId,
 			status, orderByComparator);
@@ -3773,10 +3348,8 @@ public class MBMessageUtil {
 	* @param groupId the group ID
 	* @param userId the user ID
 	* @param status the status
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByG_U_S(long groupId, long userId, int status)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByG_U_S(long groupId, long userId, int status) {
 		getPersistence().removeByG_U_S(groupId, userId, status);
 	}
 
@@ -3787,10 +3360,8 @@ public class MBMessageUtil {
 	* @param userId the user ID
 	* @param status the status
 	* @return the number of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByG_U_S(long groupId, long userId, int status)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByG_U_S(long groupId, long userId, int status) {
 		return getPersistence().countByG_U_S(groupId, userId, status);
 	}
 
@@ -3801,10 +3372,8 @@ public class MBMessageUtil {
 	* @param userId the user ID
 	* @param status the status
 	* @return the number of matching message-boards messages that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int filterCountByG_U_S(long groupId, long userId, int status)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int filterCountByG_U_S(long groupId, long userId, int status) {
 		return getPersistence().filterCountByG_U_S(groupId, userId, status);
 	}
 
@@ -3815,11 +3384,9 @@ public class MBMessageUtil {
 	* @param categoryId the category ID
 	* @param threadId the thread ID
 	* @return the matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByG_C_T(
-		long groupId, long categoryId, long threadId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, long categoryId, long threadId) {
 		return getPersistence().findByG_C_T(groupId, categoryId, threadId);
 	}
 
@@ -3836,11 +3403,9 @@ public class MBMessageUtil {
 	* @param start the lower bound of the range of message-boards messages
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @return the range of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByG_C_T(
-		long groupId, long categoryId, long threadId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, long categoryId, long threadId, int start, int end) {
 		return getPersistence()
 				   .findByG_C_T(groupId, categoryId, threadId, start, end);
 	}
@@ -3859,12 +3424,10 @@ public class MBMessageUtil {
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByG_C_T(
 		long groupId, long categoryId, long threadId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByG_C_T(groupId, categoryId, threadId, start, end,
 			orderByComparator);
@@ -3879,13 +3442,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage findByG_C_T_First(
 		long groupId, long categoryId, long threadId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .findByG_C_T_First(groupId, categoryId, threadId,
 			orderByComparator);
@@ -3899,12 +3460,10 @@ public class MBMessageUtil {
 	* @param threadId the thread ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage fetchByG_C_T_First(
 		long groupId, long categoryId, long threadId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByG_C_T_First(groupId, categoryId, threadId,
 			orderByComparator);
@@ -3919,13 +3478,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage findByG_C_T_Last(
 		long groupId, long categoryId, long threadId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .findByG_C_T_Last(groupId, categoryId, threadId,
 			orderByComparator);
@@ -3939,12 +3496,10 @@ public class MBMessageUtil {
 	* @param threadId the thread ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage fetchByG_C_T_Last(
 		long groupId, long categoryId, long threadId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByG_C_T_Last(groupId, categoryId, threadId,
 			orderByComparator);
@@ -3960,13 +3515,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a message-boards message with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage[] findByG_C_T_PrevAndNext(
 		long messageId, long groupId, long categoryId, long threadId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .findByG_C_T_PrevAndNext(messageId, groupId, categoryId,
 			threadId, orderByComparator);
@@ -3979,11 +3532,9 @@ public class MBMessageUtil {
 	* @param categoryId the category ID
 	* @param threadId the thread ID
 	* @return the matching message-boards messages that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> filterFindByG_C_T(
-		long groupId, long categoryId, long threadId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, long categoryId, long threadId) {
 		return getPersistence().filterFindByG_C_T(groupId, categoryId, threadId);
 	}
 
@@ -4000,11 +3551,9 @@ public class MBMessageUtil {
 	* @param start the lower bound of the range of message-boards messages
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @return the range of matching message-boards messages that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> filterFindByG_C_T(
-		long groupId, long categoryId, long threadId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, long categoryId, long threadId, int start, int end) {
 		return getPersistence()
 				   .filterFindByG_C_T(groupId, categoryId, threadId, start, end);
 	}
@@ -4023,12 +3572,10 @@ public class MBMessageUtil {
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching message-boards messages that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> filterFindByG_C_T(
 		long groupId, long categoryId, long threadId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_C_T(groupId, categoryId, threadId, start,
 			end, orderByComparator);
@@ -4044,13 +3591,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a message-boards message with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage[] filterFindByG_C_T_PrevAndNext(
 		long messageId, long groupId, long categoryId, long threadId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .filterFindByG_C_T_PrevAndNext(messageId, groupId,
 			categoryId, threadId, orderByComparator);
@@ -4062,11 +3607,9 @@ public class MBMessageUtil {
 	* @param groupId the group ID
 	* @param categoryId the category ID
 	* @param threadId the thread ID
-	* @throws SystemException if a system exception occurred
 	*/
 	public static void removeByG_C_T(long groupId, long categoryId,
-		long threadId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long threadId) {
 		getPersistence().removeByG_C_T(groupId, categoryId, threadId);
 	}
 
@@ -4077,10 +3620,8 @@ public class MBMessageUtil {
 	* @param categoryId the category ID
 	* @param threadId the thread ID
 	* @return the number of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByG_C_T(long groupId, long categoryId, long threadId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByG_C_T(long groupId, long categoryId, long threadId) {
 		return getPersistence().countByG_C_T(groupId, categoryId, threadId);
 	}
 
@@ -4091,11 +3632,9 @@ public class MBMessageUtil {
 	* @param categoryId the category ID
 	* @param threadId the thread ID
 	* @return the number of matching message-boards messages that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static int filterCountByG_C_T(long groupId, long categoryId,
-		long threadId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long threadId) {
 		return getPersistence().filterCountByG_C_T(groupId, categoryId, threadId);
 	}
 
@@ -4106,11 +3645,9 @@ public class MBMessageUtil {
 	* @param categoryId the category ID
 	* @param status the status
 	* @return the matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByG_C_S(
-		long groupId, long categoryId, int status)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, long categoryId, int status) {
 		return getPersistence().findByG_C_S(groupId, categoryId, status);
 	}
 
@@ -4127,11 +3664,9 @@ public class MBMessageUtil {
 	* @param start the lower bound of the range of message-boards messages
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @return the range of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByG_C_S(
-		long groupId, long categoryId, int status, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, long categoryId, int status, int start, int end) {
 		return getPersistence()
 				   .findByG_C_S(groupId, categoryId, status, start, end);
 	}
@@ -4150,12 +3685,10 @@ public class MBMessageUtil {
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByG_C_S(
 		long groupId, long categoryId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByG_C_S(groupId, categoryId, status, start, end,
 			orderByComparator);
@@ -4170,13 +3703,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage findByG_C_S_First(
 		long groupId, long categoryId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .findByG_C_S_First(groupId, categoryId, status,
 			orderByComparator);
@@ -4190,12 +3721,10 @@ public class MBMessageUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage fetchByG_C_S_First(
 		long groupId, long categoryId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByG_C_S_First(groupId, categoryId, status,
 			orderByComparator);
@@ -4210,13 +3739,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage findByG_C_S_Last(
 		long groupId, long categoryId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .findByG_C_S_Last(groupId, categoryId, status,
 			orderByComparator);
@@ -4230,12 +3757,10 @@ public class MBMessageUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage fetchByG_C_S_Last(
 		long groupId, long categoryId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByG_C_S_Last(groupId, categoryId, status,
 			orderByComparator);
@@ -4251,13 +3776,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a message-boards message with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage[] findByG_C_S_PrevAndNext(
 		long messageId, long groupId, long categoryId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .findByG_C_S_PrevAndNext(messageId, groupId, categoryId,
 			status, orderByComparator);
@@ -4270,11 +3793,9 @@ public class MBMessageUtil {
 	* @param categoryId the category ID
 	* @param status the status
 	* @return the matching message-boards messages that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> filterFindByG_C_S(
-		long groupId, long categoryId, int status)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, long categoryId, int status) {
 		return getPersistence().filterFindByG_C_S(groupId, categoryId, status);
 	}
 
@@ -4291,11 +3812,9 @@ public class MBMessageUtil {
 	* @param start the lower bound of the range of message-boards messages
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @return the range of matching message-boards messages that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> filterFindByG_C_S(
-		long groupId, long categoryId, int status, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, long categoryId, int status, int start, int end) {
 		return getPersistence()
 				   .filterFindByG_C_S(groupId, categoryId, status, start, end);
 	}
@@ -4314,12 +3833,10 @@ public class MBMessageUtil {
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching message-boards messages that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> filterFindByG_C_S(
 		long groupId, long categoryId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_C_S(groupId, categoryId, status, start, end,
 			orderByComparator);
@@ -4335,13 +3852,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a message-boards message with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage[] filterFindByG_C_S_PrevAndNext(
 		long messageId, long groupId, long categoryId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .filterFindByG_C_S_PrevAndNext(messageId, groupId,
 			categoryId, status, orderByComparator);
@@ -4353,10 +3868,8 @@ public class MBMessageUtil {
 	* @param groupId the group ID
 	* @param categoryId the category ID
 	* @param status the status
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByG_C_S(long groupId, long categoryId, int status)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByG_C_S(long groupId, long categoryId, int status) {
 		getPersistence().removeByG_C_S(groupId, categoryId, status);
 	}
 
@@ -4367,10 +3880,8 @@ public class MBMessageUtil {
 	* @param categoryId the category ID
 	* @param status the status
 	* @return the number of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByG_C_S(long groupId, long categoryId, int status)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByG_C_S(long groupId, long categoryId, int status) {
 		return getPersistence().countByG_C_S(groupId, categoryId, status);
 	}
 
@@ -4381,10 +3892,9 @@ public class MBMessageUtil {
 	* @param categoryId the category ID
 	* @param status the status
 	* @return the number of matching message-boards messages that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static int filterCountByG_C_S(long groupId, long categoryId,
-		int status) throws com.liferay.portal.kernel.exception.SystemException {
+		int status) {
 		return getPersistence().filterCountByG_C_S(groupId, categoryId, status);
 	}
 
@@ -4395,11 +3905,9 @@ public class MBMessageUtil {
 	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @return the matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByU_C_C(
-		long userId, long classNameId, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long userId, long classNameId, long classPK) {
 		return getPersistence().findByU_C_C(userId, classNameId, classPK);
 	}
 
@@ -4416,11 +3924,9 @@ public class MBMessageUtil {
 	* @param start the lower bound of the range of message-boards messages
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @return the range of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByU_C_C(
-		long userId, long classNameId, long classPK, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long userId, long classNameId, long classPK, int start, int end) {
 		return getPersistence()
 				   .findByU_C_C(userId, classNameId, classPK, start, end);
 	}
@@ -4439,12 +3945,10 @@ public class MBMessageUtil {
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByU_C_C(
 		long userId, long classNameId, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByU_C_C(userId, classNameId, classPK, start, end,
 			orderByComparator);
@@ -4459,13 +3963,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage findByU_C_C_First(
 		long userId, long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .findByU_C_C_First(userId, classNameId, classPK,
 			orderByComparator);
@@ -4479,12 +3981,10 @@ public class MBMessageUtil {
 	* @param classPK the class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage fetchByU_C_C_First(
 		long userId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByU_C_C_First(userId, classNameId, classPK,
 			orderByComparator);
@@ -4499,13 +3999,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage findByU_C_C_Last(
 		long userId, long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .findByU_C_C_Last(userId, classNameId, classPK,
 			orderByComparator);
@@ -4519,12 +4017,10 @@ public class MBMessageUtil {
 	* @param classPK the class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage fetchByU_C_C_Last(
 		long userId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByU_C_C_Last(userId, classNameId, classPK,
 			orderByComparator);
@@ -4540,13 +4036,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a message-boards message with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage[] findByU_C_C_PrevAndNext(
 		long messageId, long userId, long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .findByU_C_C_PrevAndNext(messageId, userId, classNameId,
 			classPK, orderByComparator);
@@ -4558,10 +4052,8 @@ public class MBMessageUtil {
 	* @param userId the user ID
 	* @param classNameId the class name ID
 	* @param classPK the class p k
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByU_C_C(long userId, long classNameId, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByU_C_C(long userId, long classNameId, long classPK) {
 		getPersistence().removeByU_C_C(userId, classNameId, classPK);
 	}
 
@@ -4572,10 +4064,8 @@ public class MBMessageUtil {
 	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @return the number of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByU_C_C(long userId, long classNameId, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByU_C_C(long userId, long classNameId, long classPK) {
 		return getPersistence().countByU_C_C(userId, classNameId, classPK);
 	}
 
@@ -4586,11 +4076,9 @@ public class MBMessageUtil {
 	* @param classNameId the class name ID
 	* @param status the status
 	* @return the matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByU_C_S(
-		long userId, long classNameId, int status)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long userId, long classNameId, int status) {
 		return getPersistence().findByU_C_S(userId, classNameId, status);
 	}
 
@@ -4607,11 +4095,9 @@ public class MBMessageUtil {
 	* @param start the lower bound of the range of message-boards messages
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @return the range of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByU_C_S(
-		long userId, long classNameId, int status, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long userId, long classNameId, int status, int start, int end) {
 		return getPersistence()
 				   .findByU_C_S(userId, classNameId, status, start, end);
 	}
@@ -4630,12 +4116,10 @@ public class MBMessageUtil {
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByU_C_S(
 		long userId, long classNameId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByU_C_S(userId, classNameId, status, start, end,
 			orderByComparator);
@@ -4650,13 +4134,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage findByU_C_S_First(
 		long userId, long classNameId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .findByU_C_S_First(userId, classNameId, status,
 			orderByComparator);
@@ -4670,12 +4152,10 @@ public class MBMessageUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage fetchByU_C_S_First(
 		long userId, long classNameId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByU_C_S_First(userId, classNameId, status,
 			orderByComparator);
@@ -4690,13 +4170,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage findByU_C_S_Last(
 		long userId, long classNameId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .findByU_C_S_Last(userId, classNameId, status,
 			orderByComparator);
@@ -4710,12 +4188,10 @@ public class MBMessageUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage fetchByU_C_S_Last(
 		long userId, long classNameId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByU_C_S_Last(userId, classNameId, status,
 			orderByComparator);
@@ -4731,13 +4207,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a message-boards message with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage[] findByU_C_S_PrevAndNext(
 		long messageId, long userId, long classNameId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .findByU_C_S_PrevAndNext(messageId, userId, classNameId,
 			status, orderByComparator);
@@ -4754,11 +4228,9 @@ public class MBMessageUtil {
 	* @param classNameIds the class name IDs
 	* @param status the status
 	* @return the matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByU_C_S(
-		long userId, long[] classNameIds, int status)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long userId, long[] classNameIds, int status) {
 		return getPersistence().findByU_C_S(userId, classNameIds, status);
 	}
 
@@ -4775,11 +4247,9 @@ public class MBMessageUtil {
 	* @param start the lower bound of the range of message-boards messages
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @return the range of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByU_C_S(
-		long userId, long[] classNameIds, int status, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long userId, long[] classNameIds, int status, int start, int end) {
 		return getPersistence()
 				   .findByU_C_S(userId, classNameIds, status, start, end);
 	}
@@ -4798,12 +4268,10 @@ public class MBMessageUtil {
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByU_C_S(
 		long userId, long[] classNameIds, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByU_C_S(userId, classNameIds, status, start, end,
 			orderByComparator);
@@ -4815,10 +4283,8 @@ public class MBMessageUtil {
 	* @param userId the user ID
 	* @param classNameId the class name ID
 	* @param status the status
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByU_C_S(long userId, long classNameId, int status)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByU_C_S(long userId, long classNameId, int status) {
 		getPersistence().removeByU_C_S(userId, classNameId, status);
 	}
 
@@ -4829,10 +4295,8 @@ public class MBMessageUtil {
 	* @param classNameId the class name ID
 	* @param status the status
 	* @return the number of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByU_C_S(long userId, long classNameId, int status)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByU_C_S(long userId, long classNameId, int status) {
 		return getPersistence().countByU_C_S(userId, classNameId, status);
 	}
 
@@ -4843,10 +4307,8 @@ public class MBMessageUtil {
 	* @param classNameIds the class name IDs
 	* @param status the status
 	* @return the number of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByU_C_S(long userId, long[] classNameIds, int status)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByU_C_S(long userId, long[] classNameIds, int status) {
 		return getPersistence().countByU_C_S(userId, classNameIds, status);
 	}
 
@@ -4857,11 +4319,9 @@ public class MBMessageUtil {
 	* @param classPK the class p k
 	* @param status the status
 	* @return the matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByC_C_S(
-		long classNameId, long classPK, int status)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long classNameId, long classPK, int status) {
 		return getPersistence().findByC_C_S(classNameId, classPK, status);
 	}
 
@@ -4878,11 +4338,9 @@ public class MBMessageUtil {
 	* @param start the lower bound of the range of message-boards messages
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @return the range of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByC_C_S(
-		long classNameId, long classPK, int status, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long classNameId, long classPK, int status, int start, int end) {
 		return getPersistence()
 				   .findByC_C_S(classNameId, classPK, status, start, end);
 	}
@@ -4901,12 +4359,10 @@ public class MBMessageUtil {
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByC_C_S(
 		long classNameId, long classPK, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByC_C_S(classNameId, classPK, status, start, end,
 			orderByComparator);
@@ -4921,13 +4377,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage findByC_C_S_First(
 		long classNameId, long classPK, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .findByC_C_S_First(classNameId, classPK, status,
 			orderByComparator);
@@ -4941,12 +4395,10 @@ public class MBMessageUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage fetchByC_C_S_First(
 		long classNameId, long classPK, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByC_C_S_First(classNameId, classPK, status,
 			orderByComparator);
@@ -4961,13 +4413,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage findByC_C_S_Last(
 		long classNameId, long classPK, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .findByC_C_S_Last(classNameId, classPK, status,
 			orderByComparator);
@@ -4981,12 +4431,10 @@ public class MBMessageUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage fetchByC_C_S_Last(
 		long classNameId, long classPK, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByC_C_S_Last(classNameId, classPK, status,
 			orderByComparator);
@@ -5002,13 +4450,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a message-boards message with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage[] findByC_C_S_PrevAndNext(
 		long messageId, long classNameId, long classPK, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .findByC_C_S_PrevAndNext(messageId, classNameId, classPK,
 			status, orderByComparator);
@@ -5020,10 +4466,8 @@ public class MBMessageUtil {
 	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @param status the status
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByC_C_S(long classNameId, long classPK, int status)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByC_C_S(long classNameId, long classPK, int status) {
 		getPersistence().removeByC_C_S(classNameId, classPK, status);
 	}
 
@@ -5034,10 +4478,8 @@ public class MBMessageUtil {
 	* @param classPK the class p k
 	* @param status the status
 	* @return the number of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByC_C_S(long classNameId, long classPK, int status)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByC_C_S(long classNameId, long classPK, int status) {
 		return getPersistence().countByC_C_S(classNameId, classPK, status);
 	}
 
@@ -5049,11 +4491,9 @@ public class MBMessageUtil {
 	* @param threadId the thread ID
 	* @param answer the answer
 	* @return the matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByG_C_T_A(
-		long groupId, long categoryId, long threadId, boolean answer)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, long categoryId, long threadId, boolean answer) {
 		return getPersistence()
 				   .findByG_C_T_A(groupId, categoryId, threadId, answer);
 	}
@@ -5072,12 +4512,10 @@ public class MBMessageUtil {
 	* @param start the lower bound of the range of message-boards messages
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @return the range of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByG_C_T_A(
 		long groupId, long categoryId, long threadId, boolean answer,
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return getPersistence()
 				   .findByG_C_T_A(groupId, categoryId, threadId, answer, start,
 			end);
@@ -5098,13 +4536,11 @@ public class MBMessageUtil {
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByG_C_T_A(
 		long groupId, long categoryId, long threadId, boolean answer,
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByG_C_T_A(groupId, categoryId, threadId, answer, start,
 			end, orderByComparator);
@@ -5120,13 +4556,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage findByG_C_T_A_First(
 		long groupId, long categoryId, long threadId, boolean answer,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .findByG_C_T_A_First(groupId, categoryId, threadId, answer,
 			orderByComparator);
@@ -5141,12 +4575,10 @@ public class MBMessageUtil {
 	* @param answer the answer
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage fetchByG_C_T_A_First(
 		long groupId, long categoryId, long threadId, boolean answer,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByG_C_T_A_First(groupId, categoryId, threadId, answer,
 			orderByComparator);
@@ -5162,13 +4594,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage findByG_C_T_A_Last(
 		long groupId, long categoryId, long threadId, boolean answer,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .findByG_C_T_A_Last(groupId, categoryId, threadId, answer,
 			orderByComparator);
@@ -5183,12 +4613,10 @@ public class MBMessageUtil {
 	* @param answer the answer
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage fetchByG_C_T_A_Last(
 		long groupId, long categoryId, long threadId, boolean answer,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByG_C_T_A_Last(groupId, categoryId, threadId, answer,
 			orderByComparator);
@@ -5205,14 +4633,12 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a message-boards message with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage[] findByG_C_T_A_PrevAndNext(
 		long messageId, long groupId, long categoryId, long threadId,
 		boolean answer,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .findByG_C_T_A_PrevAndNext(messageId, groupId, categoryId,
 			threadId, answer, orderByComparator);
@@ -5226,11 +4652,9 @@ public class MBMessageUtil {
 	* @param threadId the thread ID
 	* @param answer the answer
 	* @return the matching message-boards messages that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> filterFindByG_C_T_A(
-		long groupId, long categoryId, long threadId, boolean answer)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, long categoryId, long threadId, boolean answer) {
 		return getPersistence()
 				   .filterFindByG_C_T_A(groupId, categoryId, threadId, answer);
 	}
@@ -5249,12 +4673,10 @@ public class MBMessageUtil {
 	* @param start the lower bound of the range of message-boards messages
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @return the range of matching message-boards messages that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> filterFindByG_C_T_A(
 		long groupId, long categoryId, long threadId, boolean answer,
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return getPersistence()
 				   .filterFindByG_C_T_A(groupId, categoryId, threadId, answer,
 			start, end);
@@ -5275,13 +4697,11 @@ public class MBMessageUtil {
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching message-boards messages that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> filterFindByG_C_T_A(
 		long groupId, long categoryId, long threadId, boolean answer,
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_C_T_A(groupId, categoryId, threadId, answer,
 			start, end, orderByComparator);
@@ -5298,14 +4718,12 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a message-boards message with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage[] filterFindByG_C_T_A_PrevAndNext(
 		long messageId, long groupId, long categoryId, long threadId,
 		boolean answer,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .filterFindByG_C_T_A_PrevAndNext(messageId, groupId,
 			categoryId, threadId, answer, orderByComparator);
@@ -5318,11 +4736,9 @@ public class MBMessageUtil {
 	* @param categoryId the category ID
 	* @param threadId the thread ID
 	* @param answer the answer
-	* @throws SystemException if a system exception occurred
 	*/
 	public static void removeByG_C_T_A(long groupId, long categoryId,
-		long threadId, boolean answer)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long threadId, boolean answer) {
 		getPersistence().removeByG_C_T_A(groupId, categoryId, threadId, answer);
 	}
 
@@ -5334,11 +4750,9 @@ public class MBMessageUtil {
 	* @param threadId the thread ID
 	* @param answer the answer
 	* @return the number of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static int countByG_C_T_A(long groupId, long categoryId,
-		long threadId, boolean answer)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long threadId, boolean answer) {
 		return getPersistence()
 				   .countByG_C_T_A(groupId, categoryId, threadId, answer);
 	}
@@ -5351,11 +4765,9 @@ public class MBMessageUtil {
 	* @param threadId the thread ID
 	* @param answer the answer
 	* @return the number of matching message-boards messages that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static int filterCountByG_C_T_A(long groupId, long categoryId,
-		long threadId, boolean answer)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long threadId, boolean answer) {
 		return getPersistence()
 				   .filterCountByG_C_T_A(groupId, categoryId, threadId, answer);
 	}
@@ -5368,11 +4780,9 @@ public class MBMessageUtil {
 	* @param threadId the thread ID
 	* @param status the status
 	* @return the matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByG_C_T_S(
-		long groupId, long categoryId, long threadId, int status)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, long categoryId, long threadId, int status) {
 		return getPersistence()
 				   .findByG_C_T_S(groupId, categoryId, threadId, status);
 	}
@@ -5391,11 +4801,10 @@ public class MBMessageUtil {
 	* @param start the lower bound of the range of message-boards messages
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @return the range of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByG_C_T_S(
 		long groupId, long categoryId, long threadId, int status, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return getPersistence()
 				   .findByG_C_T_S(groupId, categoryId, threadId, status, start,
 			end);
@@ -5416,13 +4825,11 @@ public class MBMessageUtil {
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByG_C_T_S(
 		long groupId, long categoryId, long threadId, int status, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByG_C_T_S(groupId, categoryId, threadId, status, start,
 			end, orderByComparator);
@@ -5438,13 +4845,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage findByG_C_T_S_First(
 		long groupId, long categoryId, long threadId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .findByG_C_T_S_First(groupId, categoryId, threadId, status,
 			orderByComparator);
@@ -5459,12 +4864,10 @@ public class MBMessageUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage fetchByG_C_T_S_First(
 		long groupId, long categoryId, long threadId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByG_C_T_S_First(groupId, categoryId, threadId, status,
 			orderByComparator);
@@ -5480,13 +4883,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage findByG_C_T_S_Last(
 		long groupId, long categoryId, long threadId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .findByG_C_T_S_Last(groupId, categoryId, threadId, status,
 			orderByComparator);
@@ -5501,12 +4902,10 @@ public class MBMessageUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage fetchByG_C_T_S_Last(
 		long groupId, long categoryId, long threadId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByG_C_T_S_Last(groupId, categoryId, threadId, status,
 			orderByComparator);
@@ -5523,14 +4922,12 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a message-boards message with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage[] findByG_C_T_S_PrevAndNext(
 		long messageId, long groupId, long categoryId, long threadId,
 		int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .findByG_C_T_S_PrevAndNext(messageId, groupId, categoryId,
 			threadId, status, orderByComparator);
@@ -5544,11 +4941,9 @@ public class MBMessageUtil {
 	* @param threadId the thread ID
 	* @param status the status
 	* @return the matching message-boards messages that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> filterFindByG_C_T_S(
-		long groupId, long categoryId, long threadId, int status)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, long categoryId, long threadId, int status) {
 		return getPersistence()
 				   .filterFindByG_C_T_S(groupId, categoryId, threadId, status);
 	}
@@ -5567,11 +4962,10 @@ public class MBMessageUtil {
 	* @param start the lower bound of the range of message-boards messages
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @return the range of matching message-boards messages that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> filterFindByG_C_T_S(
 		long groupId, long categoryId, long threadId, int status, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return getPersistence()
 				   .filterFindByG_C_T_S(groupId, categoryId, threadId, status,
 			start, end);
@@ -5592,13 +4986,11 @@ public class MBMessageUtil {
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching message-boards messages that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> filterFindByG_C_T_S(
 		long groupId, long categoryId, long threadId, int status, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_C_T_S(groupId, categoryId, threadId, status,
 			start, end, orderByComparator);
@@ -5615,14 +5007,12 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a message-boards message with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage[] filterFindByG_C_T_S_PrevAndNext(
 		long messageId, long groupId, long categoryId, long threadId,
 		int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .filterFindByG_C_T_S_PrevAndNext(messageId, groupId,
 			categoryId, threadId, status, orderByComparator);
@@ -5635,11 +5025,9 @@ public class MBMessageUtil {
 	* @param categoryId the category ID
 	* @param threadId the thread ID
 	* @param status the status
-	* @throws SystemException if a system exception occurred
 	*/
 	public static void removeByG_C_T_S(long groupId, long categoryId,
-		long threadId, int status)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long threadId, int status) {
 		getPersistence().removeByG_C_T_S(groupId, categoryId, threadId, status);
 	}
 
@@ -5651,11 +5039,9 @@ public class MBMessageUtil {
 	* @param threadId the thread ID
 	* @param status the status
 	* @return the number of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static int countByG_C_T_S(long groupId, long categoryId,
-		long threadId, int status)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long threadId, int status) {
 		return getPersistence()
 				   .countByG_C_T_S(groupId, categoryId, threadId, status);
 	}
@@ -5668,11 +5054,9 @@ public class MBMessageUtil {
 	* @param threadId the thread ID
 	* @param status the status
 	* @return the number of matching message-boards messages that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static int filterCountByG_C_T_S(long groupId, long categoryId,
-		long threadId, int status)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long threadId, int status) {
 		return getPersistence()
 				   .filterCountByG_C_T_S(groupId, categoryId, threadId, status);
 	}
@@ -5685,11 +5069,9 @@ public class MBMessageUtil {
 	* @param classPK the class p k
 	* @param status the status
 	* @return the matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByU_C_C_S(
-		long userId, long classNameId, long classPK, int status)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long userId, long classNameId, long classPK, int status) {
 		return getPersistence()
 				   .findByU_C_C_S(userId, classNameId, classPK, status);
 	}
@@ -5708,11 +5090,10 @@ public class MBMessageUtil {
 	* @param start the lower bound of the range of message-boards messages
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @return the range of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByU_C_C_S(
 		long userId, long classNameId, long classPK, int status, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return getPersistence()
 				   .findByU_C_C_S(userId, classNameId, classPK, status, start,
 			end);
@@ -5733,13 +5114,11 @@ public class MBMessageUtil {
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findByU_C_C_S(
 		long userId, long classNameId, long classPK, int status, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByU_C_C_S(userId, classNameId, classPK, status, start,
 			end, orderByComparator);
@@ -5755,13 +5134,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage findByU_C_C_S_First(
 		long userId, long classNameId, long classPK, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .findByU_C_C_S_First(userId, classNameId, classPK, status,
 			orderByComparator);
@@ -5776,12 +5153,10 @@ public class MBMessageUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage fetchByU_C_C_S_First(
 		long userId, long classNameId, long classPK, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByU_C_C_S_First(userId, classNameId, classPK, status,
 			orderByComparator);
@@ -5797,13 +5172,11 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage findByU_C_C_S_Last(
 		long userId, long classNameId, long classPK, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .findByU_C_C_S_Last(userId, classNameId, classPK, status,
 			orderByComparator);
@@ -5818,12 +5191,10 @@ public class MBMessageUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching message-boards message, or <code>null</code> if a matching message-boards message could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage fetchByU_C_C_S_Last(
 		long userId, long classNameId, long classPK, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByU_C_C_S_Last(userId, classNameId, classPK, status,
 			orderByComparator);
@@ -5840,14 +5211,12 @@ public class MBMessageUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a message-boards message with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage[] findByU_C_C_S_PrevAndNext(
 		long messageId, long userId, long classNameId, long classPK,
 		int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence()
 				   .findByU_C_C_S_PrevAndNext(messageId, userId, classNameId,
 			classPK, status, orderByComparator);
@@ -5860,11 +5229,9 @@ public class MBMessageUtil {
 	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @param status the status
-	* @throws SystemException if a system exception occurred
 	*/
 	public static void removeByU_C_C_S(long userId, long classNameId,
-		long classPK, int status)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long classPK, int status) {
 		getPersistence().removeByU_C_C_S(userId, classNameId, classPK, status);
 	}
 
@@ -5876,11 +5243,9 @@ public class MBMessageUtil {
 	* @param classPK the class p k
 	* @param status the status
 	* @return the number of matching message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static int countByU_C_C_S(long userId, long classNameId,
-		long classPK, int status)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long classPK, int status) {
 		return getPersistence()
 				   .countByU_C_C_S(userId, classNameId, classPK, status);
 	}
@@ -5922,18 +5287,15 @@ public class MBMessageUtil {
 	* @param messageId the primary key of the message-boards message
 	* @return the message-boards message that was removed
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a message-boards message with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage remove(
 		long messageId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence().remove(messageId);
 	}
 
 	public static com.liferay.portlet.messageboards.model.MBMessage updateImpl(
-		com.liferay.portlet.messageboards.model.MBMessage mbMessage)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.messageboards.model.MBMessage mbMessage) {
 		return getPersistence().updateImpl(mbMessage);
 	}
 
@@ -5943,12 +5305,10 @@ public class MBMessageUtil {
 	* @param messageId the primary key of the message-boards message
 	* @return the message-boards message
 	* @throws com.liferay.portlet.messageboards.NoSuchMessageException if a message-boards message with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage findByPrimaryKey(
 		long messageId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.messageboards.NoSuchMessageException {
+		throws com.liferay.portlet.messageboards.NoSuchMessageException {
 		return getPersistence().findByPrimaryKey(messageId);
 	}
 
@@ -5957,11 +5317,9 @@ public class MBMessageUtil {
 	*
 	* @param messageId the primary key of the message-boards message
 	* @return the message-boards message, or <code>null</code> if a message-boards message with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.messageboards.model.MBMessage fetchByPrimaryKey(
-		long messageId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long messageId) {
 		return getPersistence().fetchByPrimaryKey(messageId);
 	}
 
@@ -5969,10 +5327,8 @@ public class MBMessageUtil {
 	* Returns all the message-boards messages.
 	*
 	* @return the message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findAll() {
 		return getPersistence().findAll();
 	}
 
@@ -5986,11 +5342,9 @@ public class MBMessageUtil {
 	* @param start the lower bound of the range of message-boards messages
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @return the range of message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findAll(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
@@ -6005,22 +5359,17 @@ public class MBMessageUtil {
 	* @param end the upper bound of the range of message-boards messages (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.messageboards.model.MBMessage> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
 	/**
 	* Removes all the message-boards messages from the database.
-	*
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeAll() {
 		getPersistence().removeAll();
 	}
 
@@ -6028,10 +5377,8 @@ public class MBMessageUtil {
 	* Returns the number of message-boards messages.
 	*
 	* @return the number of message-boards messages
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countAll() {
 		return getPersistence().countAll();
 	}
 

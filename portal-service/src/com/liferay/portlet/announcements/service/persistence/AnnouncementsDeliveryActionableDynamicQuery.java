@@ -15,7 +15,6 @@
 package com.liferay.portlet.announcements.service.persistence;
 
 import com.liferay.portal.kernel.dao.orm.BaseActionableDynamicQuery;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 
 import com.liferay.portlet.announcements.model.AnnouncementsDelivery;
@@ -29,8 +28,7 @@ import com.liferay.portlet.announcements.service.AnnouncementsDeliveryLocalServi
 @Deprecated
 public abstract class AnnouncementsDeliveryActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
-	public AnnouncementsDeliveryActionableDynamicQuery()
-		throws SystemException {
+	public AnnouncementsDeliveryActionableDynamicQuery() {
 		setBaseLocalService(AnnouncementsDeliveryLocalServiceUtil.getService());
 		setClass(AnnouncementsDelivery.class);
 

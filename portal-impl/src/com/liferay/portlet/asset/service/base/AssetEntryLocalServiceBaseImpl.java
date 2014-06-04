@@ -102,12 +102,10 @@ public abstract class AssetEntryLocalServiceBaseImpl
 	 *
 	 * @param assetEntry the asset entry
 	 * @return the asset entry that was added
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public AssetEntry addAssetEntry(AssetEntry assetEntry)
-		throws SystemException {
+	public AssetEntry addAssetEntry(AssetEntry assetEntry) {
 		assetEntry.setNew(true);
 
 		return assetEntryPersistence.update(assetEntry);
@@ -130,12 +128,10 @@ public abstract class AssetEntryLocalServiceBaseImpl
 	 * @param entryId the primary key of the asset entry
 	 * @return the asset entry that was removed
 	 * @throws PortalException if a asset entry with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public AssetEntry deleteAssetEntry(long entryId)
-		throws PortalException, SystemException {
+	public AssetEntry deleteAssetEntry(long entryId) throws PortalException {
 		return assetEntryPersistence.remove(entryId);
 	}
 
@@ -144,12 +140,10 @@ public abstract class AssetEntryLocalServiceBaseImpl
 	 *
 	 * @param assetEntry the asset entry
 	 * @return the asset entry that was removed
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public AssetEntry deleteAssetEntry(AssetEntry assetEntry)
-		throws SystemException {
+	public AssetEntry deleteAssetEntry(AssetEntry assetEntry) {
 		return assetEntryPersistence.remove(assetEntry);
 	}
 
@@ -166,12 +160,10 @@ public abstract class AssetEntryLocalServiceBaseImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery) {
 		return assetEntryPersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -186,12 +178,10 @@ public abstract class AssetEntryLocalServiceBaseImpl
 	 * @param start the lower bound of the range of model instances
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
 		return assetEntryPersistence.findWithDynamicQuery(dynamicQuery, start,
 			end);
 	}
@@ -208,12 +198,11 @@ public abstract class AssetEntryLocalServiceBaseImpl
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
 	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		return assetEntryPersistence.findWithDynamicQuery(dynamicQuery, start,
 			end, orderByComparator);
 	}
@@ -223,11 +212,9 @@ public abstract class AssetEntryLocalServiceBaseImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public long dynamicQueryCount(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return assetEntryPersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
@@ -237,17 +224,16 @@ public abstract class AssetEntryLocalServiceBaseImpl
 	 * @param dynamicQuery the dynamic query
 	 * @param projection the projection to apply to the query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection) throws SystemException {
+		Projection projection) {
 		return assetEntryPersistence.countWithDynamicQuery(dynamicQuery,
 			projection);
 	}
 
 	@Override
-	public AssetEntry fetchAssetEntry(long entryId) throws SystemException {
+	public AssetEntry fetchAssetEntry(long entryId) {
 		return assetEntryPersistence.fetchByPrimaryKey(entryId);
 	}
 
@@ -257,17 +243,14 @@ public abstract class AssetEntryLocalServiceBaseImpl
 	 * @param entryId the primary key of the asset entry
 	 * @return the asset entry
 	 * @throws PortalException if a asset entry with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public AssetEntry getAssetEntry(long entryId)
-		throws PortalException, SystemException {
+	public AssetEntry getAssetEntry(long entryId) throws PortalException {
 		return assetEntryPersistence.findByPrimaryKey(entryId);
 	}
 
 	@Override
-	public ActionableDynamicQuery getActionableDynamicQuery()
-		throws SystemException {
+	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil.getService());
@@ -280,8 +263,7 @@ public abstract class AssetEntryLocalServiceBaseImpl
 	}
 
 	protected void initActionableDynamicQuery(
-		ActionableDynamicQuery actionableDynamicQuery)
-		throws SystemException {
+		ActionableDynamicQuery actionableDynamicQuery) {
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(AssetEntry.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
@@ -291,7 +273,7 @@ public abstract class AssetEntryLocalServiceBaseImpl
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return assetEntryPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -305,11 +287,9 @@ public abstract class AssetEntryLocalServiceBaseImpl
 	 * @param start the lower bound of the range of asset entries
 	 * @param end the upper bound of the range of asset entries (not inclusive)
 	 * @return the range of asset entries
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<AssetEntry> getAssetEntries(int start, int end)
-		throws SystemException {
+	public List<AssetEntry> getAssetEntries(int start, int end) {
 		return assetEntryPersistence.findAll(start, end);
 	}
 
@@ -317,10 +297,9 @@ public abstract class AssetEntryLocalServiceBaseImpl
 	 * Returns the number of asset entries.
 	 *
 	 * @return the number of asset entries
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int getAssetEntriesCount() throws SystemException {
+	public int getAssetEntriesCount() {
 		return assetEntryPersistence.countAll();
 	}
 
@@ -329,93 +308,77 @@ public abstract class AssetEntryLocalServiceBaseImpl
 	 *
 	 * @param assetEntry the asset entry
 	 * @return the asset entry that was updated
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public AssetEntry updateAssetEntry(AssetEntry assetEntry)
-		throws SystemException {
+	public AssetEntry updateAssetEntry(AssetEntry assetEntry) {
 		return assetEntryPersistence.update(assetEntry);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void addAssetCategoryAssetEntry(long categoryId, long entryId)
-		throws SystemException {
+	public void addAssetCategoryAssetEntry(long categoryId, long entryId) {
 		assetCategoryPersistence.addAssetEntry(categoryId, entryId);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public void addAssetCategoryAssetEntry(long categoryId,
-		AssetEntry assetEntry) throws SystemException {
+		AssetEntry assetEntry) {
 		assetCategoryPersistence.addAssetEntry(categoryId, assetEntry);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void addAssetCategoryAssetEntries(long categoryId, long[] entryIds)
-		throws SystemException {
+	public void addAssetCategoryAssetEntries(long categoryId, long[] entryIds) {
 		assetCategoryPersistence.addAssetEntries(categoryId, entryIds);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public void addAssetCategoryAssetEntries(long categoryId,
-		List<AssetEntry> AssetEntries) throws SystemException {
+		List<AssetEntry> AssetEntries) {
 		assetCategoryPersistence.addAssetEntries(categoryId, AssetEntries);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void clearAssetCategoryAssetEntries(long categoryId)
-		throws SystemException {
+	public void clearAssetCategoryAssetEntries(long categoryId) {
 		assetCategoryPersistence.clearAssetEntries(categoryId);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void deleteAssetCategoryAssetEntry(long categoryId, long entryId)
-		throws SystemException {
+	public void deleteAssetCategoryAssetEntry(long categoryId, long entryId) {
 		assetCategoryPersistence.removeAssetEntry(categoryId, entryId);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public void deleteAssetCategoryAssetEntry(long categoryId,
-		AssetEntry assetEntry) throws SystemException {
+		AssetEntry assetEntry) {
 		assetCategoryPersistence.removeAssetEntry(categoryId, assetEntry);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void deleteAssetCategoryAssetEntries(long categoryId, long[] entryIds)
-		throws SystemException {
+	public void deleteAssetCategoryAssetEntries(long categoryId, long[] entryIds) {
 		assetCategoryPersistence.removeAssetEntries(categoryId, entryIds);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public void deleteAssetCategoryAssetEntries(long categoryId,
-		List<AssetEntry> AssetEntries) throws SystemException {
+		List<AssetEntry> AssetEntries) {
 		assetCategoryPersistence.removeAssetEntries(categoryId, AssetEntries);
 	}
 
@@ -424,156 +387,126 @@ public abstract class AssetEntryLocalServiceBaseImpl
 	 *
 	 * @param entryId the entryId of the asset entry
 	 * @return long[] the categoryIds of asset categories associated with the asset entry
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public long[] getAssetCategoryPrimaryKeys(long entryId)
-		throws SystemException {
+	public long[] getAssetCategoryPrimaryKeys(long entryId) {
 		return assetEntryPersistence.getAssetCategoryPrimaryKeys(entryId);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<AssetEntry> getAssetCategoryAssetEntries(long categoryId)
-		throws SystemException {
+	public List<AssetEntry> getAssetCategoryAssetEntries(long categoryId) {
 		return assetCategoryPersistence.getAssetEntries(categoryId);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<AssetEntry> getAssetCategoryAssetEntries(long categoryId,
-		int start, int end) throws SystemException {
+		int start, int end) {
 		return assetCategoryPersistence.getAssetEntries(categoryId, start, end);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<AssetEntry> getAssetCategoryAssetEntries(long categoryId,
-		int start, int end, OrderByComparator orderByComparator)
-		throws SystemException {
+		int start, int end, OrderByComparator orderByComparator) {
 		return assetCategoryPersistence.getAssetEntries(categoryId, start, end,
 			orderByComparator);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int getAssetCategoryAssetEntriesCount(long categoryId)
-		throws SystemException {
+	public int getAssetCategoryAssetEntriesCount(long categoryId) {
 		return assetCategoryPersistence.getAssetEntriesSize(categoryId);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public boolean hasAssetCategoryAssetEntry(long categoryId, long entryId)
-		throws SystemException {
+	public boolean hasAssetCategoryAssetEntry(long categoryId, long entryId) {
 		return assetCategoryPersistence.containsAssetEntry(categoryId, entryId);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public boolean hasAssetCategoryAssetEntries(long categoryId)
-		throws SystemException {
+	public boolean hasAssetCategoryAssetEntries(long categoryId) {
 		return assetCategoryPersistence.containsAssetEntries(categoryId);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void setAssetCategoryAssetEntries(long categoryId, long[] entryIds)
-		throws SystemException {
+	public void setAssetCategoryAssetEntries(long categoryId, long[] entryIds) {
 		assetCategoryPersistence.setAssetEntries(categoryId, entryIds);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void addAssetTagAssetEntry(long tagId, long entryId)
-		throws SystemException {
+	public void addAssetTagAssetEntry(long tagId, long entryId) {
 		assetTagPersistence.addAssetEntry(tagId, entryId);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void addAssetTagAssetEntry(long tagId, AssetEntry assetEntry)
-		throws SystemException {
+	public void addAssetTagAssetEntry(long tagId, AssetEntry assetEntry) {
 		assetTagPersistence.addAssetEntry(tagId, assetEntry);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void addAssetTagAssetEntries(long tagId, long[] entryIds)
-		throws SystemException {
+	public void addAssetTagAssetEntries(long tagId, long[] entryIds) {
 		assetTagPersistence.addAssetEntries(tagId, entryIds);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public void addAssetTagAssetEntries(long tagId,
-		List<AssetEntry> AssetEntries) throws SystemException {
+		List<AssetEntry> AssetEntries) {
 		assetTagPersistence.addAssetEntries(tagId, AssetEntries);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void clearAssetTagAssetEntries(long tagId) throws SystemException {
+	public void clearAssetTagAssetEntries(long tagId) {
 		assetTagPersistence.clearAssetEntries(tagId);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void deleteAssetTagAssetEntry(long tagId, long entryId)
-		throws SystemException {
+	public void deleteAssetTagAssetEntry(long tagId, long entryId) {
 		assetTagPersistence.removeAssetEntry(tagId, entryId);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void deleteAssetTagAssetEntry(long tagId, AssetEntry assetEntry)
-		throws SystemException {
+	public void deleteAssetTagAssetEntry(long tagId, AssetEntry assetEntry) {
 		assetTagPersistence.removeAssetEntry(tagId, assetEntry);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void deleteAssetTagAssetEntries(long tagId, long[] entryIds)
-		throws SystemException {
+	public void deleteAssetTagAssetEntries(long tagId, long[] entryIds) {
 		assetTagPersistence.removeAssetEntries(tagId, entryIds);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public void deleteAssetTagAssetEntries(long tagId,
-		List<AssetEntry> AssetEntries) throws SystemException {
+		List<AssetEntry> AssetEntries) {
 		assetTagPersistence.removeAssetEntries(tagId, AssetEntries);
 	}
 
@@ -582,75 +515,61 @@ public abstract class AssetEntryLocalServiceBaseImpl
 	 *
 	 * @param entryId the entryId of the asset entry
 	 * @return long[] the tagIds of asset tags associated with the asset entry
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public long[] getAssetTagPrimaryKeys(long entryId)
-		throws SystemException {
+	public long[] getAssetTagPrimaryKeys(long entryId) {
 		return assetEntryPersistence.getAssetTagPrimaryKeys(entryId);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<AssetEntry> getAssetTagAssetEntries(long tagId)
-		throws SystemException {
+	public List<AssetEntry> getAssetTagAssetEntries(long tagId) {
 		return assetTagPersistence.getAssetEntries(tagId);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<AssetEntry> getAssetTagAssetEntries(long tagId, int start,
-		int end) throws SystemException {
+		int end) {
 		return assetTagPersistence.getAssetEntries(tagId, start, end);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<AssetEntry> getAssetTagAssetEntries(long tagId, int start,
-		int end, OrderByComparator orderByComparator) throws SystemException {
+		int end, OrderByComparator orderByComparator) {
 		return assetTagPersistence.getAssetEntries(tagId, start, end,
 			orderByComparator);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int getAssetTagAssetEntriesCount(long tagId)
-		throws SystemException {
+	public int getAssetTagAssetEntriesCount(long tagId) {
 		return assetTagPersistence.getAssetEntriesSize(tagId);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public boolean hasAssetTagAssetEntry(long tagId, long entryId)
-		throws SystemException {
+	public boolean hasAssetTagAssetEntry(long tagId, long entryId) {
 		return assetTagPersistence.containsAssetEntry(tagId, entryId);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public boolean hasAssetTagAssetEntries(long tagId)
-		throws SystemException {
+	public boolean hasAssetTagAssetEntries(long tagId) {
 		return assetTagPersistence.containsAssetEntries(tagId);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void setAssetTagAssetEntries(long tagId, long[] entryIds)
-		throws SystemException {
+	public void setAssetTagAssetEntries(long tagId, long[] entryIds) {
 		assetTagPersistence.setAssetEntries(tagId, entryIds);
 	}
 
@@ -1937,7 +1856,7 @@ public abstract class AssetEntryLocalServiceBaseImpl
 	 *
 	 * @param sql the sql query
 	 */
-	protected void runSQL(String sql) throws SystemException {
+	protected void runSQL(String sql) {
 		try {
 			DataSource dataSource = assetEntryPersistence.getDataSource();
 

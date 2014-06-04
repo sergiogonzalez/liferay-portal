@@ -15,7 +15,6 @@
 package com.liferay.portlet.documentlibrary.service.persistence;
 
 import com.liferay.portal.kernel.dao.orm.BaseActionableDynamicQuery;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 
 import com.liferay.portlet.documentlibrary.model.DLContent;
@@ -29,7 +28,7 @@ import com.liferay.portlet.documentlibrary.service.DLContentLocalServiceUtil;
 @Deprecated
 public abstract class DLContentActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
-	public DLContentActionableDynamicQuery() throws SystemException {
+	public DLContentActionableDynamicQuery() {
 		setBaseLocalService(DLContentLocalServiceUtil.getService());
 		setClass(DLContent.class);
 

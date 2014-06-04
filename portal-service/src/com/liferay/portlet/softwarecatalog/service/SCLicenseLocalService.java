@@ -52,11 +52,9 @@ public interface SCLicenseLocalService extends BaseLocalService,
 	*
 	* @param scLicense the s c license
 	* @return the s c license that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.softwarecatalog.model.SCLicense addSCLicense(
-		com.liferay.portlet.softwarecatalog.model.SCLicense scLicense)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portlet.softwarecatalog.model.SCLicense scLicense);
 
 	/**
 	* Creates a new s c license with the primary key. Does not add the s c license to the database.
@@ -73,23 +71,19 @@ public interface SCLicenseLocalService extends BaseLocalService,
 	* @param licenseId the primary key of the s c license
 	* @return the s c license that was removed
 	* @throws PortalException if a s c license with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.softwarecatalog.model.SCLicense deleteSCLicense(
 		long licenseId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Deletes the s c license from the database. Also notifies the appropriate model listeners.
 	*
 	* @param scLicense the s c license
 	* @return the s c license that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.softwarecatalog.model.SCLicense deleteSCLicense(
-		com.liferay.portlet.softwarecatalog.model.SCLicense scLicense)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portlet.softwarecatalog.model.SCLicense scLicense);
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -98,12 +92,10 @@ public interface SCLicenseLocalService extends BaseLocalService,
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -116,12 +108,11 @@ public interface SCLicenseLocalService extends BaseLocalService,
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException;
+		int end);
 
 	/**
 	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
@@ -135,25 +126,21 @@ public interface SCLicenseLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the number of rows that match the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows that match the dynamic query.
@@ -161,17 +148,14 @@ public interface SCLicenseLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.dao.orm.Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.softwarecatalog.model.SCLicense fetchSCLicense(
-		long licenseId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long licenseId);
 
 	/**
 	* Returns the s c license with the primary key.
@@ -179,24 +163,20 @@ public interface SCLicenseLocalService extends BaseLocalService,
 	* @param licenseId the primary key of the s c license
 	* @return the s c license
 	* @throws PortalException if a s c license with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.softwarecatalog.model.SCLicense getSCLicense(
 		long licenseId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns a range of all the s c licenses.
@@ -208,159 +188,87 @@ public interface SCLicenseLocalService extends BaseLocalService,
 	* @param start the lower bound of the range of s c licenses
 	* @param end the upper bound of the range of s c licenses (not inclusive)
 	* @return the range of s c licenses
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> getSCLicenses(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		int start, int end);
 
 	/**
 	* Returns the number of s c licenses.
 	*
 	* @return the number of s c licenses
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getSCLicensesCount()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int getSCLicensesCount();
 
 	/**
 	* Updates the s c license in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param scLicense the s c license
 	* @return the s c license that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.softwarecatalog.model.SCLicense updateSCLicense(
-		com.liferay.portlet.softwarecatalog.model.SCLicense scLicense)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portlet.softwarecatalog.model.SCLicense scLicense);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	public void addSCProductEntrySCLicense(long productEntryId, long licenseId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void addSCProductEntrySCLicense(long productEntryId, long licenseId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public void addSCProductEntrySCLicense(long productEntryId,
-		com.liferay.portlet.softwarecatalog.model.SCLicense scLicense)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portlet.softwarecatalog.model.SCLicense scLicense);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public void addSCProductEntrySCLicenses(long productEntryId,
-		long[] licenseIds)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long[] licenseIds);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public void addSCProductEntrySCLicenses(long productEntryId,
-		java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> SCLicenses)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> SCLicenses);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	public void clearSCProductEntrySCLicenses(long productEntryId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void clearSCProductEntrySCLicenses(long productEntryId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public void deleteSCProductEntrySCLicense(long productEntryId,
-		long licenseId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long licenseId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public void deleteSCProductEntrySCLicense(long productEntryId,
-		com.liferay.portlet.softwarecatalog.model.SCLicense scLicense)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portlet.softwarecatalog.model.SCLicense scLicense);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public void deleteSCProductEntrySCLicenses(long productEntryId,
-		long[] licenseIds)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long[] licenseIds);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public void deleteSCProductEntrySCLicenses(long productEntryId,
-		java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> SCLicenses)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> SCLicenses);
 
 	/**
 	* Returns the productEntryIds of the s c product entries associated with the s c license.
 	*
 	* @param licenseId the licenseId of the s c license
 	* @return long[] the productEntryIds of s c product entries associated with the s c license
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long[] getSCProductEntryPrimaryKeys(long licenseId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public long[] getSCProductEntryPrimaryKeys(long licenseId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> getSCProductEntrySCLicenses(
-		long productEntryId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long productEntryId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> getSCProductEntrySCLicenses(
-		long productEntryId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long productEntryId, int start, int end);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCLicense> getSCProductEntrySCLicenses(
 		long productEntryId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getSCProductEntrySCLicensesCount(long productEntryId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int getSCProductEntrySCLicensesCount(long productEntryId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasSCProductEntrySCLicense(long productEntryId,
-		long licenseId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long licenseId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasSCProductEntrySCLicenses(long productEntryId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public boolean hasSCProductEntrySCLicenses(long productEntryId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public void setSCProductEntrySCLicenses(long productEntryId,
-		long[] licenseIds)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long[] licenseIds);
 
 	/**
 	* Returns the Spring bean ID for this bean.

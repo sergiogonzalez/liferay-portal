@@ -15,7 +15,6 @@
 package com.liferay.portal.service.persistence;
 
 import com.liferay.portal.kernel.dao.orm.BaseActionableDynamicQuery;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.model.RepositoryEntry;
 import com.liferay.portal.service.RepositoryEntryLocalServiceUtil;
@@ -28,7 +27,7 @@ import com.liferay.portal.service.RepositoryEntryLocalServiceUtil;
 @Deprecated
 public abstract class RepositoryEntryActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
-	public RepositoryEntryActionableDynamicQuery() throws SystemException {
+	public RepositoryEntryActionableDynamicQuery() {
 		setBaseLocalService(RepositoryEntryLocalServiceUtil.getService());
 		setClass(RepositoryEntry.class);
 

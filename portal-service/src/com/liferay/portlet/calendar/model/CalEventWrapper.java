@@ -345,11 +345,9 @@ public class CalEventWrapper implements CalEvent, ModelWrapper<CalEvent> {
 	* Returns the user uuid of this cal event.
 	*
 	* @return the user uuid of this cal event
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public java.lang.String getUserUuid()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public java.lang.String getUserUuid() {
 		return _calEvent.getUserUuid();
 	}
 
@@ -852,8 +850,7 @@ public class CalEventWrapper implements CalEvent, ModelWrapper<CalEvent> {
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void persist() {
 		_calEvent.persist();
 	}
 

@@ -46,11 +46,9 @@ public class WikiPageLocalServiceUtil {
 	*
 	* @param wikiPage the wiki page
 	* @return the wiki page that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.wiki.model.WikiPage addWikiPage(
-		com.liferay.portlet.wiki.model.WikiPage wikiPage)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.wiki.model.WikiPage wikiPage) {
 		return getService().addWikiPage(wikiPage);
 	}
 
@@ -71,12 +69,9 @@ public class WikiPageLocalServiceUtil {
 	* @param pageId the primary key of the wiki page
 	* @return the wiki page that was removed
 	* @throws PortalException if a wiki page with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.wiki.model.WikiPage deleteWikiPage(
-		long pageId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		long pageId) throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteWikiPage(pageId);
 	}
 
@@ -85,11 +80,9 @@ public class WikiPageLocalServiceUtil {
 	*
 	* @param wikiPage the wiki page
 	* @return the wiki page that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.wiki.model.WikiPage deleteWikiPage(
-		com.liferay.portlet.wiki.model.WikiPage wikiPage)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.wiki.model.WikiPage wikiPage) {
 		return getService().deleteWikiPage(wikiPage);
 	}
 
@@ -102,12 +95,10 @@ public class WikiPageLocalServiceUtil {
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -122,12 +113,11 @@ public class WikiPageLocalServiceUtil {
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -143,14 +133,12 @@ public class WikiPageLocalServiceUtil {
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getService()
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
@@ -160,11 +148,9 @@ public class WikiPageLocalServiceUtil {
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -174,17 +160,15 @@ public class WikiPageLocalServiceUtil {
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public static long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
 	public static com.liferay.portlet.wiki.model.WikiPage fetchWikiPage(
-		long pageId) throws com.liferay.portal.kernel.exception.SystemException {
+		long pageId) {
 		return getService().fetchWikiPage(pageId);
 	}
 
@@ -194,11 +178,9 @@ public class WikiPageLocalServiceUtil {
 	* @param uuid the wiki page's UUID
 	* @param companyId the primary key of the company
 	* @return the matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.wiki.model.WikiPage fetchWikiPageByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long companyId) {
 		return getService().fetchWikiPageByUuidAndCompanyId(uuid, companyId);
 	}
 
@@ -208,11 +190,9 @@ public class WikiPageLocalServiceUtil {
 	* @param uuid the wiki page's UUID
 	* @param groupId the primary key of the group
 	* @return the matching wiki page, or <code>null</code> if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.wiki.model.WikiPage fetchWikiPageByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long groupId) {
 		return getService().fetchWikiPageByUuidAndGroupId(uuid, groupId);
 	}
 
@@ -222,30 +202,24 @@ public class WikiPageLocalServiceUtil {
 	* @param pageId the primary key of the wiki page
 	* @return the wiki page
 	* @throws PortalException if a wiki page with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.wiki.model.WikiPage getWikiPage(
-		long pageId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		long pageId) throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getWikiPage(pageId);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext) {
 		return getService().getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	public static com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
@@ -256,12 +230,10 @@ public class WikiPageLocalServiceUtil {
 	* @param companyId the primary key of the company
 	* @return the matching wiki page
 	* @throws PortalException if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.wiki.model.WikiPage getWikiPageByUuidAndCompanyId(
 		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getWikiPageByUuidAndCompanyId(uuid, companyId);
 	}
 
@@ -272,12 +244,10 @@ public class WikiPageLocalServiceUtil {
 	* @param groupId the primary key of the group
 	* @return the matching wiki page
 	* @throws PortalException if a matching wiki page could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.wiki.model.WikiPage getWikiPageByUuidAndGroupId(
 		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getWikiPageByUuidAndGroupId(uuid, groupId);
 	}
 
@@ -291,11 +261,9 @@ public class WikiPageLocalServiceUtil {
 	* @param start the lower bound of the range of wiki pages
 	* @param end the upper bound of the range of wiki pages (not inclusive)
 	* @return the range of wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.wiki.model.WikiPage> getWikiPages(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return getService().getWikiPages(start, end);
 	}
 
@@ -303,10 +271,8 @@ public class WikiPageLocalServiceUtil {
 	* Returns the number of wiki pages.
 	*
 	* @return the number of wiki pages
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int getWikiPagesCount()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int getWikiPagesCount() {
 		return getService().getWikiPagesCount();
 	}
 
@@ -315,11 +281,9 @@ public class WikiPageLocalServiceUtil {
 	*
 	* @param wikiPage the wiki page
 	* @return the wiki page that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.wiki.model.WikiPage updateWikiPage(
-		com.liferay.portlet.wiki.model.WikiPage wikiPage)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.wiki.model.WikiPage wikiPage) {
 		return getService().updateWikiPage(wikiPage);
 	}
 

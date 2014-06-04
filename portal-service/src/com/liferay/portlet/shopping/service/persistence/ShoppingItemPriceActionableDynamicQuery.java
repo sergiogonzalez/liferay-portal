@@ -15,7 +15,6 @@
 package com.liferay.portlet.shopping.service.persistence;
 
 import com.liferay.portal.kernel.dao.orm.BaseActionableDynamicQuery;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 
 import com.liferay.portlet.shopping.model.ShoppingItemPrice;
@@ -29,7 +28,7 @@ import com.liferay.portlet.shopping.service.ShoppingItemPriceLocalServiceUtil;
 @Deprecated
 public abstract class ShoppingItemPriceActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
-	public ShoppingItemPriceActionableDynamicQuery() throws SystemException {
+	public ShoppingItemPriceActionableDynamicQuery() {
 		setBaseLocalService(ShoppingItemPriceLocalServiceUtil.getService());
 		setClass(ShoppingItemPrice.class);
 

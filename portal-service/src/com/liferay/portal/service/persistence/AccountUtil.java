@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 import com.liferay.portal.model.Account;
@@ -63,16 +62,14 @@ public class AccountUtil {
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#countWithDynamicQuery(DynamicQuery)
 	 */
-	public static long countWithDynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public static long countWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return getPersistence().countWithDynamicQuery(dynamicQuery);
 	}
 
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery)
 	 */
-	public static List<Account> findWithDynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public static List<Account> findWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -80,8 +77,7 @@ public class AccountUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
 	 */
 	public static List<Account> findWithDynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+		DynamicQuery dynamicQuery, int start, int end) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -90,7 +86,7 @@ public class AccountUtil {
 	 */
 	public static List<Account> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -99,15 +95,14 @@ public class AccountUtil {
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static Account update(Account account) throws SystemException {
+	public static Account update(Account account) {
 		return getPersistence().update(account);
 	}
 
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
-	public static Account update(Account account, ServiceContext serviceContext)
-		throws SystemException {
+	public static Account update(Account account, ServiceContext serviceContext) {
 		return getPersistence().update(account, serviceContext);
 	}
 
@@ -146,17 +141,14 @@ public class AccountUtil {
 	* @param accountId the primary key of the account
 	* @return the account that was removed
 	* @throws com.liferay.portal.NoSuchAccountException if a account with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Account remove(long accountId)
-		throws com.liferay.portal.NoSuchAccountException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.NoSuchAccountException {
 		return getPersistence().remove(accountId);
 	}
 
 	public static com.liferay.portal.model.Account updateImpl(
-		com.liferay.portal.model.Account account)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.Account account) {
 		return getPersistence().updateImpl(account);
 	}
 
@@ -166,12 +158,9 @@ public class AccountUtil {
 	* @param accountId the primary key of the account
 	* @return the account
 	* @throws com.liferay.portal.NoSuchAccountException if a account with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Account findByPrimaryKey(
-		long accountId)
-		throws com.liferay.portal.NoSuchAccountException,
-			com.liferay.portal.kernel.exception.SystemException {
+		long accountId) throws com.liferay.portal.NoSuchAccountException {
 		return getPersistence().findByPrimaryKey(accountId);
 	}
 
@@ -180,11 +169,9 @@ public class AccountUtil {
 	*
 	* @param accountId the primary key of the account
 	* @return the account, or <code>null</code> if a account with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Account fetchByPrimaryKey(
-		long accountId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long accountId) {
 		return getPersistence().fetchByPrimaryKey(accountId);
 	}
 
@@ -192,10 +179,8 @@ public class AccountUtil {
 	* Returns all the accounts.
 	*
 	* @return the accounts
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.portal.model.Account> findAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static java.util.List<com.liferay.portal.model.Account> findAll() {
 		return getPersistence().findAll();
 	}
 
@@ -209,11 +194,9 @@ public class AccountUtil {
 	* @param start the lower bound of the range of accounts
 	* @param end the upper bound of the range of accounts (not inclusive)
 	* @return the range of accounts
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portal.model.Account> findAll(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
@@ -228,22 +211,17 @@ public class AccountUtil {
 	* @param end the upper bound of the range of accounts (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of accounts
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portal.model.Account> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
 	/**
 	* Removes all the accounts from the database.
-	*
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeAll() {
 		getPersistence().removeAll();
 	}
 
@@ -251,10 +229,8 @@ public class AccountUtil {
 	* Returns the number of accounts.
 	*
 	* @return the number of accounts
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countAll() {
 		return getPersistence().countAll();
 	}
 

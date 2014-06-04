@@ -46,11 +46,9 @@ public class BlogsStatsUserLocalServiceUtil {
 	*
 	* @param blogsStatsUser the blogs stats user
 	* @return the blogs stats user that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.blogs.model.BlogsStatsUser addBlogsStatsUser(
-		com.liferay.portlet.blogs.model.BlogsStatsUser blogsStatsUser)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.blogs.model.BlogsStatsUser blogsStatsUser) {
 		return getService().addBlogsStatsUser(blogsStatsUser);
 	}
 
@@ -71,12 +69,10 @@ public class BlogsStatsUserLocalServiceUtil {
 	* @param statsUserId the primary key of the blogs stats user
 	* @return the blogs stats user that was removed
 	* @throws PortalException if a blogs stats user with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.blogs.model.BlogsStatsUser deleteBlogsStatsUser(
 		long statsUserId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteBlogsStatsUser(statsUserId);
 	}
 
@@ -85,11 +81,9 @@ public class BlogsStatsUserLocalServiceUtil {
 	*
 	* @param blogsStatsUser the blogs stats user
 	* @return the blogs stats user that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.blogs.model.BlogsStatsUser deleteBlogsStatsUser(
-		com.liferay.portlet.blogs.model.BlogsStatsUser blogsStatsUser)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.blogs.model.BlogsStatsUser blogsStatsUser) {
 		return getService().deleteBlogsStatsUser(blogsStatsUser);
 	}
 
@@ -102,12 +96,10 @@ public class BlogsStatsUserLocalServiceUtil {
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -122,12 +114,11 @@ public class BlogsStatsUserLocalServiceUtil {
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -143,14 +134,12 @@ public class BlogsStatsUserLocalServiceUtil {
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getService()
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
@@ -160,11 +149,9 @@ public class BlogsStatsUserLocalServiceUtil {
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -174,18 +161,15 @@ public class BlogsStatsUserLocalServiceUtil {
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public static long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
 	public static com.liferay.portlet.blogs.model.BlogsStatsUser fetchBlogsStatsUser(
-		long statsUserId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long statsUserId) {
 		return getService().fetchBlogsStatsUser(statsUserId);
 	}
 
@@ -195,24 +179,20 @@ public class BlogsStatsUserLocalServiceUtil {
 	* @param statsUserId the primary key of the blogs stats user
 	* @return the blogs stats user
 	* @throws PortalException if a blogs stats user with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.blogs.model.BlogsStatsUser getBlogsStatsUser(
 		long statsUserId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getBlogsStatsUser(statsUserId);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}
 
 	public static com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
@@ -226,11 +206,9 @@ public class BlogsStatsUserLocalServiceUtil {
 	* @param start the lower bound of the range of blogs stats users
 	* @param end the upper bound of the range of blogs stats users (not inclusive)
 	* @return the range of blogs stats users
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.blogs.model.BlogsStatsUser> getBlogsStatsUsers(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return getService().getBlogsStatsUsers(start, end);
 	}
 
@@ -238,10 +216,8 @@ public class BlogsStatsUserLocalServiceUtil {
 	* Returns the number of blogs stats users.
 	*
 	* @return the number of blogs stats users
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int getBlogsStatsUsersCount()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int getBlogsStatsUsersCount() {
 		return getService().getBlogsStatsUsersCount();
 	}
 
@@ -250,11 +226,9 @@ public class BlogsStatsUserLocalServiceUtil {
 	*
 	* @param blogsStatsUser the blogs stats user
 	* @return the blogs stats user that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.blogs.model.BlogsStatsUser updateBlogsStatsUser(
-		com.liferay.portlet.blogs.model.BlogsStatsUser blogsStatsUser)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.blogs.model.BlogsStatsUser blogsStatsUser) {
 		return getService().updateBlogsStatsUser(blogsStatsUser);
 	}
 

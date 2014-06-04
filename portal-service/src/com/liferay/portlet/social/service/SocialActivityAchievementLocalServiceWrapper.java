@@ -39,12 +39,10 @@ public class SocialActivityAchievementLocalServiceWrapper
 	*
 	* @param socialActivityAchievement the social activity achievement
 	* @return the social activity achievement that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.social.model.SocialActivityAchievement addSocialActivityAchievement(
-		com.liferay.portlet.social.model.SocialActivityAchievement socialActivityAchievement)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.social.model.SocialActivityAchievement socialActivityAchievement) {
 		return _socialActivityAchievementLocalService.addSocialActivityAchievement(socialActivityAchievement);
 	}
 
@@ -66,13 +64,11 @@ public class SocialActivityAchievementLocalServiceWrapper
 	* @param activityAchievementId the primary key of the social activity achievement
 	* @return the social activity achievement that was removed
 	* @throws PortalException if a social activity achievement with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.social.model.SocialActivityAchievement deleteSocialActivityAchievement(
 		long activityAchievementId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _socialActivityAchievementLocalService.deleteSocialActivityAchievement(activityAchievementId);
 	}
 
@@ -81,12 +77,10 @@ public class SocialActivityAchievementLocalServiceWrapper
 	*
 	* @param socialActivityAchievement the social activity achievement
 	* @return the social activity achievement that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.social.model.SocialActivityAchievement deleteSocialActivityAchievement(
-		com.liferay.portlet.social.model.SocialActivityAchievement socialActivityAchievement)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.social.model.SocialActivityAchievement socialActivityAchievement) {
 		return _socialActivityAchievementLocalService.deleteSocialActivityAchievement(socialActivityAchievement);
 	}
 
@@ -100,13 +94,11 @@ public class SocialActivityAchievementLocalServiceWrapper
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _socialActivityAchievementLocalService.dynamicQuery(dynamicQuery);
 	}
 
@@ -121,13 +113,12 @@ public class SocialActivityAchievementLocalServiceWrapper
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return _socialActivityAchievementLocalService.dynamicQuery(dynamicQuery,
 			start, end);
 	}
@@ -144,15 +135,13 @@ public class SocialActivityAchievementLocalServiceWrapper
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return _socialActivityAchievementLocalService.dynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
 	}
@@ -162,12 +151,10 @@ public class SocialActivityAchievementLocalServiceWrapper
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _socialActivityAchievementLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
@@ -177,21 +164,18 @@ public class SocialActivityAchievementLocalServiceWrapper
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return _socialActivityAchievementLocalService.dynamicQueryCount(dynamicQuery,
 			projection);
 	}
 
 	@Override
 	public com.liferay.portlet.social.model.SocialActivityAchievement fetchSocialActivityAchievement(
-		long activityAchievementId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long activityAchievementId) {
 		return _socialActivityAchievementLocalService.fetchSocialActivityAchievement(activityAchievementId);
 	}
 
@@ -201,27 +185,23 @@ public class SocialActivityAchievementLocalServiceWrapper
 	* @param activityAchievementId the primary key of the social activity achievement
 	* @return the social activity achievement
 	* @throws PortalException if a social activity achievement with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.social.model.SocialActivityAchievement getSocialActivityAchievement(
 		long activityAchievementId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _socialActivityAchievementLocalService.getSocialActivityAchievement(activityAchievementId);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _socialActivityAchievementLocalService.getActionableDynamicQuery();
 	}
 
 	@Override
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _socialActivityAchievementLocalService.getPersistedModel(primaryKeyObj);
 	}
 
@@ -235,12 +215,10 @@ public class SocialActivityAchievementLocalServiceWrapper
 	* @param start the lower bound of the range of social activity achievements
 	* @param end the upper bound of the range of social activity achievements (not inclusive)
 	* @return the range of social activity achievements
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portlet.social.model.SocialActivityAchievement> getSocialActivityAchievements(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return _socialActivityAchievementLocalService.getSocialActivityAchievements(start,
 			end);
 	}
@@ -249,11 +227,9 @@ public class SocialActivityAchievementLocalServiceWrapper
 	* Returns the number of social activity achievements.
 	*
 	* @return the number of social activity achievements
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public int getSocialActivityAchievementsCount()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public int getSocialActivityAchievementsCount() {
 		return _socialActivityAchievementLocalService.getSocialActivityAchievementsCount();
 	}
 
@@ -262,12 +238,10 @@ public class SocialActivityAchievementLocalServiceWrapper
 	*
 	* @param socialActivityAchievement the social activity achievement
 	* @return the social activity achievement that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.social.model.SocialActivityAchievement updateSocialActivityAchievement(
-		com.liferay.portlet.social.model.SocialActivityAchievement socialActivityAchievement)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.social.model.SocialActivityAchievement socialActivityAchievement) {
 		return _socialActivityAchievementLocalService.updateSocialActivityAchievement(socialActivityAchievement);
 	}
 

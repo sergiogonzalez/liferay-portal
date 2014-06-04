@@ -84,12 +84,10 @@ public abstract class LayoutPrototypeLocalServiceBaseImpl
 	 *
 	 * @param layoutPrototype the layout prototype
 	 * @return the layout prototype that was added
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public LayoutPrototype addLayoutPrototype(LayoutPrototype layoutPrototype)
-		throws SystemException {
+	public LayoutPrototype addLayoutPrototype(LayoutPrototype layoutPrototype) {
 		layoutPrototype.setNew(true);
 
 		return layoutPrototypePersistence.update(layoutPrototype);
@@ -112,7 +110,7 @@ public abstract class LayoutPrototypeLocalServiceBaseImpl
 	 * @param layoutPrototypeId the primary key of the layout prototype
 	 * @return the layout prototype that was removed
 	 * @throws PortalException if a layout prototype with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
+	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
@@ -127,7 +125,7 @@ public abstract class LayoutPrototypeLocalServiceBaseImpl
 	 * @param layoutPrototype the layout prototype
 	 * @return the layout prototype that was removed
 	 * @throws PortalException
-	 * @throws SystemException if a system exception occurred
+	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
@@ -150,12 +148,10 @@ public abstract class LayoutPrototypeLocalServiceBaseImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery) {
 		return layoutPrototypePersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -170,12 +166,10 @@ public abstract class LayoutPrototypeLocalServiceBaseImpl
 	 * @param start the lower bound of the range of model instances
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
 		return layoutPrototypePersistence.findWithDynamicQuery(dynamicQuery,
 			start, end);
 	}
@@ -192,12 +186,11 @@ public abstract class LayoutPrototypeLocalServiceBaseImpl
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
 	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		return layoutPrototypePersistence.findWithDynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
 	}
@@ -207,11 +200,9 @@ public abstract class LayoutPrototypeLocalServiceBaseImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public long dynamicQueryCount(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return layoutPrototypePersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
@@ -221,18 +212,16 @@ public abstract class LayoutPrototypeLocalServiceBaseImpl
 	 * @param dynamicQuery the dynamic query
 	 * @param projection the projection to apply to the query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection) throws SystemException {
+		Projection projection) {
 		return layoutPrototypePersistence.countWithDynamicQuery(dynamicQuery,
 			projection);
 	}
 
 	@Override
-	public LayoutPrototype fetchLayoutPrototype(long layoutPrototypeId)
-		throws SystemException {
+	public LayoutPrototype fetchLayoutPrototype(long layoutPrototypeId) {
 		return layoutPrototypePersistence.fetchByPrimaryKey(layoutPrototypeId);
 	}
 
@@ -242,11 +231,10 @@ public abstract class LayoutPrototypeLocalServiceBaseImpl
 	 * @param uuid the layout prototype's UUID
 	 * @param  companyId the primary key of the company
 	 * @return the matching layout prototype, or <code>null</code> if a matching layout prototype could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public LayoutPrototype fetchLayoutPrototypeByUuidAndCompanyId(String uuid,
-		long companyId) throws SystemException {
+		long companyId) {
 		return layoutPrototypePersistence.fetchByUuid_C_First(uuid, companyId,
 			null);
 	}
@@ -257,17 +245,15 @@ public abstract class LayoutPrototypeLocalServiceBaseImpl
 	 * @param layoutPrototypeId the primary key of the layout prototype
 	 * @return the layout prototype
 	 * @throws PortalException if a layout prototype with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public LayoutPrototype getLayoutPrototype(long layoutPrototypeId)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return layoutPrototypePersistence.findByPrimaryKey(layoutPrototypeId);
 	}
 
 	@Override
-	public ActionableDynamicQuery getActionableDynamicQuery()
-		throws SystemException {
+	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.LayoutPrototypeLocalServiceUtil.getService());
@@ -280,8 +266,7 @@ public abstract class LayoutPrototypeLocalServiceBaseImpl
 	}
 
 	protected void initActionableDynamicQuery(
-		ActionableDynamicQuery actionableDynamicQuery)
-		throws SystemException {
+		ActionableDynamicQuery actionableDynamicQuery) {
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.LayoutPrototypeLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(LayoutPrototype.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
@@ -291,11 +276,10 @@ public abstract class LayoutPrototypeLocalServiceBaseImpl
 
 	@Override
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		final PortletDataContext portletDataContext) throws SystemException {
+		final PortletDataContext portletDataContext) {
 		final ExportActionableDynamicQuery exportActionableDynamicQuery = new ExportActionableDynamicQuery() {
 				@Override
-				public long performCount()
-					throws PortalException, SystemException {
+				public long performCount() throws PortalException {
 					ManifestSummary manifestSummary = portletDataContext.getManifestSummary();
 
 					StagedModelType stagedModelType = getStagedModelType();
@@ -329,9 +313,8 @@ public abstract class LayoutPrototypeLocalServiceBaseImpl
 
 		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
 				@Override
-				@SuppressWarnings("unused")
 				public void performAction(Object object)
-					throws PortalException, SystemException {
+					throws PortalException {
 					LayoutPrototype stagedModel = (LayoutPrototype)object;
 
 					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
@@ -346,7 +329,7 @@ public abstract class LayoutPrototypeLocalServiceBaseImpl
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return layoutPrototypePersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -357,11 +340,10 @@ public abstract class LayoutPrototypeLocalServiceBaseImpl
 	 * @param  companyId the primary key of the company
 	 * @return the matching layout prototype
 	 * @throws PortalException if a matching layout prototype could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public LayoutPrototype getLayoutPrototypeByUuidAndCompanyId(String uuid,
-		long companyId) throws PortalException, SystemException {
+		long companyId) throws PortalException {
 		return layoutPrototypePersistence.findByUuid_C_First(uuid, companyId,
 			null);
 	}
@@ -376,11 +358,9 @@ public abstract class LayoutPrototypeLocalServiceBaseImpl
 	 * @param start the lower bound of the range of layout prototypes
 	 * @param end the upper bound of the range of layout prototypes (not inclusive)
 	 * @return the range of layout prototypes
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<LayoutPrototype> getLayoutPrototypes(int start, int end)
-		throws SystemException {
+	public List<LayoutPrototype> getLayoutPrototypes(int start, int end) {
 		return layoutPrototypePersistence.findAll(start, end);
 	}
 
@@ -388,10 +368,9 @@ public abstract class LayoutPrototypeLocalServiceBaseImpl
 	 * Returns the number of layout prototypes.
 	 *
 	 * @return the number of layout prototypes
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int getLayoutPrototypesCount() throws SystemException {
+	public int getLayoutPrototypesCount() {
 		return layoutPrototypePersistence.countAll();
 	}
 
@@ -400,12 +379,11 @@ public abstract class LayoutPrototypeLocalServiceBaseImpl
 	 *
 	 * @param layoutPrototype the layout prototype
 	 * @return the layout prototype that was updated
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public LayoutPrototype updateLayoutPrototype(
-		LayoutPrototype layoutPrototype) throws SystemException {
+		LayoutPrototype layoutPrototype) {
 		return layoutPrototypePersistence.update(layoutPrototype);
 	}
 
@@ -845,7 +823,7 @@ public abstract class LayoutPrototypeLocalServiceBaseImpl
 	 *
 	 * @param sql the sql query
 	 */
-	protected void runSQL(String sql) throws SystemException {
+	protected void runSQL(String sql) {
 		try {
 			DataSource dataSource = layoutPrototypePersistence.getDataSource();
 

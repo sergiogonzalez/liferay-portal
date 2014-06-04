@@ -70,12 +70,11 @@ public abstract class ServiceComponentLocalServiceBaseImpl
 	 *
 	 * @param serviceComponent the service component
 	 * @return the service component that was added
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ServiceComponent addServiceComponent(
-		ServiceComponent serviceComponent) throws SystemException {
+		ServiceComponent serviceComponent) {
 		serviceComponent.setNew(true);
 
 		return serviceComponentPersistence.update(serviceComponent);
@@ -98,12 +97,11 @@ public abstract class ServiceComponentLocalServiceBaseImpl
 	 * @param serviceComponentId the primary key of the service component
 	 * @return the service component that was removed
 	 * @throws PortalException if a service component with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public ServiceComponent deleteServiceComponent(long serviceComponentId)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return serviceComponentPersistence.remove(serviceComponentId);
 	}
 
@@ -112,12 +110,11 @@ public abstract class ServiceComponentLocalServiceBaseImpl
 	 *
 	 * @param serviceComponent the service component
 	 * @return the service component that was removed
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public ServiceComponent deleteServiceComponent(
-		ServiceComponent serviceComponent) throws SystemException {
+		ServiceComponent serviceComponent) {
 		return serviceComponentPersistence.remove(serviceComponent);
 	}
 
@@ -134,12 +131,10 @@ public abstract class ServiceComponentLocalServiceBaseImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery) {
 		return serviceComponentPersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -154,12 +149,10 @@ public abstract class ServiceComponentLocalServiceBaseImpl
 	 * @param start the lower bound of the range of model instances
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
 		return serviceComponentPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end);
 	}
@@ -176,12 +169,11 @@ public abstract class ServiceComponentLocalServiceBaseImpl
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
 	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		return serviceComponentPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
 	}
@@ -191,11 +183,9 @@ public abstract class ServiceComponentLocalServiceBaseImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public long dynamicQueryCount(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return serviceComponentPersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
@@ -205,18 +195,16 @@ public abstract class ServiceComponentLocalServiceBaseImpl
 	 * @param dynamicQuery the dynamic query
 	 * @param projection the projection to apply to the query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection) throws SystemException {
+		Projection projection) {
 		return serviceComponentPersistence.countWithDynamicQuery(dynamicQuery,
 			projection);
 	}
 
 	@Override
-	public ServiceComponent fetchServiceComponent(long serviceComponentId)
-		throws SystemException {
+	public ServiceComponent fetchServiceComponent(long serviceComponentId) {
 		return serviceComponentPersistence.fetchByPrimaryKey(serviceComponentId);
 	}
 
@@ -226,17 +214,15 @@ public abstract class ServiceComponentLocalServiceBaseImpl
 	 * @param serviceComponentId the primary key of the service component
 	 * @return the service component
 	 * @throws PortalException if a service component with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ServiceComponent getServiceComponent(long serviceComponentId)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return serviceComponentPersistence.findByPrimaryKey(serviceComponentId);
 	}
 
 	@Override
-	public ActionableDynamicQuery getActionableDynamicQuery()
-		throws SystemException {
+	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.ServiceComponentLocalServiceUtil.getService());
@@ -249,8 +235,7 @@ public abstract class ServiceComponentLocalServiceBaseImpl
 	}
 
 	protected void initActionableDynamicQuery(
-		ActionableDynamicQuery actionableDynamicQuery)
-		throws SystemException {
+		ActionableDynamicQuery actionableDynamicQuery) {
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.ServiceComponentLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(ServiceComponent.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
@@ -260,7 +245,7 @@ public abstract class ServiceComponentLocalServiceBaseImpl
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return serviceComponentPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -274,11 +259,9 @@ public abstract class ServiceComponentLocalServiceBaseImpl
 	 * @param start the lower bound of the range of service components
 	 * @param end the upper bound of the range of service components (not inclusive)
 	 * @return the range of service components
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<ServiceComponent> getServiceComponents(int start, int end)
-		throws SystemException {
+	public List<ServiceComponent> getServiceComponents(int start, int end) {
 		return serviceComponentPersistence.findAll(start, end);
 	}
 
@@ -286,10 +269,9 @@ public abstract class ServiceComponentLocalServiceBaseImpl
 	 * Returns the number of service components.
 	 *
 	 * @return the number of service components
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int getServiceComponentsCount() throws SystemException {
+	public int getServiceComponentsCount() {
 		return serviceComponentPersistence.countAll();
 	}
 
@@ -298,12 +280,11 @@ public abstract class ServiceComponentLocalServiceBaseImpl
 	 *
 	 * @param serviceComponent the service component
 	 * @return the service component that was updated
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ServiceComponent updateServiceComponent(
-		ServiceComponent serviceComponent) throws SystemException {
+		ServiceComponent serviceComponent) {
 		return serviceComponentPersistence.update(serviceComponent);
 	}
 
@@ -407,7 +388,7 @@ public abstract class ServiceComponentLocalServiceBaseImpl
 	 *
 	 * @param sql the sql query
 	 */
-	protected void runSQL(String sql) throws SystemException {
+	protected void runSQL(String sql) {
 		try {
 			DataSource dataSource = serviceComponentPersistence.getDataSource();
 

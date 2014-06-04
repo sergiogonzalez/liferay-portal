@@ -43,11 +43,9 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	*
 	* @param uuid the uuid
 	* @return the matching layout prototypes
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portal.model.LayoutPrototype> findByUuid(
-		java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String uuid);
 
 	/**
 	* Returns a range of all the layout prototypes where uuid = &#63;.
@@ -60,11 +58,9 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param start the lower bound of the range of layout prototypes
 	* @param end the upper bound of the range of layout prototypes (not inclusive)
 	* @return the range of matching layout prototypes
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portal.model.LayoutPrototype> findByUuid(
-		java.lang.String uuid, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String uuid, int start, int end);
 
 	/**
 	* Returns an ordered range of all the layout prototypes where uuid = &#63;.
@@ -78,12 +74,10 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param end the upper bound of the range of layout prototypes (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching layout prototypes
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portal.model.LayoutPrototype> findByUuid(
 		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first layout prototype in the ordered set where uuid = &#63;.
@@ -92,13 +86,11 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching layout prototype
 	* @throws com.liferay.portal.NoSuchLayoutPrototypeException if a matching layout prototype could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.LayoutPrototype findByUuid_First(
 		java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchLayoutPrototypeException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.NoSuchLayoutPrototypeException;
 
 	/**
 	* Returns the first layout prototype in the ordered set where uuid = &#63;.
@@ -106,12 +98,10 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching layout prototype, or <code>null</code> if a matching layout prototype could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.LayoutPrototype fetchByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last layout prototype in the ordered set where uuid = &#63;.
@@ -120,13 +110,11 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching layout prototype
 	* @throws com.liferay.portal.NoSuchLayoutPrototypeException if a matching layout prototype could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.LayoutPrototype findByUuid_Last(
 		java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchLayoutPrototypeException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.NoSuchLayoutPrototypeException;
 
 	/**
 	* Returns the last layout prototype in the ordered set where uuid = &#63;.
@@ -134,12 +122,10 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching layout prototype, or <code>null</code> if a matching layout prototype could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.LayoutPrototype fetchByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the layout prototypes before and after the current layout prototype in the ordered set where uuid = &#63;.
@@ -149,24 +135,20 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next layout prototype
 	* @throws com.liferay.portal.NoSuchLayoutPrototypeException if a layout prototype with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.LayoutPrototype[] findByUuid_PrevAndNext(
 		long layoutPrototypeId, java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchLayoutPrototypeException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.NoSuchLayoutPrototypeException;
 
 	/**
 	* Returns all the layout prototypes that the user has permission to view where uuid = &#63;.
 	*
 	* @param uuid the uuid
 	* @return the matching layout prototypes that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portal.model.LayoutPrototype> filterFindByUuid(
-		java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String uuid);
 
 	/**
 	* Returns a range of all the layout prototypes that the user has permission to view where uuid = &#63;.
@@ -179,11 +161,9 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param start the lower bound of the range of layout prototypes
 	* @param end the upper bound of the range of layout prototypes (not inclusive)
 	* @return the range of matching layout prototypes that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portal.model.LayoutPrototype> filterFindByUuid(
-		java.lang.String uuid, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String uuid, int start, int end);
 
 	/**
 	* Returns an ordered range of all the layout prototypes that the user has permissions to view where uuid = &#63;.
@@ -197,12 +177,10 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param end the upper bound of the range of layout prototypes (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching layout prototypes that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portal.model.LayoutPrototype> filterFindByUuid(
 		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the layout prototypes before and after the current layout prototype in the ordered set of layout prototypes that the user has permission to view where uuid = &#63;.
@@ -212,42 +190,34 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next layout prototype
 	* @throws com.liferay.portal.NoSuchLayoutPrototypeException if a layout prototype with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.LayoutPrototype[] filterFindByUuid_PrevAndNext(
 		long layoutPrototypeId, java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchLayoutPrototypeException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.NoSuchLayoutPrototypeException;
 
 	/**
 	* Removes all the layout prototypes where uuid = &#63; from the database.
 	*
 	* @param uuid the uuid
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByUuid(java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeByUuid(java.lang.String uuid);
 
 	/**
 	* Returns the number of layout prototypes where uuid = &#63;.
 	*
 	* @param uuid the uuid
 	* @return the number of matching layout prototypes
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countByUuid(java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByUuid(java.lang.String uuid);
 
 	/**
 	* Returns the number of layout prototypes that the user has permission to view where uuid = &#63;.
 	*
 	* @param uuid the uuid
 	* @return the number of matching layout prototypes that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
-	public int filterCountByUuid(java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int filterCountByUuid(java.lang.String uuid);
 
 	/**
 	* Returns all the layout prototypes where uuid = &#63; and companyId = &#63;.
@@ -255,11 +225,9 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param uuid the uuid
 	* @param companyId the company ID
 	* @return the matching layout prototypes
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portal.model.LayoutPrototype> findByUuid_C(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String uuid, long companyId);
 
 	/**
 	* Returns a range of all the layout prototypes where uuid = &#63; and companyId = &#63;.
@@ -273,11 +241,9 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param start the lower bound of the range of layout prototypes
 	* @param end the upper bound of the range of layout prototypes (not inclusive)
 	* @return the range of matching layout prototypes
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portal.model.LayoutPrototype> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String uuid, long companyId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the layout prototypes where uuid = &#63; and companyId = &#63;.
@@ -292,12 +258,10 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param end the upper bound of the range of layout prototypes (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching layout prototypes
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portal.model.LayoutPrototype> findByUuid_C(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first layout prototype in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -307,13 +271,11 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching layout prototype
 	* @throws com.liferay.portal.NoSuchLayoutPrototypeException if a matching layout prototype could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.LayoutPrototype findByUuid_C_First(
 		java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchLayoutPrototypeException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.NoSuchLayoutPrototypeException;
 
 	/**
 	* Returns the first layout prototype in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -322,12 +284,10 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching layout prototype, or <code>null</code> if a matching layout prototype could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.LayoutPrototype fetchByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last layout prototype in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -337,13 +297,11 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching layout prototype
 	* @throws com.liferay.portal.NoSuchLayoutPrototypeException if a matching layout prototype could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.LayoutPrototype findByUuid_C_Last(
 		java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchLayoutPrototypeException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.NoSuchLayoutPrototypeException;
 
 	/**
 	* Returns the last layout prototype in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -352,12 +310,10 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching layout prototype, or <code>null</code> if a matching layout prototype could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.LayoutPrototype fetchByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the layout prototypes before and after the current layout prototype in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -368,13 +324,11 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next layout prototype
 	* @throws com.liferay.portal.NoSuchLayoutPrototypeException if a layout prototype with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.LayoutPrototype[] findByUuid_C_PrevAndNext(
 		long layoutPrototypeId, java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchLayoutPrototypeException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.NoSuchLayoutPrototypeException;
 
 	/**
 	* Returns all the layout prototypes that the user has permission to view where uuid = &#63; and companyId = &#63;.
@@ -382,11 +336,9 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param uuid the uuid
 	* @param companyId the company ID
 	* @return the matching layout prototypes that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portal.model.LayoutPrototype> filterFindByUuid_C(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String uuid, long companyId);
 
 	/**
 	* Returns a range of all the layout prototypes that the user has permission to view where uuid = &#63; and companyId = &#63;.
@@ -400,11 +352,9 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param start the lower bound of the range of layout prototypes
 	* @param end the upper bound of the range of layout prototypes (not inclusive)
 	* @return the range of matching layout prototypes that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portal.model.LayoutPrototype> filterFindByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String uuid, long companyId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the layout prototypes that the user has permissions to view where uuid = &#63; and companyId = &#63;.
@@ -419,12 +369,10 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param end the upper bound of the range of layout prototypes (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching layout prototypes that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portal.model.LayoutPrototype> filterFindByUuid_C(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the layout prototypes before and after the current layout prototype in the ordered set of layout prototypes that the user has permission to view where uuid = &#63; and companyId = &#63;.
@@ -435,23 +383,19 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next layout prototype
 	* @throws com.liferay.portal.NoSuchLayoutPrototypeException if a layout prototype with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.LayoutPrototype[] filterFindByUuid_C_PrevAndNext(
 		long layoutPrototypeId, java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchLayoutPrototypeException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.NoSuchLayoutPrototypeException;
 
 	/**
 	* Removes all the layout prototypes where uuid = &#63; and companyId = &#63; from the database.
 	*
 	* @param uuid the uuid
 	* @param companyId the company ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByUuid_C(java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeByUuid_C(java.lang.String uuid, long companyId);
 
 	/**
 	* Returns the number of layout prototypes where uuid = &#63; and companyId = &#63;.
@@ -459,10 +403,8 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param uuid the uuid
 	* @param companyId the company ID
 	* @return the number of matching layout prototypes
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countByUuid_C(java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByUuid_C(java.lang.String uuid, long companyId);
 
 	/**
 	* Returns the number of layout prototypes that the user has permission to view where uuid = &#63; and companyId = &#63;.
@@ -470,21 +412,17 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param uuid the uuid
 	* @param companyId the company ID
 	* @return the number of matching layout prototypes that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
-	public int filterCountByUuid_C(java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int filterCountByUuid_C(java.lang.String uuid, long companyId);
 
 	/**
 	* Returns all the layout prototypes where companyId = &#63;.
 	*
 	* @param companyId the company ID
 	* @return the matching layout prototypes
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portal.model.LayoutPrototype> findByCompanyId(
-		long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long companyId);
 
 	/**
 	* Returns a range of all the layout prototypes where companyId = &#63;.
@@ -497,11 +435,9 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param start the lower bound of the range of layout prototypes
 	* @param end the upper bound of the range of layout prototypes (not inclusive)
 	* @return the range of matching layout prototypes
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portal.model.LayoutPrototype> findByCompanyId(
-		long companyId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long companyId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the layout prototypes where companyId = &#63;.
@@ -515,12 +451,10 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param end the upper bound of the range of layout prototypes (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching layout prototypes
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portal.model.LayoutPrototype> findByCompanyId(
 		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first layout prototype in the ordered set where companyId = &#63;.
@@ -529,13 +463,11 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching layout prototype
 	* @throws com.liferay.portal.NoSuchLayoutPrototypeException if a matching layout prototype could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.LayoutPrototype findByCompanyId_First(
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchLayoutPrototypeException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.NoSuchLayoutPrototypeException;
 
 	/**
 	* Returns the first layout prototype in the ordered set where companyId = &#63;.
@@ -543,12 +475,10 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching layout prototype, or <code>null</code> if a matching layout prototype could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.LayoutPrototype fetchByCompanyId_First(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last layout prototype in the ordered set where companyId = &#63;.
@@ -557,13 +487,11 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching layout prototype
 	* @throws com.liferay.portal.NoSuchLayoutPrototypeException if a matching layout prototype could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.LayoutPrototype findByCompanyId_Last(
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchLayoutPrototypeException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.NoSuchLayoutPrototypeException;
 
 	/**
 	* Returns the last layout prototype in the ordered set where companyId = &#63;.
@@ -571,12 +499,10 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching layout prototype, or <code>null</code> if a matching layout prototype could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.LayoutPrototype fetchByCompanyId_Last(
 		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the layout prototypes before and after the current layout prototype in the ordered set where companyId = &#63;.
@@ -586,24 +512,20 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next layout prototype
 	* @throws com.liferay.portal.NoSuchLayoutPrototypeException if a layout prototype with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.LayoutPrototype[] findByCompanyId_PrevAndNext(
 		long layoutPrototypeId, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchLayoutPrototypeException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.NoSuchLayoutPrototypeException;
 
 	/**
 	* Returns all the layout prototypes that the user has permission to view where companyId = &#63;.
 	*
 	* @param companyId the company ID
 	* @return the matching layout prototypes that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portal.model.LayoutPrototype> filterFindByCompanyId(
-		long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long companyId);
 
 	/**
 	* Returns a range of all the layout prototypes that the user has permission to view where companyId = &#63;.
@@ -616,11 +538,9 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param start the lower bound of the range of layout prototypes
 	* @param end the upper bound of the range of layout prototypes (not inclusive)
 	* @return the range of matching layout prototypes that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portal.model.LayoutPrototype> filterFindByCompanyId(
-		long companyId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long companyId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the layout prototypes that the user has permissions to view where companyId = &#63;.
@@ -634,12 +554,10 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param end the upper bound of the range of layout prototypes (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching layout prototypes that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portal.model.LayoutPrototype> filterFindByCompanyId(
 		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the layout prototypes before and after the current layout prototype in the ordered set of layout prototypes that the user has permission to view where companyId = &#63;.
@@ -649,42 +567,34 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next layout prototype
 	* @throws com.liferay.portal.NoSuchLayoutPrototypeException if a layout prototype with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.LayoutPrototype[] filterFindByCompanyId_PrevAndNext(
 		long layoutPrototypeId, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchLayoutPrototypeException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.NoSuchLayoutPrototypeException;
 
 	/**
 	* Removes all the layout prototypes where companyId = &#63; from the database.
 	*
 	* @param companyId the company ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByCompanyId(long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeByCompanyId(long companyId);
 
 	/**
 	* Returns the number of layout prototypes where companyId = &#63;.
 	*
 	* @param companyId the company ID
 	* @return the number of matching layout prototypes
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countByCompanyId(long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByCompanyId(long companyId);
 
 	/**
 	* Returns the number of layout prototypes that the user has permission to view where companyId = &#63;.
 	*
 	* @param companyId the company ID
 	* @return the number of matching layout prototypes that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
-	public int filterCountByCompanyId(long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int filterCountByCompanyId(long companyId);
 
 	/**
 	* Returns all the layout prototypes where companyId = &#63; and active = &#63;.
@@ -692,11 +602,9 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param companyId the company ID
 	* @param active the active
 	* @return the matching layout prototypes
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portal.model.LayoutPrototype> findByC_A(
-		long companyId, boolean active)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long companyId, boolean active);
 
 	/**
 	* Returns a range of all the layout prototypes where companyId = &#63; and active = &#63;.
@@ -710,11 +618,9 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param start the lower bound of the range of layout prototypes
 	* @param end the upper bound of the range of layout prototypes (not inclusive)
 	* @return the range of matching layout prototypes
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portal.model.LayoutPrototype> findByC_A(
-		long companyId, boolean active, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long companyId, boolean active, int start, int end);
 
 	/**
 	* Returns an ordered range of all the layout prototypes where companyId = &#63; and active = &#63;.
@@ -729,12 +635,10 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param end the upper bound of the range of layout prototypes (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching layout prototypes
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portal.model.LayoutPrototype> findByC_A(
 		long companyId, boolean active, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first layout prototype in the ordered set where companyId = &#63; and active = &#63;.
@@ -744,13 +648,11 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching layout prototype
 	* @throws com.liferay.portal.NoSuchLayoutPrototypeException if a matching layout prototype could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.LayoutPrototype findByC_A_First(
 		long companyId, boolean active,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchLayoutPrototypeException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.NoSuchLayoutPrototypeException;
 
 	/**
 	* Returns the first layout prototype in the ordered set where companyId = &#63; and active = &#63;.
@@ -759,12 +661,10 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param active the active
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching layout prototype, or <code>null</code> if a matching layout prototype could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.LayoutPrototype fetchByC_A_First(
 		long companyId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last layout prototype in the ordered set where companyId = &#63; and active = &#63;.
@@ -774,13 +674,11 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching layout prototype
 	* @throws com.liferay.portal.NoSuchLayoutPrototypeException if a matching layout prototype could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.LayoutPrototype findByC_A_Last(
 		long companyId, boolean active,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchLayoutPrototypeException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.NoSuchLayoutPrototypeException;
 
 	/**
 	* Returns the last layout prototype in the ordered set where companyId = &#63; and active = &#63;.
@@ -789,12 +687,10 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param active the active
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching layout prototype, or <code>null</code> if a matching layout prototype could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.LayoutPrototype fetchByC_A_Last(
 		long companyId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the layout prototypes before and after the current layout prototype in the ordered set where companyId = &#63; and active = &#63;.
@@ -805,13 +701,11 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next layout prototype
 	* @throws com.liferay.portal.NoSuchLayoutPrototypeException if a layout prototype with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.LayoutPrototype[] findByC_A_PrevAndNext(
 		long layoutPrototypeId, long companyId, boolean active,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchLayoutPrototypeException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.NoSuchLayoutPrototypeException;
 
 	/**
 	* Returns all the layout prototypes that the user has permission to view where companyId = &#63; and active = &#63;.
@@ -819,11 +713,9 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param companyId the company ID
 	* @param active the active
 	* @return the matching layout prototypes that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portal.model.LayoutPrototype> filterFindByC_A(
-		long companyId, boolean active)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long companyId, boolean active);
 
 	/**
 	* Returns a range of all the layout prototypes that the user has permission to view where companyId = &#63; and active = &#63;.
@@ -837,11 +729,9 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param start the lower bound of the range of layout prototypes
 	* @param end the upper bound of the range of layout prototypes (not inclusive)
 	* @return the range of matching layout prototypes that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portal.model.LayoutPrototype> filterFindByC_A(
-		long companyId, boolean active, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long companyId, boolean active, int start, int end);
 
 	/**
 	* Returns an ordered range of all the layout prototypes that the user has permissions to view where companyId = &#63; and active = &#63;.
@@ -856,12 +746,10 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param end the upper bound of the range of layout prototypes (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching layout prototypes that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portal.model.LayoutPrototype> filterFindByC_A(
 		long companyId, boolean active, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the layout prototypes before and after the current layout prototype in the ordered set of layout prototypes that the user has permission to view where companyId = &#63; and active = &#63;.
@@ -872,23 +760,19 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next layout prototype
 	* @throws com.liferay.portal.NoSuchLayoutPrototypeException if a layout prototype with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.LayoutPrototype[] filterFindByC_A_PrevAndNext(
 		long layoutPrototypeId, long companyId, boolean active,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchLayoutPrototypeException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.NoSuchLayoutPrototypeException;
 
 	/**
 	* Removes all the layout prototypes where companyId = &#63; and active = &#63; from the database.
 	*
 	* @param companyId the company ID
 	* @param active the active
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByC_A(long companyId, boolean active)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeByC_A(long companyId, boolean active);
 
 	/**
 	* Returns the number of layout prototypes where companyId = &#63; and active = &#63;.
@@ -896,10 +780,8 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param companyId the company ID
 	* @param active the active
 	* @return the number of matching layout prototypes
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countByC_A(long companyId, boolean active)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByC_A(long companyId, boolean active);
 
 	/**
 	* Returns the number of layout prototypes that the user has permission to view where companyId = &#63; and active = &#63;.
@@ -907,10 +789,8 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param companyId the company ID
 	* @param active the active
 	* @return the number of matching layout prototypes that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
-	public int filterCountByC_A(long companyId, boolean active)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int filterCountByC_A(long companyId, boolean active);
 
 	/**
 	* Caches the layout prototype in the entity cache if it is enabled.
@@ -943,16 +823,13 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param layoutPrototypeId the primary key of the layout prototype
 	* @return the layout prototype that was removed
 	* @throws com.liferay.portal.NoSuchLayoutPrototypeException if a layout prototype with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.LayoutPrototype remove(
 		long layoutPrototypeId)
-		throws com.liferay.portal.NoSuchLayoutPrototypeException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.NoSuchLayoutPrototypeException;
 
 	public com.liferay.portal.model.LayoutPrototype updateImpl(
-		com.liferay.portal.model.LayoutPrototype layoutPrototype)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.model.LayoutPrototype layoutPrototype);
 
 	/**
 	* Returns the layout prototype with the primary key or throws a {@link com.liferay.portal.NoSuchLayoutPrototypeException} if it could not be found.
@@ -960,32 +837,26 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param layoutPrototypeId the primary key of the layout prototype
 	* @return the layout prototype
 	* @throws com.liferay.portal.NoSuchLayoutPrototypeException if a layout prototype with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.LayoutPrototype findByPrimaryKey(
 		long layoutPrototypeId)
-		throws com.liferay.portal.NoSuchLayoutPrototypeException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.NoSuchLayoutPrototypeException;
 
 	/**
 	* Returns the layout prototype with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param layoutPrototypeId the primary key of the layout prototype
 	* @return the layout prototype, or <code>null</code> if a layout prototype with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.LayoutPrototype fetchByPrimaryKey(
-		long layoutPrototypeId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long layoutPrototypeId);
 
 	/**
 	* Returns all the layout prototypes.
 	*
 	* @return the layout prototypes
-	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portal.model.LayoutPrototype> findAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public java.util.List<com.liferay.portal.model.LayoutPrototype> findAll();
 
 	/**
 	* Returns a range of all the layout prototypes.
@@ -997,11 +868,9 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param start the lower bound of the range of layout prototypes
 	* @param end the upper bound of the range of layout prototypes (not inclusive)
 	* @return the range of layout prototypes
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portal.model.LayoutPrototype> findAll(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the layout prototypes.
@@ -1014,27 +883,20 @@ public interface LayoutPrototypePersistence extends BasePersistence<LayoutProtot
 	* @param end the upper bound of the range of layout prototypes (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of layout prototypes
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portal.model.LayoutPrototype> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Removes all the layout prototypes from the database.
-	*
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeAll();
 
 	/**
 	* Returns the number of layout prototypes.
 	*
 	* @return the number of layout prototypes
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countAll();
 }

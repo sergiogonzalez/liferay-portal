@@ -46,11 +46,9 @@ public class AccountLocalServiceUtil {
 	*
 	* @param account the account
 	* @return the account that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Account addAccount(
-		com.liferay.portal.model.Account account)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.Account account) {
 		return getService().addAccount(account);
 	}
 
@@ -70,11 +68,9 @@ public class AccountLocalServiceUtil {
 	* @param accountId the primary key of the account
 	* @return the account that was removed
 	* @throws PortalException if a account with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Account deleteAccount(long accountId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteAccount(accountId);
 	}
 
@@ -83,11 +79,9 @@ public class AccountLocalServiceUtil {
 	*
 	* @param account the account
 	* @return the account that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Account deleteAccount(
-		com.liferay.portal.model.Account account)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.Account account) {
 		return getService().deleteAccount(account);
 	}
 
@@ -100,12 +94,10 @@ public class AccountLocalServiceUtil {
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -120,12 +112,11 @@ public class AccountLocalServiceUtil {
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -141,14 +132,12 @@ public class AccountLocalServiceUtil {
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getService()
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
@@ -158,11 +147,9 @@ public class AccountLocalServiceUtil {
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -172,17 +159,14 @@ public class AccountLocalServiceUtil {
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public static long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.portal.model.Account fetchAccount(long accountId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static com.liferay.portal.model.Account fetchAccount(long accountId) {
 		return getService().fetchAccount(accountId);
 	}
 
@@ -192,23 +176,19 @@ public class AccountLocalServiceUtil {
 	* @param accountId the primary key of the account
 	* @return the account
 	* @throws PortalException if a account with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Account getAccount(long accountId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getAccount(accountId);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}
 
 	public static com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
@@ -222,11 +202,9 @@ public class AccountLocalServiceUtil {
 	* @param start the lower bound of the range of accounts
 	* @param end the upper bound of the range of accounts (not inclusive)
 	* @return the range of accounts
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portal.model.Account> getAccounts(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return getService().getAccounts(start, end);
 	}
 
@@ -234,10 +212,8 @@ public class AccountLocalServiceUtil {
 	* Returns the number of accounts.
 	*
 	* @return the number of accounts
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int getAccountsCount()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int getAccountsCount() {
 		return getService().getAccountsCount();
 	}
 
@@ -246,11 +222,9 @@ public class AccountLocalServiceUtil {
 	*
 	* @param account the account
 	* @return the account that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Account updateAccount(
-		com.liferay.portal.model.Account account)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.Account account) {
 		return getService().updateAccount(account);
 	}
 

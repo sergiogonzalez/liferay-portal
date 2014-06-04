@@ -304,11 +304,9 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	* Returns the user uuid of this bookmarks folder.
 	*
 	* @return the user uuid of this bookmarks folder
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public java.lang.String getUserUuid()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public java.lang.String getUserUuid() {
 		return _bookmarksFolder.getUserUuid();
 	}
 
@@ -526,11 +524,9 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	* Returns the status by user uuid of this bookmarks folder.
 	*
 	* @return the status by user uuid of this bookmarks folder
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public java.lang.String getStatusByUserUuid()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public java.lang.String getStatusByUserUuid() {
 		return _bookmarksFolder.getStatusByUserUuid();
 	}
 
@@ -588,12 +584,10 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	* Returns the trash entry created when this bookmarks folder was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this bookmarks folder.
 	*
 	* @return the trash entry created when this bookmarks folder was moved to the Recycle Bin
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.trash.model.TrashEntry getTrashEntry()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _bookmarksFolder.getTrashEntry();
 	}
 
@@ -631,7 +625,6 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	* Returns <code>true</code> if the parent of this bookmarks folder is in the Recycle Bin.
 	*
 	* @return <code>true</code> if the parent of this bookmarks folder is in the Recycle Bin; <code>false</code> otherwise
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public boolean isInTrashContainer() {
@@ -639,14 +632,12 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	}
 
 	@Override
-	public boolean isInTrashExplicitly()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public boolean isInTrashExplicitly() {
 		return _bookmarksFolder.isInTrashExplicitly();
 	}
 
 	@Override
-	public boolean isInTrashImplicitly()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public boolean isInTrashImplicitly() {
 		return _bookmarksFolder.isInTrashImplicitly();
 	}
 
@@ -889,21 +880,18 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void persist() {
 		_bookmarksFolder.persist();
 	}
 
 	@Override
 	public java.lang.String buildTreePath()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _bookmarksFolder.buildTreePath();
 	}
 
 	@Override
-	public void updateTreePath(java.lang.String treePath)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void updateTreePath(java.lang.String treePath) {
 		_bookmarksFolder.updateTreePath(treePath);
 	}
 

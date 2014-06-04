@@ -384,8 +384,7 @@ public class SocialActivitySettingWrapper implements SocialActivitySetting,
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void persist() {
 		_socialActivitySetting.persist();
 	}
 

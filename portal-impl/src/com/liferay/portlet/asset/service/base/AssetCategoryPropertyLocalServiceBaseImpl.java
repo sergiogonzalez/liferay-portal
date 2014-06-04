@@ -74,12 +74,11 @@ public abstract class AssetCategoryPropertyLocalServiceBaseImpl
 	 *
 	 * @param assetCategoryProperty the asset category property
 	 * @return the asset category property that was added
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public AssetCategoryProperty addAssetCategoryProperty(
-		AssetCategoryProperty assetCategoryProperty) throws SystemException {
+		AssetCategoryProperty assetCategoryProperty) {
 		assetCategoryProperty.setNew(true);
 
 		return assetCategoryPropertyPersistence.update(assetCategoryProperty);
@@ -103,12 +102,11 @@ public abstract class AssetCategoryPropertyLocalServiceBaseImpl
 	 * @param categoryPropertyId the primary key of the asset category property
 	 * @return the asset category property that was removed
 	 * @throws PortalException if a asset category property with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public AssetCategoryProperty deleteAssetCategoryProperty(
-		long categoryPropertyId) throws PortalException, SystemException {
+		long categoryPropertyId) throws PortalException {
 		return assetCategoryPropertyPersistence.remove(categoryPropertyId);
 	}
 
@@ -117,12 +115,11 @@ public abstract class AssetCategoryPropertyLocalServiceBaseImpl
 	 *
 	 * @param assetCategoryProperty the asset category property
 	 * @return the asset category property that was removed
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public AssetCategoryProperty deleteAssetCategoryProperty(
-		AssetCategoryProperty assetCategoryProperty) throws SystemException {
+		AssetCategoryProperty assetCategoryProperty) {
 		return assetCategoryPropertyPersistence.remove(assetCategoryProperty);
 	}
 
@@ -139,12 +136,10 @@ public abstract class AssetCategoryPropertyLocalServiceBaseImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery) {
 		return assetCategoryPropertyPersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -159,12 +154,10 @@ public abstract class AssetCategoryPropertyLocalServiceBaseImpl
 	 * @param start the lower bound of the range of model instances
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
 		return assetCategoryPropertyPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end);
 	}
@@ -181,12 +174,11 @@ public abstract class AssetCategoryPropertyLocalServiceBaseImpl
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
 	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		return assetCategoryPropertyPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
 	}
@@ -196,11 +188,9 @@ public abstract class AssetCategoryPropertyLocalServiceBaseImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public long dynamicQueryCount(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return assetCategoryPropertyPersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
@@ -210,18 +200,17 @@ public abstract class AssetCategoryPropertyLocalServiceBaseImpl
 	 * @param dynamicQuery the dynamic query
 	 * @param projection the projection to apply to the query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection) throws SystemException {
+		Projection projection) {
 		return assetCategoryPropertyPersistence.countWithDynamicQuery(dynamicQuery,
 			projection);
 	}
 
 	@Override
 	public AssetCategoryProperty fetchAssetCategoryProperty(
-		long categoryPropertyId) throws SystemException {
+		long categoryPropertyId) {
 		return assetCategoryPropertyPersistence.fetchByPrimaryKey(categoryPropertyId);
 	}
 
@@ -231,17 +220,15 @@ public abstract class AssetCategoryPropertyLocalServiceBaseImpl
 	 * @param categoryPropertyId the primary key of the asset category property
 	 * @return the asset category property
 	 * @throws PortalException if a asset category property with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AssetCategoryProperty getAssetCategoryProperty(
-		long categoryPropertyId) throws PortalException, SystemException {
+		long categoryPropertyId) throws PortalException {
 		return assetCategoryPropertyPersistence.findByPrimaryKey(categoryPropertyId);
 	}
 
 	@Override
-	public ActionableDynamicQuery getActionableDynamicQuery()
-		throws SystemException {
+	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.asset.service.AssetCategoryPropertyLocalServiceUtil.getService());
@@ -254,8 +241,7 @@ public abstract class AssetCategoryPropertyLocalServiceBaseImpl
 	}
 
 	protected void initActionableDynamicQuery(
-		ActionableDynamicQuery actionableDynamicQuery)
-		throws SystemException {
+		ActionableDynamicQuery actionableDynamicQuery) {
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.asset.service.AssetCategoryPropertyLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(AssetCategoryProperty.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
@@ -265,7 +251,7 @@ public abstract class AssetCategoryPropertyLocalServiceBaseImpl
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return assetCategoryPropertyPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -279,11 +265,10 @@ public abstract class AssetCategoryPropertyLocalServiceBaseImpl
 	 * @param start the lower bound of the range of asset category properties
 	 * @param end the upper bound of the range of asset category properties (not inclusive)
 	 * @return the range of asset category properties
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<AssetCategoryProperty> getAssetCategoryProperties(int start,
-		int end) throws SystemException {
+		int end) {
 		return assetCategoryPropertyPersistence.findAll(start, end);
 	}
 
@@ -291,10 +276,9 @@ public abstract class AssetCategoryPropertyLocalServiceBaseImpl
 	 * Returns the number of asset category properties.
 	 *
 	 * @return the number of asset category properties
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int getAssetCategoryPropertiesCount() throws SystemException {
+	public int getAssetCategoryPropertiesCount() {
 		return assetCategoryPropertyPersistence.countAll();
 	}
 
@@ -303,12 +287,11 @@ public abstract class AssetCategoryPropertyLocalServiceBaseImpl
 	 *
 	 * @param assetCategoryProperty the asset category property
 	 * @return the asset category property that was updated
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public AssetCategoryProperty updateAssetCategoryProperty(
-		AssetCategoryProperty assetCategoryProperty) throws SystemException {
+		AssetCategoryProperty assetCategoryProperty) {
 		return assetCategoryPropertyPersistence.update(assetCategoryProperty);
 	}
 
@@ -524,7 +507,7 @@ public abstract class AssetCategoryPropertyLocalServiceBaseImpl
 	 *
 	 * @param sql the sql query
 	 */
-	protected void runSQL(String sql) throws SystemException {
+	protected void runSQL(String sql) {
 		try {
 			DataSource dataSource = assetCategoryPropertyPersistence.getDataSource();
 

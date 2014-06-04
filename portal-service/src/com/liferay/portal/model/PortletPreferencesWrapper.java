@@ -367,8 +367,7 @@ public class PortletPreferencesWrapper implements PortletPreferences,
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void persist() {
 		_portletPreferences.persist();
 	}
 

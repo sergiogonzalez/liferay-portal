@@ -207,11 +207,9 @@ public class AssetTagPropertyWrapper implements AssetTagProperty,
 	* Returns the user uuid of this asset tag property.
 	*
 	* @return the user uuid of this asset tag property
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public java.lang.String getUserUuid()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public java.lang.String getUserUuid() {
 		return _assetTagProperty.getUserUuid();
 	}
 
@@ -445,8 +443,7 @@ public class AssetTagPropertyWrapper implements AssetTagProperty,
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void persist() {
 		_assetTagProperty.persist();
 	}
 

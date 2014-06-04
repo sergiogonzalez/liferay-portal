@@ -14,7 +14,6 @@
 
 package com.liferay.portal.model.impl;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.service.UserGroupLocalServiceUtil;
 
@@ -38,7 +37,7 @@ public abstract class UserGroupBaseImpl extends UserGroupModelImpl
 	 * Never modify or reference this class directly. All methods that expect a user group model instance should use the {@link UserGroup} interface instead.
 	 */
 	@Override
-	public void persist() throws SystemException {
+	public void persist() {
 		if (this.isNew()) {
 			UserGroupLocalServiceUtil.addUserGroup(this);
 		}

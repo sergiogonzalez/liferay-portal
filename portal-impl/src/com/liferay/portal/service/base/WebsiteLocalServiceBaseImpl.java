@@ -81,11 +81,10 @@ public abstract class WebsiteLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param website the website
 	 * @return the website that was added
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public Website addWebsite(Website website) throws SystemException {
+	public Website addWebsite(Website website) {
 		website.setNew(true);
 
 		return websitePersistence.update(website);
@@ -108,7 +107,7 @@ public abstract class WebsiteLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param websiteId the primary key of the website
 	 * @return the website that was removed
 	 * @throws PortalException if a website with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
+	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
@@ -122,7 +121,7 @@ public abstract class WebsiteLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param website the website
 	 * @return the website that was removed
-	 * @throws SystemException if a system exception occurred
+	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
@@ -143,12 +142,10 @@ public abstract class WebsiteLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery) {
 		return websitePersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -163,12 +160,10 @@ public abstract class WebsiteLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param start the lower bound of the range of model instances
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
 		return websitePersistence.findWithDynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -184,12 +179,11 @@ public abstract class WebsiteLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
 	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		return websitePersistence.findWithDynamicQuery(dynamicQuery, start,
 			end, orderByComparator);
 	}
@@ -199,11 +193,9 @@ public abstract class WebsiteLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public long dynamicQueryCount(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return websitePersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
@@ -213,16 +205,15 @@ public abstract class WebsiteLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param dynamicQuery the dynamic query
 	 * @param projection the projection to apply to the query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection) throws SystemException {
+		Projection projection) {
 		return websitePersistence.countWithDynamicQuery(dynamicQuery, projection);
 	}
 
 	@Override
-	public Website fetchWebsite(long websiteId) throws SystemException {
+	public Website fetchWebsite(long websiteId) {
 		return websitePersistence.fetchByPrimaryKey(websiteId);
 	}
 
@@ -232,11 +223,9 @@ public abstract class WebsiteLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param uuid the website's UUID
 	 * @param  companyId the primary key of the company
 	 * @return the matching website, or <code>null</code> if a matching website could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Website fetchWebsiteByUuidAndCompanyId(String uuid, long companyId)
-		throws SystemException {
+	public Website fetchWebsiteByUuidAndCompanyId(String uuid, long companyId) {
 		return websitePersistence.fetchByUuid_C_First(uuid, companyId, null);
 	}
 
@@ -246,17 +235,14 @@ public abstract class WebsiteLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param websiteId the primary key of the website
 	 * @return the website
 	 * @throws PortalException if a website with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Website getWebsite(long websiteId)
-		throws PortalException, SystemException {
+	public Website getWebsite(long websiteId) throws PortalException {
 		return websitePersistence.findByPrimaryKey(websiteId);
 	}
 
 	@Override
-	public ActionableDynamicQuery getActionableDynamicQuery()
-		throws SystemException {
+	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.WebsiteLocalServiceUtil.getService());
@@ -269,8 +255,7 @@ public abstract class WebsiteLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	protected void initActionableDynamicQuery(
-		ActionableDynamicQuery actionableDynamicQuery)
-		throws SystemException {
+		ActionableDynamicQuery actionableDynamicQuery) {
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.WebsiteLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(Website.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
@@ -280,11 +265,10 @@ public abstract class WebsiteLocalServiceBaseImpl extends BaseLocalServiceImpl
 
 	@Override
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		final PortletDataContext portletDataContext) throws SystemException {
+		final PortletDataContext portletDataContext) {
 		final ExportActionableDynamicQuery exportActionableDynamicQuery = new ExportActionableDynamicQuery() {
 				@Override
-				public long performCount()
-					throws PortalException, SystemException {
+				public long performCount() throws PortalException {
 					ManifestSummary manifestSummary = portletDataContext.getManifestSummary();
 
 					StagedModelType stagedModelType = getStagedModelType();
@@ -328,9 +312,8 @@ public abstract class WebsiteLocalServiceBaseImpl extends BaseLocalServiceImpl
 
 		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
 				@Override
-				@SuppressWarnings("unused")
 				public void performAction(Object object)
-					throws PortalException, SystemException {
+					throws PortalException {
 					Website stagedModel = (Website)object;
 
 					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
@@ -345,7 +328,7 @@ public abstract class WebsiteLocalServiceBaseImpl extends BaseLocalServiceImpl
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return websitePersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -356,11 +339,10 @@ public abstract class WebsiteLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param  companyId the primary key of the company
 	 * @return the matching website
 	 * @throws PortalException if a matching website could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Website getWebsiteByUuidAndCompanyId(String uuid, long companyId)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return websitePersistence.findByUuid_C_First(uuid, companyId, null);
 	}
 
@@ -374,11 +356,9 @@ public abstract class WebsiteLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param start the lower bound of the range of websites
 	 * @param end the upper bound of the range of websites (not inclusive)
 	 * @return the range of websites
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Website> getWebsites(int start, int end)
-		throws SystemException {
+	public List<Website> getWebsites(int start, int end) {
 		return websitePersistence.findAll(start, end);
 	}
 
@@ -386,10 +366,9 @@ public abstract class WebsiteLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * Returns the number of websites.
 	 *
 	 * @return the number of websites
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int getWebsitesCount() throws SystemException {
+	public int getWebsitesCount() {
 		return websitePersistence.countAll();
 	}
 
@@ -398,11 +377,10 @@ public abstract class WebsiteLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param website the website
 	 * @return the website that was updated
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public Website updateWebsite(Website website) throws SystemException {
+	public Website updateWebsite(Website website) {
 		return websitePersistence.update(website);
 	}
 
@@ -692,7 +670,7 @@ public abstract class WebsiteLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param sql the sql query
 	 */
-	protected void runSQL(String sql) throws SystemException {
+	protected void runSQL(String sql) {
 		try {
 			DataSource dataSource = websitePersistence.getDataSource();
 

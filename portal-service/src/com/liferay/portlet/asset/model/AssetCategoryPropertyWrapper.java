@@ -208,11 +208,9 @@ public class AssetCategoryPropertyWrapper implements AssetCategoryProperty,
 	* Returns the user uuid of this asset category property.
 	*
 	* @return the user uuid of this asset category property
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public java.lang.String getUserUuid()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public java.lang.String getUserUuid() {
 		return _assetCategoryProperty.getUserUuid();
 	}
 
@@ -446,8 +444,7 @@ public class AssetCategoryPropertyWrapper implements AssetCategoryProperty,
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void persist() {
 		_assetCategoryProperty.persist();
 	}
 

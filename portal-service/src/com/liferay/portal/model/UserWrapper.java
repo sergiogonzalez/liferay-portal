@@ -435,11 +435,9 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	* Returns the user uuid of this user.
 	*
 	* @return the user uuid of this user
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public java.lang.String getUserUuid()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public java.lang.String getUserUuid() {
 		return _user.getUserUuid();
 	}
 
@@ -1372,8 +1370,7 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void persist() {
 		_user.persist();
 	}
 

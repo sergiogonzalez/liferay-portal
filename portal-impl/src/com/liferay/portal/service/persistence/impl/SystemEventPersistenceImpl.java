@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -107,11 +106,9 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 *
 	 * @param groupId the group ID
 	 * @return the matching system events
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<SystemEvent> findByGroupId(long groupId)
-		throws SystemException {
+	public List<SystemEvent> findByGroupId(long groupId) {
 		return findByGroupId(groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -126,11 +123,9 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 * @param start the lower bound of the range of system events
 	 * @param end the upper bound of the range of system events (not inclusive)
 	 * @return the range of matching system events
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<SystemEvent> findByGroupId(long groupId, int start, int end)
-		throws SystemException {
+	public List<SystemEvent> findByGroupId(long groupId, int start, int end) {
 		return findByGroupId(groupId, start, end, null);
 	}
 
@@ -146,11 +141,10 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 * @param end the upper bound of the range of system events (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching system events
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<SystemEvent> findByGroupId(long groupId, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -253,12 +247,10 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching system event
 	 * @throws com.liferay.portal.NoSuchSystemEventException if a matching system event could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SystemEvent findByGroupId_First(long groupId,
-		OrderByComparator orderByComparator)
-		throws NoSuchSystemEventException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchSystemEventException {
 		SystemEvent systemEvent = fetchByGroupId_First(groupId,
 				orderByComparator);
 
@@ -284,11 +276,10 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching system event, or <code>null</code> if a matching system event could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SystemEvent fetchByGroupId_First(long groupId,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		List<SystemEvent> list = findByGroupId(groupId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -305,12 +296,10 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching system event
 	 * @throws com.liferay.portal.NoSuchSystemEventException if a matching system event could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SystemEvent findByGroupId_Last(long groupId,
-		OrderByComparator orderByComparator)
-		throws NoSuchSystemEventException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchSystemEventException {
 		SystemEvent systemEvent = fetchByGroupId_Last(groupId, orderByComparator);
 
 		if (systemEvent != null) {
@@ -335,11 +324,10 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching system event, or <code>null</code> if a matching system event could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SystemEvent fetchByGroupId_Last(long groupId,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		int count = countByGroupId(groupId);
 
 		if (count == 0) {
@@ -364,12 +352,11 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next system event
 	 * @throws com.liferay.portal.NoSuchSystemEventException if a system event with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SystemEvent[] findByGroupId_PrevAndNext(long systemEventId,
 		long groupId, OrderByComparator orderByComparator)
-		throws NoSuchSystemEventException, SystemException {
+		throws NoSuchSystemEventException {
 		SystemEvent systemEvent = findByPrimaryKey(systemEventId);
 
 		Session session = null;
@@ -506,10 +493,9 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 * Removes all the system events where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByGroupId(long groupId) throws SystemException {
+	public void removeByGroupId(long groupId) {
 		for (SystemEvent systemEvent : findByGroupId(groupId,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(systemEvent);
@@ -521,10 +507,9 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 *
 	 * @param groupId the group ID
 	 * @return the number of matching system events
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByGroupId(long groupId) throws SystemException {
+	public int countByGroupId(long groupId) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_GROUPID;
 
 		Object[] finderArgs = new Object[] { groupId };
@@ -597,11 +582,9 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 * @param groupId the group ID
 	 * @param systemEventSetKey the system event set key
 	 * @return the matching system events
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<SystemEvent> findByG_S(long groupId, long systemEventSetKey)
-		throws SystemException {
+	public List<SystemEvent> findByG_S(long groupId, long systemEventSetKey) {
 		return findByG_S(groupId, systemEventSetKey, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
@@ -618,11 +601,10 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 * @param start the lower bound of the range of system events
 	 * @param end the upper bound of the range of system events (not inclusive)
 	 * @return the range of matching system events
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<SystemEvent> findByG_S(long groupId, long systemEventSetKey,
-		int start, int end) throws SystemException {
+		int start, int end) {
 		return findByG_S(groupId, systemEventSetKey, start, end, null);
 	}
 
@@ -639,12 +621,10 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 * @param end the upper bound of the range of system events (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching system events
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<SystemEvent> findByG_S(long groupId, long systemEventSetKey,
-		int start, int end, OrderByComparator orderByComparator)
-		throws SystemException {
+		int start, int end, OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -757,12 +737,10 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching system event
 	 * @throws com.liferay.portal.NoSuchSystemEventException if a matching system event could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SystemEvent findByG_S_First(long groupId, long systemEventSetKey,
-		OrderByComparator orderByComparator)
-		throws NoSuchSystemEventException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchSystemEventException {
 		SystemEvent systemEvent = fetchByG_S_First(groupId, systemEventSetKey,
 				orderByComparator);
 
@@ -792,11 +770,10 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 * @param systemEventSetKey the system event set key
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching system event, or <code>null</code> if a matching system event could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SystemEvent fetchByG_S_First(long groupId, long systemEventSetKey,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		List<SystemEvent> list = findByG_S(groupId, systemEventSetKey, 0, 1,
 				orderByComparator);
 
@@ -815,12 +792,10 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching system event
 	 * @throws com.liferay.portal.NoSuchSystemEventException if a matching system event could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SystemEvent findByG_S_Last(long groupId, long systemEventSetKey,
-		OrderByComparator orderByComparator)
-		throws NoSuchSystemEventException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchSystemEventException {
 		SystemEvent systemEvent = fetchByG_S_Last(groupId, systemEventSetKey,
 				orderByComparator);
 
@@ -850,11 +825,10 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 * @param systemEventSetKey the system event set key
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching system event, or <code>null</code> if a matching system event could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SystemEvent fetchByG_S_Last(long groupId, long systemEventSetKey,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		int count = countByG_S(groupId, systemEventSetKey);
 
 		if (count == 0) {
@@ -880,13 +854,11 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next system event
 	 * @throws com.liferay.portal.NoSuchSystemEventException if a system event with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SystemEvent[] findByG_S_PrevAndNext(long systemEventId,
 		long groupId, long systemEventSetKey,
-		OrderByComparator orderByComparator)
-		throws NoSuchSystemEventException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchSystemEventException {
 		SystemEvent systemEvent = findByPrimaryKey(systemEventId);
 
 		Session session = null;
@@ -1028,11 +1000,9 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 *
 	 * @param groupId the group ID
 	 * @param systemEventSetKey the system event set key
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByG_S(long groupId, long systemEventSetKey)
-		throws SystemException {
+	public void removeByG_S(long groupId, long systemEventSetKey) {
 		for (SystemEvent systemEvent : findByG_S(groupId, systemEventSetKey,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(systemEvent);
@@ -1045,11 +1015,9 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 * @param groupId the group ID
 	 * @param systemEventSetKey the system event set key
 	 * @return the number of matching system events
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByG_S(long groupId, long systemEventSetKey)
-		throws SystemException {
+	public int countByG_S(long groupId, long systemEventSetKey) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_S;
 
 		Object[] finderArgs = new Object[] { groupId, systemEventSetKey };
@@ -1133,11 +1101,10 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @return the matching system events
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<SystemEvent> findByG_C_C(long groupId, long classNameId,
-		long classPK) throws SystemException {
+		long classPK) {
 		return findByG_C_C(groupId, classNameId, classPK, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
@@ -1155,11 +1122,10 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 * @param start the lower bound of the range of system events
 	 * @param end the upper bound of the range of system events (not inclusive)
 	 * @return the range of matching system events
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<SystemEvent> findByG_C_C(long groupId, long classNameId,
-		long classPK, int start, int end) throws SystemException {
+		long classPK, int start, int end) {
 		return findByG_C_C(groupId, classNameId, classPK, start, end, null);
 	}
 
@@ -1177,12 +1143,10 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 * @param end the upper bound of the range of system events (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching system events
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<SystemEvent> findByG_C_C(long groupId, long classNameId,
-		long classPK, int start, int end, OrderByComparator orderByComparator)
-		throws SystemException {
+		long classPK, int start, int end, OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1301,12 +1265,11 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching system event
 	 * @throws com.liferay.portal.NoSuchSystemEventException if a matching system event could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SystemEvent findByG_C_C_First(long groupId, long classNameId,
 		long classPK, OrderByComparator orderByComparator)
-		throws NoSuchSystemEventException, SystemException {
+		throws NoSuchSystemEventException {
 		SystemEvent systemEvent = fetchByG_C_C_First(groupId, classNameId,
 				classPK, orderByComparator);
 
@@ -1340,12 +1303,10 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 * @param classPK the class p k
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching system event, or <code>null</code> if a matching system event could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SystemEvent fetchByG_C_C_First(long groupId, long classNameId,
-		long classPK, OrderByComparator orderByComparator)
-		throws SystemException {
+		long classPK, OrderByComparator orderByComparator) {
 		List<SystemEvent> list = findByG_C_C(groupId, classNameId, classPK, 0,
 				1, orderByComparator);
 
@@ -1365,12 +1326,11 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching system event
 	 * @throws com.liferay.portal.NoSuchSystemEventException if a matching system event could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SystemEvent findByG_C_C_Last(long groupId, long classNameId,
 		long classPK, OrderByComparator orderByComparator)
-		throws NoSuchSystemEventException, SystemException {
+		throws NoSuchSystemEventException {
 		SystemEvent systemEvent = fetchByG_C_C_Last(groupId, classNameId,
 				classPK, orderByComparator);
 
@@ -1404,12 +1364,10 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 * @param classPK the class p k
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching system event, or <code>null</code> if a matching system event could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SystemEvent fetchByG_C_C_Last(long groupId, long classNameId,
-		long classPK, OrderByComparator orderByComparator)
-		throws SystemException {
+		long classPK, OrderByComparator orderByComparator) {
 		int count = countByG_C_C(groupId, classNameId, classPK);
 
 		if (count == 0) {
@@ -1436,13 +1394,11 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next system event
 	 * @throws com.liferay.portal.NoSuchSystemEventException if a system event with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SystemEvent[] findByG_C_C_PrevAndNext(long systemEventId,
 		long groupId, long classNameId, long classPK,
-		OrderByComparator orderByComparator)
-		throws NoSuchSystemEventException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchSystemEventException {
 		SystemEvent systemEvent = findByPrimaryKey(systemEventId);
 
 		Session session = null;
@@ -1589,11 +1545,9 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByG_C_C(long groupId, long classNameId, long classPK)
-		throws SystemException {
+	public void removeByG_C_C(long groupId, long classNameId, long classPK) {
 		for (SystemEvent systemEvent : findByG_C_C(groupId, classNameId,
 				classPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(systemEvent);
@@ -1607,11 +1561,9 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @return the number of matching system events
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByG_C_C(long groupId, long classNameId, long classPK)
-		throws SystemException {
+	public int countByG_C_C(long groupId, long classNameId, long classPK) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_C_C;
 
 		Object[] finderArgs = new Object[] { groupId, classNameId, classPK };
@@ -1706,11 +1658,10 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 * @param classPK the class p k
 	 * @param type the type
 	 * @return the matching system events
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<SystemEvent> findByG_C_C_T(long groupId, long classNameId,
-		long classPK, int type) throws SystemException {
+		long classPK, int type) {
 		return findByG_C_C_T(groupId, classNameId, classPK, type,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
@@ -1729,11 +1680,10 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 * @param start the lower bound of the range of system events
 	 * @param end the upper bound of the range of system events (not inclusive)
 	 * @return the range of matching system events
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<SystemEvent> findByG_C_C_T(long groupId, long classNameId,
-		long classPK, int type, int start, int end) throws SystemException {
+		long classPK, int type, int start, int end) {
 		return findByG_C_C_T(groupId, classNameId, classPK, type, start, end,
 			null);
 	}
@@ -1753,12 +1703,11 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 * @param end the upper bound of the range of system events (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching system events
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<SystemEvent> findByG_C_C_T(long groupId, long classNameId,
 		long classPK, int type, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1883,12 +1832,11 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching system event
 	 * @throws com.liferay.portal.NoSuchSystemEventException if a matching system event could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SystemEvent findByG_C_C_T_First(long groupId, long classNameId,
 		long classPK, int type, OrderByComparator orderByComparator)
-		throws NoSuchSystemEventException, SystemException {
+		throws NoSuchSystemEventException {
 		SystemEvent systemEvent = fetchByG_C_C_T_First(groupId, classNameId,
 				classPK, type, orderByComparator);
 
@@ -1926,12 +1874,10 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching system event, or <code>null</code> if a matching system event could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SystemEvent fetchByG_C_C_T_First(long groupId, long classNameId,
-		long classPK, int type, OrderByComparator orderByComparator)
-		throws SystemException {
+		long classPK, int type, OrderByComparator orderByComparator) {
 		List<SystemEvent> list = findByG_C_C_T(groupId, classNameId, classPK,
 				type, 0, 1, orderByComparator);
 
@@ -1952,12 +1898,11 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching system event
 	 * @throws com.liferay.portal.NoSuchSystemEventException if a matching system event could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SystemEvent findByG_C_C_T_Last(long groupId, long classNameId,
 		long classPK, int type, OrderByComparator orderByComparator)
-		throws NoSuchSystemEventException, SystemException {
+		throws NoSuchSystemEventException {
 		SystemEvent systemEvent = fetchByG_C_C_T_Last(groupId, classNameId,
 				classPK, type, orderByComparator);
 
@@ -1995,12 +1940,10 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching system event, or <code>null</code> if a matching system event could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SystemEvent fetchByG_C_C_T_Last(long groupId, long classNameId,
-		long classPK, int type, OrderByComparator orderByComparator)
-		throws SystemException {
+		long classPK, int type, OrderByComparator orderByComparator) {
 		int count = countByG_C_C_T(groupId, classNameId, classPK, type);
 
 		if (count == 0) {
@@ -2028,13 +1971,11 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next system event
 	 * @throws com.liferay.portal.NoSuchSystemEventException if a system event with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SystemEvent[] findByG_C_C_T_PrevAndNext(long systemEventId,
 		long groupId, long classNameId, long classPK, int type,
-		OrderByComparator orderByComparator)
-		throws NoSuchSystemEventException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchSystemEventException {
 		SystemEvent systemEvent = findByPrimaryKey(systemEventId);
 
 		Session session = null;
@@ -2186,11 +2127,10 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param type the type
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public void removeByG_C_C_T(long groupId, long classNameId, long classPK,
-		int type) throws SystemException {
+		int type) {
 		for (SystemEvent systemEvent : findByG_C_C_T(groupId, classNameId,
 				classPK, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(systemEvent);
@@ -2205,11 +2145,10 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 * @param classPK the class p k
 	 * @param type the type
 	 * @return the number of matching system events
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public int countByG_C_C_T(long groupId, long classNameId, long classPK,
-		int type) throws SystemException {
+		int type) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_C_C_T;
 
 		Object[] finderArgs = new Object[] { groupId, classNameId, classPK, type };
@@ -2376,11 +2315,10 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 * @param systemEventId the primary key of the system event
 	 * @return the system event that was removed
 	 * @throws com.liferay.portal.NoSuchSystemEventException if a system event with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SystemEvent remove(long systemEventId)
-		throws NoSuchSystemEventException, SystemException {
+		throws NoSuchSystemEventException {
 		return remove((Serializable)systemEventId);
 	}
 
@@ -2390,11 +2328,10 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 * @param primaryKey the primary key of the system event
 	 * @return the system event that was removed
 	 * @throws com.liferay.portal.NoSuchSystemEventException if a system event with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SystemEvent remove(Serializable primaryKey)
-		throws NoSuchSystemEventException, SystemException {
+		throws NoSuchSystemEventException {
 		Session session = null;
 
 		try {
@@ -2426,8 +2363,7 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	}
 
 	@Override
-	protected SystemEvent removeImpl(SystemEvent systemEvent)
-		throws SystemException {
+	protected SystemEvent removeImpl(SystemEvent systemEvent) {
 		systemEvent = toUnwrappedModel(systemEvent);
 
 		Session session = null;
@@ -2460,8 +2396,7 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 
 	@Override
 	public SystemEvent updateImpl(
-		com.liferay.portal.model.SystemEvent systemEvent)
-		throws SystemException {
+		com.liferay.portal.model.SystemEvent systemEvent) {
 		systemEvent = toUnwrappedModel(systemEvent);
 
 		boolean isNew = systemEvent.isNew();
@@ -2627,11 +2562,10 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 * @param primaryKey the primary key of the system event
 	 * @return the system event
 	 * @throws com.liferay.portal.NoSuchSystemEventException if a system event with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SystemEvent findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchSystemEventException, SystemException {
+		throws NoSuchSystemEventException {
 		SystemEvent systemEvent = fetchByPrimaryKey(primaryKey);
 
 		if (systemEvent == null) {
@@ -2652,11 +2586,10 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 * @param systemEventId the primary key of the system event
 	 * @return the system event
 	 * @throws com.liferay.portal.NoSuchSystemEventException if a system event with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SystemEvent findByPrimaryKey(long systemEventId)
-		throws NoSuchSystemEventException, SystemException {
+		throws NoSuchSystemEventException {
 		return findByPrimaryKey((Serializable)systemEventId);
 	}
 
@@ -2665,11 +2598,9 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 *
 	 * @param primaryKey the primary key of the system event
 	 * @return the system event, or <code>null</code> if a system event with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public SystemEvent fetchByPrimaryKey(Serializable primaryKey)
-		throws SystemException {
+	public SystemEvent fetchByPrimaryKey(Serializable primaryKey) {
 		SystemEvent systemEvent = (SystemEvent)EntityCacheUtil.getResult(SystemEventModelImpl.ENTITY_CACHE_ENABLED,
 				SystemEventImpl.class, primaryKey);
 
@@ -2713,11 +2644,9 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 *
 	 * @param systemEventId the primary key of the system event
 	 * @return the system event, or <code>null</code> if a system event with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public SystemEvent fetchByPrimaryKey(long systemEventId)
-		throws SystemException {
+	public SystemEvent fetchByPrimaryKey(long systemEventId) {
 		return fetchByPrimaryKey((Serializable)systemEventId);
 	}
 
@@ -2725,10 +2654,9 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 * Returns all the system events.
 	 *
 	 * @return the system events
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<SystemEvent> findAll() throws SystemException {
+	public List<SystemEvent> findAll() {
 		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -2742,11 +2670,9 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 * @param start the lower bound of the range of system events
 	 * @param end the upper bound of the range of system events (not inclusive)
 	 * @return the range of system events
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<SystemEvent> findAll(int start, int end)
-		throws SystemException {
+	public List<SystemEvent> findAll(int start, int end) {
 		return findAll(start, end, null);
 	}
 
@@ -2761,11 +2687,10 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 * @param end the upper bound of the range of system events (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of system events
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<SystemEvent> findAll(int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2847,10 +2772,9 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	/**
 	 * Removes all the system events from the database.
 	 *
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeAll() throws SystemException {
+	public void removeAll() {
 		for (SystemEvent systemEvent : findAll()) {
 			remove(systemEvent);
 		}
@@ -2860,10 +2784,9 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	 * Returns the number of system events.
 	 *
 	 * @return the number of system events
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countAll() throws SystemException {
+	public int countAll() {
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
 				FINDER_ARGS_EMPTY, this);
 

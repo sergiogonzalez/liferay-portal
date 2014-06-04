@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.trash.model.impl;
 
-import com.liferay.portal.kernel.exception.SystemException;
-
 import com.liferay.portlet.trash.model.TrashVersion;
 import com.liferay.portlet.trash.service.TrashVersionLocalServiceUtil;
 
@@ -39,7 +37,7 @@ public abstract class TrashVersionBaseImpl extends TrashVersionModelImpl
 	 * Never modify or reference this class directly. All methods that expect a trash version model instance should use the {@link TrashVersion} interface instead.
 	 */
 	@Override
-	public void persist() throws SystemException {
+	public void persist() {
 		if (this.isNew()) {
 			TrashVersionLocalServiceUtil.addTrashVersion(this);
 		}

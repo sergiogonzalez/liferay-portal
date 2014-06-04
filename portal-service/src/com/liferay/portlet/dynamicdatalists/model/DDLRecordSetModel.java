@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.bean.AutoEscape;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.LocalizedModel;
@@ -152,10 +151,9 @@ public interface DDLRecordSetModel extends BaseModel<DDLRecordSet>,
 	 * Returns the user uuid of this d d l record set.
 	 *
 	 * @return the user uuid of this d d l record set
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public String getUserUuid() throws SystemException;
+	public String getUserUuid();
 
 	/**
 	 * Sets the user uuid of this d d l record set.

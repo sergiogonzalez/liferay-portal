@@ -359,11 +359,9 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	* Returns the user uuid of this message-boards message.
 	*
 	* @return the user uuid of this message-boards message
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public java.lang.String getUserUuid()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public java.lang.String getUserUuid() {
 		return _mbMessage.getUserUuid();
 	}
 
@@ -786,11 +784,9 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	* Returns the status by user uuid of this message-boards message.
 	*
 	* @return the status by user uuid of this message-boards message
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public java.lang.String getStatusByUserUuid()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public java.lang.String getStatusByUserUuid() {
 		return _mbMessage.getStatusByUserUuid();
 	}
 
@@ -848,12 +844,10 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	* Returns the trash entry created when this message-boards message was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this message-boards message.
 	*
 	* @return the trash entry created when this message-boards message was moved to the Recycle Bin
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.trash.model.TrashEntry getTrashEntry()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbMessage.getTrashEntry();
 	}
 
@@ -891,7 +885,6 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	* Returns <code>true</code> if the parent of this message-boards message is in the Recycle Bin.
 	*
 	* @return <code>true</code> if the parent of this message-boards message is in the Recycle Bin; <code>false</code> otherwise
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public boolean isInTrashContainer() {
@@ -899,14 +892,12 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	}
 
 	@Override
-	public boolean isInTrashExplicitly()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public boolean isInTrashExplicitly() {
 		return _mbMessage.isInTrashExplicitly();
 	}
 
 	@Override
-	public boolean isInTrashImplicitly()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public boolean isInTrashImplicitly() {
 		return _mbMessage.isInTrashImplicitly();
 	}
 
@@ -1099,8 +1090,7 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void persist() {
 		_mbMessage.persist();
 	}
 

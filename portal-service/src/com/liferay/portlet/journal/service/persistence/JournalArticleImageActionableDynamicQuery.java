@@ -15,7 +15,6 @@
 package com.liferay.portlet.journal.service.persistence;
 
 import com.liferay.portal.kernel.dao.orm.BaseActionableDynamicQuery;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 
 import com.liferay.portlet.journal.model.JournalArticleImage;
@@ -29,8 +28,7 @@ import com.liferay.portlet.journal.service.JournalArticleImageLocalServiceUtil;
 @Deprecated
 public abstract class JournalArticleImageActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
-	public JournalArticleImageActionableDynamicQuery()
-		throws SystemException {
+	public JournalArticleImageActionableDynamicQuery() {
 		setBaseLocalService(JournalArticleImageLocalServiceUtil.getService());
 		setClass(JournalArticleImage.class);
 

@@ -299,11 +299,9 @@ public class ExportImportConfigurationWrapper
 	* Returns the user uuid of this export import configuration.
 	*
 	* @return the user uuid of this export import configuration
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public java.lang.String getUserUuid()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public java.lang.String getUserUuid() {
 		return _exportImportConfiguration.getUserUuid();
 	}
 
@@ -501,11 +499,9 @@ public class ExportImportConfigurationWrapper
 	* Returns the status by user uuid of this export import configuration.
 	*
 	* @return the status by user uuid of this export import configuration
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public java.lang.String getStatusByUserUuid()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public java.lang.String getStatusByUserUuid() {
 		return _exportImportConfiguration.getStatusByUserUuid();
 	}
 
@@ -563,12 +559,10 @@ public class ExportImportConfigurationWrapper
 	* Returns the trash entry created when this export import configuration was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this export import configuration.
 	*
 	* @return the trash entry created when this export import configuration was moved to the Recycle Bin
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.trash.model.TrashEntry getTrashEntry()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _exportImportConfiguration.getTrashEntry();
 	}
 
@@ -606,7 +600,6 @@ public class ExportImportConfigurationWrapper
 	* Returns <code>true</code> if the parent of this export import configuration is in the Recycle Bin.
 	*
 	* @return <code>true</code> if the parent of this export import configuration is in the Recycle Bin; <code>false</code> otherwise
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public boolean isInTrashContainer() {
@@ -614,14 +607,12 @@ public class ExportImportConfigurationWrapper
 	}
 
 	@Override
-	public boolean isInTrashExplicitly()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public boolean isInTrashExplicitly() {
 		return _exportImportConfiguration.isInTrashExplicitly();
 	}
 
 	@Override
-	public boolean isInTrashImplicitly()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public boolean isInTrashImplicitly() {
 		return _exportImportConfiguration.isInTrashImplicitly();
 	}
 
@@ -814,8 +805,7 @@ public class ExportImportConfigurationWrapper
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void persist() {
 		_exportImportConfiguration.persist();
 	}
 

@@ -1034,8 +1034,7 @@ public class DLFileEntryServiceHttp {
 	}
 
 	public static com.liferay.portal.model.Lock getFileEntryLock(
-		HttpPrincipal httpPrincipal, long fileEntryId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		HttpPrincipal httpPrincipal, long fileEntryId) {
 		try {
 			MethodKey methodKey = new MethodKey(DLFileEntryServiceUtil.class,
 					"getFileEntryLock", _getFileEntryLockParameterTypes27);

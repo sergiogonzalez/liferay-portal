@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 import com.liferay.portal.model.Ticket;
@@ -63,16 +62,14 @@ public class TicketUtil {
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#countWithDynamicQuery(DynamicQuery)
 	 */
-	public static long countWithDynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public static long countWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return getPersistence().countWithDynamicQuery(dynamicQuery);
 	}
 
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery)
 	 */
-	public static List<Ticket> findWithDynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public static List<Ticket> findWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -80,7 +77,7 @@ public class TicketUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
 	 */
 	public static List<Ticket> findWithDynamicQuery(DynamicQuery dynamicQuery,
-		int start, int end) throws SystemException {
+		int start, int end) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -88,8 +85,7 @@ public class TicketUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int, OrderByComparator)
 	 */
 	public static List<Ticket> findWithDynamicQuery(DynamicQuery dynamicQuery,
-		int start, int end, OrderByComparator orderByComparator)
-		throws SystemException {
+		int start, int end, OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -98,15 +94,14 @@ public class TicketUtil {
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static Ticket update(Ticket ticket) throws SystemException {
+	public static Ticket update(Ticket ticket) {
 		return getPersistence().update(ticket);
 	}
 
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
-	public static Ticket update(Ticket ticket, ServiceContext serviceContext)
-		throws SystemException {
+	public static Ticket update(Ticket ticket, ServiceContext serviceContext) {
 		return getPersistence().update(ticket, serviceContext);
 	}
 
@@ -116,12 +111,9 @@ public class TicketUtil {
 	* @param key the key
 	* @return the matching ticket
 	* @throws com.liferay.portal.NoSuchTicketException if a matching ticket could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Ticket findByKey(
-		java.lang.String key)
-		throws com.liferay.portal.NoSuchTicketException,
-			com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String key) throws com.liferay.portal.NoSuchTicketException {
 		return getPersistence().findByKey(key);
 	}
 
@@ -130,11 +122,9 @@ public class TicketUtil {
 	*
 	* @param key the key
 	* @return the matching ticket, or <code>null</code> if a matching ticket could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Ticket fetchByKey(
-		java.lang.String key)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String key) {
 		return getPersistence().fetchByKey(key);
 	}
 
@@ -144,11 +134,9 @@ public class TicketUtil {
 	* @param key the key
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching ticket, or <code>null</code> if a matching ticket could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Ticket fetchByKey(
-		java.lang.String key, boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String key, boolean retrieveFromCache) {
 		return getPersistence().fetchByKey(key, retrieveFromCache);
 	}
 
@@ -157,12 +145,9 @@ public class TicketUtil {
 	*
 	* @param key the key
 	* @return the ticket that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Ticket removeByKey(
-		java.lang.String key)
-		throws com.liferay.portal.NoSuchTicketException,
-			com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String key) throws com.liferay.portal.NoSuchTicketException {
 		return getPersistence().removeByKey(key);
 	}
 
@@ -171,10 +156,8 @@ public class TicketUtil {
 	*
 	* @param key the key
 	* @return the number of matching tickets
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByKey(java.lang.String key)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByKey(java.lang.String key) {
 		return getPersistence().countByKey(key);
 	}
 
@@ -213,17 +196,14 @@ public class TicketUtil {
 	* @param ticketId the primary key of the ticket
 	* @return the ticket that was removed
 	* @throws com.liferay.portal.NoSuchTicketException if a ticket with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Ticket remove(long ticketId)
-		throws com.liferay.portal.NoSuchTicketException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.NoSuchTicketException {
 		return getPersistence().remove(ticketId);
 	}
 
 	public static com.liferay.portal.model.Ticket updateImpl(
-		com.liferay.portal.model.Ticket ticket)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.Ticket ticket) {
 		return getPersistence().updateImpl(ticket);
 	}
 
@@ -233,12 +213,9 @@ public class TicketUtil {
 	* @param ticketId the primary key of the ticket
 	* @return the ticket
 	* @throws com.liferay.portal.NoSuchTicketException if a ticket with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Ticket findByPrimaryKey(
-		long ticketId)
-		throws com.liferay.portal.NoSuchTicketException,
-			com.liferay.portal.kernel.exception.SystemException {
+		long ticketId) throws com.liferay.portal.NoSuchTicketException {
 		return getPersistence().findByPrimaryKey(ticketId);
 	}
 
@@ -247,11 +224,9 @@ public class TicketUtil {
 	*
 	* @param ticketId the primary key of the ticket
 	* @return the ticket, or <code>null</code> if a ticket with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Ticket fetchByPrimaryKey(
-		long ticketId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long ticketId) {
 		return getPersistence().fetchByPrimaryKey(ticketId);
 	}
 
@@ -259,10 +234,8 @@ public class TicketUtil {
 	* Returns all the tickets.
 	*
 	* @return the tickets
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.portal.model.Ticket> findAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static java.util.List<com.liferay.portal.model.Ticket> findAll() {
 		return getPersistence().findAll();
 	}
 
@@ -276,11 +249,9 @@ public class TicketUtil {
 	* @param start the lower bound of the range of tickets
 	* @param end the upper bound of the range of tickets (not inclusive)
 	* @return the range of tickets
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portal.model.Ticket> findAll(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
@@ -295,22 +266,17 @@ public class TicketUtil {
 	* @param end the upper bound of the range of tickets (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of tickets
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portal.model.Ticket> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
 	/**
 	* Removes all the tickets from the database.
-	*
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeAll() {
 		getPersistence().removeAll();
 	}
 
@@ -318,10 +284,8 @@ public class TicketUtil {
 	* Returns the number of tickets.
 	*
 	* @return the number of tickets
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countAll() {
 		return getPersistence().countAll();
 	}
 

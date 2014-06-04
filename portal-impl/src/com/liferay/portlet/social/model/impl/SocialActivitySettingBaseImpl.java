@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.social.model.impl;
 
-import com.liferay.portal.kernel.exception.SystemException;
-
 import com.liferay.portlet.social.model.SocialActivitySetting;
 import com.liferay.portlet.social.service.SocialActivitySettingLocalServiceUtil;
 
@@ -39,7 +37,7 @@ public abstract class SocialActivitySettingBaseImpl
 	 * Never modify or reference this class directly. All methods that expect a social activity setting model instance should use the {@link SocialActivitySetting} interface instead.
 	 */
 	@Override
-	public void persist() throws SystemException {
+	public void persist() {
 		if (this.isNew()) {
 			SocialActivitySettingLocalServiceUtil.addSocialActivitySetting(this);
 		}

@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 import com.liferay.portal.service.ServiceContext;
@@ -64,8 +63,7 @@ public class MDRActionUtil {
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#countWithDynamicQuery(DynamicQuery)
 	 */
-	public static long countWithDynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public static long countWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return getPersistence().countWithDynamicQuery(dynamicQuery);
 	}
 
@@ -73,7 +71,7 @@ public class MDRActionUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery)
 	 */
 	public static List<MDRAction> findWithDynamicQuery(
-		DynamicQuery dynamicQuery) throws SystemException {
+		DynamicQuery dynamicQuery) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -81,8 +79,7 @@ public class MDRActionUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
 	 */
 	public static List<MDRAction> findWithDynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+		DynamicQuery dynamicQuery, int start, int end) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -91,7 +88,7 @@ public class MDRActionUtil {
 	 */
 	public static List<MDRAction> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -100,8 +97,7 @@ public class MDRActionUtil {
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static MDRAction update(MDRAction mdrAction)
-		throws SystemException {
+	public static MDRAction update(MDRAction mdrAction) {
 		return getPersistence().update(mdrAction);
 	}
 
@@ -109,7 +105,7 @@ public class MDRActionUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
 	public static MDRAction update(MDRAction mdrAction,
-		ServiceContext serviceContext) throws SystemException {
+		ServiceContext serviceContext) {
 		return getPersistence().update(mdrAction, serviceContext);
 	}
 
@@ -118,11 +114,9 @@ public class MDRActionUtil {
 	*
 	* @param uuid the uuid
 	* @return the matching m d r actions
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRAction> findByUuid(
-		java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid) {
 		return getPersistence().findByUuid(uuid);
 	}
 
@@ -137,11 +131,9 @@ public class MDRActionUtil {
 	* @param start the lower bound of the range of m d r actions
 	* @param end the upper bound of the range of m d r actions (not inclusive)
 	* @return the range of matching m d r actions
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRAction> findByUuid(
-		java.lang.String uuid, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, int start, int end) {
 		return getPersistence().findByUuid(uuid, start, end);
 	}
 
@@ -157,12 +149,10 @@ public class MDRActionUtil {
 	* @param end the upper bound of the range of m d r actions (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching m d r actions
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRAction> findByUuid(
 		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -173,13 +163,11 @@ public class MDRActionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching m d r action
 	* @throws com.liferay.portlet.mobiledevicerules.NoSuchActionException if a matching m d r action could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRAction findByUuid_First(
 		java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.mobiledevicerules.NoSuchActionException {
+		throws com.liferay.portlet.mobiledevicerules.NoSuchActionException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
 
@@ -189,12 +177,10 @@ public class MDRActionUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching m d r action, or <code>null</code> if a matching m d r action could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRAction fetchByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
 
@@ -205,13 +191,11 @@ public class MDRActionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching m d r action
 	* @throws com.liferay.portlet.mobiledevicerules.NoSuchActionException if a matching m d r action could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRAction findByUuid_Last(
 		java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.mobiledevicerules.NoSuchActionException {
+		throws com.liferay.portlet.mobiledevicerules.NoSuchActionException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -221,12 +205,10 @@ public class MDRActionUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching m d r action, or <code>null</code> if a matching m d r action could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRAction fetchByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -238,13 +220,11 @@ public class MDRActionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next m d r action
 	* @throws com.liferay.portlet.mobiledevicerules.NoSuchActionException if a m d r action with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRAction[] findByUuid_PrevAndNext(
 		long actionId, java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.mobiledevicerules.NoSuchActionException {
+		throws com.liferay.portlet.mobiledevicerules.NoSuchActionException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(actionId, uuid, orderByComparator);
 	}
@@ -253,10 +233,8 @@ public class MDRActionUtil {
 	* Removes all the m d r actions where uuid = &#63; from the database.
 	*
 	* @param uuid the uuid
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByUuid(java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByUuid(java.lang.String uuid) {
 		getPersistence().removeByUuid(uuid);
 	}
 
@@ -265,10 +243,8 @@ public class MDRActionUtil {
 	*
 	* @param uuid the uuid
 	* @return the number of matching m d r actions
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByUuid(java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByUuid(java.lang.String uuid) {
 		return getPersistence().countByUuid(uuid);
 	}
 
@@ -279,12 +255,10 @@ public class MDRActionUtil {
 	* @param groupId the group ID
 	* @return the matching m d r action
 	* @throws com.liferay.portlet.mobiledevicerules.NoSuchActionException if a matching m d r action could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRAction findByUUID_G(
 		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.mobiledevicerules.NoSuchActionException {
+		throws com.liferay.portlet.mobiledevicerules.NoSuchActionException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
 
@@ -294,11 +268,9 @@ public class MDRActionUtil {
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the matching m d r action, or <code>null</code> if a matching m d r action could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRAction fetchByUUID_G(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long groupId) {
 		return getPersistence().fetchByUUID_G(uuid, groupId);
 	}
 
@@ -309,11 +281,9 @@ public class MDRActionUtil {
 	* @param groupId the group ID
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching m d r action, or <code>null</code> if a matching m d r action could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRAction fetchByUUID_G(
-		java.lang.String uuid, long groupId, boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long groupId, boolean retrieveFromCache) {
 		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
 	}
 
@@ -323,12 +293,10 @@ public class MDRActionUtil {
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the m d r action that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRAction removeByUUID_G(
 		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.mobiledevicerules.NoSuchActionException {
+		throws com.liferay.portlet.mobiledevicerules.NoSuchActionException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
 
@@ -338,10 +306,8 @@ public class MDRActionUtil {
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the number of matching m d r actions
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByUUID_G(java.lang.String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
 	}
 
@@ -351,11 +317,9 @@ public class MDRActionUtil {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	* @return the matching m d r actions
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRAction> findByUuid_C(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long companyId) {
 		return getPersistence().findByUuid_C(uuid, companyId);
 	}
 
@@ -371,11 +335,9 @@ public class MDRActionUtil {
 	* @param start the lower bound of the range of m d r actions
 	* @param end the upper bound of the range of m d r actions (not inclusive)
 	* @return the range of matching m d r actions
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRAction> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long companyId, int start, int end) {
 		return getPersistence().findByUuid_C(uuid, companyId, start, end);
 	}
 
@@ -392,12 +354,10 @@ public class MDRActionUtil {
 	* @param end the upper bound of the range of m d r actions (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching m d r actions
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRAction> findByUuid_C(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
 	}
@@ -410,13 +370,11 @@ public class MDRActionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching m d r action
 	* @throws com.liferay.portlet.mobiledevicerules.NoSuchActionException if a matching m d r action could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRAction findByUuid_C_First(
 		java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.mobiledevicerules.NoSuchActionException {
+		throws com.liferay.portlet.mobiledevicerules.NoSuchActionException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -428,12 +386,10 @@ public class MDRActionUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching m d r action, or <code>null</code> if a matching m d r action could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRAction fetchByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -446,13 +402,11 @@ public class MDRActionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching m d r action
 	* @throws com.liferay.portlet.mobiledevicerules.NoSuchActionException if a matching m d r action could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRAction findByUuid_C_Last(
 		java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.mobiledevicerules.NoSuchActionException {
+		throws com.liferay.portlet.mobiledevicerules.NoSuchActionException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -464,12 +418,10 @@ public class MDRActionUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching m d r action, or <code>null</code> if a matching m d r action could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRAction fetchByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -483,13 +435,11 @@ public class MDRActionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next m d r action
 	* @throws com.liferay.portlet.mobiledevicerules.NoSuchActionException if a m d r action with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRAction[] findByUuid_C_PrevAndNext(
 		long actionId, java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.mobiledevicerules.NoSuchActionException {
+		throws com.liferay.portlet.mobiledevicerules.NoSuchActionException {
 		return getPersistence()
 				   .findByUuid_C_PrevAndNext(actionId, uuid, companyId,
 			orderByComparator);
@@ -500,10 +450,8 @@ public class MDRActionUtil {
 	*
 	* @param uuid the uuid
 	* @param companyId the company ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByUuid_C(java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByUuid_C(java.lang.String uuid, long companyId) {
 		getPersistence().removeByUuid_C(uuid, companyId);
 	}
 
@@ -513,10 +461,8 @@ public class MDRActionUtil {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	* @return the number of matching m d r actions
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByUuid_C(java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByUuid_C(java.lang.String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
@@ -525,11 +471,9 @@ public class MDRActionUtil {
 	*
 	* @param ruleGroupInstanceId the rule group instance ID
 	* @return the matching m d r actions
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRAction> findByRuleGroupInstanceId(
-		long ruleGroupInstanceId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long ruleGroupInstanceId) {
 		return getPersistence().findByRuleGroupInstanceId(ruleGroupInstanceId);
 	}
 
@@ -544,11 +488,9 @@ public class MDRActionUtil {
 	* @param start the lower bound of the range of m d r actions
 	* @param end the upper bound of the range of m d r actions (not inclusive)
 	* @return the range of matching m d r actions
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRAction> findByRuleGroupInstanceId(
-		long ruleGroupInstanceId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long ruleGroupInstanceId, int start, int end) {
 		return getPersistence()
 				   .findByRuleGroupInstanceId(ruleGroupInstanceId, start, end);
 	}
@@ -565,12 +507,10 @@ public class MDRActionUtil {
 	* @param end the upper bound of the range of m d r actions (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching m d r actions
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRAction> findByRuleGroupInstanceId(
 		long ruleGroupInstanceId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByRuleGroupInstanceId(ruleGroupInstanceId, start, end,
 			orderByComparator);
@@ -583,13 +523,11 @@ public class MDRActionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching m d r action
 	* @throws com.liferay.portlet.mobiledevicerules.NoSuchActionException if a matching m d r action could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRAction findByRuleGroupInstanceId_First(
 		long ruleGroupInstanceId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.mobiledevicerules.NoSuchActionException {
+		throws com.liferay.portlet.mobiledevicerules.NoSuchActionException {
 		return getPersistence()
 				   .findByRuleGroupInstanceId_First(ruleGroupInstanceId,
 			orderByComparator);
@@ -601,12 +539,10 @@ public class MDRActionUtil {
 	* @param ruleGroupInstanceId the rule group instance ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching m d r action, or <code>null</code> if a matching m d r action could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRAction fetchByRuleGroupInstanceId_First(
 		long ruleGroupInstanceId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByRuleGroupInstanceId_First(ruleGroupInstanceId,
 			orderByComparator);
@@ -619,13 +555,11 @@ public class MDRActionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching m d r action
 	* @throws com.liferay.portlet.mobiledevicerules.NoSuchActionException if a matching m d r action could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRAction findByRuleGroupInstanceId_Last(
 		long ruleGroupInstanceId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.mobiledevicerules.NoSuchActionException {
+		throws com.liferay.portlet.mobiledevicerules.NoSuchActionException {
 		return getPersistence()
 				   .findByRuleGroupInstanceId_Last(ruleGroupInstanceId,
 			orderByComparator);
@@ -637,12 +571,10 @@ public class MDRActionUtil {
 	* @param ruleGroupInstanceId the rule group instance ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching m d r action, or <code>null</code> if a matching m d r action could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRAction fetchByRuleGroupInstanceId_Last(
 		long ruleGroupInstanceId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByRuleGroupInstanceId_Last(ruleGroupInstanceId,
 			orderByComparator);
@@ -656,13 +588,11 @@ public class MDRActionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next m d r action
 	* @throws com.liferay.portlet.mobiledevicerules.NoSuchActionException if a m d r action with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRAction[] findByRuleGroupInstanceId_PrevAndNext(
 		long actionId, long ruleGroupInstanceId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.mobiledevicerules.NoSuchActionException {
+		throws com.liferay.portlet.mobiledevicerules.NoSuchActionException {
 		return getPersistence()
 				   .findByRuleGroupInstanceId_PrevAndNext(actionId,
 			ruleGroupInstanceId, orderByComparator);
@@ -672,10 +602,8 @@ public class MDRActionUtil {
 	* Removes all the m d r actions where ruleGroupInstanceId = &#63; from the database.
 	*
 	* @param ruleGroupInstanceId the rule group instance ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByRuleGroupInstanceId(long ruleGroupInstanceId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByRuleGroupInstanceId(long ruleGroupInstanceId) {
 		getPersistence().removeByRuleGroupInstanceId(ruleGroupInstanceId);
 	}
 
@@ -684,10 +612,8 @@ public class MDRActionUtil {
 	*
 	* @param ruleGroupInstanceId the rule group instance ID
 	* @return the number of matching m d r actions
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByRuleGroupInstanceId(long ruleGroupInstanceId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByRuleGroupInstanceId(long ruleGroupInstanceId) {
 		return getPersistence().countByRuleGroupInstanceId(ruleGroupInstanceId);
 	}
 
@@ -728,18 +654,15 @@ public class MDRActionUtil {
 	* @param actionId the primary key of the m d r action
 	* @return the m d r action that was removed
 	* @throws com.liferay.portlet.mobiledevicerules.NoSuchActionException if a m d r action with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRAction remove(
 		long actionId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.mobiledevicerules.NoSuchActionException {
+		throws com.liferay.portlet.mobiledevicerules.NoSuchActionException {
 		return getPersistence().remove(actionId);
 	}
 
 	public static com.liferay.portlet.mobiledevicerules.model.MDRAction updateImpl(
-		com.liferay.portlet.mobiledevicerules.model.MDRAction mdrAction)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.mobiledevicerules.model.MDRAction mdrAction) {
 		return getPersistence().updateImpl(mdrAction);
 	}
 
@@ -749,12 +672,10 @@ public class MDRActionUtil {
 	* @param actionId the primary key of the m d r action
 	* @return the m d r action
 	* @throws com.liferay.portlet.mobiledevicerules.NoSuchActionException if a m d r action with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRAction findByPrimaryKey(
 		long actionId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.mobiledevicerules.NoSuchActionException {
+		throws com.liferay.portlet.mobiledevicerules.NoSuchActionException {
 		return getPersistence().findByPrimaryKey(actionId);
 	}
 
@@ -763,11 +684,9 @@ public class MDRActionUtil {
 	*
 	* @param actionId the primary key of the m d r action
 	* @return the m d r action, or <code>null</code> if a m d r action with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRAction fetchByPrimaryKey(
-		long actionId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long actionId) {
 		return getPersistence().fetchByPrimaryKey(actionId);
 	}
 
@@ -775,10 +694,8 @@ public class MDRActionUtil {
 	* Returns all the m d r actions.
 	*
 	* @return the m d r actions
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRAction> findAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRAction> findAll() {
 		return getPersistence().findAll();
 	}
 
@@ -792,11 +709,9 @@ public class MDRActionUtil {
 	* @param start the lower bound of the range of m d r actions
 	* @param end the upper bound of the range of m d r actions (not inclusive)
 	* @return the range of m d r actions
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRAction> findAll(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
@@ -811,22 +726,17 @@ public class MDRActionUtil {
 	* @param end the upper bound of the range of m d r actions (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of m d r actions
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRAction> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
 	/**
 	* Removes all the m d r actions from the database.
-	*
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeAll() {
 		getPersistence().removeAll();
 	}
 
@@ -834,10 +744,8 @@ public class MDRActionUtil {
 	* Returns the number of m d r actions.
 	*
 	* @return the number of m d r actions
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countAll() {
 		return getPersistence().countAll();
 	}
 

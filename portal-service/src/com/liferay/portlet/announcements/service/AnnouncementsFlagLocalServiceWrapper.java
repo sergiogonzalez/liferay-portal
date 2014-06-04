@@ -39,12 +39,10 @@ public class AnnouncementsFlagLocalServiceWrapper
 	*
 	* @param announcementsFlag the announcements flag
 	* @return the announcements flag that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.announcements.model.AnnouncementsFlag addAnnouncementsFlag(
-		com.liferay.portlet.announcements.model.AnnouncementsFlag announcementsFlag)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.announcements.model.AnnouncementsFlag announcementsFlag) {
 		return _announcementsFlagLocalService.addAnnouncementsFlag(announcementsFlag);
 	}
 
@@ -66,13 +64,10 @@ public class AnnouncementsFlagLocalServiceWrapper
 	* @param flagId the primary key of the announcements flag
 	* @return the announcements flag that was removed
 	* @throws PortalException if a announcements flag with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.announcements.model.AnnouncementsFlag deleteAnnouncementsFlag(
-		long flagId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		long flagId) throws com.liferay.portal.kernel.exception.PortalException {
 		return _announcementsFlagLocalService.deleteAnnouncementsFlag(flagId);
 	}
 
@@ -81,12 +76,10 @@ public class AnnouncementsFlagLocalServiceWrapper
 	*
 	* @param announcementsFlag the announcements flag
 	* @return the announcements flag that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.announcements.model.AnnouncementsFlag deleteAnnouncementsFlag(
-		com.liferay.portlet.announcements.model.AnnouncementsFlag announcementsFlag)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.announcements.model.AnnouncementsFlag announcementsFlag) {
 		return _announcementsFlagLocalService.deleteAnnouncementsFlag(announcementsFlag);
 	}
 
@@ -100,13 +93,11 @@ public class AnnouncementsFlagLocalServiceWrapper
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _announcementsFlagLocalService.dynamicQuery(dynamicQuery);
 	}
 
@@ -121,13 +112,12 @@ public class AnnouncementsFlagLocalServiceWrapper
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return _announcementsFlagLocalService.dynamicQuery(dynamicQuery, start,
 			end);
 	}
@@ -144,15 +134,13 @@ public class AnnouncementsFlagLocalServiceWrapper
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return _announcementsFlagLocalService.dynamicQuery(dynamicQuery, start,
 			end, orderByComparator);
 	}
@@ -162,12 +150,10 @@ public class AnnouncementsFlagLocalServiceWrapper
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _announcementsFlagLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
@@ -177,20 +163,18 @@ public class AnnouncementsFlagLocalServiceWrapper
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return _announcementsFlagLocalService.dynamicQueryCount(dynamicQuery,
 			projection);
 	}
 
 	@Override
 	public com.liferay.portlet.announcements.model.AnnouncementsFlag fetchAnnouncementsFlag(
-		long flagId) throws com.liferay.portal.kernel.exception.SystemException {
+		long flagId) {
 		return _announcementsFlagLocalService.fetchAnnouncementsFlag(flagId);
 	}
 
@@ -200,27 +184,22 @@ public class AnnouncementsFlagLocalServiceWrapper
 	* @param flagId the primary key of the announcements flag
 	* @return the announcements flag
 	* @throws PortalException if a announcements flag with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.announcements.model.AnnouncementsFlag getAnnouncementsFlag(
-		long flagId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		long flagId) throws com.liferay.portal.kernel.exception.PortalException {
 		return _announcementsFlagLocalService.getAnnouncementsFlag(flagId);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _announcementsFlagLocalService.getActionableDynamicQuery();
 	}
 
 	@Override
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _announcementsFlagLocalService.getPersistedModel(primaryKeyObj);
 	}
 
@@ -234,12 +213,10 @@ public class AnnouncementsFlagLocalServiceWrapper
 	* @param start the lower bound of the range of announcements flags
 	* @param end the upper bound of the range of announcements flags (not inclusive)
 	* @return the range of announcements flags
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portlet.announcements.model.AnnouncementsFlag> getAnnouncementsFlags(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return _announcementsFlagLocalService.getAnnouncementsFlags(start, end);
 	}
 
@@ -247,11 +224,9 @@ public class AnnouncementsFlagLocalServiceWrapper
 	* Returns the number of announcements flags.
 	*
 	* @return the number of announcements flags
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public int getAnnouncementsFlagsCount()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public int getAnnouncementsFlagsCount() {
 		return _announcementsFlagLocalService.getAnnouncementsFlagsCount();
 	}
 
@@ -260,12 +235,10 @@ public class AnnouncementsFlagLocalServiceWrapper
 	*
 	* @param announcementsFlag the announcements flag
 	* @return the announcements flag that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.announcements.model.AnnouncementsFlag updateAnnouncementsFlag(
-		com.liferay.portlet.announcements.model.AnnouncementsFlag announcementsFlag)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.announcements.model.AnnouncementsFlag announcementsFlag) {
 		return _announcementsFlagLocalService.updateAnnouncementsFlag(announcementsFlag);
 	}
 

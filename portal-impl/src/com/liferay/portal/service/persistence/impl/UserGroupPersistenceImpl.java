@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -115,10 +114,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 *
 	 * @param uuid the uuid
 	 * @return the matching user groups
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<UserGroup> findByUuid(String uuid) throws SystemException {
+	public List<UserGroup> findByUuid(String uuid) {
 		return findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -133,11 +131,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param start the lower bound of the range of user groups
 	 * @param end the upper bound of the range of user groups (not inclusive)
 	 * @return the range of matching user groups
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<UserGroup> findByUuid(String uuid, int start, int end)
-		throws SystemException {
+	public List<UserGroup> findByUuid(String uuid, int start, int end) {
 		return findByUuid(uuid, start, end, null);
 	}
 
@@ -153,11 +149,10 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param end the upper bound of the range of user groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching user groups
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<UserGroup> findByUuid(String uuid, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -274,12 +269,10 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching user group
 	 * @throws com.liferay.portal.NoSuchUserGroupException if a matching user group could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserGroup findByUuid_First(String uuid,
-		OrderByComparator orderByComparator)
-		throws NoSuchUserGroupException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchUserGroupException {
 		UserGroup userGroup = fetchByUuid_First(uuid, orderByComparator);
 
 		if (userGroup != null) {
@@ -304,11 +297,10 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching user group, or <code>null</code> if a matching user group could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserGroup fetchByUuid_First(String uuid,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		List<UserGroup> list = findByUuid(uuid, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -325,12 +317,10 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching user group
 	 * @throws com.liferay.portal.NoSuchUserGroupException if a matching user group could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserGroup findByUuid_Last(String uuid,
-		OrderByComparator orderByComparator)
-		throws NoSuchUserGroupException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchUserGroupException {
 		UserGroup userGroup = fetchByUuid_Last(uuid, orderByComparator);
 
 		if (userGroup != null) {
@@ -355,11 +345,10 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching user group, or <code>null</code> if a matching user group could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserGroup fetchByUuid_Last(String uuid,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		int count = countByUuid(uuid);
 
 		if (count == 0) {
@@ -384,12 +373,10 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next user group
 	 * @throws com.liferay.portal.NoSuchUserGroupException if a user group with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserGroup[] findByUuid_PrevAndNext(long userGroupId, String uuid,
-		OrderByComparator orderByComparator)
-		throws NoSuchUserGroupException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchUserGroupException {
 		UserGroup userGroup = findByPrimaryKey(userGroupId);
 
 		Session session = null;
@@ -541,11 +528,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 *
 	 * @param uuid the uuid
 	 * @return the matching user groups that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<UserGroup> filterFindByUuid(String uuid)
-		throws SystemException {
+	public List<UserGroup> filterFindByUuid(String uuid) {
 		return filterFindByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -560,11 +545,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param start the lower bound of the range of user groups
 	 * @param end the upper bound of the range of user groups (not inclusive)
 	 * @return the range of matching user groups that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<UserGroup> filterFindByUuid(String uuid, int start, int end)
-		throws SystemException {
+	public List<UserGroup> filterFindByUuid(String uuid, int start, int end) {
 		return filterFindByUuid(uuid, start, end, null);
 	}
 
@@ -580,11 +563,10 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param end the upper bound of the range of user groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching user groups that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<UserGroup> filterFindByUuid(String uuid, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByUuid(uuid, start, end, orderByComparator);
 		}
@@ -684,12 +666,11 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next user group
 	 * @throws com.liferay.portal.NoSuchUserGroupException if a user group with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserGroup[] filterFindByUuid_PrevAndNext(long userGroupId,
 		String uuid, OrderByComparator orderByComparator)
-		throws NoSuchUserGroupException, SystemException {
+		throws NoSuchUserGroupException {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByUuid_PrevAndNext(userGroupId, uuid, orderByComparator);
 		}
@@ -878,10 +859,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * Removes all the user groups where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByUuid(String uuid) throws SystemException {
+	public void removeByUuid(String uuid) {
 		for (UserGroup userGroup : findByUuid(uuid, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null)) {
 			remove(userGroup);
@@ -893,10 +873,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 *
 	 * @param uuid the uuid
 	 * @return the number of matching user groups
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByUuid(String uuid) throws SystemException {
+	public int countByUuid(String uuid) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_UUID;
 
 		Object[] finderArgs = new Object[] { uuid };
@@ -960,10 +939,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 *
 	 * @param uuid the uuid
 	 * @return the number of matching user groups that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int filterCountByUuid(String uuid) throws SystemException {
+	public int filterCountByUuid(String uuid) {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return countByUuid(uuid);
 		}
@@ -1051,11 +1029,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @return the matching user groups
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<UserGroup> findByUuid_C(String uuid, long companyId)
-		throws SystemException {
+	public List<UserGroup> findByUuid_C(String uuid, long companyId) {
 		return findByUuid_C(uuid, companyId, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
@@ -1072,11 +1048,10 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param start the lower bound of the range of user groups
 	 * @param end the upper bound of the range of user groups (not inclusive)
 	 * @return the range of matching user groups
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<UserGroup> findByUuid_C(String uuid, long companyId, int start,
-		int end) throws SystemException {
+		int end) {
 		return findByUuid_C(uuid, companyId, start, end, null);
 	}
 
@@ -1093,11 +1068,10 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param end the upper bound of the range of user groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching user groups
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<UserGroup> findByUuid_C(String uuid, long companyId, int start,
-		int end, OrderByComparator orderByComparator) throws SystemException {
+		int end, OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1224,12 +1198,10 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching user group
 	 * @throws com.liferay.portal.NoSuchUserGroupException if a matching user group could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserGroup findByUuid_C_First(String uuid, long companyId,
-		OrderByComparator orderByComparator)
-		throws NoSuchUserGroupException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchUserGroupException {
 		UserGroup userGroup = fetchByUuid_C_First(uuid, companyId,
 				orderByComparator);
 
@@ -1259,11 +1231,10 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching user group, or <code>null</code> if a matching user group could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserGroup fetchByUuid_C_First(String uuid, long companyId,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		List<UserGroup> list = findByUuid_C(uuid, companyId, 0, 1,
 				orderByComparator);
 
@@ -1282,12 +1253,10 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching user group
 	 * @throws com.liferay.portal.NoSuchUserGroupException if a matching user group could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserGroup findByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator)
-		throws NoSuchUserGroupException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchUserGroupException {
 		UserGroup userGroup = fetchByUuid_C_Last(uuid, companyId,
 				orderByComparator);
 
@@ -1317,11 +1286,10 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching user group, or <code>null</code> if a matching user group could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserGroup fetchByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		int count = countByUuid_C(uuid, companyId);
 
 		if (count == 0) {
@@ -1347,12 +1315,11 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next user group
 	 * @throws com.liferay.portal.NoSuchUserGroupException if a user group with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserGroup[] findByUuid_C_PrevAndNext(long userGroupId, String uuid,
 		long companyId, OrderByComparator orderByComparator)
-		throws NoSuchUserGroupException, SystemException {
+		throws NoSuchUserGroupException {
 		UserGroup userGroup = findByPrimaryKey(userGroupId);
 
 		Session session = null;
@@ -1509,11 +1476,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @return the matching user groups that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<UserGroup> filterFindByUuid_C(String uuid, long companyId)
-		throws SystemException {
+	public List<UserGroup> filterFindByUuid_C(String uuid, long companyId) {
 		return filterFindByUuid_C(uuid, companyId, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
@@ -1530,11 +1495,10 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param start the lower bound of the range of user groups
 	 * @param end the upper bound of the range of user groups (not inclusive)
 	 * @return the range of matching user groups that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<UserGroup> filterFindByUuid_C(String uuid, long companyId,
-		int start, int end) throws SystemException {
+		int start, int end) {
 		return filterFindByUuid_C(uuid, companyId, start, end, null);
 	}
 
@@ -1551,12 +1515,10 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param end the upper bound of the range of user groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching user groups that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<UserGroup> filterFindByUuid_C(String uuid, long companyId,
-		int start, int end, OrderByComparator orderByComparator)
-		throws SystemException {
+		int start, int end, OrderByComparator orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByUuid_C(uuid, companyId, start, end, orderByComparator);
 		}
@@ -1661,12 +1623,11 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next user group
 	 * @throws com.liferay.portal.NoSuchUserGroupException if a user group with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserGroup[] filterFindByUuid_C_PrevAndNext(long userGroupId,
 		String uuid, long companyId, OrderByComparator orderByComparator)
-		throws NoSuchUserGroupException, SystemException {
+		throws NoSuchUserGroupException {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByUuid_C_PrevAndNext(userGroupId, uuid, companyId,
 				orderByComparator);
@@ -1861,11 +1822,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByUuid_C(String uuid, long companyId)
-		throws SystemException {
+	public void removeByUuid_C(String uuid, long companyId) {
 		for (UserGroup userGroup : findByUuid_C(uuid, companyId,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(userGroup);
@@ -1878,11 +1837,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @return the number of matching user groups
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByUuid_C(String uuid, long companyId)
-		throws SystemException {
+	public int countByUuid_C(String uuid, long companyId) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_UUID_C;
 
 		Object[] finderArgs = new Object[] { uuid, companyId };
@@ -1951,11 +1908,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @return the number of matching user groups that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int filterCountByUuid_C(String uuid, long companyId)
-		throws SystemException {
+	public int filterCountByUuid_C(String uuid, long companyId) {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return countByUuid_C(uuid, companyId);
 		}
@@ -2047,11 +2002,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 *
 	 * @param companyId the company ID
 	 * @return the matching user groups
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<UserGroup> findByCompanyId(long companyId)
-		throws SystemException {
+	public List<UserGroup> findByCompanyId(long companyId) {
 		return findByCompanyId(companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			null);
 	}
@@ -2067,11 +2020,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param start the lower bound of the range of user groups
 	 * @param end the upper bound of the range of user groups (not inclusive)
 	 * @return the range of matching user groups
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<UserGroup> findByCompanyId(long companyId, int start, int end)
-		throws SystemException {
+	public List<UserGroup> findByCompanyId(long companyId, int start, int end) {
 		return findByCompanyId(companyId, start, end, null);
 	}
 
@@ -2087,11 +2038,10 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param end the upper bound of the range of user groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching user groups
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<UserGroup> findByCompanyId(long companyId, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2194,12 +2144,10 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching user group
 	 * @throws com.liferay.portal.NoSuchUserGroupException if a matching user group could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserGroup findByCompanyId_First(long companyId,
-		OrderByComparator orderByComparator)
-		throws NoSuchUserGroupException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchUserGroupException {
 		UserGroup userGroup = fetchByCompanyId_First(companyId,
 				orderByComparator);
 
@@ -2225,11 +2173,10 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching user group, or <code>null</code> if a matching user group could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserGroup fetchByCompanyId_First(long companyId,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		List<UserGroup> list = findByCompanyId(companyId, 0, 1,
 				orderByComparator);
 
@@ -2247,12 +2194,10 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching user group
 	 * @throws com.liferay.portal.NoSuchUserGroupException if a matching user group could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserGroup findByCompanyId_Last(long companyId,
-		OrderByComparator orderByComparator)
-		throws NoSuchUserGroupException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchUserGroupException {
 		UserGroup userGroup = fetchByCompanyId_Last(companyId, orderByComparator);
 
 		if (userGroup != null) {
@@ -2277,11 +2222,10 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching user group, or <code>null</code> if a matching user group could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserGroup fetchByCompanyId_Last(long companyId,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		int count = countByCompanyId(companyId);
 
 		if (count == 0) {
@@ -2306,12 +2250,11 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next user group
 	 * @throws com.liferay.portal.NoSuchUserGroupException if a user group with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserGroup[] findByCompanyId_PrevAndNext(long userGroupId,
 		long companyId, OrderByComparator orderByComparator)
-		throws NoSuchUserGroupException, SystemException {
+		throws NoSuchUserGroupException {
 		UserGroup userGroup = findByPrimaryKey(userGroupId);
 
 		Session session = null;
@@ -2449,11 +2392,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 *
 	 * @param companyId the company ID
 	 * @return the matching user groups that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<UserGroup> filterFindByCompanyId(long companyId)
-		throws SystemException {
+	public List<UserGroup> filterFindByCompanyId(long companyId) {
 		return filterFindByCompanyId(companyId, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
@@ -2469,11 +2410,10 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param start the lower bound of the range of user groups
 	 * @param end the upper bound of the range of user groups (not inclusive)
 	 * @return the range of matching user groups that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<UserGroup> filterFindByCompanyId(long companyId, int start,
-		int end) throws SystemException {
+		int end) {
 		return filterFindByCompanyId(companyId, start, end, null);
 	}
 
@@ -2489,11 +2429,10 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param end the upper bound of the range of user groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching user groups that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<UserGroup> filterFindByCompanyId(long companyId, int start,
-		int end, OrderByComparator orderByComparator) throws SystemException {
+		int end, OrderByComparator orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByCompanyId(companyId, start, end, orderByComparator);
 		}
@@ -2579,12 +2518,11 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next user group
 	 * @throws com.liferay.portal.NoSuchUserGroupException if a user group with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserGroup[] filterFindByCompanyId_PrevAndNext(long userGroupId,
 		long companyId, OrderByComparator orderByComparator)
-		throws NoSuchUserGroupException, SystemException {
+		throws NoSuchUserGroupException {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByCompanyId_PrevAndNext(userGroupId, companyId,
 				orderByComparator);
@@ -2760,10 +2698,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * Removes all the user groups where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByCompanyId(long companyId) throws SystemException {
+	public void removeByCompanyId(long companyId) {
 		for (UserGroup userGroup : findByCompanyId(companyId,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(userGroup);
@@ -2775,10 +2712,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 *
 	 * @param companyId the company ID
 	 * @return the number of matching user groups
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByCompanyId(long companyId) throws SystemException {
+	public int countByCompanyId(long companyId) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_COMPANYID;
 
 		Object[] finderArgs = new Object[] { companyId };
@@ -2828,10 +2764,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 *
 	 * @param companyId the company ID
 	 * @return the number of matching user groups that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int filterCountByCompanyId(long companyId) throws SystemException {
+	public int filterCountByCompanyId(long companyId) {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return countByCompanyId(companyId);
 		}
@@ -2899,11 +2834,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param companyId the company ID
 	 * @param parentUserGroupId the parent user group ID
 	 * @return the matching user groups
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<UserGroup> findByC_P(long companyId, long parentUserGroupId)
-		throws SystemException {
+	public List<UserGroup> findByC_P(long companyId, long parentUserGroupId) {
 		return findByC_P(companyId, parentUserGroupId, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
@@ -2920,11 +2853,10 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param start the lower bound of the range of user groups
 	 * @param end the upper bound of the range of user groups (not inclusive)
 	 * @return the range of matching user groups
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<UserGroup> findByC_P(long companyId, long parentUserGroupId,
-		int start, int end) throws SystemException {
+		int start, int end) {
 		return findByC_P(companyId, parentUserGroupId, start, end, null);
 	}
 
@@ -2941,12 +2873,10 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param end the upper bound of the range of user groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching user groups
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<UserGroup> findByC_P(long companyId, long parentUserGroupId,
-		int start, int end, OrderByComparator orderByComparator)
-		throws SystemException {
+		int start, int end, OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -3059,12 +2989,10 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching user group
 	 * @throws com.liferay.portal.NoSuchUserGroupException if a matching user group could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserGroup findByC_P_First(long companyId, long parentUserGroupId,
-		OrderByComparator orderByComparator)
-		throws NoSuchUserGroupException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchUserGroupException {
 		UserGroup userGroup = fetchByC_P_First(companyId, parentUserGroupId,
 				orderByComparator);
 
@@ -3094,11 +3022,10 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param parentUserGroupId the parent user group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching user group, or <code>null</code> if a matching user group could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserGroup fetchByC_P_First(long companyId, long parentUserGroupId,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		List<UserGroup> list = findByC_P(companyId, parentUserGroupId, 0, 1,
 				orderByComparator);
 
@@ -3117,12 +3044,10 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching user group
 	 * @throws com.liferay.portal.NoSuchUserGroupException if a matching user group could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserGroup findByC_P_Last(long companyId, long parentUserGroupId,
-		OrderByComparator orderByComparator)
-		throws NoSuchUserGroupException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchUserGroupException {
 		UserGroup userGroup = fetchByC_P_Last(companyId, parentUserGroupId,
 				orderByComparator);
 
@@ -3152,11 +3077,10 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param parentUserGroupId the parent user group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching user group, or <code>null</code> if a matching user group could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserGroup fetchByC_P_Last(long companyId, long parentUserGroupId,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		int count = countByC_P(companyId, parentUserGroupId);
 
 		if (count == 0) {
@@ -3182,12 +3106,11 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next user group
 	 * @throws com.liferay.portal.NoSuchUserGroupException if a user group with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserGroup[] findByC_P_PrevAndNext(long userGroupId, long companyId,
 		long parentUserGroupId, OrderByComparator orderByComparator)
-		throws NoSuchUserGroupException, SystemException {
+		throws NoSuchUserGroupException {
 		UserGroup userGroup = findByPrimaryKey(userGroupId);
 
 		Session session = null;
@@ -3330,11 +3253,10 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param companyId the company ID
 	 * @param parentUserGroupId the parent user group ID
 	 * @return the matching user groups that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<UserGroup> filterFindByC_P(long companyId,
-		long parentUserGroupId) throws SystemException {
+		long parentUserGroupId) {
 		return filterFindByC_P(companyId, parentUserGroupId, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
@@ -3351,11 +3273,10 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param start the lower bound of the range of user groups
 	 * @param end the upper bound of the range of user groups (not inclusive)
 	 * @return the range of matching user groups that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<UserGroup> filterFindByC_P(long companyId,
-		long parentUserGroupId, int start, int end) throws SystemException {
+		long parentUserGroupId, int start, int end) {
 		return filterFindByC_P(companyId, parentUserGroupId, start, end, null);
 	}
 
@@ -3372,12 +3293,11 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param end the upper bound of the range of user groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching user groups that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<UserGroup> filterFindByC_P(long companyId,
 		long parentUserGroupId, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByC_P(companyId, parentUserGroupId, start, end,
 				orderByComparator);
@@ -3469,13 +3389,11 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next user group
 	 * @throws com.liferay.portal.NoSuchUserGroupException if a user group with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserGroup[] filterFindByC_P_PrevAndNext(long userGroupId,
 		long companyId, long parentUserGroupId,
-		OrderByComparator orderByComparator)
-		throws NoSuchUserGroupException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchUserGroupException {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return findByC_P_PrevAndNext(userGroupId, companyId,
 				parentUserGroupId, orderByComparator);
@@ -3656,11 +3574,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 *
 	 * @param companyId the company ID
 	 * @param parentUserGroupId the parent user group ID
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByC_P(long companyId, long parentUserGroupId)
-		throws SystemException {
+	public void removeByC_P(long companyId, long parentUserGroupId) {
 		for (UserGroup userGroup : findByC_P(companyId, parentUserGroupId,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(userGroup);
@@ -3673,11 +3589,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param companyId the company ID
 	 * @param parentUserGroupId the parent user group ID
 	 * @return the number of matching user groups
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByC_P(long companyId, long parentUserGroupId)
-		throws SystemException {
+	public int countByC_P(long companyId, long parentUserGroupId) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_P;
 
 		Object[] finderArgs = new Object[] { companyId, parentUserGroupId };
@@ -3732,11 +3646,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param companyId the company ID
 	 * @param parentUserGroupId the parent user group ID
 	 * @return the number of matching user groups that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int filterCountByC_P(long companyId, long parentUserGroupId)
-		throws SystemException {
+	public int filterCountByC_P(long companyId, long parentUserGroupId) {
 		if (!InlineSQLHelperUtil.isEnabled()) {
 			return countByC_P(companyId, parentUserGroupId);
 		}
@@ -3800,11 +3712,10 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param name the name
 	 * @return the matching user group
 	 * @throws com.liferay.portal.NoSuchUserGroupException if a matching user group could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserGroup findByC_N(long companyId, String name)
-		throws NoSuchUserGroupException, SystemException {
+		throws NoSuchUserGroupException {
 		UserGroup userGroup = fetchByC_N(companyId, name);
 
 		if (userGroup == null) {
@@ -3836,11 +3747,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param companyId the company ID
 	 * @param name the name
 	 * @return the matching user group, or <code>null</code> if a matching user group could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public UserGroup fetchByC_N(long companyId, String name)
-		throws SystemException {
+	public UserGroup fetchByC_N(long companyId, String name) {
 		return fetchByC_N(companyId, name, true);
 	}
 
@@ -3851,11 +3760,10 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param name the name
 	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching user group, or <code>null</code> if a matching user group could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserGroup fetchByC_N(long companyId, String name,
-		boolean retrieveFromCache) throws SystemException {
+		boolean retrieveFromCache) {
 		Object[] finderArgs = new Object[] { companyId, name };
 
 		Object result = null;
@@ -3958,11 +3866,10 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param companyId the company ID
 	 * @param name the name
 	 * @return the user group that was removed
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserGroup removeByC_N(long companyId, String name)
-		throws NoSuchUserGroupException, SystemException {
+		throws NoSuchUserGroupException {
 		UserGroup userGroup = findByC_N(companyId, name);
 
 		return remove(userGroup);
@@ -3974,11 +3881,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param companyId the company ID
 	 * @param name the name
 	 * @return the number of matching user groups
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByC_N(long companyId, String name)
-		throws SystemException {
+	public int countByC_N(long companyId, String name) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_N;
 
 		Object[] finderArgs = new Object[] { companyId, name };
@@ -4212,11 +4117,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param userGroupId the primary key of the user group
 	 * @return the user group that was removed
 	 * @throws com.liferay.portal.NoSuchUserGroupException if a user group with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public UserGroup remove(long userGroupId)
-		throws NoSuchUserGroupException, SystemException {
+	public UserGroup remove(long userGroupId) throws NoSuchUserGroupException {
 		return remove((Serializable)userGroupId);
 	}
 
@@ -4226,11 +4129,10 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param primaryKey the primary key of the user group
 	 * @return the user group that was removed
 	 * @throws com.liferay.portal.NoSuchUserGroupException if a user group with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserGroup remove(Serializable primaryKey)
-		throws NoSuchUserGroupException, SystemException {
+		throws NoSuchUserGroupException {
 		Session session = null;
 
 		try {
@@ -4262,8 +4164,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	}
 
 	@Override
-	protected UserGroup removeImpl(UserGroup userGroup)
-		throws SystemException {
+	protected UserGroup removeImpl(UserGroup userGroup) {
 		userGroup = toUnwrappedModel(userGroup);
 
 		userGroupToGroupTableMapper.deleteLeftPrimaryKeyTableMappings(userGroup.getPrimaryKey());
@@ -4301,8 +4202,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	}
 
 	@Override
-	public UserGroup updateImpl(com.liferay.portal.model.UserGroup userGroup)
-		throws SystemException {
+	public UserGroup updateImpl(com.liferay.portal.model.UserGroup userGroup) {
 		userGroup = toUnwrappedModel(userGroup);
 
 		boolean isNew = userGroup.isNew();
@@ -4465,11 +4365,10 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param primaryKey the primary key of the user group
 	 * @return the user group
 	 * @throws com.liferay.portal.NoSuchUserGroupException if a user group with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserGroup findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchUserGroupException, SystemException {
+		throws NoSuchUserGroupException {
 		UserGroup userGroup = fetchByPrimaryKey(primaryKey);
 
 		if (userGroup == null) {
@@ -4490,11 +4389,10 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param userGroupId the primary key of the user group
 	 * @return the user group
 	 * @throws com.liferay.portal.NoSuchUserGroupException if a user group with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserGroup findByPrimaryKey(long userGroupId)
-		throws NoSuchUserGroupException, SystemException {
+		throws NoSuchUserGroupException {
 		return findByPrimaryKey((Serializable)userGroupId);
 	}
 
@@ -4503,11 +4401,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 *
 	 * @param primaryKey the primary key of the user group
 	 * @return the user group, or <code>null</code> if a user group with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public UserGroup fetchByPrimaryKey(Serializable primaryKey)
-		throws SystemException {
+	public UserGroup fetchByPrimaryKey(Serializable primaryKey) {
 		UserGroup userGroup = (UserGroup)EntityCacheUtil.getResult(UserGroupModelImpl.ENTITY_CACHE_ENABLED,
 				UserGroupImpl.class, primaryKey);
 
@@ -4551,11 +4447,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 *
 	 * @param userGroupId the primary key of the user group
 	 * @return the user group, or <code>null</code> if a user group with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public UserGroup fetchByPrimaryKey(long userGroupId)
-		throws SystemException {
+	public UserGroup fetchByPrimaryKey(long userGroupId) {
 		return fetchByPrimaryKey((Serializable)userGroupId);
 	}
 
@@ -4563,10 +4457,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * Returns all the user groups.
 	 *
 	 * @return the user groups
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<UserGroup> findAll() throws SystemException {
+	public List<UserGroup> findAll() {
 		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -4580,11 +4473,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param start the lower bound of the range of user groups
 	 * @param end the upper bound of the range of user groups (not inclusive)
 	 * @return the range of user groups
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<UserGroup> findAll(int start, int end)
-		throws SystemException {
+	public List<UserGroup> findAll(int start, int end) {
 		return findAll(start, end, null);
 	}
 
@@ -4599,11 +4490,10 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param end the upper bound of the range of user groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of user groups
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<UserGroup> findAll(int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -4685,10 +4575,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	/**
 	 * Removes all the user groups from the database.
 	 *
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeAll() throws SystemException {
+	public void removeAll() {
 		for (UserGroup userGroup : findAll()) {
 			remove(userGroup);
 		}
@@ -4698,10 +4587,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * Returns the number of user groups.
 	 *
 	 * @return the number of user groups
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countAll() throws SystemException {
+	public int countAll() {
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
 				FINDER_ARGS_EMPTY, this);
 
@@ -4737,10 +4625,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 *
 	 * @param pk the primary key of the user group
 	 * @return long[] of the primaryKeys of groups associated with the user group
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public long[] getGroupPrimaryKeys(long pk) throws SystemException {
+	public long[] getGroupPrimaryKeys(long pk) {
 		long[] pks = userGroupToGroupTableMapper.getRightPrimaryKeys(pk);
 
 		return pks.clone();
@@ -4751,11 +4638,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 *
 	 * @param pk the primary key of the user group
 	 * @return the groups associated with the user group
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<com.liferay.portal.model.Group> getGroups(long pk)
-		throws SystemException {
+	public List<com.liferay.portal.model.Group> getGroups(long pk) {
 		return getGroups(pk, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
@@ -4770,11 +4655,10 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param start the lower bound of the range of user groups
 	 * @param end the upper bound of the range of user groups (not inclusive)
 	 * @return the range of groups associated with the user group
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<com.liferay.portal.model.Group> getGroups(long pk, int start,
-		int end) throws SystemException {
+		int end) {
 		return getGroups(pk, start, end, null);
 	}
 
@@ -4790,11 +4674,10 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param end the upper bound of the range of user groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of groups associated with the user group
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<com.liferay.portal.model.Group> getGroups(long pk, int start,
-		int end, OrderByComparator orderByComparator) throws SystemException {
+		int end, OrderByComparator orderByComparator) {
 		return userGroupToGroupTableMapper.getRightBaseModels(pk, start, end,
 			orderByComparator);
 	}
@@ -4804,10 +4687,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 *
 	 * @param pk the primary key of the user group
 	 * @return the number of groups associated with the user group
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int getGroupsSize(long pk) throws SystemException {
+	public int getGroupsSize(long pk) {
 		long[] pks = userGroupToGroupTableMapper.getRightPrimaryKeys(pk);
 
 		return pks.length;
@@ -4819,11 +4701,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param pk the primary key of the user group
 	 * @param groupPK the primary key of the group
 	 * @return <code>true</code> if the group is associated with the user group; <code>false</code> otherwise
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public boolean containsGroup(long pk, long groupPK)
-		throws SystemException {
+	public boolean containsGroup(long pk, long groupPK) {
 		return userGroupToGroupTableMapper.containsTableMapping(pk, groupPK);
 	}
 
@@ -4832,10 +4712,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 *
 	 * @param pk the primary key of the user group to check for associations with groups
 	 * @return <code>true</code> if the user group has any groups associated with it; <code>false</code> otherwise
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public boolean containsGroups(long pk) throws SystemException {
+	public boolean containsGroups(long pk) {
 		if (getGroupsSize(pk) > 0) {
 			return true;
 		}
@@ -4849,10 +4728,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 *
 	 * @param pk the primary key of the user group
 	 * @param groupPK the primary key of the group
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void addGroup(long pk, long groupPK) throws SystemException {
+	public void addGroup(long pk, long groupPK) {
 		userGroupToGroupTableMapper.addTableMapping(pk, groupPK);
 	}
 
@@ -4861,11 +4739,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 *
 	 * @param pk the primary key of the user group
 	 * @param group the group
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void addGroup(long pk, com.liferay.portal.model.Group group)
-		throws SystemException {
+	public void addGroup(long pk, com.liferay.portal.model.Group group) {
 		userGroupToGroupTableMapper.addTableMapping(pk, group.getPrimaryKey());
 	}
 
@@ -4874,10 +4750,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 *
 	 * @param pk the primary key of the user group
 	 * @param groupPKs the primary keys of the groups
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void addGroups(long pk, long[] groupPKs) throws SystemException {
+	public void addGroups(long pk, long[] groupPKs) {
 		for (long groupPK : groupPKs) {
 			userGroupToGroupTableMapper.addTableMapping(pk, groupPK);
 		}
@@ -4888,11 +4763,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 *
 	 * @param pk the primary key of the user group
 	 * @param groups the groups
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void addGroups(long pk, List<com.liferay.portal.model.Group> groups)
-		throws SystemException {
+	public void addGroups(long pk, List<com.liferay.portal.model.Group> groups) {
 		for (com.liferay.portal.model.Group group : groups) {
 			userGroupToGroupTableMapper.addTableMapping(pk,
 				group.getPrimaryKey());
@@ -4903,10 +4776,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * Clears all associations between the user group and its groups. Also notifies the appropriate model listeners and clears the mapping table finder cache.
 	 *
 	 * @param pk the primary key of the user group to clear the associated groups from
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void clearGroups(long pk) throws SystemException {
+	public void clearGroups(long pk) {
 		userGroupToGroupTableMapper.deleteLeftPrimaryKeyTableMappings(pk);
 	}
 
@@ -4915,10 +4787,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 *
 	 * @param pk the primary key of the user group
 	 * @param groupPK the primary key of the group
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeGroup(long pk, long groupPK) throws SystemException {
+	public void removeGroup(long pk, long groupPK) {
 		userGroupToGroupTableMapper.deleteTableMapping(pk, groupPK);
 	}
 
@@ -4927,11 +4798,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 *
 	 * @param pk the primary key of the user group
 	 * @param group the group
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeGroup(long pk, com.liferay.portal.model.Group group)
-		throws SystemException {
+	public void removeGroup(long pk, com.liferay.portal.model.Group group) {
 		userGroupToGroupTableMapper.deleteTableMapping(pk, group.getPrimaryKey());
 	}
 
@@ -4940,11 +4809,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 *
 	 * @param pk the primary key of the user group
 	 * @param groupPKs the primary keys of the groups
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeGroups(long pk, long[] groupPKs)
-		throws SystemException {
+	public void removeGroups(long pk, long[] groupPKs) {
 		for (long groupPK : groupPKs) {
 			userGroupToGroupTableMapper.deleteTableMapping(pk, groupPK);
 		}
@@ -4955,11 +4822,10 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 *
 	 * @param pk the primary key of the user group
 	 * @param groups the groups
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public void removeGroups(long pk,
-		List<com.liferay.portal.model.Group> groups) throws SystemException {
+		List<com.liferay.portal.model.Group> groups) {
 		for (com.liferay.portal.model.Group group : groups) {
 			userGroupToGroupTableMapper.deleteTableMapping(pk,
 				group.getPrimaryKey());
@@ -4971,10 +4837,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 *
 	 * @param pk the primary key of the user group
 	 * @param groupPKs the primary keys of the groups to be associated with the user group
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void setGroups(long pk, long[] groupPKs) throws SystemException {
+	public void setGroups(long pk, long[] groupPKs) {
 		Set<Long> newGroupPKsSet = SetUtil.fromArray(groupPKs);
 		Set<Long> oldGroupPKsSet = SetUtil.fromArray(userGroupToGroupTableMapper.getRightPrimaryKeys(
 					pk));
@@ -4999,11 +4864,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 *
 	 * @param pk the primary key of the user group
 	 * @param groups the groups to be associated with the user group
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void setGroups(long pk, List<com.liferay.portal.model.Group> groups)
-		throws SystemException {
+	public void setGroups(long pk, List<com.liferay.portal.model.Group> groups) {
 		try {
 			long[] groupPKs = new long[groups.size()];
 
@@ -5025,10 +4888,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 *
 	 * @param pk the primary key of the user group
 	 * @return long[] of the primaryKeys of teams associated with the user group
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public long[] getTeamPrimaryKeys(long pk) throws SystemException {
+	public long[] getTeamPrimaryKeys(long pk) {
 		long[] pks = userGroupToTeamTableMapper.getRightPrimaryKeys(pk);
 
 		return pks.clone();
@@ -5039,11 +4901,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 *
 	 * @param pk the primary key of the user group
 	 * @return the teams associated with the user group
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<com.liferay.portal.model.Team> getTeams(long pk)
-		throws SystemException {
+	public List<com.liferay.portal.model.Team> getTeams(long pk) {
 		return getTeams(pk, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
@@ -5058,11 +4918,10 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param start the lower bound of the range of user groups
 	 * @param end the upper bound of the range of user groups (not inclusive)
 	 * @return the range of teams associated with the user group
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<com.liferay.portal.model.Team> getTeams(long pk, int start,
-		int end) throws SystemException {
+		int end) {
 		return getTeams(pk, start, end, null);
 	}
 
@@ -5078,11 +4937,10 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param end the upper bound of the range of user groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of teams associated with the user group
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<com.liferay.portal.model.Team> getTeams(long pk, int start,
-		int end, OrderByComparator orderByComparator) throws SystemException {
+		int end, OrderByComparator orderByComparator) {
 		return userGroupToTeamTableMapper.getRightBaseModels(pk, start, end,
 			orderByComparator);
 	}
@@ -5092,10 +4950,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 *
 	 * @param pk the primary key of the user group
 	 * @return the number of teams associated with the user group
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int getTeamsSize(long pk) throws SystemException {
+	public int getTeamsSize(long pk) {
 		long[] pks = userGroupToTeamTableMapper.getRightPrimaryKeys(pk);
 
 		return pks.length;
@@ -5107,10 +4964,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param pk the primary key of the user group
 	 * @param teamPK the primary key of the team
 	 * @return <code>true</code> if the team is associated with the user group; <code>false</code> otherwise
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public boolean containsTeam(long pk, long teamPK) throws SystemException {
+	public boolean containsTeam(long pk, long teamPK) {
 		return userGroupToTeamTableMapper.containsTableMapping(pk, teamPK);
 	}
 
@@ -5119,10 +4975,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 *
 	 * @param pk the primary key of the user group to check for associations with teams
 	 * @return <code>true</code> if the user group has any teams associated with it; <code>false</code> otherwise
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public boolean containsTeams(long pk) throws SystemException {
+	public boolean containsTeams(long pk) {
 		if (getTeamsSize(pk) > 0) {
 			return true;
 		}
@@ -5136,10 +4991,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 *
 	 * @param pk the primary key of the user group
 	 * @param teamPK the primary key of the team
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void addTeam(long pk, long teamPK) throws SystemException {
+	public void addTeam(long pk, long teamPK) {
 		userGroupToTeamTableMapper.addTableMapping(pk, teamPK);
 	}
 
@@ -5148,11 +5002,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 *
 	 * @param pk the primary key of the user group
 	 * @param team the team
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void addTeam(long pk, com.liferay.portal.model.Team team)
-		throws SystemException {
+	public void addTeam(long pk, com.liferay.portal.model.Team team) {
 		userGroupToTeamTableMapper.addTableMapping(pk, team.getPrimaryKey());
 	}
 
@@ -5161,10 +5013,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 *
 	 * @param pk the primary key of the user group
 	 * @param teamPKs the primary keys of the teams
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void addTeams(long pk, long[] teamPKs) throws SystemException {
+	public void addTeams(long pk, long[] teamPKs) {
 		for (long teamPK : teamPKs) {
 			userGroupToTeamTableMapper.addTableMapping(pk, teamPK);
 		}
@@ -5175,11 +5026,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 *
 	 * @param pk the primary key of the user group
 	 * @param teams the teams
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void addTeams(long pk, List<com.liferay.portal.model.Team> teams)
-		throws SystemException {
+	public void addTeams(long pk, List<com.liferay.portal.model.Team> teams) {
 		for (com.liferay.portal.model.Team team : teams) {
 			userGroupToTeamTableMapper.addTableMapping(pk, team.getPrimaryKey());
 		}
@@ -5189,10 +5038,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * Clears all associations between the user group and its teams. Also notifies the appropriate model listeners and clears the mapping table finder cache.
 	 *
 	 * @param pk the primary key of the user group to clear the associated teams from
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void clearTeams(long pk) throws SystemException {
+	public void clearTeams(long pk) {
 		userGroupToTeamTableMapper.deleteLeftPrimaryKeyTableMappings(pk);
 	}
 
@@ -5201,10 +5049,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 *
 	 * @param pk the primary key of the user group
 	 * @param teamPK the primary key of the team
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeTeam(long pk, long teamPK) throws SystemException {
+	public void removeTeam(long pk, long teamPK) {
 		userGroupToTeamTableMapper.deleteTableMapping(pk, teamPK);
 	}
 
@@ -5213,11 +5060,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 *
 	 * @param pk the primary key of the user group
 	 * @param team the team
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeTeam(long pk, com.liferay.portal.model.Team team)
-		throws SystemException {
+	public void removeTeam(long pk, com.liferay.portal.model.Team team) {
 		userGroupToTeamTableMapper.deleteTableMapping(pk, team.getPrimaryKey());
 	}
 
@@ -5226,10 +5071,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 *
 	 * @param pk the primary key of the user group
 	 * @param teamPKs the primary keys of the teams
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeTeams(long pk, long[] teamPKs) throws SystemException {
+	public void removeTeams(long pk, long[] teamPKs) {
 		for (long teamPK : teamPKs) {
 			userGroupToTeamTableMapper.deleteTableMapping(pk, teamPK);
 		}
@@ -5240,11 +5084,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 *
 	 * @param pk the primary key of the user group
 	 * @param teams the teams
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeTeams(long pk, List<com.liferay.portal.model.Team> teams)
-		throws SystemException {
+	public void removeTeams(long pk, List<com.liferay.portal.model.Team> teams) {
 		for (com.liferay.portal.model.Team team : teams) {
 			userGroupToTeamTableMapper.deleteTableMapping(pk,
 				team.getPrimaryKey());
@@ -5256,10 +5098,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 *
 	 * @param pk the primary key of the user group
 	 * @param teamPKs the primary keys of the teams to be associated with the user group
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void setTeams(long pk, long[] teamPKs) throws SystemException {
+	public void setTeams(long pk, long[] teamPKs) {
 		Set<Long> newTeamPKsSet = SetUtil.fromArray(teamPKs);
 		Set<Long> oldTeamPKsSet = SetUtil.fromArray(userGroupToTeamTableMapper.getRightPrimaryKeys(
 					pk));
@@ -5284,11 +5125,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 *
 	 * @param pk the primary key of the user group
 	 * @param teams the teams to be associated with the user group
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void setTeams(long pk, List<com.liferay.portal.model.Team> teams)
-		throws SystemException {
+	public void setTeams(long pk, List<com.liferay.portal.model.Team> teams) {
 		try {
 			long[] teamPKs = new long[teams.size()];
 
@@ -5310,10 +5149,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 *
 	 * @param pk the primary key of the user group
 	 * @return long[] of the primaryKeys of users associated with the user group
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public long[] getUserPrimaryKeys(long pk) throws SystemException {
+	public long[] getUserPrimaryKeys(long pk) {
 		long[] pks = userGroupToUserTableMapper.getRightPrimaryKeys(pk);
 
 		return pks.clone();
@@ -5324,11 +5162,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 *
 	 * @param pk the primary key of the user group
 	 * @return the users associated with the user group
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<com.liferay.portal.model.User> getUsers(long pk)
-		throws SystemException {
+	public List<com.liferay.portal.model.User> getUsers(long pk) {
 		return getUsers(pk, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
@@ -5343,11 +5179,10 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param start the lower bound of the range of user groups
 	 * @param end the upper bound of the range of user groups (not inclusive)
 	 * @return the range of users associated with the user group
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<com.liferay.portal.model.User> getUsers(long pk, int start,
-		int end) throws SystemException {
+		int end) {
 		return getUsers(pk, start, end, null);
 	}
 
@@ -5363,11 +5198,10 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param end the upper bound of the range of user groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of users associated with the user group
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<com.liferay.portal.model.User> getUsers(long pk, int start,
-		int end, OrderByComparator orderByComparator) throws SystemException {
+		int end, OrderByComparator orderByComparator) {
 		return userGroupToUserTableMapper.getRightBaseModels(pk, start, end,
 			orderByComparator);
 	}
@@ -5377,10 +5211,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 *
 	 * @param pk the primary key of the user group
 	 * @return the number of users associated with the user group
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int getUsersSize(long pk) throws SystemException {
+	public int getUsersSize(long pk) {
 		long[] pks = userGroupToUserTableMapper.getRightPrimaryKeys(pk);
 
 		return pks.length;
@@ -5392,10 +5225,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * @param pk the primary key of the user group
 	 * @param userPK the primary key of the user
 	 * @return <code>true</code> if the user is associated with the user group; <code>false</code> otherwise
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public boolean containsUser(long pk, long userPK) throws SystemException {
+	public boolean containsUser(long pk, long userPK) {
 		return userGroupToUserTableMapper.containsTableMapping(pk, userPK);
 	}
 
@@ -5404,10 +5236,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 *
 	 * @param pk the primary key of the user group to check for associations with users
 	 * @return <code>true</code> if the user group has any users associated with it; <code>false</code> otherwise
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public boolean containsUsers(long pk) throws SystemException {
+	public boolean containsUsers(long pk) {
 		if (getUsersSize(pk) > 0) {
 			return true;
 		}
@@ -5421,10 +5252,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 *
 	 * @param pk the primary key of the user group
 	 * @param userPK the primary key of the user
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void addUser(long pk, long userPK) throws SystemException {
+	public void addUser(long pk, long userPK) {
 		userGroupToUserTableMapper.addTableMapping(pk, userPK);
 	}
 
@@ -5433,11 +5263,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 *
 	 * @param pk the primary key of the user group
 	 * @param user the user
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void addUser(long pk, com.liferay.portal.model.User user)
-		throws SystemException {
+	public void addUser(long pk, com.liferay.portal.model.User user) {
 		userGroupToUserTableMapper.addTableMapping(pk, user.getPrimaryKey());
 	}
 
@@ -5446,10 +5274,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 *
 	 * @param pk the primary key of the user group
 	 * @param userPKs the primary keys of the users
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void addUsers(long pk, long[] userPKs) throws SystemException {
+	public void addUsers(long pk, long[] userPKs) {
 		for (long userPK : userPKs) {
 			userGroupToUserTableMapper.addTableMapping(pk, userPK);
 		}
@@ -5460,11 +5287,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 *
 	 * @param pk the primary key of the user group
 	 * @param users the users
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void addUsers(long pk, List<com.liferay.portal.model.User> users)
-		throws SystemException {
+	public void addUsers(long pk, List<com.liferay.portal.model.User> users) {
 		for (com.liferay.portal.model.User user : users) {
 			userGroupToUserTableMapper.addTableMapping(pk, user.getPrimaryKey());
 		}
@@ -5474,10 +5299,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 * Clears all associations between the user group and its users. Also notifies the appropriate model listeners and clears the mapping table finder cache.
 	 *
 	 * @param pk the primary key of the user group to clear the associated users from
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void clearUsers(long pk) throws SystemException {
+	public void clearUsers(long pk) {
 		userGroupToUserTableMapper.deleteLeftPrimaryKeyTableMappings(pk);
 	}
 
@@ -5486,10 +5310,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 *
 	 * @param pk the primary key of the user group
 	 * @param userPK the primary key of the user
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeUser(long pk, long userPK) throws SystemException {
+	public void removeUser(long pk, long userPK) {
 		userGroupToUserTableMapper.deleteTableMapping(pk, userPK);
 	}
 
@@ -5498,11 +5321,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 *
 	 * @param pk the primary key of the user group
 	 * @param user the user
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeUser(long pk, com.liferay.portal.model.User user)
-		throws SystemException {
+	public void removeUser(long pk, com.liferay.portal.model.User user) {
 		userGroupToUserTableMapper.deleteTableMapping(pk, user.getPrimaryKey());
 	}
 
@@ -5511,10 +5332,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 *
 	 * @param pk the primary key of the user group
 	 * @param userPKs the primary keys of the users
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeUsers(long pk, long[] userPKs) throws SystemException {
+	public void removeUsers(long pk, long[] userPKs) {
 		for (long userPK : userPKs) {
 			userGroupToUserTableMapper.deleteTableMapping(pk, userPK);
 		}
@@ -5525,11 +5345,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 *
 	 * @param pk the primary key of the user group
 	 * @param users the users
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeUsers(long pk, List<com.liferay.portal.model.User> users)
-		throws SystemException {
+	public void removeUsers(long pk, List<com.liferay.portal.model.User> users) {
 		for (com.liferay.portal.model.User user : users) {
 			userGroupToUserTableMapper.deleteTableMapping(pk,
 				user.getPrimaryKey());
@@ -5541,10 +5359,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 *
 	 * @param pk the primary key of the user group
 	 * @param userPKs the primary keys of the users to be associated with the user group
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void setUsers(long pk, long[] userPKs) throws SystemException {
+	public void setUsers(long pk, long[] userPKs) {
 		Set<Long> newUserPKsSet = SetUtil.fromArray(userPKs);
 		Set<Long> oldUserPKsSet = SetUtil.fromArray(userGroupToUserTableMapper.getRightPrimaryKeys(
 					pk));
@@ -5569,11 +5386,9 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 *
 	 * @param pk the primary key of the user group
 	 * @param users the users to be associated with the user group
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void setUsers(long pk, List<com.liferay.portal.model.User> users)
-		throws SystemException {
+	public void setUsers(long pk, List<com.liferay.portal.model.User> users) {
 		try {
 			long[] userPKs = new long[users.size()];
 

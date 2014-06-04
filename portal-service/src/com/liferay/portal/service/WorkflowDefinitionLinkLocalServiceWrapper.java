@@ -37,12 +37,10 @@ public class WorkflowDefinitionLinkLocalServiceWrapper
 	*
 	* @param workflowDefinitionLink the workflow definition link
 	* @return the workflow definition link that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.WorkflowDefinitionLink addWorkflowDefinitionLink(
-		com.liferay.portal.model.WorkflowDefinitionLink workflowDefinitionLink)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.WorkflowDefinitionLink workflowDefinitionLink) {
 		return _workflowDefinitionLinkLocalService.addWorkflowDefinitionLink(workflowDefinitionLink);
 	}
 
@@ -64,13 +62,11 @@ public class WorkflowDefinitionLinkLocalServiceWrapper
 	* @param workflowDefinitionLinkId the primary key of the workflow definition link
 	* @return the workflow definition link that was removed
 	* @throws PortalException if a workflow definition link with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.WorkflowDefinitionLink deleteWorkflowDefinitionLink(
 		long workflowDefinitionLinkId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _workflowDefinitionLinkLocalService.deleteWorkflowDefinitionLink(workflowDefinitionLinkId);
 	}
 
@@ -79,12 +75,10 @@ public class WorkflowDefinitionLinkLocalServiceWrapper
 	*
 	* @param workflowDefinitionLink the workflow definition link
 	* @return the workflow definition link that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.WorkflowDefinitionLink deleteWorkflowDefinitionLink(
-		com.liferay.portal.model.WorkflowDefinitionLink workflowDefinitionLink)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.WorkflowDefinitionLink workflowDefinitionLink) {
 		return _workflowDefinitionLinkLocalService.deleteWorkflowDefinitionLink(workflowDefinitionLink);
 	}
 
@@ -98,13 +92,11 @@ public class WorkflowDefinitionLinkLocalServiceWrapper
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _workflowDefinitionLinkLocalService.dynamicQuery(dynamicQuery);
 	}
 
@@ -119,13 +111,12 @@ public class WorkflowDefinitionLinkLocalServiceWrapper
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return _workflowDefinitionLinkLocalService.dynamicQuery(dynamicQuery,
 			start, end);
 	}
@@ -142,15 +133,13 @@ public class WorkflowDefinitionLinkLocalServiceWrapper
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return _workflowDefinitionLinkLocalService.dynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
 	}
@@ -160,12 +149,10 @@ public class WorkflowDefinitionLinkLocalServiceWrapper
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _workflowDefinitionLinkLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
@@ -175,21 +162,18 @@ public class WorkflowDefinitionLinkLocalServiceWrapper
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return _workflowDefinitionLinkLocalService.dynamicQueryCount(dynamicQuery,
 			projection);
 	}
 
 	@Override
 	public com.liferay.portal.model.WorkflowDefinitionLink fetchWorkflowDefinitionLink(
-		long workflowDefinitionLinkId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long workflowDefinitionLinkId) {
 		return _workflowDefinitionLinkLocalService.fetchWorkflowDefinitionLink(workflowDefinitionLinkId);
 	}
 
@@ -199,27 +183,23 @@ public class WorkflowDefinitionLinkLocalServiceWrapper
 	* @param workflowDefinitionLinkId the primary key of the workflow definition link
 	* @return the workflow definition link
 	* @throws PortalException if a workflow definition link with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.WorkflowDefinitionLink getWorkflowDefinitionLink(
 		long workflowDefinitionLinkId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _workflowDefinitionLinkLocalService.getWorkflowDefinitionLink(workflowDefinitionLinkId);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _workflowDefinitionLinkLocalService.getActionableDynamicQuery();
 	}
 
 	@Override
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _workflowDefinitionLinkLocalService.getPersistedModel(primaryKeyObj);
 	}
 
@@ -233,12 +213,10 @@ public class WorkflowDefinitionLinkLocalServiceWrapper
 	* @param start the lower bound of the range of workflow definition links
 	* @param end the upper bound of the range of workflow definition links (not inclusive)
 	* @return the range of workflow definition links
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.model.WorkflowDefinitionLink> getWorkflowDefinitionLinks(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return _workflowDefinitionLinkLocalService.getWorkflowDefinitionLinks(start,
 			end);
 	}
@@ -247,11 +225,9 @@ public class WorkflowDefinitionLinkLocalServiceWrapper
 	* Returns the number of workflow definition links.
 	*
 	* @return the number of workflow definition links
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public int getWorkflowDefinitionLinksCount()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public int getWorkflowDefinitionLinksCount() {
 		return _workflowDefinitionLinkLocalService.getWorkflowDefinitionLinksCount();
 	}
 
@@ -260,12 +236,10 @@ public class WorkflowDefinitionLinkLocalServiceWrapper
 	*
 	* @param workflowDefinitionLink the workflow definition link
 	* @return the workflow definition link that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.WorkflowDefinitionLink updateWorkflowDefinitionLink(
-		com.liferay.portal.model.WorkflowDefinitionLink workflowDefinitionLink)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.WorkflowDefinitionLink workflowDefinitionLink) {
 		return _workflowDefinitionLinkLocalService.updateWorkflowDefinitionLink(workflowDefinitionLink);
 	}
 

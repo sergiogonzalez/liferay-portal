@@ -38,12 +38,10 @@ public class TrashEntryLocalServiceWrapper implements TrashEntryLocalService,
 	*
 	* @param trashEntry the trash entry
 	* @return the trash entry that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.trash.model.TrashEntry addTrashEntry(
-		com.liferay.portlet.trash.model.TrashEntry trashEntry)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.trash.model.TrashEntry trashEntry) {
 		return _trashEntryLocalService.addTrashEntry(trashEntry);
 	}
 
@@ -65,13 +63,11 @@ public class TrashEntryLocalServiceWrapper implements TrashEntryLocalService,
 	* @param entryId the primary key of the trash entry
 	* @return the trash entry that was removed
 	* @throws PortalException if a trash entry with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.trash.model.TrashEntry deleteTrashEntry(
 		long entryId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _trashEntryLocalService.deleteTrashEntry(entryId);
 	}
 
@@ -80,12 +76,10 @@ public class TrashEntryLocalServiceWrapper implements TrashEntryLocalService,
 	*
 	* @param trashEntry the trash entry
 	* @return the trash entry that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.trash.model.TrashEntry deleteTrashEntry(
-		com.liferay.portlet.trash.model.TrashEntry trashEntry)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.trash.model.TrashEntry trashEntry) {
 		return _trashEntryLocalService.deleteTrashEntry(trashEntry);
 	}
 
@@ -99,13 +93,11 @@ public class TrashEntryLocalServiceWrapper implements TrashEntryLocalService,
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _trashEntryLocalService.dynamicQuery(dynamicQuery);
 	}
 
@@ -120,13 +112,12 @@ public class TrashEntryLocalServiceWrapper implements TrashEntryLocalService,
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return _trashEntryLocalService.dynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -142,15 +133,13 @@ public class TrashEntryLocalServiceWrapper implements TrashEntryLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return _trashEntryLocalService.dynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
 	}
@@ -160,12 +149,10 @@ public class TrashEntryLocalServiceWrapper implements TrashEntryLocalService,
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _trashEntryLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
@@ -175,21 +162,18 @@ public class TrashEntryLocalServiceWrapper implements TrashEntryLocalService,
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return _trashEntryLocalService.dynamicQueryCount(dynamicQuery,
 			projection);
 	}
 
 	@Override
 	public com.liferay.portlet.trash.model.TrashEntry fetchTrashEntry(
-		long entryId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long entryId) {
 		return _trashEntryLocalService.fetchTrashEntry(entryId);
 	}
 
@@ -199,27 +183,23 @@ public class TrashEntryLocalServiceWrapper implements TrashEntryLocalService,
 	* @param entryId the primary key of the trash entry
 	* @return the trash entry
 	* @throws PortalException if a trash entry with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.trash.model.TrashEntry getTrashEntry(
 		long entryId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _trashEntryLocalService.getTrashEntry(entryId);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _trashEntryLocalService.getActionableDynamicQuery();
 	}
 
 	@Override
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _trashEntryLocalService.getPersistedModel(primaryKeyObj);
 	}
 
@@ -233,12 +213,10 @@ public class TrashEntryLocalServiceWrapper implements TrashEntryLocalService,
 	* @param start the lower bound of the range of trash entries
 	* @param end the upper bound of the range of trash entries (not inclusive)
 	* @return the range of trash entries
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portlet.trash.model.TrashEntry> getTrashEntries(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return _trashEntryLocalService.getTrashEntries(start, end);
 	}
 
@@ -246,11 +224,9 @@ public class TrashEntryLocalServiceWrapper implements TrashEntryLocalService,
 	* Returns the number of trash entries.
 	*
 	* @return the number of trash entries
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public int getTrashEntriesCount()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public int getTrashEntriesCount() {
 		return _trashEntryLocalService.getTrashEntriesCount();
 	}
 
@@ -259,12 +235,10 @@ public class TrashEntryLocalServiceWrapper implements TrashEntryLocalService,
 	*
 	* @param trashEntry the trash entry
 	* @return the trash entry that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.trash.model.TrashEntry updateTrashEntry(
-		com.liferay.portlet.trash.model.TrashEntry trashEntry)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.trash.model.TrashEntry trashEntry) {
 		return _trashEntryLocalService.updateTrashEntry(trashEntry);
 	}
 

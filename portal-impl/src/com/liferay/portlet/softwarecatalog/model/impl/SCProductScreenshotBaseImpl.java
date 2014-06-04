@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.softwarecatalog.model.impl;
 
-import com.liferay.portal.kernel.exception.SystemException;
-
 import com.liferay.portlet.softwarecatalog.model.SCProductScreenshot;
 import com.liferay.portlet.softwarecatalog.service.SCProductScreenshotLocalServiceUtil;
 
@@ -39,7 +37,7 @@ public abstract class SCProductScreenshotBaseImpl
 	 * Never modify or reference this class directly. All methods that expect a s c product screenshot model instance should use the {@link SCProductScreenshot} interface instead.
 	 */
 	@Override
-	public void persist() throws SystemException {
+	public void persist() {
 		if (this.isNew()) {
 			SCProductScreenshotLocalServiceUtil.addSCProductScreenshot(this);
 		}

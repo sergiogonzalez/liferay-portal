@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 import com.liferay.portal.service.ServiceContext;
@@ -64,8 +63,7 @@ public class DDLRecordSetUtil {
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#countWithDynamicQuery(DynamicQuery)
 	 */
-	public static long countWithDynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public static long countWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return getPersistence().countWithDynamicQuery(dynamicQuery);
 	}
 
@@ -73,7 +71,7 @@ public class DDLRecordSetUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery)
 	 */
 	public static List<DDLRecordSet> findWithDynamicQuery(
-		DynamicQuery dynamicQuery) throws SystemException {
+		DynamicQuery dynamicQuery) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -81,8 +79,7 @@ public class DDLRecordSetUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
 	 */
 	public static List<DDLRecordSet> findWithDynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+		DynamicQuery dynamicQuery, int start, int end) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -91,7 +88,7 @@ public class DDLRecordSetUtil {
 	 */
 	public static List<DDLRecordSet> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -100,8 +97,7 @@ public class DDLRecordSetUtil {
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static DDLRecordSet update(DDLRecordSet ddlRecordSet)
-		throws SystemException {
+	public static DDLRecordSet update(DDLRecordSet ddlRecordSet) {
 		return getPersistence().update(ddlRecordSet);
 	}
 
@@ -109,7 +105,7 @@ public class DDLRecordSetUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
 	public static DDLRecordSet update(DDLRecordSet ddlRecordSet,
-		ServiceContext serviceContext) throws SystemException {
+		ServiceContext serviceContext) {
 		return getPersistence().update(ddlRecordSet, serviceContext);
 	}
 
@@ -118,11 +114,9 @@ public class DDLRecordSetUtil {
 	*
 	* @param uuid the uuid
 	* @return the matching d d l record sets
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordSet> findByUuid(
-		java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid) {
 		return getPersistence().findByUuid(uuid);
 	}
 
@@ -137,11 +131,9 @@ public class DDLRecordSetUtil {
 	* @param start the lower bound of the range of d d l record sets
 	* @param end the upper bound of the range of d d l record sets (not inclusive)
 	* @return the range of matching d d l record sets
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordSet> findByUuid(
-		java.lang.String uuid, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, int start, int end) {
 		return getPersistence().findByUuid(uuid, start, end);
 	}
 
@@ -157,12 +149,10 @@ public class DDLRecordSetUtil {
 	* @param end the upper bound of the range of d d l record sets (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching d d l record sets
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordSet> findByUuid(
 		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -173,13 +163,11 @@ public class DDLRecordSetUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d l record set
 	* @throws com.liferay.portlet.dynamicdatalists.NoSuchRecordSetException if a matching d d l record set could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordSet findByUuid_First(
 		java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatalists.NoSuchRecordSetException {
+		throws com.liferay.portlet.dynamicdatalists.NoSuchRecordSetException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
 
@@ -189,12 +177,10 @@ public class DDLRecordSetUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d l record set, or <code>null</code> if a matching d d l record set could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordSet fetchByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
 
@@ -205,13 +191,11 @@ public class DDLRecordSetUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d l record set
 	* @throws com.liferay.portlet.dynamicdatalists.NoSuchRecordSetException if a matching d d l record set could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordSet findByUuid_Last(
 		java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatalists.NoSuchRecordSetException {
+		throws com.liferay.portlet.dynamicdatalists.NoSuchRecordSetException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -221,12 +205,10 @@ public class DDLRecordSetUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d l record set, or <code>null</code> if a matching d d l record set could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordSet fetchByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -238,13 +220,11 @@ public class DDLRecordSetUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next d d l record set
 	* @throws com.liferay.portlet.dynamicdatalists.NoSuchRecordSetException if a d d l record set with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordSet[] findByUuid_PrevAndNext(
 		long recordSetId, java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatalists.NoSuchRecordSetException {
+		throws com.liferay.portlet.dynamicdatalists.NoSuchRecordSetException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(recordSetId, uuid, orderByComparator);
 	}
@@ -253,10 +233,8 @@ public class DDLRecordSetUtil {
 	* Removes all the d d l record sets where uuid = &#63; from the database.
 	*
 	* @param uuid the uuid
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByUuid(java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByUuid(java.lang.String uuid) {
 		getPersistence().removeByUuid(uuid);
 	}
 
@@ -265,10 +243,8 @@ public class DDLRecordSetUtil {
 	*
 	* @param uuid the uuid
 	* @return the number of matching d d l record sets
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByUuid(java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByUuid(java.lang.String uuid) {
 		return getPersistence().countByUuid(uuid);
 	}
 
@@ -279,12 +255,10 @@ public class DDLRecordSetUtil {
 	* @param groupId the group ID
 	* @return the matching d d l record set
 	* @throws com.liferay.portlet.dynamicdatalists.NoSuchRecordSetException if a matching d d l record set could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordSet findByUUID_G(
 		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatalists.NoSuchRecordSetException {
+		throws com.liferay.portlet.dynamicdatalists.NoSuchRecordSetException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
 
@@ -294,11 +268,9 @@ public class DDLRecordSetUtil {
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the matching d d l record set, or <code>null</code> if a matching d d l record set could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordSet fetchByUUID_G(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long groupId) {
 		return getPersistence().fetchByUUID_G(uuid, groupId);
 	}
 
@@ -309,11 +281,9 @@ public class DDLRecordSetUtil {
 	* @param groupId the group ID
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching d d l record set, or <code>null</code> if a matching d d l record set could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordSet fetchByUUID_G(
-		java.lang.String uuid, long groupId, boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long groupId, boolean retrieveFromCache) {
 		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
 	}
 
@@ -323,12 +293,10 @@ public class DDLRecordSetUtil {
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the d d l record set that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordSet removeByUUID_G(
 		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatalists.NoSuchRecordSetException {
+		throws com.liferay.portlet.dynamicdatalists.NoSuchRecordSetException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
 
@@ -338,10 +306,8 @@ public class DDLRecordSetUtil {
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the number of matching d d l record sets
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByUUID_G(java.lang.String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
 	}
 
@@ -351,11 +317,9 @@ public class DDLRecordSetUtil {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	* @return the matching d d l record sets
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordSet> findByUuid_C(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long companyId) {
 		return getPersistence().findByUuid_C(uuid, companyId);
 	}
 
@@ -371,11 +335,9 @@ public class DDLRecordSetUtil {
 	* @param start the lower bound of the range of d d l record sets
 	* @param end the upper bound of the range of d d l record sets (not inclusive)
 	* @return the range of matching d d l record sets
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordSet> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long companyId, int start, int end) {
 		return getPersistence().findByUuid_C(uuid, companyId, start, end);
 	}
 
@@ -392,12 +354,10 @@ public class DDLRecordSetUtil {
 	* @param end the upper bound of the range of d d l record sets (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching d d l record sets
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordSet> findByUuid_C(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
 	}
@@ -410,13 +370,11 @@ public class DDLRecordSetUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d l record set
 	* @throws com.liferay.portlet.dynamicdatalists.NoSuchRecordSetException if a matching d d l record set could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordSet findByUuid_C_First(
 		java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatalists.NoSuchRecordSetException {
+		throws com.liferay.portlet.dynamicdatalists.NoSuchRecordSetException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -428,12 +386,10 @@ public class DDLRecordSetUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d l record set, or <code>null</code> if a matching d d l record set could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordSet fetchByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -446,13 +402,11 @@ public class DDLRecordSetUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d l record set
 	* @throws com.liferay.portlet.dynamicdatalists.NoSuchRecordSetException if a matching d d l record set could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordSet findByUuid_C_Last(
 		java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatalists.NoSuchRecordSetException {
+		throws com.liferay.portlet.dynamicdatalists.NoSuchRecordSetException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -464,12 +418,10 @@ public class DDLRecordSetUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d l record set, or <code>null</code> if a matching d d l record set could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordSet fetchByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -483,13 +435,11 @@ public class DDLRecordSetUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next d d l record set
 	* @throws com.liferay.portlet.dynamicdatalists.NoSuchRecordSetException if a d d l record set with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordSet[] findByUuid_C_PrevAndNext(
 		long recordSetId, java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatalists.NoSuchRecordSetException {
+		throws com.liferay.portlet.dynamicdatalists.NoSuchRecordSetException {
 		return getPersistence()
 				   .findByUuid_C_PrevAndNext(recordSetId, uuid, companyId,
 			orderByComparator);
@@ -500,10 +450,8 @@ public class DDLRecordSetUtil {
 	*
 	* @param uuid the uuid
 	* @param companyId the company ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByUuid_C(java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByUuid_C(java.lang.String uuid, long companyId) {
 		getPersistence().removeByUuid_C(uuid, companyId);
 	}
 
@@ -513,10 +461,8 @@ public class DDLRecordSetUtil {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	* @return the number of matching d d l record sets
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByUuid_C(java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByUuid_C(java.lang.String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
@@ -525,11 +471,9 @@ public class DDLRecordSetUtil {
 	*
 	* @param groupId the group ID
 	* @return the matching d d l record sets
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordSet> findByGroupId(
-		long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId) {
 		return getPersistence().findByGroupId(groupId);
 	}
 
@@ -544,11 +488,9 @@ public class DDLRecordSetUtil {
 	* @param start the lower bound of the range of d d l record sets
 	* @param end the upper bound of the range of d d l record sets (not inclusive)
 	* @return the range of matching d d l record sets
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordSet> findByGroupId(
-		long groupId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, int start, int end) {
 		return getPersistence().findByGroupId(groupId, start, end);
 	}
 
@@ -564,12 +506,10 @@ public class DDLRecordSetUtil {
 	* @param end the upper bound of the range of d d l record sets (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching d d l record sets
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordSet> findByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByGroupId(groupId, start, end, orderByComparator);
 	}
@@ -581,13 +521,11 @@ public class DDLRecordSetUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d l record set
 	* @throws com.liferay.portlet.dynamicdatalists.NoSuchRecordSetException if a matching d d l record set could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordSet findByGroupId_First(
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatalists.NoSuchRecordSetException {
+		throws com.liferay.portlet.dynamicdatalists.NoSuchRecordSetException {
 		return getPersistence().findByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -597,12 +535,10 @@ public class DDLRecordSetUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d l record set, or <code>null</code> if a matching d d l record set could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordSet fetchByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -613,13 +549,11 @@ public class DDLRecordSetUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d l record set
 	* @throws com.liferay.portlet.dynamicdatalists.NoSuchRecordSetException if a matching d d l record set could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordSet findByGroupId_Last(
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatalists.NoSuchRecordSetException {
+		throws com.liferay.portlet.dynamicdatalists.NoSuchRecordSetException {
 		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -629,12 +563,10 @@ public class DDLRecordSetUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d l record set, or <code>null</code> if a matching d d l record set could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordSet fetchByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -646,13 +578,11 @@ public class DDLRecordSetUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next d d l record set
 	* @throws com.liferay.portlet.dynamicdatalists.NoSuchRecordSetException if a d d l record set with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordSet[] findByGroupId_PrevAndNext(
 		long recordSetId, long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatalists.NoSuchRecordSetException {
+		throws com.liferay.portlet.dynamicdatalists.NoSuchRecordSetException {
 		return getPersistence()
 				   .findByGroupId_PrevAndNext(recordSetId, groupId,
 			orderByComparator);
@@ -663,11 +593,9 @@ public class DDLRecordSetUtil {
 	*
 	* @param groupId the group ID
 	* @return the matching d d l record sets that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordSet> filterFindByGroupId(
-		long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId) {
 		return getPersistence().filterFindByGroupId(groupId);
 	}
 
@@ -682,11 +610,9 @@ public class DDLRecordSetUtil {
 	* @param start the lower bound of the range of d d l record sets
 	* @param end the upper bound of the range of d d l record sets (not inclusive)
 	* @return the range of matching d d l record sets that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordSet> filterFindByGroupId(
-		long groupId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, int start, int end) {
 		return getPersistence().filterFindByGroupId(groupId, start, end);
 	}
 
@@ -702,12 +628,10 @@ public class DDLRecordSetUtil {
 	* @param end the upper bound of the range of d d l record sets (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching d d l record sets that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordSet> filterFindByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .filterFindByGroupId(groupId, start, end, orderByComparator);
 	}
@@ -720,13 +644,11 @@ public class DDLRecordSetUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next d d l record set
 	* @throws com.liferay.portlet.dynamicdatalists.NoSuchRecordSetException if a d d l record set with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordSet[] filterFindByGroupId_PrevAndNext(
 		long recordSetId, long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatalists.NoSuchRecordSetException {
+		throws com.liferay.portlet.dynamicdatalists.NoSuchRecordSetException {
 		return getPersistence()
 				   .filterFindByGroupId_PrevAndNext(recordSetId, groupId,
 			orderByComparator);
@@ -736,10 +658,8 @@ public class DDLRecordSetUtil {
 	* Removes all the d d l record sets where groupId = &#63; from the database.
 	*
 	* @param groupId the group ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByGroupId(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByGroupId(long groupId) {
 		getPersistence().removeByGroupId(groupId);
 	}
 
@@ -748,10 +668,8 @@ public class DDLRecordSetUtil {
 	*
 	* @param groupId the group ID
 	* @return the number of matching d d l record sets
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByGroupId(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByGroupId(long groupId) {
 		return getPersistence().countByGroupId(groupId);
 	}
 
@@ -760,10 +678,8 @@ public class DDLRecordSetUtil {
 	*
 	* @param groupId the group ID
 	* @return the number of matching d d l record sets that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int filterCountByGroupId(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int filterCountByGroupId(long groupId) {
 		return getPersistence().filterCountByGroupId(groupId);
 	}
 
@@ -774,12 +690,10 @@ public class DDLRecordSetUtil {
 	* @param recordSetKey the record set key
 	* @return the matching d d l record set
 	* @throws com.liferay.portlet.dynamicdatalists.NoSuchRecordSetException if a matching d d l record set could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordSet findByG_R(
 		long groupId, java.lang.String recordSetKey)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatalists.NoSuchRecordSetException {
+		throws com.liferay.portlet.dynamicdatalists.NoSuchRecordSetException {
 		return getPersistence().findByG_R(groupId, recordSetKey);
 	}
 
@@ -789,11 +703,9 @@ public class DDLRecordSetUtil {
 	* @param groupId the group ID
 	* @param recordSetKey the record set key
 	* @return the matching d d l record set, or <code>null</code> if a matching d d l record set could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordSet fetchByG_R(
-		long groupId, java.lang.String recordSetKey)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, java.lang.String recordSetKey) {
 		return getPersistence().fetchByG_R(groupId, recordSetKey);
 	}
 
@@ -804,11 +716,9 @@ public class DDLRecordSetUtil {
 	* @param recordSetKey the record set key
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching d d l record set, or <code>null</code> if a matching d d l record set could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordSet fetchByG_R(
-		long groupId, java.lang.String recordSetKey, boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, java.lang.String recordSetKey, boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByG_R(groupId, recordSetKey, retrieveFromCache);
 	}
@@ -819,12 +729,10 @@ public class DDLRecordSetUtil {
 	* @param groupId the group ID
 	* @param recordSetKey the record set key
 	* @return the d d l record set that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordSet removeByG_R(
 		long groupId, java.lang.String recordSetKey)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatalists.NoSuchRecordSetException {
+		throws com.liferay.portlet.dynamicdatalists.NoSuchRecordSetException {
 		return getPersistence().removeByG_R(groupId, recordSetKey);
 	}
 
@@ -834,10 +742,8 @@ public class DDLRecordSetUtil {
 	* @param groupId the group ID
 	* @param recordSetKey the record set key
 	* @return the number of matching d d l record sets
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByG_R(long groupId, java.lang.String recordSetKey)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByG_R(long groupId, java.lang.String recordSetKey) {
 		return getPersistence().countByG_R(groupId, recordSetKey);
 	}
 
@@ -878,18 +784,15 @@ public class DDLRecordSetUtil {
 	* @param recordSetId the primary key of the d d l record set
 	* @return the d d l record set that was removed
 	* @throws com.liferay.portlet.dynamicdatalists.NoSuchRecordSetException if a d d l record set with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordSet remove(
 		long recordSetId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatalists.NoSuchRecordSetException {
+		throws com.liferay.portlet.dynamicdatalists.NoSuchRecordSetException {
 		return getPersistence().remove(recordSetId);
 	}
 
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordSet updateImpl(
-		com.liferay.portlet.dynamicdatalists.model.DDLRecordSet ddlRecordSet)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.dynamicdatalists.model.DDLRecordSet ddlRecordSet) {
 		return getPersistence().updateImpl(ddlRecordSet);
 	}
 
@@ -899,12 +802,10 @@ public class DDLRecordSetUtil {
 	* @param recordSetId the primary key of the d d l record set
 	* @return the d d l record set
 	* @throws com.liferay.portlet.dynamicdatalists.NoSuchRecordSetException if a d d l record set with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordSet findByPrimaryKey(
 		long recordSetId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatalists.NoSuchRecordSetException {
+		throws com.liferay.portlet.dynamicdatalists.NoSuchRecordSetException {
 		return getPersistence().findByPrimaryKey(recordSetId);
 	}
 
@@ -913,11 +814,9 @@ public class DDLRecordSetUtil {
 	*
 	* @param recordSetId the primary key of the d d l record set
 	* @return the d d l record set, or <code>null</code> if a d d l record set with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordSet fetchByPrimaryKey(
-		long recordSetId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long recordSetId) {
 		return getPersistence().fetchByPrimaryKey(recordSetId);
 	}
 
@@ -925,10 +824,8 @@ public class DDLRecordSetUtil {
 	* Returns all the d d l record sets.
 	*
 	* @return the d d l record sets
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordSet> findAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordSet> findAll() {
 		return getPersistence().findAll();
 	}
 
@@ -942,11 +839,9 @@ public class DDLRecordSetUtil {
 	* @param start the lower bound of the range of d d l record sets
 	* @param end the upper bound of the range of d d l record sets (not inclusive)
 	* @return the range of d d l record sets
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordSet> findAll(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
@@ -961,22 +856,17 @@ public class DDLRecordSetUtil {
 	* @param end the upper bound of the range of d d l record sets (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of d d l record sets
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordSet> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
 	/**
 	* Removes all the d d l record sets from the database.
-	*
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeAll() {
 		getPersistence().removeAll();
 	}
 
@@ -984,10 +874,8 @@ public class DDLRecordSetUtil {
 	* Returns the number of d d l record sets.
 	*
 	* @return the number of d d l record sets
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countAll() {
 		return getPersistence().countAll();
 	}
 

@@ -46,11 +46,9 @@ public class ResourceBlockLocalServiceUtil {
 	*
 	* @param resourceBlock the resource block
 	* @return the resource block that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.ResourceBlock addResourceBlock(
-		com.liferay.portal.model.ResourceBlock resourceBlock)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.ResourceBlock resourceBlock) {
 		return getService().addResourceBlock(resourceBlock);
 	}
 
@@ -71,7 +69,7 @@ public class ResourceBlockLocalServiceUtil {
 	* @param resourceBlockId the primary key of the resource block
 	* @return the resource block that was removed
 	* @throws PortalException if a resource block with the primary key could not be found
-	* @throws SystemException if a system exception occurred
+	* @throws SystemException
 	*/
 	public static com.liferay.portal.model.ResourceBlock deleteResourceBlock(
 		long resourceBlockId)
@@ -85,7 +83,7 @@ public class ResourceBlockLocalServiceUtil {
 	*
 	* @param resourceBlock the resource block
 	* @return the resource block that was removed
-	* @throws SystemException if a system exception occurred
+	* @throws SystemException
 	*/
 	public static com.liferay.portal.model.ResourceBlock deleteResourceBlock(
 		com.liferay.portal.model.ResourceBlock resourceBlock)
@@ -102,12 +100,10 @@ public class ResourceBlockLocalServiceUtil {
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -122,12 +118,11 @@ public class ResourceBlockLocalServiceUtil {
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -143,14 +138,12 @@ public class ResourceBlockLocalServiceUtil {
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getService()
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
@@ -160,11 +153,9 @@ public class ResourceBlockLocalServiceUtil {
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -174,18 +165,15 @@ public class ResourceBlockLocalServiceUtil {
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public static long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
 	public static com.liferay.portal.model.ResourceBlock fetchResourceBlock(
-		long resourceBlockId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long resourceBlockId) {
 		return getService().fetchResourceBlock(resourceBlockId);
 	}
 
@@ -195,24 +183,20 @@ public class ResourceBlockLocalServiceUtil {
 	* @param resourceBlockId the primary key of the resource block
 	* @return the resource block
 	* @throws PortalException if a resource block with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.ResourceBlock getResourceBlock(
 		long resourceBlockId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getResourceBlock(resourceBlockId);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}
 
 	public static com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
@@ -226,11 +210,9 @@ public class ResourceBlockLocalServiceUtil {
 	* @param start the lower bound of the range of resource blocks
 	* @param end the upper bound of the range of resource blocks (not inclusive)
 	* @return the range of resource blocks
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portal.model.ResourceBlock> getResourceBlocks(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return getService().getResourceBlocks(start, end);
 	}
 
@@ -238,10 +220,8 @@ public class ResourceBlockLocalServiceUtil {
 	* Returns the number of resource blocks.
 	*
 	* @return the number of resource blocks
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int getResourceBlocksCount()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int getResourceBlocksCount() {
 		return getService().getResourceBlocksCount();
 	}
 
@@ -250,11 +230,9 @@ public class ResourceBlockLocalServiceUtil {
 	*
 	* @param resourceBlock the resource block
 	* @return the resource block that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.ResourceBlock updateResourceBlock(
-		com.liferay.portal.model.ResourceBlock resourceBlock)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.ResourceBlock resourceBlock) {
 		return getService().updateResourceBlock(resourceBlock);
 	}
 

@@ -20,7 +20,6 @@ import com.liferay.counter.model.Counter;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 import com.liferay.portal.service.ServiceContext;
@@ -64,16 +63,14 @@ public class CounterUtil {
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#countWithDynamicQuery(DynamicQuery)
 	 */
-	public static long countWithDynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public static long countWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return getPersistence().countWithDynamicQuery(dynamicQuery);
 	}
 
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery)
 	 */
-	public static List<Counter> findWithDynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public static List<Counter> findWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -81,8 +78,7 @@ public class CounterUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
 	 */
 	public static List<Counter> findWithDynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+		DynamicQuery dynamicQuery, int start, int end) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -91,7 +87,7 @@ public class CounterUtil {
 	 */
 	public static List<Counter> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -100,15 +96,14 @@ public class CounterUtil {
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static Counter update(Counter counter) throws SystemException {
+	public static Counter update(Counter counter) {
 		return getPersistence().update(counter);
 	}
 
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
-	public static Counter update(Counter counter, ServiceContext serviceContext)
-		throws SystemException {
+	public static Counter update(Counter counter, ServiceContext serviceContext) {
 		return getPersistence().update(counter, serviceContext);
 	}
 
@@ -148,18 +143,15 @@ public class CounterUtil {
 	* @param name the primary key of the counter
 	* @return the counter that was removed
 	* @throws com.liferay.counter.NoSuchCounterException if a counter with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.counter.model.Counter remove(
 		java.lang.String name)
-		throws com.liferay.counter.NoSuchCounterException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.counter.NoSuchCounterException {
 		return getPersistence().remove(name);
 	}
 
 	public static com.liferay.counter.model.Counter updateImpl(
-		com.liferay.counter.model.Counter counter)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.counter.model.Counter counter) {
 		return getPersistence().updateImpl(counter);
 	}
 
@@ -169,12 +161,10 @@ public class CounterUtil {
 	* @param name the primary key of the counter
 	* @return the counter
 	* @throws com.liferay.counter.NoSuchCounterException if a counter with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.counter.model.Counter findByPrimaryKey(
 		java.lang.String name)
-		throws com.liferay.counter.NoSuchCounterException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.counter.NoSuchCounterException {
 		return getPersistence().findByPrimaryKey(name);
 	}
 
@@ -183,11 +173,9 @@ public class CounterUtil {
 	*
 	* @param name the primary key of the counter
 	* @return the counter, or <code>null</code> if a counter with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.counter.model.Counter fetchByPrimaryKey(
-		java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String name) {
 		return getPersistence().fetchByPrimaryKey(name);
 	}
 
@@ -195,10 +183,8 @@ public class CounterUtil {
 	* Returns all the counters.
 	*
 	* @return the counters
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.counter.model.Counter> findAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static java.util.List<com.liferay.counter.model.Counter> findAll() {
 		return getPersistence().findAll();
 	}
 
@@ -212,11 +198,9 @@ public class CounterUtil {
 	* @param start the lower bound of the range of counters
 	* @param end the upper bound of the range of counters (not inclusive)
 	* @return the range of counters
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.counter.model.Counter> findAll(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
@@ -231,22 +215,17 @@ public class CounterUtil {
 	* @param end the upper bound of the range of counters (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of counters
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.counter.model.Counter> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
 	/**
 	* Removes all the counters from the database.
-	*
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeAll() {
 		getPersistence().removeAll();
 	}
 
@@ -254,10 +233,8 @@ public class CounterUtil {
 	* Returns the number of counters.
 	*
 	* @return the number of counters
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countAll() {
 		return getPersistence().countAll();
 	}
 

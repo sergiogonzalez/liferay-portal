@@ -462,8 +462,7 @@ public class TicketWrapper implements Ticket, ModelWrapper<Ticket> {
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void persist() {
 		_ticket.persist();
 	}
 

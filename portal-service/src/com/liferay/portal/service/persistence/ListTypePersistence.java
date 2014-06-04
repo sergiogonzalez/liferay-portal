@@ -43,11 +43,9 @@ public interface ListTypePersistence extends BasePersistence<ListType> {
 	*
 	* @param type the type
 	* @return the matching list types
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portal.model.ListType> findByType(
-		java.lang.String type)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String type);
 
 	/**
 	* Returns a range of all the list types where type = &#63;.
@@ -60,11 +58,9 @@ public interface ListTypePersistence extends BasePersistence<ListType> {
 	* @param start the lower bound of the range of list types
 	* @param end the upper bound of the range of list types (not inclusive)
 	* @return the range of matching list types
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portal.model.ListType> findByType(
-		java.lang.String type, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String type, int start, int end);
 
 	/**
 	* Returns an ordered range of all the list types where type = &#63;.
@@ -78,12 +74,10 @@ public interface ListTypePersistence extends BasePersistence<ListType> {
 	* @param end the upper bound of the range of list types (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching list types
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portal.model.ListType> findByType(
 		java.lang.String type, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first list type in the ordered set where type = &#63;.
@@ -92,13 +86,11 @@ public interface ListTypePersistence extends BasePersistence<ListType> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching list type
 	* @throws com.liferay.portal.NoSuchListTypeException if a matching list type could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.ListType findByType_First(
 		java.lang.String type,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchListTypeException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.NoSuchListTypeException;
 
 	/**
 	* Returns the first list type in the ordered set where type = &#63;.
@@ -106,12 +98,10 @@ public interface ListTypePersistence extends BasePersistence<ListType> {
 	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching list type, or <code>null</code> if a matching list type could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.ListType fetchByType_First(
 		java.lang.String type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last list type in the ordered set where type = &#63;.
@@ -120,13 +110,11 @@ public interface ListTypePersistence extends BasePersistence<ListType> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching list type
 	* @throws com.liferay.portal.NoSuchListTypeException if a matching list type could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.ListType findByType_Last(
 		java.lang.String type,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchListTypeException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.NoSuchListTypeException;
 
 	/**
 	* Returns the last list type in the ordered set where type = &#63;.
@@ -134,12 +122,10 @@ public interface ListTypePersistence extends BasePersistence<ListType> {
 	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching list type, or <code>null</code> if a matching list type could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.ListType fetchByType_Last(
 		java.lang.String type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the list types before and after the current list type in the ordered set where type = &#63;.
@@ -149,32 +135,26 @@ public interface ListTypePersistence extends BasePersistence<ListType> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next list type
 	* @throws com.liferay.portal.NoSuchListTypeException if a list type with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.ListType[] findByType_PrevAndNext(
 		int listTypeId, java.lang.String type,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchListTypeException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.NoSuchListTypeException;
 
 	/**
 	* Removes all the list types where type = &#63; from the database.
 	*
 	* @param type the type
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByType(java.lang.String type)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeByType(java.lang.String type);
 
 	/**
 	* Returns the number of list types where type = &#63;.
 	*
 	* @param type the type
 	* @return the number of matching list types
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countByType(java.lang.String type)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByType(java.lang.String type);
 
 	/**
 	* Caches the list type in the entity cache if it is enabled.
@@ -205,15 +185,12 @@ public interface ListTypePersistence extends BasePersistence<ListType> {
 	* @param listTypeId the primary key of the list type
 	* @return the list type that was removed
 	* @throws com.liferay.portal.NoSuchListTypeException if a list type with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.ListType remove(int listTypeId)
-		throws com.liferay.portal.NoSuchListTypeException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.NoSuchListTypeException;
 
 	public com.liferay.portal.model.ListType updateImpl(
-		com.liferay.portal.model.ListType listType)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.model.ListType listType);
 
 	/**
 	* Returns the list type with the primary key or throws a {@link com.liferay.portal.NoSuchListTypeException} if it could not be found.
@@ -221,30 +198,24 @@ public interface ListTypePersistence extends BasePersistence<ListType> {
 	* @param listTypeId the primary key of the list type
 	* @return the list type
 	* @throws com.liferay.portal.NoSuchListTypeException if a list type with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.ListType findByPrimaryKey(int listTypeId)
-		throws com.liferay.portal.NoSuchListTypeException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.NoSuchListTypeException;
 
 	/**
 	* Returns the list type with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param listTypeId the primary key of the list type
 	* @return the list type, or <code>null</code> if a list type with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portal.model.ListType fetchByPrimaryKey(int listTypeId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public com.liferay.portal.model.ListType fetchByPrimaryKey(int listTypeId);
 
 	/**
 	* Returns all the list types.
 	*
 	* @return the list types
-	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portal.model.ListType> findAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public java.util.List<com.liferay.portal.model.ListType> findAll();
 
 	/**
 	* Returns a range of all the list types.
@@ -256,11 +227,9 @@ public interface ListTypePersistence extends BasePersistence<ListType> {
 	* @param start the lower bound of the range of list types
 	* @param end the upper bound of the range of list types (not inclusive)
 	* @return the range of list types
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portal.model.ListType> findAll(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the list types.
@@ -273,27 +242,20 @@ public interface ListTypePersistence extends BasePersistence<ListType> {
 	* @param end the upper bound of the range of list types (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of list types
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portal.model.ListType> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Removes all the list types from the database.
-	*
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeAll();
 
 	/**
 	* Returns the number of list types.
 	*
 	* @return the number of list types
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countAll();
 }

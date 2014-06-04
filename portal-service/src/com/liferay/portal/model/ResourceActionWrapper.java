@@ -312,8 +312,7 @@ public class ResourceActionWrapper implements ResourceAction,
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void persist() {
 		_resourceAction.persist();
 	}
 

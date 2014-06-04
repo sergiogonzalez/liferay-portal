@@ -14,7 +14,6 @@
 
 package com.liferay.portal.model.impl;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.PortalPreferences;
 import com.liferay.portal.service.PortalPreferencesLocalServiceUtil;
 
@@ -38,7 +37,7 @@ public abstract class PortalPreferencesBaseImpl
 	 * Never modify or reference this class directly. All methods that expect a portal preferences model instance should use the {@link PortalPreferences} interface instead.
 	 */
 	@Override
-	public void persist() throws SystemException {
+	public void persist() {
 		if (this.isNew()) {
 			PortalPreferencesLocalServiceUtil.addPortalPreferences(this);
 		}

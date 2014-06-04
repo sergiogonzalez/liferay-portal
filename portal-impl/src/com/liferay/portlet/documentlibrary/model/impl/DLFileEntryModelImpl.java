@@ -17,7 +17,6 @@ package com.liferay.portlet.documentlibrary.model.impl;
 import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.trash.TrashHandler;
@@ -546,7 +545,7 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 	}
 
 	@Override
-	public String getUserUuid() throws SystemException {
+	public String getUserUuid() {
 		try {
 			User user = UserLocalServiceUtil.getUserById(getUserId());
 
@@ -954,7 +953,7 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 	}
 
 	@Override
-	public TrashEntry getTrashEntry() throws PortalException, SystemException {
+	public TrashEntry getTrashEntry() throws PortalException {
 		if (!isInTrash()) {
 			return null;
 		}
@@ -1045,7 +1044,7 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 	}
 
 	@Override
-	public boolean isInTrashExplicitly() throws SystemException {
+	public boolean isInTrashExplicitly() {
 		if (!isInTrash()) {
 			return false;
 		}
@@ -1061,7 +1060,7 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 	}
 
 	@Override
-	public boolean isInTrashImplicitly() throws SystemException {
+	public boolean isInTrashImplicitly() {
 		if (!isInTrash()) {
 			return false;
 		}

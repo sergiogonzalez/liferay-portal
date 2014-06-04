@@ -39,12 +39,10 @@ public class SocialActivityCounterLocalServiceWrapper
 	*
 	* @param socialActivityCounter the social activity counter
 	* @return the social activity counter that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.social.model.SocialActivityCounter addSocialActivityCounter(
-		com.liferay.portlet.social.model.SocialActivityCounter socialActivityCounter)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.social.model.SocialActivityCounter socialActivityCounter) {
 		return _socialActivityCounterLocalService.addSocialActivityCounter(socialActivityCounter);
 	}
 
@@ -66,13 +64,11 @@ public class SocialActivityCounterLocalServiceWrapper
 	* @param activityCounterId the primary key of the social activity counter
 	* @return the social activity counter that was removed
 	* @throws PortalException if a social activity counter with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.social.model.SocialActivityCounter deleteSocialActivityCounter(
 		long activityCounterId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _socialActivityCounterLocalService.deleteSocialActivityCounter(activityCounterId);
 	}
 
@@ -81,12 +77,10 @@ public class SocialActivityCounterLocalServiceWrapper
 	*
 	* @param socialActivityCounter the social activity counter
 	* @return the social activity counter that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.social.model.SocialActivityCounter deleteSocialActivityCounter(
-		com.liferay.portlet.social.model.SocialActivityCounter socialActivityCounter)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.social.model.SocialActivityCounter socialActivityCounter) {
 		return _socialActivityCounterLocalService.deleteSocialActivityCounter(socialActivityCounter);
 	}
 
@@ -100,13 +94,11 @@ public class SocialActivityCounterLocalServiceWrapper
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _socialActivityCounterLocalService.dynamicQuery(dynamicQuery);
 	}
 
@@ -121,13 +113,12 @@ public class SocialActivityCounterLocalServiceWrapper
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return _socialActivityCounterLocalService.dynamicQuery(dynamicQuery,
 			start, end);
 	}
@@ -144,15 +135,13 @@ public class SocialActivityCounterLocalServiceWrapper
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return _socialActivityCounterLocalService.dynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
 	}
@@ -162,12 +151,10 @@ public class SocialActivityCounterLocalServiceWrapper
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _socialActivityCounterLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
@@ -177,21 +164,18 @@ public class SocialActivityCounterLocalServiceWrapper
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return _socialActivityCounterLocalService.dynamicQueryCount(dynamicQuery,
 			projection);
 	}
 
 	@Override
 	public com.liferay.portlet.social.model.SocialActivityCounter fetchSocialActivityCounter(
-		long activityCounterId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long activityCounterId) {
 		return _socialActivityCounterLocalService.fetchSocialActivityCounter(activityCounterId);
 	}
 
@@ -201,27 +185,23 @@ public class SocialActivityCounterLocalServiceWrapper
 	* @param activityCounterId the primary key of the social activity counter
 	* @return the social activity counter
 	* @throws PortalException if a social activity counter with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.social.model.SocialActivityCounter getSocialActivityCounter(
 		long activityCounterId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _socialActivityCounterLocalService.getSocialActivityCounter(activityCounterId);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _socialActivityCounterLocalService.getActionableDynamicQuery();
 	}
 
 	@Override
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _socialActivityCounterLocalService.getPersistedModel(primaryKeyObj);
 	}
 
@@ -235,12 +215,10 @@ public class SocialActivityCounterLocalServiceWrapper
 	* @param start the lower bound of the range of social activity counters
 	* @param end the upper bound of the range of social activity counters (not inclusive)
 	* @return the range of social activity counters
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portlet.social.model.SocialActivityCounter> getSocialActivityCounters(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return _socialActivityCounterLocalService.getSocialActivityCounters(start,
 			end);
 	}
@@ -249,11 +227,9 @@ public class SocialActivityCounterLocalServiceWrapper
 	* Returns the number of social activity counters.
 	*
 	* @return the number of social activity counters
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public int getSocialActivityCountersCount()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public int getSocialActivityCountersCount() {
 		return _socialActivityCounterLocalService.getSocialActivityCountersCount();
 	}
 
@@ -262,12 +238,10 @@ public class SocialActivityCounterLocalServiceWrapper
 	*
 	* @param socialActivityCounter the social activity counter
 	* @return the social activity counter that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.social.model.SocialActivityCounter updateSocialActivityCounter(
-		com.liferay.portlet.social.model.SocialActivityCounter socialActivityCounter)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.social.model.SocialActivityCounter socialActivityCounter) {
 		return _socialActivityCounterLocalService.updateSocialActivityCounter(socialActivityCounter);
 	}
 

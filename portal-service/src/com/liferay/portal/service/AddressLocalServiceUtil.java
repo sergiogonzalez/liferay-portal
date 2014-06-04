@@ -46,11 +46,9 @@ public class AddressLocalServiceUtil {
 	*
 	* @param address the address
 	* @return the address that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Address addAddress(
-		com.liferay.portal.model.Address address)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.Address address) {
 		return getService().addAddress(address);
 	}
 
@@ -70,7 +68,7 @@ public class AddressLocalServiceUtil {
 	* @param addressId the primary key of the address
 	* @return the address that was removed
 	* @throws PortalException if a address with the primary key could not be found
-	* @throws SystemException if a system exception occurred
+	* @throws SystemException
 	*/
 	public static com.liferay.portal.model.Address deleteAddress(long addressId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -83,7 +81,7 @@ public class AddressLocalServiceUtil {
 	*
 	* @param address the address
 	* @return the address that was removed
-	* @throws SystemException if a system exception occurred
+	* @throws SystemException
 	*/
 	public static com.liferay.portal.model.Address deleteAddress(
 		com.liferay.portal.model.Address address)
@@ -100,12 +98,10 @@ public class AddressLocalServiceUtil {
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -120,12 +116,11 @@ public class AddressLocalServiceUtil {
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -141,14 +136,12 @@ public class AddressLocalServiceUtil {
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getService()
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
@@ -158,11 +151,9 @@ public class AddressLocalServiceUtil {
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -172,17 +163,14 @@ public class AddressLocalServiceUtil {
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public static long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.portal.model.Address fetchAddress(long addressId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static com.liferay.portal.model.Address fetchAddress(long addressId) {
 		return getService().fetchAddress(addressId);
 	}
 
@@ -192,11 +180,9 @@ public class AddressLocalServiceUtil {
 	* @param uuid the address's UUID
 	* @param companyId the primary key of the company
 	* @return the matching address, or <code>null</code> if a matching address could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Address fetchAddressByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long companyId) {
 		return getService().fetchAddressByUuidAndCompanyId(uuid, companyId);
 	}
 
@@ -206,29 +192,24 @@ public class AddressLocalServiceUtil {
 	* @param addressId the primary key of the address
 	* @return the address
 	* @throws PortalException if a address with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Address getAddress(long addressId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getAddress(addressId);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext) {
 		return getService().getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	public static com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
@@ -239,12 +220,10 @@ public class AddressLocalServiceUtil {
 	* @param companyId the primary key of the company
 	* @return the matching address
 	* @throws PortalException if a matching address could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Address getAddressByUuidAndCompanyId(
 		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getAddressByUuidAndCompanyId(uuid, companyId);
 	}
 
@@ -258,11 +237,9 @@ public class AddressLocalServiceUtil {
 	* @param start the lower bound of the range of addresses
 	* @param end the upper bound of the range of addresses (not inclusive)
 	* @return the range of addresses
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portal.model.Address> getAddresses(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return getService().getAddresses(start, end);
 	}
 
@@ -270,10 +247,8 @@ public class AddressLocalServiceUtil {
 	* Returns the number of addresses.
 	*
 	* @return the number of addresses
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int getAddressesCount()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int getAddressesCount() {
 		return getService().getAddressesCount();
 	}
 
@@ -282,11 +257,9 @@ public class AddressLocalServiceUtil {
 	*
 	* @param address the address
 	* @return the address that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Address updateAddress(
-		com.liferay.portal.model.Address address)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.Address address) {
 		return getService().updateAddress(address);
 	}
 

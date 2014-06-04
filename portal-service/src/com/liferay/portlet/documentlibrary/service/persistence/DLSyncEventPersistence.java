@@ -45,11 +45,9 @@ public interface DLSyncEventPersistence extends BasePersistence<DLSyncEvent> {
 	*
 	* @param modifiedTime the modified time
 	* @return the matching d l sync events
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLSyncEvent> findByModifiedTime(
-		long modifiedTime)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long modifiedTime);
 
 	/**
 	* Returns a range of all the d l sync events where modifiedTime &gt; &#63;.
@@ -62,11 +60,9 @@ public interface DLSyncEventPersistence extends BasePersistence<DLSyncEvent> {
 	* @param start the lower bound of the range of d l sync events
 	* @param end the upper bound of the range of d l sync events (not inclusive)
 	* @return the range of matching d l sync events
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLSyncEvent> findByModifiedTime(
-		long modifiedTime, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long modifiedTime, int start, int end);
 
 	/**
 	* Returns an ordered range of all the d l sync events where modifiedTime &gt; &#63;.
@@ -80,12 +76,10 @@ public interface DLSyncEventPersistence extends BasePersistence<DLSyncEvent> {
 	* @param end the upper bound of the range of d l sync events (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching d l sync events
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLSyncEvent> findByModifiedTime(
 		long modifiedTime, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first d l sync event in the ordered set where modifiedTime &gt; &#63;.
@@ -94,13 +88,11 @@ public interface DLSyncEventPersistence extends BasePersistence<DLSyncEvent> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d l sync event
 	* @throws com.liferay.portlet.documentlibrary.NoSuchSyncEventException if a matching d l sync event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLSyncEvent findByModifiedTime_First(
 		long modifiedTime,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.documentlibrary.NoSuchSyncEventException;
+		throws com.liferay.portlet.documentlibrary.NoSuchSyncEventException;
 
 	/**
 	* Returns the first d l sync event in the ordered set where modifiedTime &gt; &#63;.
@@ -108,12 +100,10 @@ public interface DLSyncEventPersistence extends BasePersistence<DLSyncEvent> {
 	* @param modifiedTime the modified time
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d l sync event, or <code>null</code> if a matching d l sync event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLSyncEvent fetchByModifiedTime_First(
 		long modifiedTime,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last d l sync event in the ordered set where modifiedTime &gt; &#63;.
@@ -122,13 +112,11 @@ public interface DLSyncEventPersistence extends BasePersistence<DLSyncEvent> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d l sync event
 	* @throws com.liferay.portlet.documentlibrary.NoSuchSyncEventException if a matching d l sync event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLSyncEvent findByModifiedTime_Last(
 		long modifiedTime,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.documentlibrary.NoSuchSyncEventException;
+		throws com.liferay.portlet.documentlibrary.NoSuchSyncEventException;
 
 	/**
 	* Returns the last d l sync event in the ordered set where modifiedTime &gt; &#63;.
@@ -136,12 +124,10 @@ public interface DLSyncEventPersistence extends BasePersistence<DLSyncEvent> {
 	* @param modifiedTime the modified time
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d l sync event, or <code>null</code> if a matching d l sync event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLSyncEvent fetchByModifiedTime_Last(
 		long modifiedTime,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the d l sync events before and after the current d l sync event in the ordered set where modifiedTime &gt; &#63;.
@@ -151,32 +137,26 @@ public interface DLSyncEventPersistence extends BasePersistence<DLSyncEvent> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next d l sync event
 	* @throws com.liferay.portlet.documentlibrary.NoSuchSyncEventException if a d l sync event with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLSyncEvent[] findByModifiedTime_PrevAndNext(
 		long syncEventId, long modifiedTime,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.documentlibrary.NoSuchSyncEventException;
+		throws com.liferay.portlet.documentlibrary.NoSuchSyncEventException;
 
 	/**
 	* Removes all the d l sync events where modifiedTime &gt; &#63; from the database.
 	*
 	* @param modifiedTime the modified time
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByModifiedTime(long modifiedTime)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeByModifiedTime(long modifiedTime);
 
 	/**
 	* Returns the number of d l sync events where modifiedTime &gt; &#63;.
 	*
 	* @param modifiedTime the modified time
 	* @return the number of matching d l sync events
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countByModifiedTime(long modifiedTime)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByModifiedTime(long modifiedTime);
 
 	/**
 	* Returns the d l sync event where typePK = &#63; or throws a {@link com.liferay.portlet.documentlibrary.NoSuchSyncEventException} if it could not be found.
@@ -184,22 +164,19 @@ public interface DLSyncEventPersistence extends BasePersistence<DLSyncEvent> {
 	* @param typePK the type p k
 	* @return the matching d l sync event
 	* @throws com.liferay.portlet.documentlibrary.NoSuchSyncEventException if a matching d l sync event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLSyncEvent findByTypePK(
 		long typePK)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.documentlibrary.NoSuchSyncEventException;
+		throws com.liferay.portlet.documentlibrary.NoSuchSyncEventException;
 
 	/**
 	* Returns the d l sync event where typePK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
 	* @param typePK the type p k
 	* @return the matching d l sync event, or <code>null</code> if a matching d l sync event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLSyncEvent fetchByTypePK(
-		long typePK) throws com.liferay.portal.kernel.exception.SystemException;
+		long typePK);
 
 	/**
 	* Returns the d l sync event where typePK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -207,33 +184,27 @@ public interface DLSyncEventPersistence extends BasePersistence<DLSyncEvent> {
 	* @param typePK the type p k
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching d l sync event, or <code>null</code> if a matching d l sync event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLSyncEvent fetchByTypePK(
-		long typePK, boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long typePK, boolean retrieveFromCache);
 
 	/**
 	* Removes the d l sync event where typePK = &#63; from the database.
 	*
 	* @param typePK the type p k
 	* @return the d l sync event that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLSyncEvent removeByTypePK(
 		long typePK)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.documentlibrary.NoSuchSyncEventException;
+		throws com.liferay.portlet.documentlibrary.NoSuchSyncEventException;
 
 	/**
 	* Returns the number of d l sync events where typePK = &#63;.
 	*
 	* @param typePK the type p k
 	* @return the number of matching d l sync events
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countByTypePK(long typePK)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByTypePK(long typePK);
 
 	/**
 	* Caches the d l sync event in the entity cache if it is enabled.
@@ -266,16 +237,13 @@ public interface DLSyncEventPersistence extends BasePersistence<DLSyncEvent> {
 	* @param syncEventId the primary key of the d l sync event
 	* @return the d l sync event that was removed
 	* @throws com.liferay.portlet.documentlibrary.NoSuchSyncEventException if a d l sync event with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLSyncEvent remove(
 		long syncEventId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.documentlibrary.NoSuchSyncEventException;
+		throws com.liferay.portlet.documentlibrary.NoSuchSyncEventException;
 
 	public com.liferay.portlet.documentlibrary.model.DLSyncEvent updateImpl(
-		com.liferay.portlet.documentlibrary.model.DLSyncEvent dlSyncEvent)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portlet.documentlibrary.model.DLSyncEvent dlSyncEvent);
 
 	/**
 	* Returns the d l sync event with the primary key or throws a {@link com.liferay.portlet.documentlibrary.NoSuchSyncEventException} if it could not be found.
@@ -283,32 +251,26 @@ public interface DLSyncEventPersistence extends BasePersistence<DLSyncEvent> {
 	* @param syncEventId the primary key of the d l sync event
 	* @return the d l sync event
 	* @throws com.liferay.portlet.documentlibrary.NoSuchSyncEventException if a d l sync event with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLSyncEvent findByPrimaryKey(
 		long syncEventId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.documentlibrary.NoSuchSyncEventException;
+		throws com.liferay.portlet.documentlibrary.NoSuchSyncEventException;
 
 	/**
 	* Returns the d l sync event with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param syncEventId the primary key of the d l sync event
 	* @return the d l sync event, or <code>null</code> if a d l sync event with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLSyncEvent fetchByPrimaryKey(
-		long syncEventId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long syncEventId);
 
 	/**
 	* Returns all the d l sync events.
 	*
 	* @return the d l sync events
-	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLSyncEvent> findAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLSyncEvent> findAll();
 
 	/**
 	* Returns a range of all the d l sync events.
@@ -320,11 +282,9 @@ public interface DLSyncEventPersistence extends BasePersistence<DLSyncEvent> {
 	* @param start the lower bound of the range of d l sync events
 	* @param end the upper bound of the range of d l sync events (not inclusive)
 	* @return the range of d l sync events
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLSyncEvent> findAll(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the d l sync events.
@@ -337,27 +297,20 @@ public interface DLSyncEventPersistence extends BasePersistence<DLSyncEvent> {
 	* @param end the upper bound of the range of d l sync events (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of d l sync events
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLSyncEvent> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Removes all the d l sync events from the database.
-	*
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeAll();
 
 	/**
 	* Returns the number of d l sync events.
 	*
 	* @return the number of d l sync events
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countAll();
 }

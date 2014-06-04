@@ -14,7 +14,6 @@
 
 package com.liferay.portal.model.impl;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Phone;
 import com.liferay.portal.service.PhoneLocalServiceUtil;
 
@@ -37,7 +36,7 @@ public abstract class PhoneBaseImpl extends PhoneModelImpl implements Phone {
 	 * Never modify or reference this class directly. All methods that expect a phone model instance should use the {@link Phone} interface instead.
 	 */
 	@Override
-	public void persist() throws SystemException {
+	public void persist() {
 		if (this.isNew()) {
 			PhoneLocalServiceUtil.addPhone(this);
 		}

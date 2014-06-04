@@ -370,11 +370,9 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	* Returns the user uuid of this wiki page.
 	*
 	* @return the user uuid of this wiki page
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public java.lang.String getUserUuid()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public java.lang.String getUserUuid() {
 		return _wikiPage.getUserUuid();
 	}
 
@@ -712,11 +710,9 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	* Returns the status by user uuid of this wiki page.
 	*
 	* @return the status by user uuid of this wiki page
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public java.lang.String getStatusByUserUuid()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public java.lang.String getStatusByUserUuid() {
 		return _wikiPage.getStatusByUserUuid();
 	}
 
@@ -774,12 +770,10 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	* Returns the trash entry created when this wiki page was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this wiki page.
 	*
 	* @return the trash entry created when this wiki page was moved to the Recycle Bin
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.trash.model.TrashEntry getTrashEntry()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiPage.getTrashEntry();
 	}
 
@@ -817,7 +811,6 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	* Returns <code>true</code> if the parent of this wiki page is in the Recycle Bin.
 	*
 	* @return <code>true</code> if the parent of this wiki page is in the Recycle Bin; <code>false</code> otherwise
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public boolean isInTrashContainer() {
@@ -825,14 +818,12 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	}
 
 	@Override
-	public boolean isInTrashExplicitly()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public boolean isInTrashExplicitly() {
 		return _wikiPage.isInTrashExplicitly();
 	}
 
 	@Override
-	public boolean isInTrashImplicitly()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public boolean isInTrashImplicitly() {
 		return _wikiPage.isInTrashImplicitly();
 	}
 
@@ -1024,8 +1015,7 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void persist() {
 		_wikiPage.persist();
 	}
 

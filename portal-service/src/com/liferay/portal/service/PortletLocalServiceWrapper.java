@@ -35,12 +35,10 @@ public class PortletLocalServiceWrapper implements PortletLocalService,
 	*
 	* @param portlet the portlet
 	* @return the portlet that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.Portlet addPortlet(
-		com.liferay.portal.model.Portlet portlet)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.Portlet portlet) {
 		return _portletLocalService.addPortlet(portlet);
 	}
 
@@ -61,12 +59,10 @@ public class PortletLocalServiceWrapper implements PortletLocalService,
 	* @param id the primary key of the portlet
 	* @return the portlet that was removed
 	* @throws PortalException if a portlet with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.Portlet deletePortlet(long id)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _portletLocalService.deletePortlet(id);
 	}
 
@@ -75,12 +71,10 @@ public class PortletLocalServiceWrapper implements PortletLocalService,
 	*
 	* @param portlet the portlet
 	* @return the portlet that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.Portlet deletePortlet(
-		com.liferay.portal.model.Portlet portlet)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.Portlet portlet) {
 		return _portletLocalService.deletePortlet(portlet);
 	}
 
@@ -94,13 +88,11 @@ public class PortletLocalServiceWrapper implements PortletLocalService,
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _portletLocalService.dynamicQuery(dynamicQuery);
 	}
 
@@ -115,13 +107,12 @@ public class PortletLocalServiceWrapper implements PortletLocalService,
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return _portletLocalService.dynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -137,15 +128,13 @@ public class PortletLocalServiceWrapper implements PortletLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return _portletLocalService.dynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
 	}
@@ -155,12 +144,10 @@ public class PortletLocalServiceWrapper implements PortletLocalService,
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _portletLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
@@ -170,19 +157,16 @@ public class PortletLocalServiceWrapper implements PortletLocalService,
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return _portletLocalService.dynamicQueryCount(dynamicQuery, projection);
 	}
 
 	@Override
-	public com.liferay.portal.model.Portlet fetchPortlet(long id)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public com.liferay.portal.model.Portlet fetchPortlet(long id) {
 		return _portletLocalService.fetchPortlet(id);
 	}
 
@@ -192,26 +176,22 @@ public class PortletLocalServiceWrapper implements PortletLocalService,
 	* @param id the primary key of the portlet
 	* @return the portlet
 	* @throws PortalException if a portlet with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.Portlet getPortlet(long id)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _portletLocalService.getPortlet(id);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _portletLocalService.getActionableDynamicQuery();
 	}
 
 	@Override
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _portletLocalService.getPersistedModel(primaryKeyObj);
 	}
 
@@ -225,12 +205,10 @@ public class PortletLocalServiceWrapper implements PortletLocalService,
 	* @param start the lower bound of the range of portlets
 	* @param end the upper bound of the range of portlets (not inclusive)
 	* @return the range of portlets
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.model.Portlet> getPortlets(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return _portletLocalService.getPortlets(start, end);
 	}
 
@@ -238,11 +216,9 @@ public class PortletLocalServiceWrapper implements PortletLocalService,
 	* Returns the number of portlets.
 	*
 	* @return the number of portlets
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public int getPortletsCount()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public int getPortletsCount() {
 		return _portletLocalService.getPortletsCount();
 	}
 
@@ -251,12 +227,10 @@ public class PortletLocalServiceWrapper implements PortletLocalService,
 	*
 	* @param portlet the portlet
 	* @return the portlet that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.Portlet updatePortlet(
-		com.liferay.portal.model.Portlet portlet)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.Portlet portlet) {
 		return _portletLocalService.updatePortlet(portlet);
 	}
 

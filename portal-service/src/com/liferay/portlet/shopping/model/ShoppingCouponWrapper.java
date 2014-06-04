@@ -290,11 +290,9 @@ public class ShoppingCouponWrapper implements ShoppingCoupon,
 	* Returns the user uuid of this shopping coupon.
 	*
 	* @return the user uuid of this shopping coupon
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public java.lang.String getUserUuid()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public java.lang.String getUserUuid() {
 		return _shoppingCoupon.getUserUuid();
 	}
 
@@ -698,8 +696,7 @@ public class ShoppingCouponWrapper implements ShoppingCoupon,
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void persist() {
 		_shoppingCoupon.persist();
 	}
 

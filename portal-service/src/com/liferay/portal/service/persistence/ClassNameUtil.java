@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 import com.liferay.portal.model.ClassName;
@@ -63,8 +62,7 @@ public class ClassNameUtil {
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#countWithDynamicQuery(DynamicQuery)
 	 */
-	public static long countWithDynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public static long countWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return getPersistence().countWithDynamicQuery(dynamicQuery);
 	}
 
@@ -72,7 +70,7 @@ public class ClassNameUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery)
 	 */
 	public static List<ClassName> findWithDynamicQuery(
-		DynamicQuery dynamicQuery) throws SystemException {
+		DynamicQuery dynamicQuery) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -80,8 +78,7 @@ public class ClassNameUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
 	 */
 	public static List<ClassName> findWithDynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+		DynamicQuery dynamicQuery, int start, int end) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -90,7 +87,7 @@ public class ClassNameUtil {
 	 */
 	public static List<ClassName> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -99,8 +96,7 @@ public class ClassNameUtil {
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static ClassName update(ClassName className)
-		throws SystemException {
+	public static ClassName update(ClassName className) {
 		return getPersistence().update(className);
 	}
 
@@ -108,7 +104,7 @@ public class ClassNameUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
 	public static ClassName update(ClassName className,
-		ServiceContext serviceContext) throws SystemException {
+		ServiceContext serviceContext) {
 		return getPersistence().update(className, serviceContext);
 	}
 
@@ -118,12 +114,10 @@ public class ClassNameUtil {
 	* @param value the value
 	* @return the matching class name
 	* @throws com.liferay.portal.NoSuchClassNameException if a matching class name could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.ClassName findByValue(
 		java.lang.String value)
-		throws com.liferay.portal.NoSuchClassNameException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.NoSuchClassNameException {
 		return getPersistence().findByValue(value);
 	}
 
@@ -132,11 +126,9 @@ public class ClassNameUtil {
 	*
 	* @param value the value
 	* @return the matching class name, or <code>null</code> if a matching class name could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.ClassName fetchByValue(
-		java.lang.String value)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String value) {
 		return getPersistence().fetchByValue(value);
 	}
 
@@ -146,11 +138,9 @@ public class ClassNameUtil {
 	* @param value the value
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching class name, or <code>null</code> if a matching class name could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.ClassName fetchByValue(
-		java.lang.String value, boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String value, boolean retrieveFromCache) {
 		return getPersistence().fetchByValue(value, retrieveFromCache);
 	}
 
@@ -159,12 +149,10 @@ public class ClassNameUtil {
 	*
 	* @param value the value
 	* @return the class name that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.ClassName removeByValue(
 		java.lang.String value)
-		throws com.liferay.portal.NoSuchClassNameException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.NoSuchClassNameException {
 		return getPersistence().removeByValue(value);
 	}
 
@@ -173,10 +161,8 @@ public class ClassNameUtil {
 	*
 	* @param value the value
 	* @return the number of matching class names
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByValue(java.lang.String value)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByValue(java.lang.String value) {
 		return getPersistence().countByValue(value);
 	}
 
@@ -215,17 +201,14 @@ public class ClassNameUtil {
 	* @param classNameId the primary key of the class name
 	* @return the class name that was removed
 	* @throws com.liferay.portal.NoSuchClassNameException if a class name with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.ClassName remove(long classNameId)
-		throws com.liferay.portal.NoSuchClassNameException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.NoSuchClassNameException {
 		return getPersistence().remove(classNameId);
 	}
 
 	public static com.liferay.portal.model.ClassName updateImpl(
-		com.liferay.portal.model.ClassName className)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.ClassName className) {
 		return getPersistence().updateImpl(className);
 	}
 
@@ -235,12 +218,9 @@ public class ClassNameUtil {
 	* @param classNameId the primary key of the class name
 	* @return the class name
 	* @throws com.liferay.portal.NoSuchClassNameException if a class name with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.ClassName findByPrimaryKey(
-		long classNameId)
-		throws com.liferay.portal.NoSuchClassNameException,
-			com.liferay.portal.kernel.exception.SystemException {
+		long classNameId) throws com.liferay.portal.NoSuchClassNameException {
 		return getPersistence().findByPrimaryKey(classNameId);
 	}
 
@@ -249,11 +229,9 @@ public class ClassNameUtil {
 	*
 	* @param classNameId the primary key of the class name
 	* @return the class name, or <code>null</code> if a class name with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.ClassName fetchByPrimaryKey(
-		long classNameId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long classNameId) {
 		return getPersistence().fetchByPrimaryKey(classNameId);
 	}
 
@@ -261,10 +239,8 @@ public class ClassNameUtil {
 	* Returns all the class names.
 	*
 	* @return the class names
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.portal.model.ClassName> findAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static java.util.List<com.liferay.portal.model.ClassName> findAll() {
 		return getPersistence().findAll();
 	}
 
@@ -278,11 +254,9 @@ public class ClassNameUtil {
 	* @param start the lower bound of the range of class names
 	* @param end the upper bound of the range of class names (not inclusive)
 	* @return the range of class names
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portal.model.ClassName> findAll(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
@@ -297,22 +271,17 @@ public class ClassNameUtil {
 	* @param end the upper bound of the range of class names (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of class names
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portal.model.ClassName> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
 	/**
 	* Removes all the class names from the database.
-	*
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeAll() {
 		getPersistence().removeAll();
 	}
 
@@ -320,10 +289,8 @@ public class ClassNameUtil {
 	* Returns the number of class names.
 	*
 	* @return the number of class names
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countAll() {
 		return getPersistence().countAll();
 	}
 

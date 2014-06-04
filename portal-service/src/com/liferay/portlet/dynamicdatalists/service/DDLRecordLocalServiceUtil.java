@@ -46,11 +46,9 @@ public class DDLRecordLocalServiceUtil {
 	*
 	* @param ddlRecord the d d l record
 	* @return the d d l record that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecord addDDLRecord(
-		com.liferay.portlet.dynamicdatalists.model.DDLRecord ddlRecord)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.dynamicdatalists.model.DDLRecord ddlRecord) {
 		return getService().addDDLRecord(ddlRecord);
 	}
 
@@ -71,12 +69,10 @@ public class DDLRecordLocalServiceUtil {
 	* @param recordId the primary key of the d d l record
 	* @return the d d l record that was removed
 	* @throws PortalException if a d d l record with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecord deleteDDLRecord(
 		long recordId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteDDLRecord(recordId);
 	}
 
@@ -85,11 +81,9 @@ public class DDLRecordLocalServiceUtil {
 	*
 	* @param ddlRecord the d d l record
 	* @return the d d l record that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecord deleteDDLRecord(
-		com.liferay.portlet.dynamicdatalists.model.DDLRecord ddlRecord)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.dynamicdatalists.model.DDLRecord ddlRecord) {
 		return getService().deleteDDLRecord(ddlRecord);
 	}
 
@@ -102,12 +96,10 @@ public class DDLRecordLocalServiceUtil {
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -122,12 +114,11 @@ public class DDLRecordLocalServiceUtil {
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -143,14 +134,12 @@ public class DDLRecordLocalServiceUtil {
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getService()
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
@@ -160,11 +149,9 @@ public class DDLRecordLocalServiceUtil {
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -174,18 +161,15 @@ public class DDLRecordLocalServiceUtil {
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public static long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecord fetchDDLRecord(
-		long recordId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long recordId) {
 		return getService().fetchDDLRecord(recordId);
 	}
 
@@ -195,11 +179,9 @@ public class DDLRecordLocalServiceUtil {
 	* @param uuid the d d l record's UUID
 	* @param companyId the primary key of the company
 	* @return the matching d d l record, or <code>null</code> if a matching d d l record could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecord fetchDDLRecordByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long companyId) {
 		return getService().fetchDDLRecordByUuidAndCompanyId(uuid, companyId);
 	}
 
@@ -209,11 +191,9 @@ public class DDLRecordLocalServiceUtil {
 	* @param uuid the d d l record's UUID
 	* @param groupId the primary key of the group
 	* @return the matching d d l record, or <code>null</code> if a matching d d l record could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecord fetchDDLRecordByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long groupId) {
 		return getService().fetchDDLRecordByUuidAndGroupId(uuid, groupId);
 	}
 
@@ -223,30 +203,25 @@ public class DDLRecordLocalServiceUtil {
 	* @param recordId the primary key of the d d l record
 	* @return the d d l record
 	* @throws PortalException if a d d l record with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecord getDDLRecord(
 		long recordId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getDDLRecord(recordId);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext) {
 		return getService().getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	public static com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
@@ -257,12 +232,10 @@ public class DDLRecordLocalServiceUtil {
 	* @param companyId the primary key of the company
 	* @return the matching d d l record
 	* @throws PortalException if a matching d d l record could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecord getDDLRecordByUuidAndCompanyId(
 		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getDDLRecordByUuidAndCompanyId(uuid, companyId);
 	}
 
@@ -273,12 +246,10 @@ public class DDLRecordLocalServiceUtil {
 	* @param groupId the primary key of the group
 	* @return the matching d d l record
 	* @throws PortalException if a matching d d l record could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecord getDDLRecordByUuidAndGroupId(
 		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getDDLRecordByUuidAndGroupId(uuid, groupId);
 	}
 
@@ -292,11 +263,9 @@ public class DDLRecordLocalServiceUtil {
 	* @param start the lower bound of the range of d d l records
 	* @param end the upper bound of the range of d d l records (not inclusive)
 	* @return the range of d d l records
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecord> getDDLRecords(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return getService().getDDLRecords(start, end);
 	}
 
@@ -304,10 +273,8 @@ public class DDLRecordLocalServiceUtil {
 	* Returns the number of d d l records.
 	*
 	* @return the number of d d l records
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int getDDLRecordsCount()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int getDDLRecordsCount() {
 		return getService().getDDLRecordsCount();
 	}
 
@@ -316,11 +283,9 @@ public class DDLRecordLocalServiceUtil {
 	*
 	* @param ddlRecord the d d l record
 	* @return the d d l record that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecord updateDDLRecord(
-		com.liferay.portlet.dynamicdatalists.model.DDLRecord ddlRecord)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.dynamicdatalists.model.DDLRecord ddlRecord) {
 		return getService().updateDDLRecord(ddlRecord);
 	}
 

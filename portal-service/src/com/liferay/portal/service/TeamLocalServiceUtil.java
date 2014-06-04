@@ -46,11 +46,9 @@ public class TeamLocalServiceUtil {
 	*
 	* @param team the team
 	* @return the team that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Team addTeam(
-		com.liferay.portal.model.Team team)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.Team team) {
 		return getService().addTeam(team);
 	}
 
@@ -70,7 +68,7 @@ public class TeamLocalServiceUtil {
 	* @param teamId the primary key of the team
 	* @return the team that was removed
 	* @throws PortalException if a team with the primary key could not be found
-	* @throws SystemException if a system exception occurred
+	* @throws SystemException
 	*/
 	public static com.liferay.portal.model.Team deleteTeam(long teamId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -84,7 +82,7 @@ public class TeamLocalServiceUtil {
 	* @param team the team
 	* @return the team that was removed
 	* @throws PortalException
-	* @throws SystemException if a system exception occurred
+	* @throws SystemException
 	*/
 	public static com.liferay.portal.model.Team deleteTeam(
 		com.liferay.portal.model.Team team)
@@ -102,12 +100,10 @@ public class TeamLocalServiceUtil {
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -122,12 +118,11 @@ public class TeamLocalServiceUtil {
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -143,14 +138,12 @@ public class TeamLocalServiceUtil {
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getService()
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
@@ -160,11 +153,9 @@ public class TeamLocalServiceUtil {
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -174,17 +165,14 @@ public class TeamLocalServiceUtil {
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public static long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.portal.model.Team fetchTeam(long teamId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static com.liferay.portal.model.Team fetchTeam(long teamId) {
 		return getService().fetchTeam(teamId);
 	}
 
@@ -194,23 +182,19 @@ public class TeamLocalServiceUtil {
 	* @param teamId the primary key of the team
 	* @return the team
 	* @throws PortalException if a team with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Team getTeam(long teamId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getTeam(teamId);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}
 
 	public static com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
@@ -224,11 +208,9 @@ public class TeamLocalServiceUtil {
 	* @param start the lower bound of the range of teams
 	* @param end the upper bound of the range of teams (not inclusive)
 	* @return the range of teams
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portal.model.Team> getTeams(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return getService().getTeams(start, end);
 	}
 
@@ -236,10 +218,8 @@ public class TeamLocalServiceUtil {
 	* Returns the number of teams.
 	*
 	* @return the number of teams
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int getTeamsCount()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int getTeamsCount() {
 		return getService().getTeamsCount();
 	}
 
@@ -248,87 +228,49 @@ public class TeamLocalServiceUtil {
 	*
 	* @param team the team
 	* @return the team that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.Team updateTeam(
-		com.liferay.portal.model.Team team)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.Team team) {
 		return getService().updateTeam(team);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void addUserTeam(long userId, long teamId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void addUserTeam(long userId, long teamId) {
 		getService().addUserTeam(userId, teamId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public static void addUserTeam(long userId,
-		com.liferay.portal.model.Team team)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.Team team) {
 		getService().addUserTeam(userId, team);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void addUserTeams(long userId, long[] teamIds)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void addUserTeams(long userId, long[] teamIds) {
 		getService().addUserTeams(userId, teamIds);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public static void addUserTeams(long userId,
-		java.util.List<com.liferay.portal.model.Team> Teams)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.util.List<com.liferay.portal.model.Team> Teams) {
 		getService().addUserTeams(userId, Teams);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void clearUserTeams(long userId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void clearUserTeams(long userId) {
 		getService().clearUserTeams(userId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void deleteUserTeam(long userId, long teamId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void deleteUserTeam(long userId, long teamId) {
 		getService().deleteUserTeam(userId, teamId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public static void deleteUserTeam(long userId,
-		com.liferay.portal.model.Team team)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.Team team) {
 		getService().deleteUserTeam(userId, team);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void deleteUserTeams(long userId, long[] teamIds)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void deleteUserTeams(long userId, long[] teamIds) {
 		getService().deleteUserTeams(userId, teamIds);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public static void deleteUserTeams(long userId,
-		java.util.List<com.liferay.portal.model.Team> Teams)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.util.List<com.liferay.portal.model.Team> Teams) {
 		getService().deleteUserTeams(userId, Teams);
 	}
 
@@ -337,145 +279,80 @@ public class TeamLocalServiceUtil {
 	*
 	* @param teamId the teamId of the team
 	* @return long[] the userIds of users associated with the team
-	* @throws SystemException if a system exception occurred
 	*/
-	public static long[] getUserPrimaryKeys(long teamId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static long[] getUserPrimaryKeys(long teamId) {
 		return getService().getUserPrimaryKeys(teamId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public static java.util.List<com.liferay.portal.model.Team> getUserTeams(
-		long userId) throws com.liferay.portal.kernel.exception.SystemException {
+		long userId) {
 		return getService().getUserTeams(userId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public static java.util.List<com.liferay.portal.model.Team> getUserTeams(
-		long userId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long userId, int start, int end) {
 		return getService().getUserTeams(userId, start, end);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public static java.util.List<com.liferay.portal.model.Team> getUserTeams(
 		long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getService().getUserTeams(userId, start, end, orderByComparator);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int getUserTeamsCount(long userId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int getUserTeamsCount(long userId) {
 		return getService().getUserTeamsCount(userId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	public static boolean hasUserTeam(long userId, long teamId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static boolean hasUserTeam(long userId, long teamId) {
 		return getService().hasUserTeam(userId, teamId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	public static boolean hasUserTeams(long userId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static boolean hasUserTeams(long userId) {
 		return getService().hasUserTeams(userId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void setUserTeams(long userId, long[] teamIds)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void setUserTeams(long userId, long[] teamIds) {
 		getService().setUserTeams(userId, teamIds);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void addUserGroupTeam(long userGroupId, long teamId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void addUserGroupTeam(long userGroupId, long teamId) {
 		getService().addUserGroupTeam(userGroupId, teamId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public static void addUserGroupTeam(long userGroupId,
-		com.liferay.portal.model.Team team)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.Team team) {
 		getService().addUserGroupTeam(userGroupId, team);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void addUserGroupTeams(long userGroupId, long[] teamIds)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void addUserGroupTeams(long userGroupId, long[] teamIds) {
 		getService().addUserGroupTeams(userGroupId, teamIds);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public static void addUserGroupTeams(long userGroupId,
-		java.util.List<com.liferay.portal.model.Team> Teams)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.util.List<com.liferay.portal.model.Team> Teams) {
 		getService().addUserGroupTeams(userGroupId, Teams);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void clearUserGroupTeams(long userGroupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void clearUserGroupTeams(long userGroupId) {
 		getService().clearUserGroupTeams(userGroupId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void deleteUserGroupTeam(long userGroupId, long teamId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void deleteUserGroupTeam(long userGroupId, long teamId) {
 		getService().deleteUserGroupTeam(userGroupId, teamId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public static void deleteUserGroupTeam(long userGroupId,
-		com.liferay.portal.model.Team team)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.Team team) {
 		getService().deleteUserGroupTeam(userGroupId, team);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void deleteUserGroupTeams(long userGroupId, long[] teamIds)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void deleteUserGroupTeams(long userGroupId, long[] teamIds) {
 		getService().deleteUserGroupTeams(userGroupId, teamIds);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public static void deleteUserGroupTeams(long userGroupId,
-		java.util.List<com.liferay.portal.model.Team> Teams)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.util.List<com.liferay.portal.model.Team> Teams) {
 		getService().deleteUserGroupTeams(userGroupId, Teams);
 	}
 
@@ -484,71 +361,41 @@ public class TeamLocalServiceUtil {
 	*
 	* @param teamId the teamId of the team
 	* @return long[] the userGroupIds of user groups associated with the team
-	* @throws SystemException if a system exception occurred
 	*/
-	public static long[] getUserGroupPrimaryKeys(long teamId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static long[] getUserGroupPrimaryKeys(long teamId) {
 		return getService().getUserGroupPrimaryKeys(teamId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public static java.util.List<com.liferay.portal.model.Team> getUserGroupTeams(
-		long userGroupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long userGroupId) {
 		return getService().getUserGroupTeams(userGroupId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public static java.util.List<com.liferay.portal.model.Team> getUserGroupTeams(
-		long userGroupId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long userGroupId, int start, int end) {
 		return getService().getUserGroupTeams(userGroupId, start, end);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public static java.util.List<com.liferay.portal.model.Team> getUserGroupTeams(
 		long userGroupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getService()
 				   .getUserGroupTeams(userGroupId, start, end, orderByComparator);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int getUserGroupTeamsCount(long userGroupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int getUserGroupTeamsCount(long userGroupId) {
 		return getService().getUserGroupTeamsCount(userGroupId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	public static boolean hasUserGroupTeam(long userGroupId, long teamId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static boolean hasUserGroupTeam(long userGroupId, long teamId) {
 		return getService().hasUserGroupTeam(userGroupId, teamId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	public static boolean hasUserGroupTeams(long userGroupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static boolean hasUserGroupTeams(long userGroupId) {
 		return getService().hasUserGroupTeams(userGroupId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void setUserGroupTeams(long userGroupId, long[] teamIds)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void setUserGroupTeams(long userGroupId, long[] teamIds) {
 		getService().setUserGroupTeams(userGroupId, teamIds);
 	}
 

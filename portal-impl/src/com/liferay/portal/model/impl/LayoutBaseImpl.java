@@ -14,7 +14,6 @@
 
 package com.liferay.portal.model.impl;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 
@@ -37,7 +36,7 @@ public abstract class LayoutBaseImpl extends LayoutModelImpl implements Layout {
 	 * Never modify or reference this class directly. All methods that expect a layout model instance should use the {@link Layout} interface instead.
 	 */
 	@Override
-	public void persist() throws SystemException {
+	public void persist() {
 		if (this.isNew()) {
 			LayoutLocalServiceUtil.addLayout(this);
 		}

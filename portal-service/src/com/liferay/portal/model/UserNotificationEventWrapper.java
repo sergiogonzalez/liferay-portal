@@ -268,11 +268,9 @@ public class UserNotificationEventWrapper implements UserNotificationEvent,
 	* Returns the user uuid of this user notification event.
 	*
 	* @return the user uuid of this user notification event
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public java.lang.String getUserUuid()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public java.lang.String getUserUuid() {
 		return _userNotificationEvent.getUserUuid();
 	}
 
@@ -546,8 +544,7 @@ public class UserNotificationEventWrapper implements UserNotificationEvent,
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void persist() {
 		_userNotificationEvent.persist();
 	}
 

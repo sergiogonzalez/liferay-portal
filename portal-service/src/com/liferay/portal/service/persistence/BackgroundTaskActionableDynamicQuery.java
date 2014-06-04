@@ -15,7 +15,6 @@
 package com.liferay.portal.service.persistence;
 
 import com.liferay.portal.kernel.dao.orm.BaseActionableDynamicQuery;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.model.BackgroundTask;
 import com.liferay.portal.service.BackgroundTaskLocalServiceUtil;
@@ -28,7 +27,7 @@ import com.liferay.portal.service.BackgroundTaskLocalServiceUtil;
 @Deprecated
 public abstract class BackgroundTaskActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
-	public BackgroundTaskActionableDynamicQuery() throws SystemException {
+	public BackgroundTaskActionableDynamicQuery() {
 		setBaseLocalService(BackgroundTaskLocalServiceUtil.getService());
 		setClass(BackgroundTask.class);
 

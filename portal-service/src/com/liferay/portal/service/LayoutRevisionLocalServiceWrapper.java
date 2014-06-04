@@ -37,12 +37,10 @@ public class LayoutRevisionLocalServiceWrapper
 	*
 	* @param layoutRevision the layout revision
 	* @return the layout revision that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.LayoutRevision addLayoutRevision(
-		com.liferay.portal.model.LayoutRevision layoutRevision)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.LayoutRevision layoutRevision) {
 		return _layoutRevisionLocalService.addLayoutRevision(layoutRevision);
 	}
 
@@ -64,7 +62,7 @@ public class LayoutRevisionLocalServiceWrapper
 	* @param layoutRevisionId the primary key of the layout revision
 	* @return the layout revision that was removed
 	* @throws PortalException if a layout revision with the primary key could not be found
-	* @throws SystemException if a system exception occurred
+	* @throws SystemException
 	*/
 	@Override
 	public com.liferay.portal.model.LayoutRevision deleteLayoutRevision(
@@ -80,7 +78,7 @@ public class LayoutRevisionLocalServiceWrapper
 	* @param layoutRevision the layout revision
 	* @return the layout revision that was removed
 	* @throws PortalException
-	* @throws SystemException if a system exception occurred
+	* @throws SystemException
 	*/
 	@Override
 	public com.liferay.portal.model.LayoutRevision deleteLayoutRevision(
@@ -100,13 +98,11 @@ public class LayoutRevisionLocalServiceWrapper
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _layoutRevisionLocalService.dynamicQuery(dynamicQuery);
 	}
 
@@ -121,13 +117,12 @@ public class LayoutRevisionLocalServiceWrapper
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return _layoutRevisionLocalService.dynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -143,15 +138,13 @@ public class LayoutRevisionLocalServiceWrapper
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return _layoutRevisionLocalService.dynamicQuery(dynamicQuery, start,
 			end, orderByComparator);
 	}
@@ -161,12 +154,10 @@ public class LayoutRevisionLocalServiceWrapper
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _layoutRevisionLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
@@ -176,21 +167,18 @@ public class LayoutRevisionLocalServiceWrapper
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return _layoutRevisionLocalService.dynamicQueryCount(dynamicQuery,
 			projection);
 	}
 
 	@Override
 	public com.liferay.portal.model.LayoutRevision fetchLayoutRevision(
-		long layoutRevisionId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long layoutRevisionId) {
 		return _layoutRevisionLocalService.fetchLayoutRevision(layoutRevisionId);
 	}
 
@@ -200,27 +188,23 @@ public class LayoutRevisionLocalServiceWrapper
 	* @param layoutRevisionId the primary key of the layout revision
 	* @return the layout revision
 	* @throws PortalException if a layout revision with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.LayoutRevision getLayoutRevision(
 		long layoutRevisionId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutRevisionLocalService.getLayoutRevision(layoutRevisionId);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _layoutRevisionLocalService.getActionableDynamicQuery();
 	}
 
 	@Override
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutRevisionLocalService.getPersistedModel(primaryKeyObj);
 	}
 
@@ -234,12 +218,10 @@ public class LayoutRevisionLocalServiceWrapper
 	* @param start the lower bound of the range of layout revisions
 	* @param end the upper bound of the range of layout revisions (not inclusive)
 	* @return the range of layout revisions
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.model.LayoutRevision> getLayoutRevisions(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return _layoutRevisionLocalService.getLayoutRevisions(start, end);
 	}
 
@@ -247,11 +229,9 @@ public class LayoutRevisionLocalServiceWrapper
 	* Returns the number of layout revisions.
 	*
 	* @return the number of layout revisions
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public int getLayoutRevisionsCount()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public int getLayoutRevisionsCount() {
 		return _layoutRevisionLocalService.getLayoutRevisionsCount();
 	}
 
@@ -260,12 +240,10 @@ public class LayoutRevisionLocalServiceWrapper
 	*
 	* @param layoutRevision the layout revision
 	* @return the layout revision that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.LayoutRevision updateLayoutRevision(
-		com.liferay.portal.model.LayoutRevision layoutRevision)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.LayoutRevision layoutRevision) {
 		return _layoutRevisionLocalService.updateLayoutRevision(layoutRevision);
 	}
 

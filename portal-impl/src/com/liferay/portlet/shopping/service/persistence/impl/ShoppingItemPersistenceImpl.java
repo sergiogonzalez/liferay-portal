@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -101,11 +100,10 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	 * @param smallImageId the small image ID
 	 * @return the matching shopping item
 	 * @throws com.liferay.portlet.shopping.NoSuchItemException if a matching shopping item could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ShoppingItem findBySmallImageId(long smallImageId)
-		throws NoSuchItemException, SystemException {
+		throws NoSuchItemException {
 		ShoppingItem shoppingItem = fetchBySmallImageId(smallImageId);
 
 		if (shoppingItem == null) {
@@ -133,11 +131,9 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	 *
 	 * @param smallImageId the small image ID
 	 * @return the matching shopping item, or <code>null</code> if a matching shopping item could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public ShoppingItem fetchBySmallImageId(long smallImageId)
-		throws SystemException {
+	public ShoppingItem fetchBySmallImageId(long smallImageId) {
 		return fetchBySmallImageId(smallImageId, true);
 	}
 
@@ -147,11 +143,10 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	 * @param smallImageId the small image ID
 	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching shopping item, or <code>null</code> if a matching shopping item could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ShoppingItem fetchBySmallImageId(long smallImageId,
-		boolean retrieveFromCache) throws SystemException {
+		boolean retrieveFromCache) {
 		Object[] finderArgs = new Object[] { smallImageId };
 
 		Object result = null;
@@ -239,11 +234,10 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	 *
 	 * @param smallImageId the small image ID
 	 * @return the shopping item that was removed
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ShoppingItem removeBySmallImageId(long smallImageId)
-		throws NoSuchItemException, SystemException {
+		throws NoSuchItemException {
 		ShoppingItem shoppingItem = findBySmallImageId(smallImageId);
 
 		return remove(shoppingItem);
@@ -254,10 +248,9 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	 *
 	 * @param smallImageId the small image ID
 	 * @return the number of matching shopping items
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countBySmallImageId(long smallImageId) throws SystemException {
+	public int countBySmallImageId(long smallImageId) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_SMALLIMAGEID;
 
 		Object[] finderArgs = new Object[] { smallImageId };
@@ -319,11 +312,10 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	 * @param mediumImageId the medium image ID
 	 * @return the matching shopping item
 	 * @throws com.liferay.portlet.shopping.NoSuchItemException if a matching shopping item could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ShoppingItem findByMediumImageId(long mediumImageId)
-		throws NoSuchItemException, SystemException {
+		throws NoSuchItemException {
 		ShoppingItem shoppingItem = fetchByMediumImageId(mediumImageId);
 
 		if (shoppingItem == null) {
@@ -351,11 +343,9 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	 *
 	 * @param mediumImageId the medium image ID
 	 * @return the matching shopping item, or <code>null</code> if a matching shopping item could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public ShoppingItem fetchByMediumImageId(long mediumImageId)
-		throws SystemException {
+	public ShoppingItem fetchByMediumImageId(long mediumImageId) {
 		return fetchByMediumImageId(mediumImageId, true);
 	}
 
@@ -365,11 +355,10 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	 * @param mediumImageId the medium image ID
 	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching shopping item, or <code>null</code> if a matching shopping item could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ShoppingItem fetchByMediumImageId(long mediumImageId,
-		boolean retrieveFromCache) throws SystemException {
+		boolean retrieveFromCache) {
 		Object[] finderArgs = new Object[] { mediumImageId };
 
 		Object result = null;
@@ -457,11 +446,10 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	 *
 	 * @param mediumImageId the medium image ID
 	 * @return the shopping item that was removed
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ShoppingItem removeByMediumImageId(long mediumImageId)
-		throws NoSuchItemException, SystemException {
+		throws NoSuchItemException {
 		ShoppingItem shoppingItem = findByMediumImageId(mediumImageId);
 
 		return remove(shoppingItem);
@@ -472,11 +460,9 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	 *
 	 * @param mediumImageId the medium image ID
 	 * @return the number of matching shopping items
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByMediumImageId(long mediumImageId)
-		throws SystemException {
+	public int countByMediumImageId(long mediumImageId) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_MEDIUMIMAGEID;
 
 		Object[] finderArgs = new Object[] { mediumImageId };
@@ -538,11 +524,10 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	 * @param largeImageId the large image ID
 	 * @return the matching shopping item
 	 * @throws com.liferay.portlet.shopping.NoSuchItemException if a matching shopping item could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ShoppingItem findByLargeImageId(long largeImageId)
-		throws NoSuchItemException, SystemException {
+		throws NoSuchItemException {
 		ShoppingItem shoppingItem = fetchByLargeImageId(largeImageId);
 
 		if (shoppingItem == null) {
@@ -570,11 +555,9 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	 *
 	 * @param largeImageId the large image ID
 	 * @return the matching shopping item, or <code>null</code> if a matching shopping item could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public ShoppingItem fetchByLargeImageId(long largeImageId)
-		throws SystemException {
+	public ShoppingItem fetchByLargeImageId(long largeImageId) {
 		return fetchByLargeImageId(largeImageId, true);
 	}
 
@@ -584,11 +567,10 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	 * @param largeImageId the large image ID
 	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching shopping item, or <code>null</code> if a matching shopping item could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ShoppingItem fetchByLargeImageId(long largeImageId,
-		boolean retrieveFromCache) throws SystemException {
+		boolean retrieveFromCache) {
 		Object[] finderArgs = new Object[] { largeImageId };
 
 		Object result = null;
@@ -676,11 +658,10 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	 *
 	 * @param largeImageId the large image ID
 	 * @return the shopping item that was removed
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ShoppingItem removeByLargeImageId(long largeImageId)
-		throws NoSuchItemException, SystemException {
+		throws NoSuchItemException {
 		ShoppingItem shoppingItem = findByLargeImageId(largeImageId);
 
 		return remove(shoppingItem);
@@ -691,10 +672,9 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	 *
 	 * @param largeImageId the large image ID
 	 * @return the number of matching shopping items
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByLargeImageId(long largeImageId) throws SystemException {
+	public int countByLargeImageId(long largeImageId) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_LARGEIMAGEID;
 
 		Object[] finderArgs = new Object[] { largeImageId };
@@ -766,11 +746,9 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	 * @param groupId the group ID
 	 * @param categoryId the category ID
 	 * @return the matching shopping items
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<ShoppingItem> findByG_C(long groupId, long categoryId)
-		throws SystemException {
+	public List<ShoppingItem> findByG_C(long groupId, long categoryId) {
 		return findByG_C(groupId, categoryId, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
@@ -787,11 +765,10 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	 * @param start the lower bound of the range of shopping items
 	 * @param end the upper bound of the range of shopping items (not inclusive)
 	 * @return the range of matching shopping items
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<ShoppingItem> findByG_C(long groupId, long categoryId,
-		int start, int end) throws SystemException {
+		int start, int end) {
 		return findByG_C(groupId, categoryId, start, end, null);
 	}
 
@@ -808,12 +785,10 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	 * @param end the upper bound of the range of shopping items (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching shopping items
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<ShoppingItem> findByG_C(long groupId, long categoryId,
-		int start, int end, OrderByComparator orderByComparator)
-		throws SystemException {
+		int start, int end, OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -926,12 +901,10 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching shopping item
 	 * @throws com.liferay.portlet.shopping.NoSuchItemException if a matching shopping item could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ShoppingItem findByG_C_First(long groupId, long categoryId,
-		OrderByComparator orderByComparator)
-		throws NoSuchItemException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchItemException {
 		ShoppingItem shoppingItem = fetchByG_C_First(groupId, categoryId,
 				orderByComparator);
 
@@ -961,11 +934,10 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	 * @param categoryId the category ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching shopping item, or <code>null</code> if a matching shopping item could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ShoppingItem fetchByG_C_First(long groupId, long categoryId,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		List<ShoppingItem> list = findByG_C(groupId, categoryId, 0, 1,
 				orderByComparator);
 
@@ -984,12 +956,10 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching shopping item
 	 * @throws com.liferay.portlet.shopping.NoSuchItemException if a matching shopping item could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ShoppingItem findByG_C_Last(long groupId, long categoryId,
-		OrderByComparator orderByComparator)
-		throws NoSuchItemException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchItemException {
 		ShoppingItem shoppingItem = fetchByG_C_Last(groupId, categoryId,
 				orderByComparator);
 
@@ -1019,11 +989,10 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	 * @param categoryId the category ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching shopping item, or <code>null</code> if a matching shopping item could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ShoppingItem fetchByG_C_Last(long groupId, long categoryId,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		int count = countByG_C(groupId, categoryId);
 
 		if (count == 0) {
@@ -1049,12 +1018,11 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next shopping item
 	 * @throws com.liferay.portlet.shopping.NoSuchItemException if a shopping item with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ShoppingItem[] findByG_C_PrevAndNext(long itemId, long groupId,
 		long categoryId, OrderByComparator orderByComparator)
-		throws NoSuchItemException, SystemException {
+		throws NoSuchItemException {
 		ShoppingItem shoppingItem = findByPrimaryKey(itemId);
 
 		Session session = null;
@@ -1197,11 +1165,9 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	 * @param groupId the group ID
 	 * @param categoryId the category ID
 	 * @return the matching shopping items that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<ShoppingItem> filterFindByG_C(long groupId, long categoryId)
-		throws SystemException {
+	public List<ShoppingItem> filterFindByG_C(long groupId, long categoryId) {
 		return filterFindByG_C(groupId, categoryId, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
@@ -1218,11 +1184,10 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	 * @param start the lower bound of the range of shopping items
 	 * @param end the upper bound of the range of shopping items (not inclusive)
 	 * @return the range of matching shopping items that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<ShoppingItem> filterFindByG_C(long groupId, long categoryId,
-		int start, int end) throws SystemException {
+		int start, int end) {
 		return filterFindByG_C(groupId, categoryId, start, end, null);
 	}
 
@@ -1239,12 +1204,10 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	 * @param end the upper bound of the range of shopping items (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching shopping items that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<ShoppingItem> filterFindByG_C(long groupId, long categoryId,
-		int start, int end, OrderByComparator orderByComparator)
-		throws SystemException {
+		int start, int end, OrderByComparator orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_C(groupId, categoryId, start, end, orderByComparator);
 		}
@@ -1337,12 +1300,11 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next shopping item
 	 * @throws com.liferay.portlet.shopping.NoSuchItemException if a shopping item with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ShoppingItem[] filterFindByG_C_PrevAndNext(long itemId,
 		long groupId, long categoryId, OrderByComparator orderByComparator)
-		throws NoSuchItemException, SystemException {
+		throws NoSuchItemException {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_C_PrevAndNext(itemId, groupId, categoryId,
 				orderByComparator);
@@ -1524,11 +1486,9 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	 *
 	 * @param groupId the group ID
 	 * @param categoryId the category ID
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByG_C(long groupId, long categoryId)
-		throws SystemException {
+	public void removeByG_C(long groupId, long categoryId) {
 		for (ShoppingItem shoppingItem : findByG_C(groupId, categoryId,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(shoppingItem);
@@ -1541,11 +1501,9 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	 * @param groupId the group ID
 	 * @param categoryId the category ID
 	 * @return the number of matching shopping items
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByG_C(long groupId, long categoryId)
-		throws SystemException {
+	public int countByG_C(long groupId, long categoryId) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_C;
 
 		Object[] finderArgs = new Object[] { groupId, categoryId };
@@ -1600,11 +1558,9 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	 * @param groupId the group ID
 	 * @param categoryId the category ID
 	 * @return the number of matching shopping items that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int filterCountByG_C(long groupId, long categoryId)
-		throws SystemException {
+	public int filterCountByG_C(long groupId, long categoryId) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return countByG_C(groupId, categoryId);
 		}
@@ -1669,11 +1625,10 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	 * @param sku the sku
 	 * @return the matching shopping item
 	 * @throws com.liferay.portlet.shopping.NoSuchItemException if a matching shopping item could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ShoppingItem findByC_S(long companyId, String sku)
-		throws NoSuchItemException, SystemException {
+		throws NoSuchItemException {
 		ShoppingItem shoppingItem = fetchByC_S(companyId, sku);
 
 		if (shoppingItem == null) {
@@ -1705,11 +1660,9 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	 * @param companyId the company ID
 	 * @param sku the sku
 	 * @return the matching shopping item, or <code>null</code> if a matching shopping item could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public ShoppingItem fetchByC_S(long companyId, String sku)
-		throws SystemException {
+	public ShoppingItem fetchByC_S(long companyId, String sku) {
 		return fetchByC_S(companyId, sku, true);
 	}
 
@@ -1720,11 +1673,10 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	 * @param sku the sku
 	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching shopping item, or <code>null</code> if a matching shopping item could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ShoppingItem fetchByC_S(long companyId, String sku,
-		boolean retrieveFromCache) throws SystemException {
+		boolean retrieveFromCache) {
 		Object[] finderArgs = new Object[] { companyId, sku };
 
 		Object result = null;
@@ -1827,11 +1779,10 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	 * @param companyId the company ID
 	 * @param sku the sku
 	 * @return the shopping item that was removed
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ShoppingItem removeByC_S(long companyId, String sku)
-		throws NoSuchItemException, SystemException {
+		throws NoSuchItemException {
 		ShoppingItem shoppingItem = findByC_S(companyId, sku);
 
 		return remove(shoppingItem);
@@ -1843,10 +1794,9 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	 * @param companyId the company ID
 	 * @param sku the sku
 	 * @return the number of matching shopping items
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByC_S(long companyId, String sku) throws SystemException {
+	public int countByC_S(long companyId, String sku) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_S;
 
 		Object[] finderArgs = new Object[] { companyId, sku };
@@ -2176,11 +2126,9 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	 * @param itemId the primary key of the shopping item
 	 * @return the shopping item that was removed
 	 * @throws com.liferay.portlet.shopping.NoSuchItemException if a shopping item with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public ShoppingItem remove(long itemId)
-		throws NoSuchItemException, SystemException {
+	public ShoppingItem remove(long itemId) throws NoSuchItemException {
 		return remove((Serializable)itemId);
 	}
 
@@ -2190,11 +2138,10 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	 * @param primaryKey the primary key of the shopping item
 	 * @return the shopping item that was removed
 	 * @throws com.liferay.portlet.shopping.NoSuchItemException if a shopping item with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ShoppingItem remove(Serializable primaryKey)
-		throws NoSuchItemException, SystemException {
+		throws NoSuchItemException {
 		Session session = null;
 
 		try {
@@ -2226,8 +2173,7 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	}
 
 	@Override
-	protected ShoppingItem removeImpl(ShoppingItem shoppingItem)
-		throws SystemException {
+	protected ShoppingItem removeImpl(ShoppingItem shoppingItem) {
 		shoppingItem = toUnwrappedModel(shoppingItem);
 
 		Session session = null;
@@ -2260,8 +2206,7 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 
 	@Override
 	public ShoppingItem updateImpl(
-		com.liferay.portlet.shopping.model.ShoppingItem shoppingItem)
-		throws SystemException {
+		com.liferay.portlet.shopping.model.ShoppingItem shoppingItem) {
 		shoppingItem = toUnwrappedModel(shoppingItem);
 
 		boolean isNew = shoppingItem.isNew();
@@ -2384,11 +2329,10 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	 * @param primaryKey the primary key of the shopping item
 	 * @return the shopping item
 	 * @throws com.liferay.portlet.shopping.NoSuchItemException if a shopping item with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ShoppingItem findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchItemException, SystemException {
+		throws NoSuchItemException {
 		ShoppingItem shoppingItem = fetchByPrimaryKey(primaryKey);
 
 		if (shoppingItem == null) {
@@ -2409,11 +2353,10 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	 * @param itemId the primary key of the shopping item
 	 * @return the shopping item
 	 * @throws com.liferay.portlet.shopping.NoSuchItemException if a shopping item with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ShoppingItem findByPrimaryKey(long itemId)
-		throws NoSuchItemException, SystemException {
+		throws NoSuchItemException {
 		return findByPrimaryKey((Serializable)itemId);
 	}
 
@@ -2422,11 +2365,9 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	 *
 	 * @param primaryKey the primary key of the shopping item
 	 * @return the shopping item, or <code>null</code> if a shopping item with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public ShoppingItem fetchByPrimaryKey(Serializable primaryKey)
-		throws SystemException {
+	public ShoppingItem fetchByPrimaryKey(Serializable primaryKey) {
 		ShoppingItem shoppingItem = (ShoppingItem)EntityCacheUtil.getResult(ShoppingItemModelImpl.ENTITY_CACHE_ENABLED,
 				ShoppingItemImpl.class, primaryKey);
 
@@ -2470,11 +2411,9 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	 *
 	 * @param itemId the primary key of the shopping item
 	 * @return the shopping item, or <code>null</code> if a shopping item with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public ShoppingItem fetchByPrimaryKey(long itemId)
-		throws SystemException {
+	public ShoppingItem fetchByPrimaryKey(long itemId) {
 		return fetchByPrimaryKey((Serializable)itemId);
 	}
 
@@ -2482,10 +2421,9 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	 * Returns all the shopping items.
 	 *
 	 * @return the shopping items
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<ShoppingItem> findAll() throws SystemException {
+	public List<ShoppingItem> findAll() {
 		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -2499,11 +2437,9 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	 * @param start the lower bound of the range of shopping items
 	 * @param end the upper bound of the range of shopping items (not inclusive)
 	 * @return the range of shopping items
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<ShoppingItem> findAll(int start, int end)
-		throws SystemException {
+	public List<ShoppingItem> findAll(int start, int end) {
 		return findAll(start, end, null);
 	}
 
@@ -2518,11 +2454,10 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	 * @param end the upper bound of the range of shopping items (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of shopping items
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<ShoppingItem> findAll(int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2604,10 +2539,9 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	/**
 	 * Removes all the shopping items from the database.
 	 *
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeAll() throws SystemException {
+	public void removeAll() {
 		for (ShoppingItem shoppingItem : findAll()) {
 			remove(shoppingItem);
 		}
@@ -2617,10 +2551,9 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	 * Returns the number of shopping items.
 	 *
 	 * @return the number of shopping items
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countAll() throws SystemException {
+	public int countAll() {
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
 				FINDER_ARGS_EMPTY, this);
 

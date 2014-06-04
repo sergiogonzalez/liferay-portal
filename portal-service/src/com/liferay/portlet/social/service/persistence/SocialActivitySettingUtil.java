@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 import com.liferay.portal.service.ServiceContext;
@@ -64,8 +63,7 @@ public class SocialActivitySettingUtil {
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#countWithDynamicQuery(DynamicQuery)
 	 */
-	public static long countWithDynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public static long countWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return getPersistence().countWithDynamicQuery(dynamicQuery);
 	}
 
@@ -73,7 +71,7 @@ public class SocialActivitySettingUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery)
 	 */
 	public static List<SocialActivitySetting> findWithDynamicQuery(
-		DynamicQuery dynamicQuery) throws SystemException {
+		DynamicQuery dynamicQuery) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -81,8 +79,7 @@ public class SocialActivitySettingUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
 	 */
 	public static List<SocialActivitySetting> findWithDynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+		DynamicQuery dynamicQuery, int start, int end) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -91,7 +88,7 @@ public class SocialActivitySettingUtil {
 	 */
 	public static List<SocialActivitySetting> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -101,7 +98,7 @@ public class SocialActivitySettingUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
 	public static SocialActivitySetting update(
-		SocialActivitySetting socialActivitySetting) throws SystemException {
+		SocialActivitySetting socialActivitySetting) {
 		return getPersistence().update(socialActivitySetting);
 	}
 
@@ -110,7 +107,7 @@ public class SocialActivitySettingUtil {
 	 */
 	public static SocialActivitySetting update(
 		SocialActivitySetting socialActivitySetting,
-		ServiceContext serviceContext) throws SystemException {
+		ServiceContext serviceContext) {
 		return getPersistence().update(socialActivitySetting, serviceContext);
 	}
 
@@ -119,11 +116,9 @@ public class SocialActivitySettingUtil {
 	*
 	* @param groupId the group ID
 	* @return the matching social activity settings
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.social.model.SocialActivitySetting> findByGroupId(
-		long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId) {
 		return getPersistence().findByGroupId(groupId);
 	}
 
@@ -138,11 +133,9 @@ public class SocialActivitySettingUtil {
 	* @param start the lower bound of the range of social activity settings
 	* @param end the upper bound of the range of social activity settings (not inclusive)
 	* @return the range of matching social activity settings
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.social.model.SocialActivitySetting> findByGroupId(
-		long groupId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, int start, int end) {
 		return getPersistence().findByGroupId(groupId, start, end);
 	}
 
@@ -158,12 +151,10 @@ public class SocialActivitySettingUtil {
 	* @param end the upper bound of the range of social activity settings (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching social activity settings
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.social.model.SocialActivitySetting> findByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByGroupId(groupId, start, end, orderByComparator);
 	}
@@ -175,13 +166,11 @@ public class SocialActivitySettingUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching social activity setting
 	* @throws com.liferay.portlet.social.NoSuchActivitySettingException if a matching social activity setting could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySetting findByGroupId_First(
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.social.NoSuchActivitySettingException {
+		throws com.liferay.portlet.social.NoSuchActivitySettingException {
 		return getPersistence().findByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -191,12 +180,10 @@ public class SocialActivitySettingUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching social activity setting, or <code>null</code> if a matching social activity setting could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySetting fetchByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -207,13 +194,11 @@ public class SocialActivitySettingUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching social activity setting
 	* @throws com.liferay.portlet.social.NoSuchActivitySettingException if a matching social activity setting could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySetting findByGroupId_Last(
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.social.NoSuchActivitySettingException {
+		throws com.liferay.portlet.social.NoSuchActivitySettingException {
 		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -223,12 +208,10 @@ public class SocialActivitySettingUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching social activity setting, or <code>null</code> if a matching social activity setting could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySetting fetchByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -240,13 +223,11 @@ public class SocialActivitySettingUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next social activity setting
 	* @throws com.liferay.portlet.social.NoSuchActivitySettingException if a social activity setting with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySetting[] findByGroupId_PrevAndNext(
 		long activitySettingId, long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.social.NoSuchActivitySettingException {
+		throws com.liferay.portlet.social.NoSuchActivitySettingException {
 		return getPersistence()
 				   .findByGroupId_PrevAndNext(activitySettingId, groupId,
 			orderByComparator);
@@ -256,10 +237,8 @@ public class SocialActivitySettingUtil {
 	* Removes all the social activity settings where groupId = &#63; from the database.
 	*
 	* @param groupId the group ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByGroupId(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByGroupId(long groupId) {
 		getPersistence().removeByGroupId(groupId);
 	}
 
@@ -268,10 +247,8 @@ public class SocialActivitySettingUtil {
 	*
 	* @param groupId the group ID
 	* @return the number of matching social activity settings
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByGroupId(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByGroupId(long groupId) {
 		return getPersistence().countByGroupId(groupId);
 	}
 
@@ -281,11 +258,9 @@ public class SocialActivitySettingUtil {
 	* @param groupId the group ID
 	* @param classNameId the class name ID
 	* @return the matching social activity settings
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.social.model.SocialActivitySetting> findByG_C(
-		long groupId, long classNameId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, long classNameId) {
 		return getPersistence().findByG_C(groupId, classNameId);
 	}
 
@@ -301,11 +276,9 @@ public class SocialActivitySettingUtil {
 	* @param start the lower bound of the range of social activity settings
 	* @param end the upper bound of the range of social activity settings (not inclusive)
 	* @return the range of matching social activity settings
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.social.model.SocialActivitySetting> findByG_C(
-		long groupId, long classNameId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, long classNameId, int start, int end) {
 		return getPersistence().findByG_C(groupId, classNameId, start, end);
 	}
 
@@ -322,12 +295,10 @@ public class SocialActivitySettingUtil {
 	* @param end the upper bound of the range of social activity settings (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching social activity settings
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.social.model.SocialActivitySetting> findByG_C(
 		long groupId, long classNameId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByG_C(groupId, classNameId, start, end,
 			orderByComparator);
@@ -341,13 +312,11 @@ public class SocialActivitySettingUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching social activity setting
 	* @throws com.liferay.portlet.social.NoSuchActivitySettingException if a matching social activity setting could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySetting findByG_C_First(
 		long groupId, long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.social.NoSuchActivitySettingException {
+		throws com.liferay.portlet.social.NoSuchActivitySettingException {
 		return getPersistence()
 				   .findByG_C_First(groupId, classNameId, orderByComparator);
 	}
@@ -359,12 +328,10 @@ public class SocialActivitySettingUtil {
 	* @param classNameId the class name ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching social activity setting, or <code>null</code> if a matching social activity setting could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySetting fetchByG_C_First(
 		long groupId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByG_C_First(groupId, classNameId, orderByComparator);
 	}
@@ -377,13 +344,11 @@ public class SocialActivitySettingUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching social activity setting
 	* @throws com.liferay.portlet.social.NoSuchActivitySettingException if a matching social activity setting could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySetting findByG_C_Last(
 		long groupId, long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.social.NoSuchActivitySettingException {
+		throws com.liferay.portlet.social.NoSuchActivitySettingException {
 		return getPersistence()
 				   .findByG_C_Last(groupId, classNameId, orderByComparator);
 	}
@@ -395,12 +360,10 @@ public class SocialActivitySettingUtil {
 	* @param classNameId the class name ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching social activity setting, or <code>null</code> if a matching social activity setting could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySetting fetchByG_C_Last(
 		long groupId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByG_C_Last(groupId, classNameId, orderByComparator);
 	}
@@ -414,13 +377,11 @@ public class SocialActivitySettingUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next social activity setting
 	* @throws com.liferay.portlet.social.NoSuchActivitySettingException if a social activity setting with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySetting[] findByG_C_PrevAndNext(
 		long activitySettingId, long groupId, long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.social.NoSuchActivitySettingException {
+		throws com.liferay.portlet.social.NoSuchActivitySettingException {
 		return getPersistence()
 				   .findByG_C_PrevAndNext(activitySettingId, groupId,
 			classNameId, orderByComparator);
@@ -431,10 +392,8 @@ public class SocialActivitySettingUtil {
 	*
 	* @param groupId the group ID
 	* @param classNameId the class name ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByG_C(long groupId, long classNameId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByG_C(long groupId, long classNameId) {
 		getPersistence().removeByG_C(groupId, classNameId);
 	}
 
@@ -444,10 +403,8 @@ public class SocialActivitySettingUtil {
 	* @param groupId the group ID
 	* @param classNameId the class name ID
 	* @return the number of matching social activity settings
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByG_C(long groupId, long classNameId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByG_C(long groupId, long classNameId) {
 		return getPersistence().countByG_C(groupId, classNameId);
 	}
 
@@ -457,11 +414,9 @@ public class SocialActivitySettingUtil {
 	* @param groupId the group ID
 	* @param activityType the activity type
 	* @return the matching social activity settings
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.social.model.SocialActivitySetting> findByG_A(
-		long groupId, int activityType)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, int activityType) {
 		return getPersistence().findByG_A(groupId, activityType);
 	}
 
@@ -477,11 +432,9 @@ public class SocialActivitySettingUtil {
 	* @param start the lower bound of the range of social activity settings
 	* @param end the upper bound of the range of social activity settings (not inclusive)
 	* @return the range of matching social activity settings
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.social.model.SocialActivitySetting> findByG_A(
-		long groupId, int activityType, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, int activityType, int start, int end) {
 		return getPersistence().findByG_A(groupId, activityType, start, end);
 	}
 
@@ -498,12 +451,10 @@ public class SocialActivitySettingUtil {
 	* @param end the upper bound of the range of social activity settings (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching social activity settings
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.social.model.SocialActivitySetting> findByG_A(
 		long groupId, int activityType, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByG_A(groupId, activityType, start, end,
 			orderByComparator);
@@ -517,13 +468,11 @@ public class SocialActivitySettingUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching social activity setting
 	* @throws com.liferay.portlet.social.NoSuchActivitySettingException if a matching social activity setting could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySetting findByG_A_First(
 		long groupId, int activityType,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.social.NoSuchActivitySettingException {
+		throws com.liferay.portlet.social.NoSuchActivitySettingException {
 		return getPersistence()
 				   .findByG_A_First(groupId, activityType, orderByComparator);
 	}
@@ -535,12 +484,10 @@ public class SocialActivitySettingUtil {
 	* @param activityType the activity type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching social activity setting, or <code>null</code> if a matching social activity setting could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySetting fetchByG_A_First(
 		long groupId, int activityType,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByG_A_First(groupId, activityType, orderByComparator);
 	}
@@ -553,13 +500,11 @@ public class SocialActivitySettingUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching social activity setting
 	* @throws com.liferay.portlet.social.NoSuchActivitySettingException if a matching social activity setting could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySetting findByG_A_Last(
 		long groupId, int activityType,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.social.NoSuchActivitySettingException {
+		throws com.liferay.portlet.social.NoSuchActivitySettingException {
 		return getPersistence()
 				   .findByG_A_Last(groupId, activityType, orderByComparator);
 	}
@@ -571,12 +516,10 @@ public class SocialActivitySettingUtil {
 	* @param activityType the activity type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching social activity setting, or <code>null</code> if a matching social activity setting could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySetting fetchByG_A_Last(
 		long groupId, int activityType,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByG_A_Last(groupId, activityType, orderByComparator);
 	}
@@ -590,13 +533,11 @@ public class SocialActivitySettingUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next social activity setting
 	* @throws com.liferay.portlet.social.NoSuchActivitySettingException if a social activity setting with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySetting[] findByG_A_PrevAndNext(
 		long activitySettingId, long groupId, int activityType,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.social.NoSuchActivitySettingException {
+		throws com.liferay.portlet.social.NoSuchActivitySettingException {
 		return getPersistence()
 				   .findByG_A_PrevAndNext(activitySettingId, groupId,
 			activityType, orderByComparator);
@@ -607,10 +548,8 @@ public class SocialActivitySettingUtil {
 	*
 	* @param groupId the group ID
 	* @param activityType the activity type
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByG_A(long groupId, int activityType)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByG_A(long groupId, int activityType) {
 		getPersistence().removeByG_A(groupId, activityType);
 	}
 
@@ -620,10 +559,8 @@ public class SocialActivitySettingUtil {
 	* @param groupId the group ID
 	* @param activityType the activity type
 	* @return the number of matching social activity settings
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByG_A(long groupId, int activityType)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByG_A(long groupId, int activityType) {
 		return getPersistence().countByG_A(groupId, activityType);
 	}
 
@@ -634,11 +571,9 @@ public class SocialActivitySettingUtil {
 	* @param classNameId the class name ID
 	* @param activityType the activity type
 	* @return the matching social activity settings
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.social.model.SocialActivitySetting> findByG_C_A(
-		long groupId, long classNameId, int activityType)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, long classNameId, int activityType) {
 		return getPersistence().findByG_C_A(groupId, classNameId, activityType);
 	}
 
@@ -655,11 +590,9 @@ public class SocialActivitySettingUtil {
 	* @param start the lower bound of the range of social activity settings
 	* @param end the upper bound of the range of social activity settings (not inclusive)
 	* @return the range of matching social activity settings
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.social.model.SocialActivitySetting> findByG_C_A(
-		long groupId, long classNameId, int activityType, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, long classNameId, int activityType, int start, int end) {
 		return getPersistence()
 				   .findByG_C_A(groupId, classNameId, activityType, start, end);
 	}
@@ -678,12 +611,10 @@ public class SocialActivitySettingUtil {
 	* @param end the upper bound of the range of social activity settings (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching social activity settings
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.social.model.SocialActivitySetting> findByG_C_A(
 		long groupId, long classNameId, int activityType, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByG_C_A(groupId, classNameId, activityType, start, end,
 			orderByComparator);
@@ -698,13 +629,11 @@ public class SocialActivitySettingUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching social activity setting
 	* @throws com.liferay.portlet.social.NoSuchActivitySettingException if a matching social activity setting could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySetting findByG_C_A_First(
 		long groupId, long classNameId, int activityType,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.social.NoSuchActivitySettingException {
+		throws com.liferay.portlet.social.NoSuchActivitySettingException {
 		return getPersistence()
 				   .findByG_C_A_First(groupId, classNameId, activityType,
 			orderByComparator);
@@ -718,12 +647,10 @@ public class SocialActivitySettingUtil {
 	* @param activityType the activity type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching social activity setting, or <code>null</code> if a matching social activity setting could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySetting fetchByG_C_A_First(
 		long groupId, long classNameId, int activityType,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByG_C_A_First(groupId, classNameId, activityType,
 			orderByComparator);
@@ -738,13 +665,11 @@ public class SocialActivitySettingUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching social activity setting
 	* @throws com.liferay.portlet.social.NoSuchActivitySettingException if a matching social activity setting could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySetting findByG_C_A_Last(
 		long groupId, long classNameId, int activityType,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.social.NoSuchActivitySettingException {
+		throws com.liferay.portlet.social.NoSuchActivitySettingException {
 		return getPersistence()
 				   .findByG_C_A_Last(groupId, classNameId, activityType,
 			orderByComparator);
@@ -758,12 +683,10 @@ public class SocialActivitySettingUtil {
 	* @param activityType the activity type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching social activity setting, or <code>null</code> if a matching social activity setting could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySetting fetchByG_C_A_Last(
 		long groupId, long classNameId, int activityType,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByG_C_A_Last(groupId, classNameId, activityType,
 			orderByComparator);
@@ -779,14 +702,12 @@ public class SocialActivitySettingUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next social activity setting
 	* @throws com.liferay.portlet.social.NoSuchActivitySettingException if a social activity setting with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySetting[] findByG_C_A_PrevAndNext(
 		long activitySettingId, long groupId, long classNameId,
 		int activityType,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.social.NoSuchActivitySettingException {
+		throws com.liferay.portlet.social.NoSuchActivitySettingException {
 		return getPersistence()
 				   .findByG_C_A_PrevAndNext(activitySettingId, groupId,
 			classNameId, activityType, orderByComparator);
@@ -798,11 +719,9 @@ public class SocialActivitySettingUtil {
 	* @param groupId the group ID
 	* @param classNameId the class name ID
 	* @param activityType the activity type
-	* @throws SystemException if a system exception occurred
 	*/
 	public static void removeByG_C_A(long groupId, long classNameId,
-		int activityType)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int activityType) {
 		getPersistence().removeByG_C_A(groupId, classNameId, activityType);
 	}
 
@@ -813,11 +732,9 @@ public class SocialActivitySettingUtil {
 	* @param classNameId the class name ID
 	* @param activityType the activity type
 	* @return the number of matching social activity settings
-	* @throws SystemException if a system exception occurred
 	*/
 	public static int countByG_C_A(long groupId, long classNameId,
-		int activityType)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int activityType) {
 		return getPersistence().countByG_C_A(groupId, classNameId, activityType);
 	}
 
@@ -830,12 +747,10 @@ public class SocialActivitySettingUtil {
 	* @param name the name
 	* @return the matching social activity setting
 	* @throws com.liferay.portlet.social.NoSuchActivitySettingException if a matching social activity setting could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySetting findByG_C_A_N(
 		long groupId, long classNameId, int activityType, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.social.NoSuchActivitySettingException {
+		throws com.liferay.portlet.social.NoSuchActivitySettingException {
 		return getPersistence()
 				   .findByG_C_A_N(groupId, classNameId, activityType, name);
 	}
@@ -848,11 +763,9 @@ public class SocialActivitySettingUtil {
 	* @param activityType the activity type
 	* @param name the name
 	* @return the matching social activity setting, or <code>null</code> if a matching social activity setting could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySetting fetchByG_C_A_N(
-		long groupId, long classNameId, int activityType, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, long classNameId, int activityType, java.lang.String name) {
 		return getPersistence()
 				   .fetchByG_C_A_N(groupId, classNameId, activityType, name);
 	}
@@ -866,12 +779,10 @@ public class SocialActivitySettingUtil {
 	* @param name the name
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching social activity setting, or <code>null</code> if a matching social activity setting could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySetting fetchByG_C_A_N(
 		long groupId, long classNameId, int activityType,
-		java.lang.String name, boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String name, boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByG_C_A_N(groupId, classNameId, activityType, name,
 			retrieveFromCache);
@@ -885,12 +796,10 @@ public class SocialActivitySettingUtil {
 	* @param activityType the activity type
 	* @param name the name
 	* @return the social activity setting that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySetting removeByG_C_A_N(
 		long groupId, long classNameId, int activityType, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.social.NoSuchActivitySettingException {
+		throws com.liferay.portlet.social.NoSuchActivitySettingException {
 		return getPersistence()
 				   .removeByG_C_A_N(groupId, classNameId, activityType, name);
 	}
@@ -903,11 +812,9 @@ public class SocialActivitySettingUtil {
 	* @param activityType the activity type
 	* @param name the name
 	* @return the number of matching social activity settings
-	* @throws SystemException if a system exception occurred
 	*/
 	public static int countByG_C_A_N(long groupId, long classNameId,
-		int activityType, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int activityType, java.lang.String name) {
 		return getPersistence()
 				   .countByG_C_A_N(groupId, classNameId, activityType, name);
 	}
@@ -949,18 +856,15 @@ public class SocialActivitySettingUtil {
 	* @param activitySettingId the primary key of the social activity setting
 	* @return the social activity setting that was removed
 	* @throws com.liferay.portlet.social.NoSuchActivitySettingException if a social activity setting with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySetting remove(
 		long activitySettingId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.social.NoSuchActivitySettingException {
+		throws com.liferay.portlet.social.NoSuchActivitySettingException {
 		return getPersistence().remove(activitySettingId);
 	}
 
 	public static com.liferay.portlet.social.model.SocialActivitySetting updateImpl(
-		com.liferay.portlet.social.model.SocialActivitySetting socialActivitySetting)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.social.model.SocialActivitySetting socialActivitySetting) {
 		return getPersistence().updateImpl(socialActivitySetting);
 	}
 
@@ -970,12 +874,10 @@ public class SocialActivitySettingUtil {
 	* @param activitySettingId the primary key of the social activity setting
 	* @return the social activity setting
 	* @throws com.liferay.portlet.social.NoSuchActivitySettingException if a social activity setting with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySetting findByPrimaryKey(
 		long activitySettingId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.social.NoSuchActivitySettingException {
+		throws com.liferay.portlet.social.NoSuchActivitySettingException {
 		return getPersistence().findByPrimaryKey(activitySettingId);
 	}
 
@@ -984,11 +886,9 @@ public class SocialActivitySettingUtil {
 	*
 	* @param activitySettingId the primary key of the social activity setting
 	* @return the social activity setting, or <code>null</code> if a social activity setting with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.social.model.SocialActivitySetting fetchByPrimaryKey(
-		long activitySettingId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long activitySettingId) {
 		return getPersistence().fetchByPrimaryKey(activitySettingId);
 	}
 
@@ -996,10 +896,8 @@ public class SocialActivitySettingUtil {
 	* Returns all the social activity settings.
 	*
 	* @return the social activity settings
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.portlet.social.model.SocialActivitySetting> findAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static java.util.List<com.liferay.portlet.social.model.SocialActivitySetting> findAll() {
 		return getPersistence().findAll();
 	}
 
@@ -1013,11 +911,9 @@ public class SocialActivitySettingUtil {
 	* @param start the lower bound of the range of social activity settings
 	* @param end the upper bound of the range of social activity settings (not inclusive)
 	* @return the range of social activity settings
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.social.model.SocialActivitySetting> findAll(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
@@ -1032,22 +928,17 @@ public class SocialActivitySettingUtil {
 	* @param end the upper bound of the range of social activity settings (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of social activity settings
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.social.model.SocialActivitySetting> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
 	/**
 	* Removes all the social activity settings from the database.
-	*
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeAll() {
 		getPersistence().removeAll();
 	}
 
@@ -1055,10 +946,8 @@ public class SocialActivitySettingUtil {
 	* Returns the number of social activity settings.
 	*
 	* @return the number of social activity settings
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countAll() {
 		return getPersistence().countAll();
 	}
 

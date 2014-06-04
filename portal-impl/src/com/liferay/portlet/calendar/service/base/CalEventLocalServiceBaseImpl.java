@@ -96,11 +96,10 @@ public abstract class CalEventLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param calEvent the cal event
 	 * @return the cal event that was added
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public CalEvent addCalEvent(CalEvent calEvent) throws SystemException {
+	public CalEvent addCalEvent(CalEvent calEvent) {
 		calEvent.setNew(true);
 
 		return calEventPersistence.update(calEvent);
@@ -123,12 +122,10 @@ public abstract class CalEventLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param eventId the primary key of the cal event
 	 * @return the cal event that was removed
 	 * @throws PortalException if a cal event with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public CalEvent deleteCalEvent(long eventId)
-		throws PortalException, SystemException {
+	public CalEvent deleteCalEvent(long eventId) throws PortalException {
 		return calEventPersistence.remove(eventId);
 	}
 
@@ -137,11 +134,10 @@ public abstract class CalEventLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param calEvent the cal event
 	 * @return the cal event that was removed
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public CalEvent deleteCalEvent(CalEvent calEvent) throws SystemException {
+	public CalEvent deleteCalEvent(CalEvent calEvent) {
 		return calEventPersistence.remove(calEvent);
 	}
 
@@ -158,12 +154,10 @@ public abstract class CalEventLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery) {
 		return calEventPersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -178,12 +172,10 @@ public abstract class CalEventLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param start the lower bound of the range of model instances
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
 		return calEventPersistence.findWithDynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -199,12 +191,11 @@ public abstract class CalEventLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
 	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		return calEventPersistence.findWithDynamicQuery(dynamicQuery, start,
 			end, orderByComparator);
 	}
@@ -214,11 +205,9 @@ public abstract class CalEventLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public long dynamicQueryCount(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return calEventPersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
@@ -228,17 +217,16 @@ public abstract class CalEventLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param dynamicQuery the dynamic query
 	 * @param projection the projection to apply to the query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection) throws SystemException {
+		Projection projection) {
 		return calEventPersistence.countWithDynamicQuery(dynamicQuery,
 			projection);
 	}
 
 	@Override
-	public CalEvent fetchCalEvent(long eventId) throws SystemException {
+	public CalEvent fetchCalEvent(long eventId) {
 		return calEventPersistence.fetchByPrimaryKey(eventId);
 	}
 
@@ -248,11 +236,9 @@ public abstract class CalEventLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param uuid the cal event's UUID
 	 * @param  companyId the primary key of the company
 	 * @return the matching cal event, or <code>null</code> if a matching cal event could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public CalEvent fetchCalEventByUuidAndCompanyId(String uuid, long companyId)
-		throws SystemException {
+	public CalEvent fetchCalEventByUuidAndCompanyId(String uuid, long companyId) {
 		return calEventPersistence.fetchByUuid_C_First(uuid, companyId, null);
 	}
 
@@ -262,11 +248,9 @@ public abstract class CalEventLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param uuid the cal event's UUID
 	 * @param groupId the primary key of the group
 	 * @return the matching cal event, or <code>null</code> if a matching cal event could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public CalEvent fetchCalEventByUuidAndGroupId(String uuid, long groupId)
-		throws SystemException {
+	public CalEvent fetchCalEventByUuidAndGroupId(String uuid, long groupId) {
 		return calEventPersistence.fetchByUUID_G(uuid, groupId);
 	}
 
@@ -276,17 +260,14 @@ public abstract class CalEventLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param eventId the primary key of the cal event
 	 * @return the cal event
 	 * @throws PortalException if a cal event with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public CalEvent getCalEvent(long eventId)
-		throws PortalException, SystemException {
+	public CalEvent getCalEvent(long eventId) throws PortalException {
 		return calEventPersistence.findByPrimaryKey(eventId);
 	}
 
 	@Override
-	public ActionableDynamicQuery getActionableDynamicQuery()
-		throws SystemException {
+	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.calendar.service.CalEventLocalServiceUtil.getService());
@@ -299,8 +280,7 @@ public abstract class CalEventLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	protected void initActionableDynamicQuery(
-		ActionableDynamicQuery actionableDynamicQuery)
-		throws SystemException {
+		ActionableDynamicQuery actionableDynamicQuery) {
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.calendar.service.CalEventLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(CalEvent.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
@@ -310,11 +290,10 @@ public abstract class CalEventLocalServiceBaseImpl extends BaseLocalServiceImpl
 
 	@Override
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		final PortletDataContext portletDataContext) throws SystemException {
+		final PortletDataContext portletDataContext) {
 		final ExportActionableDynamicQuery exportActionableDynamicQuery = new ExportActionableDynamicQuery() {
 				@Override
-				public long performCount()
-					throws PortalException, SystemException {
+				public long performCount() throws PortalException {
 					ManifestSummary manifestSummary = portletDataContext.getManifestSummary();
 
 					StagedModelType stagedModelType = getStagedModelType();
@@ -350,9 +329,8 @@ public abstract class CalEventLocalServiceBaseImpl extends BaseLocalServiceImpl
 
 		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
 				@Override
-				@SuppressWarnings("unused")
 				public void performAction(Object object)
-					throws PortalException, SystemException {
+					throws PortalException {
 					CalEvent stagedModel = (CalEvent)object;
 
 					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
@@ -367,7 +345,7 @@ public abstract class CalEventLocalServiceBaseImpl extends BaseLocalServiceImpl
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return calEventPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -378,11 +356,10 @@ public abstract class CalEventLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param  companyId the primary key of the company
 	 * @return the matching cal event
 	 * @throws PortalException if a matching cal event could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public CalEvent getCalEventByUuidAndCompanyId(String uuid, long companyId)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return calEventPersistence.findByUuid_C_First(uuid, companyId, null);
 	}
 
@@ -393,11 +370,10 @@ public abstract class CalEventLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param groupId the primary key of the group
 	 * @return the matching cal event
 	 * @throws PortalException if a matching cal event could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public CalEvent getCalEventByUuidAndGroupId(String uuid, long groupId)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return calEventPersistence.findByUUID_G(uuid, groupId);
 	}
 
@@ -411,11 +387,9 @@ public abstract class CalEventLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param start the lower bound of the range of cal events
 	 * @param end the upper bound of the range of cal events (not inclusive)
 	 * @return the range of cal events
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<CalEvent> getCalEvents(int start, int end)
-		throws SystemException {
+	public List<CalEvent> getCalEvents(int start, int end) {
 		return calEventPersistence.findAll(start, end);
 	}
 
@@ -423,10 +397,9 @@ public abstract class CalEventLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * Returns the number of cal events.
 	 *
 	 * @return the number of cal events
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int getCalEventsCount() throws SystemException {
+	public int getCalEventsCount() {
 		return calEventPersistence.countAll();
 	}
 
@@ -435,11 +408,10 @@ public abstract class CalEventLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param calEvent the cal event
 	 * @return the cal event that was updated
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public CalEvent updateCalEvent(CalEvent calEvent) throws SystemException {
+	public CalEvent updateCalEvent(CalEvent calEvent) {
 		return calEventPersistence.update(calEvent);
 	}
 
@@ -1367,7 +1339,7 @@ public abstract class CalEventLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param sql the sql query
 	 */
-	protected void runSQL(String sql) throws SystemException {
+	protected void runSQL(String sql) {
 		try {
 			DataSource dataSource = calEventPersistence.getDataSource();
 

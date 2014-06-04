@@ -262,11 +262,9 @@ public class PollsChoiceWrapper implements PollsChoice,
 	* Returns the user uuid of this polls choice.
 	*
 	* @return the user uuid of this polls choice
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public java.lang.String getUserUuid()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public java.lang.String getUserUuid() {
 		return _pollsChoice.getUserUuid();
 	}
 
@@ -645,8 +643,7 @@ public class PollsChoiceWrapper implements PollsChoice,
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void persist() {
 		_pollsChoice.persist();
 	}
 

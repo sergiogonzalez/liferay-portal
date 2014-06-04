@@ -35,12 +35,10 @@ public class ReleaseLocalServiceWrapper implements ReleaseLocalService,
 	*
 	* @param release the release
 	* @return the release that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.Release addRelease(
-		com.liferay.portal.model.Release release)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.Release release) {
 		return _releaseLocalService.addRelease(release);
 	}
 
@@ -61,12 +59,10 @@ public class ReleaseLocalServiceWrapper implements ReleaseLocalService,
 	* @param releaseId the primary key of the release
 	* @return the release that was removed
 	* @throws PortalException if a release with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.Release deleteRelease(long releaseId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _releaseLocalService.deleteRelease(releaseId);
 	}
 
@@ -75,12 +71,10 @@ public class ReleaseLocalServiceWrapper implements ReleaseLocalService,
 	*
 	* @param release the release
 	* @return the release that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.Release deleteRelease(
-		com.liferay.portal.model.Release release)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.Release release) {
 		return _releaseLocalService.deleteRelease(release);
 	}
 
@@ -94,13 +88,11 @@ public class ReleaseLocalServiceWrapper implements ReleaseLocalService,
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _releaseLocalService.dynamicQuery(dynamicQuery);
 	}
 
@@ -115,13 +107,12 @@ public class ReleaseLocalServiceWrapper implements ReleaseLocalService,
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return _releaseLocalService.dynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -137,15 +128,13 @@ public class ReleaseLocalServiceWrapper implements ReleaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return _releaseLocalService.dynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
 	}
@@ -155,12 +144,10 @@ public class ReleaseLocalServiceWrapper implements ReleaseLocalService,
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _releaseLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
@@ -170,19 +157,16 @@ public class ReleaseLocalServiceWrapper implements ReleaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return _releaseLocalService.dynamicQueryCount(dynamicQuery, projection);
 	}
 
 	@Override
-	public com.liferay.portal.model.Release fetchRelease(long releaseId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public com.liferay.portal.model.Release fetchRelease(long releaseId) {
 		return _releaseLocalService.fetchRelease(releaseId);
 	}
 
@@ -192,26 +176,22 @@ public class ReleaseLocalServiceWrapper implements ReleaseLocalService,
 	* @param releaseId the primary key of the release
 	* @return the release
 	* @throws PortalException if a release with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.Release getRelease(long releaseId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _releaseLocalService.getRelease(releaseId);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _releaseLocalService.getActionableDynamicQuery();
 	}
 
 	@Override
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _releaseLocalService.getPersistedModel(primaryKeyObj);
 	}
 
@@ -225,12 +205,10 @@ public class ReleaseLocalServiceWrapper implements ReleaseLocalService,
 	* @param start the lower bound of the range of releases
 	* @param end the upper bound of the range of releases (not inclusive)
 	* @return the range of releases
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.model.Release> getReleases(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return _releaseLocalService.getReleases(start, end);
 	}
 
@@ -238,11 +216,9 @@ public class ReleaseLocalServiceWrapper implements ReleaseLocalService,
 	* Returns the number of releases.
 	*
 	* @return the number of releases
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public int getReleasesCount()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public int getReleasesCount() {
 		return _releaseLocalService.getReleasesCount();
 	}
 
@@ -251,12 +227,10 @@ public class ReleaseLocalServiceWrapper implements ReleaseLocalService,
 	*
 	* @param release the release
 	* @return the release that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.Release updateRelease(
-		com.liferay.portal.model.Release release)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.Release release) {
 		return _releaseLocalService.updateRelease(release);
 	}
 

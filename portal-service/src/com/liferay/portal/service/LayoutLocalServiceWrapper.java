@@ -35,12 +35,10 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	*
 	* @param layout the layout
 	* @return the layout that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.Layout addLayout(
-		com.liferay.portal.model.Layout layout)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.Layout layout) {
 		return _layoutLocalService.addLayout(layout);
 	}
 
@@ -61,12 +59,10 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	* @param plid the primary key of the layout
 	* @return the layout that was removed
 	* @throws PortalException if a layout with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.Layout deleteLayout(long plid)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutLocalService.deleteLayout(plid);
 	}
 
@@ -75,12 +71,10 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	*
 	* @param layout the layout
 	* @return the layout that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.Layout deleteLayout(
-		com.liferay.portal.model.Layout layout)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.Layout layout) {
 		return _layoutLocalService.deleteLayout(layout);
 	}
 
@@ -94,13 +88,11 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _layoutLocalService.dynamicQuery(dynamicQuery);
 	}
 
@@ -115,13 +107,12 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return _layoutLocalService.dynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -137,15 +128,13 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return _layoutLocalService.dynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
 	}
@@ -155,12 +144,10 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _layoutLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
@@ -170,19 +157,16 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return _layoutLocalService.dynamicQueryCount(dynamicQuery, projection);
 	}
 
 	@Override
-	public com.liferay.portal.model.Layout fetchLayout(long plid)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public com.liferay.portal.model.Layout fetchLayout(long plid) {
 		return _layoutLocalService.fetchLayout(plid);
 	}
 
@@ -192,12 +176,10 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	* @param uuid the layout's UUID
 	* @param companyId the primary key of the company
 	* @return the matching layout, or <code>null</code> if a matching layout could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.Layout fetchLayoutByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long companyId) {
 		return _layoutLocalService.fetchLayoutByUuidAndCompanyId(uuid, companyId);
 	}
 
@@ -208,12 +190,10 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	* @param groupId the primary key of the group
 	* @param privateLayout whether the layout is private to the group
 	* @return the matching layout, or <code>null</code> if a matching layout could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.Layout fetchLayoutByUuidAndGroupId(
-		java.lang.String uuid, long groupId, boolean privateLayout)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long groupId, boolean privateLayout) {
 		return _layoutLocalService.fetchLayoutByUuidAndGroupId(uuid, groupId,
 			privateLayout);
 	}
@@ -224,33 +204,28 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	* @param plid the primary key of the layout
 	* @return the layout
 	* @throws PortalException if a layout with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.Layout getLayout(long plid)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutLocalService.getLayout(plid);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _layoutLocalService.getActionableDynamicQuery();
 	}
 
 	@Override
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext) {
 		return _layoutLocalService.getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	@Override
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutLocalService.getPersistedModel(primaryKeyObj);
 	}
 
@@ -261,13 +236,11 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	* @param companyId the primary key of the company
 	* @return the matching layout
 	* @throws PortalException if a matching layout could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.Layout getLayoutByUuidAndCompanyId(
 		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutLocalService.getLayoutByUuidAndCompanyId(uuid, companyId);
 	}
 
@@ -279,13 +252,11 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	* @param privateLayout whether the layout is private to the group
 	* @return the matching layout
 	* @throws PortalException if a matching layout could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.Layout getLayoutByUuidAndGroupId(
 		java.lang.String uuid, long groupId, boolean privateLayout)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _layoutLocalService.getLayoutByUuidAndGroupId(uuid, groupId,
 			privateLayout);
 	}
@@ -300,12 +271,10 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	* @param start the lower bound of the range of layouts
 	* @param end the upper bound of the range of layouts (not inclusive)
 	* @return the range of layouts
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.model.Layout> getLayouts(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return _layoutLocalService.getLayouts(start, end);
 	}
 
@@ -313,11 +282,9 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	* Returns the number of layouts.
 	*
 	* @return the number of layouts
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public int getLayoutsCount()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public int getLayoutsCount() {
 		return _layoutLocalService.getLayoutsCount();
 	}
 
@@ -326,12 +293,10 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	*
 	* @param layout the layout
 	* @return the layout that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.Layout updateLayout(
-		com.liferay.portal.model.Layout layout)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.Layout layout) {
 		return _layoutLocalService.updateLayout(layout);
 	}
 

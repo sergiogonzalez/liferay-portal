@@ -15,7 +15,6 @@
 package com.liferay.portal.model.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Organization;
@@ -44,7 +43,7 @@ public abstract class OrganizationBaseImpl extends OrganizationModelImpl
 	 * Never modify or reference this class directly. All methods that expect a organization model instance should use the {@link Organization} interface instead.
 	 */
 	@Override
-	public void persist() throws SystemException {
+	public void persist() {
 		if (this.isNew()) {
 			OrganizationLocalServiceUtil.addOrganization(this);
 		}
@@ -55,7 +54,7 @@ public abstract class OrganizationBaseImpl extends OrganizationModelImpl
 
 	@Override
 	@SuppressWarnings("unused")
-	public String buildTreePath() throws PortalException, SystemException {
+	public String buildTreePath() throws PortalException {
 		List<Organization> organizations = new ArrayList<Organization>();
 
 		Organization organization = this;
@@ -81,7 +80,7 @@ public abstract class OrganizationBaseImpl extends OrganizationModelImpl
 	}
 
 	@Override
-	public void updateTreePath(String treePath) throws SystemException {
+	public void updateTreePath(String treePath) {
 		Organization organization = this;
 
 		organization.setTreePath(treePath);

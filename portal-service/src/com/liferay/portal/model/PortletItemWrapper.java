@@ -260,11 +260,9 @@ public class PortletItemWrapper implements PortletItem,
 	* Returns the user uuid of this portlet item.
 	*
 	* @return the user uuid of this portlet item
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public java.lang.String getUserUuid()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public java.lang.String getUserUuid() {
 		return _portletItem.getUserUuid();
 	}
 
@@ -512,8 +510,7 @@ public class PortletItemWrapper implements PortletItem,
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void persist() {
 		_portletItem.persist();
 	}
 

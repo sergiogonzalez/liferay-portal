@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 import com.liferay.portal.service.ServiceContext;
@@ -64,8 +63,7 @@ public class ExpandoTableUtil {
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#countWithDynamicQuery(DynamicQuery)
 	 */
-	public static long countWithDynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public static long countWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return getPersistence().countWithDynamicQuery(dynamicQuery);
 	}
 
@@ -73,7 +71,7 @@ public class ExpandoTableUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery)
 	 */
 	public static List<ExpandoTable> findWithDynamicQuery(
-		DynamicQuery dynamicQuery) throws SystemException {
+		DynamicQuery dynamicQuery) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -81,8 +79,7 @@ public class ExpandoTableUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
 	 */
 	public static List<ExpandoTable> findWithDynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+		DynamicQuery dynamicQuery, int start, int end) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -91,7 +88,7 @@ public class ExpandoTableUtil {
 	 */
 	public static List<ExpandoTable> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -100,8 +97,7 @@ public class ExpandoTableUtil {
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static ExpandoTable update(ExpandoTable expandoTable)
-		throws SystemException {
+	public static ExpandoTable update(ExpandoTable expandoTable) {
 		return getPersistence().update(expandoTable);
 	}
 
@@ -109,7 +105,7 @@ public class ExpandoTableUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
 	public static ExpandoTable update(ExpandoTable expandoTable,
-		ServiceContext serviceContext) throws SystemException {
+		ServiceContext serviceContext) {
 		return getPersistence().update(expandoTable, serviceContext);
 	}
 
@@ -119,11 +115,9 @@ public class ExpandoTableUtil {
 	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @return the matching expando tables
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.expando.model.ExpandoTable> findByC_C(
-		long companyId, long classNameId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long companyId, long classNameId) {
 		return getPersistence().findByC_C(companyId, classNameId);
 	}
 
@@ -139,11 +133,9 @@ public class ExpandoTableUtil {
 	* @param start the lower bound of the range of expando tables
 	* @param end the upper bound of the range of expando tables (not inclusive)
 	* @return the range of matching expando tables
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.expando.model.ExpandoTable> findByC_C(
-		long companyId, long classNameId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long companyId, long classNameId, int start, int end) {
 		return getPersistence().findByC_C(companyId, classNameId, start, end);
 	}
 
@@ -160,12 +152,10 @@ public class ExpandoTableUtil {
 	* @param end the upper bound of the range of expando tables (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching expando tables
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.expando.model.ExpandoTable> findByC_C(
 		long companyId, long classNameId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByC_C(companyId, classNameId, start, end,
 			orderByComparator);
@@ -179,13 +169,11 @@ public class ExpandoTableUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching expando table
 	* @throws com.liferay.portlet.expando.NoSuchTableException if a matching expando table could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoTable findByC_C_First(
 		long companyId, long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.expando.NoSuchTableException {
+		throws com.liferay.portlet.expando.NoSuchTableException {
 		return getPersistence()
 				   .findByC_C_First(companyId, classNameId, orderByComparator);
 	}
@@ -197,12 +185,10 @@ public class ExpandoTableUtil {
 	* @param classNameId the class name ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching expando table, or <code>null</code> if a matching expando table could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoTable fetchByC_C_First(
 		long companyId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByC_C_First(companyId, classNameId, orderByComparator);
 	}
@@ -215,13 +201,11 @@ public class ExpandoTableUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching expando table
 	* @throws com.liferay.portlet.expando.NoSuchTableException if a matching expando table could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoTable findByC_C_Last(
 		long companyId, long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.expando.NoSuchTableException {
+		throws com.liferay.portlet.expando.NoSuchTableException {
 		return getPersistence()
 				   .findByC_C_Last(companyId, classNameId, orderByComparator);
 	}
@@ -233,12 +217,10 @@ public class ExpandoTableUtil {
 	* @param classNameId the class name ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching expando table, or <code>null</code> if a matching expando table could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoTable fetchByC_C_Last(
 		long companyId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByC_C_Last(companyId, classNameId, orderByComparator);
 	}
@@ -252,13 +234,11 @@ public class ExpandoTableUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next expando table
 	* @throws com.liferay.portlet.expando.NoSuchTableException if a expando table with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoTable[] findByC_C_PrevAndNext(
 		long tableId, long companyId, long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.expando.NoSuchTableException {
+		throws com.liferay.portlet.expando.NoSuchTableException {
 		return getPersistence()
 				   .findByC_C_PrevAndNext(tableId, companyId, classNameId,
 			orderByComparator);
@@ -269,10 +249,8 @@ public class ExpandoTableUtil {
 	*
 	* @param companyId the company ID
 	* @param classNameId the class name ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByC_C(long companyId, long classNameId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByC_C(long companyId, long classNameId) {
 		getPersistence().removeByC_C(companyId, classNameId);
 	}
 
@@ -282,10 +260,8 @@ public class ExpandoTableUtil {
 	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @return the number of matching expando tables
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByC_C(long companyId, long classNameId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByC_C(long companyId, long classNameId) {
 		return getPersistence().countByC_C(companyId, classNameId);
 	}
 
@@ -297,12 +273,10 @@ public class ExpandoTableUtil {
 	* @param name the name
 	* @return the matching expando table
 	* @throws com.liferay.portlet.expando.NoSuchTableException if a matching expando table could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoTable findByC_C_N(
 		long companyId, long classNameId, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.expando.NoSuchTableException {
+		throws com.liferay.portlet.expando.NoSuchTableException {
 		return getPersistence().findByC_C_N(companyId, classNameId, name);
 	}
 
@@ -313,11 +287,9 @@ public class ExpandoTableUtil {
 	* @param classNameId the class name ID
 	* @param name the name
 	* @return the matching expando table, or <code>null</code> if a matching expando table could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoTable fetchByC_C_N(
-		long companyId, long classNameId, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long companyId, long classNameId, java.lang.String name) {
 		return getPersistence().fetchByC_C_N(companyId, classNameId, name);
 	}
 
@@ -329,12 +301,10 @@ public class ExpandoTableUtil {
 	* @param name the name
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching expando table, or <code>null</code> if a matching expando table could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoTable fetchByC_C_N(
 		long companyId, long classNameId, java.lang.String name,
-		boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByC_C_N(companyId, classNameId, name, retrieveFromCache);
 	}
@@ -346,12 +316,10 @@ public class ExpandoTableUtil {
 	* @param classNameId the class name ID
 	* @param name the name
 	* @return the expando table that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoTable removeByC_C_N(
 		long companyId, long classNameId, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.expando.NoSuchTableException {
+		throws com.liferay.portlet.expando.NoSuchTableException {
 		return getPersistence().removeByC_C_N(companyId, classNameId, name);
 	}
 
@@ -362,11 +330,9 @@ public class ExpandoTableUtil {
 	* @param classNameId the class name ID
 	* @param name the name
 	* @return the number of matching expando tables
-	* @throws SystemException if a system exception occurred
 	*/
 	public static int countByC_C_N(long companyId, long classNameId,
-		java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String name) {
 		return getPersistence().countByC_C_N(companyId, classNameId, name);
 	}
 
@@ -407,18 +373,14 @@ public class ExpandoTableUtil {
 	* @param tableId the primary key of the expando table
 	* @return the expando table that was removed
 	* @throws com.liferay.portlet.expando.NoSuchTableException if a expando table with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoTable remove(
-		long tableId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.expando.NoSuchTableException {
+		long tableId) throws com.liferay.portlet.expando.NoSuchTableException {
 		return getPersistence().remove(tableId);
 	}
 
 	public static com.liferay.portlet.expando.model.ExpandoTable updateImpl(
-		com.liferay.portlet.expando.model.ExpandoTable expandoTable)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.expando.model.ExpandoTable expandoTable) {
 		return getPersistence().updateImpl(expandoTable);
 	}
 
@@ -428,12 +390,9 @@ public class ExpandoTableUtil {
 	* @param tableId the primary key of the expando table
 	* @return the expando table
 	* @throws com.liferay.portlet.expando.NoSuchTableException if a expando table with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoTable findByPrimaryKey(
-		long tableId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.expando.NoSuchTableException {
+		long tableId) throws com.liferay.portlet.expando.NoSuchTableException {
 		return getPersistence().findByPrimaryKey(tableId);
 	}
 
@@ -442,11 +401,9 @@ public class ExpandoTableUtil {
 	*
 	* @param tableId the primary key of the expando table
 	* @return the expando table, or <code>null</code> if a expando table with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoTable fetchByPrimaryKey(
-		long tableId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long tableId) {
 		return getPersistence().fetchByPrimaryKey(tableId);
 	}
 
@@ -454,10 +411,8 @@ public class ExpandoTableUtil {
 	* Returns all the expando tables.
 	*
 	* @return the expando tables
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.portlet.expando.model.ExpandoTable> findAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static java.util.List<com.liferay.portlet.expando.model.ExpandoTable> findAll() {
 		return getPersistence().findAll();
 	}
 
@@ -471,11 +426,9 @@ public class ExpandoTableUtil {
 	* @param start the lower bound of the range of expando tables
 	* @param end the upper bound of the range of expando tables (not inclusive)
 	* @return the range of expando tables
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.expando.model.ExpandoTable> findAll(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
@@ -490,22 +443,17 @@ public class ExpandoTableUtil {
 	* @param end the upper bound of the range of expando tables (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of expando tables
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.expando.model.ExpandoTable> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
 	/**
 	* Removes all the expando tables from the database.
-	*
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeAll() {
 		getPersistence().removeAll();
 	}
 
@@ -513,10 +461,8 @@ public class ExpandoTableUtil {
 	* Returns the number of expando tables.
 	*
 	* @return the number of expando tables
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countAll() {
 		return getPersistence().countAll();
 	}
 

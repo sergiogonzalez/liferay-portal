@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.documentlibrary.model.impl;
 
-import com.liferay.portal.kernel.exception.SystemException;
-
 import com.liferay.portlet.documentlibrary.model.DLSyncEvent;
 import com.liferay.portlet.documentlibrary.service.DLSyncEventLocalServiceUtil;
 
@@ -39,7 +37,7 @@ public abstract class DLSyncEventBaseImpl extends DLSyncEventModelImpl
 	 * Never modify or reference this class directly. All methods that expect a d l sync event model instance should use the {@link DLSyncEvent} interface instead.
 	 */
 	@Override
-	public void persist() throws SystemException {
+	public void persist() {
 		if (this.isNew()) {
 			DLSyncEventLocalServiceUtil.addDLSyncEvent(this);
 		}

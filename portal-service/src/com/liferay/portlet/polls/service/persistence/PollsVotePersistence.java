@@ -45,11 +45,9 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	*
 	* @param uuid the uuid
 	* @return the matching polls votes
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.polls.model.PollsVote> findByUuid(
-		java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String uuid);
 
 	/**
 	* Returns a range of all the polls votes where uuid = &#63;.
@@ -62,11 +60,9 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	* @param start the lower bound of the range of polls votes
 	* @param end the upper bound of the range of polls votes (not inclusive)
 	* @return the range of matching polls votes
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.polls.model.PollsVote> findByUuid(
-		java.lang.String uuid, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String uuid, int start, int end);
 
 	/**
 	* Returns an ordered range of all the polls votes where uuid = &#63;.
@@ -80,12 +76,10 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	* @param end the upper bound of the range of polls votes (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching polls votes
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.polls.model.PollsVote> findByUuid(
 		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first polls vote in the ordered set where uuid = &#63;.
@@ -94,13 +88,11 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching polls vote
 	* @throws com.liferay.portlet.polls.NoSuchVoteException if a matching polls vote could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.polls.model.PollsVote findByUuid_First(
 		java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.polls.NoSuchVoteException;
+		throws com.liferay.portlet.polls.NoSuchVoteException;
 
 	/**
 	* Returns the first polls vote in the ordered set where uuid = &#63;.
@@ -108,12 +100,10 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching polls vote, or <code>null</code> if a matching polls vote could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.polls.model.PollsVote fetchByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last polls vote in the ordered set where uuid = &#63;.
@@ -122,13 +112,11 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching polls vote
 	* @throws com.liferay.portlet.polls.NoSuchVoteException if a matching polls vote could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.polls.model.PollsVote findByUuid_Last(
 		java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.polls.NoSuchVoteException;
+		throws com.liferay.portlet.polls.NoSuchVoteException;
 
 	/**
 	* Returns the last polls vote in the ordered set where uuid = &#63;.
@@ -136,12 +124,10 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching polls vote, or <code>null</code> if a matching polls vote could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.polls.model.PollsVote fetchByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the polls votes before and after the current polls vote in the ordered set where uuid = &#63;.
@@ -151,32 +137,26 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next polls vote
 	* @throws com.liferay.portlet.polls.NoSuchVoteException if a polls vote with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.polls.model.PollsVote[] findByUuid_PrevAndNext(
 		long voteId, java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.polls.NoSuchVoteException;
+		throws com.liferay.portlet.polls.NoSuchVoteException;
 
 	/**
 	* Removes all the polls votes where uuid = &#63; from the database.
 	*
 	* @param uuid the uuid
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByUuid(java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeByUuid(java.lang.String uuid);
 
 	/**
 	* Returns the number of polls votes where uuid = &#63;.
 	*
 	* @param uuid the uuid
 	* @return the number of matching polls votes
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countByUuid(java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByUuid(java.lang.String uuid);
 
 	/**
 	* Returns the polls vote where uuid = &#63; and groupId = &#63; or throws a {@link com.liferay.portlet.polls.NoSuchVoteException} if it could not be found.
@@ -185,12 +165,10 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	* @param groupId the group ID
 	* @return the matching polls vote
 	* @throws com.liferay.portlet.polls.NoSuchVoteException if a matching polls vote could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.polls.model.PollsVote findByUUID_G(
 		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.polls.NoSuchVoteException;
+		throws com.liferay.portlet.polls.NoSuchVoteException;
 
 	/**
 	* Returns the polls vote where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -198,11 +176,9 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the matching polls vote, or <code>null</code> if a matching polls vote could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.polls.model.PollsVote fetchByUUID_G(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String uuid, long groupId);
 
 	/**
 	* Returns the polls vote where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -211,11 +187,9 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	* @param groupId the group ID
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching polls vote, or <code>null</code> if a matching polls vote could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.polls.model.PollsVote fetchByUUID_G(
-		java.lang.String uuid, long groupId, boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String uuid, long groupId, boolean retrieveFromCache);
 
 	/**
 	* Removes the polls vote where uuid = &#63; and groupId = &#63; from the database.
@@ -223,12 +197,10 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the polls vote that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.polls.model.PollsVote removeByUUID_G(
 		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.polls.NoSuchVoteException;
+		throws com.liferay.portlet.polls.NoSuchVoteException;
 
 	/**
 	* Returns the number of polls votes where uuid = &#63; and groupId = &#63;.
@@ -236,10 +208,8 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the number of matching polls votes
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByUUID_G(java.lang.String uuid, long groupId);
 
 	/**
 	* Returns all the polls votes where uuid = &#63; and companyId = &#63;.
@@ -247,11 +217,9 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	* @return the matching polls votes
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.polls.model.PollsVote> findByUuid_C(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String uuid, long companyId);
 
 	/**
 	* Returns a range of all the polls votes where uuid = &#63; and companyId = &#63;.
@@ -265,11 +233,9 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	* @param start the lower bound of the range of polls votes
 	* @param end the upper bound of the range of polls votes (not inclusive)
 	* @return the range of matching polls votes
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.polls.model.PollsVote> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String uuid, long companyId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the polls votes where uuid = &#63; and companyId = &#63;.
@@ -284,12 +250,10 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	* @param end the upper bound of the range of polls votes (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching polls votes
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.polls.model.PollsVote> findByUuid_C(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first polls vote in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -299,13 +263,11 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching polls vote
 	* @throws com.liferay.portlet.polls.NoSuchVoteException if a matching polls vote could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.polls.model.PollsVote findByUuid_C_First(
 		java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.polls.NoSuchVoteException;
+		throws com.liferay.portlet.polls.NoSuchVoteException;
 
 	/**
 	* Returns the first polls vote in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -314,12 +276,10 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching polls vote, or <code>null</code> if a matching polls vote could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.polls.model.PollsVote fetchByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last polls vote in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -329,13 +289,11 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching polls vote
 	* @throws com.liferay.portlet.polls.NoSuchVoteException if a matching polls vote could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.polls.model.PollsVote findByUuid_C_Last(
 		java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.polls.NoSuchVoteException;
+		throws com.liferay.portlet.polls.NoSuchVoteException;
 
 	/**
 	* Returns the last polls vote in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -344,12 +302,10 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching polls vote, or <code>null</code> if a matching polls vote could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.polls.model.PollsVote fetchByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the polls votes before and after the current polls vote in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -360,23 +316,19 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next polls vote
 	* @throws com.liferay.portlet.polls.NoSuchVoteException if a polls vote with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.polls.model.PollsVote[] findByUuid_C_PrevAndNext(
 		long voteId, java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.polls.NoSuchVoteException;
+		throws com.liferay.portlet.polls.NoSuchVoteException;
 
 	/**
 	* Removes all the polls votes where uuid = &#63; and companyId = &#63; from the database.
 	*
 	* @param uuid the uuid
 	* @param companyId the company ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByUuid_C(java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeByUuid_C(java.lang.String uuid, long companyId);
 
 	/**
 	* Returns the number of polls votes where uuid = &#63; and companyId = &#63;.
@@ -384,21 +336,17 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	* @return the number of matching polls votes
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countByUuid_C(java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByUuid_C(java.lang.String uuid, long companyId);
 
 	/**
 	* Returns all the polls votes where questionId = &#63;.
 	*
 	* @param questionId the question ID
 	* @return the matching polls votes
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.polls.model.PollsVote> findByQuestionId(
-		long questionId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long questionId);
 
 	/**
 	* Returns a range of all the polls votes where questionId = &#63;.
@@ -411,11 +359,9 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	* @param start the lower bound of the range of polls votes
 	* @param end the upper bound of the range of polls votes (not inclusive)
 	* @return the range of matching polls votes
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.polls.model.PollsVote> findByQuestionId(
-		long questionId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long questionId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the polls votes where questionId = &#63;.
@@ -429,12 +375,10 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	* @param end the upper bound of the range of polls votes (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching polls votes
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.polls.model.PollsVote> findByQuestionId(
 		long questionId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first polls vote in the ordered set where questionId = &#63;.
@@ -443,13 +387,11 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching polls vote
 	* @throws com.liferay.portlet.polls.NoSuchVoteException if a matching polls vote could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.polls.model.PollsVote findByQuestionId_First(
 		long questionId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.polls.NoSuchVoteException;
+		throws com.liferay.portlet.polls.NoSuchVoteException;
 
 	/**
 	* Returns the first polls vote in the ordered set where questionId = &#63;.
@@ -457,12 +399,10 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	* @param questionId the question ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching polls vote, or <code>null</code> if a matching polls vote could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.polls.model.PollsVote fetchByQuestionId_First(
 		long questionId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last polls vote in the ordered set where questionId = &#63;.
@@ -471,13 +411,11 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching polls vote
 	* @throws com.liferay.portlet.polls.NoSuchVoteException if a matching polls vote could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.polls.model.PollsVote findByQuestionId_Last(
 		long questionId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.polls.NoSuchVoteException;
+		throws com.liferay.portlet.polls.NoSuchVoteException;
 
 	/**
 	* Returns the last polls vote in the ordered set where questionId = &#63;.
@@ -485,12 +423,10 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	* @param questionId the question ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching polls vote, or <code>null</code> if a matching polls vote could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.polls.model.PollsVote fetchByQuestionId_Last(
 		long questionId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the polls votes before and after the current polls vote in the ordered set where questionId = &#63;.
@@ -500,43 +436,35 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next polls vote
 	* @throws com.liferay.portlet.polls.NoSuchVoteException if a polls vote with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.polls.model.PollsVote[] findByQuestionId_PrevAndNext(
 		long voteId, long questionId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.polls.NoSuchVoteException;
+		throws com.liferay.portlet.polls.NoSuchVoteException;
 
 	/**
 	* Removes all the polls votes where questionId = &#63; from the database.
 	*
 	* @param questionId the question ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByQuestionId(long questionId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeByQuestionId(long questionId);
 
 	/**
 	* Returns the number of polls votes where questionId = &#63;.
 	*
 	* @param questionId the question ID
 	* @return the number of matching polls votes
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countByQuestionId(long questionId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByQuestionId(long questionId);
 
 	/**
 	* Returns all the polls votes where choiceId = &#63;.
 	*
 	* @param choiceId the choice ID
 	* @return the matching polls votes
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.polls.model.PollsVote> findByChoiceId(
-		long choiceId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long choiceId);
 
 	/**
 	* Returns a range of all the polls votes where choiceId = &#63;.
@@ -549,11 +477,9 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	* @param start the lower bound of the range of polls votes
 	* @param end the upper bound of the range of polls votes (not inclusive)
 	* @return the range of matching polls votes
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.polls.model.PollsVote> findByChoiceId(
-		long choiceId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long choiceId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the polls votes where choiceId = &#63;.
@@ -567,12 +493,10 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	* @param end the upper bound of the range of polls votes (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching polls votes
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.polls.model.PollsVote> findByChoiceId(
 		long choiceId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first polls vote in the ordered set where choiceId = &#63;.
@@ -581,13 +505,11 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching polls vote
 	* @throws com.liferay.portlet.polls.NoSuchVoteException if a matching polls vote could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.polls.model.PollsVote findByChoiceId_First(
 		long choiceId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.polls.NoSuchVoteException;
+		throws com.liferay.portlet.polls.NoSuchVoteException;
 
 	/**
 	* Returns the first polls vote in the ordered set where choiceId = &#63;.
@@ -595,12 +517,10 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	* @param choiceId the choice ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching polls vote, or <code>null</code> if a matching polls vote could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.polls.model.PollsVote fetchByChoiceId_First(
 		long choiceId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last polls vote in the ordered set where choiceId = &#63;.
@@ -609,13 +529,11 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching polls vote
 	* @throws com.liferay.portlet.polls.NoSuchVoteException if a matching polls vote could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.polls.model.PollsVote findByChoiceId_Last(
 		long choiceId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.polls.NoSuchVoteException;
+		throws com.liferay.portlet.polls.NoSuchVoteException;
 
 	/**
 	* Returns the last polls vote in the ordered set where choiceId = &#63;.
@@ -623,12 +541,10 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	* @param choiceId the choice ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching polls vote, or <code>null</code> if a matching polls vote could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.polls.model.PollsVote fetchByChoiceId_Last(
 		long choiceId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the polls votes before and after the current polls vote in the ordered set where choiceId = &#63;.
@@ -638,32 +554,26 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next polls vote
 	* @throws com.liferay.portlet.polls.NoSuchVoteException if a polls vote with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.polls.model.PollsVote[] findByChoiceId_PrevAndNext(
 		long voteId, long choiceId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.polls.NoSuchVoteException;
+		throws com.liferay.portlet.polls.NoSuchVoteException;
 
 	/**
 	* Removes all the polls votes where choiceId = &#63; from the database.
 	*
 	* @param choiceId the choice ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByChoiceId(long choiceId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeByChoiceId(long choiceId);
 
 	/**
 	* Returns the number of polls votes where choiceId = &#63;.
 	*
 	* @param choiceId the choice ID
 	* @return the number of matching polls votes
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countByChoiceId(long choiceId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByChoiceId(long choiceId);
 
 	/**
 	* Returns the polls vote where questionId = &#63; and userId = &#63; or throws a {@link com.liferay.portlet.polls.NoSuchVoteException} if it could not be found.
@@ -672,12 +582,10 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	* @param userId the user ID
 	* @return the matching polls vote
 	* @throws com.liferay.portlet.polls.NoSuchVoteException if a matching polls vote could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.polls.model.PollsVote findByQ_U(
 		long questionId, long userId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.polls.NoSuchVoteException;
+		throws com.liferay.portlet.polls.NoSuchVoteException;
 
 	/**
 	* Returns the polls vote where questionId = &#63; and userId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -685,11 +593,9 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	* @param questionId the question ID
 	* @param userId the user ID
 	* @return the matching polls vote, or <code>null</code> if a matching polls vote could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.polls.model.PollsVote fetchByQ_U(
-		long questionId, long userId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long questionId, long userId);
 
 	/**
 	* Returns the polls vote where questionId = &#63; and userId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -698,11 +604,9 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	* @param userId the user ID
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching polls vote, or <code>null</code> if a matching polls vote could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.polls.model.PollsVote fetchByQ_U(
-		long questionId, long userId, boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long questionId, long userId, boolean retrieveFromCache);
 
 	/**
 	* Removes the polls vote where questionId = &#63; and userId = &#63; from the database.
@@ -710,12 +614,10 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	* @param questionId the question ID
 	* @param userId the user ID
 	* @return the polls vote that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.polls.model.PollsVote removeByQ_U(
 		long questionId, long userId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.polls.NoSuchVoteException;
+		throws com.liferay.portlet.polls.NoSuchVoteException;
 
 	/**
 	* Returns the number of polls votes where questionId = &#63; and userId = &#63;.
@@ -723,10 +625,8 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	* @param questionId the question ID
 	* @param userId the user ID
 	* @return the number of matching polls votes
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countByQ_U(long questionId, long userId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByQ_U(long questionId, long userId);
 
 	/**
 	* Caches the polls vote in the entity cache if it is enabled.
@@ -757,15 +657,12 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	* @param voteId the primary key of the polls vote
 	* @return the polls vote that was removed
 	* @throws com.liferay.portlet.polls.NoSuchVoteException if a polls vote with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.polls.model.PollsVote remove(long voteId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.polls.NoSuchVoteException;
+		throws com.liferay.portlet.polls.NoSuchVoteException;
 
 	public com.liferay.portlet.polls.model.PollsVote updateImpl(
-		com.liferay.portlet.polls.model.PollsVote pollsVote)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portlet.polls.model.PollsVote pollsVote);
 
 	/**
 	* Returns the polls vote with the primary key or throws a {@link com.liferay.portlet.polls.NoSuchVoteException} if it could not be found.
@@ -773,31 +670,25 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	* @param voteId the primary key of the polls vote
 	* @return the polls vote
 	* @throws com.liferay.portlet.polls.NoSuchVoteException if a polls vote with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.polls.model.PollsVote findByPrimaryKey(
-		long voteId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.polls.NoSuchVoteException;
+		long voteId) throws com.liferay.portlet.polls.NoSuchVoteException;
 
 	/**
 	* Returns the polls vote with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param voteId the primary key of the polls vote
 	* @return the polls vote, or <code>null</code> if a polls vote with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.polls.model.PollsVote fetchByPrimaryKey(
-		long voteId) throws com.liferay.portal.kernel.exception.SystemException;
+		long voteId);
 
 	/**
 	* Returns all the polls votes.
 	*
 	* @return the polls votes
-	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portlet.polls.model.PollsVote> findAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public java.util.List<com.liferay.portlet.polls.model.PollsVote> findAll();
 
 	/**
 	* Returns a range of all the polls votes.
@@ -809,11 +700,9 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	* @param start the lower bound of the range of polls votes
 	* @param end the upper bound of the range of polls votes (not inclusive)
 	* @return the range of polls votes
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.polls.model.PollsVote> findAll(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the polls votes.
@@ -826,27 +715,20 @@ public interface PollsVotePersistence extends BasePersistence<PollsVote> {
 	* @param end the upper bound of the range of polls votes (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of polls votes
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.polls.model.PollsVote> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Removes all the polls votes from the database.
-	*
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeAll();
 
 	/**
 	* Returns the number of polls votes.
 	*
 	* @return the number of polls votes
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countAll();
 }

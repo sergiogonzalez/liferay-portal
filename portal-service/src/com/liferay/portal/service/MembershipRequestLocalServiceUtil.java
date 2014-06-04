@@ -46,11 +46,9 @@ public class MembershipRequestLocalServiceUtil {
 	*
 	* @param membershipRequest the membership request
 	* @return the membership request that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.MembershipRequest addMembershipRequest(
-		com.liferay.portal.model.MembershipRequest membershipRequest)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.MembershipRequest membershipRequest) {
 		return getService().addMembershipRequest(membershipRequest);
 	}
 
@@ -71,12 +69,10 @@ public class MembershipRequestLocalServiceUtil {
 	* @param membershipRequestId the primary key of the membership request
 	* @return the membership request that was removed
 	* @throws PortalException if a membership request with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.MembershipRequest deleteMembershipRequest(
 		long membershipRequestId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteMembershipRequest(membershipRequestId);
 	}
 
@@ -85,11 +81,9 @@ public class MembershipRequestLocalServiceUtil {
 	*
 	* @param membershipRequest the membership request
 	* @return the membership request that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.MembershipRequest deleteMembershipRequest(
-		com.liferay.portal.model.MembershipRequest membershipRequest)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.MembershipRequest membershipRequest) {
 		return getService().deleteMembershipRequest(membershipRequest);
 	}
 
@@ -102,12 +96,10 @@ public class MembershipRequestLocalServiceUtil {
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -122,12 +114,11 @@ public class MembershipRequestLocalServiceUtil {
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -143,14 +134,12 @@ public class MembershipRequestLocalServiceUtil {
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getService()
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
@@ -160,11 +149,9 @@ public class MembershipRequestLocalServiceUtil {
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -174,18 +161,15 @@ public class MembershipRequestLocalServiceUtil {
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public static long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
 	public static com.liferay.portal.model.MembershipRequest fetchMembershipRequest(
-		long membershipRequestId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long membershipRequestId) {
 		return getService().fetchMembershipRequest(membershipRequestId);
 	}
 
@@ -195,24 +179,20 @@ public class MembershipRequestLocalServiceUtil {
 	* @param membershipRequestId the primary key of the membership request
 	* @return the membership request
 	* @throws PortalException if a membership request with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.MembershipRequest getMembershipRequest(
 		long membershipRequestId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getMembershipRequest(membershipRequestId);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}
 
 	public static com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
@@ -226,11 +206,9 @@ public class MembershipRequestLocalServiceUtil {
 	* @param start the lower bound of the range of membership requests
 	* @param end the upper bound of the range of membership requests (not inclusive)
 	* @return the range of membership requests
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portal.model.MembershipRequest> getMembershipRequests(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return getService().getMembershipRequests(start, end);
 	}
 
@@ -238,10 +216,8 @@ public class MembershipRequestLocalServiceUtil {
 	* Returns the number of membership requests.
 	*
 	* @return the number of membership requests
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int getMembershipRequestsCount()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int getMembershipRequestsCount() {
 		return getService().getMembershipRequestsCount();
 	}
 
@@ -250,11 +226,9 @@ public class MembershipRequestLocalServiceUtil {
 	*
 	* @param membershipRequest the membership request
 	* @return the membership request that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.MembershipRequest updateMembershipRequest(
-		com.liferay.portal.model.MembershipRequest membershipRequest)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.MembershipRequest membershipRequest) {
 		return getService().updateMembershipRequest(membershipRequest);
 	}
 

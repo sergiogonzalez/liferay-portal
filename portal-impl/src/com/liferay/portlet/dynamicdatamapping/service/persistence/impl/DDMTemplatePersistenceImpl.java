@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -111,10 +110,9 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 *
 	 * @param uuid the uuid
 	 * @return the matching d d m templates
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<DDMTemplate> findByUuid(String uuid) throws SystemException {
+	public List<DDMTemplate> findByUuid(String uuid) {
 		return findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -129,11 +127,9 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param start the lower bound of the range of d d m templates
 	 * @param end the upper bound of the range of d d m templates (not inclusive)
 	 * @return the range of matching d d m templates
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<DDMTemplate> findByUuid(String uuid, int start, int end)
-		throws SystemException {
+	public List<DDMTemplate> findByUuid(String uuid, int start, int end) {
 		return findByUuid(uuid, start, end, null);
 	}
 
@@ -149,11 +145,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param end the upper bound of the range of d d m templates (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching d d m templates
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<DDMTemplate> findByUuid(String uuid, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -270,12 +265,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching d d m template
 	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate findByUuid_First(String uuid,
-		OrderByComparator orderByComparator)
-		throws NoSuchTemplateException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchTemplateException {
 		DDMTemplate ddmTemplate = fetchByUuid_First(uuid, orderByComparator);
 
 		if (ddmTemplate != null) {
@@ -300,11 +293,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching d d m template, or <code>null</code> if a matching d d m template could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate fetchByUuid_First(String uuid,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		List<DDMTemplate> list = findByUuid(uuid, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -321,12 +313,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching d d m template
 	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate findByUuid_Last(String uuid,
-		OrderByComparator orderByComparator)
-		throws NoSuchTemplateException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchTemplateException {
 		DDMTemplate ddmTemplate = fetchByUuid_Last(uuid, orderByComparator);
 
 		if (ddmTemplate != null) {
@@ -351,11 +341,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching d d m template, or <code>null</code> if a matching d d m template could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate fetchByUuid_Last(String uuid,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		int count = countByUuid(uuid);
 
 		if (count == 0) {
@@ -380,12 +369,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next d d m template
 	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a d d m template with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate[] findByUuid_PrevAndNext(long templateId, String uuid,
-		OrderByComparator orderByComparator)
-		throws NoSuchTemplateException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchTemplateException {
 		DDMTemplate ddmTemplate = findByPrimaryKey(templateId);
 
 		Session session = null;
@@ -536,10 +523,9 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * Removes all the d d m templates where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByUuid(String uuid) throws SystemException {
+	public void removeByUuid(String uuid) {
 		for (DDMTemplate ddmTemplate : findByUuid(uuid, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null)) {
 			remove(ddmTemplate);
@@ -551,10 +537,9 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 *
 	 * @param uuid the uuid
 	 * @return the number of matching d d m templates
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByUuid(String uuid) throws SystemException {
+	public int countByUuid(String uuid) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_UUID;
 
 		Object[] finderArgs = new Object[] { uuid };
@@ -634,11 +619,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param groupId the group ID
 	 * @return the matching d d m template
 	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate findByUUID_G(String uuid, long groupId)
-		throws NoSuchTemplateException, SystemException {
+		throws NoSuchTemplateException {
 		DDMTemplate ddmTemplate = fetchByUUID_G(uuid, groupId);
 
 		if (ddmTemplate == null) {
@@ -670,11 +654,9 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param uuid the uuid
 	 * @param groupId the group ID
 	 * @return the matching d d m template, or <code>null</code> if a matching d d m template could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public DDMTemplate fetchByUUID_G(String uuid, long groupId)
-		throws SystemException {
+	public DDMTemplate fetchByUUID_G(String uuid, long groupId) {
 		return fetchByUUID_G(uuid, groupId, true);
 	}
 
@@ -685,11 +667,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param groupId the group ID
 	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching d d m template, or <code>null</code> if a matching d d m template could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate fetchByUUID_G(String uuid, long groupId,
-		boolean retrieveFromCache) throws SystemException {
+		boolean retrieveFromCache) {
 		Object[] finderArgs = new Object[] { uuid, groupId };
 
 		Object result = null;
@@ -792,11 +773,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param uuid the uuid
 	 * @param groupId the group ID
 	 * @return the d d m template that was removed
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate removeByUUID_G(String uuid, long groupId)
-		throws NoSuchTemplateException, SystemException {
+		throws NoSuchTemplateException {
 		DDMTemplate ddmTemplate = findByUUID_G(uuid, groupId);
 
 		return remove(ddmTemplate);
@@ -808,11 +788,9 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param uuid the uuid
 	 * @param groupId the group ID
 	 * @return the number of matching d d m templates
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByUUID_G(String uuid, long groupId)
-		throws SystemException {
+	public int countByUUID_G(String uuid, long groupId) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_UUID_G;
 
 		Object[] finderArgs = new Object[] { uuid, groupId };
@@ -906,11 +884,9 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @return the matching d d m templates
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<DDMTemplate> findByUuid_C(String uuid, long companyId)
-		throws SystemException {
+	public List<DDMTemplate> findByUuid_C(String uuid, long companyId) {
 		return findByUuid_C(uuid, companyId, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
@@ -927,11 +903,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param start the lower bound of the range of d d m templates
 	 * @param end the upper bound of the range of d d m templates (not inclusive)
 	 * @return the range of matching d d m templates
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<DDMTemplate> findByUuid_C(String uuid, long companyId,
-		int start, int end) throws SystemException {
+		int start, int end) {
 		return findByUuid_C(uuid, companyId, start, end, null);
 	}
 
@@ -948,12 +923,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param end the upper bound of the range of d d m templates (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching d d m templates
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<DDMTemplate> findByUuid_C(String uuid, long companyId,
-		int start, int end, OrderByComparator orderByComparator)
-		throws SystemException {
+		int start, int end, OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1080,12 +1053,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching d d m template
 	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate findByUuid_C_First(String uuid, long companyId,
-		OrderByComparator orderByComparator)
-		throws NoSuchTemplateException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchTemplateException {
 		DDMTemplate ddmTemplate = fetchByUuid_C_First(uuid, companyId,
 				orderByComparator);
 
@@ -1115,11 +1086,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching d d m template, or <code>null</code> if a matching d d m template could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate fetchByUuid_C_First(String uuid, long companyId,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		List<DDMTemplate> list = findByUuid_C(uuid, companyId, 0, 1,
 				orderByComparator);
 
@@ -1138,12 +1108,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching d d m template
 	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate findByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator)
-		throws NoSuchTemplateException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchTemplateException {
 		DDMTemplate ddmTemplate = fetchByUuid_C_Last(uuid, companyId,
 				orderByComparator);
 
@@ -1173,11 +1141,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching d d m template, or <code>null</code> if a matching d d m template could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate fetchByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		int count = countByUuid_C(uuid, companyId);
 
 		if (count == 0) {
@@ -1203,12 +1170,11 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next d d m template
 	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a d d m template with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate[] findByUuid_C_PrevAndNext(long templateId, String uuid,
 		long companyId, OrderByComparator orderByComparator)
-		throws NoSuchTemplateException, SystemException {
+		throws NoSuchTemplateException {
 		DDMTemplate ddmTemplate = findByPrimaryKey(templateId);
 
 		Session session = null;
@@ -1364,11 +1330,9 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByUuid_C(String uuid, long companyId)
-		throws SystemException {
+	public void removeByUuid_C(String uuid, long companyId) {
 		for (DDMTemplate ddmTemplate : findByUuid_C(uuid, companyId,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(ddmTemplate);
@@ -1381,11 +1345,9 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @return the number of matching d d m templates
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByUuid_C(String uuid, long companyId)
-		throws SystemException {
+	public int countByUuid_C(String uuid, long companyId) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_UUID_C;
 
 		Object[] finderArgs = new Object[] { uuid, companyId };
@@ -1477,11 +1439,9 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 *
 	 * @param groupId the group ID
 	 * @return the matching d d m templates
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<DDMTemplate> findByGroupId(long groupId)
-		throws SystemException {
+	public List<DDMTemplate> findByGroupId(long groupId) {
 		return findByGroupId(groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -1496,11 +1456,9 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param start the lower bound of the range of d d m templates
 	 * @param end the upper bound of the range of d d m templates (not inclusive)
 	 * @return the range of matching d d m templates
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<DDMTemplate> findByGroupId(long groupId, int start, int end)
-		throws SystemException {
+	public List<DDMTemplate> findByGroupId(long groupId, int start, int end) {
 		return findByGroupId(groupId, start, end, null);
 	}
 
@@ -1516,11 +1474,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param end the upper bound of the range of d d m templates (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching d d m templates
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<DDMTemplate> findByGroupId(long groupId, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1623,12 +1580,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching d d m template
 	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate findByGroupId_First(long groupId,
-		OrderByComparator orderByComparator)
-		throws NoSuchTemplateException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchTemplateException {
 		DDMTemplate ddmTemplate = fetchByGroupId_First(groupId,
 				orderByComparator);
 
@@ -1654,11 +1609,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching d d m template, or <code>null</code> if a matching d d m template could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate fetchByGroupId_First(long groupId,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		List<DDMTemplate> list = findByGroupId(groupId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -1675,12 +1629,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching d d m template
 	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate findByGroupId_Last(long groupId,
-		OrderByComparator orderByComparator)
-		throws NoSuchTemplateException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchTemplateException {
 		DDMTemplate ddmTemplate = fetchByGroupId_Last(groupId, orderByComparator);
 
 		if (ddmTemplate != null) {
@@ -1705,11 +1657,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching d d m template, or <code>null</code> if a matching d d m template could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate fetchByGroupId_Last(long groupId,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		int count = countByGroupId(groupId);
 
 		if (count == 0) {
@@ -1734,12 +1685,11 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next d d m template
 	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a d d m template with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate[] findByGroupId_PrevAndNext(long templateId,
 		long groupId, OrderByComparator orderByComparator)
-		throws NoSuchTemplateException, SystemException {
+		throws NoSuchTemplateException {
 		DDMTemplate ddmTemplate = findByPrimaryKey(templateId);
 
 		Session session = null;
@@ -1877,11 +1827,9 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 *
 	 * @param groupId the group ID
 	 * @return the matching d d m templates that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<DDMTemplate> filterFindByGroupId(long groupId)
-		throws SystemException {
+	public List<DDMTemplate> filterFindByGroupId(long groupId) {
 		return filterFindByGroupId(groupId, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
@@ -1897,11 +1845,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param start the lower bound of the range of d d m templates
 	 * @param end the upper bound of the range of d d m templates (not inclusive)
 	 * @return the range of matching d d m templates that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<DDMTemplate> filterFindByGroupId(long groupId, int start,
-		int end) throws SystemException {
+		int end) {
 		return filterFindByGroupId(groupId, start, end, null);
 	}
 
@@ -1917,11 +1864,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param end the upper bound of the range of d d m templates (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching d d m templates that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<DDMTemplate> filterFindByGroupId(long groupId, int start,
-		int end, OrderByComparator orderByComparator) throws SystemException {
+		int end, OrderByComparator orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByGroupId(groupId, start, end, orderByComparator);
 		}
@@ -2008,12 +1954,11 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next d d m template
 	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a d d m template with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate[] filterFindByGroupId_PrevAndNext(long templateId,
 		long groupId, OrderByComparator orderByComparator)
-		throws NoSuchTemplateException, SystemException {
+		throws NoSuchTemplateException {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByGroupId_PrevAndNext(templateId, groupId,
 				orderByComparator);
@@ -2190,10 +2135,9 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * Removes all the d d m templates where groupId = &#63; from the database.
 	 *
 	 * @param groupId the group ID
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByGroupId(long groupId) throws SystemException {
+	public void removeByGroupId(long groupId) {
 		for (DDMTemplate ddmTemplate : findByGroupId(groupId,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(ddmTemplate);
@@ -2205,10 +2149,9 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 *
 	 * @param groupId the group ID
 	 * @return the number of matching d d m templates
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByGroupId(long groupId) throws SystemException {
+	public int countByGroupId(long groupId) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_GROUPID;
 
 		Object[] finderArgs = new Object[] { groupId };
@@ -2258,10 +2201,9 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 *
 	 * @param groupId the group ID
 	 * @return the number of matching d d m templates that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int filterCountByGroupId(long groupId) throws SystemException {
+	public int filterCountByGroupId(long groupId) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return countByGroupId(groupId);
 		}
@@ -2328,11 +2270,9 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 *
 	 * @param classPK the class p k
 	 * @return the matching d d m templates
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<DDMTemplate> findByClassPK(long classPK)
-		throws SystemException {
+	public List<DDMTemplate> findByClassPK(long classPK) {
 		return findByClassPK(classPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -2347,11 +2287,9 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param start the lower bound of the range of d d m templates
 	 * @param end the upper bound of the range of d d m templates (not inclusive)
 	 * @return the range of matching d d m templates
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<DDMTemplate> findByClassPK(long classPK, int start, int end)
-		throws SystemException {
+	public List<DDMTemplate> findByClassPK(long classPK, int start, int end) {
 		return findByClassPK(classPK, start, end, null);
 	}
 
@@ -2367,11 +2305,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param end the upper bound of the range of d d m templates (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching d d m templates
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<DDMTemplate> findByClassPK(long classPK, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2474,12 +2411,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching d d m template
 	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate findByClassPK_First(long classPK,
-		OrderByComparator orderByComparator)
-		throws NoSuchTemplateException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchTemplateException {
 		DDMTemplate ddmTemplate = fetchByClassPK_First(classPK,
 				orderByComparator);
 
@@ -2505,11 +2440,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param classPK the class p k
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching d d m template, or <code>null</code> if a matching d d m template could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate fetchByClassPK_First(long classPK,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		List<DDMTemplate> list = findByClassPK(classPK, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -2526,12 +2460,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching d d m template
 	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate findByClassPK_Last(long classPK,
-		OrderByComparator orderByComparator)
-		throws NoSuchTemplateException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchTemplateException {
 		DDMTemplate ddmTemplate = fetchByClassPK_Last(classPK, orderByComparator);
 
 		if (ddmTemplate != null) {
@@ -2556,11 +2488,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param classPK the class p k
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching d d m template, or <code>null</code> if a matching d d m template could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate fetchByClassPK_Last(long classPK,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		int count = countByClassPK(classPK);
 
 		if (count == 0) {
@@ -2585,12 +2516,11 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next d d m template
 	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a d d m template with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate[] findByClassPK_PrevAndNext(long templateId,
 		long classPK, OrderByComparator orderByComparator)
-		throws NoSuchTemplateException, SystemException {
+		throws NoSuchTemplateException {
 		DDMTemplate ddmTemplate = findByPrimaryKey(templateId);
 
 		Session session = null;
@@ -2727,10 +2657,9 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * Removes all the d d m templates where classPK = &#63; from the database.
 	 *
 	 * @param classPK the class p k
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByClassPK(long classPK) throws SystemException {
+	public void removeByClassPK(long classPK) {
 		for (DDMTemplate ddmTemplate : findByClassPK(classPK,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(ddmTemplate);
@@ -2742,10 +2671,9 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 *
 	 * @param classPK the class p k
 	 * @return the number of matching d d m templates
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByClassPK(long classPK) throws SystemException {
+	public int countByClassPK(long classPK) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_CLASSPK;
 
 		Object[] finderArgs = new Object[] { classPK };
@@ -2817,11 +2745,9 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 *
 	 * @param templateKey the template key
 	 * @return the matching d d m templates
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<DDMTemplate> findByTemplateKey(String templateKey)
-		throws SystemException {
+	public List<DDMTemplate> findByTemplateKey(String templateKey) {
 		return findByTemplateKey(templateKey, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
@@ -2837,11 +2763,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param start the lower bound of the range of d d m templates
 	 * @param end the upper bound of the range of d d m templates (not inclusive)
 	 * @return the range of matching d d m templates
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<DDMTemplate> findByTemplateKey(String templateKey, int start,
-		int end) throws SystemException {
+		int end) {
 		return findByTemplateKey(templateKey, start, end, null);
 	}
 
@@ -2857,11 +2782,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param end the upper bound of the range of d d m templates (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching d d m templates
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<DDMTemplate> findByTemplateKey(String templateKey, int start,
-		int end, OrderByComparator orderByComparator) throws SystemException {
+		int end, OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2978,12 +2902,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching d d m template
 	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate findByTemplateKey_First(String templateKey,
-		OrderByComparator orderByComparator)
-		throws NoSuchTemplateException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchTemplateException {
 		DDMTemplate ddmTemplate = fetchByTemplateKey_First(templateKey,
 				orderByComparator);
 
@@ -3009,11 +2931,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param templateKey the template key
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching d d m template, or <code>null</code> if a matching d d m template could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate fetchByTemplateKey_First(String templateKey,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		List<DDMTemplate> list = findByTemplateKey(templateKey, 0, 1,
 				orderByComparator);
 
@@ -3031,12 +2952,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching d d m template
 	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate findByTemplateKey_Last(String templateKey,
-		OrderByComparator orderByComparator)
-		throws NoSuchTemplateException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchTemplateException {
 		DDMTemplate ddmTemplate = fetchByTemplateKey_Last(templateKey,
 				orderByComparator);
 
@@ -3062,11 +2981,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param templateKey the template key
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching d d m template, or <code>null</code> if a matching d d m template could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate fetchByTemplateKey_Last(String templateKey,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		int count = countByTemplateKey(templateKey);
 
 		if (count == 0) {
@@ -3091,12 +3009,11 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next d d m template
 	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a d d m template with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate[] findByTemplateKey_PrevAndNext(long templateId,
 		String templateKey, OrderByComparator orderByComparator)
-		throws NoSuchTemplateException, SystemException {
+		throws NoSuchTemplateException {
 		DDMTemplate ddmTemplate = findByPrimaryKey(templateId);
 
 		Session session = null;
@@ -3247,11 +3164,9 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * Removes all the d d m templates where templateKey = &#63; from the database.
 	 *
 	 * @param templateKey the template key
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByTemplateKey(String templateKey)
-		throws SystemException {
+	public void removeByTemplateKey(String templateKey) {
 		for (DDMTemplate ddmTemplate : findByTemplateKey(templateKey,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(ddmTemplate);
@@ -3263,10 +3178,9 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 *
 	 * @param templateKey the template key
 	 * @return the number of matching d d m templates
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByTemplateKey(String templateKey) throws SystemException {
+	public int countByTemplateKey(String templateKey) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_TEMPLATEKEY;
 
 		Object[] finderArgs = new Object[] { templateKey };
@@ -3352,10 +3266,9 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 *
 	 * @param type the type
 	 * @return the matching d d m templates
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<DDMTemplate> findByType(String type) throws SystemException {
+	public List<DDMTemplate> findByType(String type) {
 		return findByType(type, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -3370,11 +3283,9 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param start the lower bound of the range of d d m templates
 	 * @param end the upper bound of the range of d d m templates (not inclusive)
 	 * @return the range of matching d d m templates
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<DDMTemplate> findByType(String type, int start, int end)
-		throws SystemException {
+	public List<DDMTemplate> findByType(String type, int start, int end) {
 		return findByType(type, start, end, null);
 	}
 
@@ -3390,11 +3301,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param end the upper bound of the range of d d m templates (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching d d m templates
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<DDMTemplate> findByType(String type, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -3511,12 +3421,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching d d m template
 	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate findByType_First(String type,
-		OrderByComparator orderByComparator)
-		throws NoSuchTemplateException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchTemplateException {
 		DDMTemplate ddmTemplate = fetchByType_First(type, orderByComparator);
 
 		if (ddmTemplate != null) {
@@ -3541,11 +3449,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching d d m template, or <code>null</code> if a matching d d m template could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate fetchByType_First(String type,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		List<DDMTemplate> list = findByType(type, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -3562,12 +3469,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching d d m template
 	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate findByType_Last(String type,
-		OrderByComparator orderByComparator)
-		throws NoSuchTemplateException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchTemplateException {
 		DDMTemplate ddmTemplate = fetchByType_Last(type, orderByComparator);
 
 		if (ddmTemplate != null) {
@@ -3592,11 +3497,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching d d m template, or <code>null</code> if a matching d d m template could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate fetchByType_Last(String type,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		int count = countByType(type);
 
 		if (count == 0) {
@@ -3621,12 +3525,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next d d m template
 	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a d d m template with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate[] findByType_PrevAndNext(long templateId, String type,
-		OrderByComparator orderByComparator)
-		throws NoSuchTemplateException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchTemplateException {
 		DDMTemplate ddmTemplate = findByPrimaryKey(templateId);
 
 		Session session = null;
@@ -3777,10 +3679,9 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * Removes all the d d m templates where type = &#63; from the database.
 	 *
 	 * @param type the type
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByType(String type) throws SystemException {
+	public void removeByType(String type) {
 		for (DDMTemplate ddmTemplate : findByType(type, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null)) {
 			remove(ddmTemplate);
@@ -3792,10 +3693,9 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 *
 	 * @param type the type
 	 * @return the number of matching d d m templates
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByType(String type) throws SystemException {
+	public int countByType(String type) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_TYPE;
 
 		Object[] finderArgs = new Object[] { type };
@@ -3882,11 +3782,9 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 *
 	 * @param language the language
 	 * @return the matching d d m templates
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<DDMTemplate> findByLanguage(String language)
-		throws SystemException {
+	public List<DDMTemplate> findByLanguage(String language) {
 		return findByLanguage(language, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			null);
 	}
@@ -3902,11 +3800,9 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param start the lower bound of the range of d d m templates
 	 * @param end the upper bound of the range of d d m templates (not inclusive)
 	 * @return the range of matching d d m templates
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<DDMTemplate> findByLanguage(String language, int start, int end)
-		throws SystemException {
+	public List<DDMTemplate> findByLanguage(String language, int start, int end) {
 		return findByLanguage(language, start, end, null);
 	}
 
@@ -3922,11 +3818,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param end the upper bound of the range of d d m templates (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching d d m templates
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<DDMTemplate> findByLanguage(String language, int start,
-		int end, OrderByComparator orderByComparator) throws SystemException {
+		int end, OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -4043,12 +3938,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching d d m template
 	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate findByLanguage_First(String language,
-		OrderByComparator orderByComparator)
-		throws NoSuchTemplateException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchTemplateException {
 		DDMTemplate ddmTemplate = fetchByLanguage_First(language,
 				orderByComparator);
 
@@ -4074,11 +3967,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param language the language
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching d d m template, or <code>null</code> if a matching d d m template could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate fetchByLanguage_First(String language,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		List<DDMTemplate> list = findByLanguage(language, 0, 1,
 				orderByComparator);
 
@@ -4096,12 +3988,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching d d m template
 	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate findByLanguage_Last(String language,
-		OrderByComparator orderByComparator)
-		throws NoSuchTemplateException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchTemplateException {
 		DDMTemplate ddmTemplate = fetchByLanguage_Last(language,
 				orderByComparator);
 
@@ -4127,11 +4017,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param language the language
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching d d m template, or <code>null</code> if a matching d d m template could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate fetchByLanguage_Last(String language,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		int count = countByLanguage(language);
 
 		if (count == 0) {
@@ -4156,12 +4045,11 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next d d m template
 	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a d d m template with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate[] findByLanguage_PrevAndNext(long templateId,
 		String language, OrderByComparator orderByComparator)
-		throws NoSuchTemplateException, SystemException {
+		throws NoSuchTemplateException {
 		DDMTemplate ddmTemplate = findByPrimaryKey(templateId);
 
 		Session session = null;
@@ -4312,10 +4200,9 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * Removes all the d d m templates where language = &#63; from the database.
 	 *
 	 * @param language the language
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByLanguage(String language) throws SystemException {
+	public void removeByLanguage(String language) {
 		for (DDMTemplate ddmTemplate : findByLanguage(language,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(ddmTemplate);
@@ -4327,10 +4214,9 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 *
 	 * @param language the language
 	 * @return the number of matching d d m templates
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByLanguage(String language) throws SystemException {
+	public int countByLanguage(String language) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_LANGUAGE;
 
 		Object[] finderArgs = new Object[] { language };
@@ -4408,11 +4294,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param smallImageId the small image ID
 	 * @return the matching d d m template
 	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate findBySmallImageId(long smallImageId)
-		throws NoSuchTemplateException, SystemException {
+		throws NoSuchTemplateException {
 		DDMTemplate ddmTemplate = fetchBySmallImageId(smallImageId);
 
 		if (ddmTemplate == null) {
@@ -4440,11 +4325,9 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 *
 	 * @param smallImageId the small image ID
 	 * @return the matching d d m template, or <code>null</code> if a matching d d m template could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public DDMTemplate fetchBySmallImageId(long smallImageId)
-		throws SystemException {
+	public DDMTemplate fetchBySmallImageId(long smallImageId) {
 		return fetchBySmallImageId(smallImageId, true);
 	}
 
@@ -4454,11 +4337,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param smallImageId the small image ID
 	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching d d m template, or <code>null</code> if a matching d d m template could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate fetchBySmallImageId(long smallImageId,
-		boolean retrieveFromCache) throws SystemException {
+		boolean retrieveFromCache) {
 		Object[] finderArgs = new Object[] { smallImageId };
 
 		Object result = null;
@@ -4546,11 +4428,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 *
 	 * @param smallImageId the small image ID
 	 * @return the d d m template that was removed
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate removeBySmallImageId(long smallImageId)
-		throws NoSuchTemplateException, SystemException {
+		throws NoSuchTemplateException {
 		DDMTemplate ddmTemplate = findBySmallImageId(smallImageId);
 
 		return remove(ddmTemplate);
@@ -4561,10 +4442,9 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 *
 	 * @param smallImageId the small image ID
 	 * @return the number of matching d d m templates
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countBySmallImageId(long smallImageId) throws SystemException {
+	public int countBySmallImageId(long smallImageId) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_SMALLIMAGEID;
 
 		Object[] finderArgs = new Object[] { smallImageId };
@@ -4636,11 +4516,9 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @return the matching d d m templates
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<DDMTemplate> findByG_C(long groupId, long classNameId)
-		throws SystemException {
+	public List<DDMTemplate> findByG_C(long groupId, long classNameId) {
 		return findByG_C(groupId, classNameId, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
@@ -4657,11 +4535,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param start the lower bound of the range of d d m templates
 	 * @param end the upper bound of the range of d d m templates (not inclusive)
 	 * @return the range of matching d d m templates
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<DDMTemplate> findByG_C(long groupId, long classNameId,
-		int start, int end) throws SystemException {
+		int start, int end) {
 		return findByG_C(groupId, classNameId, start, end, null);
 	}
 
@@ -4678,12 +4555,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param end the upper bound of the range of d d m templates (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching d d m templates
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<DDMTemplate> findByG_C(long groupId, long classNameId,
-		int start, int end, OrderByComparator orderByComparator)
-		throws SystemException {
+		int start, int end, OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -4796,12 +4671,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching d d m template
 	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate findByG_C_First(long groupId, long classNameId,
-		OrderByComparator orderByComparator)
-		throws NoSuchTemplateException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchTemplateException {
 		DDMTemplate ddmTemplate = fetchByG_C_First(groupId, classNameId,
 				orderByComparator);
 
@@ -4831,11 +4704,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param classNameId the class name ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching d d m template, or <code>null</code> if a matching d d m template could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate fetchByG_C_First(long groupId, long classNameId,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		List<DDMTemplate> list = findByG_C(groupId, classNameId, 0, 1,
 				orderByComparator);
 
@@ -4854,12 +4726,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching d d m template
 	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate findByG_C_Last(long groupId, long classNameId,
-		OrderByComparator orderByComparator)
-		throws NoSuchTemplateException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchTemplateException {
 		DDMTemplate ddmTemplate = fetchByG_C_Last(groupId, classNameId,
 				orderByComparator);
 
@@ -4889,11 +4759,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param classNameId the class name ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching d d m template, or <code>null</code> if a matching d d m template could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate fetchByG_C_Last(long groupId, long classNameId,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		int count = countByG_C(groupId, classNameId);
 
 		if (count == 0) {
@@ -4919,12 +4788,11 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next d d m template
 	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a d d m template with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate[] findByG_C_PrevAndNext(long templateId, long groupId,
 		long classNameId, OrderByComparator orderByComparator)
-		throws NoSuchTemplateException, SystemException {
+		throws NoSuchTemplateException {
 		DDMTemplate ddmTemplate = findByPrimaryKey(templateId);
 
 		Session session = null;
@@ -5067,11 +4935,9 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @return the matching d d m templates that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<DDMTemplate> filterFindByG_C(long groupId, long classNameId)
-		throws SystemException {
+	public List<DDMTemplate> filterFindByG_C(long groupId, long classNameId) {
 		return filterFindByG_C(groupId, classNameId, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
@@ -5088,11 +4954,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param start the lower bound of the range of d d m templates
 	 * @param end the upper bound of the range of d d m templates (not inclusive)
 	 * @return the range of matching d d m templates that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<DDMTemplate> filterFindByG_C(long groupId, long classNameId,
-		int start, int end) throws SystemException {
+		int start, int end) {
 		return filterFindByG_C(groupId, classNameId, start, end, null);
 	}
 
@@ -5109,12 +4974,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param end the upper bound of the range of d d m templates (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching d d m templates that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<DDMTemplate> filterFindByG_C(long groupId, long classNameId,
-		int start, int end, OrderByComparator orderByComparator)
-		throws SystemException {
+		int start, int end, OrderByComparator orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_C(groupId, classNameId, start, end, orderByComparator);
 		}
@@ -5206,12 +5069,11 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next d d m template
 	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a d d m template with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate[] filterFindByG_C_PrevAndNext(long templateId,
 		long groupId, long classNameId, OrderByComparator orderByComparator)
-		throws NoSuchTemplateException, SystemException {
+		throws NoSuchTemplateException {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_C_PrevAndNext(templateId, groupId, classNameId,
 				orderByComparator);
@@ -5393,11 +5255,9 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 *
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByG_C(long groupId, long classNameId)
-		throws SystemException {
+	public void removeByG_C(long groupId, long classNameId) {
 		for (DDMTemplate ddmTemplate : findByG_C(groupId, classNameId,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(ddmTemplate);
@@ -5410,11 +5270,9 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @return the number of matching d d m templates
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByG_C(long groupId, long classNameId)
-		throws SystemException {
+	public int countByG_C(long groupId, long classNameId) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_C;
 
 		Object[] finderArgs = new Object[] { groupId, classNameId };
@@ -5469,11 +5327,9 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @return the number of matching d d m templates that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int filterCountByG_C(long groupId, long classNameId)
-		throws SystemException {
+	public int filterCountByG_C(long groupId, long classNameId) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return countByG_C(groupId, classNameId);
 		}
@@ -5550,11 +5406,9 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param groupId the group ID
 	 * @param classPK the class p k
 	 * @return the matching d d m templates
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<DDMTemplate> findByG_CPK(long groupId, long classPK)
-		throws SystemException {
+	public List<DDMTemplate> findByG_CPK(long groupId, long classPK) {
 		return findByG_CPK(groupId, classPK, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
@@ -5571,11 +5425,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param start the lower bound of the range of d d m templates
 	 * @param end the upper bound of the range of d d m templates (not inclusive)
 	 * @return the range of matching d d m templates
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<DDMTemplate> findByG_CPK(long groupId, long classPK, int start,
-		int end) throws SystemException {
+		int end) {
 		return findByG_CPK(groupId, classPK, start, end, null);
 	}
 
@@ -5592,11 +5445,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param end the upper bound of the range of d d m templates (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching d d m templates
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<DDMTemplate> findByG_CPK(long groupId, long classPK, int start,
-		int end, OrderByComparator orderByComparator) throws SystemException {
+		int end, OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -5709,12 +5561,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching d d m template
 	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate findByG_CPK_First(long groupId, long classPK,
-		OrderByComparator orderByComparator)
-		throws NoSuchTemplateException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchTemplateException {
 		DDMTemplate ddmTemplate = fetchByG_CPK_First(groupId, classPK,
 				orderByComparator);
 
@@ -5744,11 +5594,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param classPK the class p k
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching d d m template, or <code>null</code> if a matching d d m template could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate fetchByG_CPK_First(long groupId, long classPK,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		List<DDMTemplate> list = findByG_CPK(groupId, classPK, 0, 1,
 				orderByComparator);
 
@@ -5767,12 +5616,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching d d m template
 	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate findByG_CPK_Last(long groupId, long classPK,
-		OrderByComparator orderByComparator)
-		throws NoSuchTemplateException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchTemplateException {
 		DDMTemplate ddmTemplate = fetchByG_CPK_Last(groupId, classPK,
 				orderByComparator);
 
@@ -5802,11 +5649,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param classPK the class p k
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching d d m template, or <code>null</code> if a matching d d m template could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate fetchByG_CPK_Last(long groupId, long classPK,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		int count = countByG_CPK(groupId, classPK);
 
 		if (count == 0) {
@@ -5832,12 +5678,11 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next d d m template
 	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a d d m template with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate[] findByG_CPK_PrevAndNext(long templateId, long groupId,
 		long classPK, OrderByComparator orderByComparator)
-		throws NoSuchTemplateException, SystemException {
+		throws NoSuchTemplateException {
 		DDMTemplate ddmTemplate = findByPrimaryKey(templateId);
 
 		Session session = null;
@@ -5980,11 +5825,9 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param groupId the group ID
 	 * @param classPK the class p k
 	 * @return the matching d d m templates that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<DDMTemplate> filterFindByG_CPK(long groupId, long classPK)
-		throws SystemException {
+	public List<DDMTemplate> filterFindByG_CPK(long groupId, long classPK) {
 		return filterFindByG_CPK(groupId, classPK, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
@@ -6001,11 +5844,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param start the lower bound of the range of d d m templates
 	 * @param end the upper bound of the range of d d m templates (not inclusive)
 	 * @return the range of matching d d m templates that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<DDMTemplate> filterFindByG_CPK(long groupId, long classPK,
-		int start, int end) throws SystemException {
+		int start, int end) {
 		return filterFindByG_CPK(groupId, classPK, start, end, null);
 	}
 
@@ -6022,12 +5864,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param end the upper bound of the range of d d m templates (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching d d m templates that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<DDMTemplate> filterFindByG_CPK(long groupId, long classPK,
-		int start, int end, OrderByComparator orderByComparator)
-		throws SystemException {
+		int start, int end, OrderByComparator orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_CPK(groupId, classPK, start, end, orderByComparator);
 		}
@@ -6119,12 +5959,11 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next d d m template
 	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a d d m template with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate[] filterFindByG_CPK_PrevAndNext(long templateId,
 		long groupId, long classPK, OrderByComparator orderByComparator)
-		throws NoSuchTemplateException, SystemException {
+		throws NoSuchTemplateException {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_CPK_PrevAndNext(templateId, groupId, classPK,
 				orderByComparator);
@@ -6307,11 +6146,9 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param groupIds the group IDs
 	 * @param classPK the class p k
 	 * @return the matching d d m templates that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<DDMTemplate> filterFindByG_CPK(long[] groupIds, long classPK)
-		throws SystemException {
+	public List<DDMTemplate> filterFindByG_CPK(long[] groupIds, long classPK) {
 		return filterFindByG_CPK(groupIds, classPK, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
@@ -6328,11 +6165,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param start the lower bound of the range of d d m templates
 	 * @param end the upper bound of the range of d d m templates (not inclusive)
 	 * @return the range of matching d d m templates that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<DDMTemplate> filterFindByG_CPK(long[] groupIds, long classPK,
-		int start, int end) throws SystemException {
+		int start, int end) {
 		return filterFindByG_CPK(groupIds, classPK, start, end, null);
 	}
 
@@ -6349,12 +6185,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param end the upper bound of the range of d d m templates (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching d d m templates that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<DDMTemplate> filterFindByG_CPK(long[] groupIds, long classPK,
-		int start, int end, OrderByComparator orderByComparator)
-		throws SystemException {
+		int start, int end, OrderByComparator orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupIds)) {
 			return findByG_CPK(groupIds, classPK, start, end, orderByComparator);
 		}
@@ -6459,11 +6293,9 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param groupIds the group IDs
 	 * @param classPK the class p k
 	 * @return the matching d d m templates
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<DDMTemplate> findByG_CPK(long[] groupIds, long classPK)
-		throws SystemException {
+	public List<DDMTemplate> findByG_CPK(long[] groupIds, long classPK) {
 		return findByG_CPK(groupIds, classPK, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
@@ -6480,11 +6312,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param start the lower bound of the range of d d m templates
 	 * @param end the upper bound of the range of d d m templates (not inclusive)
 	 * @return the range of matching d d m templates
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<DDMTemplate> findByG_CPK(long[] groupIds, long classPK,
-		int start, int end) throws SystemException {
+		int start, int end) {
 		return findByG_CPK(groupIds, classPK, start, end, null);
 	}
 
@@ -6501,12 +6332,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param end the upper bound of the range of d d m templates (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching d d m templates
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<DDMTemplate> findByG_CPK(long[] groupIds, long classPK,
-		int start, int end, OrderByComparator orderByComparator)
-		throws SystemException {
+		int start, int end, OrderByComparator orderByComparator) {
 		if (groupIds == null) {
 			groupIds = new long[0];
 		}
@@ -6632,11 +6461,9 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 *
 	 * @param groupId the group ID
 	 * @param classPK the class p k
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByG_CPK(long groupId, long classPK)
-		throws SystemException {
+	public void removeByG_CPK(long groupId, long classPK) {
 		for (DDMTemplate ddmTemplate : findByG_CPK(groupId, classPK,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(ddmTemplate);
@@ -6649,11 +6476,9 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param groupId the group ID
 	 * @param classPK the class p k
 	 * @return the number of matching d d m templates
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByG_CPK(long groupId, long classPK)
-		throws SystemException {
+	public int countByG_CPK(long groupId, long classPK) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_CPK;
 
 		Object[] finderArgs = new Object[] { groupId, classPK };
@@ -6708,11 +6533,9 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param groupIds the group IDs
 	 * @param classPK the class p k
 	 * @return the number of matching d d m templates
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByG_CPK(long[] groupIds, long classPK)
-		throws SystemException {
+	public int countByG_CPK(long[] groupIds, long classPK) {
 		if (groupIds == null) {
 			groupIds = new long[0];
 		}
@@ -6787,11 +6610,9 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param groupId the group ID
 	 * @param classPK the class p k
 	 * @return the number of matching d d m templates that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int filterCountByG_CPK(long groupId, long classPK)
-		throws SystemException {
+	public int filterCountByG_CPK(long groupId, long classPK) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return countByG_CPK(groupId, classPK);
 		}
@@ -6842,11 +6663,9 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param groupIds the group IDs
 	 * @param classPK the class p k
 	 * @return the number of matching d d m templates that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int filterCountByG_CPK(long[] groupIds, long classPK)
-		throws SystemException {
+	public int filterCountByG_CPK(long[] groupIds, long classPK) {
 		if (!InlineSQLHelperUtil.isEnabled(groupIds)) {
 			return countByG_CPK(groupIds, classPK);
 		}
@@ -6952,11 +6771,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @return the matching d d m templates
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<DDMTemplate> findByG_C_C(long groupId, long classNameId,
-		long classPK) throws SystemException {
+		long classPK) {
 		return findByG_C_C(groupId, classNameId, classPK, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
@@ -6974,11 +6792,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param start the lower bound of the range of d d m templates
 	 * @param end the upper bound of the range of d d m templates (not inclusive)
 	 * @return the range of matching d d m templates
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<DDMTemplate> findByG_C_C(long groupId, long classNameId,
-		long classPK, int start, int end) throws SystemException {
+		long classPK, int start, int end) {
 		return findByG_C_C(groupId, classNameId, classPK, start, end, null);
 	}
 
@@ -6996,12 +6813,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param end the upper bound of the range of d d m templates (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching d d m templates
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<DDMTemplate> findByG_C_C(long groupId, long classNameId,
-		long classPK, int start, int end, OrderByComparator orderByComparator)
-		throws SystemException {
+		long classPK, int start, int end, OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -7120,12 +6935,11 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching d d m template
 	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate findByG_C_C_First(long groupId, long classNameId,
 		long classPK, OrderByComparator orderByComparator)
-		throws NoSuchTemplateException, SystemException {
+		throws NoSuchTemplateException {
 		DDMTemplate ddmTemplate = fetchByG_C_C_First(groupId, classNameId,
 				classPK, orderByComparator);
 
@@ -7159,12 +6973,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param classPK the class p k
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching d d m template, or <code>null</code> if a matching d d m template could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate fetchByG_C_C_First(long groupId, long classNameId,
-		long classPK, OrderByComparator orderByComparator)
-		throws SystemException {
+		long classPK, OrderByComparator orderByComparator) {
 		List<DDMTemplate> list = findByG_C_C(groupId, classNameId, classPK, 0,
 				1, orderByComparator);
 
@@ -7184,12 +6996,11 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching d d m template
 	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate findByG_C_C_Last(long groupId, long classNameId,
 		long classPK, OrderByComparator orderByComparator)
-		throws NoSuchTemplateException, SystemException {
+		throws NoSuchTemplateException {
 		DDMTemplate ddmTemplate = fetchByG_C_C_Last(groupId, classNameId,
 				classPK, orderByComparator);
 
@@ -7223,12 +7034,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param classPK the class p k
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching d d m template, or <code>null</code> if a matching d d m template could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate fetchByG_C_C_Last(long groupId, long classNameId,
-		long classPK, OrderByComparator orderByComparator)
-		throws SystemException {
+		long classPK, OrderByComparator orderByComparator) {
 		int count = countByG_C_C(groupId, classNameId, classPK);
 
 		if (count == 0) {
@@ -7255,12 +7064,11 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next d d m template
 	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a d d m template with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate[] findByG_C_C_PrevAndNext(long templateId, long groupId,
 		long classNameId, long classPK, OrderByComparator orderByComparator)
-		throws NoSuchTemplateException, SystemException {
+		throws NoSuchTemplateException {
 		DDMTemplate ddmTemplate = findByPrimaryKey(templateId);
 
 		Session session = null;
@@ -7408,11 +7216,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @return the matching d d m templates that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<DDMTemplate> filterFindByG_C_C(long groupId, long classNameId,
-		long classPK) throws SystemException {
+		long classPK) {
 		return filterFindByG_C_C(groupId, classNameId, classPK,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
@@ -7430,11 +7237,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param start the lower bound of the range of d d m templates
 	 * @param end the upper bound of the range of d d m templates (not inclusive)
 	 * @return the range of matching d d m templates that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<DDMTemplate> filterFindByG_C_C(long groupId, long classNameId,
-		long classPK, int start, int end) throws SystemException {
+		long classPK, int start, int end) {
 		return filterFindByG_C_C(groupId, classNameId, classPK, start, end, null);
 	}
 
@@ -7452,12 +7258,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param end the upper bound of the range of d d m templates (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching d d m templates that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<DDMTemplate> filterFindByG_C_C(long groupId, long classNameId,
-		long classPK, int start, int end, OrderByComparator orderByComparator)
-		throws SystemException {
+		long classPK, int start, int end, OrderByComparator orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_C_C(groupId, classNameId, classPK, start, end,
 				orderByComparator);
@@ -7555,13 +7359,11 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next d d m template
 	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a d d m template with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate[] filterFindByG_C_C_PrevAndNext(long templateId,
 		long groupId, long classNameId, long classPK,
-		OrderByComparator orderByComparator)
-		throws NoSuchTemplateException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchTemplateException {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_C_C_PrevAndNext(templateId, groupId, classNameId,
 				classPK, orderByComparator);
@@ -7749,11 +7551,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @return the matching d d m templates that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<DDMTemplate> filterFindByG_C_C(long[] groupIds,
-		long classNameId, long classPK) throws SystemException {
+		long classNameId, long classPK) {
 		return filterFindByG_C_C(groupIds, classNameId, classPK,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
@@ -7771,12 +7572,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param start the lower bound of the range of d d m templates
 	 * @param end the upper bound of the range of d d m templates (not inclusive)
 	 * @return the range of matching d d m templates that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<DDMTemplate> filterFindByG_C_C(long[] groupIds,
-		long classNameId, long classPK, int start, int end)
-		throws SystemException {
+		long classNameId, long classPK, int start, int end) {
 		return filterFindByG_C_C(groupIds, classNameId, classPK, start, end,
 			null);
 	}
@@ -7795,12 +7594,11 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param end the upper bound of the range of d d m templates (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching d d m templates that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<DDMTemplate> filterFindByG_C_C(long[] groupIds,
 		long classNameId, long classPK, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupIds)) {
 			return findByG_C_C(groupIds, classNameId, classPK, start, end,
 				orderByComparator);
@@ -7911,11 +7709,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @return the matching d d m templates
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<DDMTemplate> findByG_C_C(long[] groupIds, long classNameId,
-		long classPK) throws SystemException {
+		long classPK) {
 		return findByG_C_C(groupIds, classNameId, classPK, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
@@ -7933,11 +7730,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param start the lower bound of the range of d d m templates
 	 * @param end the upper bound of the range of d d m templates (not inclusive)
 	 * @return the range of matching d d m templates
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<DDMTemplate> findByG_C_C(long[] groupIds, long classNameId,
-		long classPK, int start, int end) throws SystemException {
+		long classPK, int start, int end) {
 		return findByG_C_C(groupIds, classNameId, classPK, start, end, null);
 	}
 
@@ -7955,12 +7751,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param end the upper bound of the range of d d m templates (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching d d m templates
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<DDMTemplate> findByG_C_C(long[] groupIds, long classNameId,
-		long classPK, int start, int end, OrderByComparator orderByComparator)
-		throws SystemException {
+		long classPK, int start, int end, OrderByComparator orderByComparator) {
 		if (groupIds == null) {
 			groupIds = new long[0];
 		}
@@ -8094,11 +7888,9 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param groupId the group ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByG_C_C(long groupId, long classNameId, long classPK)
-		throws SystemException {
+	public void removeByG_C_C(long groupId, long classNameId, long classPK) {
 		for (DDMTemplate ddmTemplate : findByG_C_C(groupId, classNameId,
 				classPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(ddmTemplate);
@@ -8112,11 +7904,9 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @return the number of matching d d m templates
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByG_C_C(long groupId, long classNameId, long classPK)
-		throws SystemException {
+	public int countByG_C_C(long groupId, long classNameId, long classPK) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_C_C;
 
 		Object[] finderArgs = new Object[] { groupId, classNameId, classPK };
@@ -8176,11 +7966,9 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @return the number of matching d d m templates
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByG_C_C(long[] groupIds, long classNameId, long classPK)
-		throws SystemException {
+	public int countByG_C_C(long[] groupIds, long classNameId, long classPK) {
 		if (groupIds == null) {
 			groupIds = new long[0];
 		}
@@ -8262,11 +8050,9 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @return the number of matching d d m templates that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int filterCountByG_C_C(long groupId, long classNameId, long classPK)
-		throws SystemException {
+	public int filterCountByG_C_C(long groupId, long classNameId, long classPK) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return countByG_C_C(groupId, classNameId, classPK);
 		}
@@ -8322,11 +8108,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @return the number of matching d d m templates that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public int filterCountByG_C_C(long[] groupIds, long classNameId,
-		long classPK) throws SystemException {
+		long classPK) {
 		if (!InlineSQLHelperUtil.isEnabled(groupIds)) {
 			return countByG_C_C(groupIds, classNameId, classPK);
 		}
@@ -8425,11 +8210,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param templateKey the template key
 	 * @return the matching d d m template
 	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate findByG_C_T(long groupId, long classNameId,
-		String templateKey) throws NoSuchTemplateException, SystemException {
+		String templateKey) throws NoSuchTemplateException {
 		DDMTemplate ddmTemplate = fetchByG_C_T(groupId, classNameId, templateKey);
 
 		if (ddmTemplate == null) {
@@ -8465,11 +8249,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param classNameId the class name ID
 	 * @param templateKey the template key
 	 * @return the matching d d m template, or <code>null</code> if a matching d d m template could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate fetchByG_C_T(long groupId, long classNameId,
-		String templateKey) throws SystemException {
+		String templateKey) {
 		return fetchByG_C_T(groupId, classNameId, templateKey, true);
 	}
 
@@ -8481,12 +8264,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param templateKey the template key
 	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching d d m template, or <code>null</code> if a matching d d m template could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate fetchByG_C_T(long groupId, long classNameId,
-		String templateKey, boolean retrieveFromCache)
-		throws SystemException {
+		String templateKey, boolean retrieveFromCache) {
 		Object[] finderArgs = new Object[] { groupId, classNameId, templateKey };
 
 		Object result = null;
@@ -8596,11 +8377,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param classNameId the class name ID
 	 * @param templateKey the template key
 	 * @return the d d m template that was removed
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate removeByG_C_T(long groupId, long classNameId,
-		String templateKey) throws NoSuchTemplateException, SystemException {
+		String templateKey) throws NoSuchTemplateException {
 		DDMTemplate ddmTemplate = findByG_C_T(groupId, classNameId, templateKey);
 
 		return remove(ddmTemplate);
@@ -8613,11 +8393,9 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param classNameId the class name ID
 	 * @param templateKey the template key
 	 * @return the number of matching d d m templates
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByG_C_T(long groupId, long classNameId, String templateKey)
-		throws SystemException {
+	public int countByG_C_T(long groupId, long classNameId, String templateKey) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_C_T;
 
 		Object[] finderArgs = new Object[] { groupId, classNameId, templateKey };
@@ -8724,11 +8502,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param classPK the class p k
 	 * @param type the type
 	 * @return the matching d d m templates
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<DDMTemplate> findByC_C_T(long classNameId, long classPK,
-		String type) throws SystemException {
+		String type) {
 		return findByC_C_T(classNameId, classPK, type, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
@@ -8746,11 +8523,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param start the lower bound of the range of d d m templates
 	 * @param end the upper bound of the range of d d m templates (not inclusive)
 	 * @return the range of matching d d m templates
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<DDMTemplate> findByC_C_T(long classNameId, long classPK,
-		String type, int start, int end) throws SystemException {
+		String type, int start, int end) {
 		return findByC_C_T(classNameId, classPK, type, start, end, null);
 	}
 
@@ -8768,12 +8544,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param end the upper bound of the range of d d m templates (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching d d m templates
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<DDMTemplate> findByC_C_T(long classNameId, long classPK,
-		String type, int start, int end, OrderByComparator orderByComparator)
-		throws SystemException {
+		String type, int start, int end, OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -8906,12 +8680,11 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching d d m template
 	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate findByC_C_T_First(long classNameId, long classPK,
 		String type, OrderByComparator orderByComparator)
-		throws NoSuchTemplateException, SystemException {
+		throws NoSuchTemplateException {
 		DDMTemplate ddmTemplate = fetchByC_C_T_First(classNameId, classPK,
 				type, orderByComparator);
 
@@ -8945,12 +8718,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching d d m template, or <code>null</code> if a matching d d m template could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate fetchByC_C_T_First(long classNameId, long classPK,
-		String type, OrderByComparator orderByComparator)
-		throws SystemException {
+		String type, OrderByComparator orderByComparator) {
 		List<DDMTemplate> list = findByC_C_T(classNameId, classPK, type, 0, 1,
 				orderByComparator);
 
@@ -8970,12 +8741,11 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching d d m template
 	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate findByC_C_T_Last(long classNameId, long classPK,
 		String type, OrderByComparator orderByComparator)
-		throws NoSuchTemplateException, SystemException {
+		throws NoSuchTemplateException {
 		DDMTemplate ddmTemplate = fetchByC_C_T_Last(classNameId, classPK, type,
 				orderByComparator);
 
@@ -9009,12 +8779,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching d d m template, or <code>null</code> if a matching d d m template could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate fetchByC_C_T_Last(long classNameId, long classPK,
-		String type, OrderByComparator orderByComparator)
-		throws SystemException {
+		String type, OrderByComparator orderByComparator) {
 		int count = countByC_C_T(classNameId, classPK, type);
 
 		if (count == 0) {
@@ -9041,13 +8809,11 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next d d m template
 	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a d d m template with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate[] findByC_C_T_PrevAndNext(long templateId,
 		long classNameId, long classPK, String type,
-		OrderByComparator orderByComparator)
-		throws NoSuchTemplateException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchTemplateException {
 		DDMTemplate ddmTemplate = findByPrimaryKey(templateId);
 
 		Session session = null;
@@ -9208,11 +8974,9 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param type the type
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByC_C_T(long classNameId, long classPK, String type)
-		throws SystemException {
+	public void removeByC_C_T(long classNameId, long classPK, String type) {
 		for (DDMTemplate ddmTemplate : findByC_C_T(classNameId, classPK, type,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(ddmTemplate);
@@ -9226,11 +8990,9 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param classPK the class p k
 	 * @param type the type
 	 * @return the number of matching d d m templates
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByC_C_T(long classNameId, long classPK, String type)
-		throws SystemException {
+	public int countByC_C_T(long classNameId, long classPK, String type) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_C_T;
 
 		Object[] finderArgs = new Object[] { classNameId, classPK, type };
@@ -9340,11 +9102,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param classPK the class p k
 	 * @param type the type
 	 * @return the matching d d m templates
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<DDMTemplate> findByG_C_C_T(long groupId, long classNameId,
-		long classPK, String type) throws SystemException {
+		long classPK, String type) {
 		return findByG_C_C_T(groupId, classNameId, classPK, type,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
@@ -9363,12 +9124,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param start the lower bound of the range of d d m templates
 	 * @param end the upper bound of the range of d d m templates (not inclusive)
 	 * @return the range of matching d d m templates
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<DDMTemplate> findByG_C_C_T(long groupId, long classNameId,
-		long classPK, String type, int start, int end)
-		throws SystemException {
+		long classPK, String type, int start, int end) {
 		return findByG_C_C_T(groupId, classNameId, classPK, type, start, end,
 			null);
 	}
@@ -9388,12 +9147,11 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param end the upper bound of the range of d d m templates (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching d d m templates
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<DDMTemplate> findByG_C_C_T(long groupId, long classNameId,
 		long classPK, String type, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -9532,12 +9290,11 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching d d m template
 	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate findByG_C_C_T_First(long groupId, long classNameId,
 		long classPK, String type, OrderByComparator orderByComparator)
-		throws NoSuchTemplateException, SystemException {
+		throws NoSuchTemplateException {
 		DDMTemplate ddmTemplate = fetchByG_C_C_T_First(groupId, classNameId,
 				classPK, type, orderByComparator);
 
@@ -9575,12 +9332,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching d d m template, or <code>null</code> if a matching d d m template could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate fetchByG_C_C_T_First(long groupId, long classNameId,
-		long classPK, String type, OrderByComparator orderByComparator)
-		throws SystemException {
+		long classPK, String type, OrderByComparator orderByComparator) {
 		List<DDMTemplate> list = findByG_C_C_T(groupId, classNameId, classPK,
 				type, 0, 1, orderByComparator);
 
@@ -9601,12 +9356,11 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching d d m template
 	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate findByG_C_C_T_Last(long groupId, long classNameId,
 		long classPK, String type, OrderByComparator orderByComparator)
-		throws NoSuchTemplateException, SystemException {
+		throws NoSuchTemplateException {
 		DDMTemplate ddmTemplate = fetchByG_C_C_T_Last(groupId, classNameId,
 				classPK, type, orderByComparator);
 
@@ -9644,12 +9398,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching d d m template, or <code>null</code> if a matching d d m template could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate fetchByG_C_C_T_Last(long groupId, long classNameId,
-		long classPK, String type, OrderByComparator orderByComparator)
-		throws SystemException {
+		long classPK, String type, OrderByComparator orderByComparator) {
 		int count = countByG_C_C_T(groupId, classNameId, classPK, type);
 
 		if (count == 0) {
@@ -9677,13 +9429,11 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next d d m template
 	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a d d m template with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate[] findByG_C_C_T_PrevAndNext(long templateId,
 		long groupId, long classNameId, long classPK, String type,
-		OrderByComparator orderByComparator)
-		throws NoSuchTemplateException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchTemplateException {
 		DDMTemplate ddmTemplate = findByPrimaryKey(templateId);
 
 		Session session = null;
@@ -9850,11 +9600,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param classPK the class p k
 	 * @param type the type
 	 * @return the matching d d m templates that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<DDMTemplate> filterFindByG_C_C_T(long groupId,
-		long classNameId, long classPK, String type) throws SystemException {
+		long classNameId, long classPK, String type) {
 		return filterFindByG_C_C_T(groupId, classNameId, classPK, type,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
@@ -9873,12 +9622,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param start the lower bound of the range of d d m templates
 	 * @param end the upper bound of the range of d d m templates (not inclusive)
 	 * @return the range of matching d d m templates that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<DDMTemplate> filterFindByG_C_C_T(long groupId,
-		long classNameId, long classPK, String type, int start, int end)
-		throws SystemException {
+		long classNameId, long classPK, String type, int start, int end) {
 		return filterFindByG_C_C_T(groupId, classNameId, classPK, type, start,
 			end, null);
 	}
@@ -9898,12 +9645,11 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param end the upper bound of the range of d d m templates (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching d d m templates that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<DDMTemplate> filterFindByG_C_C_T(long groupId,
 		long classNameId, long classPK, String type, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_C_C_T(groupId, classNameId, classPK, type, start,
 				end, orderByComparator);
@@ -10020,13 +9766,11 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next d d m template
 	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a d d m template with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate[] filterFindByG_C_C_T_PrevAndNext(long templateId,
 		long groupId, long classNameId, long classPK, String type,
-		OrderByComparator orderByComparator)
-		throws NoSuchTemplateException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchTemplateException {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_C_C_T_PrevAndNext(templateId, groupId, classNameId,
 				classPK, type, orderByComparator);
@@ -10233,11 +9977,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param classNameId the class name ID
 	 * @param classPK the class p k
 	 * @param type the type
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public void removeByG_C_C_T(long groupId, long classNameId, long classPK,
-		String type) throws SystemException {
+		String type) {
 		for (DDMTemplate ddmTemplate : findByG_C_C_T(groupId, classNameId,
 				classPK, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(ddmTemplate);
@@ -10252,11 +9995,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param classPK the class p k
 	 * @param type the type
 	 * @return the number of matching d d m templates
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public int countByG_C_C_T(long groupId, long classNameId, long classPK,
-		String type) throws SystemException {
+		String type) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_C_C_T;
 
 		Object[] finderArgs = new Object[] { groupId, classNameId, classPK, type };
@@ -10335,11 +10077,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param classPK the class p k
 	 * @param type the type
 	 * @return the number of matching d d m templates that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public int filterCountByG_C_C_T(long groupId, long classNameId,
-		long classPK, String type) throws SystemException {
+		long classPK, String type) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return countByG_C_C_T(groupId, classNameId, classPK, type);
 		}
@@ -10456,11 +10197,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param type the type
 	 * @param mode the mode
 	 * @return the matching d d m templates
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<DDMTemplate> findByG_C_C_T_M(long groupId, long classNameId,
-		long classPK, String type, String mode) throws SystemException {
+		long classPK, String type, String mode) {
 		return findByG_C_C_T_M(groupId, classNameId, classPK, type, mode,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
@@ -10480,12 +10220,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param start the lower bound of the range of d d m templates
 	 * @param end the upper bound of the range of d d m templates (not inclusive)
 	 * @return the range of matching d d m templates
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<DDMTemplate> findByG_C_C_T_M(long groupId, long classNameId,
-		long classPK, String type, String mode, int start, int end)
-		throws SystemException {
+		long classPK, String type, String mode, int start, int end) {
 		return findByG_C_C_T_M(groupId, classNameId, classPK, type, mode,
 			start, end, null);
 	}
@@ -10506,12 +10244,11 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param end the upper bound of the range of d d m templates (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching d d m templates
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<DDMTemplate> findByG_C_C_T_M(long groupId, long classNameId,
 		long classPK, String type, String mode, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -10670,13 +10407,11 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching d d m template
 	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate findByG_C_C_T_M_First(long groupId, long classNameId,
 		long classPK, String type, String mode,
-		OrderByComparator orderByComparator)
-		throws NoSuchTemplateException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchTemplateException {
 		DDMTemplate ddmTemplate = fetchByG_C_C_T_M_First(groupId, classNameId,
 				classPK, type, mode, orderByComparator);
 
@@ -10718,12 +10453,11 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param mode the mode
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching d d m template, or <code>null</code> if a matching d d m template could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate fetchByG_C_C_T_M_First(long groupId, long classNameId,
 		long classPK, String type, String mode,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		List<DDMTemplate> list = findByG_C_C_T_M(groupId, classNameId, classPK,
 				type, mode, 0, 1, orderByComparator);
 
@@ -10745,13 +10479,11 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching d d m template
 	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate findByG_C_C_T_M_Last(long groupId, long classNameId,
 		long classPK, String type, String mode,
-		OrderByComparator orderByComparator)
-		throws NoSuchTemplateException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchTemplateException {
 		DDMTemplate ddmTemplate = fetchByG_C_C_T_M_Last(groupId, classNameId,
 				classPK, type, mode, orderByComparator);
 
@@ -10793,12 +10525,11 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param mode the mode
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching d d m template, or <code>null</code> if a matching d d m template could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate fetchByG_C_C_T_M_Last(long groupId, long classNameId,
 		long classPK, String type, String mode,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		int count = countByG_C_C_T_M(groupId, classNameId, classPK, type, mode);
 
 		if (count == 0) {
@@ -10827,13 +10558,11 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next d d m template
 	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a d d m template with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate[] findByG_C_C_T_M_PrevAndNext(long templateId,
 		long groupId, long classNameId, long classPK, String type, String mode,
-		OrderByComparator orderByComparator)
-		throws NoSuchTemplateException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchTemplateException {
 		DDMTemplate ddmTemplate = findByPrimaryKey(templateId);
 
 		Session session = null;
@@ -11022,12 +10751,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param type the type
 	 * @param mode the mode
 	 * @return the matching d d m templates that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<DDMTemplate> filterFindByG_C_C_T_M(long groupId,
-		long classNameId, long classPK, String type, String mode)
-		throws SystemException {
+		long classNameId, long classPK, String type, String mode) {
 		return filterFindByG_C_C_T_M(groupId, classNameId, classPK, type, mode,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
@@ -11047,12 +10774,11 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param start the lower bound of the range of d d m templates
 	 * @param end the upper bound of the range of d d m templates (not inclusive)
 	 * @return the range of matching d d m templates that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<DDMTemplate> filterFindByG_C_C_T_M(long groupId,
 		long classNameId, long classPK, String type, String mode, int start,
-		int end) throws SystemException {
+		int end) {
 		return filterFindByG_C_C_T_M(groupId, classNameId, classPK, type, mode,
 			start, end, null);
 	}
@@ -11073,12 +10799,11 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param end the upper bound of the range of d d m templates (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching d d m templates that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<DDMTemplate> filterFindByG_C_C_T_M(long groupId,
 		long classNameId, long classPK, String type, String mode, int start,
-		int end, OrderByComparator orderByComparator) throws SystemException {
+		int end, OrderByComparator orderByComparator) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_C_C_T_M(groupId, classNameId, classPK, type, mode,
 				start, end, orderByComparator);
@@ -11214,13 +10939,11 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next d d m template
 	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a d d m template with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate[] filterFindByG_C_C_T_M_PrevAndNext(long templateId,
 		long groupId, long classNameId, long classPK, String type, String mode,
-		OrderByComparator orderByComparator)
-		throws NoSuchTemplateException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchTemplateException {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return findByG_C_C_T_M_PrevAndNext(templateId, groupId,
 				classNameId, classPK, type, mode, orderByComparator);
@@ -11448,11 +11171,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param classPK the class p k
 	 * @param type the type
 	 * @param mode the mode
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public void removeByG_C_C_T_M(long groupId, long classNameId, long classPK,
-		String type, String mode) throws SystemException {
+		String type, String mode) {
 		for (DDMTemplate ddmTemplate : findByG_C_C_T_M(groupId, classNameId,
 				classPK, type, mode, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(ddmTemplate);
@@ -11468,11 +11190,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param type the type
 	 * @param mode the mode
 	 * @return the number of matching d d m templates
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public int countByG_C_C_T_M(long groupId, long classNameId, long classPK,
-		String type, String mode) throws SystemException {
+		String type, String mode) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_C_C_T_M;
 
 		Object[] finderArgs = new Object[] {
@@ -11572,11 +11293,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param type the type
 	 * @param mode the mode
 	 * @return the number of matching d d m templates that the user has permission to view
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public int filterCountByG_C_C_T_M(long groupId, long classNameId,
-		long classPK, String type, String mode) throws SystemException {
+		long classPK, String type, String mode) {
 		if (!InlineSQLHelperUtil.isEnabled(groupId)) {
 			return countByG_C_C_T_M(groupId, classNameId, classPK, type, mode);
 		}
@@ -11926,11 +11646,9 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param templateId the primary key of the d d m template
 	 * @return the d d m template that was removed
 	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a d d m template with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public DDMTemplate remove(long templateId)
-		throws NoSuchTemplateException, SystemException {
+	public DDMTemplate remove(long templateId) throws NoSuchTemplateException {
 		return remove((Serializable)templateId);
 	}
 
@@ -11940,11 +11658,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param primaryKey the primary key of the d d m template
 	 * @return the d d m template that was removed
 	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a d d m template with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate remove(Serializable primaryKey)
-		throws NoSuchTemplateException, SystemException {
+		throws NoSuchTemplateException {
 		Session session = null;
 
 		try {
@@ -11976,8 +11693,7 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	}
 
 	@Override
-	protected DDMTemplate removeImpl(DDMTemplate ddmTemplate)
-		throws SystemException {
+	protected DDMTemplate removeImpl(DDMTemplate ddmTemplate) {
 		ddmTemplate = toUnwrappedModel(ddmTemplate);
 
 		Session session = null;
@@ -12010,8 +11726,7 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 
 	@Override
 	public DDMTemplate updateImpl(
-		com.liferay.portlet.dynamicdatamapping.model.DDMTemplate ddmTemplate)
-		throws SystemException {
+		com.liferay.portlet.dynamicdatamapping.model.DDMTemplate ddmTemplate) {
 		ddmTemplate = toUnwrappedModel(ddmTemplate);
 
 		boolean isNew = ddmTemplate.isNew();
@@ -12373,11 +12088,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param primaryKey the primary key of the d d m template
 	 * @return the d d m template
 	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a d d m template with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchTemplateException, SystemException {
+		throws NoSuchTemplateException {
 		DDMTemplate ddmTemplate = fetchByPrimaryKey(primaryKey);
 
 		if (ddmTemplate == null) {
@@ -12398,11 +12112,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param templateId the primary key of the d d m template
 	 * @return the d d m template
 	 * @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a d d m template with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMTemplate findByPrimaryKey(long templateId)
-		throws NoSuchTemplateException, SystemException {
+		throws NoSuchTemplateException {
 		return findByPrimaryKey((Serializable)templateId);
 	}
 
@@ -12411,11 +12124,9 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 *
 	 * @param primaryKey the primary key of the d d m template
 	 * @return the d d m template, or <code>null</code> if a d d m template with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public DDMTemplate fetchByPrimaryKey(Serializable primaryKey)
-		throws SystemException {
+	public DDMTemplate fetchByPrimaryKey(Serializable primaryKey) {
 		DDMTemplate ddmTemplate = (DDMTemplate)EntityCacheUtil.getResult(DDMTemplateModelImpl.ENTITY_CACHE_ENABLED,
 				DDMTemplateImpl.class, primaryKey);
 
@@ -12459,11 +12170,9 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 *
 	 * @param templateId the primary key of the d d m template
 	 * @return the d d m template, or <code>null</code> if a d d m template with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public DDMTemplate fetchByPrimaryKey(long templateId)
-		throws SystemException {
+	public DDMTemplate fetchByPrimaryKey(long templateId) {
 		return fetchByPrimaryKey((Serializable)templateId);
 	}
 
@@ -12471,10 +12180,9 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * Returns all the d d m templates.
 	 *
 	 * @return the d d m templates
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<DDMTemplate> findAll() throws SystemException {
+	public List<DDMTemplate> findAll() {
 		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -12488,11 +12196,9 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param start the lower bound of the range of d d m templates
 	 * @param end the upper bound of the range of d d m templates (not inclusive)
 	 * @return the range of d d m templates
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<DDMTemplate> findAll(int start, int end)
-		throws SystemException {
+	public List<DDMTemplate> findAll(int start, int end) {
 		return findAll(start, end, null);
 	}
 
@@ -12507,11 +12213,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * @param end the upper bound of the range of d d m templates (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of d d m templates
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<DDMTemplate> findAll(int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -12593,10 +12298,9 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	/**
 	 * Removes all the d d m templates from the database.
 	 *
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeAll() throws SystemException {
+	public void removeAll() {
 		for (DDMTemplate ddmTemplate : findAll()) {
 			remove(ddmTemplate);
 		}
@@ -12606,10 +12310,9 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	 * Returns the number of d d m templates.
 	 *
 	 * @return the number of d d m templates
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countAll() throws SystemException {
+	public int countAll() {
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
 				FINDER_ARGS_EMPTY, this);
 

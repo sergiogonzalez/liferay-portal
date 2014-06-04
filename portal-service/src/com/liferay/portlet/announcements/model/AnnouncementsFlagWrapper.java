@@ -159,11 +159,9 @@ public class AnnouncementsFlagWrapper implements AnnouncementsFlag,
 	* Returns the user uuid of this announcements flag.
 	*
 	* @return the user uuid of this announcements flag
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public java.lang.String getUserUuid()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public java.lang.String getUserUuid() {
 		return _announcementsFlag.getUserUuid();
 	}
 
@@ -337,8 +335,7 @@ public class AnnouncementsFlagWrapper implements AnnouncementsFlag,
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void persist() {
 		_announcementsFlag.persist();
 	}
 

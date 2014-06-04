@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.wiki.model.impl;
 
-import com.liferay.portal.kernel.exception.SystemException;
-
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
 
@@ -39,7 +37,7 @@ public abstract class WikiPageBaseImpl extends WikiPageModelImpl
 	 * Never modify or reference this class directly. All methods that expect a wiki page model instance should use the {@link WikiPage} interface instead.
 	 */
 	@Override
-	public void persist() throws SystemException {
+	public void persist() {
 		if (this.isNew()) {
 			WikiPageLocalServiceUtil.addWikiPage(this);
 		}

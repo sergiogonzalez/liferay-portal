@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.asset.model.impl;
 
-import com.liferay.portal.kernel.exception.SystemException;
-
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 
@@ -39,7 +37,7 @@ public abstract class AssetEntryBaseImpl extends AssetEntryModelImpl
 	 * Never modify or reference this class directly. All methods that expect a asset entry model instance should use the {@link AssetEntry} interface instead.
 	 */
 	@Override
-	public void persist() throws SystemException {
+	public void persist() {
 		if (this.isNew()) {
 			AssetEntryLocalServiceUtil.addAssetEntry(this);
 		}

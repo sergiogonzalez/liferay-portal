@@ -14,7 +14,6 @@
 
 package com.liferay.portal.model.impl;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.VirtualHost;
 import com.liferay.portal.service.VirtualHostLocalServiceUtil;
 
@@ -38,7 +37,7 @@ public abstract class VirtualHostBaseImpl extends VirtualHostModelImpl
 	 * Never modify or reference this class directly. All methods that expect a virtual host model instance should use the {@link VirtualHost} interface instead.
 	 */
 	@Override
-	public void persist() throws SystemException {
+	public void persist() {
 		if (this.isNew()) {
 			VirtualHostLocalServiceUtil.addVirtualHost(this);
 		}

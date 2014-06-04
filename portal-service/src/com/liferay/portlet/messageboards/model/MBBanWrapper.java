@@ -247,11 +247,9 @@ public class MBBanWrapper implements MBBan, ModelWrapper<MBBan> {
 	* Returns the user uuid of this message boards ban.
 	*
 	* @return the user uuid of this message boards ban
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public java.lang.String getUserUuid()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public java.lang.String getUserUuid() {
 		return _mbBan.getUserUuid();
 	}
 
@@ -349,11 +347,9 @@ public class MBBanWrapper implements MBBan, ModelWrapper<MBBan> {
 	* Returns the ban user uuid of this message boards ban.
 	*
 	* @return the ban user uuid of this message boards ban
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public java.lang.String getBanUserUuid()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public java.lang.String getBanUserUuid() {
 		return _mbBan.getBanUserUuid();
 	}
 
@@ -466,8 +462,7 @@ public class MBBanWrapper implements MBBan, ModelWrapper<MBBan> {
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void persist() {
 		_mbBan.persist();
 	}
 

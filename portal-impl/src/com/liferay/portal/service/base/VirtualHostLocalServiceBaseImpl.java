@@ -72,12 +72,10 @@ public abstract class VirtualHostLocalServiceBaseImpl
 	 *
 	 * @param virtualHost the virtual host
 	 * @return the virtual host that was added
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public VirtualHost addVirtualHost(VirtualHost virtualHost)
-		throws SystemException {
+	public VirtualHost addVirtualHost(VirtualHost virtualHost) {
 		virtualHost.setNew(true);
 
 		return virtualHostPersistence.update(virtualHost);
@@ -100,12 +98,11 @@ public abstract class VirtualHostLocalServiceBaseImpl
 	 * @param virtualHostId the primary key of the virtual host
 	 * @return the virtual host that was removed
 	 * @throws PortalException if a virtual host with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public VirtualHost deleteVirtualHost(long virtualHostId)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return virtualHostPersistence.remove(virtualHostId);
 	}
 
@@ -114,12 +111,10 @@ public abstract class VirtualHostLocalServiceBaseImpl
 	 *
 	 * @param virtualHost the virtual host
 	 * @return the virtual host that was removed
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public VirtualHost deleteVirtualHost(VirtualHost virtualHost)
-		throws SystemException {
+	public VirtualHost deleteVirtualHost(VirtualHost virtualHost) {
 		return virtualHostPersistence.remove(virtualHost);
 	}
 
@@ -136,12 +131,10 @@ public abstract class VirtualHostLocalServiceBaseImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery) {
 		return virtualHostPersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -156,12 +149,10 @@ public abstract class VirtualHostLocalServiceBaseImpl
 	 * @param start the lower bound of the range of model instances
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
 		return virtualHostPersistence.findWithDynamicQuery(dynamicQuery, start,
 			end);
 	}
@@ -178,12 +169,11 @@ public abstract class VirtualHostLocalServiceBaseImpl
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
 	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		return virtualHostPersistence.findWithDynamicQuery(dynamicQuery, start,
 			end, orderByComparator);
 	}
@@ -193,11 +183,9 @@ public abstract class VirtualHostLocalServiceBaseImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public long dynamicQueryCount(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return virtualHostPersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
@@ -207,18 +195,16 @@ public abstract class VirtualHostLocalServiceBaseImpl
 	 * @param dynamicQuery the dynamic query
 	 * @param projection the projection to apply to the query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection) throws SystemException {
+		Projection projection) {
 		return virtualHostPersistence.countWithDynamicQuery(dynamicQuery,
 			projection);
 	}
 
 	@Override
-	public VirtualHost fetchVirtualHost(long virtualHostId)
-		throws SystemException {
+	public VirtualHost fetchVirtualHost(long virtualHostId) {
 		return virtualHostPersistence.fetchByPrimaryKey(virtualHostId);
 	}
 
@@ -228,17 +214,15 @@ public abstract class VirtualHostLocalServiceBaseImpl
 	 * @param virtualHostId the primary key of the virtual host
 	 * @return the virtual host
 	 * @throws PortalException if a virtual host with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public VirtualHost getVirtualHost(long virtualHostId)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return virtualHostPersistence.findByPrimaryKey(virtualHostId);
 	}
 
 	@Override
-	public ActionableDynamicQuery getActionableDynamicQuery()
-		throws SystemException {
+	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.VirtualHostLocalServiceUtil.getService());
@@ -251,8 +235,7 @@ public abstract class VirtualHostLocalServiceBaseImpl
 	}
 
 	protected void initActionableDynamicQuery(
-		ActionableDynamicQuery actionableDynamicQuery)
-		throws SystemException {
+		ActionableDynamicQuery actionableDynamicQuery) {
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.VirtualHostLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(VirtualHost.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
@@ -262,7 +245,7 @@ public abstract class VirtualHostLocalServiceBaseImpl
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return virtualHostPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -276,11 +259,9 @@ public abstract class VirtualHostLocalServiceBaseImpl
 	 * @param start the lower bound of the range of virtual hosts
 	 * @param end the upper bound of the range of virtual hosts (not inclusive)
 	 * @return the range of virtual hosts
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<VirtualHost> getVirtualHosts(int start, int end)
-		throws SystemException {
+	public List<VirtualHost> getVirtualHosts(int start, int end) {
 		return virtualHostPersistence.findAll(start, end);
 	}
 
@@ -288,10 +269,9 @@ public abstract class VirtualHostLocalServiceBaseImpl
 	 * Returns the number of virtual hosts.
 	 *
 	 * @return the number of virtual hosts
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int getVirtualHostsCount() throws SystemException {
+	public int getVirtualHostsCount() {
 		return virtualHostPersistence.countAll();
 	}
 
@@ -300,12 +280,10 @@ public abstract class VirtualHostLocalServiceBaseImpl
 	 *
 	 * @param virtualHost the virtual host
 	 * @return the virtual host that was updated
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public VirtualHost updateVirtualHost(VirtualHost virtualHost)
-		throws SystemException {
+	public VirtualHost updateVirtualHost(VirtualHost virtualHost) {
 		return virtualHostPersistence.update(virtualHost);
 	}
 
@@ -522,7 +500,7 @@ public abstract class VirtualHostLocalServiceBaseImpl
 	 *
 	 * @param sql the sql query
 	 */
-	protected void runSQL(String sql) throws SystemException {
+	protected void runSQL(String sql) {
 		try {
 			DataSource dataSource = virtualHostPersistence.getDataSource();
 

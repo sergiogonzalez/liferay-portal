@@ -50,11 +50,9 @@ public interface CompanyLocalService extends BaseLocalService,
 	*
 	* @param company the company
 	* @return the company that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.Company addCompany(
-		com.liferay.portal.model.Company company)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.model.Company company);
 
 	/**
 	* Creates a new company with the primary key. Does not add the company to the database.
@@ -70,7 +68,7 @@ public interface CompanyLocalService extends BaseLocalService,
 	* @param companyId the primary key of the company
 	* @return the company that was removed
 	* @throws PortalException if a company with the primary key could not be found
-	* @throws SystemException if a system exception occurred
+	* @throws SystemException
 	*/
 	public com.liferay.portal.model.Company deleteCompany(long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -81,11 +79,9 @@ public interface CompanyLocalService extends BaseLocalService,
 	*
 	* @param company the company
 	* @return the company that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.Company deleteCompany(
-		com.liferay.portal.model.Company company)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.model.Company company);
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -94,12 +90,10 @@ public interface CompanyLocalService extends BaseLocalService,
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -112,12 +106,11 @@ public interface CompanyLocalService extends BaseLocalService,
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException;
+		int end);
 
 	/**
 	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
@@ -131,25 +124,21 @@ public interface CompanyLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the number of rows that match the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows that match the dynamic query.
@@ -157,16 +146,13 @@ public interface CompanyLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.dao.orm.Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Company fetchCompany(long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public com.liferay.portal.model.Company fetchCompany(long companyId);
 
 	/**
 	* Returns the company with the primary key.
@@ -174,23 +160,19 @@ public interface CompanyLocalService extends BaseLocalService,
 	* @param companyId the primary key of the company
 	* @return the company
 	* @throws PortalException if a company with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Company getCompany(long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns a range of all the companies.
@@ -202,33 +184,27 @@ public interface CompanyLocalService extends BaseLocalService,
 	* @param start the lower bound of the range of companies
 	* @param end the upper bound of the range of companies (not inclusive)
 	* @return the range of companies
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Company> getCompanies(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		int start, int end);
 
 	/**
 	* Returns the number of companies.
 	*
 	* @return the number of companies
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCompaniesCount()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int getCompaniesCount();
 
 	/**
 	* Updates the company in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param company the company
 	* @return the company that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.Company updateCompany(
-		com.liferay.portal.model.Company company)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.model.Company company);
 
 	/**
 	* Returns the Spring bean ID for this bean.

@@ -269,11 +269,9 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	* Returns the user uuid of this d d l record version.
 	*
 	* @return the user uuid of this d d l record version
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public java.lang.String getUserUuid()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public java.lang.String getUserUuid() {
 		return _ddlRecordVersion.getUserUuid();
 	}
 
@@ -471,11 +469,9 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	* Returns the status by user uuid of this d d l record version.
 	*
 	* @return the status by user uuid of this d d l record version
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public java.lang.String getStatusByUserUuid()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public java.lang.String getStatusByUserUuid() {
 		return _ddlRecordVersion.getStatusByUserUuid();
 	}
 

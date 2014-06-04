@@ -46,11 +46,9 @@ public class DLFileRankLocalServiceUtil {
 	*
 	* @param dlFileRank the document library file rank
 	* @return the document library file rank that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileRank addDLFileRank(
-		com.liferay.portlet.documentlibrary.model.DLFileRank dlFileRank)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.documentlibrary.model.DLFileRank dlFileRank) {
 		return getService().addDLFileRank(dlFileRank);
 	}
 
@@ -71,12 +69,10 @@ public class DLFileRankLocalServiceUtil {
 	* @param fileRankId the primary key of the document library file rank
 	* @return the document library file rank that was removed
 	* @throws PortalException if a document library file rank with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileRank deleteDLFileRank(
 		long fileRankId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteDLFileRank(fileRankId);
 	}
 
@@ -85,11 +81,9 @@ public class DLFileRankLocalServiceUtil {
 	*
 	* @param dlFileRank the document library file rank
 	* @return the document library file rank that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileRank deleteDLFileRank(
-		com.liferay.portlet.documentlibrary.model.DLFileRank dlFileRank)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.documentlibrary.model.DLFileRank dlFileRank) {
 		return getService().deleteDLFileRank(dlFileRank);
 	}
 
@@ -102,12 +96,10 @@ public class DLFileRankLocalServiceUtil {
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -122,12 +114,11 @@ public class DLFileRankLocalServiceUtil {
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -143,14 +134,12 @@ public class DLFileRankLocalServiceUtil {
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getService()
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
@@ -160,11 +149,9 @@ public class DLFileRankLocalServiceUtil {
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -174,18 +161,15 @@ public class DLFileRankLocalServiceUtil {
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public static long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
 	public static com.liferay.portlet.documentlibrary.model.DLFileRank fetchDLFileRank(
-		long fileRankId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long fileRankId) {
 		return getService().fetchDLFileRank(fileRankId);
 	}
 
@@ -195,24 +179,20 @@ public class DLFileRankLocalServiceUtil {
 	* @param fileRankId the primary key of the document library file rank
 	* @return the document library file rank
 	* @throws PortalException if a document library file rank with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileRank getDLFileRank(
 		long fileRankId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getDLFileRank(fileRankId);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}
 
 	public static com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
@@ -226,11 +206,9 @@ public class DLFileRankLocalServiceUtil {
 	* @param start the lower bound of the range of document library file ranks
 	* @param end the upper bound of the range of document library file ranks (not inclusive)
 	* @return the range of document library file ranks
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileRank> getDLFileRanks(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return getService().getDLFileRanks(start, end);
 	}
 
@@ -238,10 +216,8 @@ public class DLFileRankLocalServiceUtil {
 	* Returns the number of document library file ranks.
 	*
 	* @return the number of document library file ranks
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int getDLFileRanksCount()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int getDLFileRanksCount() {
 		return getService().getDLFileRanksCount();
 	}
 
@@ -250,11 +226,9 @@ public class DLFileRankLocalServiceUtil {
 	*
 	* @param dlFileRank the document library file rank
 	* @return the document library file rank that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.documentlibrary.model.DLFileRank updateDLFileRank(
-		com.liferay.portlet.documentlibrary.model.DLFileRank dlFileRank)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.documentlibrary.model.DLFileRank dlFileRank) {
 		return getService().updateDLFileRank(dlFileRank);
 	}
 

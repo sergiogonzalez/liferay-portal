@@ -16,7 +16,6 @@ package com.liferay.portal.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -106,9 +105,8 @@ public interface BrowserTrackerModel extends BaseModel<BrowserTracker>, MVCCMode
 	 * Returns the user uuid of this browser tracker.
 	 *
 	 * @return the user uuid of this browser tracker
-	 * @throws SystemException if a system exception occurred
 	 */
-	public String getUserUuid() throws SystemException;
+	public String getUserUuid();
 
 	/**
 	 * Sets the user uuid of this browser tracker.

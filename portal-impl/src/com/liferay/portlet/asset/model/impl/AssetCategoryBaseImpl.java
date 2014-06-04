@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.asset.model.impl;
 
-import com.liferay.portal.kernel.exception.SystemException;
-
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 
@@ -39,7 +37,7 @@ public abstract class AssetCategoryBaseImpl extends AssetCategoryModelImpl
 	 * Never modify or reference this class directly. All methods that expect a asset category model instance should use the {@link AssetCategory} interface instead.
 	 */
 	@Override
-	public void persist() throws SystemException {
+	public void persist() {
 		if (this.isNew()) {
 			AssetCategoryLocalServiceUtil.addAssetCategory(this);
 		}

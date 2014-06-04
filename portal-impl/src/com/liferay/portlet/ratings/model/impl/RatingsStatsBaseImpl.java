@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.ratings.model.impl;
 
-import com.liferay.portal.kernel.exception.SystemException;
-
 import com.liferay.portlet.ratings.model.RatingsStats;
 import com.liferay.portlet.ratings.service.RatingsStatsLocalServiceUtil;
 
@@ -39,7 +37,7 @@ public abstract class RatingsStatsBaseImpl extends RatingsStatsModelImpl
 	 * Never modify or reference this class directly. All methods that expect a ratings stats model instance should use the {@link RatingsStats} interface instead.
 	 */
 	@Override
-	public void persist() throws SystemException {
+	public void persist() {
 		if (this.isNew()) {
 			RatingsStatsLocalServiceUtil.addRatingsStats(this);
 		}

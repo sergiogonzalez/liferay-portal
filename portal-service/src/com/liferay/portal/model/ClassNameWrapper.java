@@ -272,8 +272,7 @@ public class ClassNameWrapper implements ClassName, ModelWrapper<ClassName> {
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void persist() {
 		_className.persist();
 	}
 

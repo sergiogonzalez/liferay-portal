@@ -231,8 +231,7 @@ public class CounterWrapper implements Counter, ModelWrapper<Counter> {
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void persist() {
 		_counter.persist();
 	}
 

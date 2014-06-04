@@ -44,21 +44,17 @@ public interface ShardPersistence extends BasePersistence<Shard> {
 	* @param name the name
 	* @return the matching shard
 	* @throws com.liferay.portal.NoSuchShardException if a matching shard could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.Shard findByName(java.lang.String name)
-		throws com.liferay.portal.NoSuchShardException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.NoSuchShardException;
 
 	/**
 	* Returns the shard where name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
 	* @param name the name
 	* @return the matching shard, or <code>null</code> if a matching shard could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portal.model.Shard fetchByName(java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public com.liferay.portal.model.Shard fetchByName(java.lang.String name);
 
 	/**
 	* Returns the shard where name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -66,32 +62,26 @@ public interface ShardPersistence extends BasePersistence<Shard> {
 	* @param name the name
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching shard, or <code>null</code> if a matching shard could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.Shard fetchByName(java.lang.String name,
-		boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		boolean retrieveFromCache);
 
 	/**
 	* Removes the shard where name = &#63; from the database.
 	*
 	* @param name the name
 	* @return the shard that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.Shard removeByName(java.lang.String name)
-		throws com.liferay.portal.NoSuchShardException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.NoSuchShardException;
 
 	/**
 	* Returns the number of shards where name = &#63;.
 	*
 	* @param name the name
 	* @return the number of matching shards
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countByName(java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByName(java.lang.String name);
 
 	/**
 	* Returns the shard where classNameId = &#63; and classPK = &#63; or throws a {@link com.liferay.portal.NoSuchShardException} if it could not be found.
@@ -100,12 +90,9 @@ public interface ShardPersistence extends BasePersistence<Shard> {
 	* @param classPK the class p k
 	* @return the matching shard
 	* @throws com.liferay.portal.NoSuchShardException if a matching shard could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.Shard findByC_C(long classNameId,
-		long classPK)
-		throws com.liferay.portal.NoSuchShardException,
-			com.liferay.portal.kernel.exception.SystemException;
+		long classPK) throws com.liferay.portal.NoSuchShardException;
 
 	/**
 	* Returns the shard where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -113,11 +100,9 @@ public interface ShardPersistence extends BasePersistence<Shard> {
 	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @return the matching shard, or <code>null</code> if a matching shard could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.Shard fetchByC_C(long classNameId,
-		long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long classPK);
 
 	/**
 	* Returns the shard where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -126,11 +111,9 @@ public interface ShardPersistence extends BasePersistence<Shard> {
 	* @param classPK the class p k
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching shard, or <code>null</code> if a matching shard could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.Shard fetchByC_C(long classNameId,
-		long classPK, boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long classPK, boolean retrieveFromCache);
 
 	/**
 	* Removes the shard where classNameId = &#63; and classPK = &#63; from the database.
@@ -138,12 +121,9 @@ public interface ShardPersistence extends BasePersistence<Shard> {
 	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @return the shard that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.Shard removeByC_C(long classNameId,
-		long classPK)
-		throws com.liferay.portal.NoSuchShardException,
-			com.liferay.portal.kernel.exception.SystemException;
+		long classPK) throws com.liferay.portal.NoSuchShardException;
 
 	/**
 	* Returns the number of shards where classNameId = &#63; and classPK = &#63;.
@@ -151,10 +131,8 @@ public interface ShardPersistence extends BasePersistence<Shard> {
 	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @return the number of matching shards
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countByC_C(long classNameId, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByC_C(long classNameId, long classPK);
 
 	/**
 	* Caches the shard in the entity cache if it is enabled.
@@ -185,15 +163,12 @@ public interface ShardPersistence extends BasePersistence<Shard> {
 	* @param shardId the primary key of the shard
 	* @return the shard that was removed
 	* @throws com.liferay.portal.NoSuchShardException if a shard with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.Shard remove(long shardId)
-		throws com.liferay.portal.NoSuchShardException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.NoSuchShardException;
 
 	public com.liferay.portal.model.Shard updateImpl(
-		com.liferay.portal.model.Shard shard)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.model.Shard shard);
 
 	/**
 	* Returns the shard with the primary key or throws a {@link com.liferay.portal.NoSuchShardException} if it could not be found.
@@ -201,30 +176,24 @@ public interface ShardPersistence extends BasePersistence<Shard> {
 	* @param shardId the primary key of the shard
 	* @return the shard
 	* @throws com.liferay.portal.NoSuchShardException if a shard with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.Shard findByPrimaryKey(long shardId)
-		throws com.liferay.portal.NoSuchShardException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.NoSuchShardException;
 
 	/**
 	* Returns the shard with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param shardId the primary key of the shard
 	* @return the shard, or <code>null</code> if a shard with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portal.model.Shard fetchByPrimaryKey(long shardId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public com.liferay.portal.model.Shard fetchByPrimaryKey(long shardId);
 
 	/**
 	* Returns all the shards.
 	*
 	* @return the shards
-	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portal.model.Shard> findAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public java.util.List<com.liferay.portal.model.Shard> findAll();
 
 	/**
 	* Returns a range of all the shards.
@@ -236,10 +205,9 @@ public interface ShardPersistence extends BasePersistence<Shard> {
 	* @param start the lower bound of the range of shards
 	* @param end the upper bound of the range of shards (not inclusive)
 	* @return the range of shards
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portal.model.Shard> findAll(int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException;
+		int end);
 
 	/**
 	* Returns an ordered range of all the shards.
@@ -252,27 +220,20 @@ public interface ShardPersistence extends BasePersistence<Shard> {
 	* @param end the upper bound of the range of shards (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of shards
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portal.model.Shard> findAll(int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Removes all the shards from the database.
-	*
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeAll();
 
 	/**
 	* Returns the number of shards.
 	*
 	* @return the number of shards
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countAll();
 }

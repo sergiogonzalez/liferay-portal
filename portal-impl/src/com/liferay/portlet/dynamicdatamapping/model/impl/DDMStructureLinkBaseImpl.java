@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.dynamicdatamapping.model.impl;
 
-import com.liferay.portal.kernel.exception.SystemException;
-
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLinkLocalServiceUtil;
 
@@ -39,7 +37,7 @@ public abstract class DDMStructureLinkBaseImpl extends DDMStructureLinkModelImpl
 	 * Never modify or reference this class directly. All methods that expect a d d m structure link model instance should use the {@link DDMStructureLink} interface instead.
 	 */
 	@Override
-	public void persist() throws SystemException {
+	public void persist() {
 		if (this.isNew()) {
 			DDMStructureLinkLocalServiceUtil.addDDMStructureLink(this);
 		}

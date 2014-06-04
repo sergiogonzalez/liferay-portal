@@ -17,8 +17,6 @@ package com.liferay.counter.model.impl;
 import com.liferay.counter.model.Counter;
 import com.liferay.counter.service.CounterLocalServiceUtil;
 
-import com.liferay.portal.kernel.exception.SystemException;
-
 /**
  * The extended model base implementation for the Counter service. Represents a row in the &quot;Counter&quot; database table, with each column mapped to a property of this class.
  *
@@ -39,7 +37,7 @@ public abstract class CounterBaseImpl extends CounterModelImpl
 	 * Never modify or reference this class directly. All methods that expect a counter model instance should use the {@link Counter} interface instead.
 	 */
 	@Override
-	public void persist() throws SystemException {
+	public void persist() {
 		if (this.isNew()) {
 			CounterLocalServiceUtil.addCounter(this);
 		}

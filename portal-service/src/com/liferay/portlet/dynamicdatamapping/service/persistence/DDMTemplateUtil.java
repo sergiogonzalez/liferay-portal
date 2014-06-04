@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 import com.liferay.portal.service.ServiceContext;
@@ -64,8 +63,7 @@ public class DDMTemplateUtil {
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#countWithDynamicQuery(DynamicQuery)
 	 */
-	public static long countWithDynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public static long countWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return getPersistence().countWithDynamicQuery(dynamicQuery);
 	}
 
@@ -73,7 +71,7 @@ public class DDMTemplateUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery)
 	 */
 	public static List<DDMTemplate> findWithDynamicQuery(
-		DynamicQuery dynamicQuery) throws SystemException {
+		DynamicQuery dynamicQuery) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -81,8 +79,7 @@ public class DDMTemplateUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
 	 */
 	public static List<DDMTemplate> findWithDynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+		DynamicQuery dynamicQuery, int start, int end) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -91,7 +88,7 @@ public class DDMTemplateUtil {
 	 */
 	public static List<DDMTemplate> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -100,8 +97,7 @@ public class DDMTemplateUtil {
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static DDMTemplate update(DDMTemplate ddmTemplate)
-		throws SystemException {
+	public static DDMTemplate update(DDMTemplate ddmTemplate) {
 		return getPersistence().update(ddmTemplate);
 	}
 
@@ -109,7 +105,7 @@ public class DDMTemplateUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
 	public static DDMTemplate update(DDMTemplate ddmTemplate,
-		ServiceContext serviceContext) throws SystemException {
+		ServiceContext serviceContext) {
 		return getPersistence().update(ddmTemplate, serviceContext);
 	}
 
@@ -118,11 +114,9 @@ public class DDMTemplateUtil {
 	*
 	* @param uuid the uuid
 	* @return the matching d d m templates
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByUuid(
-		java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid) {
 		return getPersistence().findByUuid(uuid);
 	}
 
@@ -137,11 +131,9 @@ public class DDMTemplateUtil {
 	* @param start the lower bound of the range of d d m templates
 	* @param end the upper bound of the range of d d m templates (not inclusive)
 	* @return the range of matching d d m templates
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByUuid(
-		java.lang.String uuid, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, int start, int end) {
 		return getPersistence().findByUuid(uuid, start, end);
 	}
 
@@ -157,12 +149,10 @@ public class DDMTemplateUtil {
 	* @param end the upper bound of the range of d d m templates (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching d d m templates
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByUuid(
 		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -173,13 +163,11 @@ public class DDMTemplateUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m template
 	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate findByUuid_First(
 		java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
 
@@ -189,12 +177,10 @@ public class DDMTemplateUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m template, or <code>null</code> if a matching d d m template could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
 
@@ -205,13 +191,11 @@ public class DDMTemplateUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m template
 	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate findByUuid_Last(
 		java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -221,12 +205,10 @@ public class DDMTemplateUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m template, or <code>null</code> if a matching d d m template could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -238,13 +220,11 @@ public class DDMTemplateUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next d d m template
 	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a d d m template with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate[] findByUuid_PrevAndNext(
 		long templateId, java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(templateId, uuid, orderByComparator);
 	}
@@ -253,10 +233,8 @@ public class DDMTemplateUtil {
 	* Removes all the d d m templates where uuid = &#63; from the database.
 	*
 	* @param uuid the uuid
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByUuid(java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByUuid(java.lang.String uuid) {
 		getPersistence().removeByUuid(uuid);
 	}
 
@@ -265,10 +243,8 @@ public class DDMTemplateUtil {
 	*
 	* @param uuid the uuid
 	* @return the number of matching d d m templates
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByUuid(java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByUuid(java.lang.String uuid) {
 		return getPersistence().countByUuid(uuid);
 	}
 
@@ -279,12 +255,10 @@ public class DDMTemplateUtil {
 	* @param groupId the group ID
 	* @return the matching d d m template
 	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate findByUUID_G(
 		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
 
@@ -294,11 +268,9 @@ public class DDMTemplateUtil {
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the matching d d m template, or <code>null</code> if a matching d d m template could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchByUUID_G(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long groupId) {
 		return getPersistence().fetchByUUID_G(uuid, groupId);
 	}
 
@@ -309,11 +281,9 @@ public class DDMTemplateUtil {
 	* @param groupId the group ID
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching d d m template, or <code>null</code> if a matching d d m template could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchByUUID_G(
-		java.lang.String uuid, long groupId, boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long groupId, boolean retrieveFromCache) {
 		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
 	}
 
@@ -323,12 +293,10 @@ public class DDMTemplateUtil {
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the d d m template that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate removeByUUID_G(
 		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
 
@@ -338,10 +306,8 @@ public class DDMTemplateUtil {
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the number of matching d d m templates
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByUUID_G(java.lang.String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
 	}
 
@@ -351,11 +317,9 @@ public class DDMTemplateUtil {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	* @return the matching d d m templates
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByUuid_C(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long companyId) {
 		return getPersistence().findByUuid_C(uuid, companyId);
 	}
 
@@ -371,11 +335,9 @@ public class DDMTemplateUtil {
 	* @param start the lower bound of the range of d d m templates
 	* @param end the upper bound of the range of d d m templates (not inclusive)
 	* @return the range of matching d d m templates
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long companyId, int start, int end) {
 		return getPersistence().findByUuid_C(uuid, companyId, start, end);
 	}
 
@@ -392,12 +354,10 @@ public class DDMTemplateUtil {
 	* @param end the upper bound of the range of d d m templates (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching d d m templates
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByUuid_C(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
 	}
@@ -410,13 +370,11 @@ public class DDMTemplateUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m template
 	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate findByUuid_C_First(
 		java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -428,12 +386,10 @@ public class DDMTemplateUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m template, or <code>null</code> if a matching d d m template could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -446,13 +402,11 @@ public class DDMTemplateUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m template
 	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate findByUuid_C_Last(
 		java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -464,12 +418,10 @@ public class DDMTemplateUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m template, or <code>null</code> if a matching d d m template could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -483,13 +435,11 @@ public class DDMTemplateUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next d d m template
 	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a d d m template with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate[] findByUuid_C_PrevAndNext(
 		long templateId, java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
 		return getPersistence()
 				   .findByUuid_C_PrevAndNext(templateId, uuid, companyId,
 			orderByComparator);
@@ -500,10 +450,8 @@ public class DDMTemplateUtil {
 	*
 	* @param uuid the uuid
 	* @param companyId the company ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByUuid_C(java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByUuid_C(java.lang.String uuid, long companyId) {
 		getPersistence().removeByUuid_C(uuid, companyId);
 	}
 
@@ -513,10 +461,8 @@ public class DDMTemplateUtil {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	* @return the number of matching d d m templates
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByUuid_C(java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByUuid_C(java.lang.String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
@@ -525,11 +471,9 @@ public class DDMTemplateUtil {
 	*
 	* @param groupId the group ID
 	* @return the matching d d m templates
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByGroupId(
-		long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId) {
 		return getPersistence().findByGroupId(groupId);
 	}
 
@@ -544,11 +488,9 @@ public class DDMTemplateUtil {
 	* @param start the lower bound of the range of d d m templates
 	* @param end the upper bound of the range of d d m templates (not inclusive)
 	* @return the range of matching d d m templates
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByGroupId(
-		long groupId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, int start, int end) {
 		return getPersistence().findByGroupId(groupId, start, end);
 	}
 
@@ -564,12 +506,10 @@ public class DDMTemplateUtil {
 	* @param end the upper bound of the range of d d m templates (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching d d m templates
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByGroupId(groupId, start, end, orderByComparator);
 	}
@@ -581,13 +521,11 @@ public class DDMTemplateUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m template
 	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate findByGroupId_First(
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
 		return getPersistence().findByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -597,12 +535,10 @@ public class DDMTemplateUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m template, or <code>null</code> if a matching d d m template could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -613,13 +549,11 @@ public class DDMTemplateUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m template
 	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate findByGroupId_Last(
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
 		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -629,12 +563,10 @@ public class DDMTemplateUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m template, or <code>null</code> if a matching d d m template could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -646,13 +578,11 @@ public class DDMTemplateUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next d d m template
 	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a d d m template with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate[] findByGroupId_PrevAndNext(
 		long templateId, long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
 		return getPersistence()
 				   .findByGroupId_PrevAndNext(templateId, groupId,
 			orderByComparator);
@@ -663,11 +593,9 @@ public class DDMTemplateUtil {
 	*
 	* @param groupId the group ID
 	* @return the matching d d m templates that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> filterFindByGroupId(
-		long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId) {
 		return getPersistence().filterFindByGroupId(groupId);
 	}
 
@@ -682,11 +610,9 @@ public class DDMTemplateUtil {
 	* @param start the lower bound of the range of d d m templates
 	* @param end the upper bound of the range of d d m templates (not inclusive)
 	* @return the range of matching d d m templates that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> filterFindByGroupId(
-		long groupId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, int start, int end) {
 		return getPersistence().filterFindByGroupId(groupId, start, end);
 	}
 
@@ -702,12 +628,10 @@ public class DDMTemplateUtil {
 	* @param end the upper bound of the range of d d m templates (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching d d m templates that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> filterFindByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .filterFindByGroupId(groupId, start, end, orderByComparator);
 	}
@@ -720,13 +644,11 @@ public class DDMTemplateUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next d d m template
 	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a d d m template with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate[] filterFindByGroupId_PrevAndNext(
 		long templateId, long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
 		return getPersistence()
 				   .filterFindByGroupId_PrevAndNext(templateId, groupId,
 			orderByComparator);
@@ -736,10 +658,8 @@ public class DDMTemplateUtil {
 	* Removes all the d d m templates where groupId = &#63; from the database.
 	*
 	* @param groupId the group ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByGroupId(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByGroupId(long groupId) {
 		getPersistence().removeByGroupId(groupId);
 	}
 
@@ -748,10 +668,8 @@ public class DDMTemplateUtil {
 	*
 	* @param groupId the group ID
 	* @return the number of matching d d m templates
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByGroupId(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByGroupId(long groupId) {
 		return getPersistence().countByGroupId(groupId);
 	}
 
@@ -760,10 +678,8 @@ public class DDMTemplateUtil {
 	*
 	* @param groupId the group ID
 	* @return the number of matching d d m templates that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int filterCountByGroupId(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int filterCountByGroupId(long groupId) {
 		return getPersistence().filterCountByGroupId(groupId);
 	}
 
@@ -772,11 +688,9 @@ public class DDMTemplateUtil {
 	*
 	* @param classPK the class p k
 	* @return the matching d d m templates
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByClassPK(
-		long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long classPK) {
 		return getPersistence().findByClassPK(classPK);
 	}
 
@@ -791,11 +705,9 @@ public class DDMTemplateUtil {
 	* @param start the lower bound of the range of d d m templates
 	* @param end the upper bound of the range of d d m templates (not inclusive)
 	* @return the range of matching d d m templates
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByClassPK(
-		long classPK, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long classPK, int start, int end) {
 		return getPersistence().findByClassPK(classPK, start, end);
 	}
 
@@ -811,12 +723,10 @@ public class DDMTemplateUtil {
 	* @param end the upper bound of the range of d d m templates (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching d d m templates
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByClassPK(
 		long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByClassPK(classPK, start, end, orderByComparator);
 	}
@@ -828,13 +738,11 @@ public class DDMTemplateUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m template
 	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate findByClassPK_First(
 		long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
 		return getPersistence().findByClassPK_First(classPK, orderByComparator);
 	}
 
@@ -844,12 +752,10 @@ public class DDMTemplateUtil {
 	* @param classPK the class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m template, or <code>null</code> if a matching d d m template could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchByClassPK_First(
 		long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByClassPK_First(classPK, orderByComparator);
 	}
 
@@ -860,13 +766,11 @@ public class DDMTemplateUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m template
 	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate findByClassPK_Last(
 		long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
 		return getPersistence().findByClassPK_Last(classPK, orderByComparator);
 	}
 
@@ -876,12 +780,10 @@ public class DDMTemplateUtil {
 	* @param classPK the class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m template, or <code>null</code> if a matching d d m template could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchByClassPK_Last(
 		long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByClassPK_Last(classPK, orderByComparator);
 	}
 
@@ -893,13 +795,11 @@ public class DDMTemplateUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next d d m template
 	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a d d m template with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate[] findByClassPK_PrevAndNext(
 		long templateId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
 		return getPersistence()
 				   .findByClassPK_PrevAndNext(templateId, classPK,
 			orderByComparator);
@@ -909,10 +809,8 @@ public class DDMTemplateUtil {
 	* Removes all the d d m templates where classPK = &#63; from the database.
 	*
 	* @param classPK the class p k
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByClassPK(long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByClassPK(long classPK) {
 		getPersistence().removeByClassPK(classPK);
 	}
 
@@ -921,10 +819,8 @@ public class DDMTemplateUtil {
 	*
 	* @param classPK the class p k
 	* @return the number of matching d d m templates
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByClassPK(long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByClassPK(long classPK) {
 		return getPersistence().countByClassPK(classPK);
 	}
 
@@ -933,11 +829,9 @@ public class DDMTemplateUtil {
 	*
 	* @param templateKey the template key
 	* @return the matching d d m templates
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByTemplateKey(
-		java.lang.String templateKey)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String templateKey) {
 		return getPersistence().findByTemplateKey(templateKey);
 	}
 
@@ -952,11 +846,9 @@ public class DDMTemplateUtil {
 	* @param start the lower bound of the range of d d m templates
 	* @param end the upper bound of the range of d d m templates (not inclusive)
 	* @return the range of matching d d m templates
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByTemplateKey(
-		java.lang.String templateKey, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String templateKey, int start, int end) {
 		return getPersistence().findByTemplateKey(templateKey, start, end);
 	}
 
@@ -972,12 +864,10 @@ public class DDMTemplateUtil {
 	* @param end the upper bound of the range of d d m templates (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching d d m templates
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByTemplateKey(
 		java.lang.String templateKey, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByTemplateKey(templateKey, start, end, orderByComparator);
 	}
@@ -989,13 +879,11 @@ public class DDMTemplateUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m template
 	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate findByTemplateKey_First(
 		java.lang.String templateKey,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
 		return getPersistence()
 				   .findByTemplateKey_First(templateKey, orderByComparator);
 	}
@@ -1006,12 +894,10 @@ public class DDMTemplateUtil {
 	* @param templateKey the template key
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m template, or <code>null</code> if a matching d d m template could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchByTemplateKey_First(
 		java.lang.String templateKey,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByTemplateKey_First(templateKey, orderByComparator);
 	}
@@ -1023,13 +909,11 @@ public class DDMTemplateUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m template
 	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate findByTemplateKey_Last(
 		java.lang.String templateKey,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
 		return getPersistence()
 				   .findByTemplateKey_Last(templateKey, orderByComparator);
 	}
@@ -1040,12 +924,10 @@ public class DDMTemplateUtil {
 	* @param templateKey the template key
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m template, or <code>null</code> if a matching d d m template could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchByTemplateKey_Last(
 		java.lang.String templateKey,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByTemplateKey_Last(templateKey, orderByComparator);
 	}
@@ -1058,13 +940,11 @@ public class DDMTemplateUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next d d m template
 	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a d d m template with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate[] findByTemplateKey_PrevAndNext(
 		long templateId, java.lang.String templateKey,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
 		return getPersistence()
 				   .findByTemplateKey_PrevAndNext(templateId, templateKey,
 			orderByComparator);
@@ -1074,10 +954,8 @@ public class DDMTemplateUtil {
 	* Removes all the d d m templates where templateKey = &#63; from the database.
 	*
 	* @param templateKey the template key
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByTemplateKey(java.lang.String templateKey)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByTemplateKey(java.lang.String templateKey) {
 		getPersistence().removeByTemplateKey(templateKey);
 	}
 
@@ -1086,10 +964,8 @@ public class DDMTemplateUtil {
 	*
 	* @param templateKey the template key
 	* @return the number of matching d d m templates
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByTemplateKey(java.lang.String templateKey)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByTemplateKey(java.lang.String templateKey) {
 		return getPersistence().countByTemplateKey(templateKey);
 	}
 
@@ -1098,11 +974,9 @@ public class DDMTemplateUtil {
 	*
 	* @param type the type
 	* @return the matching d d m templates
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByType(
-		java.lang.String type)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String type) {
 		return getPersistence().findByType(type);
 	}
 
@@ -1117,11 +991,9 @@ public class DDMTemplateUtil {
 	* @param start the lower bound of the range of d d m templates
 	* @param end the upper bound of the range of d d m templates (not inclusive)
 	* @return the range of matching d d m templates
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByType(
-		java.lang.String type, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String type, int start, int end) {
 		return getPersistence().findByType(type, start, end);
 	}
 
@@ -1137,12 +1009,10 @@ public class DDMTemplateUtil {
 	* @param end the upper bound of the range of d d m templates (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching d d m templates
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByType(
 		java.lang.String type, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().findByType(type, start, end, orderByComparator);
 	}
 
@@ -1153,13 +1023,11 @@ public class DDMTemplateUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m template
 	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate findByType_First(
 		java.lang.String type,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
 		return getPersistence().findByType_First(type, orderByComparator);
 	}
 
@@ -1169,12 +1037,10 @@ public class DDMTemplateUtil {
 	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m template, or <code>null</code> if a matching d d m template could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchByType_First(
 		java.lang.String type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByType_First(type, orderByComparator);
 	}
 
@@ -1185,13 +1051,11 @@ public class DDMTemplateUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m template
 	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate findByType_Last(
 		java.lang.String type,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
 		return getPersistence().findByType_Last(type, orderByComparator);
 	}
 
@@ -1201,12 +1065,10 @@ public class DDMTemplateUtil {
 	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m template, or <code>null</code> if a matching d d m template could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchByType_Last(
 		java.lang.String type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByType_Last(type, orderByComparator);
 	}
 
@@ -1218,13 +1080,11 @@ public class DDMTemplateUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next d d m template
 	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a d d m template with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate[] findByType_PrevAndNext(
 		long templateId, java.lang.String type,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
 		return getPersistence()
 				   .findByType_PrevAndNext(templateId, type, orderByComparator);
 	}
@@ -1233,10 +1093,8 @@ public class DDMTemplateUtil {
 	* Removes all the d d m templates where type = &#63; from the database.
 	*
 	* @param type the type
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByType(java.lang.String type)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByType(java.lang.String type) {
 		getPersistence().removeByType(type);
 	}
 
@@ -1245,10 +1103,8 @@ public class DDMTemplateUtil {
 	*
 	* @param type the type
 	* @return the number of matching d d m templates
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByType(java.lang.String type)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByType(java.lang.String type) {
 		return getPersistence().countByType(type);
 	}
 
@@ -1257,11 +1113,9 @@ public class DDMTemplateUtil {
 	*
 	* @param language the language
 	* @return the matching d d m templates
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByLanguage(
-		java.lang.String language)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String language) {
 		return getPersistence().findByLanguage(language);
 	}
 
@@ -1276,11 +1130,9 @@ public class DDMTemplateUtil {
 	* @param start the lower bound of the range of d d m templates
 	* @param end the upper bound of the range of d d m templates (not inclusive)
 	* @return the range of matching d d m templates
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByLanguage(
-		java.lang.String language, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String language, int start, int end) {
 		return getPersistence().findByLanguage(language, start, end);
 	}
 
@@ -1296,12 +1148,10 @@ public class DDMTemplateUtil {
 	* @param end the upper bound of the range of d d m templates (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching d d m templates
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByLanguage(
 		java.lang.String language, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByLanguage(language, start, end, orderByComparator);
 	}
@@ -1313,13 +1163,11 @@ public class DDMTemplateUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m template
 	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate findByLanguage_First(
 		java.lang.String language,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
 		return getPersistence().findByLanguage_First(language, orderByComparator);
 	}
 
@@ -1329,12 +1177,10 @@ public class DDMTemplateUtil {
 	* @param language the language
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m template, or <code>null</code> if a matching d d m template could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchByLanguage_First(
 		java.lang.String language,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByLanguage_First(language, orderByComparator);
 	}
@@ -1346,13 +1192,11 @@ public class DDMTemplateUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m template
 	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate findByLanguage_Last(
 		java.lang.String language,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
 		return getPersistence().findByLanguage_Last(language, orderByComparator);
 	}
 
@@ -1362,12 +1206,10 @@ public class DDMTemplateUtil {
 	* @param language the language
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m template, or <code>null</code> if a matching d d m template could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchByLanguage_Last(
 		java.lang.String language,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByLanguage_Last(language, orderByComparator);
 	}
 
@@ -1379,13 +1221,11 @@ public class DDMTemplateUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next d d m template
 	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a d d m template with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate[] findByLanguage_PrevAndNext(
 		long templateId, java.lang.String language,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
 		return getPersistence()
 				   .findByLanguage_PrevAndNext(templateId, language,
 			orderByComparator);
@@ -1395,10 +1235,8 @@ public class DDMTemplateUtil {
 	* Removes all the d d m templates where language = &#63; from the database.
 	*
 	* @param language the language
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByLanguage(java.lang.String language)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByLanguage(java.lang.String language) {
 		getPersistence().removeByLanguage(language);
 	}
 
@@ -1407,10 +1245,8 @@ public class DDMTemplateUtil {
 	*
 	* @param language the language
 	* @return the number of matching d d m templates
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByLanguage(java.lang.String language)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByLanguage(java.lang.String language) {
 		return getPersistence().countByLanguage(language);
 	}
 
@@ -1420,12 +1256,10 @@ public class DDMTemplateUtil {
 	* @param smallImageId the small image ID
 	* @return the matching d d m template
 	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate findBySmallImageId(
 		long smallImageId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
 		return getPersistence().findBySmallImageId(smallImageId);
 	}
 
@@ -1434,11 +1268,9 @@ public class DDMTemplateUtil {
 	*
 	* @param smallImageId the small image ID
 	* @return the matching d d m template, or <code>null</code> if a matching d d m template could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchBySmallImageId(
-		long smallImageId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long smallImageId) {
 		return getPersistence().fetchBySmallImageId(smallImageId);
 	}
 
@@ -1448,11 +1280,9 @@ public class DDMTemplateUtil {
 	* @param smallImageId the small image ID
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching d d m template, or <code>null</code> if a matching d d m template could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchBySmallImageId(
-		long smallImageId, boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long smallImageId, boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchBySmallImageId(smallImageId, retrieveFromCache);
 	}
@@ -1462,12 +1292,10 @@ public class DDMTemplateUtil {
 	*
 	* @param smallImageId the small image ID
 	* @return the d d m template that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate removeBySmallImageId(
 		long smallImageId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
 		return getPersistence().removeBySmallImageId(smallImageId);
 	}
 
@@ -1476,10 +1304,8 @@ public class DDMTemplateUtil {
 	*
 	* @param smallImageId the small image ID
 	* @return the number of matching d d m templates
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countBySmallImageId(long smallImageId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countBySmallImageId(long smallImageId) {
 		return getPersistence().countBySmallImageId(smallImageId);
 	}
 
@@ -1489,11 +1315,9 @@ public class DDMTemplateUtil {
 	* @param groupId the group ID
 	* @param classNameId the class name ID
 	* @return the matching d d m templates
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByG_C(
-		long groupId, long classNameId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, long classNameId) {
 		return getPersistence().findByG_C(groupId, classNameId);
 	}
 
@@ -1509,11 +1333,9 @@ public class DDMTemplateUtil {
 	* @param start the lower bound of the range of d d m templates
 	* @param end the upper bound of the range of d d m templates (not inclusive)
 	* @return the range of matching d d m templates
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByG_C(
-		long groupId, long classNameId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, long classNameId, int start, int end) {
 		return getPersistence().findByG_C(groupId, classNameId, start, end);
 	}
 
@@ -1530,12 +1352,10 @@ public class DDMTemplateUtil {
 	* @param end the upper bound of the range of d d m templates (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching d d m templates
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByG_C(
 		long groupId, long classNameId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByG_C(groupId, classNameId, start, end,
 			orderByComparator);
@@ -1549,13 +1369,11 @@ public class DDMTemplateUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m template
 	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate findByG_C_First(
 		long groupId, long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
 		return getPersistence()
 				   .findByG_C_First(groupId, classNameId, orderByComparator);
 	}
@@ -1567,12 +1385,10 @@ public class DDMTemplateUtil {
 	* @param classNameId the class name ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m template, or <code>null</code> if a matching d d m template could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchByG_C_First(
 		long groupId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByG_C_First(groupId, classNameId, orderByComparator);
 	}
@@ -1585,13 +1401,11 @@ public class DDMTemplateUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m template
 	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate findByG_C_Last(
 		long groupId, long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
 		return getPersistence()
 				   .findByG_C_Last(groupId, classNameId, orderByComparator);
 	}
@@ -1603,12 +1417,10 @@ public class DDMTemplateUtil {
 	* @param classNameId the class name ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m template, or <code>null</code> if a matching d d m template could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchByG_C_Last(
 		long groupId, long classNameId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByG_C_Last(groupId, classNameId, orderByComparator);
 	}
@@ -1622,13 +1434,11 @@ public class DDMTemplateUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next d d m template
 	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a d d m template with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate[] findByG_C_PrevAndNext(
 		long templateId, long groupId, long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
 		return getPersistence()
 				   .findByG_C_PrevAndNext(templateId, groupId, classNameId,
 			orderByComparator);
@@ -1640,11 +1450,9 @@ public class DDMTemplateUtil {
 	* @param groupId the group ID
 	* @param classNameId the class name ID
 	* @return the matching d d m templates that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> filterFindByG_C(
-		long groupId, long classNameId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, long classNameId) {
 		return getPersistence().filterFindByG_C(groupId, classNameId);
 	}
 
@@ -1660,11 +1468,9 @@ public class DDMTemplateUtil {
 	* @param start the lower bound of the range of d d m templates
 	* @param end the upper bound of the range of d d m templates (not inclusive)
 	* @return the range of matching d d m templates that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> filterFindByG_C(
-		long groupId, long classNameId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, long classNameId, int start, int end) {
 		return getPersistence().filterFindByG_C(groupId, classNameId, start, end);
 	}
 
@@ -1681,12 +1487,10 @@ public class DDMTemplateUtil {
 	* @param end the upper bound of the range of d d m templates (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching d d m templates that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> filterFindByG_C(
 		long groupId, long classNameId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_C(groupId, classNameId, start, end,
 			orderByComparator);
@@ -1701,13 +1505,11 @@ public class DDMTemplateUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next d d m template
 	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a d d m template with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate[] filterFindByG_C_PrevAndNext(
 		long templateId, long groupId, long classNameId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
 		return getPersistence()
 				   .filterFindByG_C_PrevAndNext(templateId, groupId,
 			classNameId, orderByComparator);
@@ -1718,10 +1520,8 @@ public class DDMTemplateUtil {
 	*
 	* @param groupId the group ID
 	* @param classNameId the class name ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByG_C(long groupId, long classNameId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByG_C(long groupId, long classNameId) {
 		getPersistence().removeByG_C(groupId, classNameId);
 	}
 
@@ -1731,10 +1531,8 @@ public class DDMTemplateUtil {
 	* @param groupId the group ID
 	* @param classNameId the class name ID
 	* @return the number of matching d d m templates
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByG_C(long groupId, long classNameId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByG_C(long groupId, long classNameId) {
 		return getPersistence().countByG_C(groupId, classNameId);
 	}
 
@@ -1744,10 +1542,8 @@ public class DDMTemplateUtil {
 	* @param groupId the group ID
 	* @param classNameId the class name ID
 	* @return the number of matching d d m templates that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int filterCountByG_C(long groupId, long classNameId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int filterCountByG_C(long groupId, long classNameId) {
 		return getPersistence().filterCountByG_C(groupId, classNameId);
 	}
 
@@ -1757,11 +1553,9 @@ public class DDMTemplateUtil {
 	* @param groupId the group ID
 	* @param classPK the class p k
 	* @return the matching d d m templates
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByG_CPK(
-		long groupId, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, long classPK) {
 		return getPersistence().findByG_CPK(groupId, classPK);
 	}
 
@@ -1777,11 +1571,9 @@ public class DDMTemplateUtil {
 	* @param start the lower bound of the range of d d m templates
 	* @param end the upper bound of the range of d d m templates (not inclusive)
 	* @return the range of matching d d m templates
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByG_CPK(
-		long groupId, long classPK, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, long classPK, int start, int end) {
 		return getPersistence().findByG_CPK(groupId, classPK, start, end);
 	}
 
@@ -1798,12 +1590,10 @@ public class DDMTemplateUtil {
 	* @param end the upper bound of the range of d d m templates (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching d d m templates
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByG_CPK(
 		long groupId, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByG_CPK(groupId, classPK, start, end, orderByComparator);
 	}
@@ -1816,13 +1606,11 @@ public class DDMTemplateUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m template
 	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate findByG_CPK_First(
 		long groupId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
 		return getPersistence()
 				   .findByG_CPK_First(groupId, classPK, orderByComparator);
 	}
@@ -1834,12 +1622,10 @@ public class DDMTemplateUtil {
 	* @param classPK the class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m template, or <code>null</code> if a matching d d m template could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchByG_CPK_First(
 		long groupId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByG_CPK_First(groupId, classPK, orderByComparator);
 	}
@@ -1852,13 +1638,11 @@ public class DDMTemplateUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m template
 	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate findByG_CPK_Last(
 		long groupId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
 		return getPersistence()
 				   .findByG_CPK_Last(groupId, classPK, orderByComparator);
 	}
@@ -1870,12 +1654,10 @@ public class DDMTemplateUtil {
 	* @param classPK the class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m template, or <code>null</code> if a matching d d m template could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchByG_CPK_Last(
 		long groupId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByG_CPK_Last(groupId, classPK, orderByComparator);
 	}
@@ -1889,13 +1671,11 @@ public class DDMTemplateUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next d d m template
 	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a d d m template with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate[] findByG_CPK_PrevAndNext(
 		long templateId, long groupId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
 		return getPersistence()
 				   .findByG_CPK_PrevAndNext(templateId, groupId, classPK,
 			orderByComparator);
@@ -1907,11 +1687,9 @@ public class DDMTemplateUtil {
 	* @param groupId the group ID
 	* @param classPK the class p k
 	* @return the matching d d m templates that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> filterFindByG_CPK(
-		long groupId, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, long classPK) {
 		return getPersistence().filterFindByG_CPK(groupId, classPK);
 	}
 
@@ -1927,11 +1705,9 @@ public class DDMTemplateUtil {
 	* @param start the lower bound of the range of d d m templates
 	* @param end the upper bound of the range of d d m templates (not inclusive)
 	* @return the range of matching d d m templates that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> filterFindByG_CPK(
-		long groupId, long classPK, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, long classPK, int start, int end) {
 		return getPersistence().filterFindByG_CPK(groupId, classPK, start, end);
 	}
 
@@ -1948,12 +1724,10 @@ public class DDMTemplateUtil {
 	* @param end the upper bound of the range of d d m templates (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching d d m templates that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> filterFindByG_CPK(
 		long groupId, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_CPK(groupId, classPK, start, end,
 			orderByComparator);
@@ -1968,13 +1742,11 @@ public class DDMTemplateUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next d d m template
 	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a d d m template with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate[] filterFindByG_CPK_PrevAndNext(
 		long templateId, long groupId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
 		return getPersistence()
 				   .filterFindByG_CPK_PrevAndNext(templateId, groupId, classPK,
 			orderByComparator);
@@ -1986,11 +1758,9 @@ public class DDMTemplateUtil {
 	* @param groupIds the group IDs
 	* @param classPK the class p k
 	* @return the matching d d m templates that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> filterFindByG_CPK(
-		long[] groupIds, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long[] groupIds, long classPK) {
 		return getPersistence().filterFindByG_CPK(groupIds, classPK);
 	}
 
@@ -2006,11 +1776,9 @@ public class DDMTemplateUtil {
 	* @param start the lower bound of the range of d d m templates
 	* @param end the upper bound of the range of d d m templates (not inclusive)
 	* @return the range of matching d d m templates that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> filterFindByG_CPK(
-		long[] groupIds, long classPK, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long[] groupIds, long classPK, int start, int end) {
 		return getPersistence().filterFindByG_CPK(groupIds, classPK, start, end);
 	}
 
@@ -2027,12 +1795,10 @@ public class DDMTemplateUtil {
 	* @param end the upper bound of the range of d d m templates (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching d d m templates that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> filterFindByG_CPK(
 		long[] groupIds, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_CPK(groupIds, classPK, start, end,
 			orderByComparator);
@@ -2048,11 +1814,9 @@ public class DDMTemplateUtil {
 	* @param groupIds the group IDs
 	* @param classPK the class p k
 	* @return the matching d d m templates
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByG_CPK(
-		long[] groupIds, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long[] groupIds, long classPK) {
 		return getPersistence().findByG_CPK(groupIds, classPK);
 	}
 
@@ -2068,11 +1832,9 @@ public class DDMTemplateUtil {
 	* @param start the lower bound of the range of d d m templates
 	* @param end the upper bound of the range of d d m templates (not inclusive)
 	* @return the range of matching d d m templates
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByG_CPK(
-		long[] groupIds, long classPK, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long[] groupIds, long classPK, int start, int end) {
 		return getPersistence().findByG_CPK(groupIds, classPK, start, end);
 	}
 
@@ -2089,12 +1851,10 @@ public class DDMTemplateUtil {
 	* @param end the upper bound of the range of d d m templates (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching d d m templates
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByG_CPK(
 		long[] groupIds, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByG_CPK(groupIds, classPK, start, end, orderByComparator);
 	}
@@ -2104,10 +1864,8 @@ public class DDMTemplateUtil {
 	*
 	* @param groupId the group ID
 	* @param classPK the class p k
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByG_CPK(long groupId, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByG_CPK(long groupId, long classPK) {
 		getPersistence().removeByG_CPK(groupId, classPK);
 	}
 
@@ -2117,10 +1875,8 @@ public class DDMTemplateUtil {
 	* @param groupId the group ID
 	* @param classPK the class p k
 	* @return the number of matching d d m templates
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByG_CPK(long groupId, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByG_CPK(long groupId, long classPK) {
 		return getPersistence().countByG_CPK(groupId, classPK);
 	}
 
@@ -2130,10 +1886,8 @@ public class DDMTemplateUtil {
 	* @param groupIds the group IDs
 	* @param classPK the class p k
 	* @return the number of matching d d m templates
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByG_CPK(long[] groupIds, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByG_CPK(long[] groupIds, long classPK) {
 		return getPersistence().countByG_CPK(groupIds, classPK);
 	}
 
@@ -2143,10 +1897,8 @@ public class DDMTemplateUtil {
 	* @param groupId the group ID
 	* @param classPK the class p k
 	* @return the number of matching d d m templates that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int filterCountByG_CPK(long groupId, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int filterCountByG_CPK(long groupId, long classPK) {
 		return getPersistence().filterCountByG_CPK(groupId, classPK);
 	}
 
@@ -2156,10 +1908,8 @@ public class DDMTemplateUtil {
 	* @param groupIds the group IDs
 	* @param classPK the class p k
 	* @return the number of matching d d m templates that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int filterCountByG_CPK(long[] groupIds, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int filterCountByG_CPK(long[] groupIds, long classPK) {
 		return getPersistence().filterCountByG_CPK(groupIds, classPK);
 	}
 
@@ -2170,11 +1920,9 @@ public class DDMTemplateUtil {
 	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @return the matching d d m templates
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByG_C_C(
-		long groupId, long classNameId, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, long classNameId, long classPK) {
 		return getPersistence().findByG_C_C(groupId, classNameId, classPK);
 	}
 
@@ -2191,11 +1939,9 @@ public class DDMTemplateUtil {
 	* @param start the lower bound of the range of d d m templates
 	* @param end the upper bound of the range of d d m templates (not inclusive)
 	* @return the range of matching d d m templates
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByG_C_C(
-		long groupId, long classNameId, long classPK, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, long classNameId, long classPK, int start, int end) {
 		return getPersistence()
 				   .findByG_C_C(groupId, classNameId, classPK, start, end);
 	}
@@ -2214,12 +1960,10 @@ public class DDMTemplateUtil {
 	* @param end the upper bound of the range of d d m templates (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching d d m templates
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByG_C_C(
 		long groupId, long classNameId, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByG_C_C(groupId, classNameId, classPK, start, end,
 			orderByComparator);
@@ -2234,13 +1978,11 @@ public class DDMTemplateUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m template
 	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate findByG_C_C_First(
 		long groupId, long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
 		return getPersistence()
 				   .findByG_C_C_First(groupId, classNameId, classPK,
 			orderByComparator);
@@ -2254,12 +1996,10 @@ public class DDMTemplateUtil {
 	* @param classPK the class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m template, or <code>null</code> if a matching d d m template could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchByG_C_C_First(
 		long groupId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByG_C_C_First(groupId, classNameId, classPK,
 			orderByComparator);
@@ -2274,13 +2014,11 @@ public class DDMTemplateUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m template
 	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate findByG_C_C_Last(
 		long groupId, long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
 		return getPersistence()
 				   .findByG_C_C_Last(groupId, classNameId, classPK,
 			orderByComparator);
@@ -2294,12 +2032,10 @@ public class DDMTemplateUtil {
 	* @param classPK the class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m template, or <code>null</code> if a matching d d m template could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchByG_C_C_Last(
 		long groupId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByG_C_C_Last(groupId, classNameId, classPK,
 			orderByComparator);
@@ -2315,13 +2051,11 @@ public class DDMTemplateUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next d d m template
 	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a d d m template with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate[] findByG_C_C_PrevAndNext(
 		long templateId, long groupId, long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
 		return getPersistence()
 				   .findByG_C_C_PrevAndNext(templateId, groupId, classNameId,
 			classPK, orderByComparator);
@@ -2334,11 +2068,9 @@ public class DDMTemplateUtil {
 	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @return the matching d d m templates that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> filterFindByG_C_C(
-		long groupId, long classNameId, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, long classNameId, long classPK) {
 		return getPersistence().filterFindByG_C_C(groupId, classNameId, classPK);
 	}
 
@@ -2355,11 +2087,9 @@ public class DDMTemplateUtil {
 	* @param start the lower bound of the range of d d m templates
 	* @param end the upper bound of the range of d d m templates (not inclusive)
 	* @return the range of matching d d m templates that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> filterFindByG_C_C(
-		long groupId, long classNameId, long classPK, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, long classNameId, long classPK, int start, int end) {
 		return getPersistence()
 				   .filterFindByG_C_C(groupId, classNameId, classPK, start, end);
 	}
@@ -2378,12 +2108,10 @@ public class DDMTemplateUtil {
 	* @param end the upper bound of the range of d d m templates (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching d d m templates that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> filterFindByG_C_C(
 		long groupId, long classNameId, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_C_C(groupId, classNameId, classPK, start,
 			end, orderByComparator);
@@ -2399,13 +2127,11 @@ public class DDMTemplateUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next d d m template
 	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a d d m template with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate[] filterFindByG_C_C_PrevAndNext(
 		long templateId, long groupId, long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
 		return getPersistence()
 				   .filterFindByG_C_C_PrevAndNext(templateId, groupId,
 			classNameId, classPK, orderByComparator);
@@ -2418,11 +2144,9 @@ public class DDMTemplateUtil {
 	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @return the matching d d m templates that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> filterFindByG_C_C(
-		long[] groupIds, long classNameId, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long[] groupIds, long classNameId, long classPK) {
 		return getPersistence().filterFindByG_C_C(groupIds, classNameId, classPK);
 	}
 
@@ -2439,11 +2163,9 @@ public class DDMTemplateUtil {
 	* @param start the lower bound of the range of d d m templates
 	* @param end the upper bound of the range of d d m templates (not inclusive)
 	* @return the range of matching d d m templates that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> filterFindByG_C_C(
-		long[] groupIds, long classNameId, long classPK, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long[] groupIds, long classNameId, long classPK, int start, int end) {
 		return getPersistence()
 				   .filterFindByG_C_C(groupIds, classNameId, classPK, start, end);
 	}
@@ -2462,12 +2184,10 @@ public class DDMTemplateUtil {
 	* @param end the upper bound of the range of d d m templates (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching d d m templates that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> filterFindByG_C_C(
 		long[] groupIds, long classNameId, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_C_C(groupIds, classNameId, classPK, start,
 			end, orderByComparator);
@@ -2484,11 +2204,9 @@ public class DDMTemplateUtil {
 	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @return the matching d d m templates
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByG_C_C(
-		long[] groupIds, long classNameId, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long[] groupIds, long classNameId, long classPK) {
 		return getPersistence().findByG_C_C(groupIds, classNameId, classPK);
 	}
 
@@ -2505,11 +2223,9 @@ public class DDMTemplateUtil {
 	* @param start the lower bound of the range of d d m templates
 	* @param end the upper bound of the range of d d m templates (not inclusive)
 	* @return the range of matching d d m templates
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByG_C_C(
-		long[] groupIds, long classNameId, long classPK, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long[] groupIds, long classNameId, long classPK, int start, int end) {
 		return getPersistence()
 				   .findByG_C_C(groupIds, classNameId, classPK, start, end);
 	}
@@ -2528,12 +2244,10 @@ public class DDMTemplateUtil {
 	* @param end the upper bound of the range of d d m templates (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching d d m templates
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByG_C_C(
 		long[] groupIds, long classNameId, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByG_C_C(groupIds, classNameId, classPK, start, end,
 			orderByComparator);
@@ -2545,11 +2259,9 @@ public class DDMTemplateUtil {
 	* @param groupId the group ID
 	* @param classNameId the class name ID
 	* @param classPK the class p k
-	* @throws SystemException if a system exception occurred
 	*/
 	public static void removeByG_C_C(long groupId, long classNameId,
-		long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long classPK) {
 		getPersistence().removeByG_C_C(groupId, classNameId, classPK);
 	}
 
@@ -2560,10 +2272,8 @@ public class DDMTemplateUtil {
 	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @return the number of matching d d m templates
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByG_C_C(long groupId, long classNameId, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByG_C_C(long groupId, long classNameId, long classPK) {
 		return getPersistence().countByG_C_C(groupId, classNameId, classPK);
 	}
 
@@ -2574,11 +2284,9 @@ public class DDMTemplateUtil {
 	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @return the number of matching d d m templates
-	* @throws SystemException if a system exception occurred
 	*/
 	public static int countByG_C_C(long[] groupIds, long classNameId,
-		long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long classPK) {
 		return getPersistence().countByG_C_C(groupIds, classNameId, classPK);
 	}
 
@@ -2589,11 +2297,9 @@ public class DDMTemplateUtil {
 	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @return the number of matching d d m templates that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static int filterCountByG_C_C(long groupId, long classNameId,
-		long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long classPK) {
 		return getPersistence().filterCountByG_C_C(groupId, classNameId, classPK);
 	}
 
@@ -2604,11 +2310,9 @@ public class DDMTemplateUtil {
 	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @return the number of matching d d m templates that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static int filterCountByG_C_C(long[] groupIds, long classNameId,
-		long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long classPK) {
 		return getPersistence()
 				   .filterCountByG_C_C(groupIds, classNameId, classPK);
 	}
@@ -2621,12 +2325,10 @@ public class DDMTemplateUtil {
 	* @param templateKey the template key
 	* @return the matching d d m template
 	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate findByG_C_T(
 		long groupId, long classNameId, java.lang.String templateKey)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
 		return getPersistence().findByG_C_T(groupId, classNameId, templateKey);
 	}
 
@@ -2637,11 +2339,9 @@ public class DDMTemplateUtil {
 	* @param classNameId the class name ID
 	* @param templateKey the template key
 	* @return the matching d d m template, or <code>null</code> if a matching d d m template could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchByG_C_T(
-		long groupId, long classNameId, java.lang.String templateKey)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, long classNameId, java.lang.String templateKey) {
 		return getPersistence().fetchByG_C_T(groupId, classNameId, templateKey);
 	}
 
@@ -2653,12 +2353,10 @@ public class DDMTemplateUtil {
 	* @param templateKey the template key
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching d d m template, or <code>null</code> if a matching d d m template could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchByG_C_T(
 		long groupId, long classNameId, java.lang.String templateKey,
-		boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByG_C_T(groupId, classNameId, templateKey,
 			retrieveFromCache);
@@ -2671,12 +2369,10 @@ public class DDMTemplateUtil {
 	* @param classNameId the class name ID
 	* @param templateKey the template key
 	* @return the d d m template that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate removeByG_C_T(
 		long groupId, long classNameId, java.lang.String templateKey)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
 		return getPersistence().removeByG_C_T(groupId, classNameId, templateKey);
 	}
 
@@ -2687,11 +2383,9 @@ public class DDMTemplateUtil {
 	* @param classNameId the class name ID
 	* @param templateKey the template key
 	* @return the number of matching d d m templates
-	* @throws SystemException if a system exception occurred
 	*/
 	public static int countByG_C_T(long groupId, long classNameId,
-		java.lang.String templateKey)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String templateKey) {
 		return getPersistence().countByG_C_T(groupId, classNameId, templateKey);
 	}
 
@@ -2702,11 +2396,9 @@ public class DDMTemplateUtil {
 	* @param classPK the class p k
 	* @param type the type
 	* @return the matching d d m templates
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByC_C_T(
-		long classNameId, long classPK, java.lang.String type)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long classNameId, long classPK, java.lang.String type) {
 		return getPersistence().findByC_C_T(classNameId, classPK, type);
 	}
 
@@ -2723,11 +2415,10 @@ public class DDMTemplateUtil {
 	* @param start the lower bound of the range of d d m templates
 	* @param end the upper bound of the range of d d m templates (not inclusive)
 	* @return the range of matching d d m templates
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByC_C_T(
 		long classNameId, long classPK, java.lang.String type, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return getPersistence()
 				   .findByC_C_T(classNameId, classPK, type, start, end);
 	}
@@ -2746,13 +2437,11 @@ public class DDMTemplateUtil {
 	* @param end the upper bound of the range of d d m templates (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching d d m templates
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByC_C_T(
 		long classNameId, long classPK, java.lang.String type, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByC_C_T(classNameId, classPK, type, start, end,
 			orderByComparator);
@@ -2767,13 +2456,11 @@ public class DDMTemplateUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m template
 	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate findByC_C_T_First(
 		long classNameId, long classPK, java.lang.String type,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
 		return getPersistence()
 				   .findByC_C_T_First(classNameId, classPK, type,
 			orderByComparator);
@@ -2787,12 +2474,10 @@ public class DDMTemplateUtil {
 	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m template, or <code>null</code> if a matching d d m template could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchByC_C_T_First(
 		long classNameId, long classPK, java.lang.String type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByC_C_T_First(classNameId, classPK, type,
 			orderByComparator);
@@ -2807,13 +2492,11 @@ public class DDMTemplateUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m template
 	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate findByC_C_T_Last(
 		long classNameId, long classPK, java.lang.String type,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
 		return getPersistence()
 				   .findByC_C_T_Last(classNameId, classPK, type,
 			orderByComparator);
@@ -2827,12 +2510,10 @@ public class DDMTemplateUtil {
 	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m template, or <code>null</code> if a matching d d m template could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchByC_C_T_Last(
 		long classNameId, long classPK, java.lang.String type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByC_C_T_Last(classNameId, classPK, type,
 			orderByComparator);
@@ -2848,13 +2529,11 @@ public class DDMTemplateUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next d d m template
 	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a d d m template with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate[] findByC_C_T_PrevAndNext(
 		long templateId, long classNameId, long classPK, java.lang.String type,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
 		return getPersistence()
 				   .findByC_C_T_PrevAndNext(templateId, classNameId, classPK,
 			type, orderByComparator);
@@ -2866,11 +2545,9 @@ public class DDMTemplateUtil {
 	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @param type the type
-	* @throws SystemException if a system exception occurred
 	*/
 	public static void removeByC_C_T(long classNameId, long classPK,
-		java.lang.String type)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String type) {
 		getPersistence().removeByC_C_T(classNameId, classPK, type);
 	}
 
@@ -2881,11 +2558,9 @@ public class DDMTemplateUtil {
 	* @param classPK the class p k
 	* @param type the type
 	* @return the number of matching d d m templates
-	* @throws SystemException if a system exception occurred
 	*/
 	public static int countByC_C_T(long classNameId, long classPK,
-		java.lang.String type)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String type) {
 		return getPersistence().countByC_C_T(classNameId, classPK, type);
 	}
 
@@ -2897,11 +2572,9 @@ public class DDMTemplateUtil {
 	* @param classPK the class p k
 	* @param type the type
 	* @return the matching d d m templates
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByG_C_C_T(
-		long groupId, long classNameId, long classPK, java.lang.String type)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, long classNameId, long classPK, java.lang.String type) {
 		return getPersistence()
 				   .findByG_C_C_T(groupId, classNameId, classPK, type);
 	}
@@ -2920,12 +2593,10 @@ public class DDMTemplateUtil {
 	* @param start the lower bound of the range of d d m templates
 	* @param end the upper bound of the range of d d m templates (not inclusive)
 	* @return the range of matching d d m templates
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByG_C_C_T(
 		long groupId, long classNameId, long classPK, java.lang.String type,
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return getPersistence()
 				   .findByG_C_C_T(groupId, classNameId, classPK, type, start,
 			end);
@@ -2946,13 +2617,11 @@ public class DDMTemplateUtil {
 	* @param end the upper bound of the range of d d m templates (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching d d m templates
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByG_C_C_T(
 		long groupId, long classNameId, long classPK, java.lang.String type,
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByG_C_C_T(groupId, classNameId, classPK, type, start,
 			end, orderByComparator);
@@ -2968,13 +2637,11 @@ public class DDMTemplateUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m template
 	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate findByG_C_C_T_First(
 		long groupId, long classNameId, long classPK, java.lang.String type,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
 		return getPersistence()
 				   .findByG_C_C_T_First(groupId, classNameId, classPK, type,
 			orderByComparator);
@@ -2989,12 +2656,10 @@ public class DDMTemplateUtil {
 	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m template, or <code>null</code> if a matching d d m template could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchByG_C_C_T_First(
 		long groupId, long classNameId, long classPK, java.lang.String type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByG_C_C_T_First(groupId, classNameId, classPK, type,
 			orderByComparator);
@@ -3010,13 +2675,11 @@ public class DDMTemplateUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m template
 	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate findByG_C_C_T_Last(
 		long groupId, long classNameId, long classPK, java.lang.String type,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
 		return getPersistence()
 				   .findByG_C_C_T_Last(groupId, classNameId, classPK, type,
 			orderByComparator);
@@ -3031,12 +2694,10 @@ public class DDMTemplateUtil {
 	* @param type the type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m template, or <code>null</code> if a matching d d m template could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchByG_C_C_T_Last(
 		long groupId, long classNameId, long classPK, java.lang.String type,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByG_C_C_T_Last(groupId, classNameId, classPK, type,
 			orderByComparator);
@@ -3053,14 +2714,12 @@ public class DDMTemplateUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next d d m template
 	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a d d m template with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate[] findByG_C_C_T_PrevAndNext(
 		long templateId, long groupId, long classNameId, long classPK,
 		java.lang.String type,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
 		return getPersistence()
 				   .findByG_C_C_T_PrevAndNext(templateId, groupId, classNameId,
 			classPK, type, orderByComparator);
@@ -3074,11 +2733,9 @@ public class DDMTemplateUtil {
 	* @param classPK the class p k
 	* @param type the type
 	* @return the matching d d m templates that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> filterFindByG_C_C_T(
-		long groupId, long classNameId, long classPK, java.lang.String type)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, long classNameId, long classPK, java.lang.String type) {
 		return getPersistence()
 				   .filterFindByG_C_C_T(groupId, classNameId, classPK, type);
 	}
@@ -3097,12 +2754,10 @@ public class DDMTemplateUtil {
 	* @param start the lower bound of the range of d d m templates
 	* @param end the upper bound of the range of d d m templates (not inclusive)
 	* @return the range of matching d d m templates that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> filterFindByG_C_C_T(
 		long groupId, long classNameId, long classPK, java.lang.String type,
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return getPersistence()
 				   .filterFindByG_C_C_T(groupId, classNameId, classPK, type,
 			start, end);
@@ -3123,13 +2778,11 @@ public class DDMTemplateUtil {
 	* @param end the upper bound of the range of d d m templates (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching d d m templates that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> filterFindByG_C_C_T(
 		long groupId, long classNameId, long classPK, java.lang.String type,
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_C_C_T(groupId, classNameId, classPK, type,
 			start, end, orderByComparator);
@@ -3146,14 +2799,12 @@ public class DDMTemplateUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next d d m template
 	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a d d m template with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate[] filterFindByG_C_C_T_PrevAndNext(
 		long templateId, long groupId, long classNameId, long classPK,
 		java.lang.String type,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
 		return getPersistence()
 				   .filterFindByG_C_C_T_PrevAndNext(templateId, groupId,
 			classNameId, classPK, type, orderByComparator);
@@ -3166,11 +2817,9 @@ public class DDMTemplateUtil {
 	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @param type the type
-	* @throws SystemException if a system exception occurred
 	*/
 	public static void removeByG_C_C_T(long groupId, long classNameId,
-		long classPK, java.lang.String type)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long classPK, java.lang.String type) {
 		getPersistence().removeByG_C_C_T(groupId, classNameId, classPK, type);
 	}
 
@@ -3182,11 +2831,9 @@ public class DDMTemplateUtil {
 	* @param classPK the class p k
 	* @param type the type
 	* @return the number of matching d d m templates
-	* @throws SystemException if a system exception occurred
 	*/
 	public static int countByG_C_C_T(long groupId, long classNameId,
-		long classPK, java.lang.String type)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long classPK, java.lang.String type) {
 		return getPersistence()
 				   .countByG_C_C_T(groupId, classNameId, classPK, type);
 	}
@@ -3199,11 +2846,9 @@ public class DDMTemplateUtil {
 	* @param classPK the class p k
 	* @param type the type
 	* @return the number of matching d d m templates that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static int filterCountByG_C_C_T(long groupId, long classNameId,
-		long classPK, java.lang.String type)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long classPK, java.lang.String type) {
 		return getPersistence()
 				   .filterCountByG_C_C_T(groupId, classNameId, classPK, type);
 	}
@@ -3217,12 +2862,10 @@ public class DDMTemplateUtil {
 	* @param type the type
 	* @param mode the mode
 	* @return the matching d d m templates
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByG_C_C_T_M(
 		long groupId, long classNameId, long classPK, java.lang.String type,
-		java.lang.String mode)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String mode) {
 		return getPersistence()
 				   .findByG_C_C_T_M(groupId, classNameId, classPK, type, mode);
 	}
@@ -3242,12 +2885,10 @@ public class DDMTemplateUtil {
 	* @param start the lower bound of the range of d d m templates
 	* @param end the upper bound of the range of d d m templates (not inclusive)
 	* @return the range of matching d d m templates
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByG_C_C_T_M(
 		long groupId, long classNameId, long classPK, java.lang.String type,
-		java.lang.String mode, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String mode, int start, int end) {
 		return getPersistence()
 				   .findByG_C_C_T_M(groupId, classNameId, classPK, type, mode,
 			start, end);
@@ -3269,13 +2910,11 @@ public class DDMTemplateUtil {
 	* @param end the upper bound of the range of d d m templates (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching d d m templates
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findByG_C_C_T_M(
 		long groupId, long classNameId, long classPK, java.lang.String type,
 		java.lang.String mode, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByG_C_C_T_M(groupId, classNameId, classPK, type, mode,
 			start, end, orderByComparator);
@@ -3292,14 +2931,12 @@ public class DDMTemplateUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m template
 	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate findByG_C_C_T_M_First(
 		long groupId, long classNameId, long classPK, java.lang.String type,
 		java.lang.String mode,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
 		return getPersistence()
 				   .findByG_C_C_T_M_First(groupId, classNameId, classPK, type,
 			mode, orderByComparator);
@@ -3315,13 +2952,11 @@ public class DDMTemplateUtil {
 	* @param mode the mode
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d m template, or <code>null</code> if a matching d d m template could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchByG_C_C_T_M_First(
 		long groupId, long classNameId, long classPK, java.lang.String type,
 		java.lang.String mode,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByG_C_C_T_M_First(groupId, classNameId, classPK, type,
 			mode, orderByComparator);
@@ -3338,14 +2973,12 @@ public class DDMTemplateUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m template
 	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a matching d d m template could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate findByG_C_C_T_M_Last(
 		long groupId, long classNameId, long classPK, java.lang.String type,
 		java.lang.String mode,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
 		return getPersistence()
 				   .findByG_C_C_T_M_Last(groupId, classNameId, classPK, type,
 			mode, orderByComparator);
@@ -3361,13 +2994,11 @@ public class DDMTemplateUtil {
 	* @param mode the mode
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d m template, or <code>null</code> if a matching d d m template could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchByG_C_C_T_M_Last(
 		long groupId, long classNameId, long classPK, java.lang.String type,
 		java.lang.String mode,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByG_C_C_T_M_Last(groupId, classNameId, classPK, type,
 			mode, orderByComparator);
@@ -3385,14 +3016,12 @@ public class DDMTemplateUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next d d m template
 	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a d d m template with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate[] findByG_C_C_T_M_PrevAndNext(
 		long templateId, long groupId, long classNameId, long classPK,
 		java.lang.String type, java.lang.String mode,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
 		return getPersistence()
 				   .findByG_C_C_T_M_PrevAndNext(templateId, groupId,
 			classNameId, classPK, type, mode, orderByComparator);
@@ -3407,12 +3036,10 @@ public class DDMTemplateUtil {
 	* @param type the type
 	* @param mode the mode
 	* @return the matching d d m templates that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> filterFindByG_C_C_T_M(
 		long groupId, long classNameId, long classPK, java.lang.String type,
-		java.lang.String mode)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String mode) {
 		return getPersistence()
 				   .filterFindByG_C_C_T_M(groupId, classNameId, classPK, type,
 			mode);
@@ -3433,12 +3060,10 @@ public class DDMTemplateUtil {
 	* @param start the lower bound of the range of d d m templates
 	* @param end the upper bound of the range of d d m templates (not inclusive)
 	* @return the range of matching d d m templates that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> filterFindByG_C_C_T_M(
 		long groupId, long classNameId, long classPK, java.lang.String type,
-		java.lang.String mode, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String mode, int start, int end) {
 		return getPersistence()
 				   .filterFindByG_C_C_T_M(groupId, classNameId, classPK, type,
 			mode, start, end);
@@ -3460,13 +3085,11 @@ public class DDMTemplateUtil {
 	* @param end the upper bound of the range of d d m templates (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching d d m templates that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> filterFindByG_C_C_T_M(
 		long groupId, long classNameId, long classPK, java.lang.String type,
 		java.lang.String mode, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_C_C_T_M(groupId, classNameId, classPK, type,
 			mode, start, end, orderByComparator);
@@ -3484,14 +3107,12 @@ public class DDMTemplateUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next d d m template
 	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a d d m template with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate[] filterFindByG_C_C_T_M_PrevAndNext(
 		long templateId, long groupId, long classNameId, long classPK,
 		java.lang.String type, java.lang.String mode,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
 		return getPersistence()
 				   .filterFindByG_C_C_T_M_PrevAndNext(templateId, groupId,
 			classNameId, classPK, type, mode, orderByComparator);
@@ -3505,11 +3126,9 @@ public class DDMTemplateUtil {
 	* @param classPK the class p k
 	* @param type the type
 	* @param mode the mode
-	* @throws SystemException if a system exception occurred
 	*/
 	public static void removeByG_C_C_T_M(long groupId, long classNameId,
-		long classPK, java.lang.String type, java.lang.String mode)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long classPK, java.lang.String type, java.lang.String mode) {
 		getPersistence()
 			.removeByG_C_C_T_M(groupId, classNameId, classPK, type, mode);
 	}
@@ -3523,11 +3142,9 @@ public class DDMTemplateUtil {
 	* @param type the type
 	* @param mode the mode
 	* @return the number of matching d d m templates
-	* @throws SystemException if a system exception occurred
 	*/
 	public static int countByG_C_C_T_M(long groupId, long classNameId,
-		long classPK, java.lang.String type, java.lang.String mode)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long classPK, java.lang.String type, java.lang.String mode) {
 		return getPersistence()
 				   .countByG_C_C_T_M(groupId, classNameId, classPK, type, mode);
 	}
@@ -3541,11 +3158,9 @@ public class DDMTemplateUtil {
 	* @param type the type
 	* @param mode the mode
 	* @return the number of matching d d m templates that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static int filterCountByG_C_C_T_M(long groupId, long classNameId,
-		long classPK, java.lang.String type, java.lang.String mode)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long classPK, java.lang.String type, java.lang.String mode) {
 		return getPersistence()
 				   .filterCountByG_C_C_T_M(groupId, classNameId, classPK, type,
 			mode);
@@ -3588,18 +3203,15 @@ public class DDMTemplateUtil {
 	* @param templateId the primary key of the d d m template
 	* @return the d d m template that was removed
 	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a d d m template with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate remove(
 		long templateId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
 		return getPersistence().remove(templateId);
 	}
 
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate updateImpl(
-		com.liferay.portlet.dynamicdatamapping.model.DDMTemplate ddmTemplate)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.dynamicdatamapping.model.DDMTemplate ddmTemplate) {
 		return getPersistence().updateImpl(ddmTemplate);
 	}
 
@@ -3609,12 +3221,10 @@ public class DDMTemplateUtil {
 	* @param templateId the primary key of the d d m template
 	* @return the d d m template
 	* @throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException if a d d m template with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate findByPrimaryKey(
 		long templateId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
+		throws com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException {
 		return getPersistence().findByPrimaryKey(templateId);
 	}
 
@@ -3623,11 +3233,9 @@ public class DDMTemplateUtil {
 	*
 	* @param templateId the primary key of the d d m template
 	* @return the d d m template, or <code>null</code> if a d d m template with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate fetchByPrimaryKey(
-		long templateId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long templateId) {
 		return getPersistence().fetchByPrimaryKey(templateId);
 	}
 
@@ -3635,10 +3243,8 @@ public class DDMTemplateUtil {
 	* Returns all the d d m templates.
 	*
 	* @return the d d m templates
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findAll() {
 		return getPersistence().findAll();
 	}
 
@@ -3652,11 +3258,9 @@ public class DDMTemplateUtil {
 	* @param start the lower bound of the range of d d m templates
 	* @param end the upper bound of the range of d d m templates (not inclusive)
 	* @return the range of d d m templates
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findAll(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
@@ -3671,22 +3275,17 @@ public class DDMTemplateUtil {
 	* @param end the upper bound of the range of d d m templates (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of d d m templates
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMTemplate> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
 	/**
 	* Removes all the d d m templates from the database.
-	*
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeAll() {
 		getPersistence().removeAll();
 	}
 
@@ -3694,10 +3293,8 @@ public class DDMTemplateUtil {
 	* Returns the number of d d m templates.
 	*
 	* @return the number of d d m templates
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countAll() {
 		return getPersistence().countAll();
 	}
 

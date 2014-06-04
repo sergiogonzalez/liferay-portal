@@ -15,7 +15,6 @@
 package com.liferay.portlet.messageboards.service.persistence;
 
 import com.liferay.portal.kernel.dao.orm.BaseActionableDynamicQuery;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 
 import com.liferay.portlet.messageboards.model.MBStatsUser;
@@ -29,7 +28,7 @@ import com.liferay.portlet.messageboards.service.MBStatsUserLocalServiceUtil;
 @Deprecated
 public abstract class MBStatsUserActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
-	public MBStatsUserActionableDynamicQuery() throws SystemException {
+	public MBStatsUserActionableDynamicQuery() {
 		setBaseLocalService(MBStatsUserLocalServiceUtil.getService());
 		setClass(MBStatsUser.class);
 

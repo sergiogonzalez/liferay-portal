@@ -310,11 +310,9 @@ public class OrganizationWrapper implements Organization,
 	* Returns the user uuid of this organization.
 	*
 	* @return the user uuid of this organization
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public java.lang.String getUserUuid()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public java.lang.String getUserUuid() {
 		return _organization.getUserUuid();
 	}
 
@@ -697,21 +695,18 @@ public class OrganizationWrapper implements Organization,
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void persist() {
 		_organization.persist();
 	}
 
 	@Override
 	public java.lang.String buildTreePath()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _organization.buildTreePath();
 	}
 
 	@Override
-	public void updateTreePath(java.lang.String treePath)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void updateTreePath(java.lang.String treePath) {
 		_organization.updateTreePath(treePath);
 	}
 

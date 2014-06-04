@@ -396,8 +396,7 @@ public class DLContentWrapper implements DLContent, ModelWrapper<DLContent> {
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void persist() {
 		_dlContent.persist();
 	}
 

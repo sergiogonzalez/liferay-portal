@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 import com.liferay.portal.service.ServiceContext;
@@ -64,8 +63,7 @@ public class ExpandoValueUtil {
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#countWithDynamicQuery(DynamicQuery)
 	 */
-	public static long countWithDynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public static long countWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return getPersistence().countWithDynamicQuery(dynamicQuery);
 	}
 
@@ -73,7 +71,7 @@ public class ExpandoValueUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery)
 	 */
 	public static List<ExpandoValue> findWithDynamicQuery(
-		DynamicQuery dynamicQuery) throws SystemException {
+		DynamicQuery dynamicQuery) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -81,8 +79,7 @@ public class ExpandoValueUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
 	 */
 	public static List<ExpandoValue> findWithDynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+		DynamicQuery dynamicQuery, int start, int end) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -91,7 +88,7 @@ public class ExpandoValueUtil {
 	 */
 	public static List<ExpandoValue> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -100,8 +97,7 @@ public class ExpandoValueUtil {
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static ExpandoValue update(ExpandoValue expandoValue)
-		throws SystemException {
+	public static ExpandoValue update(ExpandoValue expandoValue) {
 		return getPersistence().update(expandoValue);
 	}
 
@@ -109,7 +105,7 @@ public class ExpandoValueUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
 	public static ExpandoValue update(ExpandoValue expandoValue,
-		ServiceContext serviceContext) throws SystemException {
+		ServiceContext serviceContext) {
 		return getPersistence().update(expandoValue, serviceContext);
 	}
 
@@ -118,11 +114,9 @@ public class ExpandoValueUtil {
 	*
 	* @param tableId the table ID
 	* @return the matching expando values
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.expando.model.ExpandoValue> findByTableId(
-		long tableId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long tableId) {
 		return getPersistence().findByTableId(tableId);
 	}
 
@@ -137,11 +131,9 @@ public class ExpandoValueUtil {
 	* @param start the lower bound of the range of expando values
 	* @param end the upper bound of the range of expando values (not inclusive)
 	* @return the range of matching expando values
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.expando.model.ExpandoValue> findByTableId(
-		long tableId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long tableId, int start, int end) {
 		return getPersistence().findByTableId(tableId, start, end);
 	}
 
@@ -157,12 +149,10 @@ public class ExpandoValueUtil {
 	* @param end the upper bound of the range of expando values (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching expando values
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.expando.model.ExpandoValue> findByTableId(
 		long tableId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByTableId(tableId, start, end, orderByComparator);
 	}
@@ -174,13 +164,11 @@ public class ExpandoValueUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching expando value
 	* @throws com.liferay.portlet.expando.NoSuchValueException if a matching expando value could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue findByTableId_First(
 		long tableId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.expando.NoSuchValueException {
+		throws com.liferay.portlet.expando.NoSuchValueException {
 		return getPersistence().findByTableId_First(tableId, orderByComparator);
 	}
 
@@ -190,12 +178,10 @@ public class ExpandoValueUtil {
 	* @param tableId the table ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching expando value, or <code>null</code> if a matching expando value could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue fetchByTableId_First(
 		long tableId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByTableId_First(tableId, orderByComparator);
 	}
 
@@ -206,13 +192,11 @@ public class ExpandoValueUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching expando value
 	* @throws com.liferay.portlet.expando.NoSuchValueException if a matching expando value could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue findByTableId_Last(
 		long tableId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.expando.NoSuchValueException {
+		throws com.liferay.portlet.expando.NoSuchValueException {
 		return getPersistence().findByTableId_Last(tableId, orderByComparator);
 	}
 
@@ -222,12 +206,10 @@ public class ExpandoValueUtil {
 	* @param tableId the table ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching expando value, or <code>null</code> if a matching expando value could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue fetchByTableId_Last(
 		long tableId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByTableId_Last(tableId, orderByComparator);
 	}
 
@@ -239,13 +221,11 @@ public class ExpandoValueUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next expando value
 	* @throws com.liferay.portlet.expando.NoSuchValueException if a expando value with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue[] findByTableId_PrevAndNext(
 		long valueId, long tableId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.expando.NoSuchValueException {
+		throws com.liferay.portlet.expando.NoSuchValueException {
 		return getPersistence()
 				   .findByTableId_PrevAndNext(valueId, tableId,
 			orderByComparator);
@@ -255,10 +235,8 @@ public class ExpandoValueUtil {
 	* Removes all the expando values where tableId = &#63; from the database.
 	*
 	* @param tableId the table ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByTableId(long tableId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByTableId(long tableId) {
 		getPersistence().removeByTableId(tableId);
 	}
 
@@ -267,10 +245,8 @@ public class ExpandoValueUtil {
 	*
 	* @param tableId the table ID
 	* @return the number of matching expando values
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByTableId(long tableId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByTableId(long tableId) {
 		return getPersistence().countByTableId(tableId);
 	}
 
@@ -279,11 +255,9 @@ public class ExpandoValueUtil {
 	*
 	* @param columnId the column ID
 	* @return the matching expando values
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.expando.model.ExpandoValue> findByColumnId(
-		long columnId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long columnId) {
 		return getPersistence().findByColumnId(columnId);
 	}
 
@@ -298,11 +272,9 @@ public class ExpandoValueUtil {
 	* @param start the lower bound of the range of expando values
 	* @param end the upper bound of the range of expando values (not inclusive)
 	* @return the range of matching expando values
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.expando.model.ExpandoValue> findByColumnId(
-		long columnId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long columnId, int start, int end) {
 		return getPersistence().findByColumnId(columnId, start, end);
 	}
 
@@ -318,12 +290,10 @@ public class ExpandoValueUtil {
 	* @param end the upper bound of the range of expando values (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching expando values
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.expando.model.ExpandoValue> findByColumnId(
 		long columnId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByColumnId(columnId, start, end, orderByComparator);
 	}
@@ -335,13 +305,11 @@ public class ExpandoValueUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching expando value
 	* @throws com.liferay.portlet.expando.NoSuchValueException if a matching expando value could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue findByColumnId_First(
 		long columnId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.expando.NoSuchValueException {
+		throws com.liferay.portlet.expando.NoSuchValueException {
 		return getPersistence().findByColumnId_First(columnId, orderByComparator);
 	}
 
@@ -351,12 +319,10 @@ public class ExpandoValueUtil {
 	* @param columnId the column ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching expando value, or <code>null</code> if a matching expando value could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue fetchByColumnId_First(
 		long columnId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByColumnId_First(columnId, orderByComparator);
 	}
@@ -368,13 +334,11 @@ public class ExpandoValueUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching expando value
 	* @throws com.liferay.portlet.expando.NoSuchValueException if a matching expando value could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue findByColumnId_Last(
 		long columnId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.expando.NoSuchValueException {
+		throws com.liferay.portlet.expando.NoSuchValueException {
 		return getPersistence().findByColumnId_Last(columnId, orderByComparator);
 	}
 
@@ -384,12 +348,10 @@ public class ExpandoValueUtil {
 	* @param columnId the column ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching expando value, or <code>null</code> if a matching expando value could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue fetchByColumnId_Last(
 		long columnId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByColumnId_Last(columnId, orderByComparator);
 	}
 
@@ -401,13 +363,11 @@ public class ExpandoValueUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next expando value
 	* @throws com.liferay.portlet.expando.NoSuchValueException if a expando value with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue[] findByColumnId_PrevAndNext(
 		long valueId, long columnId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.expando.NoSuchValueException {
+		throws com.liferay.portlet.expando.NoSuchValueException {
 		return getPersistence()
 				   .findByColumnId_PrevAndNext(valueId, columnId,
 			orderByComparator);
@@ -417,10 +377,8 @@ public class ExpandoValueUtil {
 	* Removes all the expando values where columnId = &#63; from the database.
 	*
 	* @param columnId the column ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByColumnId(long columnId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByColumnId(long columnId) {
 		getPersistence().removeByColumnId(columnId);
 	}
 
@@ -429,10 +387,8 @@ public class ExpandoValueUtil {
 	*
 	* @param columnId the column ID
 	* @return the number of matching expando values
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByColumnId(long columnId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByColumnId(long columnId) {
 		return getPersistence().countByColumnId(columnId);
 	}
 
@@ -441,10 +397,9 @@ public class ExpandoValueUtil {
 	*
 	* @param rowId the row ID
 	* @return the matching expando values
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.expando.model.ExpandoValue> findByRowId(
-		long rowId) throws com.liferay.portal.kernel.exception.SystemException {
+		long rowId) {
 		return getPersistence().findByRowId(rowId);
 	}
 
@@ -459,11 +414,9 @@ public class ExpandoValueUtil {
 	* @param start the lower bound of the range of expando values
 	* @param end the upper bound of the range of expando values (not inclusive)
 	* @return the range of matching expando values
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.expando.model.ExpandoValue> findByRowId(
-		long rowId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long rowId, int start, int end) {
 		return getPersistence().findByRowId(rowId, start, end);
 	}
 
@@ -479,12 +432,10 @@ public class ExpandoValueUtil {
 	* @param end the upper bound of the range of expando values (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching expando values
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.expando.model.ExpandoValue> findByRowId(
 		long rowId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().findByRowId(rowId, start, end, orderByComparator);
 	}
 
@@ -495,13 +446,11 @@ public class ExpandoValueUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching expando value
 	* @throws com.liferay.portlet.expando.NoSuchValueException if a matching expando value could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue findByRowId_First(
 		long rowId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.expando.NoSuchValueException {
+		throws com.liferay.portlet.expando.NoSuchValueException {
 		return getPersistence().findByRowId_First(rowId, orderByComparator);
 	}
 
@@ -511,12 +460,10 @@ public class ExpandoValueUtil {
 	* @param rowId the row ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching expando value, or <code>null</code> if a matching expando value could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue fetchByRowId_First(
 		long rowId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByRowId_First(rowId, orderByComparator);
 	}
 
@@ -527,13 +474,11 @@ public class ExpandoValueUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching expando value
 	* @throws com.liferay.portlet.expando.NoSuchValueException if a matching expando value could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue findByRowId_Last(
 		long rowId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.expando.NoSuchValueException {
+		throws com.liferay.portlet.expando.NoSuchValueException {
 		return getPersistence().findByRowId_Last(rowId, orderByComparator);
 	}
 
@@ -543,12 +488,10 @@ public class ExpandoValueUtil {
 	* @param rowId the row ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching expando value, or <code>null</code> if a matching expando value could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue fetchByRowId_Last(
 		long rowId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByRowId_Last(rowId, orderByComparator);
 	}
 
@@ -560,13 +503,11 @@ public class ExpandoValueUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next expando value
 	* @throws com.liferay.portlet.expando.NoSuchValueException if a expando value with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue[] findByRowId_PrevAndNext(
 		long valueId, long rowId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.expando.NoSuchValueException {
+		throws com.liferay.portlet.expando.NoSuchValueException {
 		return getPersistence()
 				   .findByRowId_PrevAndNext(valueId, rowId, orderByComparator);
 	}
@@ -575,10 +516,8 @@ public class ExpandoValueUtil {
 	* Removes all the expando values where rowId = &#63; from the database.
 	*
 	* @param rowId the row ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByRowId(long rowId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByRowId(long rowId) {
 		getPersistence().removeByRowId(rowId);
 	}
 
@@ -587,10 +526,8 @@ public class ExpandoValueUtil {
 	*
 	* @param rowId the row ID
 	* @return the number of matching expando values
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByRowId(long rowId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByRowId(long rowId) {
 		return getPersistence().countByRowId(rowId);
 	}
 
@@ -600,11 +537,9 @@ public class ExpandoValueUtil {
 	* @param tableId the table ID
 	* @param columnId the column ID
 	* @return the matching expando values
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.expando.model.ExpandoValue> findByT_C(
-		long tableId, long columnId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long tableId, long columnId) {
 		return getPersistence().findByT_C(tableId, columnId);
 	}
 
@@ -620,11 +555,9 @@ public class ExpandoValueUtil {
 	* @param start the lower bound of the range of expando values
 	* @param end the upper bound of the range of expando values (not inclusive)
 	* @return the range of matching expando values
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.expando.model.ExpandoValue> findByT_C(
-		long tableId, long columnId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long tableId, long columnId, int start, int end) {
 		return getPersistence().findByT_C(tableId, columnId, start, end);
 	}
 
@@ -641,12 +574,10 @@ public class ExpandoValueUtil {
 	* @param end the upper bound of the range of expando values (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching expando values
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.expando.model.ExpandoValue> findByT_C(
 		long tableId, long columnId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByT_C(tableId, columnId, start, end, orderByComparator);
 	}
@@ -659,13 +590,11 @@ public class ExpandoValueUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching expando value
 	* @throws com.liferay.portlet.expando.NoSuchValueException if a matching expando value could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue findByT_C_First(
 		long tableId, long columnId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.expando.NoSuchValueException {
+		throws com.liferay.portlet.expando.NoSuchValueException {
 		return getPersistence()
 				   .findByT_C_First(tableId, columnId, orderByComparator);
 	}
@@ -677,12 +606,10 @@ public class ExpandoValueUtil {
 	* @param columnId the column ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching expando value, or <code>null</code> if a matching expando value could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue fetchByT_C_First(
 		long tableId, long columnId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByT_C_First(tableId, columnId, orderByComparator);
 	}
@@ -695,13 +622,11 @@ public class ExpandoValueUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching expando value
 	* @throws com.liferay.portlet.expando.NoSuchValueException if a matching expando value could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue findByT_C_Last(
 		long tableId, long columnId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.expando.NoSuchValueException {
+		throws com.liferay.portlet.expando.NoSuchValueException {
 		return getPersistence()
 				   .findByT_C_Last(tableId, columnId, orderByComparator);
 	}
@@ -713,12 +638,10 @@ public class ExpandoValueUtil {
 	* @param columnId the column ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching expando value, or <code>null</code> if a matching expando value could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue fetchByT_C_Last(
 		long tableId, long columnId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByT_C_Last(tableId, columnId, orderByComparator);
 	}
@@ -732,13 +655,11 @@ public class ExpandoValueUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next expando value
 	* @throws com.liferay.portlet.expando.NoSuchValueException if a expando value with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue[] findByT_C_PrevAndNext(
 		long valueId, long tableId, long columnId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.expando.NoSuchValueException {
+		throws com.liferay.portlet.expando.NoSuchValueException {
 		return getPersistence()
 				   .findByT_C_PrevAndNext(valueId, tableId, columnId,
 			orderByComparator);
@@ -749,10 +670,8 @@ public class ExpandoValueUtil {
 	*
 	* @param tableId the table ID
 	* @param columnId the column ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByT_C(long tableId, long columnId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByT_C(long tableId, long columnId) {
 		getPersistence().removeByT_C(tableId, columnId);
 	}
 
@@ -762,10 +681,8 @@ public class ExpandoValueUtil {
 	* @param tableId the table ID
 	* @param columnId the column ID
 	* @return the number of matching expando values
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByT_C(long tableId, long columnId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByT_C(long tableId, long columnId) {
 		return getPersistence().countByT_C(tableId, columnId);
 	}
 
@@ -775,11 +692,9 @@ public class ExpandoValueUtil {
 	* @param tableId the table ID
 	* @param classPK the class p k
 	* @return the matching expando values
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.expando.model.ExpandoValue> findByT_CPK(
-		long tableId, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long tableId, long classPK) {
 		return getPersistence().findByT_CPK(tableId, classPK);
 	}
 
@@ -795,11 +710,9 @@ public class ExpandoValueUtil {
 	* @param start the lower bound of the range of expando values
 	* @param end the upper bound of the range of expando values (not inclusive)
 	* @return the range of matching expando values
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.expando.model.ExpandoValue> findByT_CPK(
-		long tableId, long classPK, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long tableId, long classPK, int start, int end) {
 		return getPersistence().findByT_CPK(tableId, classPK, start, end);
 	}
 
@@ -816,12 +729,10 @@ public class ExpandoValueUtil {
 	* @param end the upper bound of the range of expando values (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching expando values
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.expando.model.ExpandoValue> findByT_CPK(
 		long tableId, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByT_CPK(tableId, classPK, start, end, orderByComparator);
 	}
@@ -834,13 +745,11 @@ public class ExpandoValueUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching expando value
 	* @throws com.liferay.portlet.expando.NoSuchValueException if a matching expando value could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue findByT_CPK_First(
 		long tableId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.expando.NoSuchValueException {
+		throws com.liferay.portlet.expando.NoSuchValueException {
 		return getPersistence()
 				   .findByT_CPK_First(tableId, classPK, orderByComparator);
 	}
@@ -852,12 +761,10 @@ public class ExpandoValueUtil {
 	* @param classPK the class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching expando value, or <code>null</code> if a matching expando value could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue fetchByT_CPK_First(
 		long tableId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByT_CPK_First(tableId, classPK, orderByComparator);
 	}
@@ -870,13 +777,11 @@ public class ExpandoValueUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching expando value
 	* @throws com.liferay.portlet.expando.NoSuchValueException if a matching expando value could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue findByT_CPK_Last(
 		long tableId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.expando.NoSuchValueException {
+		throws com.liferay.portlet.expando.NoSuchValueException {
 		return getPersistence()
 				   .findByT_CPK_Last(tableId, classPK, orderByComparator);
 	}
@@ -888,12 +793,10 @@ public class ExpandoValueUtil {
 	* @param classPK the class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching expando value, or <code>null</code> if a matching expando value could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue fetchByT_CPK_Last(
 		long tableId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByT_CPK_Last(tableId, classPK, orderByComparator);
 	}
@@ -907,13 +810,11 @@ public class ExpandoValueUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next expando value
 	* @throws com.liferay.portlet.expando.NoSuchValueException if a expando value with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue[] findByT_CPK_PrevAndNext(
 		long valueId, long tableId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.expando.NoSuchValueException {
+		throws com.liferay.portlet.expando.NoSuchValueException {
 		return getPersistence()
 				   .findByT_CPK_PrevAndNext(valueId, tableId, classPK,
 			orderByComparator);
@@ -924,10 +825,8 @@ public class ExpandoValueUtil {
 	*
 	* @param tableId the table ID
 	* @param classPK the class p k
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByT_CPK(long tableId, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByT_CPK(long tableId, long classPK) {
 		getPersistence().removeByT_CPK(tableId, classPK);
 	}
 
@@ -937,10 +836,8 @@ public class ExpandoValueUtil {
 	* @param tableId the table ID
 	* @param classPK the class p k
 	* @return the number of matching expando values
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByT_CPK(long tableId, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByT_CPK(long tableId, long classPK) {
 		return getPersistence().countByT_CPK(tableId, classPK);
 	}
 
@@ -950,11 +847,9 @@ public class ExpandoValueUtil {
 	* @param tableId the table ID
 	* @param rowId the row ID
 	* @return the matching expando values
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.expando.model.ExpandoValue> findByT_R(
-		long tableId, long rowId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long tableId, long rowId) {
 		return getPersistence().findByT_R(tableId, rowId);
 	}
 
@@ -970,11 +865,9 @@ public class ExpandoValueUtil {
 	* @param start the lower bound of the range of expando values
 	* @param end the upper bound of the range of expando values (not inclusive)
 	* @return the range of matching expando values
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.expando.model.ExpandoValue> findByT_R(
-		long tableId, long rowId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long tableId, long rowId, int start, int end) {
 		return getPersistence().findByT_R(tableId, rowId, start, end);
 	}
 
@@ -991,12 +884,10 @@ public class ExpandoValueUtil {
 	* @param end the upper bound of the range of expando values (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching expando values
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.expando.model.ExpandoValue> findByT_R(
 		long tableId, long rowId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByT_R(tableId, rowId, start, end, orderByComparator);
 	}
@@ -1009,13 +900,11 @@ public class ExpandoValueUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching expando value
 	* @throws com.liferay.portlet.expando.NoSuchValueException if a matching expando value could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue findByT_R_First(
 		long tableId, long rowId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.expando.NoSuchValueException {
+		throws com.liferay.portlet.expando.NoSuchValueException {
 		return getPersistence()
 				   .findByT_R_First(tableId, rowId, orderByComparator);
 	}
@@ -1027,12 +916,10 @@ public class ExpandoValueUtil {
 	* @param rowId the row ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching expando value, or <code>null</code> if a matching expando value could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue fetchByT_R_First(
 		long tableId, long rowId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByT_R_First(tableId, rowId, orderByComparator);
 	}
@@ -1045,13 +932,11 @@ public class ExpandoValueUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching expando value
 	* @throws com.liferay.portlet.expando.NoSuchValueException if a matching expando value could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue findByT_R_Last(
 		long tableId, long rowId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.expando.NoSuchValueException {
+		throws com.liferay.portlet.expando.NoSuchValueException {
 		return getPersistence().findByT_R_Last(tableId, rowId, orderByComparator);
 	}
 
@@ -1062,12 +947,10 @@ public class ExpandoValueUtil {
 	* @param rowId the row ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching expando value, or <code>null</code> if a matching expando value could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue fetchByT_R_Last(
 		long tableId, long rowId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByT_R_Last(tableId, rowId, orderByComparator);
 	}
@@ -1081,13 +964,11 @@ public class ExpandoValueUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next expando value
 	* @throws com.liferay.portlet.expando.NoSuchValueException if a expando value with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue[] findByT_R_PrevAndNext(
 		long valueId, long tableId, long rowId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.expando.NoSuchValueException {
+		throws com.liferay.portlet.expando.NoSuchValueException {
 		return getPersistence()
 				   .findByT_R_PrevAndNext(valueId, tableId, rowId,
 			orderByComparator);
@@ -1098,10 +979,8 @@ public class ExpandoValueUtil {
 	*
 	* @param tableId the table ID
 	* @param rowId the row ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByT_R(long tableId, long rowId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByT_R(long tableId, long rowId) {
 		getPersistence().removeByT_R(tableId, rowId);
 	}
 
@@ -1111,10 +990,8 @@ public class ExpandoValueUtil {
 	* @param tableId the table ID
 	* @param rowId the row ID
 	* @return the number of matching expando values
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByT_R(long tableId, long rowId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByT_R(long tableId, long rowId) {
 		return getPersistence().countByT_R(tableId, rowId);
 	}
 
@@ -1125,12 +1002,10 @@ public class ExpandoValueUtil {
 	* @param rowId the row ID
 	* @return the matching expando value
 	* @throws com.liferay.portlet.expando.NoSuchValueException if a matching expando value could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue findByC_R(
 		long columnId, long rowId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.expando.NoSuchValueException {
+		throws com.liferay.portlet.expando.NoSuchValueException {
 		return getPersistence().findByC_R(columnId, rowId);
 	}
 
@@ -1140,11 +1015,9 @@ public class ExpandoValueUtil {
 	* @param columnId the column ID
 	* @param rowId the row ID
 	* @return the matching expando value, or <code>null</code> if a matching expando value could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue fetchByC_R(
-		long columnId, long rowId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long columnId, long rowId) {
 		return getPersistence().fetchByC_R(columnId, rowId);
 	}
 
@@ -1155,11 +1028,9 @@ public class ExpandoValueUtil {
 	* @param rowId the row ID
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching expando value, or <code>null</code> if a matching expando value could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue fetchByC_R(
-		long columnId, long rowId, boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long columnId, long rowId, boolean retrieveFromCache) {
 		return getPersistence().fetchByC_R(columnId, rowId, retrieveFromCache);
 	}
 
@@ -1169,12 +1040,10 @@ public class ExpandoValueUtil {
 	* @param columnId the column ID
 	* @param rowId the row ID
 	* @return the expando value that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue removeByC_R(
 		long columnId, long rowId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.expando.NoSuchValueException {
+		throws com.liferay.portlet.expando.NoSuchValueException {
 		return getPersistence().removeByC_R(columnId, rowId);
 	}
 
@@ -1184,10 +1053,8 @@ public class ExpandoValueUtil {
 	* @param columnId the column ID
 	* @param rowId the row ID
 	* @return the number of matching expando values
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByC_R(long columnId, long rowId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByC_R(long columnId, long rowId) {
 		return getPersistence().countByC_R(columnId, rowId);
 	}
 
@@ -1197,11 +1064,9 @@ public class ExpandoValueUtil {
 	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @return the matching expando values
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.expando.model.ExpandoValue> findByC_C(
-		long classNameId, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long classNameId, long classPK) {
 		return getPersistence().findByC_C(classNameId, classPK);
 	}
 
@@ -1217,11 +1082,9 @@ public class ExpandoValueUtil {
 	* @param start the lower bound of the range of expando values
 	* @param end the upper bound of the range of expando values (not inclusive)
 	* @return the range of matching expando values
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.expando.model.ExpandoValue> findByC_C(
-		long classNameId, long classPK, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long classNameId, long classPK, int start, int end) {
 		return getPersistence().findByC_C(classNameId, classPK, start, end);
 	}
 
@@ -1238,12 +1101,10 @@ public class ExpandoValueUtil {
 	* @param end the upper bound of the range of expando values (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching expando values
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.expando.model.ExpandoValue> findByC_C(
 		long classNameId, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByC_C(classNameId, classPK, start, end,
 			orderByComparator);
@@ -1257,13 +1118,11 @@ public class ExpandoValueUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching expando value
 	* @throws com.liferay.portlet.expando.NoSuchValueException if a matching expando value could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue findByC_C_First(
 		long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.expando.NoSuchValueException {
+		throws com.liferay.portlet.expando.NoSuchValueException {
 		return getPersistence()
 				   .findByC_C_First(classNameId, classPK, orderByComparator);
 	}
@@ -1275,12 +1134,10 @@ public class ExpandoValueUtil {
 	* @param classPK the class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching expando value, or <code>null</code> if a matching expando value could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue fetchByC_C_First(
 		long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByC_C_First(classNameId, classPK, orderByComparator);
 	}
@@ -1293,13 +1150,11 @@ public class ExpandoValueUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching expando value
 	* @throws com.liferay.portlet.expando.NoSuchValueException if a matching expando value could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue findByC_C_Last(
 		long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.expando.NoSuchValueException {
+		throws com.liferay.portlet.expando.NoSuchValueException {
 		return getPersistence()
 				   .findByC_C_Last(classNameId, classPK, orderByComparator);
 	}
@@ -1311,12 +1166,10 @@ public class ExpandoValueUtil {
 	* @param classPK the class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching expando value, or <code>null</code> if a matching expando value could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue fetchByC_C_Last(
 		long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByC_C_Last(classNameId, classPK, orderByComparator);
 	}
@@ -1330,13 +1183,11 @@ public class ExpandoValueUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next expando value
 	* @throws com.liferay.portlet.expando.NoSuchValueException if a expando value with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue[] findByC_C_PrevAndNext(
 		long valueId, long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.expando.NoSuchValueException {
+		throws com.liferay.portlet.expando.NoSuchValueException {
 		return getPersistence()
 				   .findByC_C_PrevAndNext(valueId, classNameId, classPK,
 			orderByComparator);
@@ -1347,10 +1198,8 @@ public class ExpandoValueUtil {
 	*
 	* @param classNameId the class name ID
 	* @param classPK the class p k
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByC_C(long classNameId, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByC_C(long classNameId, long classPK) {
 		getPersistence().removeByC_C(classNameId, classPK);
 	}
 
@@ -1360,10 +1209,8 @@ public class ExpandoValueUtil {
 	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @return the number of matching expando values
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByC_C(long classNameId, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByC_C(long classNameId, long classPK) {
 		return getPersistence().countByC_C(classNameId, classPK);
 	}
 
@@ -1375,12 +1222,10 @@ public class ExpandoValueUtil {
 	* @param classPK the class p k
 	* @return the matching expando value
 	* @throws com.liferay.portlet.expando.NoSuchValueException if a matching expando value could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue findByT_C_C(
 		long tableId, long columnId, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.expando.NoSuchValueException {
+		throws com.liferay.portlet.expando.NoSuchValueException {
 		return getPersistence().findByT_C_C(tableId, columnId, classPK);
 	}
 
@@ -1391,11 +1236,9 @@ public class ExpandoValueUtil {
 	* @param columnId the column ID
 	* @param classPK the class p k
 	* @return the matching expando value, or <code>null</code> if a matching expando value could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue fetchByT_C_C(
-		long tableId, long columnId, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long tableId, long columnId, long classPK) {
 		return getPersistence().fetchByT_C_C(tableId, columnId, classPK);
 	}
 
@@ -1407,11 +1250,9 @@ public class ExpandoValueUtil {
 	* @param classPK the class p k
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching expando value, or <code>null</code> if a matching expando value could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue fetchByT_C_C(
-		long tableId, long columnId, long classPK, boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long tableId, long columnId, long classPK, boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByT_C_C(tableId, columnId, classPK, retrieveFromCache);
 	}
@@ -1423,12 +1264,10 @@ public class ExpandoValueUtil {
 	* @param columnId the column ID
 	* @param classPK the class p k
 	* @return the expando value that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue removeByT_C_C(
 		long tableId, long columnId, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.expando.NoSuchValueException {
+		throws com.liferay.portlet.expando.NoSuchValueException {
 		return getPersistence().removeByT_C_C(tableId, columnId, classPK);
 	}
 
@@ -1439,10 +1278,8 @@ public class ExpandoValueUtil {
 	* @param columnId the column ID
 	* @param classPK the class p k
 	* @return the number of matching expando values
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByT_C_C(long tableId, long columnId, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByT_C_C(long tableId, long columnId, long classPK) {
 		return getPersistence().countByT_C_C(tableId, columnId, classPK);
 	}
 
@@ -1453,11 +1290,9 @@ public class ExpandoValueUtil {
 	* @param columnId the column ID
 	* @param data the data
 	* @return the matching expando values
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.expando.model.ExpandoValue> findByT_C_D(
-		long tableId, long columnId, java.lang.String data)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long tableId, long columnId, java.lang.String data) {
 		return getPersistence().findByT_C_D(tableId, columnId, data);
 	}
 
@@ -1474,11 +1309,9 @@ public class ExpandoValueUtil {
 	* @param start the lower bound of the range of expando values
 	* @param end the upper bound of the range of expando values (not inclusive)
 	* @return the range of matching expando values
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.expando.model.ExpandoValue> findByT_C_D(
-		long tableId, long columnId, java.lang.String data, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long tableId, long columnId, java.lang.String data, int start, int end) {
 		return getPersistence().findByT_C_D(tableId, columnId, data, start, end);
 	}
 
@@ -1496,12 +1329,10 @@ public class ExpandoValueUtil {
 	* @param end the upper bound of the range of expando values (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching expando values
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.expando.model.ExpandoValue> findByT_C_D(
 		long tableId, long columnId, java.lang.String data, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByT_C_D(tableId, columnId, data, start, end,
 			orderByComparator);
@@ -1516,13 +1347,11 @@ public class ExpandoValueUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching expando value
 	* @throws com.liferay.portlet.expando.NoSuchValueException if a matching expando value could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue findByT_C_D_First(
 		long tableId, long columnId, java.lang.String data,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.expando.NoSuchValueException {
+		throws com.liferay.portlet.expando.NoSuchValueException {
 		return getPersistence()
 				   .findByT_C_D_First(tableId, columnId, data, orderByComparator);
 	}
@@ -1535,12 +1364,10 @@ public class ExpandoValueUtil {
 	* @param data the data
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching expando value, or <code>null</code> if a matching expando value could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue fetchByT_C_D_First(
 		long tableId, long columnId, java.lang.String data,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByT_C_D_First(tableId, columnId, data,
 			orderByComparator);
@@ -1555,13 +1382,11 @@ public class ExpandoValueUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching expando value
 	* @throws com.liferay.portlet.expando.NoSuchValueException if a matching expando value could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue findByT_C_D_Last(
 		long tableId, long columnId, java.lang.String data,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.expando.NoSuchValueException {
+		throws com.liferay.portlet.expando.NoSuchValueException {
 		return getPersistence()
 				   .findByT_C_D_Last(tableId, columnId, data, orderByComparator);
 	}
@@ -1574,12 +1399,10 @@ public class ExpandoValueUtil {
 	* @param data the data
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching expando value, or <code>null</code> if a matching expando value could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue fetchByT_C_D_Last(
 		long tableId, long columnId, java.lang.String data,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByT_C_D_Last(tableId, columnId, data, orderByComparator);
 	}
@@ -1594,13 +1417,11 @@ public class ExpandoValueUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next expando value
 	* @throws com.liferay.portlet.expando.NoSuchValueException if a expando value with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue[] findByT_C_D_PrevAndNext(
 		long valueId, long tableId, long columnId, java.lang.String data,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.expando.NoSuchValueException {
+		throws com.liferay.portlet.expando.NoSuchValueException {
 		return getPersistence()
 				   .findByT_C_D_PrevAndNext(valueId, tableId, columnId, data,
 			orderByComparator);
@@ -1612,11 +1433,9 @@ public class ExpandoValueUtil {
 	* @param tableId the table ID
 	* @param columnId the column ID
 	* @param data the data
-	* @throws SystemException if a system exception occurred
 	*/
 	public static void removeByT_C_D(long tableId, long columnId,
-		java.lang.String data)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String data) {
 		getPersistence().removeByT_C_D(tableId, columnId, data);
 	}
 
@@ -1627,11 +1446,9 @@ public class ExpandoValueUtil {
 	* @param columnId the column ID
 	* @param data the data
 	* @return the number of matching expando values
-	* @throws SystemException if a system exception occurred
 	*/
 	public static int countByT_C_D(long tableId, long columnId,
-		java.lang.String data)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String data) {
 		return getPersistence().countByT_C_D(tableId, columnId, data);
 	}
 
@@ -1672,18 +1489,14 @@ public class ExpandoValueUtil {
 	* @param valueId the primary key of the expando value
 	* @return the expando value that was removed
 	* @throws com.liferay.portlet.expando.NoSuchValueException if a expando value with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue remove(
-		long valueId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.expando.NoSuchValueException {
+		long valueId) throws com.liferay.portlet.expando.NoSuchValueException {
 		return getPersistence().remove(valueId);
 	}
 
 	public static com.liferay.portlet.expando.model.ExpandoValue updateImpl(
-		com.liferay.portlet.expando.model.ExpandoValue expandoValue)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.expando.model.ExpandoValue expandoValue) {
 		return getPersistence().updateImpl(expandoValue);
 	}
 
@@ -1693,12 +1506,9 @@ public class ExpandoValueUtil {
 	* @param valueId the primary key of the expando value
 	* @return the expando value
 	* @throws com.liferay.portlet.expando.NoSuchValueException if a expando value with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue findByPrimaryKey(
-		long valueId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.expando.NoSuchValueException {
+		long valueId) throws com.liferay.portlet.expando.NoSuchValueException {
 		return getPersistence().findByPrimaryKey(valueId);
 	}
 
@@ -1707,11 +1517,9 @@ public class ExpandoValueUtil {
 	*
 	* @param valueId the primary key of the expando value
 	* @return the expando value, or <code>null</code> if a expando value with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.expando.model.ExpandoValue fetchByPrimaryKey(
-		long valueId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long valueId) {
 		return getPersistence().fetchByPrimaryKey(valueId);
 	}
 
@@ -1719,10 +1527,8 @@ public class ExpandoValueUtil {
 	* Returns all the expando values.
 	*
 	* @return the expando values
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.portlet.expando.model.ExpandoValue> findAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static java.util.List<com.liferay.portlet.expando.model.ExpandoValue> findAll() {
 		return getPersistence().findAll();
 	}
 
@@ -1736,11 +1542,9 @@ public class ExpandoValueUtil {
 	* @param start the lower bound of the range of expando values
 	* @param end the upper bound of the range of expando values (not inclusive)
 	* @return the range of expando values
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.expando.model.ExpandoValue> findAll(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
@@ -1755,22 +1559,17 @@ public class ExpandoValueUtil {
 	* @param end the upper bound of the range of expando values (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of expando values
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.expando.model.ExpandoValue> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
 	/**
 	* Removes all the expando values from the database.
-	*
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeAll() {
 		getPersistence().removeAll();
 	}
 
@@ -1778,10 +1577,8 @@ public class ExpandoValueUtil {
 	* Returns the number of expando values.
 	*
 	* @return the number of expando values
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countAll() {
 		return getPersistence().countAll();
 	}
 

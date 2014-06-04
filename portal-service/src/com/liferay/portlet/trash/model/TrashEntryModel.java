@@ -17,7 +17,6 @@ package com.liferay.portlet.trash.model;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.AttachedModel;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
@@ -124,9 +123,8 @@ public interface TrashEntryModel extends AttachedModel, BaseModel<TrashEntry> {
 	 * Returns the user uuid of this trash entry.
 	 *
 	 * @return the user uuid of this trash entry
-	 * @throws SystemException if a system exception occurred
 	 */
-	public String getUserUuid() throws SystemException;
+	public String getUserUuid();
 
 	/**
 	 * Sets the user uuid of this trash entry.

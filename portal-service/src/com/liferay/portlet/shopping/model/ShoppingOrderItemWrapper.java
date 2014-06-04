@@ -450,8 +450,7 @@ public class ShoppingOrderItemWrapper implements ShoppingOrderItem,
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void persist() {
 		_shoppingOrderItem.persist();
 	}
 

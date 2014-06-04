@@ -382,11 +382,9 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	* Returns the user uuid of this document library file entry.
 	*
 	* @return the user uuid of this document library file entry
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public java.lang.String getUserUuid()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public java.lang.String getUserUuid() {
 		return _dlFileEntry.getUserUuid();
 	}
 
@@ -899,12 +897,10 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	* Returns the trash entry created when this document library file entry was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this document library file entry.
 	*
 	* @return the trash entry created when this document library file entry was moved to the Recycle Bin
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.trash.model.TrashEntry getTrashEntry()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFileEntry.getTrashEntry();
 	}
 
@@ -942,7 +938,6 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	* Returns <code>true</code> if the parent of this document library file entry is in the Recycle Bin.
 	*
 	* @return <code>true</code> if the parent of this document library file entry is in the Recycle Bin; <code>false</code> otherwise
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public boolean isInTrashContainer() {
@@ -950,14 +945,12 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	}
 
 	@Override
-	public boolean isInTrashExplicitly()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public boolean isInTrashExplicitly() {
 		return _dlFileEntry.isInTrashExplicitly();
 	}
 
 	@Override
-	public boolean isInTrashImplicitly()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public boolean isInTrashImplicitly() {
 		return _dlFileEntry.isInTrashImplicitly();
 	}
 
@@ -1061,14 +1054,12 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void persist() {
 		_dlFileEntry.persist();
 	}
 
 	@Override
-	public void updateTreePath(java.lang.String treePath)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void updateTreePath(java.lang.String treePath) {
 		_dlFileEntry.updateTreePath(treePath);
 	}
 

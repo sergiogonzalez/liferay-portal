@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -112,11 +111,9 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 *
 	 * @param uuid the uuid
 	 * @return the matching social relations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<SocialRelation> findByUuid(String uuid)
-		throws SystemException {
+	public List<SocialRelation> findByUuid(String uuid) {
 		return findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -131,11 +128,9 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param start the lower bound of the range of social relations
 	 * @param end the upper bound of the range of social relations (not inclusive)
 	 * @return the range of matching social relations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<SocialRelation> findByUuid(String uuid, int start, int end)
-		throws SystemException {
+	public List<SocialRelation> findByUuid(String uuid, int start, int end) {
 		return findByUuid(uuid, start, end, null);
 	}
 
@@ -151,11 +146,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param end the upper bound of the range of social relations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching social relations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<SocialRelation> findByUuid(String uuid, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -272,12 +266,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching social relation
 	 * @throws com.liferay.portlet.social.NoSuchRelationException if a matching social relation could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SocialRelation findByUuid_First(String uuid,
-		OrderByComparator orderByComparator)
-		throws NoSuchRelationException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchRelationException {
 		SocialRelation socialRelation = fetchByUuid_First(uuid,
 				orderByComparator);
 
@@ -303,11 +295,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching social relation, or <code>null</code> if a matching social relation could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SocialRelation fetchByUuid_First(String uuid,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		List<SocialRelation> list = findByUuid(uuid, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -324,12 +315,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching social relation
 	 * @throws com.liferay.portlet.social.NoSuchRelationException if a matching social relation could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SocialRelation findByUuid_Last(String uuid,
-		OrderByComparator orderByComparator)
-		throws NoSuchRelationException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchRelationException {
 		SocialRelation socialRelation = fetchByUuid_Last(uuid, orderByComparator);
 
 		if (socialRelation != null) {
@@ -354,11 +343,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching social relation, or <code>null</code> if a matching social relation could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SocialRelation fetchByUuid_Last(String uuid,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		int count = countByUuid(uuid);
 
 		if (count == 0) {
@@ -383,12 +371,11 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next social relation
 	 * @throws com.liferay.portlet.social.NoSuchRelationException if a social relation with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SocialRelation[] findByUuid_PrevAndNext(long relationId,
 		String uuid, OrderByComparator orderByComparator)
-		throws NoSuchRelationException, SystemException {
+		throws NoSuchRelationException {
 		SocialRelation socialRelation = findByPrimaryKey(relationId);
 
 		Session session = null;
@@ -539,10 +526,9 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * Removes all the social relations where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByUuid(String uuid) throws SystemException {
+	public void removeByUuid(String uuid) {
 		for (SocialRelation socialRelation : findByUuid(uuid,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(socialRelation);
@@ -554,10 +540,9 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 *
 	 * @param uuid the uuid
 	 * @return the number of matching social relations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByUuid(String uuid) throws SystemException {
+	public int countByUuid(String uuid) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_UUID;
 
 		Object[] finderArgs = new Object[] { uuid };
@@ -648,11 +633,9 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @return the matching social relations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<SocialRelation> findByUuid_C(String uuid, long companyId)
-		throws SystemException {
+	public List<SocialRelation> findByUuid_C(String uuid, long companyId) {
 		return findByUuid_C(uuid, companyId, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
@@ -669,11 +652,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param start the lower bound of the range of social relations
 	 * @param end the upper bound of the range of social relations (not inclusive)
 	 * @return the range of matching social relations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<SocialRelation> findByUuid_C(String uuid, long companyId,
-		int start, int end) throws SystemException {
+		int start, int end) {
 		return findByUuid_C(uuid, companyId, start, end, null);
 	}
 
@@ -690,12 +672,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param end the upper bound of the range of social relations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching social relations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<SocialRelation> findByUuid_C(String uuid, long companyId,
-		int start, int end, OrderByComparator orderByComparator)
-		throws SystemException {
+		int start, int end, OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -822,12 +802,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching social relation
 	 * @throws com.liferay.portlet.social.NoSuchRelationException if a matching social relation could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SocialRelation findByUuid_C_First(String uuid, long companyId,
-		OrderByComparator orderByComparator)
-		throws NoSuchRelationException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchRelationException {
 		SocialRelation socialRelation = fetchByUuid_C_First(uuid, companyId,
 				orderByComparator);
 
@@ -857,11 +835,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching social relation, or <code>null</code> if a matching social relation could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SocialRelation fetchByUuid_C_First(String uuid, long companyId,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		List<SocialRelation> list = findByUuid_C(uuid, companyId, 0, 1,
 				orderByComparator);
 
@@ -880,12 +857,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching social relation
 	 * @throws com.liferay.portlet.social.NoSuchRelationException if a matching social relation could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SocialRelation findByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator)
-		throws NoSuchRelationException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchRelationException {
 		SocialRelation socialRelation = fetchByUuid_C_Last(uuid, companyId,
 				orderByComparator);
 
@@ -915,11 +890,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching social relation, or <code>null</code> if a matching social relation could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SocialRelation fetchByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		int count = countByUuid_C(uuid, companyId);
 
 		if (count == 0) {
@@ -945,12 +919,11 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next social relation
 	 * @throws com.liferay.portlet.social.NoSuchRelationException if a social relation with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SocialRelation[] findByUuid_C_PrevAndNext(long relationId,
 		String uuid, long companyId, OrderByComparator orderByComparator)
-		throws NoSuchRelationException, SystemException {
+		throws NoSuchRelationException {
 		SocialRelation socialRelation = findByPrimaryKey(relationId);
 
 		Session session = null;
@@ -1106,11 +1079,9 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByUuid_C(String uuid, long companyId)
-		throws SystemException {
+	public void removeByUuid_C(String uuid, long companyId) {
 		for (SocialRelation socialRelation : findByUuid_C(uuid, companyId,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(socialRelation);
@@ -1123,11 +1094,9 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @return the number of matching social relations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByUuid_C(String uuid, long companyId)
-		throws SystemException {
+	public int countByUuid_C(String uuid, long companyId) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_UUID_C;
 
 		Object[] finderArgs = new Object[] { uuid, companyId };
@@ -1222,11 +1191,9 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 *
 	 * @param companyId the company ID
 	 * @return the matching social relations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<SocialRelation> findByCompanyId(long companyId)
-		throws SystemException {
+	public List<SocialRelation> findByCompanyId(long companyId) {
 		return findByCompanyId(companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			null);
 	}
@@ -1242,11 +1209,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param start the lower bound of the range of social relations
 	 * @param end the upper bound of the range of social relations (not inclusive)
 	 * @return the range of matching social relations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<SocialRelation> findByCompanyId(long companyId, int start,
-		int end) throws SystemException {
+		int end) {
 		return findByCompanyId(companyId, start, end, null);
 	}
 
@@ -1262,11 +1228,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param end the upper bound of the range of social relations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching social relations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<SocialRelation> findByCompanyId(long companyId, int start,
-		int end, OrderByComparator orderByComparator) throws SystemException {
+		int end, OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1369,12 +1334,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching social relation
 	 * @throws com.liferay.portlet.social.NoSuchRelationException if a matching social relation could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SocialRelation findByCompanyId_First(long companyId,
-		OrderByComparator orderByComparator)
-		throws NoSuchRelationException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchRelationException {
 		SocialRelation socialRelation = fetchByCompanyId_First(companyId,
 				orderByComparator);
 
@@ -1400,11 +1363,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching social relation, or <code>null</code> if a matching social relation could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SocialRelation fetchByCompanyId_First(long companyId,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		List<SocialRelation> list = findByCompanyId(companyId, 0, 1,
 				orderByComparator);
 
@@ -1422,12 +1384,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching social relation
 	 * @throws com.liferay.portlet.social.NoSuchRelationException if a matching social relation could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SocialRelation findByCompanyId_Last(long companyId,
-		OrderByComparator orderByComparator)
-		throws NoSuchRelationException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchRelationException {
 		SocialRelation socialRelation = fetchByCompanyId_Last(companyId,
 				orderByComparator);
 
@@ -1453,11 +1413,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching social relation, or <code>null</code> if a matching social relation could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SocialRelation fetchByCompanyId_Last(long companyId,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		int count = countByCompanyId(companyId);
 
 		if (count == 0) {
@@ -1482,12 +1441,11 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next social relation
 	 * @throws com.liferay.portlet.social.NoSuchRelationException if a social relation with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SocialRelation[] findByCompanyId_PrevAndNext(long relationId,
 		long companyId, OrderByComparator orderByComparator)
-		throws NoSuchRelationException, SystemException {
+		throws NoSuchRelationException {
 		SocialRelation socialRelation = findByPrimaryKey(relationId);
 
 		Session session = null;
@@ -1624,10 +1582,9 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * Removes all the social relations where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByCompanyId(long companyId) throws SystemException {
+	public void removeByCompanyId(long companyId) {
 		for (SocialRelation socialRelation : findByCompanyId(companyId,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(socialRelation);
@@ -1639,10 +1596,9 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 *
 	 * @param companyId the company ID
 	 * @return the number of matching social relations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByCompanyId(long companyId) throws SystemException {
+	public int countByCompanyId(long companyId) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_COMPANYID;
 
 		Object[] finderArgs = new Object[] { companyId };
@@ -1715,11 +1671,9 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 *
 	 * @param userId1 the user id1
 	 * @return the matching social relations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<SocialRelation> findByUserId1(long userId1)
-		throws SystemException {
+	public List<SocialRelation> findByUserId1(long userId1) {
 		return findByUserId1(userId1, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -1734,11 +1688,9 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param start the lower bound of the range of social relations
 	 * @param end the upper bound of the range of social relations (not inclusive)
 	 * @return the range of matching social relations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<SocialRelation> findByUserId1(long userId1, int start, int end)
-		throws SystemException {
+	public List<SocialRelation> findByUserId1(long userId1, int start, int end) {
 		return findByUserId1(userId1, start, end, null);
 	}
 
@@ -1754,11 +1706,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param end the upper bound of the range of social relations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching social relations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<SocialRelation> findByUserId1(long userId1, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1861,12 +1812,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching social relation
 	 * @throws com.liferay.portlet.social.NoSuchRelationException if a matching social relation could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SocialRelation findByUserId1_First(long userId1,
-		OrderByComparator orderByComparator)
-		throws NoSuchRelationException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchRelationException {
 		SocialRelation socialRelation = fetchByUserId1_First(userId1,
 				orderByComparator);
 
@@ -1892,11 +1841,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param userId1 the user id1
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching social relation, or <code>null</code> if a matching social relation could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SocialRelation fetchByUserId1_First(long userId1,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		List<SocialRelation> list = findByUserId1(userId1, 0, 1,
 				orderByComparator);
 
@@ -1914,12 +1862,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching social relation
 	 * @throws com.liferay.portlet.social.NoSuchRelationException if a matching social relation could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SocialRelation findByUserId1_Last(long userId1,
-		OrderByComparator orderByComparator)
-		throws NoSuchRelationException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchRelationException {
 		SocialRelation socialRelation = fetchByUserId1_Last(userId1,
 				orderByComparator);
 
@@ -1945,11 +1891,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param userId1 the user id1
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching social relation, or <code>null</code> if a matching social relation could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SocialRelation fetchByUserId1_Last(long userId1,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		int count = countByUserId1(userId1);
 
 		if (count == 0) {
@@ -1974,12 +1919,11 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next social relation
 	 * @throws com.liferay.portlet.social.NoSuchRelationException if a social relation with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SocialRelation[] findByUserId1_PrevAndNext(long relationId,
 		long userId1, OrderByComparator orderByComparator)
-		throws NoSuchRelationException, SystemException {
+		throws NoSuchRelationException {
 		SocialRelation socialRelation = findByPrimaryKey(relationId);
 
 		Session session = null;
@@ -2116,10 +2060,9 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * Removes all the social relations where userId1 = &#63; from the database.
 	 *
 	 * @param userId1 the user id1
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByUserId1(long userId1) throws SystemException {
+	public void removeByUserId1(long userId1) {
 		for (SocialRelation socialRelation : findByUserId1(userId1,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(socialRelation);
@@ -2131,10 +2074,9 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 *
 	 * @param userId1 the user id1
 	 * @return the number of matching social relations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByUserId1(long userId1) throws SystemException {
+	public int countByUserId1(long userId1) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_USERID1;
 
 		Object[] finderArgs = new Object[] { userId1 };
@@ -2207,11 +2149,9 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 *
 	 * @param userId2 the user id2
 	 * @return the matching social relations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<SocialRelation> findByUserId2(long userId2)
-		throws SystemException {
+	public List<SocialRelation> findByUserId2(long userId2) {
 		return findByUserId2(userId2, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -2226,11 +2166,9 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param start the lower bound of the range of social relations
 	 * @param end the upper bound of the range of social relations (not inclusive)
 	 * @return the range of matching social relations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<SocialRelation> findByUserId2(long userId2, int start, int end)
-		throws SystemException {
+	public List<SocialRelation> findByUserId2(long userId2, int start, int end) {
 		return findByUserId2(userId2, start, end, null);
 	}
 
@@ -2246,11 +2184,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param end the upper bound of the range of social relations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching social relations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<SocialRelation> findByUserId2(long userId2, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2353,12 +2290,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching social relation
 	 * @throws com.liferay.portlet.social.NoSuchRelationException if a matching social relation could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SocialRelation findByUserId2_First(long userId2,
-		OrderByComparator orderByComparator)
-		throws NoSuchRelationException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchRelationException {
 		SocialRelation socialRelation = fetchByUserId2_First(userId2,
 				orderByComparator);
 
@@ -2384,11 +2319,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param userId2 the user id2
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching social relation, or <code>null</code> if a matching social relation could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SocialRelation fetchByUserId2_First(long userId2,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		List<SocialRelation> list = findByUserId2(userId2, 0, 1,
 				orderByComparator);
 
@@ -2406,12 +2340,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching social relation
 	 * @throws com.liferay.portlet.social.NoSuchRelationException if a matching social relation could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SocialRelation findByUserId2_Last(long userId2,
-		OrderByComparator orderByComparator)
-		throws NoSuchRelationException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchRelationException {
 		SocialRelation socialRelation = fetchByUserId2_Last(userId2,
 				orderByComparator);
 
@@ -2437,11 +2369,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param userId2 the user id2
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching social relation, or <code>null</code> if a matching social relation could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SocialRelation fetchByUserId2_Last(long userId2,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		int count = countByUserId2(userId2);
 
 		if (count == 0) {
@@ -2466,12 +2397,11 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next social relation
 	 * @throws com.liferay.portlet.social.NoSuchRelationException if a social relation with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SocialRelation[] findByUserId2_PrevAndNext(long relationId,
 		long userId2, OrderByComparator orderByComparator)
-		throws NoSuchRelationException, SystemException {
+		throws NoSuchRelationException {
 		SocialRelation socialRelation = findByPrimaryKey(relationId);
 
 		Session session = null;
@@ -2608,10 +2538,9 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * Removes all the social relations where userId2 = &#63; from the database.
 	 *
 	 * @param userId2 the user id2
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByUserId2(long userId2) throws SystemException {
+	public void removeByUserId2(long userId2) {
 		for (SocialRelation socialRelation : findByUserId2(userId2,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(socialRelation);
@@ -2623,10 +2552,9 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 *
 	 * @param userId2 the user id2
 	 * @return the number of matching social relations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByUserId2(long userId2) throws SystemException {
+	public int countByUserId2(long userId2) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_USERID2;
 
 		Object[] finderArgs = new Object[] { userId2 };
@@ -2698,10 +2626,9 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 *
 	 * @param type the type
 	 * @return the matching social relations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<SocialRelation> findByType(int type) throws SystemException {
+	public List<SocialRelation> findByType(int type) {
 		return findByType(type, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -2716,11 +2643,9 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param start the lower bound of the range of social relations
 	 * @param end the upper bound of the range of social relations (not inclusive)
 	 * @return the range of matching social relations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<SocialRelation> findByType(int type, int start, int end)
-		throws SystemException {
+	public List<SocialRelation> findByType(int type, int start, int end) {
 		return findByType(type, start, end, null);
 	}
 
@@ -2736,11 +2661,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param end the upper bound of the range of social relations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching social relations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<SocialRelation> findByType(int type, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2843,12 +2767,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching social relation
 	 * @throws com.liferay.portlet.social.NoSuchRelationException if a matching social relation could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SocialRelation findByType_First(int type,
-		OrderByComparator orderByComparator)
-		throws NoSuchRelationException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchRelationException {
 		SocialRelation socialRelation = fetchByType_First(type,
 				orderByComparator);
 
@@ -2874,11 +2796,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching social relation, or <code>null</code> if a matching social relation could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SocialRelation fetchByType_First(int type,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		List<SocialRelation> list = findByType(type, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -2895,12 +2816,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching social relation
 	 * @throws com.liferay.portlet.social.NoSuchRelationException if a matching social relation could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SocialRelation findByType_Last(int type,
-		OrderByComparator orderByComparator)
-		throws NoSuchRelationException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchRelationException {
 		SocialRelation socialRelation = fetchByType_Last(type, orderByComparator);
 
 		if (socialRelation != null) {
@@ -2925,11 +2844,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching social relation, or <code>null</code> if a matching social relation could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SocialRelation fetchByType_Last(int type,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		int count = countByType(type);
 
 		if (count == 0) {
@@ -2954,12 +2872,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next social relation
 	 * @throws com.liferay.portlet.social.NoSuchRelationException if a social relation with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SocialRelation[] findByType_PrevAndNext(long relationId, int type,
-		OrderByComparator orderByComparator)
-		throws NoSuchRelationException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchRelationException {
 		SocialRelation socialRelation = findByPrimaryKey(relationId);
 
 		Session session = null;
@@ -3096,10 +3012,9 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * Removes all the social relations where type = &#63; from the database.
 	 *
 	 * @param type the type
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByType(int type) throws SystemException {
+	public void removeByType(int type) {
 		for (SocialRelation socialRelation : findByType(type,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(socialRelation);
@@ -3111,10 +3026,9 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 *
 	 * @param type the type
 	 * @return the number of matching social relations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByType(int type) throws SystemException {
+	public int countByType(int type) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_TYPE;
 
 		Object[] finderArgs = new Object[] { type };
@@ -3188,11 +3102,9 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param companyId the company ID
 	 * @param type the type
 	 * @return the matching social relations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<SocialRelation> findByC_T(long companyId, int type)
-		throws SystemException {
+	public List<SocialRelation> findByC_T(long companyId, int type) {
 		return findByC_T(companyId, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			null);
 	}
@@ -3209,11 +3121,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param start the lower bound of the range of social relations
 	 * @param end the upper bound of the range of social relations (not inclusive)
 	 * @return the range of matching social relations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<SocialRelation> findByC_T(long companyId, int type, int start,
-		int end) throws SystemException {
+		int end) {
 		return findByC_T(companyId, type, start, end, null);
 	}
 
@@ -3230,11 +3141,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param end the upper bound of the range of social relations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching social relations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<SocialRelation> findByC_T(long companyId, int type, int start,
-		int end, OrderByComparator orderByComparator) throws SystemException {
+		int end, OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -3347,12 +3257,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching social relation
 	 * @throws com.liferay.portlet.social.NoSuchRelationException if a matching social relation could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SocialRelation findByC_T_First(long companyId, int type,
-		OrderByComparator orderByComparator)
-		throws NoSuchRelationException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchRelationException {
 		SocialRelation socialRelation = fetchByC_T_First(companyId, type,
 				orderByComparator);
 
@@ -3382,11 +3290,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching social relation, or <code>null</code> if a matching social relation could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SocialRelation fetchByC_T_First(long companyId, int type,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		List<SocialRelation> list = findByC_T(companyId, type, 0, 1,
 				orderByComparator);
 
@@ -3405,12 +3312,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching social relation
 	 * @throws com.liferay.portlet.social.NoSuchRelationException if a matching social relation could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SocialRelation findByC_T_Last(long companyId, int type,
-		OrderByComparator orderByComparator)
-		throws NoSuchRelationException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchRelationException {
 		SocialRelation socialRelation = fetchByC_T_Last(companyId, type,
 				orderByComparator);
 
@@ -3440,11 +3345,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching social relation, or <code>null</code> if a matching social relation could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SocialRelation fetchByC_T_Last(long companyId, int type,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		int count = countByC_T(companyId, type);
 
 		if (count == 0) {
@@ -3470,12 +3374,11 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next social relation
 	 * @throws com.liferay.portlet.social.NoSuchRelationException if a social relation with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SocialRelation[] findByC_T_PrevAndNext(long relationId,
 		long companyId, int type, OrderByComparator orderByComparator)
-		throws NoSuchRelationException, SystemException {
+		throws NoSuchRelationException {
 		SocialRelation socialRelation = findByPrimaryKey(relationId);
 
 		Session session = null;
@@ -3617,10 +3520,9 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 *
 	 * @param companyId the company ID
 	 * @param type the type
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByC_T(long companyId, int type) throws SystemException {
+	public void removeByC_T(long companyId, int type) {
 		for (SocialRelation socialRelation : findByC_T(companyId, type,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(socialRelation);
@@ -3633,10 +3535,9 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param companyId the company ID
 	 * @param type the type
 	 * @return the number of matching social relations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByC_T(long companyId, int type) throws SystemException {
+	public int countByC_T(long companyId, int type) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_T;
 
 		Object[] finderArgs = new Object[] { companyId, type };
@@ -3715,11 +3616,9 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param userId1 the user id1
 	 * @param userId2 the user id2
 	 * @return the matching social relations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<SocialRelation> findByU1_U2(long userId1, long userId2)
-		throws SystemException {
+	public List<SocialRelation> findByU1_U2(long userId1, long userId2) {
 		return findByU1_U2(userId1, userId2, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
@@ -3736,11 +3635,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param start the lower bound of the range of social relations
 	 * @param end the upper bound of the range of social relations (not inclusive)
 	 * @return the range of matching social relations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<SocialRelation> findByU1_U2(long userId1, long userId2,
-		int start, int end) throws SystemException {
+		int start, int end) {
 		return findByU1_U2(userId1, userId2, start, end, null);
 	}
 
@@ -3757,12 +3655,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param end the upper bound of the range of social relations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching social relations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<SocialRelation> findByU1_U2(long userId1, long userId2,
-		int start, int end, OrderByComparator orderByComparator)
-		throws SystemException {
+		int start, int end, OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -3875,12 +3771,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching social relation
 	 * @throws com.liferay.portlet.social.NoSuchRelationException if a matching social relation could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SocialRelation findByU1_U2_First(long userId1, long userId2,
-		OrderByComparator orderByComparator)
-		throws NoSuchRelationException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchRelationException {
 		SocialRelation socialRelation = fetchByU1_U2_First(userId1, userId2,
 				orderByComparator);
 
@@ -3910,11 +3804,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param userId2 the user id2
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching social relation, or <code>null</code> if a matching social relation could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SocialRelation fetchByU1_U2_First(long userId1, long userId2,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		List<SocialRelation> list = findByU1_U2(userId1, userId2, 0, 1,
 				orderByComparator);
 
@@ -3933,12 +3826,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching social relation
 	 * @throws com.liferay.portlet.social.NoSuchRelationException if a matching social relation could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SocialRelation findByU1_U2_Last(long userId1, long userId2,
-		OrderByComparator orderByComparator)
-		throws NoSuchRelationException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchRelationException {
 		SocialRelation socialRelation = fetchByU1_U2_Last(userId1, userId2,
 				orderByComparator);
 
@@ -3968,11 +3859,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param userId2 the user id2
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching social relation, or <code>null</code> if a matching social relation could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SocialRelation fetchByU1_U2_Last(long userId1, long userId2,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		int count = countByU1_U2(userId1, userId2);
 
 		if (count == 0) {
@@ -3998,12 +3888,11 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next social relation
 	 * @throws com.liferay.portlet.social.NoSuchRelationException if a social relation with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SocialRelation[] findByU1_U2_PrevAndNext(long relationId,
 		long userId1, long userId2, OrderByComparator orderByComparator)
-		throws NoSuchRelationException, SystemException {
+		throws NoSuchRelationException {
 		SocialRelation socialRelation = findByPrimaryKey(relationId);
 
 		Session session = null;
@@ -4145,11 +4034,9 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 *
 	 * @param userId1 the user id1
 	 * @param userId2 the user id2
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByU1_U2(long userId1, long userId2)
-		throws SystemException {
+	public void removeByU1_U2(long userId1, long userId2) {
 		for (SocialRelation socialRelation : findByU1_U2(userId1, userId2,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(socialRelation);
@@ -4162,11 +4049,9 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param userId1 the user id1
 	 * @param userId2 the user id2
 	 * @return the number of matching social relations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByU1_U2(long userId1, long userId2)
-		throws SystemException {
+	public int countByU1_U2(long userId1, long userId2) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_U1_U2;
 
 		Object[] finderArgs = new Object[] { userId1, userId2 };
@@ -4245,11 +4130,9 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param userId1 the user id1
 	 * @param type the type
 	 * @return the matching social relations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<SocialRelation> findByU1_T(long userId1, int type)
-		throws SystemException {
+	public List<SocialRelation> findByU1_T(long userId1, int type) {
 		return findByU1_T(userId1, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			null);
 	}
@@ -4266,11 +4149,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param start the lower bound of the range of social relations
 	 * @param end the upper bound of the range of social relations (not inclusive)
 	 * @return the range of matching social relations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<SocialRelation> findByU1_T(long userId1, int type, int start,
-		int end) throws SystemException {
+		int end) {
 		return findByU1_T(userId1, type, start, end, null);
 	}
 
@@ -4287,11 +4169,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param end the upper bound of the range of social relations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching social relations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<SocialRelation> findByU1_T(long userId1, int type, int start,
-		int end, OrderByComparator orderByComparator) throws SystemException {
+		int end, OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -4404,12 +4285,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching social relation
 	 * @throws com.liferay.portlet.social.NoSuchRelationException if a matching social relation could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SocialRelation findByU1_T_First(long userId1, int type,
-		OrderByComparator orderByComparator)
-		throws NoSuchRelationException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchRelationException {
 		SocialRelation socialRelation = fetchByU1_T_First(userId1, type,
 				orderByComparator);
 
@@ -4439,11 +4318,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching social relation, or <code>null</code> if a matching social relation could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SocialRelation fetchByU1_T_First(long userId1, int type,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		List<SocialRelation> list = findByU1_T(userId1, type, 0, 1,
 				orderByComparator);
 
@@ -4462,12 +4340,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching social relation
 	 * @throws com.liferay.portlet.social.NoSuchRelationException if a matching social relation could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SocialRelation findByU1_T_Last(long userId1, int type,
-		OrderByComparator orderByComparator)
-		throws NoSuchRelationException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchRelationException {
 		SocialRelation socialRelation = fetchByU1_T_Last(userId1, type,
 				orderByComparator);
 
@@ -4497,11 +4373,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching social relation, or <code>null</code> if a matching social relation could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SocialRelation fetchByU1_T_Last(long userId1, int type,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		int count = countByU1_T(userId1, type);
 
 		if (count == 0) {
@@ -4527,12 +4402,11 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next social relation
 	 * @throws com.liferay.portlet.social.NoSuchRelationException if a social relation with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SocialRelation[] findByU1_T_PrevAndNext(long relationId,
 		long userId1, int type, OrderByComparator orderByComparator)
-		throws NoSuchRelationException, SystemException {
+		throws NoSuchRelationException {
 		SocialRelation socialRelation = findByPrimaryKey(relationId);
 
 		Session session = null;
@@ -4674,10 +4548,9 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 *
 	 * @param userId1 the user id1
 	 * @param type the type
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByU1_T(long userId1, int type) throws SystemException {
+	public void removeByU1_T(long userId1, int type) {
 		for (SocialRelation socialRelation : findByU1_T(userId1, type,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(socialRelation);
@@ -4690,10 +4563,9 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param userId1 the user id1
 	 * @param type the type
 	 * @return the number of matching social relations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByU1_T(long userId1, int type) throws SystemException {
+	public int countByU1_T(long userId1, int type) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_U1_T;
 
 		Object[] finderArgs = new Object[] { userId1, type };
@@ -4772,11 +4644,9 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param userId2 the user id2
 	 * @param type the type
 	 * @return the matching social relations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<SocialRelation> findByU2_T(long userId2, int type)
-		throws SystemException {
+	public List<SocialRelation> findByU2_T(long userId2, int type) {
 		return findByU2_T(userId2, type, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			null);
 	}
@@ -4793,11 +4663,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param start the lower bound of the range of social relations
 	 * @param end the upper bound of the range of social relations (not inclusive)
 	 * @return the range of matching social relations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<SocialRelation> findByU2_T(long userId2, int type, int start,
-		int end) throws SystemException {
+		int end) {
 		return findByU2_T(userId2, type, start, end, null);
 	}
 
@@ -4814,11 +4683,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param end the upper bound of the range of social relations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching social relations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<SocialRelation> findByU2_T(long userId2, int type, int start,
-		int end, OrderByComparator orderByComparator) throws SystemException {
+		int end, OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -4931,12 +4799,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching social relation
 	 * @throws com.liferay.portlet.social.NoSuchRelationException if a matching social relation could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SocialRelation findByU2_T_First(long userId2, int type,
-		OrderByComparator orderByComparator)
-		throws NoSuchRelationException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchRelationException {
 		SocialRelation socialRelation = fetchByU2_T_First(userId2, type,
 				orderByComparator);
 
@@ -4966,11 +4832,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching social relation, or <code>null</code> if a matching social relation could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SocialRelation fetchByU2_T_First(long userId2, int type,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		List<SocialRelation> list = findByU2_T(userId2, type, 0, 1,
 				orderByComparator);
 
@@ -4989,12 +4854,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching social relation
 	 * @throws com.liferay.portlet.social.NoSuchRelationException if a matching social relation could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SocialRelation findByU2_T_Last(long userId2, int type,
-		OrderByComparator orderByComparator)
-		throws NoSuchRelationException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchRelationException {
 		SocialRelation socialRelation = fetchByU2_T_Last(userId2, type,
 				orderByComparator);
 
@@ -5024,11 +4887,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param type the type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching social relation, or <code>null</code> if a matching social relation could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SocialRelation fetchByU2_T_Last(long userId2, int type,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		int count = countByU2_T(userId2, type);
 
 		if (count == 0) {
@@ -5054,12 +4916,11 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next social relation
 	 * @throws com.liferay.portlet.social.NoSuchRelationException if a social relation with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SocialRelation[] findByU2_T_PrevAndNext(long relationId,
 		long userId2, int type, OrderByComparator orderByComparator)
-		throws NoSuchRelationException, SystemException {
+		throws NoSuchRelationException {
 		SocialRelation socialRelation = findByPrimaryKey(relationId);
 
 		Session session = null;
@@ -5201,10 +5062,9 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 *
 	 * @param userId2 the user id2
 	 * @param type the type
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByU2_T(long userId2, int type) throws SystemException {
+	public void removeByU2_T(long userId2, int type) {
 		for (SocialRelation socialRelation : findByU2_T(userId2, type,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(socialRelation);
@@ -5217,10 +5077,9 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param userId2 the user id2
 	 * @param type the type
 	 * @return the number of matching social relations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByU2_T(long userId2, int type) throws SystemException {
+	public int countByU2_T(long userId2, int type) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_U2_T;
 
 		Object[] finderArgs = new Object[] { userId2, type };
@@ -5298,11 +5157,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param type the type
 	 * @return the matching social relation
 	 * @throws com.liferay.portlet.social.NoSuchRelationException if a matching social relation could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SocialRelation findByU1_U2_T(long userId1, long userId2, int type)
-		throws NoSuchRelationException, SystemException {
+		throws NoSuchRelationException {
 		SocialRelation socialRelation = fetchByU1_U2_T(userId1, userId2, type);
 
 		if (socialRelation == null) {
@@ -5338,11 +5196,9 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param userId2 the user id2
 	 * @param type the type
 	 * @return the matching social relation, or <code>null</code> if a matching social relation could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public SocialRelation fetchByU1_U2_T(long userId1, long userId2, int type)
-		throws SystemException {
+	public SocialRelation fetchByU1_U2_T(long userId1, long userId2, int type) {
 		return fetchByU1_U2_T(userId1, userId2, type, true);
 	}
 
@@ -5354,11 +5210,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param type the type
 	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching social relation, or <code>null</code> if a matching social relation could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SocialRelation fetchByU1_U2_T(long userId1, long userId2, int type,
-		boolean retrieveFromCache) throws SystemException {
+		boolean retrieveFromCache) {
 		Object[] finderArgs = new Object[] { userId1, userId2, type };
 
 		Object result = null;
@@ -5453,11 +5308,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param userId2 the user id2
 	 * @param type the type
 	 * @return the social relation that was removed
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SocialRelation removeByU1_U2_T(long userId1, long userId2, int type)
-		throws NoSuchRelationException, SystemException {
+		throws NoSuchRelationException {
 		SocialRelation socialRelation = findByU1_U2_T(userId1, userId2, type);
 
 		return remove(socialRelation);
@@ -5470,11 +5324,9 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param userId2 the user id2
 	 * @param type the type
 	 * @return the number of matching social relations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByU1_U2_T(long userId1, long userId2, int type)
-		throws SystemException {
+	public int countByU1_U2_T(long userId1, long userId2, int type) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_U1_U2_T;
 
 		Object[] finderArgs = new Object[] { userId1, userId2, type };
@@ -5705,11 +5557,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param relationId the primary key of the social relation
 	 * @return the social relation that was removed
 	 * @throws com.liferay.portlet.social.NoSuchRelationException if a social relation with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SocialRelation remove(long relationId)
-		throws NoSuchRelationException, SystemException {
+		throws NoSuchRelationException {
 		return remove((Serializable)relationId);
 	}
 
@@ -5719,11 +5570,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param primaryKey the primary key of the social relation
 	 * @return the social relation that was removed
 	 * @throws com.liferay.portlet.social.NoSuchRelationException if a social relation with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SocialRelation remove(Serializable primaryKey)
-		throws NoSuchRelationException, SystemException {
+		throws NoSuchRelationException {
 		Session session = null;
 
 		try {
@@ -5755,8 +5605,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	}
 
 	@Override
-	protected SocialRelation removeImpl(SocialRelation socialRelation)
-		throws SystemException {
+	protected SocialRelation removeImpl(SocialRelation socialRelation) {
 		socialRelation = toUnwrappedModel(socialRelation);
 
 		Session session = null;
@@ -5789,8 +5638,7 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 
 	@Override
 	public SocialRelation updateImpl(
-		com.liferay.portlet.social.model.SocialRelation socialRelation)
-		throws SystemException {
+		com.liferay.portlet.social.model.SocialRelation socialRelation) {
 		socialRelation = toUnwrappedModel(socialRelation);
 
 		boolean isNew = socialRelation.isNew();
@@ -6063,11 +5911,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param primaryKey the primary key of the social relation
 	 * @return the social relation
 	 * @throws com.liferay.portlet.social.NoSuchRelationException if a social relation with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SocialRelation findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchRelationException, SystemException {
+		throws NoSuchRelationException {
 		SocialRelation socialRelation = fetchByPrimaryKey(primaryKey);
 
 		if (socialRelation == null) {
@@ -6088,11 +5935,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param relationId the primary key of the social relation
 	 * @return the social relation
 	 * @throws com.liferay.portlet.social.NoSuchRelationException if a social relation with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SocialRelation findByPrimaryKey(long relationId)
-		throws NoSuchRelationException, SystemException {
+		throws NoSuchRelationException {
 		return findByPrimaryKey((Serializable)relationId);
 	}
 
@@ -6101,11 +5947,9 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 *
 	 * @param primaryKey the primary key of the social relation
 	 * @return the social relation, or <code>null</code> if a social relation with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public SocialRelation fetchByPrimaryKey(Serializable primaryKey)
-		throws SystemException {
+	public SocialRelation fetchByPrimaryKey(Serializable primaryKey) {
 		SocialRelation socialRelation = (SocialRelation)EntityCacheUtil.getResult(SocialRelationModelImpl.ENTITY_CACHE_ENABLED,
 				SocialRelationImpl.class, primaryKey);
 
@@ -6150,11 +5994,9 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 *
 	 * @param relationId the primary key of the social relation
 	 * @return the social relation, or <code>null</code> if a social relation with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public SocialRelation fetchByPrimaryKey(long relationId)
-		throws SystemException {
+	public SocialRelation fetchByPrimaryKey(long relationId) {
 		return fetchByPrimaryKey((Serializable)relationId);
 	}
 
@@ -6162,10 +6004,9 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * Returns all the social relations.
 	 *
 	 * @return the social relations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<SocialRelation> findAll() throws SystemException {
+	public List<SocialRelation> findAll() {
 		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -6179,11 +6020,9 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param start the lower bound of the range of social relations
 	 * @param end the upper bound of the range of social relations (not inclusive)
 	 * @return the range of social relations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<SocialRelation> findAll(int start, int end)
-		throws SystemException {
+	public List<SocialRelation> findAll(int start, int end) {
 		return findAll(start, end, null);
 	}
 
@@ -6198,11 +6037,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * @param end the upper bound of the range of social relations (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of social relations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<SocialRelation> findAll(int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -6284,10 +6122,9 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	/**
 	 * Removes all the social relations from the database.
 	 *
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeAll() throws SystemException {
+	public void removeAll() {
 		for (SocialRelation socialRelation : findAll()) {
 			remove(socialRelation);
 		}
@@ -6297,10 +6134,9 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	 * Returns the number of social relations.
 	 *
 	 * @return the number of social relations
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countAll() throws SystemException {
+	public int countAll() {
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
 				FINDER_ARGS_EMPTY, this);
 

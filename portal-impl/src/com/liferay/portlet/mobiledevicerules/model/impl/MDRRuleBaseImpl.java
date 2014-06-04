@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.mobiledevicerules.model.impl;
 
-import com.liferay.portal.kernel.exception.SystemException;
-
 import com.liferay.portlet.mobiledevicerules.model.MDRRule;
 import com.liferay.portlet.mobiledevicerules.service.MDRRuleLocalServiceUtil;
 
@@ -39,7 +37,7 @@ public abstract class MDRRuleBaseImpl extends MDRRuleModelImpl
 	 * Never modify or reference this class directly. All methods that expect a m d r rule model instance should use the {@link MDRRule} interface instead.
 	 */
 	@Override
-	public void persist() throws SystemException {
+	public void persist() {
 		if (this.isNew()) {
 			MDRRuleLocalServiceUtil.addMDRRule(this);
 		}

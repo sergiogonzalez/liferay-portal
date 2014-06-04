@@ -15,7 +15,6 @@
 package com.liferay.portlet.wiki.service.persistence;
 
 import com.liferay.portal.kernel.dao.orm.BaseActionableDynamicQuery;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 
 import com.liferay.portlet.wiki.model.WikiPageResource;
@@ -29,7 +28,7 @@ import com.liferay.portlet.wiki.service.WikiPageResourceLocalServiceUtil;
 @Deprecated
 public abstract class WikiPageResourceActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
-	public WikiPageResourceActionableDynamicQuery() throws SystemException {
+	public WikiPageResourceActionableDynamicQuery() {
 		setBaseLocalService(WikiPageResourceLocalServiceUtil.getService());
 		setClass(WikiPageResource.class);
 

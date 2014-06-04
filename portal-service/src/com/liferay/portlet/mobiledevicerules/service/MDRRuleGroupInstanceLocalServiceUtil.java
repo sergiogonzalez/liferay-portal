@@ -46,11 +46,9 @@ public class MDRRuleGroupInstanceLocalServiceUtil {
 	*
 	* @param mdrRuleGroupInstance the m d r rule group instance
 	* @return the m d r rule group instance that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance addMDRRuleGroupInstance(
-		com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance mdrRuleGroupInstance)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance mdrRuleGroupInstance) {
 		return getService().addMDRRuleGroupInstance(mdrRuleGroupInstance);
 	}
 
@@ -71,12 +69,10 @@ public class MDRRuleGroupInstanceLocalServiceUtil {
 	* @param ruleGroupInstanceId the primary key of the m d r rule group instance
 	* @return the m d r rule group instance that was removed
 	* @throws PortalException if a m d r rule group instance with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance deleteMDRRuleGroupInstance(
 		long ruleGroupInstanceId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteMDRRuleGroupInstance(ruleGroupInstanceId);
 	}
 
@@ -85,11 +81,9 @@ public class MDRRuleGroupInstanceLocalServiceUtil {
 	*
 	* @param mdrRuleGroupInstance the m d r rule group instance
 	* @return the m d r rule group instance that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance deleteMDRRuleGroupInstance(
-		com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance mdrRuleGroupInstance)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance mdrRuleGroupInstance) {
 		return getService().deleteMDRRuleGroupInstance(mdrRuleGroupInstance);
 	}
 
@@ -102,12 +96,10 @@ public class MDRRuleGroupInstanceLocalServiceUtil {
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -122,12 +114,11 @@ public class MDRRuleGroupInstanceLocalServiceUtil {
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -143,14 +134,12 @@ public class MDRRuleGroupInstanceLocalServiceUtil {
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getService()
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
@@ -160,11 +149,9 @@ public class MDRRuleGroupInstanceLocalServiceUtil {
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -174,18 +161,15 @@ public class MDRRuleGroupInstanceLocalServiceUtil {
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public static long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
 	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance fetchMDRRuleGroupInstance(
-		long ruleGroupInstanceId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long ruleGroupInstanceId) {
 		return getService().fetchMDRRuleGroupInstance(ruleGroupInstanceId);
 	}
 
@@ -195,11 +179,9 @@ public class MDRRuleGroupInstanceLocalServiceUtil {
 	* @param uuid the m d r rule group instance's UUID
 	* @param companyId the primary key of the company
 	* @return the matching m d r rule group instance, or <code>null</code> if a matching m d r rule group instance could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance fetchMDRRuleGroupInstanceByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long companyId) {
 		return getService()
 				   .fetchMDRRuleGroupInstanceByUuidAndCompanyId(uuid, companyId);
 	}
@@ -210,11 +192,9 @@ public class MDRRuleGroupInstanceLocalServiceUtil {
 	* @param uuid the m d r rule group instance's UUID
 	* @param groupId the primary key of the group
 	* @return the matching m d r rule group instance, or <code>null</code> if a matching m d r rule group instance could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance fetchMDRRuleGroupInstanceByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long groupId) {
 		return getService()
 				   .fetchMDRRuleGroupInstanceByUuidAndGroupId(uuid, groupId);
 	}
@@ -225,30 +205,25 @@ public class MDRRuleGroupInstanceLocalServiceUtil {
 	* @param ruleGroupInstanceId the primary key of the m d r rule group instance
 	* @return the m d r rule group instance
 	* @throws PortalException if a m d r rule group instance with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance getMDRRuleGroupInstance(
 		long ruleGroupInstanceId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getMDRRuleGroupInstance(ruleGroupInstanceId);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext) {
 		return getService().getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	public static com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
@@ -259,12 +234,10 @@ public class MDRRuleGroupInstanceLocalServiceUtil {
 	* @param companyId the primary key of the company
 	* @return the matching m d r rule group instance
 	* @throws PortalException if a matching m d r rule group instance could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance getMDRRuleGroupInstanceByUuidAndCompanyId(
 		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getMDRRuleGroupInstanceByUuidAndCompanyId(uuid, companyId);
 	}
@@ -276,12 +249,10 @@ public class MDRRuleGroupInstanceLocalServiceUtil {
 	* @param groupId the primary key of the group
 	* @return the matching m d r rule group instance
 	* @throws PortalException if a matching m d r rule group instance could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance getMDRRuleGroupInstanceByUuidAndGroupId(
 		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getMDRRuleGroupInstanceByUuidAndGroupId(uuid, groupId);
 	}
@@ -296,11 +267,9 @@ public class MDRRuleGroupInstanceLocalServiceUtil {
 	* @param start the lower bound of the range of m d r rule group instances
 	* @param end the upper bound of the range of m d r rule group instances (not inclusive)
 	* @return the range of m d r rule group instances
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance> getMDRRuleGroupInstances(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return getService().getMDRRuleGroupInstances(start, end);
 	}
 
@@ -308,10 +277,8 @@ public class MDRRuleGroupInstanceLocalServiceUtil {
 	* Returns the number of m d r rule group instances.
 	*
 	* @return the number of m d r rule group instances
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int getMDRRuleGroupInstancesCount()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int getMDRRuleGroupInstancesCount() {
 		return getService().getMDRRuleGroupInstancesCount();
 	}
 
@@ -320,11 +287,9 @@ public class MDRRuleGroupInstanceLocalServiceUtil {
 	*
 	* @param mdrRuleGroupInstance the m d r rule group instance
 	* @return the m d r rule group instance that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance updateMDRRuleGroupInstance(
-		com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance mdrRuleGroupInstance)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance mdrRuleGroupInstance) {
 		return getService().updateMDRRuleGroupInstance(mdrRuleGroupInstance);
 	}
 

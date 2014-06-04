@@ -45,12 +45,9 @@ public interface PortalPreferencesPersistence extends BasePersistence<PortalPref
 	* @param ownerType the owner type
 	* @return the matching portal preferences
 	* @throws com.liferay.portal.NoSuchPreferencesException if a matching portal preferences could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.PortalPreferences findByO_O(long ownerId,
-		int ownerType)
-		throws com.liferay.portal.NoSuchPreferencesException,
-			com.liferay.portal.kernel.exception.SystemException;
+		int ownerType) throws com.liferay.portal.NoSuchPreferencesException;
 
 	/**
 	* Returns the portal preferences where ownerId = &#63; and ownerType = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -58,11 +55,9 @@ public interface PortalPreferencesPersistence extends BasePersistence<PortalPref
 	* @param ownerId the owner ID
 	* @param ownerType the owner type
 	* @return the matching portal preferences, or <code>null</code> if a matching portal preferences could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.PortalPreferences fetchByO_O(long ownerId,
-		int ownerType)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		int ownerType);
 
 	/**
 	* Returns the portal preferences where ownerId = &#63; and ownerType = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -71,11 +66,9 @@ public interface PortalPreferencesPersistence extends BasePersistence<PortalPref
 	* @param ownerType the owner type
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching portal preferences, or <code>null</code> if a matching portal preferences could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.PortalPreferences fetchByO_O(long ownerId,
-		int ownerType, boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		int ownerType, boolean retrieveFromCache);
 
 	/**
 	* Removes the portal preferences where ownerId = &#63; and ownerType = &#63; from the database.
@@ -83,12 +76,10 @@ public interface PortalPreferencesPersistence extends BasePersistence<PortalPref
 	* @param ownerId the owner ID
 	* @param ownerType the owner type
 	* @return the portal preferences that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.PortalPreferences removeByO_O(
 		long ownerId, int ownerType)
-		throws com.liferay.portal.NoSuchPreferencesException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.NoSuchPreferencesException;
 
 	/**
 	* Returns the number of portal preferenceses where ownerId = &#63; and ownerType = &#63;.
@@ -96,10 +87,8 @@ public interface PortalPreferencesPersistence extends BasePersistence<PortalPref
 	* @param ownerId the owner ID
 	* @param ownerType the owner type
 	* @return the number of matching portal preferenceses
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countByO_O(long ownerId, int ownerType)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByO_O(long ownerId, int ownerType);
 
 	/**
 	* Caches the portal preferences in the entity cache if it is enabled.
@@ -132,16 +121,13 @@ public interface PortalPreferencesPersistence extends BasePersistence<PortalPref
 	* @param portalPreferencesId the primary key of the portal preferences
 	* @return the portal preferences that was removed
 	* @throws com.liferay.portal.NoSuchPreferencesException if a portal preferences with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.PortalPreferences remove(
 		long portalPreferencesId)
-		throws com.liferay.portal.NoSuchPreferencesException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.NoSuchPreferencesException;
 
 	public com.liferay.portal.model.PortalPreferences updateImpl(
-		com.liferay.portal.model.PortalPreferences portalPreferences)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.model.PortalPreferences portalPreferences);
 
 	/**
 	* Returns the portal preferences with the primary key or throws a {@link com.liferay.portal.NoSuchPreferencesException} if it could not be found.
@@ -149,32 +135,26 @@ public interface PortalPreferencesPersistence extends BasePersistence<PortalPref
 	* @param portalPreferencesId the primary key of the portal preferences
 	* @return the portal preferences
 	* @throws com.liferay.portal.NoSuchPreferencesException if a portal preferences with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.PortalPreferences findByPrimaryKey(
 		long portalPreferencesId)
-		throws com.liferay.portal.NoSuchPreferencesException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.NoSuchPreferencesException;
 
 	/**
 	* Returns the portal preferences with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param portalPreferencesId the primary key of the portal preferences
 	* @return the portal preferences, or <code>null</code> if a portal preferences with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.PortalPreferences fetchByPrimaryKey(
-		long portalPreferencesId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long portalPreferencesId);
 
 	/**
 	* Returns all the portal preferenceses.
 	*
 	* @return the portal preferenceses
-	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portal.model.PortalPreferences> findAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public java.util.List<com.liferay.portal.model.PortalPreferences> findAll();
 
 	/**
 	* Returns a range of all the portal preferenceses.
@@ -186,11 +166,9 @@ public interface PortalPreferencesPersistence extends BasePersistence<PortalPref
 	* @param start the lower bound of the range of portal preferenceses
 	* @param end the upper bound of the range of portal preferenceses (not inclusive)
 	* @return the range of portal preferenceses
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portal.model.PortalPreferences> findAll(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the portal preferenceses.
@@ -203,27 +181,20 @@ public interface PortalPreferencesPersistence extends BasePersistence<PortalPref
 	* @param end the upper bound of the range of portal preferenceses (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of portal preferenceses
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portal.model.PortalPreferences> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Removes all the portal preferenceses from the database.
-	*
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeAll();
 
 	/**
 	* Returns the number of portal preferenceses.
 	*
 	* @return the number of portal preferenceses
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countAll();
 }

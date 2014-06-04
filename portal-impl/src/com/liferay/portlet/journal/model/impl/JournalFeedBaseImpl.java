@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.journal.model.impl;
 
-import com.liferay.portal.kernel.exception.SystemException;
-
 import com.liferay.portlet.journal.model.JournalFeed;
 import com.liferay.portlet.journal.service.JournalFeedLocalServiceUtil;
 
@@ -39,7 +37,7 @@ public abstract class JournalFeedBaseImpl extends JournalFeedModelImpl
 	 * Never modify or reference this class directly. All methods that expect a journal feed model instance should use the {@link JournalFeed} interface instead.
 	 */
 	@Override
-	public void persist() throws SystemException {
+	public void persist() {
 		if (this.isNew()) {
 			JournalFeedLocalServiceUtil.addJournalFeed(this);
 		}

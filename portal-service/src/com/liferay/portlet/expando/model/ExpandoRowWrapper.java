@@ -314,8 +314,7 @@ public class ExpandoRowWrapper implements ExpandoRow, ModelWrapper<ExpandoRow> {
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void persist() {
 		_expandoRow.persist();
 	}
 

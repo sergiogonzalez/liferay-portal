@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 import com.liferay.portal.service.ServiceContext;
@@ -64,16 +63,14 @@ public class MDRRuleUtil {
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#countWithDynamicQuery(DynamicQuery)
 	 */
-	public static long countWithDynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public static long countWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return getPersistence().countWithDynamicQuery(dynamicQuery);
 	}
 
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery)
 	 */
-	public static List<MDRRule> findWithDynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public static List<MDRRule> findWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -81,8 +78,7 @@ public class MDRRuleUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
 	 */
 	public static List<MDRRule> findWithDynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+		DynamicQuery dynamicQuery, int start, int end) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -91,7 +87,7 @@ public class MDRRuleUtil {
 	 */
 	public static List<MDRRule> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -100,15 +96,14 @@ public class MDRRuleUtil {
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static MDRRule update(MDRRule mdrRule) throws SystemException {
+	public static MDRRule update(MDRRule mdrRule) {
 		return getPersistence().update(mdrRule);
 	}
 
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
-	public static MDRRule update(MDRRule mdrRule, ServiceContext serviceContext)
-		throws SystemException {
+	public static MDRRule update(MDRRule mdrRule, ServiceContext serviceContext) {
 		return getPersistence().update(mdrRule, serviceContext);
 	}
 
@@ -117,11 +112,9 @@ public class MDRRuleUtil {
 	*
 	* @param uuid the uuid
 	* @return the matching m d r rules
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRule> findByUuid(
-		java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid) {
 		return getPersistence().findByUuid(uuid);
 	}
 
@@ -136,11 +129,9 @@ public class MDRRuleUtil {
 	* @param start the lower bound of the range of m d r rules
 	* @param end the upper bound of the range of m d r rules (not inclusive)
 	* @return the range of matching m d r rules
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRule> findByUuid(
-		java.lang.String uuid, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, int start, int end) {
 		return getPersistence().findByUuid(uuid, start, end);
 	}
 
@@ -156,12 +147,10 @@ public class MDRRuleUtil {
 	* @param end the upper bound of the range of m d r rules (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching m d r rules
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRule> findByUuid(
 		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -172,13 +161,11 @@ public class MDRRuleUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching m d r rule
 	* @throws com.liferay.portlet.mobiledevicerules.NoSuchRuleException if a matching m d r rule could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRRule findByUuid_First(
 		java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.mobiledevicerules.NoSuchRuleException {
+		throws com.liferay.portlet.mobiledevicerules.NoSuchRuleException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
 
@@ -188,12 +175,10 @@ public class MDRRuleUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching m d r rule, or <code>null</code> if a matching m d r rule could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRRule fetchByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
 
@@ -204,13 +189,11 @@ public class MDRRuleUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching m d r rule
 	* @throws com.liferay.portlet.mobiledevicerules.NoSuchRuleException if a matching m d r rule could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRRule findByUuid_Last(
 		java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.mobiledevicerules.NoSuchRuleException {
+		throws com.liferay.portlet.mobiledevicerules.NoSuchRuleException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -220,12 +203,10 @@ public class MDRRuleUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching m d r rule, or <code>null</code> if a matching m d r rule could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRRule fetchByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -237,13 +218,11 @@ public class MDRRuleUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next m d r rule
 	* @throws com.liferay.portlet.mobiledevicerules.NoSuchRuleException if a m d r rule with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRRule[] findByUuid_PrevAndNext(
 		long ruleId, java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.mobiledevicerules.NoSuchRuleException {
+		throws com.liferay.portlet.mobiledevicerules.NoSuchRuleException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(ruleId, uuid, orderByComparator);
 	}
@@ -252,10 +231,8 @@ public class MDRRuleUtil {
 	* Removes all the m d r rules where uuid = &#63; from the database.
 	*
 	* @param uuid the uuid
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByUuid(java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByUuid(java.lang.String uuid) {
 		getPersistence().removeByUuid(uuid);
 	}
 
@@ -264,10 +241,8 @@ public class MDRRuleUtil {
 	*
 	* @param uuid the uuid
 	* @return the number of matching m d r rules
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByUuid(java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByUuid(java.lang.String uuid) {
 		return getPersistence().countByUuid(uuid);
 	}
 
@@ -278,12 +253,10 @@ public class MDRRuleUtil {
 	* @param groupId the group ID
 	* @return the matching m d r rule
 	* @throws com.liferay.portlet.mobiledevicerules.NoSuchRuleException if a matching m d r rule could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRRule findByUUID_G(
 		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.mobiledevicerules.NoSuchRuleException {
+		throws com.liferay.portlet.mobiledevicerules.NoSuchRuleException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
 
@@ -293,11 +266,9 @@ public class MDRRuleUtil {
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the matching m d r rule, or <code>null</code> if a matching m d r rule could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRRule fetchByUUID_G(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long groupId) {
 		return getPersistence().fetchByUUID_G(uuid, groupId);
 	}
 
@@ -308,11 +279,9 @@ public class MDRRuleUtil {
 	* @param groupId the group ID
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching m d r rule, or <code>null</code> if a matching m d r rule could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRRule fetchByUUID_G(
-		java.lang.String uuid, long groupId, boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long groupId, boolean retrieveFromCache) {
 		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
 	}
 
@@ -322,12 +291,10 @@ public class MDRRuleUtil {
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the m d r rule that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRRule removeByUUID_G(
 		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.mobiledevicerules.NoSuchRuleException {
+		throws com.liferay.portlet.mobiledevicerules.NoSuchRuleException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
 
@@ -337,10 +304,8 @@ public class MDRRuleUtil {
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the number of matching m d r rules
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByUUID_G(java.lang.String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
 	}
 
@@ -350,11 +315,9 @@ public class MDRRuleUtil {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	* @return the matching m d r rules
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRule> findByUuid_C(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long companyId) {
 		return getPersistence().findByUuid_C(uuid, companyId);
 	}
 
@@ -370,11 +333,9 @@ public class MDRRuleUtil {
 	* @param start the lower bound of the range of m d r rules
 	* @param end the upper bound of the range of m d r rules (not inclusive)
 	* @return the range of matching m d r rules
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRule> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long companyId, int start, int end) {
 		return getPersistence().findByUuid_C(uuid, companyId, start, end);
 	}
 
@@ -391,12 +352,10 @@ public class MDRRuleUtil {
 	* @param end the upper bound of the range of m d r rules (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching m d r rules
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRule> findByUuid_C(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
 	}
@@ -409,13 +368,11 @@ public class MDRRuleUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching m d r rule
 	* @throws com.liferay.portlet.mobiledevicerules.NoSuchRuleException if a matching m d r rule could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRRule findByUuid_C_First(
 		java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.mobiledevicerules.NoSuchRuleException {
+		throws com.liferay.portlet.mobiledevicerules.NoSuchRuleException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -427,12 +384,10 @@ public class MDRRuleUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching m d r rule, or <code>null</code> if a matching m d r rule could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRRule fetchByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -445,13 +400,11 @@ public class MDRRuleUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching m d r rule
 	* @throws com.liferay.portlet.mobiledevicerules.NoSuchRuleException if a matching m d r rule could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRRule findByUuid_C_Last(
 		java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.mobiledevicerules.NoSuchRuleException {
+		throws com.liferay.portlet.mobiledevicerules.NoSuchRuleException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -463,12 +416,10 @@ public class MDRRuleUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching m d r rule, or <code>null</code> if a matching m d r rule could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRRule fetchByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -482,13 +433,11 @@ public class MDRRuleUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next m d r rule
 	* @throws com.liferay.portlet.mobiledevicerules.NoSuchRuleException if a m d r rule with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRRule[] findByUuid_C_PrevAndNext(
 		long ruleId, java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.mobiledevicerules.NoSuchRuleException {
+		throws com.liferay.portlet.mobiledevicerules.NoSuchRuleException {
 		return getPersistence()
 				   .findByUuid_C_PrevAndNext(ruleId, uuid, companyId,
 			orderByComparator);
@@ -499,10 +448,8 @@ public class MDRRuleUtil {
 	*
 	* @param uuid the uuid
 	* @param companyId the company ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByUuid_C(java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByUuid_C(java.lang.String uuid, long companyId) {
 		getPersistence().removeByUuid_C(uuid, companyId);
 	}
 
@@ -512,10 +459,8 @@ public class MDRRuleUtil {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	* @return the number of matching m d r rules
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByUuid_C(java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByUuid_C(java.lang.String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
@@ -524,11 +469,9 @@ public class MDRRuleUtil {
 	*
 	* @param ruleGroupId the rule group ID
 	* @return the matching m d r rules
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRule> findByRuleGroupId(
-		long ruleGroupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long ruleGroupId) {
 		return getPersistence().findByRuleGroupId(ruleGroupId);
 	}
 
@@ -543,11 +486,9 @@ public class MDRRuleUtil {
 	* @param start the lower bound of the range of m d r rules
 	* @param end the upper bound of the range of m d r rules (not inclusive)
 	* @return the range of matching m d r rules
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRule> findByRuleGroupId(
-		long ruleGroupId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long ruleGroupId, int start, int end) {
 		return getPersistence().findByRuleGroupId(ruleGroupId, start, end);
 	}
 
@@ -563,12 +504,10 @@ public class MDRRuleUtil {
 	* @param end the upper bound of the range of m d r rules (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching m d r rules
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRule> findByRuleGroupId(
 		long ruleGroupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByRuleGroupId(ruleGroupId, start, end, orderByComparator);
 	}
@@ -580,13 +519,11 @@ public class MDRRuleUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching m d r rule
 	* @throws com.liferay.portlet.mobiledevicerules.NoSuchRuleException if a matching m d r rule could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRRule findByRuleGroupId_First(
 		long ruleGroupId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.mobiledevicerules.NoSuchRuleException {
+		throws com.liferay.portlet.mobiledevicerules.NoSuchRuleException {
 		return getPersistence()
 				   .findByRuleGroupId_First(ruleGroupId, orderByComparator);
 	}
@@ -597,12 +534,10 @@ public class MDRRuleUtil {
 	* @param ruleGroupId the rule group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching m d r rule, or <code>null</code> if a matching m d r rule could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRRule fetchByRuleGroupId_First(
 		long ruleGroupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByRuleGroupId_First(ruleGroupId, orderByComparator);
 	}
@@ -614,13 +549,11 @@ public class MDRRuleUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching m d r rule
 	* @throws com.liferay.portlet.mobiledevicerules.NoSuchRuleException if a matching m d r rule could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRRule findByRuleGroupId_Last(
 		long ruleGroupId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.mobiledevicerules.NoSuchRuleException {
+		throws com.liferay.portlet.mobiledevicerules.NoSuchRuleException {
 		return getPersistence()
 				   .findByRuleGroupId_Last(ruleGroupId, orderByComparator);
 	}
@@ -631,12 +564,10 @@ public class MDRRuleUtil {
 	* @param ruleGroupId the rule group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching m d r rule, or <code>null</code> if a matching m d r rule could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRRule fetchByRuleGroupId_Last(
 		long ruleGroupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByRuleGroupId_Last(ruleGroupId, orderByComparator);
 	}
@@ -649,13 +580,11 @@ public class MDRRuleUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next m d r rule
 	* @throws com.liferay.portlet.mobiledevicerules.NoSuchRuleException if a m d r rule with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRRule[] findByRuleGroupId_PrevAndNext(
 		long ruleId, long ruleGroupId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.mobiledevicerules.NoSuchRuleException {
+		throws com.liferay.portlet.mobiledevicerules.NoSuchRuleException {
 		return getPersistence()
 				   .findByRuleGroupId_PrevAndNext(ruleId, ruleGroupId,
 			orderByComparator);
@@ -665,10 +594,8 @@ public class MDRRuleUtil {
 	* Removes all the m d r rules where ruleGroupId = &#63; from the database.
 	*
 	* @param ruleGroupId the rule group ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByRuleGroupId(long ruleGroupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByRuleGroupId(long ruleGroupId) {
 		getPersistence().removeByRuleGroupId(ruleGroupId);
 	}
 
@@ -677,10 +604,8 @@ public class MDRRuleUtil {
 	*
 	* @param ruleGroupId the rule group ID
 	* @return the number of matching m d r rules
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByRuleGroupId(long ruleGroupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByRuleGroupId(long ruleGroupId) {
 		return getPersistence().countByRuleGroupId(ruleGroupId);
 	}
 
@@ -721,18 +646,15 @@ public class MDRRuleUtil {
 	* @param ruleId the primary key of the m d r rule
 	* @return the m d r rule that was removed
 	* @throws com.liferay.portlet.mobiledevicerules.NoSuchRuleException if a m d r rule with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRRule remove(
 		long ruleId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.mobiledevicerules.NoSuchRuleException {
+		throws com.liferay.portlet.mobiledevicerules.NoSuchRuleException {
 		return getPersistence().remove(ruleId);
 	}
 
 	public static com.liferay.portlet.mobiledevicerules.model.MDRRule updateImpl(
-		com.liferay.portlet.mobiledevicerules.model.MDRRule mdrRule)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.mobiledevicerules.model.MDRRule mdrRule) {
 		return getPersistence().updateImpl(mdrRule);
 	}
 
@@ -742,12 +664,10 @@ public class MDRRuleUtil {
 	* @param ruleId the primary key of the m d r rule
 	* @return the m d r rule
 	* @throws com.liferay.portlet.mobiledevicerules.NoSuchRuleException if a m d r rule with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRRule findByPrimaryKey(
 		long ruleId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.mobiledevicerules.NoSuchRuleException {
+		throws com.liferay.portlet.mobiledevicerules.NoSuchRuleException {
 		return getPersistence().findByPrimaryKey(ruleId);
 	}
 
@@ -756,10 +676,9 @@ public class MDRRuleUtil {
 	*
 	* @param ruleId the primary key of the m d r rule
 	* @return the m d r rule, or <code>null</code> if a m d r rule with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.mobiledevicerules.model.MDRRule fetchByPrimaryKey(
-		long ruleId) throws com.liferay.portal.kernel.exception.SystemException {
+		long ruleId) {
 		return getPersistence().fetchByPrimaryKey(ruleId);
 	}
 
@@ -767,10 +686,8 @@ public class MDRRuleUtil {
 	* Returns all the m d r rules.
 	*
 	* @return the m d r rules
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRule> findAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRule> findAll() {
 		return getPersistence().findAll();
 	}
 
@@ -784,11 +701,9 @@ public class MDRRuleUtil {
 	* @param start the lower bound of the range of m d r rules
 	* @param end the upper bound of the range of m d r rules (not inclusive)
 	* @return the range of m d r rules
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRule> findAll(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
@@ -803,22 +718,17 @@ public class MDRRuleUtil {
 	* @param end the upper bound of the range of m d r rules (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of m d r rules
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.mobiledevicerules.model.MDRRule> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
 	/**
 	* Removes all the m d r rules from the database.
-	*
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeAll() {
 		getPersistence().removeAll();
 	}
 
@@ -826,10 +736,8 @@ public class MDRRuleUtil {
 	* Returns the number of m d r rules.
 	*
 	* @return the number of m d r rules
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countAll() {
 		return getPersistence().countAll();
 	}
 

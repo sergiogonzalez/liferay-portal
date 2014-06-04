@@ -37,12 +37,10 @@ public class PortletPreferencesLocalServiceWrapper
 	*
 	* @param portletPreferences the portlet preferences
 	* @return the portlet preferences that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.PortletPreferences addPortletPreferences(
-		com.liferay.portal.model.PortletPreferences portletPreferences)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.PortletPreferences portletPreferences) {
 		return _portletPreferencesLocalService.addPortletPreferences(portletPreferences);
 	}
 
@@ -64,13 +62,11 @@ public class PortletPreferencesLocalServiceWrapper
 	* @param portletPreferencesId the primary key of the portlet preferences
 	* @return the portlet preferences that was removed
 	* @throws PortalException if a portlet preferences with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.PortletPreferences deletePortletPreferences(
 		long portletPreferencesId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _portletPreferencesLocalService.deletePortletPreferences(portletPreferencesId);
 	}
 
@@ -79,12 +75,10 @@ public class PortletPreferencesLocalServiceWrapper
 	*
 	* @param portletPreferences the portlet preferences
 	* @return the portlet preferences that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.PortletPreferences deletePortletPreferences(
-		com.liferay.portal.model.PortletPreferences portletPreferences)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.PortletPreferences portletPreferences) {
 		return _portletPreferencesLocalService.deletePortletPreferences(portletPreferences);
 	}
 
@@ -98,13 +92,11 @@ public class PortletPreferencesLocalServiceWrapper
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _portletPreferencesLocalService.dynamicQuery(dynamicQuery);
 	}
 
@@ -119,13 +111,12 @@ public class PortletPreferencesLocalServiceWrapper
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return _portletPreferencesLocalService.dynamicQuery(dynamicQuery,
 			start, end);
 	}
@@ -142,15 +133,13 @@ public class PortletPreferencesLocalServiceWrapper
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return _portletPreferencesLocalService.dynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
 	}
@@ -160,12 +149,10 @@ public class PortletPreferencesLocalServiceWrapper
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _portletPreferencesLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
@@ -175,21 +162,18 @@ public class PortletPreferencesLocalServiceWrapper
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return _portletPreferencesLocalService.dynamicQueryCount(dynamicQuery,
 			projection);
 	}
 
 	@Override
 	public com.liferay.portal.model.PortletPreferences fetchPortletPreferences(
-		long portletPreferencesId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long portletPreferencesId) {
 		return _portletPreferencesLocalService.fetchPortletPreferences(portletPreferencesId);
 	}
 
@@ -199,27 +183,23 @@ public class PortletPreferencesLocalServiceWrapper
 	* @param portletPreferencesId the primary key of the portlet preferences
 	* @return the portlet preferences
 	* @throws PortalException if a portlet preferences with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.PortletPreferences getPortletPreferences(
 		long portletPreferencesId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _portletPreferencesLocalService.getPortletPreferences(portletPreferencesId);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _portletPreferencesLocalService.getActionableDynamicQuery();
 	}
 
 	@Override
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _portletPreferencesLocalService.getPersistedModel(primaryKeyObj);
 	}
 
@@ -233,12 +213,10 @@ public class PortletPreferencesLocalServiceWrapper
 	* @param start the lower bound of the range of portlet preferenceses
 	* @param end the upper bound of the range of portlet preferenceses (not inclusive)
 	* @return the range of portlet preferenceses
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.model.PortletPreferences> getPortletPreferenceses(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return _portletPreferencesLocalService.getPortletPreferenceses(start,
 			end);
 	}
@@ -247,11 +225,9 @@ public class PortletPreferencesLocalServiceWrapper
 	* Returns the number of portlet preferenceses.
 	*
 	* @return the number of portlet preferenceses
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public int getPortletPreferencesesCount()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public int getPortletPreferencesesCount() {
 		return _portletPreferencesLocalService.getPortletPreferencesesCount();
 	}
 
@@ -260,12 +236,10 @@ public class PortletPreferencesLocalServiceWrapper
 	*
 	* @param portletPreferences the portlet preferences
 	* @return the portlet preferences that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.PortletPreferences updatePortletPreferences(
-		com.liferay.portal.model.PortletPreferences portletPreferences)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.PortletPreferences portletPreferences) {
 		return _portletPreferencesLocalService.updatePortletPreferences(portletPreferences);
 	}
 

@@ -15,7 +15,6 @@
 package com.liferay.portlet.documentlibrary.model.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
@@ -45,7 +44,7 @@ public abstract class DLFolderBaseImpl extends DLFolderModelImpl
 	 * Never modify or reference this class directly. All methods that expect a document library folder model instance should use the {@link DLFolder} interface instead.
 	 */
 	@Override
-	public void persist() throws SystemException {
+	public void persist() {
 		if (this.isNew()) {
 			DLFolderLocalServiceUtil.addDLFolder(this);
 		}
@@ -56,7 +55,7 @@ public abstract class DLFolderBaseImpl extends DLFolderModelImpl
 
 	@Override
 	@SuppressWarnings("unused")
-	public String buildTreePath() throws PortalException, SystemException {
+	public String buildTreePath() throws PortalException {
 		List<DLFolder> dlFolders = new ArrayList<DLFolder>();
 
 		DLFolder dlFolder = this;
@@ -82,7 +81,7 @@ public abstract class DLFolderBaseImpl extends DLFolderModelImpl
 	}
 
 	@Override
-	public void updateTreePath(String treePath) throws SystemException {
+	public void updateTreePath(String treePath) {
 		DLFolder dlFolder = this;
 
 		dlFolder.setTreePath(treePath);

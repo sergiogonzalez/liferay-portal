@@ -50,11 +50,9 @@ public interface PasswordPolicyLocalService extends BaseLocalService,
 	*
 	* @param passwordPolicy the password policy
 	* @return the password policy that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.PasswordPolicy addPasswordPolicy(
-		com.liferay.portal.model.PasswordPolicy passwordPolicy)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.model.PasswordPolicy passwordPolicy);
 
 	/**
 	* Creates a new password policy with the primary key. Does not add the password policy to the database.
@@ -71,7 +69,7 @@ public interface PasswordPolicyLocalService extends BaseLocalService,
 	* @param passwordPolicyId the primary key of the password policy
 	* @return the password policy that was removed
 	* @throws PortalException if a password policy with the primary key could not be found
-	* @throws SystemException if a system exception occurred
+	* @throws SystemException
 	*/
 	public com.liferay.portal.model.PasswordPolicy deletePasswordPolicy(
 		long passwordPolicyId)
@@ -84,7 +82,7 @@ public interface PasswordPolicyLocalService extends BaseLocalService,
 	* @param passwordPolicy the password policy
 	* @return the password policy that was removed
 	* @throws PortalException
-	* @throws SystemException if a system exception occurred
+	* @throws SystemException
 	*/
 	public com.liferay.portal.model.PasswordPolicy deletePasswordPolicy(
 		com.liferay.portal.model.PasswordPolicy passwordPolicy)
@@ -98,12 +96,10 @@ public interface PasswordPolicyLocalService extends BaseLocalService,
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -116,12 +112,11 @@ public interface PasswordPolicyLocalService extends BaseLocalService,
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException;
+		int end);
 
 	/**
 	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
@@ -135,25 +130,21 @@ public interface PasswordPolicyLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the number of rows that match the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows that match the dynamic query.
@@ -161,17 +152,14 @@ public interface PasswordPolicyLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.dao.orm.Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PasswordPolicy fetchPasswordPolicy(
-		long passwordPolicyId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long passwordPolicyId);
 
 	/**
 	* Returns the password policy with the matching UUID and company.
@@ -179,12 +167,10 @@ public interface PasswordPolicyLocalService extends BaseLocalService,
 	* @param uuid the password policy's UUID
 	* @param companyId the primary key of the company
 	* @return the matching password policy, or <code>null</code> if a matching password policy could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PasswordPolicy fetchPasswordPolicyByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String uuid, long companyId);
 
 	/**
 	* Returns the password policy with the primary key.
@@ -192,29 +178,24 @@ public interface PasswordPolicyLocalService extends BaseLocalService,
 	* @param passwordPolicyId the primary key of the password policy
 	* @return the password policy
 	* @throws PortalException if a password policy with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PasswordPolicy getPasswordPolicy(
 		long passwordPolicyId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext);
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns the password policy with the matching UUID and company.
@@ -223,13 +204,11 @@ public interface PasswordPolicyLocalService extends BaseLocalService,
 	* @param companyId the primary key of the company
 	* @return the matching password policy
 	* @throws PortalException if a matching password policy could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PasswordPolicy getPasswordPolicyByUuidAndCompanyId(
 		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns a range of all the password policies.
@@ -241,33 +220,27 @@ public interface PasswordPolicyLocalService extends BaseLocalService,
 	* @param start the lower bound of the range of password policies
 	* @param end the upper bound of the range of password policies (not inclusive)
 	* @return the range of password policies
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.PasswordPolicy> getPasswordPolicies(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		int start, int end);
 
 	/**
 	* Returns the number of password policies.
 	*
 	* @return the number of password policies
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getPasswordPoliciesCount()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int getPasswordPoliciesCount();
 
 	/**
 	* Updates the password policy in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param passwordPolicy the password policy
 	* @return the password policy that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.PasswordPolicy updatePasswordPolicy(
-		com.liferay.portal.model.PasswordPolicy passwordPolicy)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.model.PasswordPolicy passwordPolicy);
 
 	/**
 	* Returns the Spring bean ID for this bean.

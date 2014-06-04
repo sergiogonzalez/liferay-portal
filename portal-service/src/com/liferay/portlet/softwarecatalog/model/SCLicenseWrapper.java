@@ -370,8 +370,7 @@ public class SCLicenseWrapper implements SCLicense, ModelWrapper<SCLicense> {
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void persist() {
 		_scLicense.persist();
 	}
 

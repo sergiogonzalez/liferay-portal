@@ -14,7 +14,6 @@
 
 package com.liferay.portal.model.impl;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Contact;
 import com.liferay.portal.service.ContactLocalServiceUtil;
 
@@ -38,7 +37,7 @@ public abstract class ContactBaseImpl extends ContactModelImpl
 	 * Never modify or reference this class directly. All methods that expect a contact model instance should use the {@link Contact} interface instead.
 	 */
 	@Override
-	public void persist() throws SystemException {
+	public void persist() {
 		if (this.isNew()) {
 			ContactLocalServiceUtil.addContact(this);
 		}

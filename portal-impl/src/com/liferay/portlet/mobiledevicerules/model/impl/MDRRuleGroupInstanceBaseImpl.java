@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.mobiledevicerules.model.impl;
 
-import com.liferay.portal.kernel.exception.SystemException;
-
 import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance;
 import com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupInstanceLocalServiceUtil;
 
@@ -39,7 +37,7 @@ public abstract class MDRRuleGroupInstanceBaseImpl
 	 * Never modify or reference this class directly. All methods that expect a m d r rule group instance model instance should use the {@link MDRRuleGroupInstance} interface instead.
 	 */
 	@Override
-	public void persist() throws SystemException {
+	public void persist() {
 		if (this.isNew()) {
 			MDRRuleGroupInstanceLocalServiceUtil.addMDRRuleGroupInstance(this);
 		}

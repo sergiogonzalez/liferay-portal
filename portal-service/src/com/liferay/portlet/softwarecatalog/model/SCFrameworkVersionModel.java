@@ -17,7 +17,6 @@ package com.liferay.portlet.softwarecatalog.model;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.GroupedModel;
@@ -131,10 +130,9 @@ public interface SCFrameworkVersionModel extends BaseModel<SCFrameworkVersion>,
 	 * Returns the user uuid of this s c framework version.
 	 *
 	 * @return the user uuid of this s c framework version
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public String getUserUuid() throws SystemException;
+	public String getUserUuid();
 
 	/**
 	 * Sets the user uuid of this s c framework version.

@@ -39,12 +39,10 @@ public class ShoppingCouponLocalServiceWrapper
 	*
 	* @param shoppingCoupon the shopping coupon
 	* @return the shopping coupon that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.shopping.model.ShoppingCoupon addShoppingCoupon(
-		com.liferay.portlet.shopping.model.ShoppingCoupon shoppingCoupon)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.shopping.model.ShoppingCoupon shoppingCoupon) {
 		return _shoppingCouponLocalService.addShoppingCoupon(shoppingCoupon);
 	}
 
@@ -66,13 +64,11 @@ public class ShoppingCouponLocalServiceWrapper
 	* @param couponId the primary key of the shopping coupon
 	* @return the shopping coupon that was removed
 	* @throws PortalException if a shopping coupon with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.shopping.model.ShoppingCoupon deleteShoppingCoupon(
 		long couponId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _shoppingCouponLocalService.deleteShoppingCoupon(couponId);
 	}
 
@@ -81,12 +77,10 @@ public class ShoppingCouponLocalServiceWrapper
 	*
 	* @param shoppingCoupon the shopping coupon
 	* @return the shopping coupon that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.shopping.model.ShoppingCoupon deleteShoppingCoupon(
-		com.liferay.portlet.shopping.model.ShoppingCoupon shoppingCoupon)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.shopping.model.ShoppingCoupon shoppingCoupon) {
 		return _shoppingCouponLocalService.deleteShoppingCoupon(shoppingCoupon);
 	}
 
@@ -100,13 +94,11 @@ public class ShoppingCouponLocalServiceWrapper
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _shoppingCouponLocalService.dynamicQuery(dynamicQuery);
 	}
 
@@ -121,13 +113,12 @@ public class ShoppingCouponLocalServiceWrapper
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return _shoppingCouponLocalService.dynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -143,15 +134,13 @@ public class ShoppingCouponLocalServiceWrapper
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return _shoppingCouponLocalService.dynamicQuery(dynamicQuery, start,
 			end, orderByComparator);
 	}
@@ -161,12 +150,10 @@ public class ShoppingCouponLocalServiceWrapper
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _shoppingCouponLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
@@ -176,21 +163,18 @@ public class ShoppingCouponLocalServiceWrapper
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return _shoppingCouponLocalService.dynamicQueryCount(dynamicQuery,
 			projection);
 	}
 
 	@Override
 	public com.liferay.portlet.shopping.model.ShoppingCoupon fetchShoppingCoupon(
-		long couponId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long couponId) {
 		return _shoppingCouponLocalService.fetchShoppingCoupon(couponId);
 	}
 
@@ -200,27 +184,23 @@ public class ShoppingCouponLocalServiceWrapper
 	* @param couponId the primary key of the shopping coupon
 	* @return the shopping coupon
 	* @throws PortalException if a shopping coupon with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.shopping.model.ShoppingCoupon getShoppingCoupon(
 		long couponId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _shoppingCouponLocalService.getShoppingCoupon(couponId);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _shoppingCouponLocalService.getActionableDynamicQuery();
 	}
 
 	@Override
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _shoppingCouponLocalService.getPersistedModel(primaryKeyObj);
 	}
 
@@ -234,12 +214,10 @@ public class ShoppingCouponLocalServiceWrapper
 	* @param start the lower bound of the range of shopping coupons
 	* @param end the upper bound of the range of shopping coupons (not inclusive)
 	* @return the range of shopping coupons
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portlet.shopping.model.ShoppingCoupon> getShoppingCoupons(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return _shoppingCouponLocalService.getShoppingCoupons(start, end);
 	}
 
@@ -247,11 +225,9 @@ public class ShoppingCouponLocalServiceWrapper
 	* Returns the number of shopping coupons.
 	*
 	* @return the number of shopping coupons
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public int getShoppingCouponsCount()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public int getShoppingCouponsCount() {
 		return _shoppingCouponLocalService.getShoppingCouponsCount();
 	}
 
@@ -260,12 +236,10 @@ public class ShoppingCouponLocalServiceWrapper
 	*
 	* @param shoppingCoupon the shopping coupon
 	* @return the shopping coupon that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.shopping.model.ShoppingCoupon updateShoppingCoupon(
-		com.liferay.portlet.shopping.model.ShoppingCoupon shoppingCoupon)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.shopping.model.ShoppingCoupon shoppingCoupon) {
 		return _shoppingCouponLocalService.updateShoppingCoupon(shoppingCoupon);
 	}
 

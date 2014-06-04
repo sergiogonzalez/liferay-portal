@@ -38,12 +38,10 @@ public class ExpandoTableLocalServiceWrapper implements ExpandoTableLocalService
 	*
 	* @param expandoTable the expando table
 	* @return the expando table that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.expando.model.ExpandoTable addExpandoTable(
-		com.liferay.portlet.expando.model.ExpandoTable expandoTable)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.expando.model.ExpandoTable expandoTable) {
 		return _expandoTableLocalService.addExpandoTable(expandoTable);
 	}
 
@@ -65,13 +63,11 @@ public class ExpandoTableLocalServiceWrapper implements ExpandoTableLocalService
 	* @param tableId the primary key of the expando table
 	* @return the expando table that was removed
 	* @throws PortalException if a expando table with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.expando.model.ExpandoTable deleteExpandoTable(
 		long tableId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _expandoTableLocalService.deleteExpandoTable(tableId);
 	}
 
@@ -80,12 +76,10 @@ public class ExpandoTableLocalServiceWrapper implements ExpandoTableLocalService
 	*
 	* @param expandoTable the expando table
 	* @return the expando table that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.expando.model.ExpandoTable deleteExpandoTable(
-		com.liferay.portlet.expando.model.ExpandoTable expandoTable)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.expando.model.ExpandoTable expandoTable) {
 		return _expandoTableLocalService.deleteExpandoTable(expandoTable);
 	}
 
@@ -99,13 +93,11 @@ public class ExpandoTableLocalServiceWrapper implements ExpandoTableLocalService
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _expandoTableLocalService.dynamicQuery(dynamicQuery);
 	}
 
@@ -120,13 +112,12 @@ public class ExpandoTableLocalServiceWrapper implements ExpandoTableLocalService
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return _expandoTableLocalService.dynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -142,15 +133,13 @@ public class ExpandoTableLocalServiceWrapper implements ExpandoTableLocalService
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return _expandoTableLocalService.dynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
 	}
@@ -160,12 +149,10 @@ public class ExpandoTableLocalServiceWrapper implements ExpandoTableLocalService
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _expandoTableLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
@@ -175,21 +162,18 @@ public class ExpandoTableLocalServiceWrapper implements ExpandoTableLocalService
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return _expandoTableLocalService.dynamicQueryCount(dynamicQuery,
 			projection);
 	}
 
 	@Override
 	public com.liferay.portlet.expando.model.ExpandoTable fetchExpandoTable(
-		long tableId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long tableId) {
 		return _expandoTableLocalService.fetchExpandoTable(tableId);
 	}
 
@@ -199,27 +183,23 @@ public class ExpandoTableLocalServiceWrapper implements ExpandoTableLocalService
 	* @param tableId the primary key of the expando table
 	* @return the expando table
 	* @throws PortalException if a expando table with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.expando.model.ExpandoTable getExpandoTable(
 		long tableId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _expandoTableLocalService.getExpandoTable(tableId);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _expandoTableLocalService.getActionableDynamicQuery();
 	}
 
 	@Override
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _expandoTableLocalService.getPersistedModel(primaryKeyObj);
 	}
 
@@ -233,12 +213,10 @@ public class ExpandoTableLocalServiceWrapper implements ExpandoTableLocalService
 	* @param start the lower bound of the range of expando tables
 	* @param end the upper bound of the range of expando tables (not inclusive)
 	* @return the range of expando tables
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portlet.expando.model.ExpandoTable> getExpandoTables(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return _expandoTableLocalService.getExpandoTables(start, end);
 	}
 
@@ -246,11 +224,9 @@ public class ExpandoTableLocalServiceWrapper implements ExpandoTableLocalService
 	* Returns the number of expando tables.
 	*
 	* @return the number of expando tables
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public int getExpandoTablesCount()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public int getExpandoTablesCount() {
 		return _expandoTableLocalService.getExpandoTablesCount();
 	}
 
@@ -259,12 +235,10 @@ public class ExpandoTableLocalServiceWrapper implements ExpandoTableLocalService
 	*
 	* @param expandoTable the expando table
 	* @return the expando table that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.expando.model.ExpandoTable updateExpandoTable(
-		com.liferay.portlet.expando.model.ExpandoTable expandoTable)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.expando.model.ExpandoTable expandoTable) {
 		return _expandoTableLocalService.updateExpandoTable(expandoTable);
 	}
 

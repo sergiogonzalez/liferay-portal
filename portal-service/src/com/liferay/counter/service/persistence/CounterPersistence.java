@@ -69,15 +69,12 @@ public interface CounterPersistence extends BasePersistence<Counter> {
 	* @param name the primary key of the counter
 	* @return the counter that was removed
 	* @throws com.liferay.counter.NoSuchCounterException if a counter with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.counter.model.Counter remove(java.lang.String name)
-		throws com.liferay.counter.NoSuchCounterException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.counter.NoSuchCounterException;
 
 	public com.liferay.counter.model.Counter updateImpl(
-		com.liferay.counter.model.Counter counter)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.counter.model.Counter counter);
 
 	/**
 	* Returns the counter with the primary key or throws a {@link com.liferay.counter.NoSuchCounterException} if it could not be found.
@@ -85,32 +82,26 @@ public interface CounterPersistence extends BasePersistence<Counter> {
 	* @param name the primary key of the counter
 	* @return the counter
 	* @throws com.liferay.counter.NoSuchCounterException if a counter with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.counter.model.Counter findByPrimaryKey(
 		java.lang.String name)
-		throws com.liferay.counter.NoSuchCounterException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.counter.NoSuchCounterException;
 
 	/**
 	* Returns the counter with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param name the primary key of the counter
 	* @return the counter, or <code>null</code> if a counter with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.counter.model.Counter fetchByPrimaryKey(
-		java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String name);
 
 	/**
 	* Returns all the counters.
 	*
 	* @return the counters
-	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.counter.model.Counter> findAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public java.util.List<com.liferay.counter.model.Counter> findAll();
 
 	/**
 	* Returns a range of all the counters.
@@ -122,11 +113,9 @@ public interface CounterPersistence extends BasePersistence<Counter> {
 	* @param start the lower bound of the range of counters
 	* @param end the upper bound of the range of counters (not inclusive)
 	* @return the range of counters
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.counter.model.Counter> findAll(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the counters.
@@ -139,27 +128,20 @@ public interface CounterPersistence extends BasePersistence<Counter> {
 	* @param end the upper bound of the range of counters (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of counters
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.counter.model.Counter> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Removes all the counters from the database.
-	*
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeAll();
 
 	/**
 	* Returns the number of counters.
 	*
 	* @return the number of counters
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countAll();
 }

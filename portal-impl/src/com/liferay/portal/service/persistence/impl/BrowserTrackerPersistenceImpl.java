@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -97,11 +96,10 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 	 * @param userId the user ID
 	 * @return the matching browser tracker
 	 * @throws com.liferay.portal.NoSuchBrowserTrackerException if a matching browser tracker could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public BrowserTracker findByUserId(long userId)
-		throws NoSuchBrowserTrackerException, SystemException {
+		throws NoSuchBrowserTrackerException {
 		BrowserTracker browserTracker = fetchByUserId(userId);
 
 		if (browserTracker == null) {
@@ -129,10 +127,9 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 	 *
 	 * @param userId the user ID
 	 * @return the matching browser tracker, or <code>null</code> if a matching browser tracker could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public BrowserTracker fetchByUserId(long userId) throws SystemException {
+	public BrowserTracker fetchByUserId(long userId) {
 		return fetchByUserId(userId, true);
 	}
 
@@ -142,11 +139,9 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 	 * @param userId the user ID
 	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching browser tracker, or <code>null</code> if a matching browser tracker could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public BrowserTracker fetchByUserId(long userId, boolean retrieveFromCache)
-		throws SystemException {
+	public BrowserTracker fetchByUserId(long userId, boolean retrieveFromCache) {
 		Object[] finderArgs = new Object[] { userId };
 
 		Object result = null;
@@ -227,11 +222,10 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 	 *
 	 * @param userId the user ID
 	 * @return the browser tracker that was removed
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public BrowserTracker removeByUserId(long userId)
-		throws NoSuchBrowserTrackerException, SystemException {
+		throws NoSuchBrowserTrackerException {
 		BrowserTracker browserTracker = findByUserId(userId);
 
 		return remove(browserTracker);
@@ -242,10 +236,9 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 	 *
 	 * @param userId the user ID
 	 * @return the number of matching browser trackers
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByUserId(long userId) throws SystemException {
+	public int countByUserId(long userId) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_USERID;
 
 		Object[] finderArgs = new Object[] { userId };
@@ -446,11 +439,10 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 	 * @param browserTrackerId the primary key of the browser tracker
 	 * @return the browser tracker that was removed
 	 * @throws com.liferay.portal.NoSuchBrowserTrackerException if a browser tracker with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public BrowserTracker remove(long browserTrackerId)
-		throws NoSuchBrowserTrackerException, SystemException {
+		throws NoSuchBrowserTrackerException {
 		return remove((Serializable)browserTrackerId);
 	}
 
@@ -460,11 +452,10 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 	 * @param primaryKey the primary key of the browser tracker
 	 * @return the browser tracker that was removed
 	 * @throws com.liferay.portal.NoSuchBrowserTrackerException if a browser tracker with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public BrowserTracker remove(Serializable primaryKey)
-		throws NoSuchBrowserTrackerException, SystemException {
+		throws NoSuchBrowserTrackerException {
 		Session session = null;
 
 		try {
@@ -496,8 +487,7 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 	}
 
 	@Override
-	protected BrowserTracker removeImpl(BrowserTracker browserTracker)
-		throws SystemException {
+	protected BrowserTracker removeImpl(BrowserTracker browserTracker) {
 		browserTracker = toUnwrappedModel(browserTracker);
 
 		Session session = null;
@@ -530,8 +520,7 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 
 	@Override
 	public BrowserTracker updateImpl(
-		com.liferay.portal.model.BrowserTracker browserTracker)
-		throws SystemException {
+		com.liferay.portal.model.BrowserTracker browserTracker) {
 		browserTracker = toUnwrappedModel(browserTracker);
 
 		boolean isNew = browserTracker.isNew();
@@ -599,11 +588,10 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 	 * @param primaryKey the primary key of the browser tracker
 	 * @return the browser tracker
 	 * @throws com.liferay.portal.NoSuchBrowserTrackerException if a browser tracker with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public BrowserTracker findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchBrowserTrackerException, SystemException {
+		throws NoSuchBrowserTrackerException {
 		BrowserTracker browserTracker = fetchByPrimaryKey(primaryKey);
 
 		if (browserTracker == null) {
@@ -624,11 +612,10 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 	 * @param browserTrackerId the primary key of the browser tracker
 	 * @return the browser tracker
 	 * @throws com.liferay.portal.NoSuchBrowserTrackerException if a browser tracker with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public BrowserTracker findByPrimaryKey(long browserTrackerId)
-		throws NoSuchBrowserTrackerException, SystemException {
+		throws NoSuchBrowserTrackerException {
 		return findByPrimaryKey((Serializable)browserTrackerId);
 	}
 
@@ -637,11 +624,9 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 	 *
 	 * @param primaryKey the primary key of the browser tracker
 	 * @return the browser tracker, or <code>null</code> if a browser tracker with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public BrowserTracker fetchByPrimaryKey(Serializable primaryKey)
-		throws SystemException {
+	public BrowserTracker fetchByPrimaryKey(Serializable primaryKey) {
 		BrowserTracker browserTracker = (BrowserTracker)EntityCacheUtil.getResult(BrowserTrackerModelImpl.ENTITY_CACHE_ENABLED,
 				BrowserTrackerImpl.class, primaryKey);
 
@@ -686,11 +671,9 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 	 *
 	 * @param browserTrackerId the primary key of the browser tracker
 	 * @return the browser tracker, or <code>null</code> if a browser tracker with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public BrowserTracker fetchByPrimaryKey(long browserTrackerId)
-		throws SystemException {
+	public BrowserTracker fetchByPrimaryKey(long browserTrackerId) {
 		return fetchByPrimaryKey((Serializable)browserTrackerId);
 	}
 
@@ -698,10 +681,9 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 	 * Returns all the browser trackers.
 	 *
 	 * @return the browser trackers
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<BrowserTracker> findAll() throws SystemException {
+	public List<BrowserTracker> findAll() {
 		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -715,11 +697,9 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 	 * @param start the lower bound of the range of browser trackers
 	 * @param end the upper bound of the range of browser trackers (not inclusive)
 	 * @return the range of browser trackers
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<BrowserTracker> findAll(int start, int end)
-		throws SystemException {
+	public List<BrowserTracker> findAll(int start, int end) {
 		return findAll(start, end, null);
 	}
 
@@ -734,11 +714,10 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 	 * @param end the upper bound of the range of browser trackers (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of browser trackers
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<BrowserTracker> findAll(int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -820,10 +799,9 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 	/**
 	 * Removes all the browser trackers from the database.
 	 *
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeAll() throws SystemException {
+	public void removeAll() {
 		for (BrowserTracker browserTracker : findAll()) {
 			remove(browserTracker);
 		}
@@ -833,10 +811,9 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 	 * Returns the number of browser trackers.
 	 *
 	 * @return the number of browser trackers
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countAll() throws SystemException {
+	public int countAll() {
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
 				FINDER_ARGS_EMPTY, this);
 

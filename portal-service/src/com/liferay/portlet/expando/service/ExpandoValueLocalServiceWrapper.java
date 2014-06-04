@@ -38,12 +38,10 @@ public class ExpandoValueLocalServiceWrapper implements ExpandoValueLocalService
 	*
 	* @param expandoValue the expando value
 	* @return the expando value that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.expando.model.ExpandoValue addExpandoValue(
-		com.liferay.portlet.expando.model.ExpandoValue expandoValue)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.expando.model.ExpandoValue expandoValue) {
 		return _expandoValueLocalService.addExpandoValue(expandoValue);
 	}
 
@@ -65,13 +63,11 @@ public class ExpandoValueLocalServiceWrapper implements ExpandoValueLocalService
 	* @param valueId the primary key of the expando value
 	* @return the expando value that was removed
 	* @throws PortalException if a expando value with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.expando.model.ExpandoValue deleteExpandoValue(
 		long valueId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _expandoValueLocalService.deleteExpandoValue(valueId);
 	}
 
@@ -80,12 +76,10 @@ public class ExpandoValueLocalServiceWrapper implements ExpandoValueLocalService
 	*
 	* @param expandoValue the expando value
 	* @return the expando value that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.expando.model.ExpandoValue deleteExpandoValue(
-		com.liferay.portlet.expando.model.ExpandoValue expandoValue)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.expando.model.ExpandoValue expandoValue) {
 		return _expandoValueLocalService.deleteExpandoValue(expandoValue);
 	}
 
@@ -99,13 +93,11 @@ public class ExpandoValueLocalServiceWrapper implements ExpandoValueLocalService
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _expandoValueLocalService.dynamicQuery(dynamicQuery);
 	}
 
@@ -120,13 +112,12 @@ public class ExpandoValueLocalServiceWrapper implements ExpandoValueLocalService
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return _expandoValueLocalService.dynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -142,15 +133,13 @@ public class ExpandoValueLocalServiceWrapper implements ExpandoValueLocalService
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return _expandoValueLocalService.dynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
 	}
@@ -160,12 +149,10 @@ public class ExpandoValueLocalServiceWrapper implements ExpandoValueLocalService
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _expandoValueLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
@@ -175,21 +162,18 @@ public class ExpandoValueLocalServiceWrapper implements ExpandoValueLocalService
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return _expandoValueLocalService.dynamicQueryCount(dynamicQuery,
 			projection);
 	}
 
 	@Override
 	public com.liferay.portlet.expando.model.ExpandoValue fetchExpandoValue(
-		long valueId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long valueId) {
 		return _expandoValueLocalService.fetchExpandoValue(valueId);
 	}
 
@@ -199,27 +183,23 @@ public class ExpandoValueLocalServiceWrapper implements ExpandoValueLocalService
 	* @param valueId the primary key of the expando value
 	* @return the expando value
 	* @throws PortalException if a expando value with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.expando.model.ExpandoValue getExpandoValue(
 		long valueId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _expandoValueLocalService.getExpandoValue(valueId);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _expandoValueLocalService.getActionableDynamicQuery();
 	}
 
 	@Override
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _expandoValueLocalService.getPersistedModel(primaryKeyObj);
 	}
 
@@ -233,12 +213,10 @@ public class ExpandoValueLocalServiceWrapper implements ExpandoValueLocalService
 	* @param start the lower bound of the range of expando values
 	* @param end the upper bound of the range of expando values (not inclusive)
 	* @return the range of expando values
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portlet.expando.model.ExpandoValue> getExpandoValues(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return _expandoValueLocalService.getExpandoValues(start, end);
 	}
 
@@ -246,11 +224,9 @@ public class ExpandoValueLocalServiceWrapper implements ExpandoValueLocalService
 	* Returns the number of expando values.
 	*
 	* @return the number of expando values
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public int getExpandoValuesCount()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public int getExpandoValuesCount() {
 		return _expandoValueLocalService.getExpandoValuesCount();
 	}
 
@@ -259,12 +235,10 @@ public class ExpandoValueLocalServiceWrapper implements ExpandoValueLocalService
 	*
 	* @param expandoValue the expando value
 	* @return the expando value that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.expando.model.ExpandoValue updateExpandoValue(
-		com.liferay.portlet.expando.model.ExpandoValue expandoValue)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.expando.model.ExpandoValue expandoValue) {
 		return _expandoValueLocalService.updateExpandoValue(expandoValue);
 	}
 

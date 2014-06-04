@@ -45,11 +45,9 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	*
 	* @param groupId the group ID
 	* @return the matching asset tags
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.asset.model.AssetTag> findByGroupId(
-		long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long groupId);
 
 	/**
 	* Returns a range of all the asset tags where groupId = &#63;.
@@ -62,11 +60,9 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	* @param start the lower bound of the range of asset tags
 	* @param end the upper bound of the range of asset tags (not inclusive)
 	* @return the range of matching asset tags
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.asset.model.AssetTag> findByGroupId(
-		long groupId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long groupId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the asset tags where groupId = &#63;.
@@ -80,12 +76,10 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	* @param end the upper bound of the range of asset tags (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching asset tags
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.asset.model.AssetTag> findByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first asset tag in the ordered set where groupId = &#63;.
@@ -94,13 +88,11 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching asset tag
 	* @throws com.liferay.portlet.asset.NoSuchTagException if a matching asset tag could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.asset.model.AssetTag findByGroupId_First(
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.asset.NoSuchTagException;
+		throws com.liferay.portlet.asset.NoSuchTagException;
 
 	/**
 	* Returns the first asset tag in the ordered set where groupId = &#63;.
@@ -108,12 +100,10 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching asset tag, or <code>null</code> if a matching asset tag could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.asset.model.AssetTag fetchByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last asset tag in the ordered set where groupId = &#63;.
@@ -122,13 +112,11 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching asset tag
 	* @throws com.liferay.portlet.asset.NoSuchTagException if a matching asset tag could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.asset.model.AssetTag findByGroupId_Last(
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.asset.NoSuchTagException;
+		throws com.liferay.portlet.asset.NoSuchTagException;
 
 	/**
 	* Returns the last asset tag in the ordered set where groupId = &#63;.
@@ -136,12 +124,10 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching asset tag, or <code>null</code> if a matching asset tag could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.asset.model.AssetTag fetchByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the asset tags before and after the current asset tag in the ordered set where groupId = &#63;.
@@ -151,24 +137,20 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next asset tag
 	* @throws com.liferay.portlet.asset.NoSuchTagException if a asset tag with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.asset.model.AssetTag[] findByGroupId_PrevAndNext(
 		long tagId, long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.asset.NoSuchTagException;
+		throws com.liferay.portlet.asset.NoSuchTagException;
 
 	/**
 	* Returns all the asset tags that the user has permission to view where groupId = &#63;.
 	*
 	* @param groupId the group ID
 	* @return the matching asset tags that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.asset.model.AssetTag> filterFindByGroupId(
-		long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long groupId);
 
 	/**
 	* Returns a range of all the asset tags that the user has permission to view where groupId = &#63;.
@@ -181,11 +163,9 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	* @param start the lower bound of the range of asset tags
 	* @param end the upper bound of the range of asset tags (not inclusive)
 	* @return the range of matching asset tags that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.asset.model.AssetTag> filterFindByGroupId(
-		long groupId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long groupId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the asset tags that the user has permissions to view where groupId = &#63;.
@@ -199,12 +179,10 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	* @param end the upper bound of the range of asset tags (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching asset tags that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.asset.model.AssetTag> filterFindByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the asset tags before and after the current asset tag in the ordered set of asset tags that the user has permission to view where groupId = &#63;.
@@ -214,42 +192,34 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next asset tag
 	* @throws com.liferay.portlet.asset.NoSuchTagException if a asset tag with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.asset.model.AssetTag[] filterFindByGroupId_PrevAndNext(
 		long tagId, long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.asset.NoSuchTagException;
+		throws com.liferay.portlet.asset.NoSuchTagException;
 
 	/**
 	* Removes all the asset tags where groupId = &#63; from the database.
 	*
 	* @param groupId the group ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByGroupId(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeByGroupId(long groupId);
 
 	/**
 	* Returns the number of asset tags where groupId = &#63;.
 	*
 	* @param groupId the group ID
 	* @return the number of matching asset tags
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countByGroupId(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByGroupId(long groupId);
 
 	/**
 	* Returns the number of asset tags that the user has permission to view where groupId = &#63;.
 	*
 	* @param groupId the group ID
 	* @return the number of matching asset tags that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
-	public int filterCountByGroupId(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int filterCountByGroupId(long groupId);
 
 	/**
 	* Returns the asset tag where groupId = &#63; and name = &#63; or throws a {@link com.liferay.portlet.asset.NoSuchTagException} if it could not be found.
@@ -258,12 +228,10 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	* @param name the name
 	* @return the matching asset tag
 	* @throws com.liferay.portlet.asset.NoSuchTagException if a matching asset tag could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.asset.model.AssetTag findByG_N(long groupId,
 		java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.asset.NoSuchTagException;
+		throws com.liferay.portlet.asset.NoSuchTagException;
 
 	/**
 	* Returns the asset tag where groupId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -271,11 +239,9 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	* @param groupId the group ID
 	* @param name the name
 	* @return the matching asset tag, or <code>null</code> if a matching asset tag could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.asset.model.AssetTag fetchByG_N(long groupId,
-		java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String name);
 
 	/**
 	* Returns the asset tag where groupId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -284,11 +250,9 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	* @param name the name
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching asset tag, or <code>null</code> if a matching asset tag could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.asset.model.AssetTag fetchByG_N(long groupId,
-		java.lang.String name, boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String name, boolean retrieveFromCache);
 
 	/**
 	* Removes the asset tag where groupId = &#63; and name = &#63; from the database.
@@ -296,12 +260,10 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	* @param groupId the group ID
 	* @param name the name
 	* @return the asset tag that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.asset.model.AssetTag removeByG_N(long groupId,
 		java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.asset.NoSuchTagException;
+		throws com.liferay.portlet.asset.NoSuchTagException;
 
 	/**
 	* Returns the number of asset tags where groupId = &#63; and name = &#63;.
@@ -309,10 +271,8 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	* @param groupId the group ID
 	* @param name the name
 	* @return the number of matching asset tags
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countByG_N(long groupId, java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByG_N(long groupId, java.lang.String name);
 
 	/**
 	* Caches the asset tag in the entity cache if it is enabled.
@@ -343,15 +303,12 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	* @param tagId the primary key of the asset tag
 	* @return the asset tag that was removed
 	* @throws com.liferay.portlet.asset.NoSuchTagException if a asset tag with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.asset.model.AssetTag remove(long tagId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.asset.NoSuchTagException;
+		throws com.liferay.portlet.asset.NoSuchTagException;
 
 	public com.liferay.portlet.asset.model.AssetTag updateImpl(
-		com.liferay.portlet.asset.model.AssetTag assetTag)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portlet.asset.model.AssetTag assetTag);
 
 	/**
 	* Returns the asset tag with the primary key or throws a {@link com.liferay.portlet.asset.NoSuchTagException} if it could not be found.
@@ -359,30 +316,25 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	* @param tagId the primary key of the asset tag
 	* @return the asset tag
 	* @throws com.liferay.portlet.asset.NoSuchTagException if a asset tag with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.asset.model.AssetTag findByPrimaryKey(long tagId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.asset.NoSuchTagException;
+		throws com.liferay.portlet.asset.NoSuchTagException;
 
 	/**
 	* Returns the asset tag with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param tagId the primary key of the asset tag
 	* @return the asset tag, or <code>null</code> if a asset tag with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.asset.model.AssetTag fetchByPrimaryKey(
-		long tagId) throws com.liferay.portal.kernel.exception.SystemException;
+		long tagId);
 
 	/**
 	* Returns all the asset tags.
 	*
 	* @return the asset tags
-	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portlet.asset.model.AssetTag> findAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public java.util.List<com.liferay.portlet.asset.model.AssetTag> findAll();
 
 	/**
 	* Returns a range of all the asset tags.
@@ -394,11 +346,9 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	* @param start the lower bound of the range of asset tags
 	* @param end the upper bound of the range of asset tags (not inclusive)
 	* @return the range of asset tags
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.asset.model.AssetTag> findAll(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the asset tags.
@@ -411,49 +361,39 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	* @param end the upper bound of the range of asset tags (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of asset tags
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.asset.model.AssetTag> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Removes all the asset tags from the database.
-	*
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeAll();
 
 	/**
 	* Returns the number of asset tags.
 	*
 	* @return the number of asset tags
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countAll();
 
 	/**
 	* Returns the primaryKeys of asset entries associated with the asset tag.
 	*
 	* @param pk the primary key of the asset tag
 	* @return long[] of the primaryKeys of asset entries associated with the asset tag
-	* @throws SystemException if a system exception occurred
 	*/
-	public long[] getAssetEntryPrimaryKeys(long pk)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public long[] getAssetEntryPrimaryKeys(long pk);
 
 	/**
 	* Returns all the asset entries associated with the asset tag.
 	*
 	* @param pk the primary key of the asset tag
 	* @return the asset entries associated with the asset tag
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.asset.model.AssetEntry> getAssetEntries(
-		long pk) throws com.liferay.portal.kernel.exception.SystemException;
+		long pk);
 
 	/**
 	* Returns a range of all the asset entries associated with the asset tag.
@@ -466,11 +406,9 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	* @param start the lower bound of the range of asset tags
 	* @param end the upper bound of the range of asset tags (not inclusive)
 	* @return the range of asset entries associated with the asset tag
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.asset.model.AssetEntry> getAssetEntries(
-		long pk, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long pk, int start, int end);
 
 	/**
 	* Returns an ordered range of all the asset entries associated with the asset tag.
@@ -484,22 +422,18 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	* @param end the upper bound of the range of asset tags (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of asset entries associated with the asset tag
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.asset.model.AssetEntry> getAssetEntries(
 		long pk, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the number of asset entries associated with the asset tag.
 	*
 	* @param pk the primary key of the asset tag
 	* @return the number of asset entries associated with the asset tag
-	* @throws SystemException if a system exception occurred
 	*/
-	public int getAssetEntriesSize(long pk)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int getAssetEntriesSize(long pk);
 
 	/**
 	* Returns <code>true</code> if the asset entry is associated with the asset tag.
@@ -507,132 +441,106 @@ public interface AssetTagPersistence extends BasePersistence<AssetTag> {
 	* @param pk the primary key of the asset tag
 	* @param assetEntryPK the primary key of the asset entry
 	* @return <code>true</code> if the asset entry is associated with the asset tag; <code>false</code> otherwise
-	* @throws SystemException if a system exception occurred
 	*/
-	public boolean containsAssetEntry(long pk, long assetEntryPK)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public boolean containsAssetEntry(long pk, long assetEntryPK);
 
 	/**
 	* Returns <code>true</code> if the asset tag has any asset entries associated with it.
 	*
 	* @param pk the primary key of the asset tag to check for associations with asset entries
 	* @return <code>true</code> if the asset tag has any asset entries associated with it; <code>false</code> otherwise
-	* @throws SystemException if a system exception occurred
 	*/
-	public boolean containsAssetEntries(long pk)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public boolean containsAssetEntries(long pk);
 
 	/**
 	* Adds an association between the asset tag and the asset entry. Also notifies the appropriate model listeners and clears the mapping table finder cache.
 	*
 	* @param pk the primary key of the asset tag
 	* @param assetEntryPK the primary key of the asset entry
-	* @throws SystemException if a system exception occurred
 	*/
-	public void addAssetEntry(long pk, long assetEntryPK)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void addAssetEntry(long pk, long assetEntryPK);
 
 	/**
 	* Adds an association between the asset tag and the asset entry. Also notifies the appropriate model listeners and clears the mapping table finder cache.
 	*
 	* @param pk the primary key of the asset tag
 	* @param assetEntry the asset entry
-	* @throws SystemException if a system exception occurred
 	*/
 	public void addAssetEntry(long pk,
-		com.liferay.portlet.asset.model.AssetEntry assetEntry)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portlet.asset.model.AssetEntry assetEntry);
 
 	/**
 	* Adds an association between the asset tag and the asset entries. Also notifies the appropriate model listeners and clears the mapping table finder cache.
 	*
 	* @param pk the primary key of the asset tag
 	* @param assetEntryPKs the primary keys of the asset entries
-	* @throws SystemException if a system exception occurred
 	*/
-	public void addAssetEntries(long pk, long[] assetEntryPKs)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void addAssetEntries(long pk, long[] assetEntryPKs);
 
 	/**
 	* Adds an association between the asset tag and the asset entries. Also notifies the appropriate model listeners and clears the mapping table finder cache.
 	*
 	* @param pk the primary key of the asset tag
 	* @param assetEntries the asset entries
-	* @throws SystemException if a system exception occurred
 	*/
 	public void addAssetEntries(long pk,
-		java.util.List<com.liferay.portlet.asset.model.AssetEntry> assetEntries)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.util.List<com.liferay.portlet.asset.model.AssetEntry> assetEntries);
 
 	/**
 	* Clears all associations between the asset tag and its asset entries. Also notifies the appropriate model listeners and clears the mapping table finder cache.
 	*
 	* @param pk the primary key of the asset tag to clear the associated asset entries from
-	* @throws SystemException if a system exception occurred
 	*/
-	public void clearAssetEntries(long pk)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void clearAssetEntries(long pk);
 
 	/**
 	* Removes the association between the asset tag and the asset entry. Also notifies the appropriate model listeners and clears the mapping table finder cache.
 	*
 	* @param pk the primary key of the asset tag
 	* @param assetEntryPK the primary key of the asset entry
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeAssetEntry(long pk, long assetEntryPK)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeAssetEntry(long pk, long assetEntryPK);
 
 	/**
 	* Removes the association between the asset tag and the asset entry. Also notifies the appropriate model listeners and clears the mapping table finder cache.
 	*
 	* @param pk the primary key of the asset tag
 	* @param assetEntry the asset entry
-	* @throws SystemException if a system exception occurred
 	*/
 	public void removeAssetEntry(long pk,
-		com.liferay.portlet.asset.model.AssetEntry assetEntry)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portlet.asset.model.AssetEntry assetEntry);
 
 	/**
 	* Removes the association between the asset tag and the asset entries. Also notifies the appropriate model listeners and clears the mapping table finder cache.
 	*
 	* @param pk the primary key of the asset tag
 	* @param assetEntryPKs the primary keys of the asset entries
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeAssetEntries(long pk, long[] assetEntryPKs)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeAssetEntries(long pk, long[] assetEntryPKs);
 
 	/**
 	* Removes the association between the asset tag and the asset entries. Also notifies the appropriate model listeners and clears the mapping table finder cache.
 	*
 	* @param pk the primary key of the asset tag
 	* @param assetEntries the asset entries
-	* @throws SystemException if a system exception occurred
 	*/
 	public void removeAssetEntries(long pk,
-		java.util.List<com.liferay.portlet.asset.model.AssetEntry> assetEntries)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.util.List<com.liferay.portlet.asset.model.AssetEntry> assetEntries);
 
 	/**
 	* Sets the asset entries associated with the asset tag, removing and adding associations as necessary. Also notifies the appropriate model listeners and clears the mapping table finder cache.
 	*
 	* @param pk the primary key of the asset tag
 	* @param assetEntryPKs the primary keys of the asset entries to be associated with the asset tag
-	* @throws SystemException if a system exception occurred
 	*/
-	public void setAssetEntries(long pk, long[] assetEntryPKs)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void setAssetEntries(long pk, long[] assetEntryPKs);
 
 	/**
 	* Sets the asset entries associated with the asset tag, removing and adding associations as necessary. Also notifies the appropriate model listeners and clears the mapping table finder cache.
 	*
 	* @param pk the primary key of the asset tag
 	* @param assetEntries the asset entries to be associated with the asset tag
-	* @throws SystemException if a system exception occurred
 	*/
 	public void setAssetEntries(long pk,
-		java.util.List<com.liferay.portlet.asset.model.AssetEntry> assetEntries)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.util.List<com.liferay.portlet.asset.model.AssetEntry> assetEntries);
 }

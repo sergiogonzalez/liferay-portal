@@ -35,12 +35,10 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	*
 	* @param group the group
 	* @return the group that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.Group addGroup(
-		com.liferay.portal.model.Group group)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.Group group) {
 		return _groupLocalService.addGroup(group);
 	}
 
@@ -61,7 +59,7 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	* @param groupId the primary key of the group
 	* @return the group that was removed
 	* @throws PortalException if a group with the primary key could not be found
-	* @throws SystemException if a system exception occurred
+	* @throws SystemException
 	*/
 	@Override
 	public com.liferay.portal.model.Group deleteGroup(long groupId)
@@ -76,7 +74,7 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	* @param group the group
 	* @return the group that was removed
 	* @throws PortalException
-	* @throws SystemException if a system exception occurred
+	* @throws SystemException
 	*/
 	@Override
 	public com.liferay.portal.model.Group deleteGroup(
@@ -96,13 +94,11 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _groupLocalService.dynamicQuery(dynamicQuery);
 	}
 
@@ -117,13 +113,12 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return _groupLocalService.dynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -139,15 +134,13 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return _groupLocalService.dynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
 	}
@@ -157,12 +150,10 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _groupLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
@@ -172,19 +163,16 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return _groupLocalService.dynamicQueryCount(dynamicQuery, projection);
 	}
 
 	@Override
-	public com.liferay.portal.model.Group fetchGroup(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public com.liferay.portal.model.Group fetchGroup(long groupId) {
 		return _groupLocalService.fetchGroup(groupId);
 	}
 
@@ -194,12 +182,10 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	* @param uuid the group's UUID
 	* @param companyId the primary key of the company
 	* @return the matching group, or <code>null</code> if a matching group could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.Group fetchGroupByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long companyId) {
 		return _groupLocalService.fetchGroupByUuidAndCompanyId(uuid, companyId);
 	}
 
@@ -209,7 +195,7 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	* @param groupId the primary key of the group
 	* @return the group
 	* @throws PortalException if a group with the primary key could not be found
-	* @throws SystemException if a system exception occurred
+	* @throws SystemException
 	*/
 	@Override
 	public com.liferay.portal.model.Group getGroup(long groupId)
@@ -219,16 +205,14 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _groupLocalService.getActionableDynamicQuery();
 	}
 
 	@Override
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _groupLocalService.getPersistedModel(primaryKeyObj);
 	}
 
@@ -239,7 +223,7 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	* @param companyId the primary key of the company
 	* @return the matching group
 	* @throws PortalException if a matching group could not be found
-	* @throws SystemException if a system exception occurred
+	* @throws SystemException
 	*/
 	@Override
 	public com.liferay.portal.model.Group getGroupByUuidAndCompanyId(
@@ -259,11 +243,10 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	* @param start the lower bound of the range of groups
 	* @param end the upper bound of the range of groups (not inclusive)
 	* @return the range of groups
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.model.Group> getGroups(int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return _groupLocalService.getGroups(start, end);
 	}
 
@@ -271,11 +254,9 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	* Returns the number of groups.
 	*
 	* @return the number of groups
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public int getGroupsCount()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public int getGroupsCount() {
 		return _groupLocalService.getGroupsCount();
 	}
 
@@ -284,97 +265,59 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	*
 	* @param group the group
 	* @return the group that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portal.model.Group updateGroup(
-		com.liferay.portal.model.Group group)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.Group group) {
 		return _groupLocalService.updateGroup(group);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
-	public void addOrganizationGroup(long organizationId, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void addOrganizationGroup(long organizationId, long groupId) {
 		_groupLocalService.addOrganizationGroup(organizationId, groupId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
 	public void addOrganizationGroup(long organizationId,
-		com.liferay.portal.model.Group group)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.Group group) {
 		_groupLocalService.addOrganizationGroup(organizationId, group);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
-	public void addOrganizationGroups(long organizationId, long[] groupIds)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void addOrganizationGroups(long organizationId, long[] groupIds) {
 		_groupLocalService.addOrganizationGroups(organizationId, groupIds);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
 	public void addOrganizationGroups(long organizationId,
-		java.util.List<com.liferay.portal.model.Group> Groups)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.util.List<com.liferay.portal.model.Group> Groups) {
 		_groupLocalService.addOrganizationGroups(organizationId, Groups);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
-	public void clearOrganizationGroups(long organizationId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void clearOrganizationGroups(long organizationId) {
 		_groupLocalService.clearOrganizationGroups(organizationId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
-	public void deleteOrganizationGroup(long organizationId, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void deleteOrganizationGroup(long organizationId, long groupId) {
 		_groupLocalService.deleteOrganizationGroup(organizationId, groupId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
 	public void deleteOrganizationGroup(long organizationId,
-		com.liferay.portal.model.Group group)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.Group group) {
 		_groupLocalService.deleteOrganizationGroup(organizationId, group);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
-	public void deleteOrganizationGroups(long organizationId, long[] groupIds)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void deleteOrganizationGroups(long organizationId, long[] groupIds) {
 		_groupLocalService.deleteOrganizationGroups(organizationId, groupIds);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
 	public void deleteOrganizationGroups(long organizationId,
-		java.util.List<com.liferay.portal.model.Group> Groups)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.util.List<com.liferay.portal.model.Group> Groups) {
 		_groupLocalService.deleteOrganizationGroups(organizationId, Groups);
 	}
 
@@ -383,103 +326,65 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	*
 	* @param groupId the groupId of the group
 	* @return long[] the organizationIds of organizations associated with the group
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public long[] getOrganizationPrimaryKeys(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public long[] getOrganizationPrimaryKeys(long groupId) {
 		return _groupLocalService.getOrganizationPrimaryKeys(groupId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
 	public java.util.List<com.liferay.portal.model.Group> getOrganizationGroups(
-		long organizationId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long organizationId) {
 		return _groupLocalService.getOrganizationGroups(organizationId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
 	public java.util.List<com.liferay.portal.model.Group> getOrganizationGroups(
-		long organizationId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long organizationId, int start, int end) {
 		return _groupLocalService.getOrganizationGroups(organizationId, start,
 			end);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
 	public java.util.List<com.liferay.portal.model.Group> getOrganizationGroups(
 		long organizationId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return _groupLocalService.getOrganizationGroups(organizationId, start,
 			end, orderByComparator);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
-	public int getOrganizationGroupsCount(long organizationId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public int getOrganizationGroupsCount(long organizationId) {
 		return _groupLocalService.getOrganizationGroupsCount(organizationId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
-	public boolean hasOrganizationGroup(long organizationId, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public boolean hasOrganizationGroup(long organizationId, long groupId) {
 		return _groupLocalService.hasOrganizationGroup(organizationId, groupId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
-	public boolean hasOrganizationGroups(long organizationId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public boolean hasOrganizationGroups(long organizationId) {
 		return _groupLocalService.hasOrganizationGroups(organizationId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
-	public void setOrganizationGroups(long organizationId, long[] groupIds)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void setOrganizationGroups(long organizationId, long[] groupIds) {
 		_groupLocalService.setOrganizationGroups(organizationId, groupIds);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
-	public void addRoleGroup(long roleId, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void addRoleGroup(long roleId, long groupId) {
 		_groupLocalService.addRoleGroup(roleId, groupId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
-	public void addRoleGroup(long roleId, com.liferay.portal.model.Group group)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void addRoleGroup(long roleId, com.liferay.portal.model.Group group) {
 		_groupLocalService.addRoleGroup(roleId, group);
 	}
 
 	/**
-	* @throws SystemException if a system exception occurred
+	* @throws SystemException
 	*/
 	@Override
 	public void addRoleGroups(long roleId, long[] groupIds)
@@ -488,7 +393,7 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	}
 
 	/**
-	* @throws SystemException if a system exception occurred
+	* @throws SystemException
 	*/
 	@Override
 	public void addRoleGroups(long roleId,
@@ -497,50 +402,30 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 		_groupLocalService.addRoleGroups(roleId, Groups);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
-	public void clearRoleGroups(long roleId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void clearRoleGroups(long roleId) {
 		_groupLocalService.clearRoleGroups(roleId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
-	public void deleteRoleGroup(long roleId, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void deleteRoleGroup(long roleId, long groupId) {
 		_groupLocalService.deleteRoleGroup(roleId, groupId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
 	public void deleteRoleGroup(long roleId,
-		com.liferay.portal.model.Group group)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.Group group) {
 		_groupLocalService.deleteRoleGroup(roleId, group);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
-	public void deleteRoleGroups(long roleId, long[] groupIds)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void deleteRoleGroups(long roleId, long[] groupIds) {
 		_groupLocalService.deleteRoleGroups(roleId, groupIds);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
 	public void deleteRoleGroups(long roleId,
-		java.util.List<com.liferay.portal.model.Group> Groups)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.util.List<com.liferay.portal.model.Group> Groups) {
 		_groupLocalService.deleteRoleGroups(roleId, Groups);
 	}
 
@@ -549,74 +434,49 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	*
 	* @param groupId the groupId of the group
 	* @return long[] the roleIds of roles associated with the group
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public long[] getRolePrimaryKeys(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public long[] getRolePrimaryKeys(long groupId) {
 		return _groupLocalService.getRolePrimaryKeys(groupId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
 	public java.util.List<com.liferay.portal.model.Group> getRoleGroups(
-		long roleId) throws com.liferay.portal.kernel.exception.SystemException {
+		long roleId) {
 		return _groupLocalService.getRoleGroups(roleId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
 	public java.util.List<com.liferay.portal.model.Group> getRoleGroups(
-		long roleId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long roleId, int start, int end) {
 		return _groupLocalService.getRoleGroups(roleId, start, end);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
 	public java.util.List<com.liferay.portal.model.Group> getRoleGroups(
 		long roleId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return _groupLocalService.getRoleGroups(roleId, start, end,
 			orderByComparator);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
-	public int getRoleGroupsCount(long roleId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public int getRoleGroupsCount(long roleId) {
 		return _groupLocalService.getRoleGroupsCount(roleId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
-	public boolean hasRoleGroup(long roleId, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public boolean hasRoleGroup(long roleId, long groupId) {
 		return _groupLocalService.hasRoleGroup(roleId, groupId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
-	public boolean hasRoleGroups(long roleId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public boolean hasRoleGroups(long roleId) {
 		return _groupLocalService.hasRoleGroups(roleId);
 	}
 
 	/**
-	* @throws SystemException if a system exception occurred
+	* @throws SystemException
 	*/
 	@Override
 	public void setRoleGroups(long roleId, long[] groupIds)
@@ -624,88 +484,52 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 		_groupLocalService.setRoleGroups(roleId, groupIds);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
-	public void addUserGroupGroup(long userGroupId, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void addUserGroupGroup(long userGroupId, long groupId) {
 		_groupLocalService.addUserGroupGroup(userGroupId, groupId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
 	public void addUserGroupGroup(long userGroupId,
-		com.liferay.portal.model.Group group)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.Group group) {
 		_groupLocalService.addUserGroupGroup(userGroupId, group);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
-	public void addUserGroupGroups(long userGroupId, long[] groupIds)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void addUserGroupGroups(long userGroupId, long[] groupIds) {
 		_groupLocalService.addUserGroupGroups(userGroupId, groupIds);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
 	public void addUserGroupGroups(long userGroupId,
-		java.util.List<com.liferay.portal.model.Group> Groups)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.util.List<com.liferay.portal.model.Group> Groups) {
 		_groupLocalService.addUserGroupGroups(userGroupId, Groups);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
-	public void clearUserGroupGroups(long userGroupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void clearUserGroupGroups(long userGroupId) {
 		_groupLocalService.clearUserGroupGroups(userGroupId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
-	public void deleteUserGroupGroup(long userGroupId, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void deleteUserGroupGroup(long userGroupId, long groupId) {
 		_groupLocalService.deleteUserGroupGroup(userGroupId, groupId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
 	public void deleteUserGroupGroup(long userGroupId,
-		com.liferay.portal.model.Group group)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.Group group) {
 		_groupLocalService.deleteUserGroupGroup(userGroupId, group);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
-	public void deleteUserGroupGroups(long userGroupId, long[] groupIds)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void deleteUserGroupGroups(long userGroupId, long[] groupIds) {
 		_groupLocalService.deleteUserGroupGroups(userGroupId, groupIds);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
 	public void deleteUserGroupGroups(long userGroupId,
-		java.util.List<com.liferay.portal.model.Group> Groups)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.util.List<com.liferay.portal.model.Group> Groups) {
 		_groupLocalService.deleteUserGroupGroups(userGroupId, Groups);
 	}
 
@@ -714,102 +538,64 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	*
 	* @param groupId the groupId of the group
 	* @return long[] the userGroupIds of user groups associated with the group
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public long[] getUserGroupPrimaryKeys(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public long[] getUserGroupPrimaryKeys(long groupId) {
 		return _groupLocalService.getUserGroupPrimaryKeys(groupId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
 	public java.util.List<com.liferay.portal.model.Group> getUserGroupGroups(
-		long userGroupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long userGroupId) {
 		return _groupLocalService.getUserGroupGroups(userGroupId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
 	public java.util.List<com.liferay.portal.model.Group> getUserGroupGroups(
-		long userGroupId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long userGroupId, int start, int end) {
 		return _groupLocalService.getUserGroupGroups(userGroupId, start, end);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
 	public java.util.List<com.liferay.portal.model.Group> getUserGroupGroups(
 		long userGroupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return _groupLocalService.getUserGroupGroups(userGroupId, start, end,
 			orderByComparator);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
-	public int getUserGroupGroupsCount(long userGroupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public int getUserGroupGroupsCount(long userGroupId) {
 		return _groupLocalService.getUserGroupGroupsCount(userGroupId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
-	public boolean hasUserGroupGroup(long userGroupId, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public boolean hasUserGroupGroup(long userGroupId, long groupId) {
 		return _groupLocalService.hasUserGroupGroup(userGroupId, groupId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
-	public boolean hasUserGroupGroups(long userGroupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public boolean hasUserGroupGroups(long userGroupId) {
 		return _groupLocalService.hasUserGroupGroups(userGroupId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
-	public void setUserGroupGroups(long userGroupId, long[] groupIds)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void setUserGroupGroups(long userGroupId, long[] groupIds) {
 		_groupLocalService.setUserGroupGroups(userGroupId, groupIds);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
-	public void addUserGroup(long userId, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void addUserGroup(long userId, long groupId) {
 		_groupLocalService.addUserGroup(userId, groupId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
-	public void addUserGroup(long userId, com.liferay.portal.model.Group group)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void addUserGroup(long userId, com.liferay.portal.model.Group group) {
 		_groupLocalService.addUserGroup(userId, group);
 	}
 
 	/**
-	* @throws SystemException if a system exception occurred
+	* @throws SystemException
 	*/
 	@Override
 	public void addUserGroups(long userId, long[] groupIds)
@@ -818,7 +604,7 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	}
 
 	/**
-	* @throws SystemException if a system exception occurred
+	* @throws SystemException
 	*/
 	@Override
 	public void addUserGroups(long userId,
@@ -827,50 +613,30 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 		_groupLocalService.addUserGroups(userId, Groups);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
-	public void clearUserGroups(long userId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void clearUserGroups(long userId) {
 		_groupLocalService.clearUserGroups(userId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
-	public void deleteUserGroup(long userId, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void deleteUserGroup(long userId, long groupId) {
 		_groupLocalService.deleteUserGroup(userId, groupId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
 	public void deleteUserGroup(long userId,
-		com.liferay.portal.model.Group group)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.Group group) {
 		_groupLocalService.deleteUserGroup(userId, group);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
-	public void deleteUserGroups(long userId, long[] groupIds)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void deleteUserGroups(long userId, long[] groupIds) {
 		_groupLocalService.deleteUserGroups(userId, groupIds);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
 	public void deleteUserGroups(long userId,
-		java.util.List<com.liferay.portal.model.Group> Groups)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.util.List<com.liferay.portal.model.Group> Groups) {
 		_groupLocalService.deleteUserGroups(userId, Groups);
 	}
 
@@ -879,36 +645,27 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 	*
 	* @param groupId the groupId of the group
 	* @return long[] the userIds of users associated with the group
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public long[] getUserPrimaryKeys(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public long[] getUserPrimaryKeys(long groupId) {
 		return _groupLocalService.getUserPrimaryKeys(groupId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
 	public java.util.List<com.liferay.portal.model.Group> getUserGroups(
-		long userId) throws com.liferay.portal.kernel.exception.SystemException {
+		long userId) {
 		return _groupLocalService.getUserGroups(userId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
 	public java.util.List<com.liferay.portal.model.Group> getUserGroups(
-		long userId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long userId, int start, int end) {
 		return _groupLocalService.getUserGroups(userId, start, end);
 	}
 
 	/**
 	* @throws PortalException
-	* @throws SystemException if a system exception occurred
+	* @throws SystemException
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.model.Group> getUserGroups(
@@ -920,17 +677,13 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 			orderByComparator);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
-	public int getUserGroupsCount(long userId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public int getUserGroupsCount(long userId) {
 		return _groupLocalService.getUserGroupsCount(userId);
 	}
 
 	/**
-	* @throws SystemException if a system exception occurred
+	* @throws SystemException
 	*/
 	@Override
 	public boolean hasUserGroup(long userId, long groupId)
@@ -938,21 +691,13 @@ public class GroupLocalServiceWrapper implements GroupLocalService,
 		return _groupLocalService.hasUserGroup(userId, groupId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
-	public boolean hasUserGroups(long userId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public boolean hasUserGroups(long userId) {
 		return _groupLocalService.hasUserGroups(userId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
-	public void setUserGroups(long userId, long[] groupIds)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void setUserGroups(long userId, long[] groupIds) {
 		_groupLocalService.setUserGroups(userId, groupIds);
 	}
 

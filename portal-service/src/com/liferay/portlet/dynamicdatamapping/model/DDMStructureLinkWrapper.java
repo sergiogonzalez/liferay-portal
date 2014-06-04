@@ -302,8 +302,7 @@ public class DDMStructureLinkWrapper implements DDMStructureLink,
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void persist() {
 		_ddmStructureLink.persist();
 	}
 

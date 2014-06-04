@@ -212,11 +212,9 @@ public class DLFileRankWrapper implements DLFileRank, ModelWrapper<DLFileRank> {
 	* Returns the user uuid of this document library file rank.
 	*
 	* @return the user uuid of this document library file rank
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public java.lang.String getUserUuid()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public java.lang.String getUserUuid() {
 		return _dlFileRank.getUserUuid();
 	}
 
@@ -400,8 +398,7 @@ public class DLFileRankWrapper implements DLFileRank, ModelWrapper<DLFileRank> {
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void persist() {
 		_dlFileRank.persist();
 	}
 

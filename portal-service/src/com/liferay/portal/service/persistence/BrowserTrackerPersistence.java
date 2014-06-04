@@ -44,21 +44,17 @@ public interface BrowserTrackerPersistence extends BasePersistence<BrowserTracke
 	* @param userId the user ID
 	* @return the matching browser tracker
 	* @throws com.liferay.portal.NoSuchBrowserTrackerException if a matching browser tracker could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.BrowserTracker findByUserId(long userId)
-		throws com.liferay.portal.NoSuchBrowserTrackerException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.NoSuchBrowserTrackerException;
 
 	/**
 	* Returns the browser tracker where userId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
 	* @param userId the user ID
 	* @return the matching browser tracker, or <code>null</code> if a matching browser tracker could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.portal.model.BrowserTracker fetchByUserId(long userId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public com.liferay.portal.model.BrowserTracker fetchByUserId(long userId);
 
 	/**
 	* Returns the browser tracker where userId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -66,32 +62,26 @@ public interface BrowserTrackerPersistence extends BasePersistence<BrowserTracke
 	* @param userId the user ID
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching browser tracker, or <code>null</code> if a matching browser tracker could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.BrowserTracker fetchByUserId(long userId,
-		boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		boolean retrieveFromCache);
 
 	/**
 	* Removes the browser tracker where userId = &#63; from the database.
 	*
 	* @param userId the user ID
 	* @return the browser tracker that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.BrowserTracker removeByUserId(long userId)
-		throws com.liferay.portal.NoSuchBrowserTrackerException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.NoSuchBrowserTrackerException;
 
 	/**
 	* Returns the number of browser trackers where userId = &#63;.
 	*
 	* @param userId the user ID
 	* @return the number of matching browser trackers
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countByUserId(long userId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByUserId(long userId);
 
 	/**
 	* Caches the browser tracker in the entity cache if it is enabled.
@@ -123,15 +113,12 @@ public interface BrowserTrackerPersistence extends BasePersistence<BrowserTracke
 	* @param browserTrackerId the primary key of the browser tracker
 	* @return the browser tracker that was removed
 	* @throws com.liferay.portal.NoSuchBrowserTrackerException if a browser tracker with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.BrowserTracker remove(long browserTrackerId)
-		throws com.liferay.portal.NoSuchBrowserTrackerException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.NoSuchBrowserTrackerException;
 
 	public com.liferay.portal.model.BrowserTracker updateImpl(
-		com.liferay.portal.model.BrowserTracker browserTracker)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.model.BrowserTracker browserTracker);
 
 	/**
 	* Returns the browser tracker with the primary key or throws a {@link com.liferay.portal.NoSuchBrowserTrackerException} if it could not be found.
@@ -139,32 +126,26 @@ public interface BrowserTrackerPersistence extends BasePersistence<BrowserTracke
 	* @param browserTrackerId the primary key of the browser tracker
 	* @return the browser tracker
 	* @throws com.liferay.portal.NoSuchBrowserTrackerException if a browser tracker with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.BrowserTracker findByPrimaryKey(
 		long browserTrackerId)
-		throws com.liferay.portal.NoSuchBrowserTrackerException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.NoSuchBrowserTrackerException;
 
 	/**
 	* Returns the browser tracker with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param browserTrackerId the primary key of the browser tracker
 	* @return the browser tracker, or <code>null</code> if a browser tracker with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.BrowserTracker fetchByPrimaryKey(
-		long browserTrackerId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long browserTrackerId);
 
 	/**
 	* Returns all the browser trackers.
 	*
 	* @return the browser trackers
-	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portal.model.BrowserTracker> findAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public java.util.List<com.liferay.portal.model.BrowserTracker> findAll();
 
 	/**
 	* Returns a range of all the browser trackers.
@@ -176,11 +157,9 @@ public interface BrowserTrackerPersistence extends BasePersistence<BrowserTracke
 	* @param start the lower bound of the range of browser trackers
 	* @param end the upper bound of the range of browser trackers (not inclusive)
 	* @return the range of browser trackers
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portal.model.BrowserTracker> findAll(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the browser trackers.
@@ -193,27 +172,20 @@ public interface BrowserTrackerPersistence extends BasePersistence<BrowserTracke
 	* @param end the upper bound of the range of browser trackers (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of browser trackers
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portal.model.BrowserTracker> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Removes all the browser trackers from the database.
-	*
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeAll();
 
 	/**
 	* Returns the number of browser trackers.
 	*
 	* @return the number of browser trackers
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countAll();
 }

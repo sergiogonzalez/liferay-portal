@@ -52,11 +52,9 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 	*
 	* @param dlFileEntryType the document library file entry type
 	* @return the document library file entry type that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileEntryType addDLFileEntryType(
-		com.liferay.portlet.documentlibrary.model.DLFileEntryType dlFileEntryType)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portlet.documentlibrary.model.DLFileEntryType dlFileEntryType);
 
 	/**
 	* Creates a new document library file entry type with the primary key. Does not add the document library file entry type to the database.
@@ -73,23 +71,19 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 	* @param fileEntryTypeId the primary key of the document library file entry type
 	* @return the document library file entry type that was removed
 	* @throws PortalException if a document library file entry type with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileEntryType deleteDLFileEntryType(
 		long fileEntryTypeId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Deletes the document library file entry type from the database. Also notifies the appropriate model listeners.
 	*
 	* @param dlFileEntryType the document library file entry type
 	* @return the document library file entry type that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileEntryType deleteDLFileEntryType(
-		com.liferay.portlet.documentlibrary.model.DLFileEntryType dlFileEntryType)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portlet.documentlibrary.model.DLFileEntryType dlFileEntryType);
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -98,12 +92,10 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -116,12 +108,11 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException;
+		int end);
 
 	/**
 	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
@@ -135,25 +126,21 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the number of rows that match the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows that match the dynamic query.
@@ -161,17 +148,14 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.dao.orm.Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.documentlibrary.model.DLFileEntryType fetchDLFileEntryType(
-		long fileEntryTypeId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long fileEntryTypeId);
 
 	/**
 	* Returns the document library file entry type with the matching UUID and company.
@@ -179,12 +163,10 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 	* @param uuid the document library file entry type's UUID
 	* @param companyId the primary key of the company
 	* @return the matching document library file entry type, or <code>null</code> if a matching document library file entry type could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.documentlibrary.model.DLFileEntryType fetchDLFileEntryTypeByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String uuid, long companyId);
 
 	/**
 	* Returns the document library file entry type matching the UUID and group.
@@ -192,12 +174,10 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 	* @param uuid the document library file entry type's UUID
 	* @param groupId the primary key of the group
 	* @return the matching document library file entry type, or <code>null</code> if a matching document library file entry type could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.documentlibrary.model.DLFileEntryType fetchDLFileEntryTypeByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String uuid, long groupId);
 
 	/**
 	* Returns the document library file entry type with the primary key.
@@ -205,29 +185,24 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 	* @param fileEntryTypeId the primary key of the document library file entry type
 	* @return the document library file entry type
 	* @throws PortalException if a document library file entry type with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.documentlibrary.model.DLFileEntryType getDLFileEntryType(
 		long fileEntryTypeId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext);
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns the document library file entry type with the matching UUID and company.
@@ -236,13 +211,11 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 	* @param companyId the primary key of the company
 	* @return the matching document library file entry type
 	* @throws PortalException if a matching document library file entry type could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.documentlibrary.model.DLFileEntryType getDLFileEntryTypeByUuidAndCompanyId(
 		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns the document library file entry type matching the UUID and group.
@@ -251,13 +224,11 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 	* @param groupId the primary key of the group
 	* @return the matching document library file entry type
 	* @throws PortalException if a matching document library file entry type could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.documentlibrary.model.DLFileEntryType getDLFileEntryTypeByUuidAndGroupId(
 		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns a range of all the document library file entry types.
@@ -269,286 +240,148 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 	* @param start the lower bound of the range of document library file entry types
 	* @param end the upper bound of the range of document library file entry types (not inclusive)
 	* @return the range of document library file entry types
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> getDLFileEntryTypes(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		int start, int end);
 
 	/**
 	* Returns the number of document library file entry types.
 	*
 	* @return the number of document library file entry types
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getDLFileEntryTypesCount()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int getDLFileEntryTypesCount();
 
 	/**
 	* Updates the document library file entry type in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param dlFileEntryType the document library file entry type
 	* @return the document library file entry type that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.documentlibrary.model.DLFileEntryType updateDLFileEntryType(
-		com.liferay.portlet.documentlibrary.model.DLFileEntryType dlFileEntryType)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portlet.documentlibrary.model.DLFileEntryType dlFileEntryType);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	public void addDLFolderDLFileEntryType(long folderId, long fileEntryTypeId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void addDLFolderDLFileEntryType(long folderId, long fileEntryTypeId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public void addDLFolderDLFileEntryType(long folderId,
-		com.liferay.portlet.documentlibrary.model.DLFileEntryType dlFileEntryType)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portlet.documentlibrary.model.DLFileEntryType dlFileEntryType);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public void addDLFolderDLFileEntryTypes(long folderId,
-		long[] fileEntryTypeIds)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long[] fileEntryTypeIds);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public void addDLFolderDLFileEntryTypes(long folderId,
-		java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> DLFileEntryTypes)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> DLFileEntryTypes);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	public void clearDLFolderDLFileEntryTypes(long folderId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void clearDLFolderDLFileEntryTypes(long folderId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public void deleteDLFolderDLFileEntryType(long folderId,
-		long fileEntryTypeId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long fileEntryTypeId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public void deleteDLFolderDLFileEntryType(long folderId,
-		com.liferay.portlet.documentlibrary.model.DLFileEntryType dlFileEntryType)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portlet.documentlibrary.model.DLFileEntryType dlFileEntryType);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public void deleteDLFolderDLFileEntryTypes(long folderId,
-		long[] fileEntryTypeIds)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long[] fileEntryTypeIds);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public void deleteDLFolderDLFileEntryTypes(long folderId,
-		java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> DLFileEntryTypes)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> DLFileEntryTypes);
 
 	/**
 	* Returns the folderIds of the document library folders associated with the document library file entry type.
 	*
 	* @param fileEntryTypeId the fileEntryTypeId of the document library file entry type
 	* @return long[] the folderIds of document library folders associated with the document library file entry type
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long[] getDLFolderPrimaryKeys(long fileEntryTypeId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public long[] getDLFolderPrimaryKeys(long fileEntryTypeId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> getDLFolderDLFileEntryTypes(
-		long folderId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long folderId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> getDLFolderDLFileEntryTypes(
-		long folderId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long folderId, int start, int end);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> getDLFolderDLFileEntryTypes(
 		long folderId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getDLFolderDLFileEntryTypesCount(long folderId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int getDLFolderDLFileEntryTypesCount(long folderId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasDLFolderDLFileEntryType(long folderId,
-		long fileEntryTypeId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long fileEntryTypeId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasDLFolderDLFileEntryTypes(long folderId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public boolean hasDLFolderDLFileEntryTypes(long folderId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public void setDLFolderDLFileEntryTypes(long folderId,
-		long[] fileEntryTypeIds)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long[] fileEntryTypeIds);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public void addDDMStructureDLFileEntryType(long structureId,
-		long fileEntryTypeId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long fileEntryTypeId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public void addDDMStructureDLFileEntryType(long structureId,
-		com.liferay.portlet.documentlibrary.model.DLFileEntryType dlFileEntryType)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portlet.documentlibrary.model.DLFileEntryType dlFileEntryType);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public void addDDMStructureDLFileEntryTypes(long structureId,
-		long[] fileEntryTypeIds)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long[] fileEntryTypeIds);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public void addDDMStructureDLFileEntryTypes(long structureId,
-		java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> DLFileEntryTypes)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> DLFileEntryTypes);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	public void clearDDMStructureDLFileEntryTypes(long structureId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void clearDDMStructureDLFileEntryTypes(long structureId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public void deleteDDMStructureDLFileEntryType(long structureId,
-		long fileEntryTypeId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long fileEntryTypeId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public void deleteDDMStructureDLFileEntryType(long structureId,
-		com.liferay.portlet.documentlibrary.model.DLFileEntryType dlFileEntryType)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portlet.documentlibrary.model.DLFileEntryType dlFileEntryType);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public void deleteDDMStructureDLFileEntryTypes(long structureId,
-		long[] fileEntryTypeIds)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long[] fileEntryTypeIds);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public void deleteDDMStructureDLFileEntryTypes(long structureId,
-		java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> DLFileEntryTypes)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> DLFileEntryTypes);
 
 	/**
 	* Returns the structureIds of the d d m structures associated with the document library file entry type.
 	*
 	* @param fileEntryTypeId the fileEntryTypeId of the document library file entry type
 	* @return long[] the structureIds of d d m structures associated with the document library file entry type
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long[] getDDMStructurePrimaryKeys(long fileEntryTypeId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public long[] getDDMStructurePrimaryKeys(long fileEntryTypeId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> getDDMStructureDLFileEntryTypes(
-		long structureId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long structureId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> getDDMStructureDLFileEntryTypes(
-		long structureId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long structureId, int start, int end);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> getDDMStructureDLFileEntryTypes(
 		long structureId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getDDMStructureDLFileEntryTypesCount(long structureId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int getDDMStructureDLFileEntryTypesCount(long structureId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasDDMStructureDLFileEntryType(long structureId,
-		long fileEntryTypeId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long fileEntryTypeId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasDDMStructureDLFileEntryTypes(long structureId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public boolean hasDDMStructureDLFileEntryTypes(long structureId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public void setDDMStructureDLFileEntryTypes(long structureId,
-		long[] fileEntryTypeIds)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long[] fileEntryTypeIds);
 
 	/**
 	* Returns the Spring bean ID for this bean.

@@ -15,7 +15,6 @@
 package com.liferay.portal.service.persistence;
 
 import com.liferay.portal.kernel.dao.orm.BaseActionableDynamicQuery;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.model.Contact;
 import com.liferay.portal.service.ContactLocalServiceUtil;
@@ -28,7 +27,7 @@ import com.liferay.portal.service.ContactLocalServiceUtil;
 @Deprecated
 public abstract class ContactActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
-	public ContactActionableDynamicQuery() throws SystemException {
+	public ContactActionableDynamicQuery() {
 		setBaseLocalService(ContactLocalServiceUtil.getService());
 		setClass(Contact.class);
 

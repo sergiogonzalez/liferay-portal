@@ -302,8 +302,7 @@ public class ExpandoTableWrapper implements ExpandoTable,
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void persist() {
 		_expandoTable.persist();
 	}
 

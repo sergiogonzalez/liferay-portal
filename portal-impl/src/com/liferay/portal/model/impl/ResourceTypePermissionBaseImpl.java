@@ -14,7 +14,6 @@
 
 package com.liferay.portal.model.impl;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.ResourceTypePermission;
 import com.liferay.portal.service.ResourceTypePermissionLocalServiceUtil;
 
@@ -38,7 +37,7 @@ public abstract class ResourceTypePermissionBaseImpl
 	 * Never modify or reference this class directly. All methods that expect a resource type permission model instance should use the {@link ResourceTypePermission} interface instead.
 	 */
 	@Override
-	public void persist() throws SystemException {
+	public void persist() {
 		if (this.isNew()) {
 			ResourceTypePermissionLocalServiceUtil.addResourceTypePermission(this);
 		}

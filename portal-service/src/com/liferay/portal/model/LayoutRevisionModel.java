@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.bean.AutoEscape;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -147,10 +146,9 @@ public interface LayoutRevisionModel extends BaseModel<LayoutRevision>,
 	 * Returns the user uuid of this layout revision.
 	 *
 	 * @return the user uuid of this layout revision
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public String getUserUuid() throws SystemException;
+	public String getUserUuid();
 
 	/**
 	 * Sets the user uuid of this layout revision.
@@ -966,10 +964,9 @@ public interface LayoutRevisionModel extends BaseModel<LayoutRevision>,
 	 * Returns the status by user uuid of this layout revision.
 	 *
 	 * @return the status by user uuid of this layout revision
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public String getStatusByUserUuid() throws SystemException;
+	public String getStatusByUserUuid();
 
 	/**
 	 * Sets the status by user uuid of this layout revision.

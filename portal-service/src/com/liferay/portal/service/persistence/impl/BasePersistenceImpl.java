@@ -115,7 +115,6 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	}
 
 	@Override
-	@SuppressWarnings("unused")
 	public T fetchByPrimaryKey(Serializable primaryKey) throws SystemException {
 		throw new UnsupportedOperationException();
 	}

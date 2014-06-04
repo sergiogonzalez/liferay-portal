@@ -69,11 +69,10 @@ public abstract class ReleaseLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param release the release
 	 * @return the release that was added
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public Release addRelease(Release release) throws SystemException {
+	public Release addRelease(Release release) {
 		release.setNew(true);
 
 		return releasePersistence.update(release);
@@ -96,12 +95,10 @@ public abstract class ReleaseLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param releaseId the primary key of the release
 	 * @return the release that was removed
 	 * @throws PortalException if a release with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public Release deleteRelease(long releaseId)
-		throws PortalException, SystemException {
+	public Release deleteRelease(long releaseId) throws PortalException {
 		return releasePersistence.remove(releaseId);
 	}
 
@@ -110,11 +107,10 @@ public abstract class ReleaseLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param release the release
 	 * @return the release that was removed
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public Release deleteRelease(Release release) throws SystemException {
+	public Release deleteRelease(Release release) {
 		return releasePersistence.remove(release);
 	}
 
@@ -131,12 +127,10 @@ public abstract class ReleaseLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery) {
 		return releasePersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -151,12 +145,10 @@ public abstract class ReleaseLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param start the lower bound of the range of model instances
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
 		return releasePersistence.findWithDynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -172,12 +164,11 @@ public abstract class ReleaseLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
 	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		return releasePersistence.findWithDynamicQuery(dynamicQuery, start,
 			end, orderByComparator);
 	}
@@ -187,11 +178,9 @@ public abstract class ReleaseLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public long dynamicQueryCount(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return releasePersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
@@ -201,16 +190,15 @@ public abstract class ReleaseLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param dynamicQuery the dynamic query
 	 * @param projection the projection to apply to the query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection) throws SystemException {
+		Projection projection) {
 		return releasePersistence.countWithDynamicQuery(dynamicQuery, projection);
 	}
 
 	@Override
-	public Release fetchRelease(long releaseId) throws SystemException {
+	public Release fetchRelease(long releaseId) {
 		return releasePersistence.fetchByPrimaryKey(releaseId);
 	}
 
@@ -220,17 +208,14 @@ public abstract class ReleaseLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param releaseId the primary key of the release
 	 * @return the release
 	 * @throws PortalException if a release with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Release getRelease(long releaseId)
-		throws PortalException, SystemException {
+	public Release getRelease(long releaseId) throws PortalException {
 		return releasePersistence.findByPrimaryKey(releaseId);
 	}
 
 	@Override
-	public ActionableDynamicQuery getActionableDynamicQuery()
-		throws SystemException {
+	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.ReleaseLocalServiceUtil.getService());
@@ -243,8 +228,7 @@ public abstract class ReleaseLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	protected void initActionableDynamicQuery(
-		ActionableDynamicQuery actionableDynamicQuery)
-		throws SystemException {
+		ActionableDynamicQuery actionableDynamicQuery) {
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portal.service.ReleaseLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(Release.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
@@ -254,7 +238,7 @@ public abstract class ReleaseLocalServiceBaseImpl extends BaseLocalServiceImpl
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return releasePersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -268,11 +252,9 @@ public abstract class ReleaseLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param start the lower bound of the range of releases
 	 * @param end the upper bound of the range of releases (not inclusive)
 	 * @return the range of releases
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Release> getReleases(int start, int end)
-		throws SystemException {
+	public List<Release> getReleases(int start, int end) {
 		return releasePersistence.findAll(start, end);
 	}
 
@@ -280,10 +262,9 @@ public abstract class ReleaseLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * Returns the number of releases.
 	 *
 	 * @return the number of releases
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int getReleasesCount() throws SystemException {
+	public int getReleasesCount() {
 		return releasePersistence.countAll();
 	}
 
@@ -292,11 +273,10 @@ public abstract class ReleaseLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param release the release
 	 * @return the release that was updated
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public Release updateRelease(Release release) throws SystemException {
+	public Release updateRelease(Release release) {
 		return releasePersistence.update(release);
 	}
 
@@ -399,7 +379,7 @@ public abstract class ReleaseLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param sql the sql query
 	 */
-	protected void runSQL(String sql) throws SystemException {
+	protected void runSQL(String sql) {
 		try {
 			DataSource dataSource = releasePersistence.getDataSource();
 

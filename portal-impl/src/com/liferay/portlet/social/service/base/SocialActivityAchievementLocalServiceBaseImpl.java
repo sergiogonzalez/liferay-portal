@@ -77,13 +77,11 @@ public abstract class SocialActivityAchievementLocalServiceBaseImpl
 	 *
 	 * @param socialActivityAchievement the social activity achievement
 	 * @return the social activity achievement that was added
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public SocialActivityAchievement addSocialActivityAchievement(
-		SocialActivityAchievement socialActivityAchievement)
-		throws SystemException {
+		SocialActivityAchievement socialActivityAchievement) {
 		socialActivityAchievement.setNew(true);
 
 		return socialActivityAchievementPersistence.update(socialActivityAchievement);
@@ -107,12 +105,11 @@ public abstract class SocialActivityAchievementLocalServiceBaseImpl
 	 * @param activityAchievementId the primary key of the social activity achievement
 	 * @return the social activity achievement that was removed
 	 * @throws PortalException if a social activity achievement with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public SocialActivityAchievement deleteSocialActivityAchievement(
-		long activityAchievementId) throws PortalException, SystemException {
+		long activityAchievementId) throws PortalException {
 		return socialActivityAchievementPersistence.remove(activityAchievementId);
 	}
 
@@ -121,13 +118,11 @@ public abstract class SocialActivityAchievementLocalServiceBaseImpl
 	 *
 	 * @param socialActivityAchievement the social activity achievement
 	 * @return the social activity achievement that was removed
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public SocialActivityAchievement deleteSocialActivityAchievement(
-		SocialActivityAchievement socialActivityAchievement)
-		throws SystemException {
+		SocialActivityAchievement socialActivityAchievement) {
 		return socialActivityAchievementPersistence.remove(socialActivityAchievement);
 	}
 
@@ -144,12 +139,10 @@ public abstract class SocialActivityAchievementLocalServiceBaseImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery) {
 		return socialActivityAchievementPersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -164,12 +157,10 @@ public abstract class SocialActivityAchievementLocalServiceBaseImpl
 	 * @param start the lower bound of the range of model instances
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
 		return socialActivityAchievementPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end);
 	}
@@ -186,12 +177,11 @@ public abstract class SocialActivityAchievementLocalServiceBaseImpl
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
 	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		return socialActivityAchievementPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
 	}
@@ -201,11 +191,9 @@ public abstract class SocialActivityAchievementLocalServiceBaseImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public long dynamicQueryCount(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return socialActivityAchievementPersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
@@ -215,18 +203,17 @@ public abstract class SocialActivityAchievementLocalServiceBaseImpl
 	 * @param dynamicQuery the dynamic query
 	 * @param projection the projection to apply to the query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection) throws SystemException {
+		Projection projection) {
 		return socialActivityAchievementPersistence.countWithDynamicQuery(dynamicQuery,
 			projection);
 	}
 
 	@Override
 	public SocialActivityAchievement fetchSocialActivityAchievement(
-		long activityAchievementId) throws SystemException {
+		long activityAchievementId) {
 		return socialActivityAchievementPersistence.fetchByPrimaryKey(activityAchievementId);
 	}
 
@@ -236,17 +223,15 @@ public abstract class SocialActivityAchievementLocalServiceBaseImpl
 	 * @param activityAchievementId the primary key of the social activity achievement
 	 * @return the social activity achievement
 	 * @throws PortalException if a social activity achievement with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public SocialActivityAchievement getSocialActivityAchievement(
-		long activityAchievementId) throws PortalException, SystemException {
+		long activityAchievementId) throws PortalException {
 		return socialActivityAchievementPersistence.findByPrimaryKey(activityAchievementId);
 	}
 
 	@Override
-	public ActionableDynamicQuery getActionableDynamicQuery()
-		throws SystemException {
+	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.social.service.SocialActivityAchievementLocalServiceUtil.getService());
@@ -260,8 +245,7 @@ public abstract class SocialActivityAchievementLocalServiceBaseImpl
 	}
 
 	protected void initActionableDynamicQuery(
-		ActionableDynamicQuery actionableDynamicQuery)
-		throws SystemException {
+		ActionableDynamicQuery actionableDynamicQuery) {
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.social.service.SocialActivityAchievementLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(SocialActivityAchievement.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
@@ -272,7 +256,7 @@ public abstract class SocialActivityAchievementLocalServiceBaseImpl
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return socialActivityAchievementPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -286,11 +270,10 @@ public abstract class SocialActivityAchievementLocalServiceBaseImpl
 	 * @param start the lower bound of the range of social activity achievements
 	 * @param end the upper bound of the range of social activity achievements (not inclusive)
 	 * @return the range of social activity achievements
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<SocialActivityAchievement> getSocialActivityAchievements(
-		int start, int end) throws SystemException {
+		int start, int end) {
 		return socialActivityAchievementPersistence.findAll(start, end);
 	}
 
@@ -298,10 +281,9 @@ public abstract class SocialActivityAchievementLocalServiceBaseImpl
 	 * Returns the number of social activity achievements.
 	 *
 	 * @return the number of social activity achievements
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int getSocialActivityAchievementsCount() throws SystemException {
+	public int getSocialActivityAchievementsCount() {
 		return socialActivityAchievementPersistence.countAll();
 	}
 
@@ -310,13 +292,11 @@ public abstract class SocialActivityAchievementLocalServiceBaseImpl
 	 *
 	 * @param socialActivityAchievement the social activity achievement
 	 * @return the social activity achievement that was updated
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public SocialActivityAchievement updateSocialActivityAchievement(
-		SocialActivityAchievement socialActivityAchievement)
-		throws SystemException {
+		SocialActivityAchievement socialActivityAchievement) {
 		return socialActivityAchievementPersistence.update(socialActivityAchievement);
 	}
 
@@ -625,7 +605,7 @@ public abstract class SocialActivityAchievementLocalServiceBaseImpl
 	 *
 	 * @param sql the sql query
 	 */
-	protected void runSQL(String sql) throws SystemException {
+	protected void runSQL(String sql) {
 		try {
 			DataSource dataSource = socialActivityAchievementPersistence.getDataSource();
 

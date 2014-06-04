@@ -14,7 +14,6 @@
 
 package com.liferay.portal.model.impl;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.PortletPreferences;
 import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
 
@@ -38,7 +37,7 @@ public abstract class PortletPreferencesBaseImpl
 	 * Never modify or reference this class directly. All methods that expect a portlet preferences model instance should use the {@link PortletPreferences} interface instead.
 	 */
 	@Override
-	public void persist() throws SystemException {
+	public void persist() {
 		if (this.isNew()) {
 			PortletPreferencesLocalServiceUtil.addPortletPreferences(this);
 		}

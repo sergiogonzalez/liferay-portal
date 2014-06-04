@@ -241,11 +241,9 @@ public class SCFrameworkVersionWrapper implements SCFrameworkVersion,
 	* Returns the user uuid of this s c framework version.
 	*
 	* @return the user uuid of this s c framework version
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public java.lang.String getUserUuid()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public java.lang.String getUserUuid() {
 		return _scFrameworkVersion.getUserUuid();
 	}
 
@@ -509,8 +507,7 @@ public class SCFrameworkVersionWrapper implements SCFrameworkVersion,
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void persist() {
 		_scFrameworkVersion.persist();
 	}
 

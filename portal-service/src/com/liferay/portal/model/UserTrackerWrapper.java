@@ -226,11 +226,9 @@ public class UserTrackerWrapper implements UserTracker,
 	* Returns the user uuid of this user tracker.
 	*
 	* @return the user uuid of this user tracker
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public java.lang.String getUserUuid()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public java.lang.String getUserUuid() {
 		return _userTracker.getUserUuid();
 	}
 
@@ -443,8 +441,7 @@ public class UserTrackerWrapper implements UserTracker,
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void persist() {
 		_userTracker.persist();
 	}
 

@@ -46,11 +46,9 @@ public class JournalFolderLocalServiceUtil {
 	*
 	* @param journalFolder the journal folder
 	* @return the journal folder that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.journal.model.JournalFolder addJournalFolder(
-		com.liferay.portlet.journal.model.JournalFolder journalFolder)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.journal.model.JournalFolder journalFolder) {
 		return getService().addJournalFolder(journalFolder);
 	}
 
@@ -71,12 +69,10 @@ public class JournalFolderLocalServiceUtil {
 	* @param folderId the primary key of the journal folder
 	* @return the journal folder that was removed
 	* @throws PortalException if a journal folder with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.journal.model.JournalFolder deleteJournalFolder(
 		long folderId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteJournalFolder(folderId);
 	}
 
@@ -85,11 +81,9 @@ public class JournalFolderLocalServiceUtil {
 	*
 	* @param journalFolder the journal folder
 	* @return the journal folder that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.journal.model.JournalFolder deleteJournalFolder(
-		com.liferay.portlet.journal.model.JournalFolder journalFolder)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.journal.model.JournalFolder journalFolder) {
 		return getService().deleteJournalFolder(journalFolder);
 	}
 
@@ -102,12 +96,10 @@ public class JournalFolderLocalServiceUtil {
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -122,12 +114,11 @@ public class JournalFolderLocalServiceUtil {
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -143,14 +134,12 @@ public class JournalFolderLocalServiceUtil {
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getService()
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
@@ -160,11 +149,9 @@ public class JournalFolderLocalServiceUtil {
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -174,18 +161,15 @@ public class JournalFolderLocalServiceUtil {
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public static long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
 	public static com.liferay.portlet.journal.model.JournalFolder fetchJournalFolder(
-		long folderId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long folderId) {
 		return getService().fetchJournalFolder(folderId);
 	}
 
@@ -195,11 +179,9 @@ public class JournalFolderLocalServiceUtil {
 	* @param uuid the journal folder's UUID
 	* @param companyId the primary key of the company
 	* @return the matching journal folder, or <code>null</code> if a matching journal folder could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.journal.model.JournalFolder fetchJournalFolderByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long companyId) {
 		return getService().fetchJournalFolderByUuidAndCompanyId(uuid, companyId);
 	}
 
@@ -209,11 +191,9 @@ public class JournalFolderLocalServiceUtil {
 	* @param uuid the journal folder's UUID
 	* @param groupId the primary key of the group
 	* @return the matching journal folder, or <code>null</code> if a matching journal folder could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.journal.model.JournalFolder fetchJournalFolderByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long groupId) {
 		return getService().fetchJournalFolderByUuidAndGroupId(uuid, groupId);
 	}
 
@@ -223,30 +203,25 @@ public class JournalFolderLocalServiceUtil {
 	* @param folderId the primary key of the journal folder
 	* @return the journal folder
 	* @throws PortalException if a journal folder with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.journal.model.JournalFolder getJournalFolder(
 		long folderId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getJournalFolder(folderId);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext) {
 		return getService().getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	public static com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
@@ -257,12 +232,10 @@ public class JournalFolderLocalServiceUtil {
 	* @param companyId the primary key of the company
 	* @return the matching journal folder
 	* @throws PortalException if a matching journal folder could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.journal.model.JournalFolder getJournalFolderByUuidAndCompanyId(
 		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getJournalFolderByUuidAndCompanyId(uuid, companyId);
 	}
 
@@ -273,12 +246,10 @@ public class JournalFolderLocalServiceUtil {
 	* @param groupId the primary key of the group
 	* @return the matching journal folder
 	* @throws PortalException if a matching journal folder could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.journal.model.JournalFolder getJournalFolderByUuidAndGroupId(
 		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getJournalFolderByUuidAndGroupId(uuid, groupId);
 	}
 
@@ -292,11 +263,9 @@ public class JournalFolderLocalServiceUtil {
 	* @param start the lower bound of the range of journal folders
 	* @param end the upper bound of the range of journal folders (not inclusive)
 	* @return the range of journal folders
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.journal.model.JournalFolder> getJournalFolders(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return getService().getJournalFolders(start, end);
 	}
 
@@ -304,10 +273,8 @@ public class JournalFolderLocalServiceUtil {
 	* Returns the number of journal folders.
 	*
 	* @return the number of journal folders
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int getJournalFoldersCount()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int getJournalFoldersCount() {
 		return getService().getJournalFoldersCount();
 	}
 
@@ -316,91 +283,53 @@ public class JournalFolderLocalServiceUtil {
 	*
 	* @param journalFolder the journal folder
 	* @return the journal folder that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.journal.model.JournalFolder updateJournalFolder(
-		com.liferay.portlet.journal.model.JournalFolder journalFolder)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.journal.model.JournalFolder journalFolder) {
 		return getService().updateJournalFolder(journalFolder);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public static void addDDMStructureJournalFolder(long structureId,
-		long folderId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long folderId) {
 		getService().addDDMStructureJournalFolder(structureId, folderId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public static void addDDMStructureJournalFolder(long structureId,
-		com.liferay.portlet.journal.model.JournalFolder journalFolder)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.journal.model.JournalFolder journalFolder) {
 		getService().addDDMStructureJournalFolder(structureId, journalFolder);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public static void addDDMStructureJournalFolders(long structureId,
-		long[] folderIds)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long[] folderIds) {
 		getService().addDDMStructureJournalFolders(structureId, folderIds);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public static void addDDMStructureJournalFolders(long structureId,
-		java.util.List<com.liferay.portlet.journal.model.JournalFolder> JournalFolders)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.util.List<com.liferay.portlet.journal.model.JournalFolder> JournalFolders) {
 		getService().addDDMStructureJournalFolders(structureId, JournalFolders);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void clearDDMStructureJournalFolders(long structureId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void clearDDMStructureJournalFolders(long structureId) {
 		getService().clearDDMStructureJournalFolders(structureId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public static void deleteDDMStructureJournalFolder(long structureId,
-		long folderId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long folderId) {
 		getService().deleteDDMStructureJournalFolder(structureId, folderId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public static void deleteDDMStructureJournalFolder(long structureId,
-		com.liferay.portlet.journal.model.JournalFolder journalFolder)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.journal.model.JournalFolder journalFolder) {
 		getService().deleteDDMStructureJournalFolder(structureId, journalFolder);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public static void deleteDDMStructureJournalFolders(long structureId,
-		long[] folderIds)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long[] folderIds) {
 		getService().deleteDDMStructureJournalFolders(structureId, folderIds);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public static void deleteDDMStructureJournalFolders(long structureId,
-		java.util.List<com.liferay.portlet.journal.model.JournalFolder> JournalFolders)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.util.List<com.liferay.portlet.journal.model.JournalFolder> JournalFolders) {
 		getService()
 			.deleteDDMStructureJournalFolders(structureId, JournalFolders);
 	}
@@ -410,75 +339,45 @@ public class JournalFolderLocalServiceUtil {
 	*
 	* @param folderId the folderId of the journal folder
 	* @return long[] the structureIds of d d m structures associated with the journal folder
-	* @throws SystemException if a system exception occurred
 	*/
-	public static long[] getDDMStructurePrimaryKeys(long folderId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static long[] getDDMStructurePrimaryKeys(long folderId) {
 		return getService().getDDMStructurePrimaryKeys(folderId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public static java.util.List<com.liferay.portlet.journal.model.JournalFolder> getDDMStructureJournalFolders(
-		long structureId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long structureId) {
 		return getService().getDDMStructureJournalFolders(structureId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public static java.util.List<com.liferay.portlet.journal.model.JournalFolder> getDDMStructureJournalFolders(
-		long structureId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long structureId, int start, int end) {
 		return getService()
 				   .getDDMStructureJournalFolders(structureId, start, end);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public static java.util.List<com.liferay.portlet.journal.model.JournalFolder> getDDMStructureJournalFolders(
 		long structureId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getService()
 				   .getDDMStructureJournalFolders(structureId, start, end,
 			orderByComparator);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int getDDMStructureJournalFoldersCount(long structureId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int getDDMStructureJournalFoldersCount(long structureId) {
 		return getService().getDDMStructureJournalFoldersCount(structureId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public static boolean hasDDMStructureJournalFolder(long structureId,
-		long folderId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long folderId) {
 		return getService().hasDDMStructureJournalFolder(structureId, folderId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	public static boolean hasDDMStructureJournalFolders(long structureId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static boolean hasDDMStructureJournalFolders(long structureId) {
 		return getService().hasDDMStructureJournalFolders(structureId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public static void setDDMStructureJournalFolders(long structureId,
-		long[] folderIds)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long[] folderIds) {
 		getService().setDDMStructureJournalFolders(structureId, folderIds);
 	}
 

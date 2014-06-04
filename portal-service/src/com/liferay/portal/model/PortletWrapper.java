@@ -348,8 +348,7 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void persist() {
 		_portlet.persist();
 	}
 

@@ -493,8 +493,7 @@ public class CompanyWrapper implements Company, ModelWrapper<Company> {
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void persist() {
 		_company.persist();
 	}
 

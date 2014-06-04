@@ -17,7 +17,6 @@ package com.liferay.portal.model;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -138,9 +137,8 @@ public interface MembershipRequestModel extends BaseModel<MembershipRequest>,
 	 * Returns the user uuid of this membership request.
 	 *
 	 * @return the user uuid of this membership request
-	 * @throws SystemException if a system exception occurred
 	 */
-	public String getUserUuid() throws SystemException;
+	public String getUserUuid();
 
 	/**
 	 * Sets the user uuid of this membership request.
@@ -225,9 +223,8 @@ public interface MembershipRequestModel extends BaseModel<MembershipRequest>,
 	 * Returns the replier user uuid of this membership request.
 	 *
 	 * @return the replier user uuid of this membership request
-	 * @throws SystemException if a system exception occurred
 	 */
-	public String getReplierUserUuid() throws SystemException;
+	public String getReplierUserUuid();
 
 	/**
 	 * Sets the replier user uuid of this membership request.

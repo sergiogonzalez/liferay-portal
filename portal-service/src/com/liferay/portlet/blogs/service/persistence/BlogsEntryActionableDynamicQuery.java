@@ -15,7 +15,6 @@
 package com.liferay.portlet.blogs.service.persistence;
 
 import com.liferay.portal.kernel.dao.orm.BaseActionableDynamicQuery;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 
 import com.liferay.portlet.blogs.model.BlogsEntry;
@@ -29,7 +28,7 @@ import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 @Deprecated
 public abstract class BlogsEntryActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
-	public BlogsEntryActionableDynamicQuery() throws SystemException {
+	public BlogsEntryActionableDynamicQuery() {
 		setBaseLocalService(BlogsEntryLocalServiceUtil.getService());
 		setClass(BlogsEntry.class);
 

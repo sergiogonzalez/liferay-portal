@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -107,11 +106,9 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	 *
 	 * @param userId the user ID
 	 * @return the matching user ID mappers
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<UserIdMapper> findByUserId(long userId)
-		throws SystemException {
+	public List<UserIdMapper> findByUserId(long userId) {
 		return findByUserId(userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -126,11 +123,9 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	 * @param start the lower bound of the range of user ID mappers
 	 * @param end the upper bound of the range of user ID mappers (not inclusive)
 	 * @return the range of matching user ID mappers
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<UserIdMapper> findByUserId(long userId, int start, int end)
-		throws SystemException {
+	public List<UserIdMapper> findByUserId(long userId, int start, int end) {
 		return findByUserId(userId, start, end, null);
 	}
 
@@ -146,11 +141,10 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	 * @param end the upper bound of the range of user ID mappers (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching user ID mappers
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<UserIdMapper> findByUserId(long userId, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -253,12 +247,10 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching user ID mapper
 	 * @throws com.liferay.portal.NoSuchUserIdMapperException if a matching user ID mapper could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserIdMapper findByUserId_First(long userId,
-		OrderByComparator orderByComparator)
-		throws NoSuchUserIdMapperException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchUserIdMapperException {
 		UserIdMapper userIdMapper = fetchByUserId_First(userId,
 				orderByComparator);
 
@@ -284,11 +276,10 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	 * @param userId the user ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching user ID mapper, or <code>null</code> if a matching user ID mapper could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserIdMapper fetchByUserId_First(long userId,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		List<UserIdMapper> list = findByUserId(userId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -305,12 +296,10 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching user ID mapper
 	 * @throws com.liferay.portal.NoSuchUserIdMapperException if a matching user ID mapper could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserIdMapper findByUserId_Last(long userId,
-		OrderByComparator orderByComparator)
-		throws NoSuchUserIdMapperException, SystemException {
+		OrderByComparator orderByComparator) throws NoSuchUserIdMapperException {
 		UserIdMapper userIdMapper = fetchByUserId_Last(userId, orderByComparator);
 
 		if (userIdMapper != null) {
@@ -335,11 +324,10 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	 * @param userId the user ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching user ID mapper, or <code>null</code> if a matching user ID mapper could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserIdMapper fetchByUserId_Last(long userId,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		int count = countByUserId(userId);
 
 		if (count == 0) {
@@ -364,12 +352,11 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next user ID mapper
 	 * @throws com.liferay.portal.NoSuchUserIdMapperException if a user ID mapper with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserIdMapper[] findByUserId_PrevAndNext(long userIdMapperId,
 		long userId, OrderByComparator orderByComparator)
-		throws NoSuchUserIdMapperException, SystemException {
+		throws NoSuchUserIdMapperException {
 		UserIdMapper userIdMapper = findByPrimaryKey(userIdMapperId);
 
 		Session session = null;
@@ -506,10 +493,9 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	 * Removes all the user ID mappers where userId = &#63; from the database.
 	 *
 	 * @param userId the user ID
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByUserId(long userId) throws SystemException {
+	public void removeByUserId(long userId) {
 		for (UserIdMapper userIdMapper : findByUserId(userId,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(userIdMapper);
@@ -521,10 +507,9 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	 *
 	 * @param userId the user ID
 	 * @return the number of matching user ID mappers
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByUserId(long userId) throws SystemException {
+	public int countByUserId(long userId) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_USERID;
 
 		Object[] finderArgs = new Object[] { userId };
@@ -588,11 +573,10 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	 * @param type the type
 	 * @return the matching user ID mapper
 	 * @throws com.liferay.portal.NoSuchUserIdMapperException if a matching user ID mapper could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserIdMapper findByU_T(long userId, String type)
-		throws NoSuchUserIdMapperException, SystemException {
+		throws NoSuchUserIdMapperException {
 		UserIdMapper userIdMapper = fetchByU_T(userId, type);
 
 		if (userIdMapper == null) {
@@ -624,11 +608,9 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	 * @param userId the user ID
 	 * @param type the type
 	 * @return the matching user ID mapper, or <code>null</code> if a matching user ID mapper could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public UserIdMapper fetchByU_T(long userId, String type)
-		throws SystemException {
+	public UserIdMapper fetchByU_T(long userId, String type) {
 		return fetchByU_T(userId, type, true);
 	}
 
@@ -639,11 +621,10 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	 * @param type the type
 	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching user ID mapper, or <code>null</code> if a matching user ID mapper could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserIdMapper fetchByU_T(long userId, String type,
-		boolean retrieveFromCache) throws SystemException {
+		boolean retrieveFromCache) {
 		Object[] finderArgs = new Object[] { userId, type };
 
 		Object result = null;
@@ -746,11 +727,10 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	 * @param userId the user ID
 	 * @param type the type
 	 * @return the user ID mapper that was removed
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserIdMapper removeByU_T(long userId, String type)
-		throws NoSuchUserIdMapperException, SystemException {
+		throws NoSuchUserIdMapperException {
 		UserIdMapper userIdMapper = findByU_T(userId, type);
 
 		return remove(userIdMapper);
@@ -762,10 +742,9 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	 * @param userId the user ID
 	 * @param type the type
 	 * @return the number of matching user ID mappers
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByU_T(long userId, String type) throws SystemException {
+	public int countByU_T(long userId, String type) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_U_T;
 
 		Object[] finderArgs = new Object[] { userId, type };
@@ -850,11 +829,10 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	 * @param externalUserId the external user ID
 	 * @return the matching user ID mapper
 	 * @throws com.liferay.portal.NoSuchUserIdMapperException if a matching user ID mapper could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserIdMapper findByT_E(String type, String externalUserId)
-		throws NoSuchUserIdMapperException, SystemException {
+		throws NoSuchUserIdMapperException {
 		UserIdMapper userIdMapper = fetchByT_E(type, externalUserId);
 
 		if (userIdMapper == null) {
@@ -886,11 +864,9 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	 * @param type the type
 	 * @param externalUserId the external user ID
 	 * @return the matching user ID mapper, or <code>null</code> if a matching user ID mapper could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public UserIdMapper fetchByT_E(String type, String externalUserId)
-		throws SystemException {
+	public UserIdMapper fetchByT_E(String type, String externalUserId) {
 		return fetchByT_E(type, externalUserId, true);
 	}
 
@@ -901,11 +877,10 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	 * @param externalUserId the external user ID
 	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching user ID mapper, or <code>null</code> if a matching user ID mapper could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserIdMapper fetchByT_E(String type, String externalUserId,
-		boolean retrieveFromCache) throws SystemException {
+		boolean retrieveFromCache) {
 		Object[] finderArgs = new Object[] { type, externalUserId };
 
 		Object result = null;
@@ -1025,11 +1000,10 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	 * @param type the type
 	 * @param externalUserId the external user ID
 	 * @return the user ID mapper that was removed
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserIdMapper removeByT_E(String type, String externalUserId)
-		throws NoSuchUserIdMapperException, SystemException {
+		throws NoSuchUserIdMapperException {
 		UserIdMapper userIdMapper = findByT_E(type, externalUserId);
 
 		return remove(userIdMapper);
@@ -1041,11 +1015,9 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	 * @param type the type
 	 * @param externalUserId the external user ID
 	 * @return the number of matching user ID mappers
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByT_E(String type, String externalUserId)
-		throws SystemException {
+	public int countByT_E(String type, String externalUserId) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_T_E;
 
 		Object[] finderArgs = new Object[] { type, externalUserId };
@@ -1336,11 +1308,10 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	 * @param userIdMapperId the primary key of the user ID mapper
 	 * @return the user ID mapper that was removed
 	 * @throws com.liferay.portal.NoSuchUserIdMapperException if a user ID mapper with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserIdMapper remove(long userIdMapperId)
-		throws NoSuchUserIdMapperException, SystemException {
+		throws NoSuchUserIdMapperException {
 		return remove((Serializable)userIdMapperId);
 	}
 
@@ -1350,11 +1321,10 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	 * @param primaryKey the primary key of the user ID mapper
 	 * @return the user ID mapper that was removed
 	 * @throws com.liferay.portal.NoSuchUserIdMapperException if a user ID mapper with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserIdMapper remove(Serializable primaryKey)
-		throws NoSuchUserIdMapperException, SystemException {
+		throws NoSuchUserIdMapperException {
 		Session session = null;
 
 		try {
@@ -1386,8 +1356,7 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	}
 
 	@Override
-	protected UserIdMapper removeImpl(UserIdMapper userIdMapper)
-		throws SystemException {
+	protected UserIdMapper removeImpl(UserIdMapper userIdMapper) {
 		userIdMapper = toUnwrappedModel(userIdMapper);
 
 		Session session = null;
@@ -1420,8 +1389,7 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 
 	@Override
 	public UserIdMapper updateImpl(
-		com.liferay.portal.model.UserIdMapper userIdMapper)
-		throws SystemException {
+		com.liferay.portal.model.UserIdMapper userIdMapper) {
 		userIdMapper = toUnwrappedModel(userIdMapper);
 
 		boolean isNew = userIdMapper.isNew();
@@ -1512,11 +1480,10 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	 * @param primaryKey the primary key of the user ID mapper
 	 * @return the user ID mapper
 	 * @throws com.liferay.portal.NoSuchUserIdMapperException if a user ID mapper with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserIdMapper findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchUserIdMapperException, SystemException {
+		throws NoSuchUserIdMapperException {
 		UserIdMapper userIdMapper = fetchByPrimaryKey(primaryKey);
 
 		if (userIdMapper == null) {
@@ -1537,11 +1504,10 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	 * @param userIdMapperId the primary key of the user ID mapper
 	 * @return the user ID mapper
 	 * @throws com.liferay.portal.NoSuchUserIdMapperException if a user ID mapper with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserIdMapper findByPrimaryKey(long userIdMapperId)
-		throws NoSuchUserIdMapperException, SystemException {
+		throws NoSuchUserIdMapperException {
 		return findByPrimaryKey((Serializable)userIdMapperId);
 	}
 
@@ -1550,11 +1516,9 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	 *
 	 * @param primaryKey the primary key of the user ID mapper
 	 * @return the user ID mapper, or <code>null</code> if a user ID mapper with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public UserIdMapper fetchByPrimaryKey(Serializable primaryKey)
-		throws SystemException {
+	public UserIdMapper fetchByPrimaryKey(Serializable primaryKey) {
 		UserIdMapper userIdMapper = (UserIdMapper)EntityCacheUtil.getResult(UserIdMapperModelImpl.ENTITY_CACHE_ENABLED,
 				UserIdMapperImpl.class, primaryKey);
 
@@ -1598,11 +1562,9 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	 *
 	 * @param userIdMapperId the primary key of the user ID mapper
 	 * @return the user ID mapper, or <code>null</code> if a user ID mapper with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public UserIdMapper fetchByPrimaryKey(long userIdMapperId)
-		throws SystemException {
+	public UserIdMapper fetchByPrimaryKey(long userIdMapperId) {
 		return fetchByPrimaryKey((Serializable)userIdMapperId);
 	}
 
@@ -1610,10 +1572,9 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	 * Returns all the user ID mappers.
 	 *
 	 * @return the user ID mappers
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<UserIdMapper> findAll() throws SystemException {
+	public List<UserIdMapper> findAll() {
 		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -1627,11 +1588,9 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	 * @param start the lower bound of the range of user ID mappers
 	 * @param end the upper bound of the range of user ID mappers (not inclusive)
 	 * @return the range of user ID mappers
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<UserIdMapper> findAll(int start, int end)
-		throws SystemException {
+	public List<UserIdMapper> findAll(int start, int end) {
 		return findAll(start, end, null);
 	}
 
@@ -1646,11 +1605,10 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	 * @param end the upper bound of the range of user ID mappers (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of user ID mappers
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<UserIdMapper> findAll(int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1732,10 +1690,9 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	/**
 	 * Removes all the user ID mappers from the database.
 	 *
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeAll() throws SystemException {
+	public void removeAll() {
 		for (UserIdMapper userIdMapper : findAll()) {
 			remove(userIdMapper);
 		}
@@ -1745,10 +1702,9 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	 * Returns the number of user ID mappers.
 	 *
 	 * @return the number of user ID mappers
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countAll() throws SystemException {
+	public int countAll() {
 		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
 				FINDER_ARGS_EMPTY, this);
 

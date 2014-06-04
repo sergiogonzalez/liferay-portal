@@ -72,11 +72,10 @@ public abstract class CounterLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param counter the counter
 	 * @return the counter that was added
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public Counter addCounter(Counter counter) throws SystemException {
+	public Counter addCounter(Counter counter) {
 		counter.setNew(true);
 
 		return counterPersistence.update(counter);
@@ -99,12 +98,10 @@ public abstract class CounterLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param name the primary key of the counter
 	 * @return the counter that was removed
 	 * @throws PortalException if a counter with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public Counter deleteCounter(String name)
-		throws PortalException, SystemException {
+	public Counter deleteCounter(String name) throws PortalException {
 		return counterPersistence.remove(name);
 	}
 
@@ -113,11 +110,10 @@ public abstract class CounterLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param counter the counter
 	 * @return the counter that was removed
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public Counter deleteCounter(Counter counter) throws SystemException {
+	public Counter deleteCounter(Counter counter) {
 		return counterPersistence.remove(counter);
 	}
 
@@ -134,12 +130,10 @@ public abstract class CounterLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery) {
 		return counterPersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -154,12 +148,10 @@ public abstract class CounterLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param start the lower bound of the range of model instances
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
 		return counterPersistence.findWithDynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -175,12 +167,11 @@ public abstract class CounterLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
 	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		return counterPersistence.findWithDynamicQuery(dynamicQuery, start,
 			end, orderByComparator);
 	}
@@ -190,11 +181,9 @@ public abstract class CounterLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public long dynamicQueryCount(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return counterPersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
@@ -204,16 +193,15 @@ public abstract class CounterLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param dynamicQuery the dynamic query
 	 * @param projection the projection to apply to the query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection) throws SystemException {
+		Projection projection) {
 		return counterPersistence.countWithDynamicQuery(dynamicQuery, projection);
 	}
 
 	@Override
-	public Counter fetchCounter(String name) throws SystemException {
+	public Counter fetchCounter(String name) {
 		return counterPersistence.fetchByPrimaryKey(name);
 	}
 
@@ -223,17 +211,15 @@ public abstract class CounterLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param name the primary key of the counter
 	 * @return the counter
 	 * @throws PortalException if a counter with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Counter getCounter(String name)
-		throws PortalException, SystemException {
+	public Counter getCounter(String name) throws PortalException {
 		return counterPersistence.findByPrimaryKey(name);
 	}
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return counterPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -247,11 +233,9 @@ public abstract class CounterLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param start the lower bound of the range of counters
 	 * @param end the upper bound of the range of counters (not inclusive)
 	 * @return the range of counters
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Counter> getCounters(int start, int end)
-		throws SystemException {
+	public List<Counter> getCounters(int start, int end) {
 		return counterPersistence.findAll(start, end);
 	}
 
@@ -259,10 +243,9 @@ public abstract class CounterLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * Returns the number of counters.
 	 *
 	 * @return the number of counters
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int getCountersCount() throws SystemException {
+	public int getCountersCount() {
 		return counterPersistence.countAll();
 	}
 
@@ -271,11 +254,10 @@ public abstract class CounterLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param counter the counter
 	 * @return the counter that was updated
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public Counter updateCounter(Counter counter) throws SystemException {
+	public Counter updateCounter(Counter counter) {
 		return counterPersistence.update(counter);
 	}
 
@@ -527,7 +509,7 @@ public abstract class CounterLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param sql the sql query
 	 */
-	protected void runSQL(String sql) throws SystemException {
+	protected void runSQL(String sql) {
 		try {
 			DataSource dataSource = counterPersistence.getDataSource();
 

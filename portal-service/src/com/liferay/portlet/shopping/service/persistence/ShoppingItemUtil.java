@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 import com.liferay.portal.service.ServiceContext;
@@ -64,8 +63,7 @@ public class ShoppingItemUtil {
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#countWithDynamicQuery(DynamicQuery)
 	 */
-	public static long countWithDynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public static long countWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return getPersistence().countWithDynamicQuery(dynamicQuery);
 	}
 
@@ -73,7 +71,7 @@ public class ShoppingItemUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery)
 	 */
 	public static List<ShoppingItem> findWithDynamicQuery(
-		DynamicQuery dynamicQuery) throws SystemException {
+		DynamicQuery dynamicQuery) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -81,8 +79,7 @@ public class ShoppingItemUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
 	 */
 	public static List<ShoppingItem> findWithDynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+		DynamicQuery dynamicQuery, int start, int end) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -91,7 +88,7 @@ public class ShoppingItemUtil {
 	 */
 	public static List<ShoppingItem> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -100,8 +97,7 @@ public class ShoppingItemUtil {
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static ShoppingItem update(ShoppingItem shoppingItem)
-		throws SystemException {
+	public static ShoppingItem update(ShoppingItem shoppingItem) {
 		return getPersistence().update(shoppingItem);
 	}
 
@@ -109,7 +105,7 @@ public class ShoppingItemUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
 	public static ShoppingItem update(ShoppingItem shoppingItem,
-		ServiceContext serviceContext) throws SystemException {
+		ServiceContext serviceContext) {
 		return getPersistence().update(shoppingItem, serviceContext);
 	}
 
@@ -119,12 +115,10 @@ public class ShoppingItemUtil {
 	* @param smallImageId the small image ID
 	* @return the matching shopping item
 	* @throws com.liferay.portlet.shopping.NoSuchItemException if a matching shopping item could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.shopping.model.ShoppingItem findBySmallImageId(
 		long smallImageId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.shopping.NoSuchItemException {
+		throws com.liferay.portlet.shopping.NoSuchItemException {
 		return getPersistence().findBySmallImageId(smallImageId);
 	}
 
@@ -133,11 +127,9 @@ public class ShoppingItemUtil {
 	*
 	* @param smallImageId the small image ID
 	* @return the matching shopping item, or <code>null</code> if a matching shopping item could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.shopping.model.ShoppingItem fetchBySmallImageId(
-		long smallImageId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long smallImageId) {
 		return getPersistence().fetchBySmallImageId(smallImageId);
 	}
 
@@ -147,11 +139,9 @@ public class ShoppingItemUtil {
 	* @param smallImageId the small image ID
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching shopping item, or <code>null</code> if a matching shopping item could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.shopping.model.ShoppingItem fetchBySmallImageId(
-		long smallImageId, boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long smallImageId, boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchBySmallImageId(smallImageId, retrieveFromCache);
 	}
@@ -161,12 +151,10 @@ public class ShoppingItemUtil {
 	*
 	* @param smallImageId the small image ID
 	* @return the shopping item that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.shopping.model.ShoppingItem removeBySmallImageId(
 		long smallImageId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.shopping.NoSuchItemException {
+		throws com.liferay.portlet.shopping.NoSuchItemException {
 		return getPersistence().removeBySmallImageId(smallImageId);
 	}
 
@@ -175,10 +163,8 @@ public class ShoppingItemUtil {
 	*
 	* @param smallImageId the small image ID
 	* @return the number of matching shopping items
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countBySmallImageId(long smallImageId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countBySmallImageId(long smallImageId) {
 		return getPersistence().countBySmallImageId(smallImageId);
 	}
 
@@ -188,12 +174,10 @@ public class ShoppingItemUtil {
 	* @param mediumImageId the medium image ID
 	* @return the matching shopping item
 	* @throws com.liferay.portlet.shopping.NoSuchItemException if a matching shopping item could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.shopping.model.ShoppingItem findByMediumImageId(
 		long mediumImageId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.shopping.NoSuchItemException {
+		throws com.liferay.portlet.shopping.NoSuchItemException {
 		return getPersistence().findByMediumImageId(mediumImageId);
 	}
 
@@ -202,11 +186,9 @@ public class ShoppingItemUtil {
 	*
 	* @param mediumImageId the medium image ID
 	* @return the matching shopping item, or <code>null</code> if a matching shopping item could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.shopping.model.ShoppingItem fetchByMediumImageId(
-		long mediumImageId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long mediumImageId) {
 		return getPersistence().fetchByMediumImageId(mediumImageId);
 	}
 
@@ -216,11 +198,9 @@ public class ShoppingItemUtil {
 	* @param mediumImageId the medium image ID
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching shopping item, or <code>null</code> if a matching shopping item could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.shopping.model.ShoppingItem fetchByMediumImageId(
-		long mediumImageId, boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long mediumImageId, boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByMediumImageId(mediumImageId, retrieveFromCache);
 	}
@@ -230,12 +210,10 @@ public class ShoppingItemUtil {
 	*
 	* @param mediumImageId the medium image ID
 	* @return the shopping item that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.shopping.model.ShoppingItem removeByMediumImageId(
 		long mediumImageId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.shopping.NoSuchItemException {
+		throws com.liferay.portlet.shopping.NoSuchItemException {
 		return getPersistence().removeByMediumImageId(mediumImageId);
 	}
 
@@ -244,10 +222,8 @@ public class ShoppingItemUtil {
 	*
 	* @param mediumImageId the medium image ID
 	* @return the number of matching shopping items
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByMediumImageId(long mediumImageId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByMediumImageId(long mediumImageId) {
 		return getPersistence().countByMediumImageId(mediumImageId);
 	}
 
@@ -257,12 +233,10 @@ public class ShoppingItemUtil {
 	* @param largeImageId the large image ID
 	* @return the matching shopping item
 	* @throws com.liferay.portlet.shopping.NoSuchItemException if a matching shopping item could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.shopping.model.ShoppingItem findByLargeImageId(
 		long largeImageId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.shopping.NoSuchItemException {
+		throws com.liferay.portlet.shopping.NoSuchItemException {
 		return getPersistence().findByLargeImageId(largeImageId);
 	}
 
@@ -271,11 +245,9 @@ public class ShoppingItemUtil {
 	*
 	* @param largeImageId the large image ID
 	* @return the matching shopping item, or <code>null</code> if a matching shopping item could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.shopping.model.ShoppingItem fetchByLargeImageId(
-		long largeImageId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long largeImageId) {
 		return getPersistence().fetchByLargeImageId(largeImageId);
 	}
 
@@ -285,11 +257,9 @@ public class ShoppingItemUtil {
 	* @param largeImageId the large image ID
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching shopping item, or <code>null</code> if a matching shopping item could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.shopping.model.ShoppingItem fetchByLargeImageId(
-		long largeImageId, boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long largeImageId, boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByLargeImageId(largeImageId, retrieveFromCache);
 	}
@@ -299,12 +269,10 @@ public class ShoppingItemUtil {
 	*
 	* @param largeImageId the large image ID
 	* @return the shopping item that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.shopping.model.ShoppingItem removeByLargeImageId(
 		long largeImageId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.shopping.NoSuchItemException {
+		throws com.liferay.portlet.shopping.NoSuchItemException {
 		return getPersistence().removeByLargeImageId(largeImageId);
 	}
 
@@ -313,10 +281,8 @@ public class ShoppingItemUtil {
 	*
 	* @param largeImageId the large image ID
 	* @return the number of matching shopping items
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByLargeImageId(long largeImageId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByLargeImageId(long largeImageId) {
 		return getPersistence().countByLargeImageId(largeImageId);
 	}
 
@@ -326,11 +292,9 @@ public class ShoppingItemUtil {
 	* @param groupId the group ID
 	* @param categoryId the category ID
 	* @return the matching shopping items
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.shopping.model.ShoppingItem> findByG_C(
-		long groupId, long categoryId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, long categoryId) {
 		return getPersistence().findByG_C(groupId, categoryId);
 	}
 
@@ -346,11 +310,9 @@ public class ShoppingItemUtil {
 	* @param start the lower bound of the range of shopping items
 	* @param end the upper bound of the range of shopping items (not inclusive)
 	* @return the range of matching shopping items
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.shopping.model.ShoppingItem> findByG_C(
-		long groupId, long categoryId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, long categoryId, int start, int end) {
 		return getPersistence().findByG_C(groupId, categoryId, start, end);
 	}
 
@@ -367,12 +329,10 @@ public class ShoppingItemUtil {
 	* @param end the upper bound of the range of shopping items (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching shopping items
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.shopping.model.ShoppingItem> findByG_C(
 		long groupId, long categoryId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByG_C(groupId, categoryId, start, end, orderByComparator);
 	}
@@ -385,13 +345,11 @@ public class ShoppingItemUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching shopping item
 	* @throws com.liferay.portlet.shopping.NoSuchItemException if a matching shopping item could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.shopping.model.ShoppingItem findByG_C_First(
 		long groupId, long categoryId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.shopping.NoSuchItemException {
+		throws com.liferay.portlet.shopping.NoSuchItemException {
 		return getPersistence()
 				   .findByG_C_First(groupId, categoryId, orderByComparator);
 	}
@@ -403,12 +361,10 @@ public class ShoppingItemUtil {
 	* @param categoryId the category ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching shopping item, or <code>null</code> if a matching shopping item could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.shopping.model.ShoppingItem fetchByG_C_First(
 		long groupId, long categoryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByG_C_First(groupId, categoryId, orderByComparator);
 	}
@@ -421,13 +377,11 @@ public class ShoppingItemUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching shopping item
 	* @throws com.liferay.portlet.shopping.NoSuchItemException if a matching shopping item could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.shopping.model.ShoppingItem findByG_C_Last(
 		long groupId, long categoryId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.shopping.NoSuchItemException {
+		throws com.liferay.portlet.shopping.NoSuchItemException {
 		return getPersistence()
 				   .findByG_C_Last(groupId, categoryId, orderByComparator);
 	}
@@ -439,12 +393,10 @@ public class ShoppingItemUtil {
 	* @param categoryId the category ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching shopping item, or <code>null</code> if a matching shopping item could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.shopping.model.ShoppingItem fetchByG_C_Last(
 		long groupId, long categoryId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByG_C_Last(groupId, categoryId, orderByComparator);
 	}
@@ -458,13 +410,11 @@ public class ShoppingItemUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next shopping item
 	* @throws com.liferay.portlet.shopping.NoSuchItemException if a shopping item with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.shopping.model.ShoppingItem[] findByG_C_PrevAndNext(
 		long itemId, long groupId, long categoryId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.shopping.NoSuchItemException {
+		throws com.liferay.portlet.shopping.NoSuchItemException {
 		return getPersistence()
 				   .findByG_C_PrevAndNext(itemId, groupId, categoryId,
 			orderByComparator);
@@ -476,11 +426,9 @@ public class ShoppingItemUtil {
 	* @param groupId the group ID
 	* @param categoryId the category ID
 	* @return the matching shopping items that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.shopping.model.ShoppingItem> filterFindByG_C(
-		long groupId, long categoryId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, long categoryId) {
 		return getPersistence().filterFindByG_C(groupId, categoryId);
 	}
 
@@ -496,11 +444,9 @@ public class ShoppingItemUtil {
 	* @param start the lower bound of the range of shopping items
 	* @param end the upper bound of the range of shopping items (not inclusive)
 	* @return the range of matching shopping items that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.shopping.model.ShoppingItem> filterFindByG_C(
-		long groupId, long categoryId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, long categoryId, int start, int end) {
 		return getPersistence().filterFindByG_C(groupId, categoryId, start, end);
 	}
 
@@ -517,12 +463,10 @@ public class ShoppingItemUtil {
 	* @param end the upper bound of the range of shopping items (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching shopping items that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.shopping.model.ShoppingItem> filterFindByG_C(
 		long groupId, long categoryId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .filterFindByG_C(groupId, categoryId, start, end,
 			orderByComparator);
@@ -537,13 +481,11 @@ public class ShoppingItemUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next shopping item
 	* @throws com.liferay.portlet.shopping.NoSuchItemException if a shopping item with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.shopping.model.ShoppingItem[] filterFindByG_C_PrevAndNext(
 		long itemId, long groupId, long categoryId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.shopping.NoSuchItemException {
+		throws com.liferay.portlet.shopping.NoSuchItemException {
 		return getPersistence()
 				   .filterFindByG_C_PrevAndNext(itemId, groupId, categoryId,
 			orderByComparator);
@@ -554,10 +496,8 @@ public class ShoppingItemUtil {
 	*
 	* @param groupId the group ID
 	* @param categoryId the category ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByG_C(long groupId, long categoryId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByG_C(long groupId, long categoryId) {
 		getPersistence().removeByG_C(groupId, categoryId);
 	}
 
@@ -567,10 +507,8 @@ public class ShoppingItemUtil {
 	* @param groupId the group ID
 	* @param categoryId the category ID
 	* @return the number of matching shopping items
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByG_C(long groupId, long categoryId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByG_C(long groupId, long categoryId) {
 		return getPersistence().countByG_C(groupId, categoryId);
 	}
 
@@ -580,10 +518,8 @@ public class ShoppingItemUtil {
 	* @param groupId the group ID
 	* @param categoryId the category ID
 	* @return the number of matching shopping items that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int filterCountByG_C(long groupId, long categoryId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int filterCountByG_C(long groupId, long categoryId) {
 		return getPersistence().filterCountByG_C(groupId, categoryId);
 	}
 
@@ -594,12 +530,10 @@ public class ShoppingItemUtil {
 	* @param sku the sku
 	* @return the matching shopping item
 	* @throws com.liferay.portlet.shopping.NoSuchItemException if a matching shopping item could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.shopping.model.ShoppingItem findByC_S(
 		long companyId, java.lang.String sku)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.shopping.NoSuchItemException {
+		throws com.liferay.portlet.shopping.NoSuchItemException {
 		return getPersistence().findByC_S(companyId, sku);
 	}
 
@@ -609,11 +543,9 @@ public class ShoppingItemUtil {
 	* @param companyId the company ID
 	* @param sku the sku
 	* @return the matching shopping item, or <code>null</code> if a matching shopping item could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.shopping.model.ShoppingItem fetchByC_S(
-		long companyId, java.lang.String sku)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long companyId, java.lang.String sku) {
 		return getPersistence().fetchByC_S(companyId, sku);
 	}
 
@@ -624,11 +556,9 @@ public class ShoppingItemUtil {
 	* @param sku the sku
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching shopping item, or <code>null</code> if a matching shopping item could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.shopping.model.ShoppingItem fetchByC_S(
-		long companyId, java.lang.String sku, boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long companyId, java.lang.String sku, boolean retrieveFromCache) {
 		return getPersistence().fetchByC_S(companyId, sku, retrieveFromCache);
 	}
 
@@ -638,12 +568,10 @@ public class ShoppingItemUtil {
 	* @param companyId the company ID
 	* @param sku the sku
 	* @return the shopping item that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.shopping.model.ShoppingItem removeByC_S(
 		long companyId, java.lang.String sku)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.shopping.NoSuchItemException {
+		throws com.liferay.portlet.shopping.NoSuchItemException {
 		return getPersistence().removeByC_S(companyId, sku);
 	}
 
@@ -653,10 +581,8 @@ public class ShoppingItemUtil {
 	* @param companyId the company ID
 	* @param sku the sku
 	* @return the number of matching shopping items
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByC_S(long companyId, java.lang.String sku)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByC_S(long companyId, java.lang.String sku) {
 		return getPersistence().countByC_S(companyId, sku);
 	}
 
@@ -697,18 +623,14 @@ public class ShoppingItemUtil {
 	* @param itemId the primary key of the shopping item
 	* @return the shopping item that was removed
 	* @throws com.liferay.portlet.shopping.NoSuchItemException if a shopping item with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.shopping.model.ShoppingItem remove(
-		long itemId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.shopping.NoSuchItemException {
+		long itemId) throws com.liferay.portlet.shopping.NoSuchItemException {
 		return getPersistence().remove(itemId);
 	}
 
 	public static com.liferay.portlet.shopping.model.ShoppingItem updateImpl(
-		com.liferay.portlet.shopping.model.ShoppingItem shoppingItem)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.shopping.model.ShoppingItem shoppingItem) {
 		return getPersistence().updateImpl(shoppingItem);
 	}
 
@@ -718,12 +640,9 @@ public class ShoppingItemUtil {
 	* @param itemId the primary key of the shopping item
 	* @return the shopping item
 	* @throws com.liferay.portlet.shopping.NoSuchItemException if a shopping item with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.shopping.model.ShoppingItem findByPrimaryKey(
-		long itemId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.shopping.NoSuchItemException {
+		long itemId) throws com.liferay.portlet.shopping.NoSuchItemException {
 		return getPersistence().findByPrimaryKey(itemId);
 	}
 
@@ -732,10 +651,9 @@ public class ShoppingItemUtil {
 	*
 	* @param itemId the primary key of the shopping item
 	* @return the shopping item, or <code>null</code> if a shopping item with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.shopping.model.ShoppingItem fetchByPrimaryKey(
-		long itemId) throws com.liferay.portal.kernel.exception.SystemException {
+		long itemId) {
 		return getPersistence().fetchByPrimaryKey(itemId);
 	}
 
@@ -743,10 +661,8 @@ public class ShoppingItemUtil {
 	* Returns all the shopping items.
 	*
 	* @return the shopping items
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.portlet.shopping.model.ShoppingItem> findAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static java.util.List<com.liferay.portlet.shopping.model.ShoppingItem> findAll() {
 		return getPersistence().findAll();
 	}
 
@@ -760,11 +676,9 @@ public class ShoppingItemUtil {
 	* @param start the lower bound of the range of shopping items
 	* @param end the upper bound of the range of shopping items (not inclusive)
 	* @return the range of shopping items
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.shopping.model.ShoppingItem> findAll(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
@@ -779,22 +693,17 @@ public class ShoppingItemUtil {
 	* @param end the upper bound of the range of shopping items (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of shopping items
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.shopping.model.ShoppingItem> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
 	/**
 	* Removes all the shopping items from the database.
-	*
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeAll() {
 		getPersistence().removeAll();
 	}
 
@@ -802,10 +711,8 @@ public class ShoppingItemUtil {
 	* Returns the number of shopping items.
 	*
 	* @return the number of shopping items
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countAll() {
 		return getPersistence().countAll();
 	}
 

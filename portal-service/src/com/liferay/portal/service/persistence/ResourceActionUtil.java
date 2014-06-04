@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 import com.liferay.portal.model.ResourceAction;
@@ -63,8 +62,7 @@ public class ResourceActionUtil {
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#countWithDynamicQuery(DynamicQuery)
 	 */
-	public static long countWithDynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public static long countWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return getPersistence().countWithDynamicQuery(dynamicQuery);
 	}
 
@@ -72,7 +70,7 @@ public class ResourceActionUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery)
 	 */
 	public static List<ResourceAction> findWithDynamicQuery(
-		DynamicQuery dynamicQuery) throws SystemException {
+		DynamicQuery dynamicQuery) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -80,8 +78,7 @@ public class ResourceActionUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
 	 */
 	public static List<ResourceAction> findWithDynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+		DynamicQuery dynamicQuery, int start, int end) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -90,7 +87,7 @@ public class ResourceActionUtil {
 	 */
 	public static List<ResourceAction> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -99,8 +96,7 @@ public class ResourceActionUtil {
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static ResourceAction update(ResourceAction resourceAction)
-		throws SystemException {
+	public static ResourceAction update(ResourceAction resourceAction) {
 		return getPersistence().update(resourceAction);
 	}
 
@@ -108,7 +104,7 @@ public class ResourceActionUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
 	public static ResourceAction update(ResourceAction resourceAction,
-		ServiceContext serviceContext) throws SystemException {
+		ServiceContext serviceContext) {
 		return getPersistence().update(resourceAction, serviceContext);
 	}
 
@@ -117,11 +113,9 @@ public class ResourceActionUtil {
 	*
 	* @param name the name
 	* @return the matching resource actions
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portal.model.ResourceAction> findByName(
-		java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String name) {
 		return getPersistence().findByName(name);
 	}
 
@@ -136,11 +130,9 @@ public class ResourceActionUtil {
 	* @param start the lower bound of the range of resource actions
 	* @param end the upper bound of the range of resource actions (not inclusive)
 	* @return the range of matching resource actions
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portal.model.ResourceAction> findByName(
-		java.lang.String name, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String name, int start, int end) {
 		return getPersistence().findByName(name, start, end);
 	}
 
@@ -156,12 +148,10 @@ public class ResourceActionUtil {
 	* @param end the upper bound of the range of resource actions (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching resource actions
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portal.model.ResourceAction> findByName(
 		java.lang.String name, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().findByName(name, start, end, orderByComparator);
 	}
 
@@ -172,13 +162,11 @@ public class ResourceActionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching resource action
 	* @throws com.liferay.portal.NoSuchResourceActionException if a matching resource action could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.ResourceAction findByName_First(
 		java.lang.String name,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchResourceActionException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.NoSuchResourceActionException {
 		return getPersistence().findByName_First(name, orderByComparator);
 	}
 
@@ -188,12 +176,10 @@ public class ResourceActionUtil {
 	* @param name the name
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching resource action, or <code>null</code> if a matching resource action could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.ResourceAction fetchByName_First(
 		java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByName_First(name, orderByComparator);
 	}
 
@@ -204,13 +190,11 @@ public class ResourceActionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching resource action
 	* @throws com.liferay.portal.NoSuchResourceActionException if a matching resource action could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.ResourceAction findByName_Last(
 		java.lang.String name,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchResourceActionException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.NoSuchResourceActionException {
 		return getPersistence().findByName_Last(name, orderByComparator);
 	}
 
@@ -220,12 +204,10 @@ public class ResourceActionUtil {
 	* @param name the name
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching resource action, or <code>null</code> if a matching resource action could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.ResourceAction fetchByName_Last(
 		java.lang.String name,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByName_Last(name, orderByComparator);
 	}
 
@@ -237,13 +219,11 @@ public class ResourceActionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next resource action
 	* @throws com.liferay.portal.NoSuchResourceActionException if a resource action with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.ResourceAction[] findByName_PrevAndNext(
 		long resourceActionId, java.lang.String name,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchResourceActionException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.NoSuchResourceActionException {
 		return getPersistence()
 				   .findByName_PrevAndNext(resourceActionId, name,
 			orderByComparator);
@@ -253,10 +233,8 @@ public class ResourceActionUtil {
 	* Removes all the resource actions where name = &#63; from the database.
 	*
 	* @param name the name
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByName(java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByName(java.lang.String name) {
 		getPersistence().removeByName(name);
 	}
 
@@ -265,10 +243,8 @@ public class ResourceActionUtil {
 	*
 	* @param name the name
 	* @return the number of matching resource actions
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByName(java.lang.String name)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByName(java.lang.String name) {
 		return getPersistence().countByName(name);
 	}
 
@@ -279,12 +255,10 @@ public class ResourceActionUtil {
 	* @param actionId the action ID
 	* @return the matching resource action
 	* @throws com.liferay.portal.NoSuchResourceActionException if a matching resource action could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.ResourceAction findByN_A(
 		java.lang.String name, java.lang.String actionId)
-		throws com.liferay.portal.NoSuchResourceActionException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.NoSuchResourceActionException {
 		return getPersistence().findByN_A(name, actionId);
 	}
 
@@ -294,11 +268,9 @@ public class ResourceActionUtil {
 	* @param name the name
 	* @param actionId the action ID
 	* @return the matching resource action, or <code>null</code> if a matching resource action could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.ResourceAction fetchByN_A(
-		java.lang.String name, java.lang.String actionId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String name, java.lang.String actionId) {
 		return getPersistence().fetchByN_A(name, actionId);
 	}
 
@@ -309,12 +281,10 @@ public class ResourceActionUtil {
 	* @param actionId the action ID
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching resource action, or <code>null</code> if a matching resource action could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.ResourceAction fetchByN_A(
 		java.lang.String name, java.lang.String actionId,
-		boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		boolean retrieveFromCache) {
 		return getPersistence().fetchByN_A(name, actionId, retrieveFromCache);
 	}
 
@@ -324,12 +294,10 @@ public class ResourceActionUtil {
 	* @param name the name
 	* @param actionId the action ID
 	* @return the resource action that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.ResourceAction removeByN_A(
 		java.lang.String name, java.lang.String actionId)
-		throws com.liferay.portal.NoSuchResourceActionException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.NoSuchResourceActionException {
 		return getPersistence().removeByN_A(name, actionId);
 	}
 
@@ -339,11 +307,9 @@ public class ResourceActionUtil {
 	* @param name the name
 	* @param actionId the action ID
 	* @return the number of matching resource actions
-	* @throws SystemException if a system exception occurred
 	*/
 	public static int countByN_A(java.lang.String name,
-		java.lang.String actionId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String actionId) {
 		return getPersistence().countByN_A(name, actionId);
 	}
 
@@ -384,18 +350,15 @@ public class ResourceActionUtil {
 	* @param resourceActionId the primary key of the resource action
 	* @return the resource action that was removed
 	* @throws com.liferay.portal.NoSuchResourceActionException if a resource action with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.ResourceAction remove(
 		long resourceActionId)
-		throws com.liferay.portal.NoSuchResourceActionException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.NoSuchResourceActionException {
 		return getPersistence().remove(resourceActionId);
 	}
 
 	public static com.liferay.portal.model.ResourceAction updateImpl(
-		com.liferay.portal.model.ResourceAction resourceAction)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.ResourceAction resourceAction) {
 		return getPersistence().updateImpl(resourceAction);
 	}
 
@@ -405,12 +368,10 @@ public class ResourceActionUtil {
 	* @param resourceActionId the primary key of the resource action
 	* @return the resource action
 	* @throws com.liferay.portal.NoSuchResourceActionException if a resource action with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.ResourceAction findByPrimaryKey(
 		long resourceActionId)
-		throws com.liferay.portal.NoSuchResourceActionException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.NoSuchResourceActionException {
 		return getPersistence().findByPrimaryKey(resourceActionId);
 	}
 
@@ -419,11 +380,9 @@ public class ResourceActionUtil {
 	*
 	* @param resourceActionId the primary key of the resource action
 	* @return the resource action, or <code>null</code> if a resource action with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.ResourceAction fetchByPrimaryKey(
-		long resourceActionId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long resourceActionId) {
 		return getPersistence().fetchByPrimaryKey(resourceActionId);
 	}
 
@@ -431,10 +390,8 @@ public class ResourceActionUtil {
 	* Returns all the resource actions.
 	*
 	* @return the resource actions
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.portal.model.ResourceAction> findAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static java.util.List<com.liferay.portal.model.ResourceAction> findAll() {
 		return getPersistence().findAll();
 	}
 
@@ -448,11 +405,9 @@ public class ResourceActionUtil {
 	* @param start the lower bound of the range of resource actions
 	* @param end the upper bound of the range of resource actions (not inclusive)
 	* @return the range of resource actions
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portal.model.ResourceAction> findAll(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
@@ -467,22 +422,17 @@ public class ResourceActionUtil {
 	* @param end the upper bound of the range of resource actions (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of resource actions
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portal.model.ResourceAction> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
 	/**
 	* Removes all the resource actions from the database.
-	*
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeAll() {
 		getPersistence().removeAll();
 	}
 
@@ -490,10 +440,8 @@ public class ResourceActionUtil {
 	* Returns the number of resource actions.
 	*
 	* @return the number of resource actions
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countAll() {
 		return getPersistence().countAll();
 	}
 

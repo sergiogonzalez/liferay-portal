@@ -52,11 +52,9 @@ public interface AssetCategoryLocalService extends BaseLocalService,
 	*
 	* @param assetCategory the asset category
 	* @return the asset category that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.asset.model.AssetCategory addAssetCategory(
-		com.liferay.portlet.asset.model.AssetCategory assetCategory)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portlet.asset.model.AssetCategory assetCategory);
 
 	/**
 	* Creates a new asset category with the primary key. Does not add the asset category to the database.
@@ -73,23 +71,19 @@ public interface AssetCategoryLocalService extends BaseLocalService,
 	* @param categoryId the primary key of the asset category
 	* @return the asset category that was removed
 	* @throws PortalException if a asset category with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.asset.model.AssetCategory deleteAssetCategory(
 		long categoryId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Deletes the asset category from the database. Also notifies the appropriate model listeners.
 	*
 	* @param assetCategory the asset category
 	* @return the asset category that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.asset.model.AssetCategory deleteAssetCategory(
-		com.liferay.portlet.asset.model.AssetCategory assetCategory)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portlet.asset.model.AssetCategory assetCategory);
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -98,12 +92,10 @@ public interface AssetCategoryLocalService extends BaseLocalService,
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -116,12 +108,11 @@ public interface AssetCategoryLocalService extends BaseLocalService,
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException;
+		int end);
 
 	/**
 	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
@@ -135,25 +126,21 @@ public interface AssetCategoryLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the number of rows that match the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows that match the dynamic query.
@@ -161,17 +148,14 @@ public interface AssetCategoryLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.dao.orm.Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.asset.model.AssetCategory fetchAssetCategory(
-		long categoryId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long categoryId);
 
 	/**
 	* Returns the asset category with the matching UUID and company.
@@ -179,12 +163,10 @@ public interface AssetCategoryLocalService extends BaseLocalService,
 	* @param uuid the asset category's UUID
 	* @param companyId the primary key of the company
 	* @return the matching asset category, or <code>null</code> if a matching asset category could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.asset.model.AssetCategory fetchAssetCategoryByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String uuid, long companyId);
 
 	/**
 	* Returns the asset category matching the UUID and group.
@@ -192,12 +174,10 @@ public interface AssetCategoryLocalService extends BaseLocalService,
 	* @param uuid the asset category's UUID
 	* @param groupId the primary key of the group
 	* @return the matching asset category, or <code>null</code> if a matching asset category could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.asset.model.AssetCategory fetchAssetCategoryByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String uuid, long groupId);
 
 	/**
 	* Returns the asset category with the primary key.
@@ -205,29 +185,24 @@ public interface AssetCategoryLocalService extends BaseLocalService,
 	* @param categoryId the primary key of the asset category
 	* @return the asset category
 	* @throws PortalException if a asset category with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.asset.model.AssetCategory getAssetCategory(
 		long categoryId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext);
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns the asset category with the matching UUID and company.
@@ -236,13 +211,11 @@ public interface AssetCategoryLocalService extends BaseLocalService,
 	* @param companyId the primary key of the company
 	* @return the matching asset category
 	* @throws PortalException if a matching asset category could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.asset.model.AssetCategory getAssetCategoryByUuidAndCompanyId(
 		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns the asset category matching the UUID and group.
@@ -251,13 +224,11 @@ public interface AssetCategoryLocalService extends BaseLocalService,
 	* @param groupId the primary key of the group
 	* @return the matching asset category
 	* @throws PortalException if a matching asset category could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.asset.model.AssetCategory getAssetCategoryByUuidAndGroupId(
 		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns a range of all the asset categories.
@@ -269,154 +240,82 @@ public interface AssetCategoryLocalService extends BaseLocalService,
 	* @param start the lower bound of the range of asset categories
 	* @param end the upper bound of the range of asset categories (not inclusive)
 	* @return the range of asset categories
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.asset.model.AssetCategory> getAssetCategories(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		int start, int end);
 
 	/**
 	* Returns the number of asset categories.
 	*
 	* @return the number of asset categories
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getAssetCategoriesCount()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int getAssetCategoriesCount();
 
 	/**
 	* Updates the asset category in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param assetCategory the asset category
 	* @return the asset category that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.asset.model.AssetCategory updateAssetCategory(
-		com.liferay.portlet.asset.model.AssetCategory assetCategory)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portlet.asset.model.AssetCategory assetCategory);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	public void addAssetEntryAssetCategory(long entryId, long categoryId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void addAssetEntryAssetCategory(long entryId, long categoryId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public void addAssetEntryAssetCategory(long entryId,
-		com.liferay.portlet.asset.model.AssetCategory assetCategory)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portlet.asset.model.AssetCategory assetCategory);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	public void addAssetEntryAssetCategories(long entryId, long[] categoryIds)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void addAssetEntryAssetCategories(long entryId, long[] categoryIds);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public void addAssetEntryAssetCategories(long entryId,
-		java.util.List<com.liferay.portlet.asset.model.AssetCategory> AssetCategories)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.util.List<com.liferay.portlet.asset.model.AssetCategory> AssetCategories);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	public void clearAssetEntryAssetCategories(long entryId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void clearAssetEntryAssetCategories(long entryId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	public void deleteAssetEntryAssetCategory(long entryId, long categoryId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void deleteAssetEntryAssetCategory(long entryId, long categoryId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public void deleteAssetEntryAssetCategory(long entryId,
-		com.liferay.portlet.asset.model.AssetCategory assetCategory)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portlet.asset.model.AssetCategory assetCategory);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	public void deleteAssetEntryAssetCategories(long entryId, long[] categoryIds)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void deleteAssetEntryAssetCategories(long entryId, long[] categoryIds);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public void deleteAssetEntryAssetCategories(long entryId,
-		java.util.List<com.liferay.portlet.asset.model.AssetCategory> AssetCategories)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.util.List<com.liferay.portlet.asset.model.AssetCategory> AssetCategories);
 
 	/**
 	* Returns the entryIds of the asset entries associated with the asset category.
 	*
 	* @param categoryId the categoryId of the asset category
 	* @return long[] the entryIds of asset entries associated with the asset category
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long[] getAssetEntryPrimaryKeys(long categoryId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public long[] getAssetEntryPrimaryKeys(long categoryId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.asset.model.AssetCategory> getAssetEntryAssetCategories(
-		long entryId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long entryId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.asset.model.AssetCategory> getAssetEntryAssetCategories(
-		long entryId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long entryId, int start, int end);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.asset.model.AssetCategory> getAssetEntryAssetCategories(
 		long entryId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getAssetEntryAssetCategoriesCount(long entryId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int getAssetEntryAssetCategoriesCount(long entryId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasAssetEntryAssetCategory(long entryId, long categoryId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public boolean hasAssetEntryAssetCategory(long entryId, long categoryId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasAssetEntryAssetCategories(long entryId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public boolean hasAssetEntryAssetCategories(long entryId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	public void setAssetEntryAssetCategories(long entryId, long[] categoryIds)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void setAssetEntryAssetCategories(long entryId, long[] categoryIds);
 
 	/**
 	* Returns the Spring bean ID for this bean.

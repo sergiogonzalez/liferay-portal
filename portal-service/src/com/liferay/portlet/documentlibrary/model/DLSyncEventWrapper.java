@@ -314,8 +314,7 @@ public class DLSyncEventWrapper implements DLSyncEvent,
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void persist() {
 		_dlSyncEvent.persist();
 	}
 

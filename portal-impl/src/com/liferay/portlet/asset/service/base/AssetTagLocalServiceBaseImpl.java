@@ -81,11 +81,10 @@ public abstract class AssetTagLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param assetTag the asset tag
 	 * @return the asset tag that was added
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public AssetTag addAssetTag(AssetTag assetTag) throws SystemException {
+	public AssetTag addAssetTag(AssetTag assetTag) {
 		assetTag.setNew(true);
 
 		return assetTagPersistence.update(assetTag);
@@ -108,12 +107,10 @@ public abstract class AssetTagLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param tagId the primary key of the asset tag
 	 * @return the asset tag that was removed
 	 * @throws PortalException if a asset tag with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public AssetTag deleteAssetTag(long tagId)
-		throws PortalException, SystemException {
+	public AssetTag deleteAssetTag(long tagId) throws PortalException {
 		return assetTagPersistence.remove(tagId);
 	}
 
@@ -122,11 +119,10 @@ public abstract class AssetTagLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param assetTag the asset tag
 	 * @return the asset tag that was removed
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public AssetTag deleteAssetTag(AssetTag assetTag) throws SystemException {
+	public AssetTag deleteAssetTag(AssetTag assetTag) {
 		return assetTagPersistence.remove(assetTag);
 	}
 
@@ -143,12 +139,10 @@ public abstract class AssetTagLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery) {
 		return assetTagPersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -163,12 +157,10 @@ public abstract class AssetTagLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param start the lower bound of the range of model instances
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
 		return assetTagPersistence.findWithDynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -184,12 +176,11 @@ public abstract class AssetTagLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
 	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		return assetTagPersistence.findWithDynamicQuery(dynamicQuery, start,
 			end, orderByComparator);
 	}
@@ -199,11 +190,9 @@ public abstract class AssetTagLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public long dynamicQueryCount(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return assetTagPersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
@@ -213,17 +202,16 @@ public abstract class AssetTagLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param dynamicQuery the dynamic query
 	 * @param projection the projection to apply to the query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection) throws SystemException {
+		Projection projection) {
 		return assetTagPersistence.countWithDynamicQuery(dynamicQuery,
 			projection);
 	}
 
 	@Override
-	public AssetTag fetchAssetTag(long tagId) throws SystemException {
+	public AssetTag fetchAssetTag(long tagId) {
 		return assetTagPersistence.fetchByPrimaryKey(tagId);
 	}
 
@@ -233,17 +221,14 @@ public abstract class AssetTagLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param tagId the primary key of the asset tag
 	 * @return the asset tag
 	 * @throws PortalException if a asset tag with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public AssetTag getAssetTag(long tagId)
-		throws PortalException, SystemException {
+	public AssetTag getAssetTag(long tagId) throws PortalException {
 		return assetTagPersistence.findByPrimaryKey(tagId);
 	}
 
 	@Override
-	public ActionableDynamicQuery getActionableDynamicQuery()
-		throws SystemException {
+	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.asset.service.AssetTagLocalServiceUtil.getService());
@@ -256,8 +241,7 @@ public abstract class AssetTagLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	protected void initActionableDynamicQuery(
-		ActionableDynamicQuery actionableDynamicQuery)
-		throws SystemException {
+		ActionableDynamicQuery actionableDynamicQuery) {
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.asset.service.AssetTagLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(AssetTag.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
@@ -267,7 +251,7 @@ public abstract class AssetTagLocalServiceBaseImpl extends BaseLocalServiceImpl
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return assetTagPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -281,11 +265,9 @@ public abstract class AssetTagLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param start the lower bound of the range of asset tags
 	 * @param end the upper bound of the range of asset tags (not inclusive)
 	 * @return the range of asset tags
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<AssetTag> getAssetTags(int start, int end)
-		throws SystemException {
+	public List<AssetTag> getAssetTags(int start, int end) {
 		return assetTagPersistence.findAll(start, end);
 	}
 
@@ -293,10 +275,9 @@ public abstract class AssetTagLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * Returns the number of asset tags.
 	 *
 	 * @return the number of asset tags
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int getAssetTagsCount() throws SystemException {
+	public int getAssetTagsCount() {
 		return assetTagPersistence.countAll();
 	}
 
@@ -305,92 +286,73 @@ public abstract class AssetTagLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param assetTag the asset tag
 	 * @return the asset tag that was updated
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public AssetTag updateAssetTag(AssetTag assetTag) throws SystemException {
+	public AssetTag updateAssetTag(AssetTag assetTag) {
 		return assetTagPersistence.update(assetTag);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void addAssetEntryAssetTag(long entryId, long tagId)
-		throws SystemException {
+	public void addAssetEntryAssetTag(long entryId, long tagId) {
 		assetEntryPersistence.addAssetTag(entryId, tagId);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void addAssetEntryAssetTag(long entryId, AssetTag assetTag)
-		throws SystemException {
+	public void addAssetEntryAssetTag(long entryId, AssetTag assetTag) {
 		assetEntryPersistence.addAssetTag(entryId, assetTag);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void addAssetEntryAssetTags(long entryId, long[] tagIds)
-		throws SystemException {
+	public void addAssetEntryAssetTags(long entryId, long[] tagIds) {
 		assetEntryPersistence.addAssetTags(entryId, tagIds);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void addAssetEntryAssetTags(long entryId, List<AssetTag> AssetTags)
-		throws SystemException {
+	public void addAssetEntryAssetTags(long entryId, List<AssetTag> AssetTags) {
 		assetEntryPersistence.addAssetTags(entryId, AssetTags);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void clearAssetEntryAssetTags(long entryId)
-		throws SystemException {
+	public void clearAssetEntryAssetTags(long entryId) {
 		assetEntryPersistence.clearAssetTags(entryId);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void deleteAssetEntryAssetTag(long entryId, long tagId)
-		throws SystemException {
+	public void deleteAssetEntryAssetTag(long entryId, long tagId) {
 		assetEntryPersistence.removeAssetTag(entryId, tagId);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void deleteAssetEntryAssetTag(long entryId, AssetTag assetTag)
-		throws SystemException {
+	public void deleteAssetEntryAssetTag(long entryId, AssetTag assetTag) {
 		assetEntryPersistence.removeAssetTag(entryId, assetTag);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void deleteAssetEntryAssetTags(long entryId, long[] tagIds)
-		throws SystemException {
+	public void deleteAssetEntryAssetTags(long entryId, long[] tagIds) {
 		assetEntryPersistence.removeAssetTags(entryId, tagIds);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void deleteAssetEntryAssetTags(long entryId, List<AssetTag> AssetTags)
-		throws SystemException {
+	public void deleteAssetEntryAssetTags(long entryId, List<AssetTag> AssetTags) {
 		assetEntryPersistence.removeAssetTags(entryId, AssetTags);
 	}
 
@@ -399,75 +361,61 @@ public abstract class AssetTagLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param tagId the tagId of the asset tag
 	 * @return long[] the entryIds of asset entries associated with the asset tag
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public long[] getAssetEntryPrimaryKeys(long tagId)
-		throws SystemException {
+	public long[] getAssetEntryPrimaryKeys(long tagId) {
 		return assetTagPersistence.getAssetEntryPrimaryKeys(tagId);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<AssetTag> getAssetEntryAssetTags(long entryId)
-		throws SystemException {
+	public List<AssetTag> getAssetEntryAssetTags(long entryId) {
 		return assetEntryPersistence.getAssetTags(entryId);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<AssetTag> getAssetEntryAssetTags(long entryId, int start,
-		int end) throws SystemException {
+		int end) {
 		return assetEntryPersistence.getAssetTags(entryId, start, end);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<AssetTag> getAssetEntryAssetTags(long entryId, int start,
-		int end, OrderByComparator orderByComparator) throws SystemException {
+		int end, OrderByComparator orderByComparator) {
 		return assetEntryPersistence.getAssetTags(entryId, start, end,
 			orderByComparator);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int getAssetEntryAssetTagsCount(long entryId)
-		throws SystemException {
+	public int getAssetEntryAssetTagsCount(long entryId) {
 		return assetEntryPersistence.getAssetTagsSize(entryId);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public boolean hasAssetEntryAssetTag(long entryId, long tagId)
-		throws SystemException {
+	public boolean hasAssetEntryAssetTag(long entryId, long tagId) {
 		return assetEntryPersistence.containsAssetTag(entryId, tagId);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public boolean hasAssetEntryAssetTags(long entryId)
-		throws SystemException {
+	public boolean hasAssetEntryAssetTags(long entryId) {
 		return assetEntryPersistence.containsAssetTags(entryId);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void setAssetEntryAssetTags(long entryId, long[] tagIds)
-		throws SystemException {
+	public void setAssetEntryAssetTags(long entryId, long[] tagIds) {
 		assetEntryPersistence.setAssetTags(entryId, tagIds);
 	}
 
@@ -1020,7 +968,7 @@ public abstract class AssetTagLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param sql the sql query
 	 */
-	protected void runSQL(String sql) throws SystemException {
+	protected void runSQL(String sql) {
 		try {
 			DataSource dataSource = assetTagPersistence.getDataSource();
 

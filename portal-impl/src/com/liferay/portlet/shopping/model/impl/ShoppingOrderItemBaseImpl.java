@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.shopping.model.impl;
 
-import com.liferay.portal.kernel.exception.SystemException;
-
 import com.liferay.portlet.shopping.model.ShoppingOrderItem;
 import com.liferay.portlet.shopping.service.ShoppingOrderItemLocalServiceUtil;
 
@@ -39,7 +37,7 @@ public abstract class ShoppingOrderItemBaseImpl
 	 * Never modify or reference this class directly. All methods that expect a shopping order item model instance should use the {@link ShoppingOrderItem} interface instead.
 	 */
 	@Override
-	public void persist() throws SystemException {
+	public void persist() {
 		if (this.isNew()) {
 			ShoppingOrderItemLocalServiceUtil.addShoppingOrderItem(this);
 		}

@@ -46,11 +46,9 @@ public class ResourcePermissionLocalServiceUtil {
 	*
 	* @param resourcePermission the resource permission
 	* @return the resource permission that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.ResourcePermission addResourcePermission(
-		com.liferay.portal.model.ResourcePermission resourcePermission)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.ResourcePermission resourcePermission) {
 		return getService().addResourcePermission(resourcePermission);
 	}
 
@@ -71,12 +69,10 @@ public class ResourcePermissionLocalServiceUtil {
 	* @param resourcePermissionId the primary key of the resource permission
 	* @return the resource permission that was removed
 	* @throws PortalException if a resource permission with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.ResourcePermission deleteResourcePermission(
 		long resourcePermissionId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteResourcePermission(resourcePermissionId);
 	}
 
@@ -85,11 +81,9 @@ public class ResourcePermissionLocalServiceUtil {
 	*
 	* @param resourcePermission the resource permission
 	* @return the resource permission that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.ResourcePermission deleteResourcePermission(
-		com.liferay.portal.model.ResourcePermission resourcePermission)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.ResourcePermission resourcePermission) {
 		return getService().deleteResourcePermission(resourcePermission);
 	}
 
@@ -102,12 +96,10 @@ public class ResourcePermissionLocalServiceUtil {
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -122,12 +114,11 @@ public class ResourcePermissionLocalServiceUtil {
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -143,14 +134,12 @@ public class ResourcePermissionLocalServiceUtil {
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getService()
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
@@ -160,11 +149,9 @@ public class ResourcePermissionLocalServiceUtil {
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -174,18 +161,15 @@ public class ResourcePermissionLocalServiceUtil {
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public static long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
 	public static com.liferay.portal.model.ResourcePermission fetchResourcePermission(
-		long resourcePermissionId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long resourcePermissionId) {
 		return getService().fetchResourcePermission(resourcePermissionId);
 	}
 
@@ -195,24 +179,20 @@ public class ResourcePermissionLocalServiceUtil {
 	* @param resourcePermissionId the primary key of the resource permission
 	* @return the resource permission
 	* @throws PortalException if a resource permission with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.ResourcePermission getResourcePermission(
 		long resourcePermissionId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getResourcePermission(resourcePermissionId);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}
 
 	public static com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
@@ -226,11 +206,9 @@ public class ResourcePermissionLocalServiceUtil {
 	* @param start the lower bound of the range of resource permissions
 	* @param end the upper bound of the range of resource permissions (not inclusive)
 	* @return the range of resource permissions
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portal.model.ResourcePermission> getResourcePermissions(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return getService().getResourcePermissions(start, end);
 	}
 
@@ -238,10 +216,8 @@ public class ResourcePermissionLocalServiceUtil {
 	* Returns the number of resource permissions.
 	*
 	* @return the number of resource permissions
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int getResourcePermissionsCount()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int getResourcePermissionsCount() {
 		return getService().getResourcePermissionsCount();
 	}
 
@@ -250,11 +226,9 @@ public class ResourcePermissionLocalServiceUtil {
 	*
 	* @param resourcePermission the resource permission
 	* @return the resource permission that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.ResourcePermission updateResourcePermission(
-		com.liferay.portal.model.ResourcePermission resourcePermission)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.ResourcePermission resourcePermission) {
 		return getService().updateResourcePermission(resourcePermission);
 	}
 

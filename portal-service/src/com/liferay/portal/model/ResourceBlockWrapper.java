@@ -366,8 +366,7 @@ public class ResourceBlockWrapper implements ResourceBlock,
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void persist() {
 		_resourceBlock.persist();
 	}
 

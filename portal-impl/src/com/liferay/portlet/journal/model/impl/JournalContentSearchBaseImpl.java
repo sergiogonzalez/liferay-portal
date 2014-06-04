@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.journal.model.impl;
 
-import com.liferay.portal.kernel.exception.SystemException;
-
 import com.liferay.portlet.journal.model.JournalContentSearch;
 import com.liferay.portlet.journal.service.JournalContentSearchLocalServiceUtil;
 
@@ -39,7 +37,7 @@ public abstract class JournalContentSearchBaseImpl
 	 * Never modify or reference this class directly. All methods that expect a journal content search model instance should use the {@link JournalContentSearch} interface instead.
 	 */
 	@Override
-	public void persist() throws SystemException {
+	public void persist() {
 		if (this.isNew()) {
 			JournalContentSearchLocalServiceUtil.addJournalContentSearch(this);
 		}

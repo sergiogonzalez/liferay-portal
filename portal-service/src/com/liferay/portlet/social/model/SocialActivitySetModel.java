@@ -16,7 +16,6 @@ package com.liferay.portlet.social.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.AttachedModel;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
@@ -122,9 +121,8 @@ public interface SocialActivitySetModel extends AttachedModel,
 	 * Returns the user uuid of this social activity set.
 	 *
 	 * @return the user uuid of this social activity set
-	 * @throws SystemException if a system exception occurred
 	 */
-	public String getUserUuid() throws SystemException;
+	public String getUserUuid();
 
 	/**
 	 * Sets the user uuid of this social activity set.

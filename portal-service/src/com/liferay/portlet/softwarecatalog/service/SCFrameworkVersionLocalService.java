@@ -52,11 +52,9 @@ public interface SCFrameworkVersionLocalService extends BaseLocalService,
 	*
 	* @param scFrameworkVersion the s c framework version
 	* @return the s c framework version that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion addSCFrameworkVersion(
-		com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion scFrameworkVersion)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion scFrameworkVersion);
 
 	/**
 	* Creates a new s c framework version with the primary key. Does not add the s c framework version to the database.
@@ -73,23 +71,19 @@ public interface SCFrameworkVersionLocalService extends BaseLocalService,
 	* @param frameworkVersionId the primary key of the s c framework version
 	* @return the s c framework version that was removed
 	* @throws PortalException if a s c framework version with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion deleteSCFrameworkVersion(
 		long frameworkVersionId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Deletes the s c framework version from the database. Also notifies the appropriate model listeners.
 	*
 	* @param scFrameworkVersion the s c framework version
 	* @return the s c framework version that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion deleteSCFrameworkVersion(
-		com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion scFrameworkVersion)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion scFrameworkVersion);
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -98,12 +92,10 @@ public interface SCFrameworkVersionLocalService extends BaseLocalService,
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -116,12 +108,11 @@ public interface SCFrameworkVersionLocalService extends BaseLocalService,
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException;
+		int end);
 
 	/**
 	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
@@ -135,25 +126,21 @@ public interface SCFrameworkVersionLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the number of rows that match the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows that match the dynamic query.
@@ -161,17 +148,14 @@ public interface SCFrameworkVersionLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.dao.orm.Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion fetchSCFrameworkVersion(
-		long frameworkVersionId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long frameworkVersionId);
 
 	/**
 	* Returns the s c framework version with the primary key.
@@ -179,24 +163,20 @@ public interface SCFrameworkVersionLocalService extends BaseLocalService,
 	* @param frameworkVersionId the primary key of the s c framework version
 	* @return the s c framework version
 	* @throws PortalException if a s c framework version with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion getSCFrameworkVersion(
 		long frameworkVersionId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns a range of all the s c framework versions.
@@ -208,163 +188,91 @@ public interface SCFrameworkVersionLocalService extends BaseLocalService,
 	* @param start the lower bound of the range of s c framework versions
 	* @param end the upper bound of the range of s c framework versions (not inclusive)
 	* @return the range of s c framework versions
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> getSCFrameworkVersions(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		int start, int end);
 
 	/**
 	* Returns the number of s c framework versions.
 	*
 	* @return the number of s c framework versions
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getSCFrameworkVersionsCount()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int getSCFrameworkVersionsCount();
 
 	/**
 	* Updates the s c framework version in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param scFrameworkVersion the s c framework version
 	* @return the s c framework version that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion updateSCFrameworkVersion(
-		com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion scFrameworkVersion)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion scFrameworkVersion);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public void addSCProductVersionSCFrameworkVersion(long productVersionId,
-		long frameworkVersionId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long frameworkVersionId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public void addSCProductVersionSCFrameworkVersion(long productVersionId,
-		com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion scFrameworkVersion)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion scFrameworkVersion);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public void addSCProductVersionSCFrameworkVersions(long productVersionId,
-		long[] frameworkVersionIds)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long[] frameworkVersionIds);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public void addSCProductVersionSCFrameworkVersions(long productVersionId,
-		java.util.List<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> SCFrameworkVersions)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.util.List<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> SCFrameworkVersions);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	public void clearSCProductVersionSCFrameworkVersions(long productVersionId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void clearSCProductVersionSCFrameworkVersions(long productVersionId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public void deleteSCProductVersionSCFrameworkVersion(
-		long productVersionId, long frameworkVersionId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long productVersionId, long frameworkVersionId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public void deleteSCProductVersionSCFrameworkVersion(
 		long productVersionId,
-		com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion scFrameworkVersion)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion scFrameworkVersion);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public void deleteSCProductVersionSCFrameworkVersions(
-		long productVersionId, long[] frameworkVersionIds)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long productVersionId, long[] frameworkVersionIds);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public void deleteSCProductVersionSCFrameworkVersions(
 		long productVersionId,
-		java.util.List<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> SCFrameworkVersions)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.util.List<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> SCFrameworkVersions);
 
 	/**
 	* Returns the productVersionIds of the s c product versions associated with the s c framework version.
 	*
 	* @param frameworkVersionId the frameworkVersionId of the s c framework version
 	* @return long[] the productVersionIds of s c product versions associated with the s c framework version
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long[] getSCProductVersionPrimaryKeys(long frameworkVersionId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public long[] getSCProductVersionPrimaryKeys(long frameworkVersionId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> getSCProductVersionSCFrameworkVersions(
-		long productVersionId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long productVersionId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> getSCProductVersionSCFrameworkVersions(
-		long productVersionId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long productVersionId, int start, int end);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion> getSCProductVersionSCFrameworkVersions(
 		long productVersionId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getSCProductVersionSCFrameworkVersionsCount(
-		long productVersionId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long productVersionId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasSCProductVersionSCFrameworkVersion(
-		long productVersionId, long frameworkVersionId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long productVersionId, long frameworkVersionId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasSCProductVersionSCFrameworkVersions(long productVersionId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public boolean hasSCProductVersionSCFrameworkVersions(long productVersionId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public void setSCProductVersionSCFrameworkVersions(long productVersionId,
-		long[] frameworkVersionIds)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long[] frameworkVersionIds);
 
 	/**
 	* Returns the Spring bean ID for this bean.

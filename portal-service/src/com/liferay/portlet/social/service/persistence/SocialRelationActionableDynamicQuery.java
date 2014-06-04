@@ -15,7 +15,6 @@
 package com.liferay.portlet.social.service.persistence;
 
 import com.liferay.portal.kernel.dao.orm.BaseActionableDynamicQuery;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 
 import com.liferay.portlet.social.model.SocialRelation;
@@ -29,7 +28,7 @@ import com.liferay.portlet.social.service.SocialRelationLocalServiceUtil;
 @Deprecated
 public abstract class SocialRelationActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
-	public SocialRelationActionableDynamicQuery() throws SystemException {
+	public SocialRelationActionableDynamicQuery() {
 		setBaseLocalService(SocialRelationLocalServiceUtil.getService());
 		setClass(SocialRelation.class);
 

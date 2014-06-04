@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.social.model.impl;
 
-import com.liferay.portal.kernel.exception.SystemException;
-
 import com.liferay.portlet.social.model.SocialRequest;
 import com.liferay.portlet.social.service.SocialRequestLocalServiceUtil;
 
@@ -39,7 +37,7 @@ public abstract class SocialRequestBaseImpl extends SocialRequestModelImpl
 	 * Never modify or reference this class directly. All methods that expect a social request model instance should use the {@link SocialRequest} interface instead.
 	 */
 	@Override
-	public void persist() throws SystemException {
+	public void persist() {
 		if (this.isNew()) {
 			SocialRequestLocalServiceUtil.addSocialRequest(this);
 		}

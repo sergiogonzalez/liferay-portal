@@ -297,11 +297,9 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 	* Returns the user uuid of this background task.
 	*
 	* @return the user uuid of this background task
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public java.lang.String getUserUuid()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public java.lang.String getUserUuid() {
 		return _backgroundTask.getUserUuid();
 	}
 
@@ -644,8 +642,7 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void persist() {
 		_backgroundTask.persist();
 	}
 

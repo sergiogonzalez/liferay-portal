@@ -409,8 +409,7 @@ public class WebDAVPropsWrapper implements WebDAVProps,
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void persist() {
 		_webDAVProps.persist();
 	}
 

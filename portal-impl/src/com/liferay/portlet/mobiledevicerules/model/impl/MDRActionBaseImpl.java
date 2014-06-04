@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.mobiledevicerules.model.impl;
 
-import com.liferay.portal.kernel.exception.SystemException;
-
 import com.liferay.portlet.mobiledevicerules.model.MDRAction;
 import com.liferay.portlet.mobiledevicerules.service.MDRActionLocalServiceUtil;
 
@@ -39,7 +37,7 @@ public abstract class MDRActionBaseImpl extends MDRActionModelImpl
 	 * Never modify or reference this class directly. All methods that expect a m d r action model instance should use the {@link MDRAction} interface instead.
 	 */
 	@Override
-	public void persist() throws SystemException {
+	public void persist() {
 		if (this.isNew()) {
 			MDRActionLocalServiceUtil.addMDRAction(this);
 		}

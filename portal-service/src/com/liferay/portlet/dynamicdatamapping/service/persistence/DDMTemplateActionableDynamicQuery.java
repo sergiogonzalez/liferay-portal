@@ -15,7 +15,6 @@
 package com.liferay.portlet.dynamicdatamapping.service.persistence;
 
 import com.liferay.portal.kernel.dao.orm.BaseActionableDynamicQuery;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
@@ -29,7 +28,7 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUti
 @Deprecated
 public abstract class DDMTemplateActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
-	public DDMTemplateActionableDynamicQuery() throws SystemException {
+	public DDMTemplateActionableDynamicQuery() {
 		setBaseLocalService(DDMTemplateLocalServiceUtil.getService());
 		setClass(DDMTemplate.class);
 

@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 import com.liferay.portal.model.LayoutSet;
@@ -63,8 +62,7 @@ public class LayoutSetUtil {
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#countWithDynamicQuery(DynamicQuery)
 	 */
-	public static long countWithDynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public static long countWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return getPersistence().countWithDynamicQuery(dynamicQuery);
 	}
 
@@ -72,7 +70,7 @@ public class LayoutSetUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery)
 	 */
 	public static List<LayoutSet> findWithDynamicQuery(
-		DynamicQuery dynamicQuery) throws SystemException {
+		DynamicQuery dynamicQuery) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -80,8 +78,7 @@ public class LayoutSetUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
 	 */
 	public static List<LayoutSet> findWithDynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+		DynamicQuery dynamicQuery, int start, int end) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -90,7 +87,7 @@ public class LayoutSetUtil {
 	 */
 	public static List<LayoutSet> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -99,8 +96,7 @@ public class LayoutSetUtil {
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static LayoutSet update(LayoutSet layoutSet)
-		throws SystemException {
+	public static LayoutSet update(LayoutSet layoutSet) {
 		return getPersistence().update(layoutSet);
 	}
 
@@ -108,7 +104,7 @@ public class LayoutSetUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
 	public static LayoutSet update(LayoutSet layoutSet,
-		ServiceContext serviceContext) throws SystemException {
+		ServiceContext serviceContext) {
 		return getPersistence().update(layoutSet, serviceContext);
 	}
 
@@ -117,11 +113,9 @@ public class LayoutSetUtil {
 	*
 	* @param groupId the group ID
 	* @return the matching layout sets
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portal.model.LayoutSet> findByGroupId(
-		long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId) {
 		return getPersistence().findByGroupId(groupId);
 	}
 
@@ -136,11 +130,9 @@ public class LayoutSetUtil {
 	* @param start the lower bound of the range of layout sets
 	* @param end the upper bound of the range of layout sets (not inclusive)
 	* @return the range of matching layout sets
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portal.model.LayoutSet> findByGroupId(
-		long groupId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, int start, int end) {
 		return getPersistence().findByGroupId(groupId, start, end);
 	}
 
@@ -156,12 +148,10 @@ public class LayoutSetUtil {
 	* @param end the upper bound of the range of layout sets (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching layout sets
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portal.model.LayoutSet> findByGroupId(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByGroupId(groupId, start, end, orderByComparator);
 	}
@@ -173,13 +163,11 @@ public class LayoutSetUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching layout set
 	* @throws com.liferay.portal.NoSuchLayoutSetException if a matching layout set could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.LayoutSet findByGroupId_First(
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchLayoutSetException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.NoSuchLayoutSetException {
 		return getPersistence().findByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -189,12 +177,10 @@ public class LayoutSetUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching layout set, or <code>null</code> if a matching layout set could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.LayoutSet fetchByGroupId_First(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -205,13 +191,11 @@ public class LayoutSetUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching layout set
 	* @throws com.liferay.portal.NoSuchLayoutSetException if a matching layout set could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.LayoutSet findByGroupId_Last(
 		long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchLayoutSetException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.NoSuchLayoutSetException {
 		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -221,12 +205,10 @@ public class LayoutSetUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching layout set, or <code>null</code> if a matching layout set could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.LayoutSet fetchByGroupId_Last(
 		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -238,13 +220,11 @@ public class LayoutSetUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next layout set
 	* @throws com.liferay.portal.NoSuchLayoutSetException if a layout set with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.LayoutSet[] findByGroupId_PrevAndNext(
 		long layoutSetId, long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchLayoutSetException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.NoSuchLayoutSetException {
 		return getPersistence()
 				   .findByGroupId_PrevAndNext(layoutSetId, groupId,
 			orderByComparator);
@@ -254,10 +234,8 @@ public class LayoutSetUtil {
 	* Removes all the layout sets where groupId = &#63; from the database.
 	*
 	* @param groupId the group ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByGroupId(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByGroupId(long groupId) {
 		getPersistence().removeByGroupId(groupId);
 	}
 
@@ -266,10 +244,8 @@ public class LayoutSetUtil {
 	*
 	* @param groupId the group ID
 	* @return the number of matching layout sets
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByGroupId(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByGroupId(long groupId) {
 		return getPersistence().countByGroupId(groupId);
 	}
 
@@ -278,11 +254,9 @@ public class LayoutSetUtil {
 	*
 	* @param layoutSetPrototypeUuid the layout set prototype uuid
 	* @return the matching layout sets
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portal.model.LayoutSet> findByLayoutSetPrototypeUuid(
-		java.lang.String layoutSetPrototypeUuid)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String layoutSetPrototypeUuid) {
 		return getPersistence()
 				   .findByLayoutSetPrototypeUuid(layoutSetPrototypeUuid);
 	}
@@ -298,11 +272,9 @@ public class LayoutSetUtil {
 	* @param start the lower bound of the range of layout sets
 	* @param end the upper bound of the range of layout sets (not inclusive)
 	* @return the range of matching layout sets
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portal.model.LayoutSet> findByLayoutSetPrototypeUuid(
-		java.lang.String layoutSetPrototypeUuid, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String layoutSetPrototypeUuid, int start, int end) {
 		return getPersistence()
 				   .findByLayoutSetPrototypeUuid(layoutSetPrototypeUuid, start,
 			end);
@@ -320,12 +292,10 @@ public class LayoutSetUtil {
 	* @param end the upper bound of the range of layout sets (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching layout sets
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portal.model.LayoutSet> findByLayoutSetPrototypeUuid(
 		java.lang.String layoutSetPrototypeUuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByLayoutSetPrototypeUuid(layoutSetPrototypeUuid, start,
 			end, orderByComparator);
@@ -338,13 +308,11 @@ public class LayoutSetUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching layout set
 	* @throws com.liferay.portal.NoSuchLayoutSetException if a matching layout set could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.LayoutSet findByLayoutSetPrototypeUuid_First(
 		java.lang.String layoutSetPrototypeUuid,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchLayoutSetException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.NoSuchLayoutSetException {
 		return getPersistence()
 				   .findByLayoutSetPrototypeUuid_First(layoutSetPrototypeUuid,
 			orderByComparator);
@@ -356,12 +324,10 @@ public class LayoutSetUtil {
 	* @param layoutSetPrototypeUuid the layout set prototype uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching layout set, or <code>null</code> if a matching layout set could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.LayoutSet fetchByLayoutSetPrototypeUuid_First(
 		java.lang.String layoutSetPrototypeUuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByLayoutSetPrototypeUuid_First(layoutSetPrototypeUuid,
 			orderByComparator);
@@ -374,13 +340,11 @@ public class LayoutSetUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching layout set
 	* @throws com.liferay.portal.NoSuchLayoutSetException if a matching layout set could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.LayoutSet findByLayoutSetPrototypeUuid_Last(
 		java.lang.String layoutSetPrototypeUuid,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchLayoutSetException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.NoSuchLayoutSetException {
 		return getPersistence()
 				   .findByLayoutSetPrototypeUuid_Last(layoutSetPrototypeUuid,
 			orderByComparator);
@@ -392,12 +356,10 @@ public class LayoutSetUtil {
 	* @param layoutSetPrototypeUuid the layout set prototype uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching layout set, or <code>null</code> if a matching layout set could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.LayoutSet fetchByLayoutSetPrototypeUuid_Last(
 		java.lang.String layoutSetPrototypeUuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByLayoutSetPrototypeUuid_Last(layoutSetPrototypeUuid,
 			orderByComparator);
@@ -411,13 +373,11 @@ public class LayoutSetUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next layout set
 	* @throws com.liferay.portal.NoSuchLayoutSetException if a layout set with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.LayoutSet[] findByLayoutSetPrototypeUuid_PrevAndNext(
 		long layoutSetId, java.lang.String layoutSetPrototypeUuid,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchLayoutSetException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.NoSuchLayoutSetException {
 		return getPersistence()
 				   .findByLayoutSetPrototypeUuid_PrevAndNext(layoutSetId,
 			layoutSetPrototypeUuid, orderByComparator);
@@ -427,11 +387,9 @@ public class LayoutSetUtil {
 	* Removes all the layout sets where layoutSetPrototypeUuid = &#63; from the database.
 	*
 	* @param layoutSetPrototypeUuid the layout set prototype uuid
-	* @throws SystemException if a system exception occurred
 	*/
 	public static void removeByLayoutSetPrototypeUuid(
-		java.lang.String layoutSetPrototypeUuid)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String layoutSetPrototypeUuid) {
 		getPersistence().removeByLayoutSetPrototypeUuid(layoutSetPrototypeUuid);
 	}
 
@@ -440,11 +398,9 @@ public class LayoutSetUtil {
 	*
 	* @param layoutSetPrototypeUuid the layout set prototype uuid
 	* @return the number of matching layout sets
-	* @throws SystemException if a system exception occurred
 	*/
 	public static int countByLayoutSetPrototypeUuid(
-		java.lang.String layoutSetPrototypeUuid)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String layoutSetPrototypeUuid) {
 		return getPersistence()
 				   .countByLayoutSetPrototypeUuid(layoutSetPrototypeUuid);
 	}
@@ -456,12 +412,10 @@ public class LayoutSetUtil {
 	* @param privateLayout the private layout
 	* @return the matching layout set
 	* @throws com.liferay.portal.NoSuchLayoutSetException if a matching layout set could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.LayoutSet findByG_P(long groupId,
 		boolean privateLayout)
-		throws com.liferay.portal.NoSuchLayoutSetException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.NoSuchLayoutSetException {
 		return getPersistence().findByG_P(groupId, privateLayout);
 	}
 
@@ -471,11 +425,9 @@ public class LayoutSetUtil {
 	* @param groupId the group ID
 	* @param privateLayout the private layout
 	* @return the matching layout set, or <code>null</code> if a matching layout set could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.LayoutSet fetchByG_P(long groupId,
-		boolean privateLayout)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		boolean privateLayout) {
 		return getPersistence().fetchByG_P(groupId, privateLayout);
 	}
 
@@ -486,11 +438,9 @@ public class LayoutSetUtil {
 	* @param privateLayout the private layout
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching layout set, or <code>null</code> if a matching layout set could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.LayoutSet fetchByG_P(long groupId,
-		boolean privateLayout, boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		boolean privateLayout, boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByG_P(groupId, privateLayout, retrieveFromCache);
 	}
@@ -501,12 +451,10 @@ public class LayoutSetUtil {
 	* @param groupId the group ID
 	* @param privateLayout the private layout
 	* @return the layout set that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.LayoutSet removeByG_P(long groupId,
 		boolean privateLayout)
-		throws com.liferay.portal.NoSuchLayoutSetException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.NoSuchLayoutSetException {
 		return getPersistence().removeByG_P(groupId, privateLayout);
 	}
 
@@ -516,10 +464,8 @@ public class LayoutSetUtil {
 	* @param groupId the group ID
 	* @param privateLayout the private layout
 	* @return the number of matching layout sets
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByG_P(long groupId, boolean privateLayout)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByG_P(long groupId, boolean privateLayout) {
 		return getPersistence().countByG_P(groupId, privateLayout);
 	}
 
@@ -558,17 +504,14 @@ public class LayoutSetUtil {
 	* @param layoutSetId the primary key of the layout set
 	* @return the layout set that was removed
 	* @throws com.liferay.portal.NoSuchLayoutSetException if a layout set with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.LayoutSet remove(long layoutSetId)
-		throws com.liferay.portal.NoSuchLayoutSetException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.NoSuchLayoutSetException {
 		return getPersistence().remove(layoutSetId);
 	}
 
 	public static com.liferay.portal.model.LayoutSet updateImpl(
-		com.liferay.portal.model.LayoutSet layoutSet)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.model.LayoutSet layoutSet) {
 		return getPersistence().updateImpl(layoutSet);
 	}
 
@@ -578,12 +521,9 @@ public class LayoutSetUtil {
 	* @param layoutSetId the primary key of the layout set
 	* @return the layout set
 	* @throws com.liferay.portal.NoSuchLayoutSetException if a layout set with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.LayoutSet findByPrimaryKey(
-		long layoutSetId)
-		throws com.liferay.portal.NoSuchLayoutSetException,
-			com.liferay.portal.kernel.exception.SystemException {
+		long layoutSetId) throws com.liferay.portal.NoSuchLayoutSetException {
 		return getPersistence().findByPrimaryKey(layoutSetId);
 	}
 
@@ -592,11 +532,9 @@ public class LayoutSetUtil {
 	*
 	* @param layoutSetId the primary key of the layout set
 	* @return the layout set, or <code>null</code> if a layout set with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portal.model.LayoutSet fetchByPrimaryKey(
-		long layoutSetId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long layoutSetId) {
 		return getPersistence().fetchByPrimaryKey(layoutSetId);
 	}
 
@@ -604,10 +542,8 @@ public class LayoutSetUtil {
 	* Returns all the layout sets.
 	*
 	* @return the layout sets
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.portal.model.LayoutSet> findAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static java.util.List<com.liferay.portal.model.LayoutSet> findAll() {
 		return getPersistence().findAll();
 	}
 
@@ -621,11 +557,9 @@ public class LayoutSetUtil {
 	* @param start the lower bound of the range of layout sets
 	* @param end the upper bound of the range of layout sets (not inclusive)
 	* @return the range of layout sets
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portal.model.LayoutSet> findAll(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
@@ -640,22 +574,17 @@ public class LayoutSetUtil {
 	* @param end the upper bound of the range of layout sets (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of layout sets
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portal.model.LayoutSet> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
 	/**
 	* Removes all the layout sets from the database.
-	*
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeAll() {
 		getPersistence().removeAll();
 	}
 
@@ -663,10 +592,8 @@ public class LayoutSetUtil {
 	* Returns the number of layout sets.
 	*
 	* @return the number of layout sets
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countAll() {
 		return getPersistence().countAll();
 	}
 

@@ -79,12 +79,10 @@ public abstract class DDMContentLocalServiceBaseImpl
 	 *
 	 * @param ddmContent the d d m content
 	 * @return the d d m content that was added
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public DDMContent addDDMContent(DDMContent ddmContent)
-		throws SystemException {
+	public DDMContent addDDMContent(DDMContent ddmContent) {
 		ddmContent.setNew(true);
 
 		return ddmContentPersistence.update(ddmContent);
@@ -107,12 +105,11 @@ public abstract class DDMContentLocalServiceBaseImpl
 	 * @param contentId the primary key of the d d m content
 	 * @return the d d m content that was removed
 	 * @throws PortalException if a d d m content with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public DDMContent deleteDDMContent(long contentId)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return ddmContentPersistence.remove(contentId);
 	}
 
@@ -121,12 +118,10 @@ public abstract class DDMContentLocalServiceBaseImpl
 	 *
 	 * @param ddmContent the d d m content
 	 * @return the d d m content that was removed
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public DDMContent deleteDDMContent(DDMContent ddmContent)
-		throws SystemException {
+	public DDMContent deleteDDMContent(DDMContent ddmContent) {
 		return ddmContentPersistence.remove(ddmContent);
 	}
 
@@ -143,12 +138,10 @@ public abstract class DDMContentLocalServiceBaseImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery) {
 		return ddmContentPersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -163,12 +156,10 @@ public abstract class DDMContentLocalServiceBaseImpl
 	 * @param start the lower bound of the range of model instances
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end) {
 		return ddmContentPersistence.findWithDynamicQuery(dynamicQuery, start,
 			end);
 	}
@@ -185,12 +176,11 @@ public abstract class DDMContentLocalServiceBaseImpl
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	@SuppressWarnings("rawtypes")
 	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		return ddmContentPersistence.findWithDynamicQuery(dynamicQuery, start,
 			end, orderByComparator);
 	}
@@ -200,11 +190,9 @@ public abstract class DDMContentLocalServiceBaseImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public long dynamicQueryCount(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return ddmContentPersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
@@ -214,17 +202,16 @@ public abstract class DDMContentLocalServiceBaseImpl
 	 * @param dynamicQuery the dynamic query
 	 * @param projection the projection to apply to the query
 	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection) throws SystemException {
+		Projection projection) {
 		return ddmContentPersistence.countWithDynamicQuery(dynamicQuery,
 			projection);
 	}
 
 	@Override
-	public DDMContent fetchDDMContent(long contentId) throws SystemException {
+	public DDMContent fetchDDMContent(long contentId) {
 		return ddmContentPersistence.fetchByPrimaryKey(contentId);
 	}
 
@@ -234,11 +221,10 @@ public abstract class DDMContentLocalServiceBaseImpl
 	 * @param uuid the d d m content's UUID
 	 * @param  companyId the primary key of the company
 	 * @return the matching d d m content, or <code>null</code> if a matching d d m content could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMContent fetchDDMContentByUuidAndCompanyId(String uuid,
-		long companyId) throws SystemException {
+		long companyId) {
 		return ddmContentPersistence.fetchByUuid_C_First(uuid, companyId, null);
 	}
 
@@ -248,11 +234,9 @@ public abstract class DDMContentLocalServiceBaseImpl
 	 * @param uuid the d d m content's UUID
 	 * @param groupId the primary key of the group
 	 * @return the matching d d m content, or <code>null</code> if a matching d d m content could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public DDMContent fetchDDMContentByUuidAndGroupId(String uuid, long groupId)
-		throws SystemException {
+	public DDMContent fetchDDMContentByUuidAndGroupId(String uuid, long groupId) {
 		return ddmContentPersistence.fetchByUUID_G(uuid, groupId);
 	}
 
@@ -262,17 +246,14 @@ public abstract class DDMContentLocalServiceBaseImpl
 	 * @param contentId the primary key of the d d m content
 	 * @return the d d m content
 	 * @throws PortalException if a d d m content with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public DDMContent getDDMContent(long contentId)
-		throws PortalException, SystemException {
+	public DDMContent getDDMContent(long contentId) throws PortalException {
 		return ddmContentPersistence.findByPrimaryKey(contentId);
 	}
 
 	@Override
-	public ActionableDynamicQuery getActionableDynamicQuery()
-		throws SystemException {
+	public ActionableDynamicQuery getActionableDynamicQuery() {
 		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
 
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.dynamicdatamapping.service.DDMContentLocalServiceUtil.getService());
@@ -285,8 +266,7 @@ public abstract class DDMContentLocalServiceBaseImpl
 	}
 
 	protected void initActionableDynamicQuery(
-		ActionableDynamicQuery actionableDynamicQuery)
-		throws SystemException {
+		ActionableDynamicQuery actionableDynamicQuery) {
 		actionableDynamicQuery.setBaseLocalService(com.liferay.portlet.dynamicdatamapping.service.DDMContentLocalServiceUtil.getService());
 		actionableDynamicQuery.setClass(DDMContent.class);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
@@ -296,11 +276,10 @@ public abstract class DDMContentLocalServiceBaseImpl
 
 	@Override
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		final PortletDataContext portletDataContext) throws SystemException {
+		final PortletDataContext portletDataContext) {
 		final ExportActionableDynamicQuery exportActionableDynamicQuery = new ExportActionableDynamicQuery() {
 				@Override
-				public long performCount()
-					throws PortalException, SystemException {
+				public long performCount() throws PortalException {
 					ManifestSummary manifestSummary = portletDataContext.getManifestSummary();
 
 					StagedModelType stagedModelType = getStagedModelType();
@@ -336,9 +315,8 @@ public abstract class DDMContentLocalServiceBaseImpl
 
 		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod() {
 				@Override
-				@SuppressWarnings("unused")
 				public void performAction(Object object)
-					throws PortalException, SystemException {
+					throws PortalException {
 					DDMContent stagedModel = (DDMContent)object;
 
 					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
@@ -353,7 +331,7 @@ public abstract class DDMContentLocalServiceBaseImpl
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return ddmContentPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -364,11 +342,10 @@ public abstract class DDMContentLocalServiceBaseImpl
 	 * @param  companyId the primary key of the company
 	 * @return the matching d d m content
 	 * @throws PortalException if a matching d d m content could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMContent getDDMContentByUuidAndCompanyId(String uuid,
-		long companyId) throws PortalException, SystemException {
+		long companyId) throws PortalException {
 		return ddmContentPersistence.findByUuid_C_First(uuid, companyId, null);
 	}
 
@@ -379,11 +356,10 @@ public abstract class DDMContentLocalServiceBaseImpl
 	 * @param groupId the primary key of the group
 	 * @return the matching d d m content
 	 * @throws PortalException if a matching d d m content could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public DDMContent getDDMContentByUuidAndGroupId(String uuid, long groupId)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return ddmContentPersistence.findByUUID_G(uuid, groupId);
 	}
 
@@ -397,11 +373,9 @@ public abstract class DDMContentLocalServiceBaseImpl
 	 * @param start the lower bound of the range of d d m contents
 	 * @param end the upper bound of the range of d d m contents (not inclusive)
 	 * @return the range of d d m contents
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<DDMContent> getDDMContents(int start, int end)
-		throws SystemException {
+	public List<DDMContent> getDDMContents(int start, int end) {
 		return ddmContentPersistence.findAll(start, end);
 	}
 
@@ -409,10 +383,9 @@ public abstract class DDMContentLocalServiceBaseImpl
 	 * Returns the number of d d m contents.
 	 *
 	 * @return the number of d d m contents
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int getDDMContentsCount() throws SystemException {
+	public int getDDMContentsCount() {
 		return ddmContentPersistence.countAll();
 	}
 
@@ -421,12 +394,10 @@ public abstract class DDMContentLocalServiceBaseImpl
 	 *
 	 * @param ddmContent the d d m content
 	 * @return the d d m content that was updated
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public DDMContent updateDDMContent(DDMContent ddmContent)
-		throws SystemException {
+	public DDMContent updateDDMContent(DDMContent ddmContent) {
 		return ddmContentPersistence.update(ddmContent);
 	}
 
@@ -604,7 +575,7 @@ public abstract class DDMContentLocalServiceBaseImpl
 	 *
 	 * @param sql the sql query
 	 */
-	protected void runSQL(String sql) throws SystemException {
+	protected void runSQL(String sql) {
 		try {
 			DataSource dataSource = ddmContentPersistence.getDataSource();
 

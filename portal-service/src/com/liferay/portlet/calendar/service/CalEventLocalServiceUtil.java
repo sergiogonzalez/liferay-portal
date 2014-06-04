@@ -46,11 +46,9 @@ public class CalEventLocalServiceUtil {
 	*
 	* @param calEvent the cal event
 	* @return the cal event that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent addCalEvent(
-		com.liferay.portlet.calendar.model.CalEvent calEvent)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.calendar.model.CalEvent calEvent) {
 		return getService().addCalEvent(calEvent);
 	}
 
@@ -71,12 +69,10 @@ public class CalEventLocalServiceUtil {
 	* @param eventId the primary key of the cal event
 	* @return the cal event that was removed
 	* @throws PortalException if a cal event with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent deleteCalEvent(
 		long eventId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteCalEvent(eventId);
 	}
 
@@ -85,11 +81,9 @@ public class CalEventLocalServiceUtil {
 	*
 	* @param calEvent the cal event
 	* @return the cal event that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent deleteCalEvent(
-		com.liferay.portlet.calendar.model.CalEvent calEvent)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.calendar.model.CalEvent calEvent) {
 		return getService().deleteCalEvent(calEvent);
 	}
 
@@ -102,12 +96,10 @@ public class CalEventLocalServiceUtil {
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
@@ -122,12 +114,11 @@ public class CalEventLocalServiceUtil {
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -143,14 +134,12 @@ public class CalEventLocalServiceUtil {
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public static java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getService()
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
@@ -160,11 +149,9 @@ public class CalEventLocalServiceUtil {
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
 
@@ -174,18 +161,15 @@ public class CalEventLocalServiceUtil {
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public static long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
 	public static com.liferay.portlet.calendar.model.CalEvent fetchCalEvent(
-		long eventId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long eventId) {
 		return getService().fetchCalEvent(eventId);
 	}
 
@@ -195,11 +179,9 @@ public class CalEventLocalServiceUtil {
 	* @param uuid the cal event's UUID
 	* @param companyId the primary key of the company
 	* @return the matching cal event, or <code>null</code> if a matching cal event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent fetchCalEventByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long companyId) {
 		return getService().fetchCalEventByUuidAndCompanyId(uuid, companyId);
 	}
 
@@ -209,11 +191,9 @@ public class CalEventLocalServiceUtil {
 	* @param uuid the cal event's UUID
 	* @param groupId the primary key of the group
 	* @return the matching cal event, or <code>null</code> if a matching cal event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent fetchCalEventByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long groupId) {
 		return getService().fetchCalEventByUuidAndGroupId(uuid, groupId);
 	}
 
@@ -223,30 +203,25 @@ public class CalEventLocalServiceUtil {
 	* @param eventId the primary key of the cal event
 	* @return the cal event
 	* @throws PortalException if a cal event with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent getCalEvent(
 		long eventId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getCalEvent(eventId);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext) {
 		return getService().getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	public static com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
@@ -257,12 +232,10 @@ public class CalEventLocalServiceUtil {
 	* @param companyId the primary key of the company
 	* @return the matching cal event
 	* @throws PortalException if a matching cal event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent getCalEventByUuidAndCompanyId(
 		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getCalEventByUuidAndCompanyId(uuid, companyId);
 	}
 
@@ -273,12 +246,10 @@ public class CalEventLocalServiceUtil {
 	* @param groupId the primary key of the group
 	* @return the matching cal event
 	* @throws PortalException if a matching cal event could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent getCalEventByUuidAndGroupId(
 		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getCalEventByUuidAndGroupId(uuid, groupId);
 	}
 
@@ -292,11 +263,9 @@ public class CalEventLocalServiceUtil {
 	* @param start the lower bound of the range of cal events
 	* @param end the upper bound of the range of cal events (not inclusive)
 	* @return the range of cal events
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.calendar.model.CalEvent> getCalEvents(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return getService().getCalEvents(start, end);
 	}
 
@@ -304,10 +273,8 @@ public class CalEventLocalServiceUtil {
 	* Returns the number of cal events.
 	*
 	* @return the number of cal events
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int getCalEventsCount()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int getCalEventsCount() {
 		return getService().getCalEventsCount();
 	}
 
@@ -316,11 +283,9 @@ public class CalEventLocalServiceUtil {
 	*
 	* @param calEvent the cal event
 	* @return the cal event that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.calendar.model.CalEvent updateCalEvent(
-		com.liferay.portlet.calendar.model.CalEvent calEvent)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.calendar.model.CalEvent calEvent) {
 		return getService().updateCalEvent(calEvent);
 	}
 

@@ -43,10 +43,9 @@ public interface UserNotificationDeliveryPersistence extends BasePersistence<Use
 	*
 	* @param userId the user ID
 	* @return the matching user notification deliveries
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portal.model.UserNotificationDelivery> findByUserId(
-		long userId) throws com.liferay.portal.kernel.exception.SystemException;
+		long userId);
 
 	/**
 	* Returns a range of all the user notification deliveries where userId = &#63;.
@@ -59,11 +58,9 @@ public interface UserNotificationDeliveryPersistence extends BasePersistence<Use
 	* @param start the lower bound of the range of user notification deliveries
 	* @param end the upper bound of the range of user notification deliveries (not inclusive)
 	* @return the range of matching user notification deliveries
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portal.model.UserNotificationDelivery> findByUserId(
-		long userId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long userId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the user notification deliveries where userId = &#63;.
@@ -77,12 +74,10 @@ public interface UserNotificationDeliveryPersistence extends BasePersistence<Use
 	* @param end the upper bound of the range of user notification deliveries (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching user notification deliveries
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portal.model.UserNotificationDelivery> findByUserId(
 		long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first user notification delivery in the ordered set where userId = &#63;.
@@ -91,13 +86,11 @@ public interface UserNotificationDeliveryPersistence extends BasePersistence<Use
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching user notification delivery
 	* @throws com.liferay.portal.NoSuchUserNotificationDeliveryException if a matching user notification delivery could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.UserNotificationDelivery findByUserId_First(
 		long userId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchUserNotificationDeliveryException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.NoSuchUserNotificationDeliveryException;
 
 	/**
 	* Returns the first user notification delivery in the ordered set where userId = &#63;.
@@ -105,12 +98,10 @@ public interface UserNotificationDeliveryPersistence extends BasePersistence<Use
 	* @param userId the user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching user notification delivery, or <code>null</code> if a matching user notification delivery could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.UserNotificationDelivery fetchByUserId_First(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last user notification delivery in the ordered set where userId = &#63;.
@@ -119,13 +110,11 @@ public interface UserNotificationDeliveryPersistence extends BasePersistence<Use
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching user notification delivery
 	* @throws com.liferay.portal.NoSuchUserNotificationDeliveryException if a matching user notification delivery could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.UserNotificationDelivery findByUserId_Last(
 		long userId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchUserNotificationDeliveryException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.NoSuchUserNotificationDeliveryException;
 
 	/**
 	* Returns the last user notification delivery in the ordered set where userId = &#63;.
@@ -133,12 +122,10 @@ public interface UserNotificationDeliveryPersistence extends BasePersistence<Use
 	* @param userId the user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching user notification delivery, or <code>null</code> if a matching user notification delivery could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.UserNotificationDelivery fetchByUserId_Last(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the user notification deliveries before and after the current user notification delivery in the ordered set where userId = &#63;.
@@ -148,32 +135,26 @@ public interface UserNotificationDeliveryPersistence extends BasePersistence<Use
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next user notification delivery
 	* @throws com.liferay.portal.NoSuchUserNotificationDeliveryException if a user notification delivery with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.UserNotificationDelivery[] findByUserId_PrevAndNext(
 		long userNotificationDeliveryId, long userId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchUserNotificationDeliveryException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.NoSuchUserNotificationDeliveryException;
 
 	/**
 	* Removes all the user notification deliveries where userId = &#63; from the database.
 	*
 	* @param userId the user ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByUserId(long userId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeByUserId(long userId);
 
 	/**
 	* Returns the number of user notification deliveries where userId = &#63;.
 	*
 	* @param userId the user ID
 	* @return the number of matching user notification deliveries
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countByUserId(long userId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByUserId(long userId);
 
 	/**
 	* Returns the user notification delivery where userId = &#63; and portletId = &#63; and classNameId = &#63; and notificationType = &#63; and deliveryType = &#63; or throws a {@link com.liferay.portal.NoSuchUserNotificationDeliveryException} if it could not be found.
@@ -185,13 +166,11 @@ public interface UserNotificationDeliveryPersistence extends BasePersistence<Use
 	* @param deliveryType the delivery type
 	* @return the matching user notification delivery
 	* @throws com.liferay.portal.NoSuchUserNotificationDeliveryException if a matching user notification delivery could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.UserNotificationDelivery findByU_P_C_N_D(
 		long userId, java.lang.String portletId, long classNameId,
 		int notificationType, int deliveryType)
-		throws com.liferay.portal.NoSuchUserNotificationDeliveryException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.NoSuchUserNotificationDeliveryException;
 
 	/**
 	* Returns the user notification delivery where userId = &#63; and portletId = &#63; and classNameId = &#63; and notificationType = &#63; and deliveryType = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -202,12 +181,10 @@ public interface UserNotificationDeliveryPersistence extends BasePersistence<Use
 	* @param notificationType the notification type
 	* @param deliveryType the delivery type
 	* @return the matching user notification delivery, or <code>null</code> if a matching user notification delivery could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.UserNotificationDelivery fetchByU_P_C_N_D(
 		long userId, java.lang.String portletId, long classNameId,
-		int notificationType, int deliveryType)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		int notificationType, int deliveryType);
 
 	/**
 	* Returns the user notification delivery where userId = &#63; and portletId = &#63; and classNameId = &#63; and notificationType = &#63; and deliveryType = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -219,12 +196,10 @@ public interface UserNotificationDeliveryPersistence extends BasePersistence<Use
 	* @param deliveryType the delivery type
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching user notification delivery, or <code>null</code> if a matching user notification delivery could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.UserNotificationDelivery fetchByU_P_C_N_D(
 		long userId, java.lang.String portletId, long classNameId,
-		int notificationType, int deliveryType, boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		int notificationType, int deliveryType, boolean retrieveFromCache);
 
 	/**
 	* Removes the user notification delivery where userId = &#63; and portletId = &#63; and classNameId = &#63; and notificationType = &#63; and deliveryType = &#63; from the database.
@@ -235,13 +210,11 @@ public interface UserNotificationDeliveryPersistence extends BasePersistence<Use
 	* @param notificationType the notification type
 	* @param deliveryType the delivery type
 	* @return the user notification delivery that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.UserNotificationDelivery removeByU_P_C_N_D(
 		long userId, java.lang.String portletId, long classNameId,
 		int notificationType, int deliveryType)
-		throws com.liferay.portal.NoSuchUserNotificationDeliveryException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.NoSuchUserNotificationDeliveryException;
 
 	/**
 	* Returns the number of user notification deliveries where userId = &#63; and portletId = &#63; and classNameId = &#63; and notificationType = &#63; and deliveryType = &#63;.
@@ -252,11 +225,9 @@ public interface UserNotificationDeliveryPersistence extends BasePersistence<Use
 	* @param notificationType the notification type
 	* @param deliveryType the delivery type
 	* @return the number of matching user notification deliveries
-	* @throws SystemException if a system exception occurred
 	*/
 	public int countByU_P_C_N_D(long userId, java.lang.String portletId,
-		long classNameId, int notificationType, int deliveryType)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long classNameId, int notificationType, int deliveryType);
 
 	/**
 	* Caches the user notification delivery in the entity cache if it is enabled.
@@ -289,16 +260,13 @@ public interface UserNotificationDeliveryPersistence extends BasePersistence<Use
 	* @param userNotificationDeliveryId the primary key of the user notification delivery
 	* @return the user notification delivery that was removed
 	* @throws com.liferay.portal.NoSuchUserNotificationDeliveryException if a user notification delivery with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.UserNotificationDelivery remove(
 		long userNotificationDeliveryId)
-		throws com.liferay.portal.NoSuchUserNotificationDeliveryException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.NoSuchUserNotificationDeliveryException;
 
 	public com.liferay.portal.model.UserNotificationDelivery updateImpl(
-		com.liferay.portal.model.UserNotificationDelivery userNotificationDelivery)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.model.UserNotificationDelivery userNotificationDelivery);
 
 	/**
 	* Returns the user notification delivery with the primary key or throws a {@link com.liferay.portal.NoSuchUserNotificationDeliveryException} if it could not be found.
@@ -306,32 +274,26 @@ public interface UserNotificationDeliveryPersistence extends BasePersistence<Use
 	* @param userNotificationDeliveryId the primary key of the user notification delivery
 	* @return the user notification delivery
 	* @throws com.liferay.portal.NoSuchUserNotificationDeliveryException if a user notification delivery with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.UserNotificationDelivery findByPrimaryKey(
 		long userNotificationDeliveryId)
-		throws com.liferay.portal.NoSuchUserNotificationDeliveryException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.NoSuchUserNotificationDeliveryException;
 
 	/**
 	* Returns the user notification delivery with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param userNotificationDeliveryId the primary key of the user notification delivery
 	* @return the user notification delivery, or <code>null</code> if a user notification delivery with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.UserNotificationDelivery fetchByPrimaryKey(
-		long userNotificationDeliveryId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long userNotificationDeliveryId);
 
 	/**
 	* Returns all the user notification deliveries.
 	*
 	* @return the user notification deliveries
-	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portal.model.UserNotificationDelivery> findAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public java.util.List<com.liferay.portal.model.UserNotificationDelivery> findAll();
 
 	/**
 	* Returns a range of all the user notification deliveries.
@@ -343,11 +305,9 @@ public interface UserNotificationDeliveryPersistence extends BasePersistence<Use
 	* @param start the lower bound of the range of user notification deliveries
 	* @param end the upper bound of the range of user notification deliveries (not inclusive)
 	* @return the range of user notification deliveries
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portal.model.UserNotificationDelivery> findAll(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the user notification deliveries.
@@ -360,27 +320,20 @@ public interface UserNotificationDeliveryPersistence extends BasePersistence<Use
 	* @param end the upper bound of the range of user notification deliveries (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of user notification deliveries
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portal.model.UserNotificationDelivery> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Removes all the user notification deliveries from the database.
-	*
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeAll();
 
 	/**
 	* Returns the number of user notification deliveries.
 	*
 	* @return the number of user notification deliveries
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countAll();
 }

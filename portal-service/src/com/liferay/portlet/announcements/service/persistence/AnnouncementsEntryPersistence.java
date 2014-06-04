@@ -45,11 +45,9 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	*
 	* @param uuid the uuid
 	* @return the matching announcements entries
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.announcements.model.AnnouncementsEntry> findByUuid(
-		java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String uuid);
 
 	/**
 	* Returns a range of all the announcements entries where uuid = &#63;.
@@ -62,11 +60,9 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param start the lower bound of the range of announcements entries
 	* @param end the upper bound of the range of announcements entries (not inclusive)
 	* @return the range of matching announcements entries
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.announcements.model.AnnouncementsEntry> findByUuid(
-		java.lang.String uuid, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String uuid, int start, int end);
 
 	/**
 	* Returns an ordered range of all the announcements entries where uuid = &#63;.
@@ -80,12 +76,10 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param end the upper bound of the range of announcements entries (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching announcements entries
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.announcements.model.AnnouncementsEntry> findByUuid(
 		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first announcements entry in the ordered set where uuid = &#63;.
@@ -94,13 +88,11 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching announcements entry
 	* @throws com.liferay.portlet.announcements.NoSuchEntryException if a matching announcements entry could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsEntry findByUuid_First(
 		java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.announcements.NoSuchEntryException;
+		throws com.liferay.portlet.announcements.NoSuchEntryException;
 
 	/**
 	* Returns the first announcements entry in the ordered set where uuid = &#63;.
@@ -108,12 +100,10 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching announcements entry, or <code>null</code> if a matching announcements entry could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsEntry fetchByUuid_First(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last announcements entry in the ordered set where uuid = &#63;.
@@ -122,13 +112,11 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching announcements entry
 	* @throws com.liferay.portlet.announcements.NoSuchEntryException if a matching announcements entry could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsEntry findByUuid_Last(
 		java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.announcements.NoSuchEntryException;
+		throws com.liferay.portlet.announcements.NoSuchEntryException;
 
 	/**
 	* Returns the last announcements entry in the ordered set where uuid = &#63;.
@@ -136,12 +124,10 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching announcements entry, or <code>null</code> if a matching announcements entry could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsEntry fetchByUuid_Last(
 		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the announcements entries before and after the current announcements entry in the ordered set where uuid = &#63;.
@@ -151,24 +137,20 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next announcements entry
 	* @throws com.liferay.portlet.announcements.NoSuchEntryException if a announcements entry with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsEntry[] findByUuid_PrevAndNext(
 		long entryId, java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.announcements.NoSuchEntryException;
+		throws com.liferay.portlet.announcements.NoSuchEntryException;
 
 	/**
 	* Returns all the announcements entries that the user has permission to view where uuid = &#63;.
 	*
 	* @param uuid the uuid
 	* @return the matching announcements entries that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.announcements.model.AnnouncementsEntry> filterFindByUuid(
-		java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String uuid);
 
 	/**
 	* Returns a range of all the announcements entries that the user has permission to view where uuid = &#63;.
@@ -181,11 +163,9 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param start the lower bound of the range of announcements entries
 	* @param end the upper bound of the range of announcements entries (not inclusive)
 	* @return the range of matching announcements entries that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.announcements.model.AnnouncementsEntry> filterFindByUuid(
-		java.lang.String uuid, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String uuid, int start, int end);
 
 	/**
 	* Returns an ordered range of all the announcements entries that the user has permissions to view where uuid = &#63;.
@@ -199,12 +179,10 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param end the upper bound of the range of announcements entries (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching announcements entries that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.announcements.model.AnnouncementsEntry> filterFindByUuid(
 		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the announcements entries before and after the current announcements entry in the ordered set of announcements entries that the user has permission to view where uuid = &#63;.
@@ -214,42 +192,34 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next announcements entry
 	* @throws com.liferay.portlet.announcements.NoSuchEntryException if a announcements entry with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsEntry[] filterFindByUuid_PrevAndNext(
 		long entryId, java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.announcements.NoSuchEntryException;
+		throws com.liferay.portlet.announcements.NoSuchEntryException;
 
 	/**
 	* Removes all the announcements entries where uuid = &#63; from the database.
 	*
 	* @param uuid the uuid
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByUuid(java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeByUuid(java.lang.String uuid);
 
 	/**
 	* Returns the number of announcements entries where uuid = &#63;.
 	*
 	* @param uuid the uuid
 	* @return the number of matching announcements entries
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countByUuid(java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByUuid(java.lang.String uuid);
 
 	/**
 	* Returns the number of announcements entries that the user has permission to view where uuid = &#63;.
 	*
 	* @param uuid the uuid
 	* @return the number of matching announcements entries that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
-	public int filterCountByUuid(java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int filterCountByUuid(java.lang.String uuid);
 
 	/**
 	* Returns all the announcements entries where uuid = &#63; and companyId = &#63;.
@@ -257,11 +227,9 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param uuid the uuid
 	* @param companyId the company ID
 	* @return the matching announcements entries
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.announcements.model.AnnouncementsEntry> findByUuid_C(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String uuid, long companyId);
 
 	/**
 	* Returns a range of all the announcements entries where uuid = &#63; and companyId = &#63;.
@@ -275,11 +243,9 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param start the lower bound of the range of announcements entries
 	* @param end the upper bound of the range of announcements entries (not inclusive)
 	* @return the range of matching announcements entries
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.announcements.model.AnnouncementsEntry> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String uuid, long companyId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the announcements entries where uuid = &#63; and companyId = &#63;.
@@ -294,12 +260,10 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param end the upper bound of the range of announcements entries (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching announcements entries
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.announcements.model.AnnouncementsEntry> findByUuid_C(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first announcements entry in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -309,13 +273,11 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching announcements entry
 	* @throws com.liferay.portlet.announcements.NoSuchEntryException if a matching announcements entry could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsEntry findByUuid_C_First(
 		java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.announcements.NoSuchEntryException;
+		throws com.liferay.portlet.announcements.NoSuchEntryException;
 
 	/**
 	* Returns the first announcements entry in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -324,12 +286,10 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching announcements entry, or <code>null</code> if a matching announcements entry could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsEntry fetchByUuid_C_First(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last announcements entry in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -339,13 +299,11 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching announcements entry
 	* @throws com.liferay.portlet.announcements.NoSuchEntryException if a matching announcements entry could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsEntry findByUuid_C_Last(
 		java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.announcements.NoSuchEntryException;
+		throws com.liferay.portlet.announcements.NoSuchEntryException;
 
 	/**
 	* Returns the last announcements entry in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -354,12 +312,10 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching announcements entry, or <code>null</code> if a matching announcements entry could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsEntry fetchByUuid_C_Last(
 		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the announcements entries before and after the current announcements entry in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -370,13 +326,11 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next announcements entry
 	* @throws com.liferay.portlet.announcements.NoSuchEntryException if a announcements entry with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsEntry[] findByUuid_C_PrevAndNext(
 		long entryId, java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.announcements.NoSuchEntryException;
+		throws com.liferay.portlet.announcements.NoSuchEntryException;
 
 	/**
 	* Returns all the announcements entries that the user has permission to view where uuid = &#63; and companyId = &#63;.
@@ -384,11 +338,9 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param uuid the uuid
 	* @param companyId the company ID
 	* @return the matching announcements entries that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.announcements.model.AnnouncementsEntry> filterFindByUuid_C(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String uuid, long companyId);
 
 	/**
 	* Returns a range of all the announcements entries that the user has permission to view where uuid = &#63; and companyId = &#63;.
@@ -402,11 +354,9 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param start the lower bound of the range of announcements entries
 	* @param end the upper bound of the range of announcements entries (not inclusive)
 	* @return the range of matching announcements entries that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.announcements.model.AnnouncementsEntry> filterFindByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String uuid, long companyId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the announcements entries that the user has permissions to view where uuid = &#63; and companyId = &#63;.
@@ -421,12 +371,10 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param end the upper bound of the range of announcements entries (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching announcements entries that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.announcements.model.AnnouncementsEntry> filterFindByUuid_C(
 		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the announcements entries before and after the current announcements entry in the ordered set of announcements entries that the user has permission to view where uuid = &#63; and companyId = &#63;.
@@ -437,23 +385,19 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next announcements entry
 	* @throws com.liferay.portlet.announcements.NoSuchEntryException if a announcements entry with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsEntry[] filterFindByUuid_C_PrevAndNext(
 		long entryId, java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.announcements.NoSuchEntryException;
+		throws com.liferay.portlet.announcements.NoSuchEntryException;
 
 	/**
 	* Removes all the announcements entries where uuid = &#63; and companyId = &#63; from the database.
 	*
 	* @param uuid the uuid
 	* @param companyId the company ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByUuid_C(java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeByUuid_C(java.lang.String uuid, long companyId);
 
 	/**
 	* Returns the number of announcements entries where uuid = &#63; and companyId = &#63;.
@@ -461,10 +405,8 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param uuid the uuid
 	* @param companyId the company ID
 	* @return the number of matching announcements entries
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countByUuid_C(java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByUuid_C(java.lang.String uuid, long companyId);
 
 	/**
 	* Returns the number of announcements entries that the user has permission to view where uuid = &#63; and companyId = &#63;.
@@ -472,20 +414,17 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param uuid the uuid
 	* @param companyId the company ID
 	* @return the number of matching announcements entries that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
-	public int filterCountByUuid_C(java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int filterCountByUuid_C(java.lang.String uuid, long companyId);
 
 	/**
 	* Returns all the announcements entries where userId = &#63;.
 	*
 	* @param userId the user ID
 	* @return the matching announcements entries
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.announcements.model.AnnouncementsEntry> findByUserId(
-		long userId) throws com.liferay.portal.kernel.exception.SystemException;
+		long userId);
 
 	/**
 	* Returns a range of all the announcements entries where userId = &#63;.
@@ -498,11 +437,9 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param start the lower bound of the range of announcements entries
 	* @param end the upper bound of the range of announcements entries (not inclusive)
 	* @return the range of matching announcements entries
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.announcements.model.AnnouncementsEntry> findByUserId(
-		long userId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long userId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the announcements entries where userId = &#63;.
@@ -516,12 +453,10 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param end the upper bound of the range of announcements entries (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching announcements entries
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.announcements.model.AnnouncementsEntry> findByUserId(
 		long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first announcements entry in the ordered set where userId = &#63;.
@@ -530,13 +465,11 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching announcements entry
 	* @throws com.liferay.portlet.announcements.NoSuchEntryException if a matching announcements entry could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsEntry findByUserId_First(
 		long userId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.announcements.NoSuchEntryException;
+		throws com.liferay.portlet.announcements.NoSuchEntryException;
 
 	/**
 	* Returns the first announcements entry in the ordered set where userId = &#63;.
@@ -544,12 +477,10 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param userId the user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching announcements entry, or <code>null</code> if a matching announcements entry could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsEntry fetchByUserId_First(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last announcements entry in the ordered set where userId = &#63;.
@@ -558,13 +489,11 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching announcements entry
 	* @throws com.liferay.portlet.announcements.NoSuchEntryException if a matching announcements entry could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsEntry findByUserId_Last(
 		long userId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.announcements.NoSuchEntryException;
+		throws com.liferay.portlet.announcements.NoSuchEntryException;
 
 	/**
 	* Returns the last announcements entry in the ordered set where userId = &#63;.
@@ -572,12 +501,10 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param userId the user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching announcements entry, or <code>null</code> if a matching announcements entry could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsEntry fetchByUserId_Last(
 		long userId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the announcements entries before and after the current announcements entry in the ordered set where userId = &#63;.
@@ -587,23 +514,20 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next announcements entry
 	* @throws com.liferay.portlet.announcements.NoSuchEntryException if a announcements entry with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsEntry[] findByUserId_PrevAndNext(
 		long entryId, long userId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.announcements.NoSuchEntryException;
+		throws com.liferay.portlet.announcements.NoSuchEntryException;
 
 	/**
 	* Returns all the announcements entries that the user has permission to view where userId = &#63;.
 	*
 	* @param userId the user ID
 	* @return the matching announcements entries that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.announcements.model.AnnouncementsEntry> filterFindByUserId(
-		long userId) throws com.liferay.portal.kernel.exception.SystemException;
+		long userId);
 
 	/**
 	* Returns a range of all the announcements entries that the user has permission to view where userId = &#63;.
@@ -616,11 +540,9 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param start the lower bound of the range of announcements entries
 	* @param end the upper bound of the range of announcements entries (not inclusive)
 	* @return the range of matching announcements entries that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.announcements.model.AnnouncementsEntry> filterFindByUserId(
-		long userId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long userId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the announcements entries that the user has permissions to view where userId = &#63;.
@@ -634,12 +556,10 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param end the upper bound of the range of announcements entries (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching announcements entries that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.announcements.model.AnnouncementsEntry> filterFindByUserId(
 		long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the announcements entries before and after the current announcements entry in the ordered set of announcements entries that the user has permission to view where userId = &#63;.
@@ -649,42 +569,34 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next announcements entry
 	* @throws com.liferay.portlet.announcements.NoSuchEntryException if a announcements entry with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsEntry[] filterFindByUserId_PrevAndNext(
 		long entryId, long userId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.announcements.NoSuchEntryException;
+		throws com.liferay.portlet.announcements.NoSuchEntryException;
 
 	/**
 	* Removes all the announcements entries where userId = &#63; from the database.
 	*
 	* @param userId the user ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByUserId(long userId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeByUserId(long userId);
 
 	/**
 	* Returns the number of announcements entries where userId = &#63;.
 	*
 	* @param userId the user ID
 	* @return the number of matching announcements entries
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countByUserId(long userId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByUserId(long userId);
 
 	/**
 	* Returns the number of announcements entries that the user has permission to view where userId = &#63;.
 	*
 	* @param userId the user ID
 	* @return the number of matching announcements entries that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
-	public int filterCountByUserId(long userId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int filterCountByUserId(long userId);
 
 	/**
 	* Returns all the announcements entries where classNameId = &#63; and classPK = &#63;.
@@ -692,11 +604,9 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @return the matching announcements entries
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.announcements.model.AnnouncementsEntry> findByC_C(
-		long classNameId, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long classNameId, long classPK);
 
 	/**
 	* Returns a range of all the announcements entries where classNameId = &#63; and classPK = &#63;.
@@ -710,11 +620,9 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param start the lower bound of the range of announcements entries
 	* @param end the upper bound of the range of announcements entries (not inclusive)
 	* @return the range of matching announcements entries
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.announcements.model.AnnouncementsEntry> findByC_C(
-		long classNameId, long classPK, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long classNameId, long classPK, int start, int end);
 
 	/**
 	* Returns an ordered range of all the announcements entries where classNameId = &#63; and classPK = &#63;.
@@ -729,12 +637,10 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param end the upper bound of the range of announcements entries (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching announcements entries
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.announcements.model.AnnouncementsEntry> findByC_C(
 		long classNameId, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first announcements entry in the ordered set where classNameId = &#63; and classPK = &#63;.
@@ -744,13 +650,11 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching announcements entry
 	* @throws com.liferay.portlet.announcements.NoSuchEntryException if a matching announcements entry could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsEntry findByC_C_First(
 		long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.announcements.NoSuchEntryException;
+		throws com.liferay.portlet.announcements.NoSuchEntryException;
 
 	/**
 	* Returns the first announcements entry in the ordered set where classNameId = &#63; and classPK = &#63;.
@@ -759,12 +663,10 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param classPK the class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching announcements entry, or <code>null</code> if a matching announcements entry could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsEntry fetchByC_C_First(
 		long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last announcements entry in the ordered set where classNameId = &#63; and classPK = &#63;.
@@ -774,13 +676,11 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching announcements entry
 	* @throws com.liferay.portlet.announcements.NoSuchEntryException if a matching announcements entry could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsEntry findByC_C_Last(
 		long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.announcements.NoSuchEntryException;
+		throws com.liferay.portlet.announcements.NoSuchEntryException;
 
 	/**
 	* Returns the last announcements entry in the ordered set where classNameId = &#63; and classPK = &#63;.
@@ -789,12 +689,10 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param classPK the class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching announcements entry, or <code>null</code> if a matching announcements entry could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsEntry fetchByC_C_Last(
 		long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the announcements entries before and after the current announcements entry in the ordered set where classNameId = &#63; and classPK = &#63;.
@@ -805,13 +703,11 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next announcements entry
 	* @throws com.liferay.portlet.announcements.NoSuchEntryException if a announcements entry with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsEntry[] findByC_C_PrevAndNext(
 		long entryId, long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.announcements.NoSuchEntryException;
+		throws com.liferay.portlet.announcements.NoSuchEntryException;
 
 	/**
 	* Returns all the announcements entries that the user has permission to view where classNameId = &#63; and classPK = &#63;.
@@ -819,11 +715,9 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @return the matching announcements entries that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.announcements.model.AnnouncementsEntry> filterFindByC_C(
-		long classNameId, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long classNameId, long classPK);
 
 	/**
 	* Returns a range of all the announcements entries that the user has permission to view where classNameId = &#63; and classPK = &#63;.
@@ -837,11 +731,9 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param start the lower bound of the range of announcements entries
 	* @param end the upper bound of the range of announcements entries (not inclusive)
 	* @return the range of matching announcements entries that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.announcements.model.AnnouncementsEntry> filterFindByC_C(
-		long classNameId, long classPK, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long classNameId, long classPK, int start, int end);
 
 	/**
 	* Returns an ordered range of all the announcements entries that the user has permissions to view where classNameId = &#63; and classPK = &#63;.
@@ -856,12 +748,10 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param end the upper bound of the range of announcements entries (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching announcements entries that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.announcements.model.AnnouncementsEntry> filterFindByC_C(
 		long classNameId, long classPK, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the announcements entries before and after the current announcements entry in the ordered set of announcements entries that the user has permission to view where classNameId = &#63; and classPK = &#63;.
@@ -872,23 +762,19 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next announcements entry
 	* @throws com.liferay.portlet.announcements.NoSuchEntryException if a announcements entry with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsEntry[] filterFindByC_C_PrevAndNext(
 		long entryId, long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.announcements.NoSuchEntryException;
+		throws com.liferay.portlet.announcements.NoSuchEntryException;
 
 	/**
 	* Removes all the announcements entries where classNameId = &#63; and classPK = &#63; from the database.
 	*
 	* @param classNameId the class name ID
 	* @param classPK the class p k
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByC_C(long classNameId, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeByC_C(long classNameId, long classPK);
 
 	/**
 	* Returns the number of announcements entries where classNameId = &#63; and classPK = &#63;.
@@ -896,10 +782,8 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @return the number of matching announcements entries
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countByC_C(long classNameId, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByC_C(long classNameId, long classPK);
 
 	/**
 	* Returns the number of announcements entries that the user has permission to view where classNameId = &#63; and classPK = &#63;.
@@ -907,10 +791,8 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @return the number of matching announcements entries that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
-	public int filterCountByC_C(long classNameId, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int filterCountByC_C(long classNameId, long classPK);
 
 	/**
 	* Returns all the announcements entries where classNameId = &#63; and classPK = &#63; and alert = &#63;.
@@ -919,11 +801,9 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param classPK the class p k
 	* @param alert the alert
 	* @return the matching announcements entries
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.announcements.model.AnnouncementsEntry> findByC_C_A(
-		long classNameId, long classPK, boolean alert)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long classNameId, long classPK, boolean alert);
 
 	/**
 	* Returns a range of all the announcements entries where classNameId = &#63; and classPK = &#63; and alert = &#63;.
@@ -938,11 +818,9 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param start the lower bound of the range of announcements entries
 	* @param end the upper bound of the range of announcements entries (not inclusive)
 	* @return the range of matching announcements entries
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.announcements.model.AnnouncementsEntry> findByC_C_A(
-		long classNameId, long classPK, boolean alert, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long classNameId, long classPK, boolean alert, int start, int end);
 
 	/**
 	* Returns an ordered range of all the announcements entries where classNameId = &#63; and classPK = &#63; and alert = &#63;.
@@ -958,12 +836,10 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param end the upper bound of the range of announcements entries (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching announcements entries
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.announcements.model.AnnouncementsEntry> findByC_C_A(
 		long classNameId, long classPK, boolean alert, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first announcements entry in the ordered set where classNameId = &#63; and classPK = &#63; and alert = &#63;.
@@ -974,13 +850,11 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching announcements entry
 	* @throws com.liferay.portlet.announcements.NoSuchEntryException if a matching announcements entry could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsEntry findByC_C_A_First(
 		long classNameId, long classPK, boolean alert,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.announcements.NoSuchEntryException;
+		throws com.liferay.portlet.announcements.NoSuchEntryException;
 
 	/**
 	* Returns the first announcements entry in the ordered set where classNameId = &#63; and classPK = &#63; and alert = &#63;.
@@ -990,12 +864,10 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param alert the alert
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching announcements entry, or <code>null</code> if a matching announcements entry could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsEntry fetchByC_C_A_First(
 		long classNameId, long classPK, boolean alert,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last announcements entry in the ordered set where classNameId = &#63; and classPK = &#63; and alert = &#63;.
@@ -1006,13 +878,11 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching announcements entry
 	* @throws com.liferay.portlet.announcements.NoSuchEntryException if a matching announcements entry could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsEntry findByC_C_A_Last(
 		long classNameId, long classPK, boolean alert,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.announcements.NoSuchEntryException;
+		throws com.liferay.portlet.announcements.NoSuchEntryException;
 
 	/**
 	* Returns the last announcements entry in the ordered set where classNameId = &#63; and classPK = &#63; and alert = &#63;.
@@ -1022,12 +892,10 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param alert the alert
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching announcements entry, or <code>null</code> if a matching announcements entry could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsEntry fetchByC_C_A_Last(
 		long classNameId, long classPK, boolean alert,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the announcements entries before and after the current announcements entry in the ordered set where classNameId = &#63; and classPK = &#63; and alert = &#63;.
@@ -1039,13 +907,11 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next announcements entry
 	* @throws com.liferay.portlet.announcements.NoSuchEntryException if a announcements entry with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsEntry[] findByC_C_A_PrevAndNext(
 		long entryId, long classNameId, long classPK, boolean alert,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.announcements.NoSuchEntryException;
+		throws com.liferay.portlet.announcements.NoSuchEntryException;
 
 	/**
 	* Returns all the announcements entries that the user has permission to view where classNameId = &#63; and classPK = &#63; and alert = &#63;.
@@ -1054,11 +920,9 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param classPK the class p k
 	* @param alert the alert
 	* @return the matching announcements entries that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.announcements.model.AnnouncementsEntry> filterFindByC_C_A(
-		long classNameId, long classPK, boolean alert)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long classNameId, long classPK, boolean alert);
 
 	/**
 	* Returns a range of all the announcements entries that the user has permission to view where classNameId = &#63; and classPK = &#63; and alert = &#63;.
@@ -1073,11 +937,9 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param start the lower bound of the range of announcements entries
 	* @param end the upper bound of the range of announcements entries (not inclusive)
 	* @return the range of matching announcements entries that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.announcements.model.AnnouncementsEntry> filterFindByC_C_A(
-		long classNameId, long classPK, boolean alert, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long classNameId, long classPK, boolean alert, int start, int end);
 
 	/**
 	* Returns an ordered range of all the announcements entries that the user has permissions to view where classNameId = &#63; and classPK = &#63; and alert = &#63;.
@@ -1093,12 +955,10 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param end the upper bound of the range of announcements entries (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching announcements entries that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.announcements.model.AnnouncementsEntry> filterFindByC_C_A(
 		long classNameId, long classPK, boolean alert, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the announcements entries before and after the current announcements entry in the ordered set of announcements entries that the user has permission to view where classNameId = &#63; and classPK = &#63; and alert = &#63;.
@@ -1110,13 +970,11 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next announcements entry
 	* @throws com.liferay.portlet.announcements.NoSuchEntryException if a announcements entry with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsEntry[] filterFindByC_C_A_PrevAndNext(
 		long entryId, long classNameId, long classPK, boolean alert,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.announcements.NoSuchEntryException;
+		throws com.liferay.portlet.announcements.NoSuchEntryException;
 
 	/**
 	* Removes all the announcements entries where classNameId = &#63; and classPK = &#63; and alert = &#63; from the database.
@@ -1124,10 +982,8 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @param alert the alert
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByC_C_A(long classNameId, long classPK, boolean alert)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeByC_C_A(long classNameId, long classPK, boolean alert);
 
 	/**
 	* Returns the number of announcements entries where classNameId = &#63; and classPK = &#63; and alert = &#63;.
@@ -1136,10 +992,8 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param classPK the class p k
 	* @param alert the alert
 	* @return the number of matching announcements entries
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countByC_C_A(long classNameId, long classPK, boolean alert)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByC_C_A(long classNameId, long classPK, boolean alert);
 
 	/**
 	* Returns the number of announcements entries that the user has permission to view where classNameId = &#63; and classPK = &#63; and alert = &#63;.
@@ -1148,10 +1002,8 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param classPK the class p k
 	* @param alert the alert
 	* @return the number of matching announcements entries that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
-	public int filterCountByC_C_A(long classNameId, long classPK, boolean alert)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int filterCountByC_C_A(long classNameId, long classPK, boolean alert);
 
 	/**
 	* Caches the announcements entry in the entity cache if it is enabled.
@@ -1184,16 +1036,13 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param entryId the primary key of the announcements entry
 	* @return the announcements entry that was removed
 	* @throws com.liferay.portlet.announcements.NoSuchEntryException if a announcements entry with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsEntry remove(
 		long entryId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.announcements.NoSuchEntryException;
+		throws com.liferay.portlet.announcements.NoSuchEntryException;
 
 	public com.liferay.portlet.announcements.model.AnnouncementsEntry updateImpl(
-		com.liferay.portlet.announcements.model.AnnouncementsEntry announcementsEntry)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portlet.announcements.model.AnnouncementsEntry announcementsEntry);
 
 	/**
 	* Returns the announcements entry with the primary key or throws a {@link com.liferay.portlet.announcements.NoSuchEntryException} if it could not be found.
@@ -1201,32 +1050,26 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param entryId the primary key of the announcements entry
 	* @return the announcements entry
 	* @throws com.liferay.portlet.announcements.NoSuchEntryException if a announcements entry with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsEntry findByPrimaryKey(
 		long entryId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.announcements.NoSuchEntryException;
+		throws com.liferay.portlet.announcements.NoSuchEntryException;
 
 	/**
 	* Returns the announcements entry with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param entryId the primary key of the announcements entry
 	* @return the announcements entry, or <code>null</code> if a announcements entry with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portlet.announcements.model.AnnouncementsEntry fetchByPrimaryKey(
-		long entryId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long entryId);
 
 	/**
 	* Returns all the announcements entries.
 	*
 	* @return the announcements entries
-	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portlet.announcements.model.AnnouncementsEntry> findAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public java.util.List<com.liferay.portlet.announcements.model.AnnouncementsEntry> findAll();
 
 	/**
 	* Returns a range of all the announcements entries.
@@ -1238,11 +1081,9 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param start the lower bound of the range of announcements entries
 	* @param end the upper bound of the range of announcements entries (not inclusive)
 	* @return the range of announcements entries
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.announcements.model.AnnouncementsEntry> findAll(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the announcements entries.
@@ -1255,27 +1096,20 @@ public interface AnnouncementsEntryPersistence extends BasePersistence<Announcem
 	* @param end the upper bound of the range of announcements entries (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of announcements entries
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portlet.announcements.model.AnnouncementsEntry> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Removes all the announcements entries from the database.
-	*
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeAll();
 
 	/**
 	* Returns the number of announcements entries.
 	*
 	* @return the number of announcements entries
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countAll();
 }

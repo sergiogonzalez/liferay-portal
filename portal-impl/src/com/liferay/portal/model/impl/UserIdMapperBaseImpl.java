@@ -14,7 +14,6 @@
 
 package com.liferay.portal.model.impl;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.UserIdMapper;
 import com.liferay.portal.service.UserIdMapperLocalServiceUtil;
 
@@ -38,7 +37,7 @@ public abstract class UserIdMapperBaseImpl extends UserIdMapperModelImpl
 	 * Never modify or reference this class directly. All methods that expect a user ID mapper model instance should use the {@link UserIdMapper} interface instead.
 	 */
 	@Override
-	public void persist() throws SystemException {
+	public void persist() {
 		if (this.isNew()) {
 			UserIdMapperLocalServiceUtil.addUserIdMapper(this);
 		}

@@ -44,23 +44,19 @@ public interface ClassNamePersistence extends BasePersistence<ClassName> {
 	* @param value the value
 	* @return the matching class name
 	* @throws com.liferay.portal.NoSuchClassNameException if a matching class name could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.ClassName findByValue(
 		java.lang.String value)
-		throws com.liferay.portal.NoSuchClassNameException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.NoSuchClassNameException;
 
 	/**
 	* Returns the class name where value = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
 	* @param value the value
 	* @return the matching class name, or <code>null</code> if a matching class name could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.ClassName fetchByValue(
-		java.lang.String value)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String value);
 
 	/**
 	* Returns the class name where value = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -68,33 +64,27 @@ public interface ClassNamePersistence extends BasePersistence<ClassName> {
 	* @param value the value
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching class name, or <code>null</code> if a matching class name could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.ClassName fetchByValue(
-		java.lang.String value, boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String value, boolean retrieveFromCache);
 
 	/**
 	* Removes the class name where value = &#63; from the database.
 	*
 	* @param value the value
 	* @return the class name that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.ClassName removeByValue(
 		java.lang.String value)
-		throws com.liferay.portal.NoSuchClassNameException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.NoSuchClassNameException;
 
 	/**
 	* Returns the number of class names where value = &#63;.
 	*
 	* @param value the value
 	* @return the number of matching class names
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countByValue(java.lang.String value)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByValue(java.lang.String value);
 
 	/**
 	* Caches the class name in the entity cache if it is enabled.
@@ -125,15 +115,12 @@ public interface ClassNamePersistence extends BasePersistence<ClassName> {
 	* @param classNameId the primary key of the class name
 	* @return the class name that was removed
 	* @throws com.liferay.portal.NoSuchClassNameException if a class name with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.ClassName remove(long classNameId)
-		throws com.liferay.portal.NoSuchClassNameException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.NoSuchClassNameException;
 
 	public com.liferay.portal.model.ClassName updateImpl(
-		com.liferay.portal.model.ClassName className)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.model.ClassName className);
 
 	/**
 	* Returns the class name with the primary key or throws a {@link com.liferay.portal.NoSuchClassNameException} if it could not be found.
@@ -141,31 +128,25 @@ public interface ClassNamePersistence extends BasePersistence<ClassName> {
 	* @param classNameId the primary key of the class name
 	* @return the class name
 	* @throws com.liferay.portal.NoSuchClassNameException if a class name with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.ClassName findByPrimaryKey(long classNameId)
-		throws com.liferay.portal.NoSuchClassNameException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.NoSuchClassNameException;
 
 	/**
 	* Returns the class name with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param classNameId the primary key of the class name
 	* @return the class name, or <code>null</code> if a class name with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.ClassName fetchByPrimaryKey(
-		long classNameId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long classNameId);
 
 	/**
 	* Returns all the class names.
 	*
 	* @return the class names
-	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portal.model.ClassName> findAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public java.util.List<com.liferay.portal.model.ClassName> findAll();
 
 	/**
 	* Returns a range of all the class names.
@@ -177,11 +158,9 @@ public interface ClassNamePersistence extends BasePersistence<ClassName> {
 	* @param start the lower bound of the range of class names
 	* @param end the upper bound of the range of class names (not inclusive)
 	* @return the range of class names
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portal.model.ClassName> findAll(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the class names.
@@ -194,27 +173,20 @@ public interface ClassNamePersistence extends BasePersistence<ClassName> {
 	* @param end the upper bound of the range of class names (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of class names
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portal.model.ClassName> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Removes all the class names from the database.
-	*
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeAll();
 
 	/**
 	* Returns the number of class names.
 	*
 	* @return the number of class names
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countAll();
 }

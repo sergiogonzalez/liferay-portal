@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 import com.liferay.portal.service.ServiceContext;
@@ -64,8 +63,7 @@ public class DDLRecordVersionUtil {
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#countWithDynamicQuery(DynamicQuery)
 	 */
-	public static long countWithDynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public static long countWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return getPersistence().countWithDynamicQuery(dynamicQuery);
 	}
 
@@ -73,7 +71,7 @@ public class DDLRecordVersionUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery)
 	 */
 	public static List<DDLRecordVersion> findWithDynamicQuery(
-		DynamicQuery dynamicQuery) throws SystemException {
+		DynamicQuery dynamicQuery) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -81,8 +79,7 @@ public class DDLRecordVersionUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
 	 */
 	public static List<DDLRecordVersion> findWithDynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+		DynamicQuery dynamicQuery, int start, int end) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -91,7 +88,7 @@ public class DDLRecordVersionUtil {
 	 */
 	public static List<DDLRecordVersion> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -100,8 +97,7 @@ public class DDLRecordVersionUtil {
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static DDLRecordVersion update(DDLRecordVersion ddlRecordVersion)
-		throws SystemException {
+	public static DDLRecordVersion update(DDLRecordVersion ddlRecordVersion) {
 		return getPersistence().update(ddlRecordVersion);
 	}
 
@@ -109,7 +105,7 @@ public class DDLRecordVersionUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
 	public static DDLRecordVersion update(DDLRecordVersion ddlRecordVersion,
-		ServiceContext serviceContext) throws SystemException {
+		ServiceContext serviceContext) {
 		return getPersistence().update(ddlRecordVersion, serviceContext);
 	}
 
@@ -118,11 +114,9 @@ public class DDLRecordVersionUtil {
 	*
 	* @param recordId the record ID
 	* @return the matching d d l record versions
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion> findByRecordId(
-		long recordId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long recordId) {
 		return getPersistence().findByRecordId(recordId);
 	}
 
@@ -137,11 +131,9 @@ public class DDLRecordVersionUtil {
 	* @param start the lower bound of the range of d d l record versions
 	* @param end the upper bound of the range of d d l record versions (not inclusive)
 	* @return the range of matching d d l record versions
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion> findByRecordId(
-		long recordId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long recordId, int start, int end) {
 		return getPersistence().findByRecordId(recordId, start, end);
 	}
 
@@ -157,12 +149,10 @@ public class DDLRecordVersionUtil {
 	* @param end the upper bound of the range of d d l record versions (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching d d l record versions
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion> findByRecordId(
 		long recordId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByRecordId(recordId, start, end, orderByComparator);
 	}
@@ -174,13 +164,11 @@ public class DDLRecordVersionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d l record version
 	* @throws com.liferay.portlet.dynamicdatalists.NoSuchRecordVersionException if a matching d d l record version could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion findByRecordId_First(
 		long recordId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatalists.NoSuchRecordVersionException {
+		throws com.liferay.portlet.dynamicdatalists.NoSuchRecordVersionException {
 		return getPersistence().findByRecordId_First(recordId, orderByComparator);
 	}
 
@@ -190,12 +178,10 @@ public class DDLRecordVersionUtil {
 	* @param recordId the record ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d l record version, or <code>null</code> if a matching d d l record version could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion fetchByRecordId_First(
 		long recordId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByRecordId_First(recordId, orderByComparator);
 	}
@@ -207,13 +193,11 @@ public class DDLRecordVersionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d l record version
 	* @throws com.liferay.portlet.dynamicdatalists.NoSuchRecordVersionException if a matching d d l record version could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion findByRecordId_Last(
 		long recordId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatalists.NoSuchRecordVersionException {
+		throws com.liferay.portlet.dynamicdatalists.NoSuchRecordVersionException {
 		return getPersistence().findByRecordId_Last(recordId, orderByComparator);
 	}
 
@@ -223,12 +207,10 @@ public class DDLRecordVersionUtil {
 	* @param recordId the record ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d l record version, or <code>null</code> if a matching d d l record version could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion fetchByRecordId_Last(
 		long recordId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().fetchByRecordId_Last(recordId, orderByComparator);
 	}
 
@@ -240,13 +222,11 @@ public class DDLRecordVersionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next d d l record version
 	* @throws com.liferay.portlet.dynamicdatalists.NoSuchRecordVersionException if a d d l record version with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion[] findByRecordId_PrevAndNext(
 		long recordVersionId, long recordId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatalists.NoSuchRecordVersionException {
+		throws com.liferay.portlet.dynamicdatalists.NoSuchRecordVersionException {
 		return getPersistence()
 				   .findByRecordId_PrevAndNext(recordVersionId, recordId,
 			orderByComparator);
@@ -256,10 +236,8 @@ public class DDLRecordVersionUtil {
 	* Removes all the d d l record versions where recordId = &#63; from the database.
 	*
 	* @param recordId the record ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByRecordId(long recordId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByRecordId(long recordId) {
 		getPersistence().removeByRecordId(recordId);
 	}
 
@@ -268,10 +246,8 @@ public class DDLRecordVersionUtil {
 	*
 	* @param recordId the record ID
 	* @return the number of matching d d l record versions
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByRecordId(long recordId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByRecordId(long recordId) {
 		return getPersistence().countByRecordId(recordId);
 	}
 
@@ -282,12 +258,10 @@ public class DDLRecordVersionUtil {
 	* @param version the version
 	* @return the matching d d l record version
 	* @throws com.liferay.portlet.dynamicdatalists.NoSuchRecordVersionException if a matching d d l record version could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion findByR_V(
 		long recordId, java.lang.String version)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatalists.NoSuchRecordVersionException {
+		throws com.liferay.portlet.dynamicdatalists.NoSuchRecordVersionException {
 		return getPersistence().findByR_V(recordId, version);
 	}
 
@@ -297,11 +271,9 @@ public class DDLRecordVersionUtil {
 	* @param recordId the record ID
 	* @param version the version
 	* @return the matching d d l record version, or <code>null</code> if a matching d d l record version could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion fetchByR_V(
-		long recordId, java.lang.String version)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long recordId, java.lang.String version) {
 		return getPersistence().fetchByR_V(recordId, version);
 	}
 
@@ -312,11 +284,9 @@ public class DDLRecordVersionUtil {
 	* @param version the version
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching d d l record version, or <code>null</code> if a matching d d l record version could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion fetchByR_V(
-		long recordId, java.lang.String version, boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long recordId, java.lang.String version, boolean retrieveFromCache) {
 		return getPersistence().fetchByR_V(recordId, version, retrieveFromCache);
 	}
 
@@ -326,12 +296,10 @@ public class DDLRecordVersionUtil {
 	* @param recordId the record ID
 	* @param version the version
 	* @return the d d l record version that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion removeByR_V(
 		long recordId, java.lang.String version)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatalists.NoSuchRecordVersionException {
+		throws com.liferay.portlet.dynamicdatalists.NoSuchRecordVersionException {
 		return getPersistence().removeByR_V(recordId, version);
 	}
 
@@ -341,10 +309,8 @@ public class DDLRecordVersionUtil {
 	* @param recordId the record ID
 	* @param version the version
 	* @return the number of matching d d l record versions
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByR_V(long recordId, java.lang.String version)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByR_V(long recordId, java.lang.String version) {
 		return getPersistence().countByR_V(recordId, version);
 	}
 
@@ -354,11 +320,9 @@ public class DDLRecordVersionUtil {
 	* @param recordId the record ID
 	* @param status the status
 	* @return the matching d d l record versions
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion> findByR_S(
-		long recordId, int status)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long recordId, int status) {
 		return getPersistence().findByR_S(recordId, status);
 	}
 
@@ -374,11 +338,9 @@ public class DDLRecordVersionUtil {
 	* @param start the lower bound of the range of d d l record versions
 	* @param end the upper bound of the range of d d l record versions (not inclusive)
 	* @return the range of matching d d l record versions
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion> findByR_S(
-		long recordId, int status, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long recordId, int status, int start, int end) {
 		return getPersistence().findByR_S(recordId, status, start, end);
 	}
 
@@ -395,12 +357,10 @@ public class DDLRecordVersionUtil {
 	* @param end the upper bound of the range of d d l record versions (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching d d l record versions
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion> findByR_S(
 		long recordId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .findByR_S(recordId, status, start, end, orderByComparator);
 	}
@@ -413,13 +373,11 @@ public class DDLRecordVersionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d l record version
 	* @throws com.liferay.portlet.dynamicdatalists.NoSuchRecordVersionException if a matching d d l record version could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion findByR_S_First(
 		long recordId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatalists.NoSuchRecordVersionException {
+		throws com.liferay.portlet.dynamicdatalists.NoSuchRecordVersionException {
 		return getPersistence()
 				   .findByR_S_First(recordId, status, orderByComparator);
 	}
@@ -431,12 +389,10 @@ public class DDLRecordVersionUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching d d l record version, or <code>null</code> if a matching d d l record version could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion fetchByR_S_First(
 		long recordId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByR_S_First(recordId, status, orderByComparator);
 	}
@@ -449,13 +405,11 @@ public class DDLRecordVersionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d l record version
 	* @throws com.liferay.portlet.dynamicdatalists.NoSuchRecordVersionException if a matching d d l record version could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion findByR_S_Last(
 		long recordId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatalists.NoSuchRecordVersionException {
+		throws com.liferay.portlet.dynamicdatalists.NoSuchRecordVersionException {
 		return getPersistence()
 				   .findByR_S_Last(recordId, status, orderByComparator);
 	}
@@ -467,12 +421,10 @@ public class DDLRecordVersionUtil {
 	* @param status the status
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching d d l record version, or <code>null</code> if a matching d d l record version could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion fetchByR_S_Last(
 		long recordId, int status,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence()
 				   .fetchByR_S_Last(recordId, status, orderByComparator);
 	}
@@ -486,13 +438,11 @@ public class DDLRecordVersionUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next d d l record version
 	* @throws com.liferay.portlet.dynamicdatalists.NoSuchRecordVersionException if a d d l record version with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion[] findByR_S_PrevAndNext(
 		long recordVersionId, long recordId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatalists.NoSuchRecordVersionException {
+		throws com.liferay.portlet.dynamicdatalists.NoSuchRecordVersionException {
 		return getPersistence()
 				   .findByR_S_PrevAndNext(recordVersionId, recordId, status,
 			orderByComparator);
@@ -503,10 +453,8 @@ public class DDLRecordVersionUtil {
 	*
 	* @param recordId the record ID
 	* @param status the status
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByR_S(long recordId, int status)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByR_S(long recordId, int status) {
 		getPersistence().removeByR_S(recordId, status);
 	}
 
@@ -516,10 +464,8 @@ public class DDLRecordVersionUtil {
 	* @param recordId the record ID
 	* @param status the status
 	* @return the number of matching d d l record versions
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByR_S(long recordId, int status)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByR_S(long recordId, int status) {
 		return getPersistence().countByR_S(recordId, status);
 	}
 
@@ -560,18 +506,15 @@ public class DDLRecordVersionUtil {
 	* @param recordVersionId the primary key of the d d l record version
 	* @return the d d l record version that was removed
 	* @throws com.liferay.portlet.dynamicdatalists.NoSuchRecordVersionException if a d d l record version with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion remove(
 		long recordVersionId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatalists.NoSuchRecordVersionException {
+		throws com.liferay.portlet.dynamicdatalists.NoSuchRecordVersionException {
 		return getPersistence().remove(recordVersionId);
 	}
 
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion updateImpl(
-		com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion ddlRecordVersion)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion ddlRecordVersion) {
 		return getPersistence().updateImpl(ddlRecordVersion);
 	}
 
@@ -581,12 +524,10 @@ public class DDLRecordVersionUtil {
 	* @param recordVersionId the primary key of the d d l record version
 	* @return the d d l record version
 	* @throws com.liferay.portlet.dynamicdatalists.NoSuchRecordVersionException if a d d l record version with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion findByPrimaryKey(
 		long recordVersionId)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			com.liferay.portlet.dynamicdatalists.NoSuchRecordVersionException {
+		throws com.liferay.portlet.dynamicdatalists.NoSuchRecordVersionException {
 		return getPersistence().findByPrimaryKey(recordVersionId);
 	}
 
@@ -595,11 +536,9 @@ public class DDLRecordVersionUtil {
 	*
 	* @param recordVersionId the primary key of the d d l record version
 	* @return the d d l record version, or <code>null</code> if a d d l record version with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion fetchByPrimaryKey(
-		long recordVersionId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long recordVersionId) {
 		return getPersistence().fetchByPrimaryKey(recordVersionId);
 	}
 
@@ -607,10 +546,8 @@ public class DDLRecordVersionUtil {
 	* Returns all the d d l record versions.
 	*
 	* @return the d d l record versions
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion> findAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion> findAll() {
 		return getPersistence().findAll();
 	}
 
@@ -624,11 +561,9 @@ public class DDLRecordVersionUtil {
 	* @param start the lower bound of the range of d d l record versions
 	* @param end the upper bound of the range of d d l record versions (not inclusive)
 	* @return the range of d d l record versions
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion> findAll(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
@@ -643,22 +578,17 @@ public class DDLRecordVersionUtil {
 	* @param end the upper bound of the range of d d l record versions (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of d d l record versions
-	* @throws SystemException if a system exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
 	/**
 	* Removes all the d d l record versions from the database.
-	*
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeAll() {
 		getPersistence().removeAll();
 	}
 
@@ -666,10 +596,8 @@ public class DDLRecordVersionUtil {
 	* Returns the number of d d l record versions.
 	*
 	* @return the number of d d l record versions
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countAll() {
 		return getPersistence().countAll();
 	}
 

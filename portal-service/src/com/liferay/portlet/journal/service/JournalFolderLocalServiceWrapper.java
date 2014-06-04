@@ -39,12 +39,10 @@ public class JournalFolderLocalServiceWrapper
 	*
 	* @param journalFolder the journal folder
 	* @return the journal folder that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.journal.model.JournalFolder addJournalFolder(
-		com.liferay.portlet.journal.model.JournalFolder journalFolder)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.journal.model.JournalFolder journalFolder) {
 		return _journalFolderLocalService.addJournalFolder(journalFolder);
 	}
 
@@ -66,13 +64,11 @@ public class JournalFolderLocalServiceWrapper
 	* @param folderId the primary key of the journal folder
 	* @return the journal folder that was removed
 	* @throws PortalException if a journal folder with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.journal.model.JournalFolder deleteJournalFolder(
 		long folderId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _journalFolderLocalService.deleteJournalFolder(folderId);
 	}
 
@@ -81,12 +77,10 @@ public class JournalFolderLocalServiceWrapper
 	*
 	* @param journalFolder the journal folder
 	* @return the journal folder that was removed
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.journal.model.JournalFolder deleteJournalFolder(
-		com.liferay.portlet.journal.model.JournalFolder journalFolder)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.journal.model.JournalFolder journalFolder) {
 		return _journalFolderLocalService.deleteJournalFolder(journalFolder);
 	}
 
@@ -100,13 +94,11 @@ public class JournalFolderLocalServiceWrapper
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _journalFolderLocalService.dynamicQuery(dynamicQuery);
 	}
 
@@ -121,13 +113,12 @@ public class JournalFolderLocalServiceWrapper
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return _journalFolderLocalService.dynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -143,15 +134,13 @@ public class JournalFolderLocalServiceWrapper
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return _journalFolderLocalService.dynamicQuery(dynamicQuery, start,
 			end, orderByComparator);
 	}
@@ -161,12 +150,10 @@ public class JournalFolderLocalServiceWrapper
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 		return _journalFolderLocalService.dynamicQueryCount(dynamicQuery);
 	}
 
@@ -176,21 +163,18 @@ public class JournalFolderLocalServiceWrapper
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return _journalFolderLocalService.dynamicQueryCount(dynamicQuery,
 			projection);
 	}
 
 	@Override
 	public com.liferay.portlet.journal.model.JournalFolder fetchJournalFolder(
-		long folderId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long folderId) {
 		return _journalFolderLocalService.fetchJournalFolder(folderId);
 	}
 
@@ -200,12 +184,10 @@ public class JournalFolderLocalServiceWrapper
 	* @param uuid the journal folder's UUID
 	* @param companyId the primary key of the company
 	* @return the matching journal folder, or <code>null</code> if a matching journal folder could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.journal.model.JournalFolder fetchJournalFolderByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long companyId) {
 		return _journalFolderLocalService.fetchJournalFolderByUuidAndCompanyId(uuid,
 			companyId);
 	}
@@ -216,12 +198,10 @@ public class JournalFolderLocalServiceWrapper
 	* @param uuid the journal folder's UUID
 	* @param groupId the primary key of the group
 	* @return the matching journal folder, or <code>null</code> if a matching journal folder could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.journal.model.JournalFolder fetchJournalFolderByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String uuid, long groupId) {
 		return _journalFolderLocalService.fetchJournalFolderByUuidAndGroupId(uuid,
 			groupId);
 	}
@@ -232,34 +212,29 @@ public class JournalFolderLocalServiceWrapper
 	* @param folderId the primary key of the journal folder
 	* @return the journal folder
 	* @throws PortalException if a journal folder with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.journal.model.JournalFolder getJournalFolder(
 		long folderId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _journalFolderLocalService.getJournalFolder(folderId);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _journalFolderLocalService.getActionableDynamicQuery();
 	}
 
 	@Override
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext) {
 		return _journalFolderLocalService.getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	@Override
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _journalFolderLocalService.getPersistedModel(primaryKeyObj);
 	}
 
@@ -270,13 +245,11 @@ public class JournalFolderLocalServiceWrapper
 	* @param companyId the primary key of the company
 	* @return the matching journal folder
 	* @throws PortalException if a matching journal folder could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.journal.model.JournalFolder getJournalFolderByUuidAndCompanyId(
 		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _journalFolderLocalService.getJournalFolderByUuidAndCompanyId(uuid,
 			companyId);
 	}
@@ -288,13 +261,11 @@ public class JournalFolderLocalServiceWrapper
 	* @param groupId the primary key of the group
 	* @return the matching journal folder
 	* @throws PortalException if a matching journal folder could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.journal.model.JournalFolder getJournalFolderByUuidAndGroupId(
 		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _journalFolderLocalService.getJournalFolderByUuidAndGroupId(uuid,
 			groupId);
 	}
@@ -309,12 +280,10 @@ public class JournalFolderLocalServiceWrapper
 	* @param start the lower bound of the range of journal folders
 	* @param end the upper bound of the range of journal folders (not inclusive)
 	* @return the range of journal folders
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public java.util.List<com.liferay.portlet.journal.model.JournalFolder> getJournalFolders(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return _journalFolderLocalService.getJournalFolders(start, end);
 	}
 
@@ -322,11 +291,9 @@ public class JournalFolderLocalServiceWrapper
 	* Returns the number of journal folders.
 	*
 	* @return the number of journal folders
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public int getJournalFoldersCount()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public int getJournalFoldersCount() {
 		return _journalFolderLocalService.getJournalFoldersCount();
 	}
 
@@ -335,105 +302,67 @@ public class JournalFolderLocalServiceWrapper
 	*
 	* @param journalFolder the journal folder
 	* @return the journal folder that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.portlet.journal.model.JournalFolder updateJournalFolder(
-		com.liferay.portlet.journal.model.JournalFolder journalFolder)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.journal.model.JournalFolder journalFolder) {
 		return _journalFolderLocalService.updateJournalFolder(journalFolder);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
-	public void addDDMStructureJournalFolder(long structureId, long folderId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void addDDMStructureJournalFolder(long structureId, long folderId) {
 		_journalFolderLocalService.addDDMStructureJournalFolder(structureId,
 			folderId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
 	public void addDDMStructureJournalFolder(long structureId,
-		com.liferay.portlet.journal.model.JournalFolder journalFolder)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.journal.model.JournalFolder journalFolder) {
 		_journalFolderLocalService.addDDMStructureJournalFolder(structureId,
 			journalFolder);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
-	public void addDDMStructureJournalFolders(long structureId, long[] folderIds)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void addDDMStructureJournalFolders(long structureId, long[] folderIds) {
 		_journalFolderLocalService.addDDMStructureJournalFolders(structureId,
 			folderIds);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
 	public void addDDMStructureJournalFolders(long structureId,
-		java.util.List<com.liferay.portlet.journal.model.JournalFolder> JournalFolders)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.util.List<com.liferay.portlet.journal.model.JournalFolder> JournalFolders) {
 		_journalFolderLocalService.addDDMStructureJournalFolders(structureId,
 			JournalFolders);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
-	public void clearDDMStructureJournalFolders(long structureId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void clearDDMStructureJournalFolders(long structureId) {
 		_journalFolderLocalService.clearDDMStructureJournalFolders(structureId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
-	public void deleteDDMStructureJournalFolder(long structureId, long folderId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void deleteDDMStructureJournalFolder(long structureId, long folderId) {
 		_journalFolderLocalService.deleteDDMStructureJournalFolder(structureId,
 			folderId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
 	public void deleteDDMStructureJournalFolder(long structureId,
-		com.liferay.portlet.journal.model.JournalFolder journalFolder)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.journal.model.JournalFolder journalFolder) {
 		_journalFolderLocalService.deleteDDMStructureJournalFolder(structureId,
 			journalFolder);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
 	public void deleteDDMStructureJournalFolders(long structureId,
-		long[] folderIds)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long[] folderIds) {
 		_journalFolderLocalService.deleteDDMStructureJournalFolders(structureId,
 			folderIds);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
 	public void deleteDDMStructureJournalFolders(long structureId,
-		java.util.List<com.liferay.portlet.journal.model.JournalFolder> JournalFolders)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.util.List<com.liferay.portlet.journal.model.JournalFolder> JournalFolders) {
 		_journalFolderLocalService.deleteDDMStructureJournalFolders(structureId,
 			JournalFolders);
 	}
@@ -443,81 +372,51 @@ public class JournalFolderLocalServiceWrapper
 	*
 	* @param folderId the folderId of the journal folder
 	* @return long[] the structureIds of d d m structures associated with the journal folder
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public long[] getDDMStructurePrimaryKeys(long folderId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public long[] getDDMStructurePrimaryKeys(long folderId) {
 		return _journalFolderLocalService.getDDMStructurePrimaryKeys(folderId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
 	public java.util.List<com.liferay.portlet.journal.model.JournalFolder> getDDMStructureJournalFolders(
-		long structureId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long structureId) {
 		return _journalFolderLocalService.getDDMStructureJournalFolders(structureId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
 	public java.util.List<com.liferay.portlet.journal.model.JournalFolder> getDDMStructureJournalFolders(
-		long structureId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long structureId, int start, int end) {
 		return _journalFolderLocalService.getDDMStructureJournalFolders(structureId,
 			start, end);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
 	public java.util.List<com.liferay.portlet.journal.model.JournalFolder> getDDMStructureJournalFolders(
 		long structureId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator) {
 		return _journalFolderLocalService.getDDMStructureJournalFolders(structureId,
 			start, end, orderByComparator);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
-	public int getDDMStructureJournalFoldersCount(long structureId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public int getDDMStructureJournalFoldersCount(long structureId) {
 		return _journalFolderLocalService.getDDMStructureJournalFoldersCount(structureId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
-	public boolean hasDDMStructureJournalFolder(long structureId, long folderId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public boolean hasDDMStructureJournalFolder(long structureId, long folderId) {
 		return _journalFolderLocalService.hasDDMStructureJournalFolder(structureId,
 			folderId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
-	public boolean hasDDMStructureJournalFolders(long structureId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public boolean hasDDMStructureJournalFolders(long structureId) {
 		return _journalFolderLocalService.hasDDMStructureJournalFolders(structureId);
 	}
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Override
-	public void setDDMStructureJournalFolders(long structureId, long[] folderIds)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void setDDMStructureJournalFolders(long structureId, long[] folderIds) {
 		_journalFolderLocalService.setDDMStructureJournalFolders(structureId,
 			folderIds);
 	}

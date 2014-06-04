@@ -46,11 +46,9 @@ public interface WorkflowInstanceLinkPersistence extends BasePersistence<Workflo
 	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @return the matching workflow instance links
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portal.model.WorkflowInstanceLink> findByG_C_C_C(
-		long groupId, long companyId, long classNameId, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long groupId, long companyId, long classNameId, long classPK);
 
 	/**
 	* Returns a range of all the workflow instance links where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -66,12 +64,10 @@ public interface WorkflowInstanceLinkPersistence extends BasePersistence<Workflo
 	* @param start the lower bound of the range of workflow instance links
 	* @param end the upper bound of the range of workflow instance links (not inclusive)
 	* @return the range of matching workflow instance links
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portal.model.WorkflowInstanceLink> findByG_C_C_C(
 		long groupId, long companyId, long classNameId, long classPK,
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the workflow instance links where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -88,13 +84,11 @@ public interface WorkflowInstanceLinkPersistence extends BasePersistence<Workflo
 	* @param end the upper bound of the range of workflow instance links (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching workflow instance links
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portal.model.WorkflowInstanceLink> findByG_C_C_C(
 		long groupId, long companyId, long classNameId, long classPK,
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the first workflow instance link in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -106,13 +100,11 @@ public interface WorkflowInstanceLinkPersistence extends BasePersistence<Workflo
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching workflow instance link
 	* @throws com.liferay.portal.NoSuchWorkflowInstanceLinkException if a matching workflow instance link could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.WorkflowInstanceLink findByG_C_C_C_First(
 		long groupId, long companyId, long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchWorkflowInstanceLinkException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.NoSuchWorkflowInstanceLinkException;
 
 	/**
 	* Returns the first workflow instance link in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -123,12 +115,10 @@ public interface WorkflowInstanceLinkPersistence extends BasePersistence<Workflo
 	* @param classPK the class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching workflow instance link, or <code>null</code> if a matching workflow instance link could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.WorkflowInstanceLink fetchByG_C_C_C_First(
 		long groupId, long companyId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the last workflow instance link in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -140,13 +130,11 @@ public interface WorkflowInstanceLinkPersistence extends BasePersistence<Workflo
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching workflow instance link
 	* @throws com.liferay.portal.NoSuchWorkflowInstanceLinkException if a matching workflow instance link could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.WorkflowInstanceLink findByG_C_C_C_Last(
 		long groupId, long companyId, long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchWorkflowInstanceLinkException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.NoSuchWorkflowInstanceLinkException;
 
 	/**
 	* Returns the last workflow instance link in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -157,12 +145,10 @@ public interface WorkflowInstanceLinkPersistence extends BasePersistence<Workflo
 	* @param classPK the class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching workflow instance link, or <code>null</code> if a matching workflow instance link could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.WorkflowInstanceLink fetchByG_C_C_C_Last(
 		long groupId, long companyId, long classNameId, long classPK,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the workflow instance links before and after the current workflow instance link in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -175,14 +161,12 @@ public interface WorkflowInstanceLinkPersistence extends BasePersistence<Workflo
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next workflow instance link
 	* @throws com.liferay.portal.NoSuchWorkflowInstanceLinkException if a workflow instance link with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.WorkflowInstanceLink[] findByG_C_C_C_PrevAndNext(
 		long workflowInstanceLinkId, long groupId, long companyId,
 		long classNameId, long classPK,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.NoSuchWorkflowInstanceLinkException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.NoSuchWorkflowInstanceLinkException;
 
 	/**
 	* Removes all the workflow instance links where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
@@ -191,11 +175,9 @@ public interface WorkflowInstanceLinkPersistence extends BasePersistence<Workflo
 	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param classPK the class p k
-	* @throws SystemException if a system exception occurred
 	*/
 	public void removeByG_C_C_C(long groupId, long companyId, long classNameId,
-		long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long classPK);
 
 	/**
 	* Returns the number of workflow instance links where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63;.
@@ -205,11 +187,9 @@ public interface WorkflowInstanceLinkPersistence extends BasePersistence<Workflo
 	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @return the number of matching workflow instance links
-	* @throws SystemException if a system exception occurred
 	*/
 	public int countByG_C_C_C(long groupId, long companyId, long classNameId,
-		long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long classPK);
 
 	/**
 	* Caches the workflow instance link in the entity cache if it is enabled.
@@ -242,16 +222,13 @@ public interface WorkflowInstanceLinkPersistence extends BasePersistence<Workflo
 	* @param workflowInstanceLinkId the primary key of the workflow instance link
 	* @return the workflow instance link that was removed
 	* @throws com.liferay.portal.NoSuchWorkflowInstanceLinkException if a workflow instance link with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.WorkflowInstanceLink remove(
 		long workflowInstanceLinkId)
-		throws com.liferay.portal.NoSuchWorkflowInstanceLinkException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.NoSuchWorkflowInstanceLinkException;
 
 	public com.liferay.portal.model.WorkflowInstanceLink updateImpl(
-		com.liferay.portal.model.WorkflowInstanceLink workflowInstanceLink)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.model.WorkflowInstanceLink workflowInstanceLink);
 
 	/**
 	* Returns the workflow instance link with the primary key or throws a {@link com.liferay.portal.NoSuchWorkflowInstanceLinkException} if it could not be found.
@@ -259,32 +236,26 @@ public interface WorkflowInstanceLinkPersistence extends BasePersistence<Workflo
 	* @param workflowInstanceLinkId the primary key of the workflow instance link
 	* @return the workflow instance link
 	* @throws com.liferay.portal.NoSuchWorkflowInstanceLinkException if a workflow instance link with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.WorkflowInstanceLink findByPrimaryKey(
 		long workflowInstanceLinkId)
-		throws com.liferay.portal.NoSuchWorkflowInstanceLinkException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.NoSuchWorkflowInstanceLinkException;
 
 	/**
 	* Returns the workflow instance link with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param workflowInstanceLinkId the primary key of the workflow instance link
 	* @return the workflow instance link, or <code>null</code> if a workflow instance link with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.WorkflowInstanceLink fetchByPrimaryKey(
-		long workflowInstanceLinkId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long workflowInstanceLinkId);
 
 	/**
 	* Returns all the workflow instance links.
 	*
 	* @return the workflow instance links
-	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.portal.model.WorkflowInstanceLink> findAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public java.util.List<com.liferay.portal.model.WorkflowInstanceLink> findAll();
 
 	/**
 	* Returns a range of all the workflow instance links.
@@ -296,11 +267,9 @@ public interface WorkflowInstanceLinkPersistence extends BasePersistence<Workflo
 	* @param start the lower bound of the range of workflow instance links
 	* @param end the upper bound of the range of workflow instance links (not inclusive)
 	* @return the range of workflow instance links
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portal.model.WorkflowInstanceLink> findAll(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the workflow instance links.
@@ -313,27 +282,20 @@ public interface WorkflowInstanceLinkPersistence extends BasePersistence<Workflo
 	* @param end the upper bound of the range of workflow instance links (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of workflow instance links
-	* @throws SystemException if a system exception occurred
 	*/
 	public java.util.List<com.liferay.portal.model.WorkflowInstanceLink> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Removes all the workflow instance links from the database.
-	*
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeAll();
 
 	/**
 	* Returns the number of workflow instance links.
 	*
 	* @return the number of workflow instance links
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countAll();
 }

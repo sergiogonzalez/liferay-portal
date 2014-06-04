@@ -50,11 +50,9 @@ public interface OrganizationLocalService extends BaseLocalService,
 	*
 	* @param organization the organization
 	* @return the organization that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.Organization addOrganization(
-		com.liferay.portal.model.Organization organization)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.model.Organization organization);
 
 	/**
 	* Creates a new organization with the primary key. Does not add the organization to the database.
@@ -71,7 +69,7 @@ public interface OrganizationLocalService extends BaseLocalService,
 	* @param organizationId the primary key of the organization
 	* @return the organization that was removed
 	* @throws PortalException if a organization with the primary key could not be found
-	* @throws SystemException if a system exception occurred
+	* @throws SystemException
 	*/
 	public com.liferay.portal.model.Organization deleteOrganization(
 		long organizationId)
@@ -84,7 +82,7 @@ public interface OrganizationLocalService extends BaseLocalService,
 	* @param organization the organization
 	* @return the organization that was removed
 	* @throws PortalException
-	* @throws SystemException if a system exception occurred
+	* @throws SystemException
 	*/
 	public com.liferay.portal.model.Organization deleteOrganization(
 		com.liferay.portal.model.Organization organization)
@@ -98,12 +96,10 @@ public interface OrganizationLocalService extends BaseLocalService,
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -116,12 +112,11 @@ public interface OrganizationLocalService extends BaseLocalService,
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException;
+		int end);
 
 	/**
 	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
@@ -135,25 +130,21 @@ public interface OrganizationLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
 	@SuppressWarnings("rawtypes")
 	public java.util.List dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
 	/**
 	* Returns the number of rows that match the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
 
 	/**
 	* Returns the number of rows that match the dynamic query.
@@ -161,17 +152,14 @@ public interface OrganizationLocalService extends BaseLocalService,
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
 	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
 	*/
 	public long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.dao.orm.Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Organization fetchOrganization(
-		long organizationId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long organizationId);
 
 	/**
 	* Returns the organization with the matching UUID and company.
@@ -179,12 +167,10 @@ public interface OrganizationLocalService extends BaseLocalService,
 	* @param uuid the organization's UUID
 	* @param companyId the primary key of the company
 	* @return the matching organization, or <code>null</code> if a matching organization could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Organization fetchOrganizationByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String uuid, long companyId);
 
 	/**
 	* Returns the organization with the primary key.
@@ -192,29 +178,24 @@ public interface OrganizationLocalService extends BaseLocalService,
 	* @param organizationId the primary key of the organization
 	* @return the organization
 	* @throws PortalException if a organization with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Organization getOrganization(
 		long organizationId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext);
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns the organization with the matching UUID and company.
@@ -223,13 +204,11 @@ public interface OrganizationLocalService extends BaseLocalService,
 	* @param companyId the primary key of the company
 	* @return the matching organization
 	* @throws PortalException if a matching organization could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.Organization getOrganizationByUuidAndCompanyId(
 		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* Returns a range of all the organizations.
@@ -241,50 +220,36 @@ public interface OrganizationLocalService extends BaseLocalService,
 	* @param start the lower bound of the range of organizations
 	* @param end the upper bound of the range of organizations (not inclusive)
 	* @return the range of organizations
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Organization> getOrganizations(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		int start, int end);
 
 	/**
 	* Returns the number of organizations.
 	*
 	* @return the number of organizations
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getOrganizationsCount()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int getOrganizationsCount();
 
 	/**
 	* Updates the organization in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param organization the organization
 	* @return the organization that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.portal.model.Organization updateOrganization(
-		com.liferay.portal.model.Organization organization)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.model.Organization organization);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	public void addGroupOrganization(long groupId, long organizationId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void addGroupOrganization(long groupId, long organizationId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public void addGroupOrganization(long groupId,
-		com.liferay.portal.model.Organization organization)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.model.Organization organization);
 
 	/**
 	* @throws PortalException
-	* @throws SystemException if a system exception occurred
+	* @throws SystemException
 	*/
 	public void addGroupOrganizations(long groupId, long[] organizationIds)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -292,229 +257,118 @@ public interface OrganizationLocalService extends BaseLocalService,
 
 	/**
 	* @throws PortalException
-	* @throws SystemException if a system exception occurred
+	* @throws SystemException
 	*/
 	public void addGroupOrganizations(long groupId,
 		java.util.List<com.liferay.portal.model.Organization> Organizations)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	public void clearGroupOrganizations(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void clearGroupOrganizations(long groupId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	public void deleteGroupOrganization(long groupId, long organizationId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void deleteGroupOrganization(long groupId, long organizationId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public void deleteGroupOrganization(long groupId,
-		com.liferay.portal.model.Organization organization)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.model.Organization organization);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	public void deleteGroupOrganizations(long groupId, long[] organizationIds)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void deleteGroupOrganizations(long groupId, long[] organizationIds);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public void deleteGroupOrganizations(long groupId,
-		java.util.List<com.liferay.portal.model.Organization> Organizations)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.util.List<com.liferay.portal.model.Organization> Organizations);
 
 	/**
 	* Returns the groupIds of the groups associated with the organization.
 	*
 	* @param organizationId the organizationId of the organization
 	* @return long[] the groupIds of groups associated with the organization
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long[] getGroupPrimaryKeys(long organizationId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public long[] getGroupPrimaryKeys(long organizationId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Organization> getGroupOrganizations(
-		long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long groupId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Organization> getGroupOrganizations(
-		long groupId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long groupId, int start, int end);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Organization> getGroupOrganizations(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getGroupOrganizationsCount(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int getGroupOrganizationsCount(long groupId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasGroupOrganization(long groupId, long organizationId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public boolean hasGroupOrganization(long groupId, long organizationId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasGroupOrganizations(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public boolean hasGroupOrganizations(long groupId);
 
 	/**
 	* @throws PortalException
-	* @throws SystemException if a system exception occurred
+	* @throws SystemException
 	*/
 	public void setGroupOrganizations(long groupId, long[] organizationIds)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	public void addUserOrganization(long userId, long organizationId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void addUserOrganization(long userId, long organizationId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public void addUserOrganization(long userId,
-		com.liferay.portal.model.Organization organization)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.model.Organization organization);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	public void addUserOrganizations(long userId, long[] organizationIds)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void addUserOrganizations(long userId, long[] organizationIds);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public void addUserOrganizations(long userId,
-		java.util.List<com.liferay.portal.model.Organization> Organizations)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.util.List<com.liferay.portal.model.Organization> Organizations);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	public void clearUserOrganizations(long userId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void clearUserOrganizations(long userId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	public void deleteUserOrganization(long userId, long organizationId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void deleteUserOrganization(long userId, long organizationId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public void deleteUserOrganization(long userId,
-		com.liferay.portal.model.Organization organization)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.model.Organization organization);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	public void deleteUserOrganizations(long userId, long[] organizationIds)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void deleteUserOrganizations(long userId, long[] organizationIds);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	public void deleteUserOrganizations(long userId,
-		java.util.List<com.liferay.portal.model.Organization> Organizations)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.util.List<com.liferay.portal.model.Organization> Organizations);
 
 	/**
 	* Returns the userIds of the users associated with the organization.
 	*
 	* @param organizationId the organizationId of the organization
 	* @return long[] the userIds of users associated with the organization
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long[] getUserPrimaryKeys(long organizationId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public long[] getUserPrimaryKeys(long organizationId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Organization> getUserOrganizations(
-		long userId) throws com.liferay.portal.kernel.exception.SystemException;
+		long userId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Organization> getUserOrganizations(
-		long userId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long userId, int start, int end);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Organization> getUserOrganizations(
 		long userId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getUserOrganizationsCount(long userId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int getUserOrganizationsCount(long userId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasUserOrganization(long userId, long organizationId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public boolean hasUserOrganization(long userId, long organizationId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasUserOrganizations(long userId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public boolean hasUserOrganizations(long userId);
 
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	public void setUserOrganizations(long userId, long[] organizationIds)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void setUserOrganizations(long userId, long[] organizationIds);
 
 	/**
 	* Returns the Spring bean ID for this bean.
