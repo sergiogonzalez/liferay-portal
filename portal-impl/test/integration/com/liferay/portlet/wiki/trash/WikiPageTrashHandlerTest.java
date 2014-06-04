@@ -925,7 +925,6 @@ public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 	}
 
 	@Test
-	@Transactional
 	public void testTrashVersionDeletionWhenRestoringFromTrash2()
 		throws Exception {
 
@@ -933,11 +932,12 @@ public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 			group.getGroupId(), _node.getNodeId());
 
 		WikiPage childPage = wikipages[0];
+		WikiPage finalParentPage = wikipages[1];
 
 		String originalChildPageTitle = childPage.getTitle();
 
 		WikiPageLocalServiceUtil.movePageToTrash(
-			TestPropsValues.getUserId(), childPage);
+			TestPropsValues.getUserId(), finalParentPage);
 
 		WikiTestUtil.addPage(
 			TestPropsValues.getUserId(), group.getGroupId(), _node.getNodeId(),

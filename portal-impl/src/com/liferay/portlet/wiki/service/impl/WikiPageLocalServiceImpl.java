@@ -1766,7 +1766,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 				versionPageOldStatus = trashVersion.getStatus();
 			}
 
-			versionPage.setTitle(page.getTitle());
+			//versionPage.setTitle(page.getTitle());
 			versionPage.setStatus(versionPageOldStatus);
 
 			wikiPagePersistence.update(versionPage);
@@ -2632,7 +2632,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 			int versionPageOldStatus = versionPage.getStatus();
 
-			versionPage.setTitle(page.getTitle());
+			//versionPage.setTitle(page.getTitle());
 			versionPage.setStatus(WorkflowConstants.STATUS_IN_TRASH);
 
 			wikiPagePersistence.update(versionPage);
