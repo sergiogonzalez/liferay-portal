@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.repository.InvalidRepositoryIdException;
 import com.liferay.portal.kernel.repository.LocalRepository;
+import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -745,10 +746,15 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 					" does not support trash operations");
 		}
 
+		TrashCapability trashCapability = localRepository.getCapability(
+			TrashCapability.class);
+
 		FileEntry fileEntry = localRepository.getFileEntry(fileEntryId);
 
-		return dlAppHelperLocalService.moveFileEntryFromTrash(
-			userId, fileEntry, newFolderId, serviceContext);
+		Folder destinationFolder = localRepository.getFolder(newFolderId);
+
+		return trashCapability.moveFileEntryFromTrash(
+			userId, fileEntry, destinationFolder, serviceContext);
 	}
 
 	/**
@@ -766,9 +772,12 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		LocalRepository localRepository = getFileEntryLocalRepository(
 			fileEntryId);
 
+		TrashCapability trashCapability = localRepository.getCapability(
+			TrashCapability.class);
+
 		FileEntry fileEntry = localRepository.getFileEntry(fileEntryId);
 
-		return dlAppHelperLocalService.moveFileEntryToTrash(userId, fileEntry);
+		return trashCapability.moveFileEntryToTrash(userId, fileEntry);
 	}
 
 	@Override
@@ -839,9 +848,12 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		LocalRepository localRepository = getFileEntryLocalRepository(
 			fileEntryId);
 
+		TrashCapability trashCapability = localRepository.getCapability(
+			TrashCapability.class);
+
 		FileEntry fileEntry = localRepository.getFileEntry(fileEntryId);
 
-		dlAppHelperLocalService.restoreFileEntryFromTrash(userId, fileEntry);
+		trashCapability.restoreFileEntryFromTrash(userId, fileEntry);
 	}
 
 	/**
