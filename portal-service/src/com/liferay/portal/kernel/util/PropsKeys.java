@@ -1095,6 +1095,10 @@ public interface PropsKeys {
 
 	public static final String INTRABAND_MAILBOX_STORAGE_LIFE = "intraband.mailbox.storage.life";
 
+	public static final String INTRABAND_PROXY_DUMP_CLASSES_DIR = "intraband.proxy.dump.classes.dir";
+
+	public static final String INTRABAND_PROXY_DUMP_CLASSES_ENABLED = "intraband.proxy.dump.classes.enabled";
+
 	public static final String INTRABAND_TIMEOUT_DEFAULT = "intraband.timeout.default";
 
 	public static final String INTRABAND_WELDER_IMPL = "intraband.welder.impl";
@@ -1138,6 +1142,8 @@ public interface PropsKeys {
 	public static final String JAVASCRIPT_FAST_LOAD = "javascript.fast.load";
 
 	public static final String JAVASCRIPT_LOG_ENABLED = "javascript.log.enabled";
+
+	public static final String JAVASCRIPT_SINGLE_PAGE_APPLICATION_ENABLED = "javascript.single.page.application.enabled";
 
 	public static final String JCR_INITIALIZE_ON_STARTUP = "jcr.initialize.on.startup";
 

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.servlet.ServletResponseConstants;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.upload.LiferayFileItemException;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
@@ -137,7 +138,10 @@ public class EditFileEntryAction extends PortletAction {
 					WebKeys.UPLOAD_EXCEPTION);
 
 			if (uploadException != null) {
-				if (uploadException.isExceededSizeLimit()) {
+				if (uploadException.isExceededLiferayFileItemSizeLimit()) {
+					throw new LiferayFileItemException();
+				}
+				else if (uploadException.isExceededSizeLimit()) {
 					throw new FileSizeException(uploadException.getCause());
 				}
 
@@ -784,6 +788,7 @@ public class EditFileEntryAction extends PortletAction {
 		else if (e instanceof AntivirusScannerException ||
 				 e instanceof DuplicateFileException ||
 				 e instanceof DuplicateFolderNameException ||
+				 e instanceof LiferayFileItemException ||
 				 e instanceof FileExtensionException ||
 				 e instanceof FileMimeTypeException ||
 				 e instanceof FileNameException ||
@@ -1066,10 +1071,13 @@ public class EditFileEntryAction extends PortletAction {
 				(UploadException)actionRequest.getAttribute(
 					WebKeys.UPLOAD_EXCEPTION);
 
-			if ((uploadException != null) &&
-				uploadException.isExceededSizeLimit()) {
-
-				throw new FileSizeException(uploadException.getCause());
+			if (uploadException != null) {
+				if (uploadException.isExceededLiferayFileItemSizeLimit()) {
+					throw new LiferayFileItemException();
+				}
+				else if (uploadException.isExceededSizeLimit()) {
+					throw new FileSizeException(uploadException.getCause());
+				}
 			}
 
 			throw e;

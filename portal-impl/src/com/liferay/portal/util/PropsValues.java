@@ -828,6 +828,10 @@ public class PropsValues {
 
 	public static final boolean INDEX_WITH_THREAD = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.INDEX_WITH_THREAD));
 
+	public static final String INTRABAND_PROXY_DUMP_CLASSES_DIR = PropsUtil.get(PropsKeys.INTRABAND_PROXY_DUMP_CLASSES_DIR);
+
+	public static final boolean INTRABAND_PROXY_DUMP_CLASSES_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.INTRABAND_PROXY_DUMP_CLASSES_ENABLED));
+
 	public static final String INVITATION_EMAIL_MESSAGE_BODY = PropsUtil.get(PropsKeys.INVITATION_EMAIL_MESSAGE_BODY);
 
 	public static final String INVITATION_EMAIL_MESSAGE_SUBJECT = PropsUtil.get(PropsKeys.INVITATION_EMAIL_MESSAGE_SUBJECT);
@@ -841,6 +845,8 @@ public class PropsValues {
 	public static boolean JAVASCRIPT_FAST_LOAD = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.JAVASCRIPT_FAST_LOAD));
 
 	public static final boolean JAVASCRIPT_LOG_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.JAVASCRIPT_LOG_ENABLED));
+
+	public static final boolean JAVASCRIPT_SINGLE_PAGE_APPLICATION_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.JAVASCRIPT_SINGLE_PAGE_APPLICATION_ENABLED));
 
 	public static final boolean JCR_WRAP_SESSION = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.JCR_WRAP_SESSION));
 

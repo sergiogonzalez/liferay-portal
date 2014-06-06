@@ -287,17 +287,25 @@ for (Locale availableLocale : LanguageUtil.getAvailableLocales(themeDisplay.getS
 		dialog.after('widthChange', setEditorSize);
 	}
 
-	Liferay.after(
-		'showTab',
-		function(event) {
-			if (isViewTabActive()) {
-				switchToView();
-			}
-			else {
-				switchToSource();
-			}
+	var afterShowTab = function(event) {
+		if (isViewTabActive()) {
+			switchToView();
 		}
-	);
+		else {
+			switchToSource();
+		}
+	};
+
+	Liferay.after('showTab', afterShowTab);
+
+	var clearShowTabHandle = function(event) {
+		if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {
+			Liferay.detach('showTab', afterShowTab);
+			Liferay.detach('destroyPortlet', clearShowTabHandle);
+		}
+	};
+
+	Liferay.on('destroyPortlet', clearShowTabHandle);
 
 	window.<portlet:namespace />formBuilder = formBuilder;
 

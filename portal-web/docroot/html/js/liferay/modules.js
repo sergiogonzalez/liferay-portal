@@ -12,6 +12,17 @@
 
 	var SUPPORTS_INPUT_SELECTION = ((typeof INPUT_EL.selectionStart === 'number') && (typeof INPUT_EL.selectionEnd === 'number'));
 
+	var testHistory = function(A) {
+		var WIN = A.config.win;
+
+		var HISTORY = WIN.history;
+
+		return (HISTORY &&
+				HISTORY.pushState &&
+				HISTORY.replaceState &&
+				('onpopstate' in WIN || A.UA.gecko >= 2));
+	};
+
 	var testTouch = function(A) {
 		return A.UA.touch;
 	};
@@ -41,17 +52,6 @@
 				base: PATH_JAVASCRIPT + '/liferay/',
 				combine: COMBINE,
 				modules: {
-					'liferay-ajax-session': {
-						condition: {
-							trigger: 'aui-io-request'
-						},
-						path: 'ajax_session.js',
-						requires: [
-							'aui-io-request',
-							'liferay-session'
-						]
-					},
-
 					'liferay-app-view-folders': {
 						path: 'app_view_folders.js',
 						requires: [
@@ -149,12 +149,6 @@
 					'liferay-autocomplete-input': {
 						path: 'autocomplete_input.js',
 						requires: [
-							'liferay-autocomplete-input-base'
-						]
-					},
-					'liferay-autocomplete-input-base': {
-						path: 'autocomplete_input_base.js',
-						requires: [
 							'aui-base',
 							'autocomplete',
 							'autocomplete-filters',
@@ -167,11 +161,11 @@
 							test: function() {
 								return SUPPORTS_INPUT_SELECTION;
 							},
-							trigger: 'liferay-autocomplete-input'
+							trigger: 'liferay-autocomplete-textarea'
 						},
 						path: 'autocomplete_input_caretindex.js',
 						requires: [
-							'liferay-autocomplete-input'
+							'liferay-autocomplete-textarea'
 						]
 					},
 					'liferay-autocomplete-input-caretindex-sel': {
@@ -180,11 +174,11 @@
 							test: function() {
 								return !SUPPORTS_INPUT_SELECTION;
 							},
-							trigger: 'liferay-autocomplete-input'
+							trigger: 'liferay-autocomplete-textarea'
 						},
 						path: 'autocomplete_input_caretindex_sel.js',
 						requires: [
-							'liferay-autocomplete-input'
+							'liferay-autocomplete-textarea'
 						]
 					},
 					'liferay-autocomplete-input-caretoffset': {
@@ -193,11 +187,11 @@
 							test: function(A) {
 								return !(A.UA.ie && A.UA.ie < 9);
 							},
-							trigger: 'liferay-autocomplete-input'
+							trigger: 'liferay-autocomplete-textarea'
 						},
 						path: 'autocomplete_input_caretoffset.js',
 						requires: [
-							'liferay-autocomplete-input'
+							'liferay-autocomplete-textarea'
 						]
 					},
 					'liferay-autocomplete-input-caretoffset-sel': {
@@ -206,9 +200,15 @@
 							test: function(A) {
 								return (A.UA.ie && A.UA.ie < 9);
 							},
-							trigger: 'liferay-autocomplete-input'
+							trigger: 'liferay-autocomplete-textarea'
 						},
 						path: 'autocomplete_input_caretoffset_sel.js',
+						requires: [
+							'liferay-autocomplete-textarea'
+						]
+					},
+					'liferay-autocomplete-textarea': {
+						path: 'autocomplete_textarea.js',
 						requires: [
 							'liferay-autocomplete-input'
 						]
@@ -399,16 +399,7 @@
 					'liferay-history-html5': {
 						condition: {
 							name: 'liferay-history-html5',
-							test: function(A) {
-								var WIN = A.config.win;
-
-								var HISTORY = WIN.history;
-
-								return (HISTORY &&
-										HISTORY.pushState &&
-										HISTORY.replaceState &&
-										('onpopstate' in WIN || A.UA.gecko >= 2));
-							},
+							test: testHistory,
 							trigger: 'liferay-history'
 						},
 						path: 'history_html5.js',
@@ -428,7 +419,8 @@
 						path: 'hudcrumbs.js',
 						requires: [
 							'aui-base',
-							'plugin'
+							'aui-debounce',
+							'event-resize'
 						]
 					},
 					'liferay-icon': {
@@ -756,6 +748,30 @@
 						path: 'store.js',
 						requires: [
 							'aui-io-request'
+						]
+					},
+					'liferay-surface': {
+						condition: {
+							name: 'liferay-surface',
+							test: testHistory
+						},
+						path: 'surface.js',
+						requires: [
+							'aui-surface-app',
+							'aui-surface-base',
+							'aui-surface-screen-html',
+							'liferay-portlet-url',
+							'json'
+						]
+					},
+					'liferay-surface-app': {
+						condition: {
+							name: 'liferay-surface-app',
+							test: testHistory
+						},
+						path: 'surface_app.js',
+						requires: [
+							'liferay-surface'
 						]
 					},
 					'liferay-toggler-interaction': {

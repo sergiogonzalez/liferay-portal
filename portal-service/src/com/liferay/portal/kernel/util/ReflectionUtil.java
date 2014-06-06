@@ -19,7 +19,10 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Brian Wing Shun Chan
@@ -142,6 +145,27 @@ public class ReflectionUtil {
 		}
 
 		return parameterTypes;
+	}
+
+	public static Set<Method> getVisibleMethods(Class<?> clazz) {
+		Set<Method> visibleMethods = new HashSet<Method>(
+			Arrays.asList(clazz.getMethods()));
+
+		visibleMethods.addAll(Arrays.asList(clazz.getDeclaredMethods()));
+
+		while ((clazz = clazz.getSuperclass()) != null) {
+			for (Method method : clazz.getDeclaredMethods()) {
+				int modifiers = method.getModifiers();
+
+				if (!Modifier.isPrivate(modifiers) &
+					!Modifier.isPublic(modifiers)) {
+
+					visibleMethods.add(method);
+				}
+			}
+		}
+
+		return visibleMethods;
 	}
 
 	public static boolean isAnnotationDeclaredInClass(

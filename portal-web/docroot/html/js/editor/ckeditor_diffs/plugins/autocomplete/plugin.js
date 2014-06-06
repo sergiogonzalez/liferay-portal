@@ -6,7 +6,8 @@
 				var instance = this;
 
 				AUI().use(
-					'liferay-autocomplete-input-base',
+					'aui-debounce',
+					'liferay-autocomplete-input',
 					function(A) {
 						var path = instance.path;
 
@@ -14,7 +15,7 @@
 							CKEDITOR.getUrl(path + 'autocomplete.js')
 						];
 
-						CKEDITOR.scriptLoader.load(
+						CKEDITOR.scriptLoader.loadScripts(
 							dependencies,
 							function() {
 								new Liferay.AutoCompleteCKEditor(
@@ -24,7 +25,7 @@
 											editor: editor
 										}
 									)
-								);
+								).render();
 							}
 						);
 					}

@@ -187,6 +187,10 @@ request.setAttribute("edit_article.jsp-toLanguageId", toLanguageId);
 
 		<liferay-ui:error exception="<%= ArticleContentSizeException.class %>" message="you-have-exceeded-the-maximum-web-content-size-allowed" />
 
+		<liferay-ui:error exception="<%= LiferayFileItemException.class %>">
+			<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(LiferayFileItem.THRESHOLD_SIZE, locale) %>" key="please-enter-valid-content-with-valid-content-size-no-larger-than-x" translateArguments="<%= false %>" />
+		</liferay-ui:error>
+
 		<aui:model-context bean="<%= article %>" defaultLanguageId="<%= defaultLanguageId %>" model="<%= JournalArticle.class %>" />
 
 		<div class="journal-article-wrapper" id="<portlet:namespace />journalArticleWrapper">
@@ -363,13 +367,6 @@ request.setAttribute("edit_article.jsp-toLanguageId", toLanguageId);
 		<portlet:param name="ddmTemplateKey" value="<%= (ddmTemplate != null) ? ddmTemplate.getTemplateKey() : article.getTemplateId() %>" />
 	</c:if>
 </liferay-portlet:renderURL>
-
-<liferay-security:permissionsURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"
-	modelResource="<%= JournalArticle.class.getName() %>"
-	modelResourceDescription="<%= article.getTitle(locale) %>"
-	resourcePrimKey="<%= String.valueOf(article.getResourcePrimKey()) %>"
-	var="permissionsURL"
-/>
 
 <portlet:renderURL var="editArticleURL">
 	<portlet:param name="redirect" value="<%= redirect %>" />

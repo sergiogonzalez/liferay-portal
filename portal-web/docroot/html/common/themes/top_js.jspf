@@ -120,6 +120,9 @@
 					getLayoutId: function() {
 						return "<%= layout.getLayoutId() %>";
 					},
+					getLayoutRelativeURL: function() {
+						return "<%= PortalUtil.getLayoutRelativeURL(layout, themeDisplay) %>";
+					},
 					getLayoutURL: function() {
 						return "<%= PortalUtil.getLayoutURL(layout, themeDisplay) %>";
 					},
@@ -351,7 +354,7 @@
 		<c:if test="<%= (layoutTypePortlet != null) %>">
 
 			<%
-			List<Portlet> allPortlets = layoutTypePortlet.getAllPortlets(false);
+			List<Portlet> allPortlets = layoutTypePortlet.getAllPortlets(true);
 
 			StringBundler sb = new StringBundler(allPortlets.size() * 2);
 

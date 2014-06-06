@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.upload.LiferayFileItemException;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
@@ -103,7 +104,10 @@ public class EditMessageAction extends PortletAction {
 					WebKeys.UPLOAD_EXCEPTION);
 
 			if (uploadException != null) {
-				if (uploadException.isExceededSizeLimit()) {
+				if (uploadException.isExceededLiferayFileItemSizeLimit()) {
+					throw new LiferayFileItemException();
+				}
+				else if (uploadException.isExceededSizeLimit()) {
 					throw new FileSizeException(uploadException.getCause());
 				}
 
@@ -165,6 +169,7 @@ public class EditMessageAction extends PortletAction {
 					 e instanceof FileExtensionException ||
 					 e instanceof FileNameException ||
 					 e instanceof FileSizeException ||
+					 e instanceof LiferayFileItemException ||
 					 e instanceof LockedThreadException ||
 					 e instanceof MessageBodyException ||
 					 e instanceof MessageSubjectException ||
