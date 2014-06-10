@@ -33,8 +33,7 @@ import java.util.List;
  */
 @JSON
 @ProviderType
-public interface FileEntry extends RepositoryModel<FileEntry> {
-
+public interface FileEntry extends RepositoryEntry, RepositoryModel<FileEntry> {
 	public static final Accessor<FileEntry, Long> FILE_ENTRY_ID_ACCESSOR =
 
 		new Accessor<FileEntry, Long>() {

@@ -25,8 +25,7 @@ import java.util.List;
 /**
  * @author Alexander Chow
  */
-public interface Folder extends RepositoryModel<Folder> {
-
+public interface Folder extends RepositoryEntry, RepositoryModel<Folder> {
 	public static final Accessor<Folder, Long> FOLDER_ID_ACCESSOR =
 
 		new Accessor<Folder, Long>() {
