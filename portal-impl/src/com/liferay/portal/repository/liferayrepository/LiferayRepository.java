@@ -320,7 +320,7 @@ public class LiferayRepository
 			dlFolderService.getFileEntriesAndFileShortcuts(
 				getGroupId(), toFolderId(folderId), status, start, end);
 
-		return RepositoryModelUtil.toFileEntriesAndFolders(
+		return (List)RepositoryModelUtil.toFileEntriesFileShortcutsAndFolders(
 			dlFileEntriesAndFileShortcuts);
 	}
 
@@ -460,7 +460,7 @@ public class LiferayRepository
 				getGroupId(), toFolderId(folderId), status, includeMountFolders,
 				start, end, obc);
 
-		return RepositoryModelUtil.toFileEntriesAndFolders(
+		return (List)RepositoryModelUtil.toFileEntriesFileShortcutsAndFolders(
 			dlFoldersAndFileEntriesAndFileShortcuts);
 	}
 
@@ -476,7 +476,7 @@ public class LiferayRepository
 				getGroupId(), toFolderId(folderId), status, mimeTypes,
 				includeMountFolders, start, end, obc);
 
-		return RepositoryModelUtil.toFileEntriesAndFolders(
+		return (List)RepositoryModelUtil.toFileEntriesFileShortcutsAndFolders(
 			dlFoldersAndFileEntriesAndFileShortcuts);
 	}
 
