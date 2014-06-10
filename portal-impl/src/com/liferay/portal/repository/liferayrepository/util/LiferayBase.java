@@ -38,7 +38,7 @@ public abstract class LiferayBase {
 	public List<Object> toFileEntriesAndFolders(
 		List<Object> dlFileEntriesAndDLFolders) {
 
-		return RepositoryModelUtil.toFileEntriesAndFolders(
+		return (List)RepositoryModelUtil.toFileEntriesFileShortcutsAndFolders(
 			dlFileEntriesAndDLFolders);
 	}
 
