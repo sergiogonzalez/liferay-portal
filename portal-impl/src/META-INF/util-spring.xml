@@ -251,6 +251,11 @@
 			<bean class="com.liferay.portal.repository.LocalRepositoryFactoryImpl" depends-on="com.liferay.portal.model.ModelHintsUtil" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.kernel.repository.PortletLocalRepositoryFactoryUtil" class="com.liferay.portal.kernel.repository.PortletLocalRepositoryFactoryUtil">
+		<property name="portletLocalRepositoryFactory">
+			<bean class="com.liferay.portal.repository.liferayrepository.PortletLocalRepositoryFactoryImpl" depends-on="com.liferay.portal.model.ModelHintsUtil" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portal.kernel.repository.RepositoryFactoryUtil" class="com.liferay.portal.kernel.repository.RepositoryFactoryUtil">
 		<property name="repositoryFactory">
 			<bean class="com.liferay.portal.repository.RepositoryFactoryImpl" depends-on="com.liferay.portal.model.ModelHintsUtil" />
