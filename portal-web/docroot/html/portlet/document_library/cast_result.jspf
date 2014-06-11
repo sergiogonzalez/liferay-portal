@@ -47,7 +47,11 @@ else if (result instanceof FileEntry) {
 
 	fileEntry = fileEntry.toEscapedModel();
 }
-else {
+else if (result instanceof FileShortcut || result instanceof DLFileShortcut) {
+	if (result instanceof FileShortcut) {
+		result = ((FileShortcut) result).getModel();
+	}
+
 	fileShortcut = (DLFileShortcut)result;
 
 	fileShortcut = fileShortcut.toEscapedModel();
