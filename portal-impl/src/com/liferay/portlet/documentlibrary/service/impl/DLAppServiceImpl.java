@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.repository.InvalidRepositoryIdException;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.search.Hits;
@@ -3559,15 +3560,15 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 						fromRepository, toRepository, serviceContext);
 				}
 				else if (folderAndFileEntryAndFileShortcut
-							instanceof DLFileShortcut) {
+							instanceof FileShortcut) {
 
 					if (newFolder.isSupportsShortcuts()) {
-						DLFileShortcut dlFileShorcut =
-							(DLFileShortcut)folderAndFileEntryAndFileShortcut;
+						FileShortcut fileShortcut =
+							(FileShortcut)folderAndFileEntryAndFileShortcut;
 
 						dlFileShortcutService.addFileShortcut(
-							dlFileShorcut.getGroupId(), newFolder.getFolderId(),
-							dlFileShorcut.getToFileEntryId(), serviceContext);
+							fileShortcut.getGroupId(), newFolder.getFolderId(),
+							fileShortcut.getToFileEntryId(), serviceContext);
 					}
 				}
 			}

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.trash.BaseTrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandler;
@@ -158,12 +159,12 @@ public abstract class DLBaseTrashHandler extends BaseTrashHandler {
 			String curClassName = StringPool.BLANK;
 			long curClassPK = 0;
 
-			if (fileEntryOrFileShortcut instanceof DLFileShortcut) {
-				DLFileShortcut dlFileShortcut =
-					(DLFileShortcut)fileEntryOrFileShortcut;
+			if (fileEntryOrFileShortcut instanceof FileShortcut) {
+				FileShortcut fileShortcut =
+					(FileShortcut)fileEntryOrFileShortcut;
 
 				curClassName = DLFileShortcut.class.getName();
-				curClassPK = dlFileShortcut.getPrimaryKey();
+				curClassPK = fileShortcut.getPrimaryKey();
 			}
 			else if (fileEntryOrFileShortcut instanceof FileEntry) {
 				FileEntry fileEntry = (FileEntry)fileEntryOrFileShortcut;

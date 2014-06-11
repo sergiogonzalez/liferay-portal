@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.repository.InvalidRepositoryIdException;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntryThreadLocal;
@@ -1586,16 +1587,16 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 						destinationLocalRepository, serviceContext);
 				}
 				else if (folderAndFileEntryAndFileShortcut
-							instanceof DLFileShortcut) {
+							instanceof FileShortcut) {
 
 					if (destinationFolder.isSupportsShortcuts()) {
-						DLFileShortcut dlFileShorcut =
-							(DLFileShortcut)folderAndFileEntryAndFileShortcut;
+						FileShortcut fileShortcut =
+							(FileShortcut)folderAndFileEntryAndFileShortcut;
 
 						dlFileShortcutLocalService.addFileShortcut(
-							userId, dlFileShorcut.getGroupId(),
+							userId, fileShortcut.getGroupId(),
 							destinationFolder.getFolderId(),
-							dlFileShorcut.getToFileEntryId(), serviceContext);
+							fileShortcut.getToFileEntryId(), serviceContext);
 					}
 				}
 			}
