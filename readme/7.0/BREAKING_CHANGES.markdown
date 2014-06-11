@@ -1454,3 +1454,39 @@ OSGi plugins in a more extensible way, allowing the developer to include new
 sections to access to their own utils and services.
 
 ---------------------------------------
+
+### [Title]
+- **Date:** 2014-Jun-11
+- **JIRA Ticket:** LPS-47541
+
+#### What changed?
+The methods `getFoldersAndFileEntriesAndFileShortcuts()` and
+`getFileEntriesAndFileShortcuts()` in `Repository` returned a list of raw
+`Object`.
+
+A new interface `RepositoryEntry` has been created to abstract over the
+existing repository entity types (`FileEntry`, `FileShortcut`, `FileVersion`
+and `Folder`). The signature of the methods that returned raw `Object`s has
+been changed to return `RepositoryEntry` instead.
+
+#### Who is affected?
+
+Applications that use `Repository` directly.
+
+#### How should I update my code?
+
+There are two possible approaches:
+- Cast the returned list to a raw `List`, with no type parameters. Do this only
+  if strictly necessary.
+- Change the type annotation for variables storing the returned value or methods
+  accepting it from `List<Object>` to `List<RepositoryEntry>`
+
+#### Why was this change made?
+
+To help the compiler catch errors and to make the API more explicit. By
+returning `List<Object>` the repository API wasn't telling anything at all about
+the returned objects; with this change at least the consumer knows that the
+returned objects must be one of `FileEntry`, `FileShortcut`, `FileVersion` or
+`Folder`.
+
+---------------------------------------
