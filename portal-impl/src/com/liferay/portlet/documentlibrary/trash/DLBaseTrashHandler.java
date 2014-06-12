@@ -18,7 +18,9 @@ import com.liferay.portal.InvalidRepositoryException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.repository.model.RepositoryEntry;
 import com.liferay.portal.kernel.trash.BaseTrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
@@ -149,23 +151,22 @@ public abstract class DLBaseTrashHandler extends BaseTrashHandler {
 
 		Repository repository = getRepository(classPK);
 
-		List<Object> fileEntriesAndFileShortcuts =
+		List<RepositoryEntry> repositoryEntries =
 			repository.getFileEntriesAndFileShortcuts(
 				classPK, WorkflowConstants.STATUS_IN_TRASH, start, end);
 
-		for (Object fileEntryOrFileShortcut : fileEntriesAndFileShortcuts) {
+		for (RepositoryEntry repositoryEntry : repositoryEntries) {
 			String curClassName = StringPool.BLANK;
 			long curClassPK = 0;
 
-			if (fileEntryOrFileShortcut instanceof DLFileShortcut) {
-				DLFileShortcut dlFileShortcut =
-					(DLFileShortcut)fileEntryOrFileShortcut;
+			if (repositoryEntry instanceof FileShortcut) {
+				FileShortcut fileShortcut = (FileShortcut)repositoryEntry;
 
 				curClassName = DLFileShortcut.class.getName();
-				curClassPK = dlFileShortcut.getPrimaryKey();
+				curClassPK = fileShortcut.getPrimaryKey();
 			}
-			else if (fileEntryOrFileShortcut instanceof FileEntry) {
-				FileEntry fileEntry = (FileEntry)fileEntryOrFileShortcut;
+			else if (repositoryEntry instanceof FileEntry) {
+				FileEntry fileEntry = (FileEntry)repositoryEntry;
 
 				curClassName = DLFileEntry.class.getName();
 				curClassPK = fileEntry.getPrimaryKey();

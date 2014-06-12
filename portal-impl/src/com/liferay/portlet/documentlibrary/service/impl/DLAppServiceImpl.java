@@ -26,8 +26,10 @@ import com.liferay.portal.kernel.repository.InvalidRepositoryIdException;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.repository.model.RepositoryEntry;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -1022,7 +1024,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		Repository repository = getRepository(repositoryId);
 
-		return repository.getFileEntriesAndFileShortcuts(
+		return (List)repository.getFileEntriesAndFileShortcuts(
 			folderId, status, start, end);
 	}
 
@@ -1542,7 +1544,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		Repository repository = getRepository(repositoryId);
 
-		return repository.getFoldersAndFileEntriesAndFileShortcuts(
+		return (List)repository.getFoldersAndFileEntriesAndFileShortcuts(
 			folderId, status, mimeTypes, includeMountFolders, start, end, obc);
 	}
 
@@ -3419,42 +3421,35 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		dlAppHelperLocalService.addFolder(
 			getUserId(), newFolder, serviceContext);
 
-		List<Object> foldersAndFileEntriesAndFileShortcuts =
-			getFoldersAndFileEntriesAndFileShortcuts(
-				fromRepository.getRepositoryId(), folderId,
-				WorkflowConstants.STATUS_ANY, true, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
+		List<RepositoryEntry> repositoryEntries =
+			fromRepository.getFoldersAndFileEntriesAndFileShortcuts(
+				folderId, WorkflowConstants.STATUS_ANY, true, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
 
 		try {
-			for (Object folderAndFileEntryAndFileShortcut :
-					foldersAndFileEntriesAndFileShortcuts) {
-
-				if (folderAndFileEntryAndFileShortcut instanceof FileEntry) {
-					FileEntry fileEntry =
-						(FileEntry)folderAndFileEntryAndFileShortcut;
+			for (RepositoryEntry repositoryEntry : repositoryEntries) {
+				if (repositoryEntry instanceof FileEntry) {
+					FileEntry fileEntry = (FileEntry)repositoryEntry;
 
 					copyFileEntry(
 						toRepository, fileEntry, newFolder.getFolderId(),
 						serviceContext);
 				}
-				else if (folderAndFileEntryAndFileShortcut instanceof Folder) {
-					Folder currentFolder =
-						(Folder)folderAndFileEntryAndFileShortcut;
+				else if (repositoryEntry instanceof Folder) {
+					Folder currentFolder = (Folder)repositoryEntry;
 
 					moveFolders(
 						currentFolder.getFolderId(), newFolder.getFolderId(),
 						fromRepository, toRepository, serviceContext);
 				}
-				else if (folderAndFileEntryAndFileShortcut
-							instanceof DLFileShortcut) {
-
+				else if (repositoryEntry instanceof FileShortcut) {
 					if (newFolder.isSupportsShortcuts()) {
-						DLFileShortcut dlFileShorcut =
-							(DLFileShortcut)folderAndFileEntryAndFileShortcut;
+						FileShortcut fileShortcut =
+							(FileShortcut)repositoryEntry;
 
 						dlFileShortcutService.addFileShortcut(
-							dlFileShorcut.getGroupId(), newFolder.getFolderId(),
-							dlFileShorcut.getToFileEntryId(), serviceContext);
+							fileShortcut.getGroupId(), newFolder.getFolderId(),
+							fileShortcut.getToFileEntryId(), serviceContext);
 					}
 				}
 			}
