@@ -224,3 +224,44 @@ Some content (such as web content) needs the `PortletRequest` and
 `PortletResponse` parameters in order to be rendered.
 
 ---------------------------------------
+
+### Removed trash logic from `DLAppHelperLocalService` methods
+- **Date:** 2014-Jun-11
+- **JIRA Ticket:** LPS-47508
+
+#### What changed?
+
+The methods `deleteFileEntry` and `deleteFolder` in `DLAppHelperLocalService`
+deleted the corresponding trash entry in the database. This logic has been
+removed from these methods.
+
+#### Who is affected?
+
+Every caller of `deleteFileEntry` and `deleteFolder`.
+
+#### How should I update my code?
+
+There is no direct replacement. Trash operations are now accessible through the
+`TrashCapability` implementations for each repository:
+
+```
+Repository repository = getRepository();
+
+TrashCapability trashCapability = repository.getCapability(
+    TrashCapability.class);
+
+FileEntry fileEntry = repository.getFileEntry(fileEntryId);
+
+trashCapability.deleteFileEntry(fileEntry);
+```
+
+Note that the `deleteFileEntry` and `deleteFolder` methods in `TrashCapability`
+not only remove the trash entry, but also the folder or file entry itself (and
+any associated data as assets, previews, etc.).
+
+#### Why was this change made?
+
+To make possible for different kinds of repositories to support trash
+operations in a uniform way. 
+
+---------------------------------------
