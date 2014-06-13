@@ -24,34 +24,29 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  */
 @ProviderType
 public class BlogsStatsUserFinderUtil {
-	public static int countByOrganizationId(long organizationId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByOrganizationId(long organizationId) {
 		return getFinder().countByOrganizationId(organizationId);
 	}
 
 	public static int countByOrganizationIds(
-		java.util.List<java.lang.Long> organizationIds)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.util.List<java.lang.Long> organizationIds) {
 		return getFinder().countByOrganizationIds(organizationIds);
 	}
 
 	public static java.util.List<com.liferay.portlet.blogs.model.BlogsStatsUser> findByGroupIds(
-		long companyId, long groupId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long companyId, long groupId, int start, int end) {
 		return getFinder().findByGroupIds(companyId, groupId, start, end);
 	}
 
 	public static java.util.List<com.liferay.portlet.blogs.model.BlogsStatsUser> findByOrganizationId(
 		long organizationId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator obc) {
 		return getFinder().findByOrganizationId(organizationId, start, end, obc);
 	}
 
 	public static java.util.List<com.liferay.portlet.blogs.model.BlogsStatsUser> findByOrganizationIds(
 		java.util.List<java.lang.Long> organizationIds, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator obc) {
 		return getFinder()
 				   .findByOrganizationIds(organizationIds, start, end, obc);
 	}

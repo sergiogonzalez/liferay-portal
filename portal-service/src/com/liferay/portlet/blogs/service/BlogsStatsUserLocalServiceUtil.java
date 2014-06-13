@@ -260,105 +260,88 @@ public class BlogsStatsUserLocalServiceUtil {
 	}
 
 	public static void deleteStatsUser(
-		com.liferay.portlet.blogs.model.BlogsStatsUser statsUsers)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.blogs.model.BlogsStatsUser statsUsers) {
 		getService().deleteStatsUser(statsUsers);
 	}
 
 	public static void deleteStatsUser(long statsUserId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteStatsUser(statsUserId);
 	}
 
-	public static void deleteStatsUserByGroupId(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void deleteStatsUserByGroupId(long groupId) {
 		getService().deleteStatsUserByGroupId(groupId);
 	}
 
-	public static void deleteStatsUserByUserId(long userId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void deleteStatsUserByUserId(long userId) {
 		getService().deleteStatsUserByUserId(userId);
 	}
 
 	public static java.util.List<com.liferay.portlet.blogs.model.BlogsStatsUser> getCompanyStatsUsers(
-		long companyId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long companyId, int start, int end) {
 		return getService().getCompanyStatsUsers(companyId, start, end);
 	}
 
 	public static java.util.List<com.liferay.portlet.blogs.model.BlogsStatsUser> getCompanyStatsUsers(
 		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator obc) {
 		return getService().getCompanyStatsUsers(companyId, start, end, obc);
 	}
 
-	public static int getCompanyStatsUsersCount(long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int getCompanyStatsUsersCount(long companyId) {
 		return getService().getCompanyStatsUsersCount(companyId);
 	}
 
 	public static java.util.List<com.liferay.portlet.blogs.model.BlogsStatsUser> getGroupsStatsUsers(
-		long companyId, long groupId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long companyId, long groupId, int start, int end) {
 		return getService().getGroupsStatsUsers(companyId, groupId, start, end);
 	}
 
 	public static java.util.List<com.liferay.portlet.blogs.model.BlogsStatsUser> getGroupStatsUsers(
-		long groupId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, int start, int end) {
 		return getService().getGroupStatsUsers(groupId, start, end);
 	}
 
 	public static java.util.List<com.liferay.portlet.blogs.model.BlogsStatsUser> getGroupStatsUsers(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator obc) {
 		return getService().getGroupStatsUsers(groupId, start, end, obc);
 	}
 
-	public static int getGroupStatsUsersCount(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int getGroupStatsUsersCount(long groupId) {
 		return getService().getGroupStatsUsersCount(groupId);
 	}
 
 	public static java.util.List<com.liferay.portlet.blogs.model.BlogsStatsUser> getOrganizationStatsUsers(
-		long organizationId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long organizationId, int start, int end) {
 		return getService().getOrganizationStatsUsers(organizationId, start, end);
 	}
 
 	public static java.util.List<com.liferay.portlet.blogs.model.BlogsStatsUser> getOrganizationStatsUsers(
 		long organizationId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator obc) {
 		return getService()
 				   .getOrganizationStatsUsers(organizationId, start, end, obc);
 	}
 
-	public static int getOrganizationStatsUsersCount(long organizationId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int getOrganizationStatsUsersCount(long organizationId) {
 		return getService().getOrganizationStatsUsersCount(organizationId);
 	}
 
 	public static com.liferay.portlet.blogs.model.BlogsStatsUser getStatsUser(
 		long groupId, long userId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getStatsUser(groupId, userId);
 	}
 
 	public static void updateStatsUser(long groupId, long userId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().updateStatsUser(groupId, userId);
 	}
 
 	public static void updateStatsUser(long groupId, long userId,
 		java.util.Date displayDate)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().updateStatsUser(groupId, userId, displayDate);
 	}
 

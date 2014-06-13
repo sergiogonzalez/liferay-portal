@@ -23,31 +23,25 @@ import aQute.bnd.annotation.ProviderType;
 public interface BlogsEntryFinder {
 	public int countByOrganizationId(long organizationId,
 		java.util.Date displayDate,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition);
 
 	public int countByOrganizationIds(
 		java.util.List<java.lang.Long> organizationIds,
 		java.util.Date displayDate,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition);
 
 	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByGroupIds(
 		long companyId, long groupId, java.util.Date displayDate,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition);
 
 	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByOrganizationId(
 		long organizationId, java.util.Date displayDate,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition);
 
 	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByOrganizationIds(
 		java.util.List<java.lang.Long> organizationIds,
 		java.util.Date displayDate,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition);
 
-	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByNoAssets()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public java.util.List<com.liferay.portlet.blogs.model.BlogsEntry> findByNoAssets();
 }

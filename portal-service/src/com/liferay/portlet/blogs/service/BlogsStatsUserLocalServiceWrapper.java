@@ -275,34 +275,29 @@ public class BlogsStatsUserLocalServiceWrapper
 
 	@Override
 	public void deleteStatsUser(
-		com.liferay.portlet.blogs.model.BlogsStatsUser statsUsers)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portlet.blogs.model.BlogsStatsUser statsUsers) {
 		_blogsStatsUserLocalService.deleteStatsUser(statsUsers);
 	}
 
 	@Override
 	public void deleteStatsUser(long statsUserId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		_blogsStatsUserLocalService.deleteStatsUser(statsUserId);
 	}
 
 	@Override
-	public void deleteStatsUserByGroupId(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void deleteStatsUserByGroupId(long groupId) {
 		_blogsStatsUserLocalService.deleteStatsUserByGroupId(groupId);
 	}
 
 	@Override
-	public void deleteStatsUserByUserId(long userId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public void deleteStatsUserByUserId(long userId) {
 		_blogsStatsUserLocalService.deleteStatsUserByUserId(userId);
 	}
 
 	@Override
 	public java.util.List<com.liferay.portlet.blogs.model.BlogsStatsUser> getCompanyStatsUsers(
-		long companyId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long companyId, int start, int end) {
 		return _blogsStatsUserLocalService.getCompanyStatsUsers(companyId,
 			start, end);
 	}
@@ -310,30 +305,26 @@ public class BlogsStatsUserLocalServiceWrapper
 	@Override
 	public java.util.List<com.liferay.portlet.blogs.model.BlogsStatsUser> getCompanyStatsUsers(
 		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator obc) {
 		return _blogsStatsUserLocalService.getCompanyStatsUsers(companyId,
 			start, end, obc);
 	}
 
 	@Override
-	public int getCompanyStatsUsersCount(long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public int getCompanyStatsUsersCount(long companyId) {
 		return _blogsStatsUserLocalService.getCompanyStatsUsersCount(companyId);
 	}
 
 	@Override
 	public java.util.List<com.liferay.portlet.blogs.model.BlogsStatsUser> getGroupsStatsUsers(
-		long companyId, long groupId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long companyId, long groupId, int start, int end) {
 		return _blogsStatsUserLocalService.getGroupsStatsUsers(companyId,
 			groupId, start, end);
 	}
 
 	@Override
 	public java.util.List<com.liferay.portlet.blogs.model.BlogsStatsUser> getGroupStatsUsers(
-		long groupId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long groupId, int start, int end) {
 		return _blogsStatsUserLocalService.getGroupStatsUsers(groupId, start,
 			end);
 	}
@@ -341,22 +332,19 @@ public class BlogsStatsUserLocalServiceWrapper
 	@Override
 	public java.util.List<com.liferay.portlet.blogs.model.BlogsStatsUser> getGroupStatsUsers(
 		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator obc) {
 		return _blogsStatsUserLocalService.getGroupStatsUsers(groupId, start,
 			end, obc);
 	}
 
 	@Override
-	public int getGroupStatsUsersCount(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public int getGroupStatsUsersCount(long groupId) {
 		return _blogsStatsUserLocalService.getGroupStatsUsersCount(groupId);
 	}
 
 	@Override
 	public java.util.List<com.liferay.portlet.blogs.model.BlogsStatsUser> getOrganizationStatsUsers(
-		long organizationId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long organizationId, int start, int end) {
 		return _blogsStatsUserLocalService.getOrganizationStatsUsers(organizationId,
 			start, end);
 	}
@@ -364,38 +352,33 @@ public class BlogsStatsUserLocalServiceWrapper
 	@Override
 	public java.util.List<com.liferay.portlet.blogs.model.BlogsStatsUser> getOrganizationStatsUsers(
 		long organizationId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator obc) {
 		return _blogsStatsUserLocalService.getOrganizationStatsUsers(organizationId,
 			start, end, obc);
 	}
 
 	@Override
-	public int getOrganizationStatsUsersCount(long organizationId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public int getOrganizationStatsUsersCount(long organizationId) {
 		return _blogsStatsUserLocalService.getOrganizationStatsUsersCount(organizationId);
 	}
 
 	@Override
 	public com.liferay.portlet.blogs.model.BlogsStatsUser getStatsUser(
 		long groupId, long userId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _blogsStatsUserLocalService.getStatsUser(groupId, userId);
 	}
 
 	@Override
 	public void updateStatsUser(long groupId, long userId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		_blogsStatsUserLocalService.updateStatsUser(groupId, userId);
 	}
 
 	@Override
 	public void updateStatsUser(long groupId, long userId,
 		java.util.Date displayDate)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		_blogsStatsUserLocalService.updateStatsUser(groupId, userId, displayDate);
 	}
 
