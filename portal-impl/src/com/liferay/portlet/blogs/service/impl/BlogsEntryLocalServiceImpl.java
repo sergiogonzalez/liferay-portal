@@ -1059,13 +1059,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		saveImages(smallImage, entry.getSmallImageId(), smallImageBytes);
 
-		// Asset
-
-		updateAsset(
-			userId, entry, serviceContext.getAssetCategoryIds(),
-			serviceContext.getAssetTagNames(),
-			serviceContext.getAssetLinkEntryIds());
-
 		// Workflow
 
 		boolean pingOldTrackbacks = false;
@@ -1084,7 +1077,14 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			serviceContext.setAttribute("trackbacks", null);
 		}
 
-		startWorkflowInstance(userId, entry, serviceContext);
+		entry =  startWorkflowInstance(userId, entry, serviceContext);
+
+		// Asset
+
+		updateAsset(
+			userId, entry, serviceContext.getAssetCategoryIds(),
+			serviceContext.getAssetTagNames(),
+			serviceContext.getAssetLinkEntryIds());
 
 		return entry;
 	}
@@ -1669,7 +1669,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		}
 	}
 
-	protected void startWorkflowInstance(
+	protected BlogsEntry startWorkflowInstance(
 			long userId, BlogsEntry entry, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -1679,7 +1679,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		workflowContext.put(
 			WorkflowConstants.CONTEXT_URL, getEntryURL(entry, serviceContext));
 
-		WorkflowHandlerRegistryUtil.startWorkflowInstance(
+		return WorkflowHandlerRegistryUtil.startWorkflowInstance(
 			entry.getCompanyId(), entry.getGroupId(), userId,
 			BlogsEntry.class.getName(), entry.getEntryId(), entry,
 			serviceContext, workflowContext);
