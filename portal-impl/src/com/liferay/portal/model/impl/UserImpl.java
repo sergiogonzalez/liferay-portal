@@ -414,7 +414,7 @@ public class UserImpl extends UserBaseImpl {
 			ThemeDisplay themeDisplay, boolean privateLayout)
 		throws PortalException {
 
-		if (isDefaultUser()) {
+		if (isDefaultUser() || themeDisplay == null) {
 			return StringPool.BLANK;
 		}
 
@@ -696,6 +696,10 @@ public class UserImpl extends UserBaseImpl {
 	@Override
 	public String getPortraitURL(ThemeDisplay themeDisplay)
 		throws PortalException {
+
+		if (themeDisplay == null) {
+			return StringPool.BLANK;
+		}
 
 		return UserConstants.getPortraitURL(
 			themeDisplay.getPathImage(), isMale(), getPortraitId(),
