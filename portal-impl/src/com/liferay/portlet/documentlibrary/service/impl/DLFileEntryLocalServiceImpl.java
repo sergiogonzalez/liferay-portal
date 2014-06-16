@@ -80,6 +80,7 @@ import com.liferay.portlet.documentlibrary.InvalidFileVersionException;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryMetadataException;
 import com.liferay.portlet.documentlibrary.NoSuchFileVersionException;
+import com.liferay.portlet.documentlibrary.action.EditFileEntryAction;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
@@ -159,6 +160,12 @@ public class DLFileEntryLocalServiceImpl
 			else {
 				title = sourceFileName;
 			}
+		}
+
+		int pos = sourceFileName.indexOf(EditFileEntryAction.TEMP_RANDOM_SUFFIX);
+
+		if (pos != -1) {
+			sourceFileName = sourceFileName.substring(0, pos);
 		}
 
 		// File entry
