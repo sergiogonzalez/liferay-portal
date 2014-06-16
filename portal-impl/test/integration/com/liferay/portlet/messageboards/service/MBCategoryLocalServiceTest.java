@@ -50,9 +50,9 @@ public class MBCategoryLocalServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		Group group = GroupTestUtil.addGroup();
+		_group = GroupTestUtil.addGroup();
 
-		_groupId = group.getGroupId();
+		_groupId = _group.getGroupId();
 	}
 
 	@Test
@@ -363,6 +363,8 @@ public class MBCategoryLocalServiceTest {
 	}
 
 	@DeleteAfterTestRun
+	private Group _group;
+
 	private long _groupId;
 
 }
