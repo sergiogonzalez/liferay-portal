@@ -123,7 +123,7 @@ String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageI
 											iconCssClass="icon-search"
 											id="selectStructure"
 											label="<%= true %>"
-											linkCssClass="btn"
+											linkCssClass="btn btn-default"
 											message="select"
 											url="javascript:;"
 										/>
@@ -158,7 +158,7 @@ String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageI
 										iconCssClass="icon-search"
 										id="selectTemplate"
 										label="<%= true %>"
-										linkCssClass="btn"
+										linkCssClass="btn btn-default"
 										message="select"
 										url="javascript:;"
 									/>
@@ -410,7 +410,7 @@ String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageI
 		}
 	);
 
-	Liferay.Util.disableToggleBoxes('<portlet:namespace />autoArticleIdCheckbox','<portlet:namespace />newArticleId', true);
+	Liferay.Util.disableToggleBoxes('<portlet:namespace />autoArticleId','<portlet:namespace />newArticleId', true);
 </aui:script>
 
 <%!
