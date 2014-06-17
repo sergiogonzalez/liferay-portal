@@ -115,7 +115,7 @@ long folderId = BeanParamUtil.getLong(fileEntry, request, "folderId");
 
 							var inputTpl = '<input id="<portlet:namespace />selectedFileName{0}" name="<portlet:namespace />selectedFileName" type="hidden" value="{1}" />';
 
-							var values = A.all('input[name=<portlet:namespace />selectUploadedFileCheckbox]:checked').val();
+							var values = A.all('input[name=<portlet:namespace />selectUploadedFile]:checked').val();
 
 							var buffer = [];
 							var dataBuffer = [];
@@ -224,7 +224,7 @@ long folderId = BeanParamUtil.getLong(fileEntry, request, "folderId");
 		</aui:row>
 	</c:when>
 	<c:otherwise>
-		<div class="alert alert-error">
+		<div class="alert alert-danger">
 			<liferay-ui:message key="you-do-not-have-the-required-permissions-to-access-this-application" />
 		</div>
 	</c:otherwise>

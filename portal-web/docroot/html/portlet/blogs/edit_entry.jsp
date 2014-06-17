@@ -384,7 +384,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 						on: {
 							failure: function() {
 								if (saveStatus) {
-									saveStatus.set('className', 'alert alert-error save-status');
+									saveStatus.set('className', 'alert alert-danger save-status');
 									saveStatus.html('<%= UnicodeLanguageUtil.get(pageContext, "could-not-save-draft-to-the-server") %>');
 								}
 							},
@@ -528,8 +528,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 
 					var expanded = !instance.get('expanded');
 
-					A.one('#<portlet:namespace />smallImage').set('value', expanded);
-					A.one('#<portlet:namespace />smallImageCheckbox').set('checked', expanded);
+					A.one('#<portlet:namespace />smallImage').set('checked', expanded);
 
 					if (expanded) {
 						types.each(

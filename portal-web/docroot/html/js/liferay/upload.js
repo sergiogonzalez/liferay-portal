@@ -15,13 +15,13 @@ AUI.add(
 
 		var STRINGS = 'strings';
 
-		var TPL_ERROR_MESSAGE = '<div class="alert alert-error">{0}</div>';
+		var TPL_ERROR_MESSAGE = '<div class="alert alert-danger">{0}</div>';
 
 		var TPL_FILE_LIST = [
 			'<tpl for=".">',
 				'<tpl if="!values.error">',
 					'<li class="upload-file {[ values.temp ? "upload-complete pending-file selectable" : "" ]} {[ values.selected ? "selected" : "" ]}" data-fileId="{id}" data-fileName="{[ Liferay.Util.escapeHTML(values.name) ]}" data-title="{[ Liferay.Util.escapeHTML(values.title ? values.title : values.name) ]}" id="{id}">',
-						'<input class="{[ !values.temp ? "hide" : "" ]} select-file" data-fileName="{[ Liferay.Util.escapeHTML(values.name) ]}" data-title="{[ Liferay.Util.escapeHTML(values.title ? values.title : values.name) ]}" id="{id}checkbox" name="{$ns}selectUploadedFileCheckbox" type="{[ this.multipleFiles ? "checkbox" : "hidden" ]}" value="{[ Liferay.Util.escapeHTML(values.name) ]}" />',
+						'<input class="{[ !values.temp ? "hide" : "" ]} select-file" data-fileName="{[ Liferay.Util.escapeHTML(values.name) ]}" data-title="{[ Liferay.Util.escapeHTML(values.title ? values.title : values.name) ]}" id="{id}checkbox" name="{$ns}selectUploadedFile" type="{[ this.multipleFiles ? "checkbox" : "hidden" ]}" value="{[ Liferay.Util.escapeHTML(values.name) ]}" />',
 						'<span class="file-title" title="{[ Liferay.Util.escapeHTML(values.title ? values.title : values.name) ]}">{[ Liferay.Util.escapeHTML(values.title ? values.title : values.name) ]}</span>',
 						'<span class="progress-bar">',
 							'<span class="progress" id="{id}progress"></span>',
@@ -48,7 +48,7 @@ AUI.add(
 					'</li>',
 				'</tpl>',
 				'<tpl if="values.error && !this.multipleFiles">',
-					'<li class="alert alert-error upload-error" data-fileId="{id}" id="{id}">',
+					'<li class="alert alert-danger upload-error" data-fileId="{id}" id="{id}">',
 						'<h4 class="upload-error-message">{[ Lang.sub(this.strings.fileCannotBeSavedText, [Liferay.Util.escapeHTML(values.name)]) ]}</h4>',
 						'<span class="error-message" title="{[ Liferay.Util.escapeHTML(values.error) ]}">{[ Liferay.Util.escapeHTML(values.error) ]}</span>',
 						'<tpl if="values.messageListItems && (values.messageListItems.length > 0)">',
@@ -88,7 +88,7 @@ AUI.add(
 						'<h4 class="drop-file-text">{[ this.dropFileText ]}<span class="or-text">{[ this.strings.orText ]}</span></h4>',
 					'</tpl>',
 					'<span class="select-files-container" id="{$ns}selectFilesButton">',
-						'<button class="btn" type="button">{[ this.selectFilesText ]}</button>',
+						'<button class="btn btn-default" type="button">{[ this.selectFilesText ]}</button>',
 					'</span>',
 				'</div>',
 			'</div>',
@@ -104,7 +104,7 @@ AUI.add(
 					'<span class="field field-choice select-files">',
 						'<span class="field-content">',
 							'<span class="field-element">',
-								'<input class="select-all-files" id="{$ns}allRowIdsCheckbox" name="{$ns}allRowIdsCheckbox" type="checkbox" />',
+								'<input class="select-all-files" id="{$ns}allRowIds" name="{$ns}allRowIds" type="checkbox" />',
 							'</span>',
 						'</span>',
 					'</span>',
@@ -115,7 +115,7 @@ AUI.add(
 			'</div>',
 
 			'<div class="upload-list" id="{$ns}fileList">',
-				'<ul class="unstyled {[ this.multipleFiles ? "multiple-files" : "single-file" ]}" id="{$ns}fileListContent"></ul>',
+				'<ul class="list-unstyled {[ this.multipleFiles ? "multiple-files" : "single-file" ]}" id="{$ns}fileListContent"></ul>',
 			'</div>'
 		];
 
@@ -933,12 +933,12 @@ AUI.add(
 
 						instance._fileListTPL = new A.Template(TPL_FILE_LIST, templateConfig);
 
-						instance._selectUploadedFileCheckboxId = instance.ns('selectUploadedFileCheckbox');
+						instance._selectUploadedFileCheckboxId = instance.ns('selectUploadedFile');
 
 						var NS = instance.NS;
 
 						instance._fileListSelector = formatSelectorNS(NS, '#fileList');
-						instance._allRowIdsCheckboxSelector = formatSelectorNS(NS, '#allRowIdsCheckbox');
+						instance._allRowIdsCheckboxSelector = formatSelectorNS(NS, '#allRowIds');
 
 						var uploadFragment = new A.Template(TPL_UPLOAD, templateConfig).render(
 							{

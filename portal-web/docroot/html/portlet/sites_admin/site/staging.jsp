@@ -48,7 +48,7 @@ BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskLoc
 </c:if>
 
 <c:if test="<%= (lastCompletedInitialPublicationBackgroundTask != null) && (lastCompletedInitialPublicationBackgroundTask.getStatus() == BackgroundTaskConstants.STATUS_FAILED) %>">
-	<div class="alert alert-error">
+	<div class="alert alert-danger">
 		<liferay-ui:message key="an-unexpected-error-occurred--with-the-initial-staging-publication" />
 
 		<liferay-portlet:actionURL portletName="<%= PortletKeys.GROUP_PAGES %>" var="deleteBackgroundTaskURL">
@@ -230,7 +230,7 @@ BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskLoc
 					boolean staged = GetterUtil.getBoolean(liveGroupTypeSettings.getProperty(StagingUtil.getStagedPortletId(curPortlet.getRootPortletId())), portletDataHandler.isPublishToLiveByDefault());
 				%>
 
-					<aui:input disabled="<%= liveGroupRemoteStaging %>" label="<%= PortalUtil.getPortletTitle(curPortlet, application, locale) %>" name="<%= StagingUtil.getStagedPortletId(curPortlet.getRootPortletId()) %>" type="checkbox" value="<%= staged %>" />
+					<aui:input disabled="<%= liveGroupRemoteStaging %>" label="<%= PortalUtil.getPortletTitle(curPortlet, application, locale) %>" name="<%= StagingConstants.STAGED_PREFIX + StagingUtil.getStagedPortletId(curPortlet.getRootPortletId()) + StringPool.DOUBLE_DASH %>" type="checkbox" value="<%= staged %>" />
 
 				<%
 				}
