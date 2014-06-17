@@ -61,7 +61,7 @@ boolean splitThread = false;
 	%>
 
 	<aui:fieldset>
-		<div class="control-group">
+		<div class="form-group">
 			<aui:input label="category[message-board]" name="categoryName" type="resource" value='<%= ((categoryId != MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) && (categoryId != MBCategoryConstants.DISCUSSION_CATEGORY_ID)) ? category.getName() : LanguageUtil.get(pageContext, "message-boards-home") %>' />
 
 			<aui:button name="selectCategoryButton" value="select" />
@@ -73,7 +73,7 @@ boolean splitThread = false;
 			<aui:input maxlength="75" name="subject" style="width: 350px;" value="">
 				<aui:validator name="required">
 					function() {
-						return A.one('#<portlet:namespace />addExplanationPostCheckbox').get('checked');
+						return A.one('#<portlet:namespace />addExplanationPost').get('checked');
 					}
 				</aui:validator>
 			</aui:input>
@@ -101,7 +101,7 @@ boolean splitThread = false;
 	}
 
 	function <portlet:namespace />toggleExplanationPost() {
-		if (document.getElementById('<portlet:namespace />addExplanationPostCheckbox').checked) {
+		if (document.getElementById('<portlet:namespace />addExplanationPost').checked) {
 			document.getElementById('<portlet:namespace />explanationPost').style.display = '';
 		}
 		else {
