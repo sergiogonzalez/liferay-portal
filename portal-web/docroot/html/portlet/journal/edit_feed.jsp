@@ -185,7 +185,7 @@ if (feed != null) {
 
 				</aui:select>
 
-				<div class="control-group">
+				<div class="form-group">
 					<aui:input name="structureId" required="<%= true %>" type="hidden" value="<%= structureId %>" />
 
 					<aui:input name="structure" type="resource" value="<%= ddmStructureName %>" />
@@ -414,7 +414,7 @@ if (feed != null) {
 		}
 	}
 
-	Liferay.Util.disableToggleBoxes('<portlet:namespace />autoFeedIdCheckbox','<portlet:namespace />newFeedId', true);
+	Liferay.Util.disableToggleBoxes('<portlet:namespace />autoFeedId','<portlet:namespace />newFeedId', true);
 </aui:script>
 
 <aui:script use="aui-base">
