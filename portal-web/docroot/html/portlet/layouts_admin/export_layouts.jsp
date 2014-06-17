@@ -167,7 +167,7 @@ if (!cmd.equals(Constants.ADD)) {
 	<liferay-ui:section>
 		<div <%= (!cmd.equals(Constants.ADD) && !cmd.equals(Constants.UPDATE)) ? StringPool.BLANK : "class=\"hide\"" %>>
 			<aui:nav-bar>
-				<aui:nav id="exportConfigurationButtons">
+				<aui:nav cssClass="navbar-nav" id="exportConfigurationButtons">
 					<aui:nav-item
 						data-value="custom"
 						iconCssClass="icon-puzzle"
@@ -250,7 +250,7 @@ if (!cmd.equals(Constants.ADD)) {
 							<aui:input name="<%= PortletDataHandlerKeys.PORTLET_DATA %>" type="hidden" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_DATA, true) %>" />
 							<aui:input name="<%= PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT %>" type="hidden" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT, true) %>" />
 
-							<ul class="lfr-tree unstyled">
+							<ul class="lfr-tree list-unstyled">
 								<li class="tree-item">
 									<aui:input checked="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.PORTLET_DATA_ALL, true) %>" helpMessage="all-content-export-help" id="allContent" label="all-content" name="<%= PortletDataHandlerKeys.PORTLET_DATA_ALL %>" type="radio" value="<%= true %>" />
 
@@ -259,7 +259,7 @@ if (!cmd.equals(Constants.ADD)) {
 									<ul class="hide select-options" id="<portlet:namespace />selectContents">
 										<li>
 											<div class="hide" id="<portlet:namespace />range">
-												<ul class="lfr-tree unstyled">
+												<ul class="lfr-tree list-unstyled">
 													<li class="tree-item">
 														<aui:fieldset cssClass="portlet-data-section" label="date-range">
 
@@ -288,7 +288,7 @@ if (!cmd.equals(Constants.ADD)) {
 															}
 															%>
 
-															<ul class="date-range-options hide unstyled" id="<portlet:namespace />startEndDate">
+															<ul class="date-range-options hide list-unstyled" id="<portlet:namespace />startEndDate">
 																<li>
 																	<aui:fieldset label="start-date">
 																		<liferay-ui:input-date
@@ -354,7 +354,7 @@ if (!cmd.equals(Constants.ADD)) {
 
 															<aui:input checked="<%= selectedRange.equals(ExportImportDateUtil.RANGE_LAST) %>" id="rangeLast" label='<%= LanguageUtil.get(pageContext, "last") + StringPool.TRIPLE_PERIOD %>' name="range" type="radio" value="<%= ExportImportDateUtil.RANGE_LAST %>" />
 
-															<ul class="hide unstyled" id="<portlet:namespace />rangeLastInputs">
+															<ul class="hide list-unstyled" id="<portlet:namespace />rangeLastInputs">
 																<li>
 																	<aui:select cssClass="relative-range" label="" name="last">
 
@@ -434,7 +434,7 @@ if (!cmd.equals(Constants.ADD)) {
 															%>
 
 																<div class="hide" id="<portlet:namespace />content_<%= portlet.getPortletId() %>">
-																	<ul class="lfr-tree unstyled">
+																	<ul class="lfr-tree list-unstyled">
 																		<li class="tree-item">
 																			<aui:fieldset cssClass="portlet-type-data-section" label="<%= portletTitle %>">
 
@@ -448,7 +448,7 @@ if (!cmd.equals(Constants.ADD)) {
 																				%>
 
 																					<aui:field-wrapper label='<%= ArrayUtil.isNotEmpty(metadataControls) ? "content" : StringPool.BLANK %>'>
-																						<ul class="lfr-tree unstyled">
+																						<ul class="lfr-tree list-unstyled">
 																							<liferay-util:include page="/html/portlet/layouts_admin/render_controls.jsp" />
 																						</ul>
 																					</aui:field-wrapper>
@@ -474,7 +474,7 @@ if (!cmd.equals(Constants.ADD)) {
 																						%>
 
 																						<aui:field-wrapper label="content-metadata">
-																							<ul class="lfr-tree unstyled">
+																							<ul class="lfr-tree list-unstyled">
 																								<liferay-util:include page="/html/portlet/layouts_admin/render_controls.jsp" />
 																							</ul>
 																						</aui:field-wrapper>
@@ -506,7 +506,7 @@ if (!cmd.equals(Constants.ADD)) {
 																</ul>
 
 																<aui:script>
-																	Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + portlet.getPortletId() %>Checkbox', '<portlet:namespace />showChangeContent<%= StringPool.UNDERLINE + portlet.getPortletId() %>');
+																	Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + portlet.getPortletId() %>', '<portlet:namespace />showChangeContent<%= StringPool.UNDERLINE + portlet.getPortletId() %>');
 																</aui:script>
 
 															<%
@@ -528,7 +528,7 @@ if (!cmd.equals(Constants.ADD)) {
 												<aui:a cssClass="modify-link" href="javascript:;" id="contentOptionsLink" label="change" method="get" />
 
 												<div class="hide" id="<portlet:namespace />contentOptions">
-													<ul class="lfr-tree unstyled">
+													<ul class="lfr-tree list-unstyled">
 														<li class="tree-item">
 															<aui:input label="comments" name="<%= PortletDataHandlerKeys.COMMENTS %>" type="checkbox" value="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.COMMENTS, true) %>" />
 
@@ -610,14 +610,14 @@ if (!cmd.equals(Constants.ADD)) {
 
 	new Liferay.ExportImport(
 		{
-			archivedSetupsNode: '#<%= PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS_ALL %>Checkbox',
-			commentsNode: '#<%= PortletDataHandlerKeys.COMMENTS %>Checkbox',
-			deletionsNode: '#<%= PortletDataHandlerKeys.DELETIONS %>Checkbox',
+			archivedSetupsNode: '#<%= PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS_ALL %>',
+			commentsNode: '#<%= PortletDataHandlerKeys.COMMENTS %>',
+			deletionsNode: '#<%= PortletDataHandlerKeys.DELETIONS %>',
 			exportLAR: true,
 			form: document.<portlet:namespace />fm1,
 			incompleteProcessMessageNode: '#<portlet:namespace />incompleteProcessMessage',
-			layoutSetSettingsNode: '#<%= PortletDataHandlerKeys.LAYOUT_SET_SETTINGS %>Checkbox',
-			logoNode: '#<%= PortletDataHandlerKeys.LOGO %>Checkbox',
+			layoutSetSettingsNode: '#<%= PortletDataHandlerKeys.LAYOUT_SET_SETTINGS %>',
+			logoNode: '#<%= PortletDataHandlerKeys.LOGO %>',
 			namespace: '<portlet:namespace />',
 			pageTreeId: '<%= treeId %>',
 			processesNode: '#exportProcesses',
@@ -625,10 +625,10 @@ if (!cmd.equals(Constants.ADD)) {
 			rangeAllNode: '#rangeAll',
 			rangeDateRangeNode: '#rangeDateRange',
 			rangeLastNode: '#rangeLast',
-			ratingsNode: '#<%= PortletDataHandlerKeys.RATINGS %>Checkbox',
-			setupNode: '#<%= PortletDataHandlerKeys.PORTLET_SETUP_ALL %>Checkbox',
-			themeReferenceNode: '#<%= PortletDataHandlerKeys.THEME_REFERENCE %>Checkbox',
-			userPreferencesNode: '#<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES_ALL %>Checkbox'
+			ratingsNode: '#<%= PortletDataHandlerKeys.RATINGS %>',
+			setupNode: '#<%= PortletDataHandlerKeys.PORTLET_SETUP_ALL %>',
+			themeReferenceNode: '#<%= PortletDataHandlerKeys.THEME_REFERENCE %>',
+			userPreferencesNode: '#<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES_ALL %>'
 		}
 	);
 
@@ -645,18 +645,6 @@ if (!cmd.equals(Constants.ADD)) {
 
 			if (allContentRadioChecked) {
 				var selectedContents = A.one('#<portlet:namespace />selectContents');
-
-				var checkedNodes = selectedContents.all('input[type=checkbox]');
-
-				checkedNodes.each(
-					function(item, index, collection) {
-						if (!item.attr('checked')) {
-							item.attr('checked', true);
-
-							Liferay.Util.updateCheckboxValue(item);
-						}
-					}
-				);
 
 				var portletDataControlDefault = A.one('#<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT %>');
 
