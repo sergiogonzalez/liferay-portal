@@ -57,7 +57,9 @@ public abstract class BaseSubscriptionLocalizedContentTestCase
 	}
 
 	@Test
-	public void testSubscriptionLocalizedContent() throws Exception {
+	public void testSubscriptionLocalizedContentWhenAddingBaseModel()
+		throws Exception {
+
 		setAddBaseModelSubscriptionBodyPreferences();
 
 		addSubscriptionContainerModel(PARENT_CONTAINER_MODEL_ID_DEFAULT);
@@ -74,6 +76,38 @@ public abstract class BaseSubscriptionLocalizedContentTestCase
 		LocaleThreadLocal.setDefaultLocale(LocaleUtil.SPAIN);
 
 		addBaseModel(PARENT_CONTAINER_MODEL_ID_DEFAULT);
+
+		messages = MailServiceTestUtil.getMailMessages("Body", SPANISH_BODY);
+
+		Assert.assertEquals(1, messages.size());
+	}
+
+	@Test
+	public void testSubscriptionLocalizedContentWhenUpdatingBaseModel()
+		throws Exception {
+
+		setAddBaseModelSubscriptionBodyPreferences();
+
+		LocaleThreadLocal.setDefaultLocale(LocaleUtil.GERMANY);
+
+		long baseModelId = addBaseModel(PARENT_CONTAINER_MODEL_ID_DEFAULT);
+
+		addSubscriptionContainerModel(PARENT_CONTAINER_MODEL_ID_DEFAULT);
+
+		updateBaseModel(baseModelId);
+
+		List<MailMessage> messages = MailServiceTestUtil.getMailMessages(
+			"Body", GERMAN_BODY);
+
+		Assert.assertEquals(1, messages.size());
+
+		LocaleThreadLocal.setDefaultLocale(LocaleUtil.SPAIN);
+
+		baseModelId = addBaseModel(PARENT_CONTAINER_MODEL_ID_DEFAULT);
+
+		addSubscriptionContainerModel(PARENT_CONTAINER_MODEL_ID_DEFAULT);
+
+		updateBaseModel(baseModelId);
 
 		messages = MailServiceTestUtil.getMailMessages("Body", SPANISH_BODY);
 
