@@ -61,7 +61,7 @@ for (int i = 0; i < controls.length; i++) {
 				<aui:input data="<%= data %>" disabled="<%= controls[i].isDisabled() %>" helpMessage="<%= control.getHelpMessage(locale, action) %>" label="<%= controlLabel %>" name="<%= controlName %>" type="checkbox" value="<%= MapUtil.getBoolean(parameterMap, controlName, control.getDefaultState()) %>" />
 
 				<c:if test="<%= children != null %>">
-					<ul class="unstyled" id="<portlet:namespace /><%= controlName %>Controls">
+					<ul class="list-unstyled" id="<portlet:namespace /><%= controlName %>Controls">
 
 						<%
 						request.setAttribute("render_controls.jsp-controls", children);
@@ -71,7 +71,7 @@ for (int i = 0; i < controls.length; i++) {
 					</ul>
 
 					<aui:script>
-						Liferay.Util.toggleBoxes('<portlet:namespace /><%= controlName %>Checkbox', '<portlet:namespace /><%= controlName %>Controls', false, true);
+						Liferay.Util.toggleBoxes('<portlet:namespace /><%= controlName %>', '<portlet:namespace /><%= controlName %>Controls', false, true);
 					</aui:script>
 				</c:if>
 			</c:when>

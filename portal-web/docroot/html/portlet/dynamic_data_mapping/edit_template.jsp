@@ -138,14 +138,14 @@ if (Validator.isNotNull(structureAvailableFields)) {
 		<liferay-ui:panel-container cssClass="lfr-structure-entry-details-container" extended="<%= false %>" id="templateDetailsPanelContainer" persistState="<%= true %>">
 			<liferay-ui:panel collapsible="<%= true %>" defaultState="closed" extended="<%= false %>" id="templateDetailsSectionPanel" persistState="<%= true %>" title="details">
 				<c:if test="<%= ddmDisplay.isShowStructureSelector() %>">
-					<div class="control-group">
+					<div class="form-group">
 						<aui:input helpMessage="structure-help" name="structure" type="resource" value="<%= (structure != null) ? structure.getName(locale) : StringPool.BLANK %>" />
 
 						<c:if test="<%= ((template == null) || (template.getClassPK() == 0)) %>">
 							<liferay-ui:icon
 								iconCssClass="icon-search"
 								label="<%= true %>"
-								linkCssClass="btn"
+								linkCssClass="btn btn-default"
 								message="select"
 								url='<%= "javascript:" + renderResponse.getNamespace() + "openDDMStructureSelector();" %>'
 							/>
@@ -326,13 +326,13 @@ if (Validator.isNotNull(structureAvailableFields)) {
 			var values = container.all('.lfr-ddm-small-image-value');
 
 			var selectSmallImageType = function(index) {
-				types.set('checked', false);
+				types.attr('checked', false);
 
-				types.item(index).set('checked', true);
+				types.item(index).attr('checked', true);
 
-				values.set('disabled', true);
+				values.attr('disabled', true);
 
-				values.item(index).set('disabled', false);
+				values.item(index).attr('disabled', false);
 			};
 
 			container.delegate(
@@ -357,20 +357,19 @@ if (Validator.isNotNull(structureAvailableFields)) {
 
 							var expanded = !instance.get('expanded');
 
-							A.one('#<portlet:namespace />smallImage').set('value', expanded);
-							A.one('#<portlet:namespace />smallImageCheckbox').set('checked', expanded);
+							A.one('#<portlet:namespace />smallImage').attr('checked', expanded);
 
 							if (expanded) {
 								types.each(
 									function(item, index) {
 										if (item.get('checked')) {
-											values.item(index).set('disabled', false);
+											values.item(index).attr('disabled', false);
 										}
 									}
 								);
 							}
 							else {
-								values.set('disabled', true);
+								values.attr('disabled', true);
 							}
 						}
 					}

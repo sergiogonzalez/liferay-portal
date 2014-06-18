@@ -12,20 +12,31 @@
  * details.
  */
 
-package com.liferay.portal.security.auth;
+package com.liferay.portlet.dynamicdatamapping.util;
 
-import com.liferay.portal.kernel.security.pacl.DoPrivileged;
-import com.liferay.portal.kernel.util.InstancePool;
-import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 
 /**
- * @author Amos Fong
+ * @author Marcellus Tavares
  */
-@DoPrivileged
-public class AuthTokenImpl extends AuthTokenWrapper {
+public class DDMFormJSONDeserializerTest extends BaseDDMFormDeserializer {
 
-	public AuthTokenImpl() {
-		super((AuthToken)InstancePool.get(PropsValues.AUTH_TOKEN_IMPL));
+	@Override
+	protected DDMForm deserialize(String serializedDDMForm)
+		throws PortalException {
+
+		return DDMFormJSONDeserializerUtil.deserialize(serializedDDMForm);
+	}
+
+	@Override
+	protected String getDeserializerType() {
+		return "json";
+	}
+
+	@Override
+	protected String getTestFileExtension() {
+		return ".json";
 	}
 
 }

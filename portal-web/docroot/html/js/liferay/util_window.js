@@ -54,7 +54,7 @@ AUI.add(
 
 				IFRAME_SUFFIX: '_iframe_',
 
-				TITLE_TEMPLATE: '<h3 />',
+				TITLE_TEMPLATE: '<h3 class="modal-title" />',
 
 				_winResizeHandler: null,
 
@@ -164,7 +164,13 @@ AUI.add(
 										modalUtil.Window._name = id;
 									}
 
-									modal.iframe.node.focus();
+									var iframeNode = modal.iframe.node;
+
+									iframeNode.focus();
+
+									if (A.UA.ios) {
+										iframeNode.attr('scrolling', 'no');
+									}
 								}
 							}
 						)

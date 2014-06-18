@@ -39,6 +39,8 @@ import javax.portlet.PortletRequest;
  */
 public class ArticleDisplayTerms extends DisplayTerms {
 
+	public static final String ABSTRACT = "abstract";
+
 	public static final String ARTICLE_ID = "searchArticleId";
 
 	public static final String CONTENT = "content";

@@ -30,13 +30,13 @@ AUI.add(
 
 		var CSS_CATEGORY_ITEM_CHECK = 'category-item-check';
 
-		var CSS_COLUMN_WIDTH_CATEGORY = 'span5';
+		var CSS_COLUMN_WIDTH_CATEGORY = 'col-md-5';
 
-		var CSS_COLUMN_WIDTH_CATEGORY_FULL = 'span9';
+		var CSS_COLUMN_WIDTH_CATEGORY_FULL = 'col-md-9';
 
 		var CSS_MESSAGE_RESPONSE = 'lfr-message-response';
 
-		var CSS_MESSAGE_ERROR = 'alert alert-error';
+		var CSS_MESSAGE_ERROR = 'alert alert-danger';
 
 		var CSS_MESSAGE_SUCCESS = 'alert alert-success';
 
@@ -276,13 +276,13 @@ AUI.add(
 
 						A.one(idPrefix + 'deleteSelectedItems').on(EVENT_CLICK, instance._deleteSelected, instance);
 
-						var checkAllVocabulariesCheckbox = A.one(idPrefix + 'checkAllVocabulariesCheckbox');
+						var checkAllVocabulariesCheckbox = A.one(idPrefix + 'checkAllVocabularies');
 
 						checkAllVocabulariesCheckbox.on(EVENT_CLICK, instance._checkAllVocabularies, instance);
 
 						instance._checkAllVocabulariesCheckbox = checkAllVocabulariesCheckbox;
 
-						var checkAllCategoriesCheckbox = A.one(idPrefix + 'checkAllCategoriesCheckbox');
+						var checkAllCategoriesCheckbox = A.one(idPrefix + 'checkAllCategories');
 
 						checkAllCategoriesCheckbox.on(EVENT_CLICK, instance._checkAllCategories, instance);
 
@@ -1836,7 +1836,7 @@ AUI.add(
 
 								selectNode.append(buffer.join(STR_EMPTY));
 
-								selectNode.set('selectedIndex', selectedVocabularyIndex);
+								selectNode.attr('selectedIndex', selectedVocabularyIndex);
 							}
 						}
 					},
@@ -2198,7 +2198,7 @@ AUI.add(
 									if (vocabulary) {
 										var scrollTop = vocabulary.get('region').top;
 
-										A.one(instance._vocabularyListSelector).set('scrollTop', scrollTop);
+										A.one(instance._vocabularyListSelector).attr('scrollTop', scrollTop);
 									}
 								}
 							);
@@ -2471,7 +2471,7 @@ AUI.add(
 						var option = A.one('select.vocabulary-select-list option[value="' + value + '"]');
 
 						if (option) {
-							option.set(STR_SELECTED, true);
+							option.attr(STR_SELECTED, true);
 						}
 					},
 
@@ -2525,7 +2525,7 @@ AUI.add(
 
 						message = message || Liferay.Language.get('there-are-no-categories');
 
-						categoryMessages.set('className', CSS_MESSAGE_RESPONSE + STR_SPACE + className);
+						categoryMessages.attr('className', CSS_MESSAGE_RESPONSE + STR_SPACE + className);
 
 						categoryMessages.html(message);
 
@@ -2671,7 +2671,7 @@ AUI.add(
 
 						message = message || Liferay.Language.get('there-are-no-vocabularies');
 
-						vocabularyMessages.set('className', CSS_MESSAGE_RESPONSE + STR_SPACE + className);
+						vocabularyMessages.attr('className', CSS_MESSAGE_RESPONSE + STR_SPACE + className);
 
 						vocabularyMessages.html(message);
 

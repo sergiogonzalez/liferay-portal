@@ -2544,7 +2544,6 @@ public class PortalImpl implements Portal {
 
 	@Override
 	public Portlet getFirstMyAccountPortlet(ThemeDisplay themeDisplay) {
-
 		List<Portlet> portlets = getControlPanelPortlets(
 			PortletCategoryKeys.MY, themeDisplay);
 
@@ -4153,7 +4152,10 @@ public class PortalImpl implements Portal {
 
 	@Override
 	public String getPortalURL(HttpServletRequest request, boolean secure) {
-		String domain = getValidPortalDomain(request.getServerName());
+		long companyId = getCompanyId(request);
+
+		String domain = getValidPortalDomain(
+			companyId, request.getServerName());
 
 		return getPortalURL(domain, request.getServerPort(), secure);
 	}
@@ -4171,12 +4173,7 @@ public class PortalImpl implements Portal {
 		if (layout != null) {
 			Layout virtualHostLayout = layout;
 
-			long refererPlid = 0;
-
-			if (themeDisplay.getRequest() != null) {
-				refererPlid = ParamUtil.getLong(
-					themeDisplay.getRequest(), "refererPlid");
-			}
+			long refererPlid = themeDisplay.getRefererPlid();
 
 			if (refererPlid > 0) {
 				virtualHostLayout = LayoutLocalServiceUtil.getLayout(
@@ -4207,7 +4204,10 @@ public class PortalImpl implements Portal {
 
 	@Override
 	public String getPortalURL(PortletRequest portletRequest, boolean secure) {
-		String domain = getValidPortalDomain(portletRequest.getServerName());
+		long companyId = getCompanyId(portletRequest);
+
+		String domain = getValidPortalDomain(
+			companyId, portletRequest.getServerName());
 
 		return getPortalURL(domain, portletRequest.getServerPort(), secure);
 	}
@@ -5918,7 +5918,6 @@ public class PortalImpl implements Portal {
 	@Deprecated
 	@Override
 	public String getUserValue(long userId, String param, String defaultValue) {
-
 		if (Validator.isNotNull(defaultValue)) {
 			return defaultValue;
 		}
@@ -6627,7 +6626,6 @@ public class PortalImpl implements Portal {
 
 	@Override
 	public boolean isLoginRedirectRequired(HttpServletRequest request) {
-
 		if (PropsValues.COMPANY_SECURITY_AUTH_REQUIRES_HTTPS &&
 			!request.isSecure()) {
 
@@ -8193,13 +8191,34 @@ public class PortalImpl implements Portal {
 		return sb.toString();
 	}
 
-	protected String getValidPortalDomain(String domain) {
-		if (StringUtil.equalsIgnoreCase(domain, _LOCALHOST)) {
-			return _LOCALHOST;
+	protected String getValidPortalDomain(long companyId, String domain) {
+		for (String validVirtualHost : PropsValues.VIRTUAL_HOSTS_VALID_HOSTS) {
+			if (StringUtil.equalsIgnoreCase(domain, validVirtualHost)) {
+				return validVirtualHost;
+			}
+		}
+
+		if (StringUtil.equalsIgnoreCase(domain, PropsValues.WEB_SERVER_HOST)) {
+			return PropsValues.WEB_SERVER_HOST;
 		}
 
 		if (isValidVirtualHostname(domain)) {
 			return domain;
+		}
+
+		if (StringUtil.equalsIgnoreCase(domain, getCDNHostHttp(companyId))) {
+			return domain;
+		}
+
+		if (StringUtil.equalsIgnoreCase(domain, getCDNHostHttps(companyId))) {
+			return domain;
+		}
+
+		if (_log.isWarnEnabled()) {
+			_log.warn(
+				"Set the property \"" + PropsKeys.VIRTUAL_HOSTS_VALID_HOSTS +
+					"\" in portal.properties to allow " + domain +
+						" as a domain");
 		}
 
 		try {

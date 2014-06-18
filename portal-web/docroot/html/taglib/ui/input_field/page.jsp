@@ -42,6 +42,10 @@ Map<String, String> hints = ModelHintsUtil.getHints(model, field);
 if (hints != null) {
 	type = GetterUtil.getString(hints.get("type"), type);
 }
+
+if (type.equals("String")) {
+	cssClass += " form-control";
+}
 %>
 
 <c:if test="<%= type != null %>">
@@ -62,8 +66,8 @@ if (hints != null) {
 
 			boolean value = BeanPropertiesUtil.getBooleanSilent(bean, field, defaultBoolean);
 
-			if (!ignoreRequestValue) {
-				value = ParamUtil.getBoolean(request, fieldParam, value);
+			if (!ignoreRequestValue && Validator.isNotNull(ParamUtil.getString(request, "checkboxNames"))) {
+				value = Validator.isNotNull(ParamUtil.getString(request, fieldParam));
 			}
 			%>
 
@@ -248,7 +252,7 @@ if (hints != null) {
 				</div>
 
 				<aui:script use="aui-base">
-					var checkbox = A.one('#<portlet:namespace /><%= formName + fieldParam %>Checkbox');
+					var checkbox = A.one('#<portlet:namespace /><%= formName + fieldParam %>');
 
 					checkbox.once(
 						['click', 'mouseover'],
@@ -260,7 +264,7 @@ if (hints != null) {
 					checkbox.on(
 						['click', 'mouseover'],
 						function(event) {
-							var checked = document.getElementById('<portlet:namespace /><%= formName + fieldParam %>Checkbox').checked;
+							var checked = document.getElementById('<portlet:namespace /><%= formName + fieldParam %>').checked;
 
 							document.<portlet:namespace /><%= formName %>['<portlet:namespace /><%= fieldParam %>'].disabled = checked;
 							document.<portlet:namespace /><%= formName %>['<portlet:namespace /><%= fieldParam %>Month'].disabled = checked;
@@ -437,6 +441,7 @@ if (hints != null) {
 						</c:when>
 						<c:otherwise>
 							<liferay-ui:input-editor
+								contentsLanguageId="<%= languageId %>"
 								cssClass="<%= cssClass %>"
 								editorImpl="ckeditor"
 								initMethod='<%= fieldParam + \"InitEditor\" %>'

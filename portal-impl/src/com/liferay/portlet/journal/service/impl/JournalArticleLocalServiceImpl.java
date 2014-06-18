@@ -103,7 +103,7 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
-import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
+import com.liferay.portlet.dynamicdatamapping.storage.FieldConstants;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
@@ -1246,7 +1246,6 @@ public class JournalArticleLocalServiceImpl
 	 */
 	@Override
 	public void deleteLayoutArticleReferences(long groupId, String layoutUuid) {
-
 		List<JournalArticle> articles = journalArticlePersistence.findByG_L(
 			groupId, layoutUuid);
 
@@ -1396,7 +1395,6 @@ public class JournalArticleLocalServiceImpl
 
 	@Override
 	public JournalArticle fetchLatestIndexableArticle(long resourcePrimKey) {
-
 		OrderByComparator orderByComparator = new ArticleVersionComparator();
 
 		int[] statuses = new int[] {
@@ -1973,7 +1971,6 @@ public class JournalArticleLocalServiceImpl
 	 */
 	@Override
 	public List<JournalArticle> getArticles(long groupId) {
-
 		return journalArticlePersistence.findByGroupId(groupId);
 	}
 
@@ -1998,7 +1995,6 @@ public class JournalArticleLocalServiceImpl
 	 */
 	@Override
 	public List<JournalArticle> getArticles(long groupId, int start, int end) {
-
 		return journalArticlePersistence.findByGroupId(groupId, start, end);
 	}
 
@@ -2041,7 +2037,6 @@ public class JournalArticleLocalServiceImpl
 	 */
 	@Override
 	public List<JournalArticle> getArticles(long groupId, long folderId) {
-
 		return journalArticlePersistence.findByG_F(groupId, folderId);
 	}
 
@@ -2124,7 +2119,6 @@ public class JournalArticleLocalServiceImpl
 	 */
 	@Override
 	public List<JournalArticle> getArticles(long groupId, String articleId) {
-
 		return journalArticlePersistence.findByG_A(groupId, articleId);
 	}
 
@@ -2153,7 +2147,6 @@ public class JournalArticleLocalServiceImpl
 	 */
 	@Override
 	public List<JournalArticle> getArticlesBySmallImageId(long smallImageId) {
-
 		return journalArticlePersistence.findBySmallImageId(smallImageId);
 	}
 
@@ -2177,20 +2170,17 @@ public class JournalArticleLocalServiceImpl
 	 */
 	@Override
 	public int getArticlesCount(long groupId, long folderId) {
-
 		return journalArticlePersistence.countByG_F(groupId, folderId);
 	}
 
 	@Override
 	public int getArticlesCount(long groupId, long folderId, int status) {
-
 		return journalArticlePersistence.countByG_F_ST(
 			groupId, folderId, status);
 	}
 
 	@Override
 	public int getArticlesCount(long groupId, String articleId) {
-
 		return journalArticlePersistence.countByG_A(groupId, articleId);
 	}
 
@@ -2319,7 +2309,6 @@ public class JournalArticleLocalServiceImpl
 	 */
 	@Override
 	public int getCompanyArticlesCount(long companyId, int status) {
-
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return journalArticlePersistence.countByCompanyId(companyId);
 		}
@@ -2683,7 +2672,6 @@ public class JournalArticleLocalServiceImpl
 	 */
 	@Override
 	public int getNotInTrashArticlesCount(long groupId, long folderId) {
-
 		QueryDefinition queryDefinition = new QueryDefinition(
 			WorkflowConstants.STATUS_ANY);
 
@@ -2714,7 +2702,6 @@ public class JournalArticleLocalServiceImpl
 
 	@Override
 	public JournalArticle getPreviousApprovedArticle(JournalArticle article) {
-
 		List<JournalArticle> approvedArticles =
 			journalArticlePersistence.findByG_A_ST(
 				article.getGroupId(), article.getArticleId(),
@@ -2803,7 +2790,6 @@ public class JournalArticleLocalServiceImpl
 	 */
 	@Override
 	public int getStructureArticlesCount(long groupId, String ddmStructureKey) {
-
 		return journalArticlePersistence.countByG_S(groupId, ddmStructureKey);
 	}
 
@@ -2866,7 +2852,6 @@ public class JournalArticleLocalServiceImpl
 	 */
 	@Override
 	public int getTemplateArticlesCount(long groupId, String ddmTemplateKey) {
-
 		return journalArticlePersistence.countByG_T(groupId, ddmTemplateKey);
 	}
 
@@ -2914,7 +2899,6 @@ public class JournalArticleLocalServiceImpl
 	 */
 	@Override
 	public boolean hasArticle(long groupId, String articleId) {
-
 		try {
 			getArticle(groupId, articleId);
 
@@ -3192,15 +3176,6 @@ public class JournalArticleLocalServiceImpl
 			SocialActivityConstants.TYPE_MOVE_TO_TRASH,
 			extraDataJSONObject.toString(), 0);
 
-		if (!articleVersions.isEmpty()) {
-			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-				JournalArticle.class);
-
-			for (JournalArticle articleVersion : articleVersions) {
-				indexer.reindex(articleVersion);
-			}
-		}
-
 		if (oldStatus == WorkflowConstants.STATUS_PENDING) {
 			workflowInstanceLinkLocalService.deleteWorkflowInstanceLink(
 				article.getCompanyId(), article.getGroupId(),
@@ -3393,15 +3368,6 @@ public class JournalArticleLocalServiceImpl
 			article.getResourcePrimKey(),
 			SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
 			extraDataJSONObject.toString(), 0);
-
-		if (!articleVersions.isEmpty()) {
-			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-				JournalArticle.class);
-
-			for (JournalArticle articleVersion : articleVersions) {
-				indexer.reindex(articleVersion);
-			}
-		}
 
 		return article;
 	}
@@ -3868,7 +3834,6 @@ public class JournalArticleLocalServiceImpl
 
 	@Override
 	public int searchCount(long groupId, List<Long> folderIds, int status) {
-
 		QueryDefinition queryDefinition = new QueryDefinition(status);
 
 		return journalArticleFinder.countByG_F(
@@ -3877,7 +3842,6 @@ public class JournalArticleLocalServiceImpl
 
 	@Override
 	public int searchCount(long groupId, long folderId, int status) {
-
 		List<Long> folderIds = new ArrayList<Long>();
 
 		folderIds.add(folderId);
@@ -5355,11 +5319,6 @@ public class JournalArticleLocalServiceImpl
 			displayDate, WorkflowConstants.STATUS_SCHEDULED);
 
 		for (JournalArticle article : articles) {
-			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-				JournalArticle.class);
-
-			indexer.reindex(article);
-
 			ServiceContext serviceContext = new ServiceContext();
 
 			serviceContext.setCommand(Constants.UPDATE);
@@ -5601,37 +5560,6 @@ public class JournalArticleLocalServiceImpl
 		}
 
 		newArticle.setContent(contentDocument.formattedString());
-	}
-
-	protected Map<String, String> createFieldsValuesMap(String content) {
-		try {
-			Map<String, String> fieldsValuesMap = new HashMap<String, String>();
-
-			Document document = SAXReaderUtil.read(content);
-
-			Element rootElement = document.getRootElement();
-
-			List<Element> elements = rootElement.elements();
-
-			for (Element element : elements) {
-				String fieldName = element.attributeValue(
-					"name", StringPool.BLANK);
-
-				List<Element> dynamicContentElements = element.elements(
-					"dynamic-content");
-
-				for (Element dynamicContentElement : dynamicContentElements) {
-					String value = dynamicContentElement.getText();
-
-					fieldsValuesMap.put(fieldName, value);
-				}
-			}
-
-			return fieldsValuesMap;
-		}
-		catch (DocumentException de) {
-			throw new SystemException(de);
-		}
 	}
 
 	protected void format(
@@ -6133,8 +6061,8 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	protected Date[] getDateInterval(
-			long groupId, String articleId, Date earliestDisplayDate,
-			Date latestExpirationDate) {
+		long groupId, String articleId, Date earliestDisplayDate,
+		Date latestExpirationDate) {
 
 		Date[] dateInterval = new Date[2];
 
@@ -6584,43 +6512,36 @@ public class JournalArticleLocalServiceImpl
 			serviceContext, workflowContext);
 	}
 
-	protected void updateDDMFormFieldPredefinedValue(
-		DDMFormField ddmFormField, String ddmFormFieldValue) {
-
-		LocalizedValue predefinedValue = ddmFormField.getPredefinedValue();
-
-		for (Locale locale : predefinedValue.getAvailableLocales()) {
-			predefinedValue.addValue(locale, ddmFormFieldValue);
-		}
-	}
-
 	protected void updateDDMStructurePredefinedValues(
 			long ddmStructureId, String content, ServiceContext serviceContext)
 		throws PortalException {
 
-		DDMStructure ddmStructure = ddmStructureLocalService.fetchDDMStructure(
-			ddmStructureId);
+		try {
+			Document document = SAXReaderUtil.read(content);
 
-		DDMForm ddmForm = ddmStructure.getDDMForm();
+			Element rootElement = document.getRootElement();
 
-		Map<String, DDMFormField> ddmFormFieldsMap =
-			ddmForm.getDDMFormFieldsMap(true);
+			List<Element> elements = rootElement.elements();
 
-		Map<String, String> fieldsValuesMap = createFieldsValuesMap(content);
+			for (Element element : elements) {
+				String fieldName = element.attributeValue(
+					"name", StringPool.BLANK);
 
-		for (Map.Entry<String, String> fieldValue :
-				fieldsValuesMap.entrySet()) {
+				List<Element> dynamicContentElements = element.elements(
+					"dynamic-content");
 
-			String ddmFormFieldName = fieldValue.getKey();
-			String ddmFormFieldValue = fieldValue.getValue();
+				for (Element dynamicContentElement : dynamicContentElements) {
+					String value = dynamicContentElement.getText();
 
-			updateDDMFormFieldPredefinedValue(
-				ddmFormFieldsMap.get(ddmFormFieldName), ddmFormFieldValue);
+					ddmStructureLocalService.updateXSDFieldMetadata(
+						ddmStructureId, fieldName,
+						FieldConstants.PREDEFINED_VALUE, value, serviceContext);
+				}
+			}
 		}
-
-		ddmStructure.updateDDMForm(ddmForm);
-
-		ddmStructureLocalService.updateDDMStructure(ddmStructure);
+		catch (DocumentException de) {
+			throw new SystemException(de);
+		}
 	}
 
 	protected void updatePreviousApprovedArticle(JournalArticle article)
@@ -6657,7 +6578,15 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	protected void updateUrlTitles(
-		long groupId, String articleId, String urlTitle) {
+			long groupId, String articleId, String urlTitle)
+		throws PortalException {
+
+		JournalArticle firstArticle = journalArticlePersistence.findByG_A_First(
+			groupId, articleId, new ArticleVersionComparator(false));
+
+		if (firstArticle.getUrlTitle().equals(urlTitle)) {
+			return;
+		}
 
 		List<JournalArticle> articles = journalArticlePersistence.findByG_A(
 			groupId, articleId);

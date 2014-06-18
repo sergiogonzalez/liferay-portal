@@ -219,6 +219,10 @@
 
 /* ---------- Tabs ---------- */
 
+.lfr-nav.nav-tabs {
+	margin-bottom: 20px;
+}
+
 .tab-active strong {
 	font-weight: normal;
 }
@@ -401,6 +405,25 @@
 	background-color: #5B677D;
 	color: #FFF;
 	text-shadow: -1px -1px #2C2F34;
+}
+
+/* ---------- Modals ---------- */
+
+.aui {
+	.modal {
+		display: block;
+		margin: 0;
+		overflow: hidden;
+		position: fixed;
+	}
+
+	.modal-body {
+		overflow: auto;
+	}
+
+	.modal-hidden {
+		display: none;
+	}
 }
 
 /* ---------- Loading mask ---------- */
@@ -779,22 +802,27 @@ body.html-editor {
 .ios.mobile {
 	.dialog-iframe-modal {
 		height: auto !important;
-		left: 7px !important;
 		position: absolute !important;
 		top: 10px !important;
 
-		&, .dialog-iframe-bd, .dialog-iframe-node {
+		&, .dialog-iframe-bd, .dialog-iframe-node, .modal-content {
 			height: auto !important;
+			overflow: visible;
 		}
 
 		.dialog-iframe-bd {
 			max-height: none !important;
-			overflow: auto;
-			-webkit-overflow-scrolling: touch;
 		}
 
-		.modal-content {
-			overflow: visible;
+		.dialog-iframe-node {
+			min-width: 100%;
+			width: 100px;
+		}
+	}
+
+	&.dialog-iframe-root-node {
+		&, .dialog-iframe-popup {
+			overflow: auto;
 		}
 	}
 }
