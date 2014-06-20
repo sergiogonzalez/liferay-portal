@@ -501,6 +501,7 @@ DLActionsDisplayContext dlActionsDisplayContext = dlFileEntryActionsDisplayConte
 								%>
 
 								<liferay-ui:search-container
+									delta="5"
 									deltaConfigurable="<%= false %>"
 									iteratorURL="<%= viewFileEntryURL %>"
 									total="<%= fileEntryVersions.size() %>"
