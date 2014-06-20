@@ -30,6 +30,7 @@ import com.liferay.portal.util.subscriptions.BaseSubscriptionLocalizedContentTes
 import com.liferay.portal.util.test.ServiceContextTestUtil;
 import com.liferay.portal.util.test.TestPropsValues;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
+import com.liferay.portlet.bookmarks.service.BookmarksEntryLocalServiceUtil;
 import com.liferay.portlet.bookmarks.service.BookmarksFolderLocalServiceUtil;
 import com.liferay.portlet.bookmarks.util.BookmarksConstants;
 import com.liferay.portlet.bookmarks.util.test.BookmarksTestUtil;
@@ -105,6 +106,14 @@ public class BookmarksSubscriptionLocalizedContentTest
 			spanishSubscriptionBodyPreferencesKey, SPANISH_BODY);
 
 		modifiableSettings.store();
+	}
+
+	@Override
+	protected void updateBaseModel(long baseModelId) throws Exception {
+		BookmarksEntry entry = BookmarksEntryLocalServiceUtil.getEntry(
+			baseModelId);
+
+		BookmarksTestUtil.updateEntry(entry);
 	}
 
 }

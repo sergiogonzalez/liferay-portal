@@ -29,6 +29,7 @@ import com.liferay.portal.util.subscriptions.BaseSubscriptionLocalizedContentTes
 import com.liferay.portal.util.test.TestPropsValues;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
+import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.util.MBConstants;
 import com.liferay.portlet.messageboards.util.test.MBTestUtil;
 
@@ -100,6 +101,13 @@ public class MBSubscriptionLocalizedContentTest
 			spanishSubscriptionBodyPreferencesKey, SPANISH_BODY);
 
 		modifiableSettings.store();
+	}
+
+	@Override
+	protected void updateBaseModel(long baseModelId) throws Exception {
+		MBMessage message = MBMessageLocalServiceUtil.getMessage(baseModelId);
+
+		MBTestUtil.updateMessage(message, true);
 	}
 
 }

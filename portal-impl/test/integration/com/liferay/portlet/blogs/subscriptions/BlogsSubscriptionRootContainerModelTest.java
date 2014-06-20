@@ -46,13 +46,28 @@ public class BlogsSubscriptionRootContainerModelTest
 	@Ignore
 	@Override
 	@Test
-	public void testSubscriptionRootContainerModelWhenInContainerModel() {
+	public void testSubscriptionRootContainerModelAddingBaseModelWhenInContainerModel() {
 	}
 
 	@Ignore
 	@Override
 	@Test
-	public void testSubscriptionRootContainerModelWhenInSubcontainerModel() {
+	public void
+	testSubscriptionRootContainerModelWhenAddingBaseModelInSubcontainerModel() {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void
+	testSubscriptionRootContainerModelWhenUpdatingBaseModelInContainerModel() {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void
+	testSubscriptionRootContainerModelWhenUpdatingBaseModelInSubcontainerModel() {
 	}
 
 	@Override
@@ -68,6 +83,13 @@ public class BlogsSubscriptionRootContainerModelTest
 
 		BlogsEntryLocalServiceUtil.subscribe(
 			TestPropsValues.getUserId(), group.getGroupId());
+	}
+
+	@Override
+	protected void updateBaseModel(long baseModelId) throws Exception {
+		BlogsEntry entry = BlogsEntryLocalServiceUtil.getEntry(baseModelId);
+
+		BlogsTestUtil.updateEntry(entry, true);
 	}
 
 }

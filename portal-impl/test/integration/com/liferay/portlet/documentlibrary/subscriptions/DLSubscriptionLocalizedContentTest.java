@@ -103,4 +103,10 @@ public class DLSubscriptionLocalizedContentTest
 		modifiableSettings.store();
 	}
 
+	@Override
+	protected void updateBaseModel(long baseModelId) throws Exception {
+		DLAppTestUtil.updateFileEntryWithWorkflow(
+			group.getGroupId(), baseModelId, false, true);
+	}
+
 }
