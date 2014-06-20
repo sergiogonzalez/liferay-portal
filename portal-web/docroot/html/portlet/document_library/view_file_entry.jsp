@@ -479,28 +479,11 @@ DLActionsDisplayContext dlActionsDisplayContext = dlFileEntryActionsDisplayConte
 							<liferay-ui:panel collapsible="<%= true %>" cssClass="version-history" id="documentLibraryVersionHistoryPanel" persistState="<%= true %>" title="version-history">
 
 								<%
-								boolean comparableFileEntry = DocumentConversionUtil.isComparableVersion(fileVersion.getExtension());
 								boolean showNonApprovedDocuments = false;
 
 								if ((user.getUserId() == fileEntry.getUserId()) || permissionChecker.isContentReviewer(user.getCompanyId(), scopeGroupId)) {
 									showNonApprovedDocuments = true;
 								}
-
-								SearchContainer searchContainer = new SearchContainer();
-
-								List<String> headerNames = new ArrayList<String>();
-
-								headerNames.add("version");
-								headerNames.add("date");
-								headerNames.add("size");
-
-								if (showNonApprovedDocuments && !portletId.equals(PortletKeys.TRASH)) {
-									headerNames.add("status");
-								}
-
-								headerNames.add(StringPool.BLANK);
-
-								searchContainer.setHeaderNames(headerNames);
 
 								PortletURL viewFileEntryURL = renderResponse.createRenderURL();
 
@@ -508,53 +491,64 @@ DLActionsDisplayContext dlActionsDisplayContext = dlFileEntryActionsDisplayConte
 								viewFileEntryURL.setParameter("redirect", currentURL);
 								viewFileEntryURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
 
-								searchContainer.setIteratorURL(viewFileEntryURL);
-
-								if (comparableFileEntry) {
-									RowChecker rowChecker = new RowChecker(renderResponse);
-
-									rowChecker.setAllRowIds(null);
-
-									searchContainer.setRowChecker(rowChecker);
-								}
-
 								int status = WorkflowConstants.STATUS_APPROVED;
 
 								if (showNonApprovedDocuments) {
 									status = WorkflowConstants.STATUS_ANY;
 								}
 
-								List results = fileEntry.getFileVersions(status);
-								List resultRows = searchContainer.getResultRows();
+								List fileEntryVersions = fileEntry.getFileVersions(status);
+								%>
 
-								for (int i = 0; i < results.size(); i++) {
-									FileVersion curFileVersion = (FileVersion)results.get(i);
+								<liferay-ui:search-container
+									deltaConfigurable="<%= false %>"
+									iteratorURL="<%= viewFileEntryURL %>"
+									total="<%= fileEntryVersions.size() %>"
+								>
+									<liferay-ui:search-container-results
+										results="<%= ListUtil.subList(fileEntryVersions, searchContainer.getStart(), searchContainer.getEnd())%>"
+									/>
 
-									ResultRow row = new ResultRow(new Object[] {fileEntry, curFileVersion, results.size(), conversions, fileEntry.isCheckedOut(), fileEntry.hasLock()}, String.valueOf(curFileVersion.getVersion()), i);
+									<liferay-ui:search-container-row
+										className="com.liferay.portal.kernel.repository.model.FileVersion"
+										keyProperty="fileVersionId"
+										modelVar="curFileVersion"
+									>
+										<liferay-ui:search-container-column-text
+											property="version"
+										/>
 
-									// Statistics
+										<liferay-ui:search-container-column-date
+											name="date"
+											property="createDate"
+										/>
 
-									row.addText(String.valueOf(curFileVersion.getVersion()));
-									row.addDate(curFileVersion.getCreateDate());
-									row.addText(TextFormatter.formatStorageSize(curFileVersion.getSize(), locale));
+										<liferay-ui:search-container-column-text
+											name="size"
+										>
+											<%= (TextFormatter.formatStorageSize(curFileVersion.getSize(), locale)) %>
+										</liferay-ui:search-container-column-text>
 
-									// Status
+										<c:if test="<%= showNonApprovedDocuments && !portletId.equals(PortletKeys.TRASH) %>">
+											<liferay-ui:search-container-column-status property="status" />
+										</c:if>
 
-									if (showNonApprovedDocuments && !portletId.equals(PortletKeys.TRASH)) {
-										row.addStatus(curFileVersion.getStatus(), curFileVersion.getStatusByUserId(), curFileVersion.getStatusDate());
-									}
+										<liferay-ui:search-container-column-jsp
+											align="right"
+											cssClass="entry-action"
+											path="/html/portlet/document_library/file_entry_history_action.jsp"
+										/>
 
-									// Action
+									</liferay-ui:search-container-row>
 
-									row.addJSP("/html/portlet/document_library/file_entry_history_action.jsp", "entry-action");
+									<liferay-ui:search-iterator />
+								</liferay-ui:search-container>
 
-									// Add result row
+								<%
+								boolean comparableFileEntry = DocumentConversionUtil.isComparableVersion(fileVersion.getExtension());
 
-									resultRows.add(row);
-								}
-
-								if (comparableFileEntry && !results.isEmpty()) {
-									FileVersion curFileVersion = (FileVersion)results.get(0);
+								if (comparableFileEntry && !fileEntryVersions.isEmpty()) {
+									FileVersion curFileVersion = (FileVersion)fileEntryVersions.get(0);
 								%>
 
 									<portlet:actionURL var="compareVersionsURL">
@@ -576,7 +570,6 @@ DLActionsDisplayContext dlActionsDisplayContext = dlFileEntryActionsDisplayConte
 								}
 								%>
 
-								<liferay-ui:search-iterator paginate="<%= false %>" searchContainer="<%= searchContainer %>" />
 							</liferay-ui:panel>
 						</c:if>
 					</liferay-ui:panel-container>
