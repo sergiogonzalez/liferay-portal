@@ -50,12 +50,12 @@
 			%>
 
 				<c:if test='<%= (invalidEmailAddresses != null) && invalidEmailAddresses.contains("emailAddress" + i) %>'>
-					<div class="alert alert-error">
+					<div class="alert alert-danger">
 						<liferay-ui:message key="please-enter-a-valid-email-address" />
 					</div>
 				</c:if>
 
-				<aui:input cssClass="lfr-input-text-container" label="" name='<%= "emailAddress" + i %>' size="65" title='<%= LanguageUtil.get(pageContext, "email-address") + StringPool.SPACE + (i + 1) %>' type="text" value="<%= emailAddress %>" />
+				<aui:input cssClass="lfr-input-text-container" label="" name='<%= "emailAddress" + i %>' size="65" title='<%= LanguageUtil.get(request, "email-address") + StringPool.SPACE + (i + 1) %>' type="text" value="<%= emailAddress %>" />
 
 			<%
 			}

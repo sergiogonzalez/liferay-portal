@@ -14,9 +14,23 @@
 
 package com.liferay.portal.wab.extender.internal.processor;
 
-import java.io.File;
-import java.io.IOException;
+import com.liferay.portal.events.GlobalStartupAction;
+import com.liferay.portal.kernel.deploy.auto.AutoDeployException;
+import com.liferay.portal.kernel.deploy.auto.AutoDeployListener;
+import com.liferay.portal.kernel.deploy.auto.context.AutoDeploymentContext;
+import com.liferay.portal.kernel.deploy.hot.DependencyManagementThreadLocal;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.wab.extender.internal.util.AntUtil;
 
+import java.io.File;
+import java.io.FilenameFilter;
+import java.io.IOException;
+import java.io.InputStream;
+
+import java.util.List;
 import java.util.Map;
 
 import org.osgi.framework.BundleContext;
@@ -37,17 +51,113 @@ public class WabProcessor {
 		_parameters = parameters;
 	}
 
-	public java.io.InputStream getInputStream() throws IOException {
+	public InputStream getInputStream() throws IOException {
+		_pluginDir = autoDeploy();
+
+		if ((_pluginDir == null) || !_pluginDir.exists() ||
+			!_pluginDir.isDirectory()) {
+
+			return null;
+		}
+
+		// TODO
+
 		return null;
 	}
 
-	public void process() throws IOException {
+	protected File autoDeploy() {
+		String webContextpath = MapUtil.getString(
+			_parameters, "Web-ContextPath");
+
+		if (!webContextpath.startsWith(StringPool.SLASH)) {
+			webContextpath = StringPool.SLASH.concat(webContextpath);
+		}
+
+		AutoDeploymentContext autoDeploymentContext =
+			buildAutoDeploymentContext(webContextpath);
+
+		executeAutoDeployers(autoDeploymentContext);
+
+		File deployDir = autoDeploymentContext.getDeployDir();
+
+		if (!deployDir.exists()) {
+			File parentFile = deployDir.getParentFile();
+
+			File[] files = parentFile.listFiles(
+				new FilenameFilter() {
+
+					@Override
+					public boolean accept(File dir, String name) {
+						return name.endsWith(".war");
+					}
+
+				});
+
+			if ((files == null) || (files.length == 0)) {
+				_log.error("Unable to find any WARs in " + parentFile);
+
+				return null;
+			}
+
+			File file = files[0];
+
+			deployDir.mkdirs();
+
+			AntUtil.expandFile(file, deployDir);
+		}
+
+		return deployDir;
 	}
+
+	protected AutoDeploymentContext buildAutoDeploymentContext(String context) {
+		AutoDeploymentContext autoDeploymentContext =
+			new AutoDeploymentContext();
+
+		autoDeploymentContext.setContext(context);
+
+		File file = new File(_file.getParentFile(), "deploy");
+
+		file.mkdirs();
+
+		autoDeploymentContext.setDestDir(file.getAbsolutePath());
+
+		autoDeploymentContext.setFile(_file);
+
+		return autoDeploymentContext;
+	}
+
+	protected void executeAutoDeployers(
+		AutoDeploymentContext autoDeploymentContext) {
+
+		boolean enabled = DependencyManagementThreadLocal.isEnabled();
+
+		try {
+			DependencyManagementThreadLocal.setEnabled(false);
+
+			List<AutoDeployListener> autoDeployListeners =
+				GlobalStartupAction.getAutoDeployListeners(false);
+
+			for (AutoDeployListener autoDeployListener : autoDeployListeners) {
+				try {
+					autoDeployListener.deploy(autoDeploymentContext);
+				}
+				catch (AutoDeployException ade) {
+					_log.error(ade, ade);
+				}
+			}
+		}
+		finally {
+			DependencyManagementThreadLocal.setEnabled(enabled);
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(WabProcessor.class);
 
 	private BundleContext _bundleContext;
 	private ClassLoader _classLoader;
 	private File _file;
 	private File _manifestFile;
 	private Map<String, String[]> _parameters;
+	private File _pluginDir;
 
 }

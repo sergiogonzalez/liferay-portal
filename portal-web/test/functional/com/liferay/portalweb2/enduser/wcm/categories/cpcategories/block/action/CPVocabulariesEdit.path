@@ -50,7 +50,7 @@
 </tr>
 <tr>
 	<td>ALLOW_MULTIPLE_CATEGORIES_CHECKBOX</td>
-	<td>//input[@id='_147_multiValuedCheckbox']</td>
+	<td>//input[@id='_147_multiValued']</td>
 	<td></td>
 </tr>
 <tr>
@@ -81,7 +81,7 @@
 <!--ASSOCIATED_ASSET_TYPES-->
 <tr>
 	<td>ASSOCIATED_ASSET_TYPES_DROP_DOWN</td>
-	<td>//div[@id='vocabularyExtraFieldsPanelContainer']//div[@class='accordion-toggle']</td>
+	<td>//div[@id='vocabularyExtraFieldsPanelContainer']//div[@class='panel-toggle']</td>
 	<td></td>
 </tr>
 <tr>

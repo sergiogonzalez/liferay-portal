@@ -647,7 +647,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	@Deprecated
 	@Override
 	public int getGroupEntriesCount(long groupId, int status) {
-
 		QueryDefinition queryDefinition = new QueryDefinition(status);
 
 		return getGroupEntriesCount(groupId, queryDefinition);
@@ -1251,10 +1250,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 				// Subscriptions
 
-				notifySubscribers(
-					entry,
-					(String)workflowContext.get(WorkflowConstants.CONTEXT_URL),
-					serviceContext);
+				notifySubscribers(entry, serviceContext, workflowContext);
 
 				// Ping
 
@@ -1408,8 +1404,12 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	}
 
 	protected void notifySubscribers(
-			BlogsEntry entry, String entryURL, ServiceContext serviceContext)
+			BlogsEntry entry, ServiceContext serviceContext,
+			Map<String, Serializable> workflowContext)
 		throws PortalException {
+
+		String entryURL = (String)workflowContext.get(
+			WorkflowConstants.CONTEXT_URL);
 
 		if (!entry.isApproved() || Validator.isNull(entryURL)) {
 			return;
@@ -1457,8 +1457,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			StringUtil.shorten(HtmlUtil.stripHtml(entry.getContent()), 500),
 			false);
 
-		User user = userPersistence.findByPrimaryKey(entry.getUserId());
-
 		subscriptionSender.setContextAttributes(
 			"[$BLOGS_ENTRY_CREATE_DATE$]",
 			Time.getSimpleDate(entry.getCreateDate(), "yyyy/MM/dd"),
@@ -1469,9 +1467,9 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			"[$BLOGS_ENTRY_STATUS_BY_USER_NAME$]", entry.getStatusByUserName(),
 			"[$BLOGS_ENTRY_TITLE$]", entryTitle, "[$BLOGS_ENTRY_URL$]",
 			entryURL, "[$BLOGS_ENTRY_USER_PORTRAIT_URL$]",
-			user.getPortraitURL(serviceContext.getThemeDisplay()),
+			workflowContext.get(WorkflowConstants.CONTEXT_USER_PORTRAIT_URL),
 			"[$BLOGS_ENTRY_USER_URL$]",
-			user.getDisplayURL(serviceContext.getThemeDisplay()));
+			workflowContext.get(WorkflowConstants.CONTEXT_USER_URL));
 
 		subscriptionSender.setContextUserPrefix("BLOGS_ENTRY");
 		subscriptionSender.setEntryTitle(entryTitle);
@@ -1725,6 +1723,21 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		workflowContext.put(
 			WorkflowConstants.CONTEXT_URL, getEntryURL(entry, serviceContext));
+
+		String userPortraitURL = StringPool.BLANK;
+		String userURL = StringPool.BLANK;
+
+		if (serviceContext.getThemeDisplay() != null) {
+			User user = userPersistence.findByPrimaryKey(userId);
+
+			userPortraitURL = user.getPortraitURL(
+				serviceContext.getThemeDisplay());
+			userURL = user.getDisplayURL(serviceContext.getThemeDisplay());
+		}
+
+		workflowContext.put(
+			WorkflowConstants.CONTEXT_USER_PORTRAIT_URL, userPortraitURL);
+		workflowContext.put(WorkflowConstants.CONTEXT_USER_URL, userURL);
 
 		WorkflowHandlerRegistryUtil.startWorkflowInstance(
 			entry.getCompanyId(), entry.getGroupId(), userId,

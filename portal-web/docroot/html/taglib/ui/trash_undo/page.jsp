@@ -110,7 +110,7 @@ if (SessionMessages.contains(portletRequest, portletDisplay.getId() + SessionMes
 						if (ArrayUtil.isNotEmpty(classNames)) {
 							className = classNames[0];
 
-							type = ResourceActionsUtil.getModelResource(pageContext, className);
+							type = ResourceActionsUtil.getModelResource(request, className);
 						}
 
 						String[] titles = data.get("deleteEntryTitle");
@@ -149,16 +149,16 @@ if (SessionMessages.contains(portletRequest, portletDisplay.getId() + SessionMes
 
 						<c:choose>
 							<c:when test="<%= Validator.equals(cmd, Constants.REMOVE) %>">
-								<liferay-ui:message arguments="<%= new Object[] {LanguageUtil.get(pageContext, type), trashEntityLink} %>" key="the-x-x-was-removed" translateArguments="<%= false %>" />
+								<liferay-ui:message arguments="<%= new Object[] {LanguageUtil.get(request, type), trashEntityLink} %>" key="the-x-x-was-removed" translateArguments="<%= false %>" />
 							</c:when>
 							<c:otherwise>
-								<liferay-ui:message arguments="<%= new Object[] {LanguageUtil.get(pageContext, type), trashEntityLink, trashLink.trim()} %>" key="the-x-x-was-moved-to-x" translateArguments="<%= false %>" />
+								<liferay-ui:message arguments="<%= new Object[] {LanguageUtil.get(request, type), trashEntityLink, trashLink.trim()} %>" key="the-x-x-was-moved-to-x" translateArguments="<%= false %>" />
 							</c:otherwise>
 						</c:choose>
 					</c:otherwise>
 				</c:choose>
 
-				<a class="btn btn-primary btn-small trash-undo-link" href="javascript:;" id="<%= restoreNamespace %>undo"><liferay-ui:message key="undo" /></a>
+				<a class="btn btn-primary btn-sm trash-undo-link" href="javascript:;" id="<%= restoreNamespace %>undo"><liferay-ui:message key="undo" /></a>
 
 				<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 

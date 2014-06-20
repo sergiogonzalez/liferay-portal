@@ -141,6 +141,10 @@ if (!selectableTree) {
 				data.id = '';
 			}
 
+			if (!data.url) {
+				data.url = '';
+			}
+
 			if (<%= checkContentDisplayPage %> && !data.contentDisplayPage) {
 				className += ' layout-page-invalid';
 			}
@@ -153,7 +157,7 @@ if (!selectableTree) {
 				}
 			);
 
-			return '<a class="' + className + '" data-uuid="' + Util.escapeHTML(data.uuid) + '" href="' + href + '" id="' + Util.escapeHTML(data.id) + '" title="' + data.title + '">' + data.label + '</a>';
+			return '<a class="' + className + '" data-url="' + Util.escapeHTML(data.url) + '" data-uuid="' + Util.escapeHTML(data.uuid) + '" href="' + href + '" id="' + Util.escapeHTML(data.id) + '" title="' + data.title + '">' + data.label + '</a>';
 		},
 
 		extractGroupId: function(node) {
@@ -229,7 +233,7 @@ if (!selectableTree) {
 								childrenChange: function(event) {
 									var target = event.target;
 
-									target.set('alwaysShowHitArea', (event.newVal.length > 0));
+									target.attr('alwaysShowHitArea', (event.newVal.length > 0));
 
 									target.eachChildren(TreeUtil.restoreSelectedNode);
 
@@ -329,18 +333,18 @@ if (!selectableTree) {
 
 					if (node.layoutRevisionId) {
 						if (!node.layoutRevisionHead) {
-							title = '<%= UnicodeLanguageUtil.get(pageContext, "there-is-not-a-version-of-this-page-marked-as-ready-for-publication") %>';
+							title = '<%= UnicodeLanguageUtil.get(request, "there-is-not-a-version-of-this-page-marked-as-ready-for-publication") %>';
 						}
 						else if (node.layoutBranchName) {
 							node.layoutBranchName = Util.escapeHTML(node.layoutBranchName);
 
-							newNode.label += Lang.sub(' <span class="layout-branch-name" title="<%= UnicodeLanguageUtil.get(pageContext, "this-is-the-page-variation-that-is-marked-as-ready-for-publication") %>">[{layoutBranchName}]</span>', node);
+							newNode.label += Lang.sub(' <span class="layout-branch-name" title="<%= UnicodeLanguageUtil.get(request, "this-is-the-page-variation-that-is-marked-as-ready-for-publication") %>">[{layoutBranchName}]</span>', node);
 						}
 
 						if (node.incomplete) {
 							cssClass = 'incomplete-layout';
 
-							title = '<%= UnicodeLanguageUtil.get(pageContext, "this-page-is-not-enabled-in-this-site-pages-variation,-but-is-available-in-other-variations") %>';
+							title = '<%= UnicodeLanguageUtil.get(request, "this-page-is-not-enabled-in-this-site-pages-variation,-but-is-available-in-other-variations") %>';
 						}
 					}
 
@@ -357,6 +361,7 @@ if (!selectableTree) {
 								label: newNode.label,
 								plid: node.plid,
 								title: title,
+								url: node.friendlyURL,
 								uuid: node.uuid
 							}
 						);

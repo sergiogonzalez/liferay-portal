@@ -120,7 +120,7 @@
 </tr>
 <tr>
 	<td>ERROR_MESSAGE</td>
-	<td>//div[contains(@class,'alert') and contains(@class, 'alert-error')]</td>
+	<td>//div[contains(@class, 'alert-danger')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -140,7 +140,7 @@
 </tr>
 <tr>
 	<td>ERROR_MESSAGE_ALERT_ERROR</td>
-	<td>//div[@class='portlet-content']/h3[contains(@class,'alert') and contains(@class, 'alert-error')]</td>
+	<td>//div[@class='portlet-content']/h3[contains(@class, 'alert-danger')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -335,27 +335,27 @@
 </tr>
 <tr>
 	<td>PAGE_COLUMN_1_LAYOUT_1_COLUMN</td>
-	<td>//div[contains(@class,'portlet-layout')]/div[@id='column-1' and contains(@class,'span12')]</td>
+	<td>//div[contains(@class,'portlet-layout')]/div[@id='column-1' and contains(@class,'col-md-12')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_COLUMN_1_LAYOUT_2_COLUMNS_30_SPLIT</td>
-	<td>//div[contains(@class,'portlet-layout')]/div[@id='column-1' and contains(@class,'span4')]</td>
+	<td>//div[contains(@class,'portlet-layout')]/div[@id='column-1' and contains(@class,'col-md-4')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_COLUMN_2_LAYOUT_2_COLUMNS_70_SPLIT</td>
-	<td>//div[contains(@class,'portlet-layout')]/div[@id='column-2' and contains(@class,'span8')]</td>
+	<td>//div[contains(@class,'portlet-layout')]/div[@id='column-2' and contains(@class,'col-md-8')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_COLUMN_1_LAYOUT_2_COLUMNS_50_SPLIT</td>
-	<td>//div[contains(@class,'portlet-layout')]/div[@id='column-1' and contains(@class,'span6')]</td>
+	<td>//div[contains(@class,'portlet-layout')]/div[@id='column-1' and contains(@class,'col-md-6')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_COLUMN_2_LAYOUT_2_COLUMNS_50_SPLIT</td>
-	<td>//div[contains(@class,'portlet-layout')]/div[@id='column-2' and contains(@class,'span6')]</td>
+	<td>//div[contains(@class,'portlet-layout')]/div[@id='column-2' and contains(@class,'col-md-6')]</td>
 	<td></td>
 </tr>
 <tr>

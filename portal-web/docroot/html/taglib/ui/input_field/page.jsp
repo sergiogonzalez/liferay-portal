@@ -42,6 +42,10 @@ Map<String, String> hints = ModelHintsUtil.getHints(model, field);
 if (hints != null) {
 	type = GetterUtil.getString(hints.get("type"), type);
 }
+
+if (type.equals("String")) {
+	cssClass += " form-control";
+}
 %>
 
 <c:if test="<%= type != null %>">
@@ -62,8 +66,8 @@ if (hints != null) {
 
 			boolean value = BeanPropertiesUtil.getBooleanSilent(bean, field, defaultBoolean);
 
-			if (!ignoreRequestValue) {
-				value = ParamUtil.getBoolean(request, fieldParam, value);
+			if (!ignoreRequestValue && Validator.isNotNull(ParamUtil.getString(request, "checkboxNames"))) {
+				value = Validator.isNotNull(ParamUtil.getString(request, fieldParam));
 			}
 			%>
 
@@ -248,7 +252,7 @@ if (hints != null) {
 				</div>
 
 				<aui:script use="aui-base">
-					var checkbox = A.one('#<portlet:namespace /><%= formName + fieldParam %>Checkbox');
+					var checkbox = A.one('#<portlet:namespace /><%= formName + fieldParam %>');
 
 					checkbox.once(
 						['click', 'mouseover'],
@@ -260,7 +264,7 @@ if (hints != null) {
 					checkbox.on(
 						['click', 'mouseover'],
 						function(event) {
-							var checked = document.getElementById('<portlet:namespace /><%= formName + fieldParam %>Checkbox').checked;
+							var checked = document.getElementById('<portlet:namespace /><%= formName + fieldParam %>').checked;
 
 							document.<portlet:namespace /><%= formName %>['<portlet:namespace /><%= fieldParam %>'].disabled = checked;
 							document.<portlet:namespace /><%= formName %>['<portlet:namespace /><%= fieldParam %>Month'].disabled = checked;
@@ -437,6 +441,7 @@ if (hints != null) {
 						</c:when>
 						<c:otherwise>
 							<liferay-ui:input-editor
+								contentsLanguageId="<%= languageId %>"
 								cssClass="<%= cssClass %>"
 								editorImpl="ckeditor"
 								initMethod='<%= fieldParam + \"InitEditor\" %>'
@@ -483,7 +488,7 @@ if (hints != null) {
 							/>
 						</c:when>
 						<c:otherwise>
-							<input class="<%= cssClass + " lfr-input-text" %>" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= namespace %><%= id %>" name="<%= namespace %><%= fieldParam %>" <%= Validator.isNotNull(placeholder) ? "placeholder=\"" + LanguageUtil.get(pageContext, placeholder) + "\"" : StringPool.BLANK %> style="<%= upperCase ? "text-transform: uppercase;" : "" %>" type="<%= secret ? "password" : "text" %>" value="<%= autoEscape ? HtmlUtil.escape(value) : value %>" />
+							<input class="<%= cssClass + " lfr-input-text" %>" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= namespace %><%= id %>" name="<%= namespace %><%= fieldParam %>" <%= Validator.isNotNull(placeholder) ? "placeholder=\"" + LanguageUtil.get(request, placeholder) + "\"" : StringPool.BLANK %> style="<%= upperCase ? "text-transform: uppercase;" : "" %>" type="<%= secret ? "password" : "text" %>" value="<%= autoEscape ? HtmlUtil.escape(value) : value %>" />
 						</c:otherwise>
 					</c:choose>
 				</c:when>
@@ -511,7 +516,7 @@ if (hints != null) {
 							/>
 						</c:when>
 						<c:otherwise>
-							<textarea class="<%= cssClass + " lfr-textarea" %>" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= namespace %><%= id %>" name="<%= namespace %><%= fieldParam %>" <%= Validator.isNotNull(placeholder) ? "placeholder=\"" + LanguageUtil.get(pageContext, placeholder) + "\"" : StringPool.BLANK %> style="<%= !autoSize ? "height: " + displayHeight + (Validator.isDigit(displayHeight) ? "px" : StringPool.BLANK) + ";" : StringPool.BLANK %>" wrap="soft" onKeyDown="<%= checkTab ? "Liferay.Util.checkTab(this); " : "" %> Liferay.Util.disableEsc();"><%= autoEscape ? HtmlUtil.escape(value) : value %></textarea>
+							<textarea class="<%= cssClass + " lfr-textarea" %>" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= namespace %><%= id %>" name="<%= namespace %><%= fieldParam %>" <%= Validator.isNotNull(placeholder) ? "placeholder=\"" + LanguageUtil.get(request, placeholder) + "\"" : StringPool.BLANK %> style="<%= !autoSize ? "height: " + displayHeight + (Validator.isDigit(displayHeight) ? "px" : StringPool.BLANK) + ";" : StringPool.BLANK %>" wrap="soft" onKeyDown="<%= checkTab ? "Liferay.Util.checkTab(this); " : "" %> Liferay.Util.disableEsc();"><%= autoEscape ? HtmlUtil.escape(value) : value %></textarea>
 						</c:otherwise>
 					</c:choose>
 

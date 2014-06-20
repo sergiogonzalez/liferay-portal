@@ -140,6 +140,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>OPTIONS_MENULIST_PREFERENCES</td>
+	<td>//a[contains(@id,'_menu_preferences')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>OPTIONS_MENULIST_EXPORT_IMPORT</td>
 	<td>//a[contains(@id,'_menu_export-import')]</td>
 	<td></td>
@@ -198,7 +203,7 @@
 </tr>
 <tr>
 	<td>PORTLET_CONFIGURATION_USE_CUSTOM_TITLE_CHECKBOX</td>
-	<td>//input[@id='_113_use-custom-titleCheckbox']</td>
+	<td>//input[@id='_113_use-custom-title']</td>
 	<td></td>
 </tr>
 <tr>

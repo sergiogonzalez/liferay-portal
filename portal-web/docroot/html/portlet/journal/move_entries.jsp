@@ -85,11 +85,11 @@ for (JournalArticle curArticle : articles) {
 
 	<c:if test="<%= !validMoveFolders.isEmpty() %>">
 		<div class="move-list-info">
-			<h4><%= LanguageUtil.format(pageContext, "x-folders-ready-to-be-moved", validMoveFolders.size(), false) %></h4>
+			<h4><%= LanguageUtil.format(request, "x-folders-ready-to-be-moved", validMoveFolders.size(), false) %></h4>
 		</div>
 
 		<div class="move-list">
-			<ul class="unstyled">
+			<ul class="list-unstyled">
 
 				<%
 				for (JournalFolder folder : validMoveFolders) {
@@ -116,11 +116,11 @@ for (JournalArticle curArticle : articles) {
 
 	<c:if test="<%= !invalidMoveFolders.isEmpty() %>">
 		<div class="move-list-info">
-			<h4><%= LanguageUtil.format(pageContext, "x-folders-cannot-be-moved", invalidMoveFolders.size(), false) %></h4>
+			<h4><%= LanguageUtil.format(request, "x-folders-cannot-be-moved", invalidMoveFolders.size(), false) %></h4>
 		</div>
 
 		<div class="move-list">
-			<ul class="unstyled">
+			<ul class="list-unstyled">
 
 				<%
 				for (JournalFolder folder : invalidMoveFolders) {
@@ -137,7 +137,7 @@ for (JournalArticle curArticle : articles) {
 						</span>
 
 						<span class="error-message">
-							<%= LanguageUtil.get(pageContext, "you-do-not-have-the-required-permissions") %>
+							<%= LanguageUtil.get(request, "you-do-not-have-the-required-permissions") %>
 						</span>
 					</li>
 
@@ -153,11 +153,11 @@ for (JournalArticle curArticle : articles) {
 
 	<c:if test="<%= !validMoveArticles.isEmpty() %>">
 		<div class="move-list-info">
-			<h4><%= LanguageUtil.format(pageContext, "x-web-content-instances-are-ready-to-be-moved", validMoveArticles.size(), false) %></h4>
+			<h4><%= LanguageUtil.format(request, "x-web-content-instances-are-ready-to-be-moved", validMoveArticles.size(), false) %></h4>
 		</div>
 
 		<div class="move-list">
-			<ul class="unstyled">
+			<ul class="list-unstyled">
 
 				<%
 				for (JournalArticle validMoveArticle : validMoveArticles) {
@@ -184,11 +184,11 @@ for (JournalArticle curArticle : articles) {
 
 	<c:if test="<%= !invalidMoveArticles.isEmpty() %>">
 		<div class="move-list-info">
-			<h4><%= LanguageUtil.format(pageContext, "x-web-content-instances-cannot-be-moved", invalidMoveArticles.size(), false) %></h4>
+			<h4><%= LanguageUtil.format(request, "x-web-content-instances-cannot-be-moved", invalidMoveArticles.size(), false) %></h4>
 		</div>
 
 		<div class="move-list">
-			<ul class="unstyled">
+			<ul class="list-unstyled">
 
 				<%
 				for (JournalArticle invalidMoveArticle : invalidMoveArticles) {
@@ -205,7 +205,7 @@ for (JournalArticle curArticle : articles) {
 						</span>
 
 						<span class="error-message">
-							<%= LanguageUtil.get(pageContext, "you-do-not-have-the-required-permissions") %>
+							<%= LanguageUtil.get(request, "you-do-not-have-the-required-permissions") %>
 						</span>
 					</li>
 
@@ -232,11 +232,11 @@ for (JournalArticle curArticle : articles) {
 			folderName = folder.getName();
 		}
 		else {
-			folderName = LanguageUtil.get(pageContext, "home");
+			folderName = LanguageUtil.get(request, "home");
 		}
 		%>
 
-		<div class="control-group">
+		<div class="form-group">
 			<aui:input label="new-folder" name="folderName" title="new-folder" type="resource" value="<%= folderName %>" />
 
 			<aui:button name="selectFolderButton" value="select" />
@@ -294,5 +294,5 @@ for (JournalArticle curArticle : articles) {
 </aui:script>
 
 <%
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "move-web-content"), currentURL);
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "move-web-content"), currentURL);
 %>

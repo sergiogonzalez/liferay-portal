@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.messageboards.attachments;
 
-import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.ObjectValuePair;
@@ -61,8 +60,6 @@ public class MBAttachmentsTest {
 
 	@Before
 	public void setUp() throws Exception {
-		FinderCacheUtil.clearCache();
-
 		_group = GroupTestUtil.addGroup();
 	}
 
@@ -322,7 +319,7 @@ public class MBAttachmentsTest {
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
 		_message = MBTestUtil.addMessage(
-			_category.getCategoryId(), serviceContext);
+			_category.getGroupId(), _category.getCategoryId(), serviceContext);
 	}
 
 	protected void addMessageAttachment() throws Exception {

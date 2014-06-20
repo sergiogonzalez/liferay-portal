@@ -73,7 +73,6 @@ import javax.portlet.PortletRequest;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.jsp.PageContext;
 
 /**
  * @author Brian Wing Shun Chan
@@ -82,6 +81,147 @@ import javax.servlet.jsp.PageContext;
  */
 @DoPrivileged
 public class LanguageImpl implements Language, Serializable {
+
+	@Override
+	public String format(
+		HttpServletRequest request, String pattern, LanguageWrapper argument) {
+
+		return format(request, pattern, new LanguageWrapper[] {argument}, true);
+	}
+
+	@Override
+	public String format(
+		HttpServletRequest request, String pattern, LanguageWrapper argument,
+		boolean translateArguments) {
+
+		return format(
+			request, pattern, new LanguageWrapper[] {argument},
+			translateArguments);
+	}
+
+	@Override
+	public String format(
+		HttpServletRequest request, String pattern,
+		LanguageWrapper[] arguments) {
+
+		return format(request, pattern, arguments, true);
+	}
+
+	@Override
+	public String format(
+		HttpServletRequest request, String pattern, LanguageWrapper[] arguments,
+		boolean translateArguments) {
+
+		if (PropsValues.TRANSLATIONS_DISABLED) {
+			return pattern;
+		}
+
+		String value = null;
+
+		try {
+			pattern = get(request, pattern);
+
+			if (ArrayUtil.isNotEmpty(arguments)) {
+				pattern = _escapePattern(pattern);
+
+				Object[] formattedArguments = new Object[arguments.length];
+
+				for (int i = 0; i < arguments.length; i++) {
+					if (translateArguments) {
+						formattedArguments[i] =
+							arguments[i].getBefore() +
+							get(request, arguments[i].getText()) +
+							arguments[i].getAfter();
+					}
+					else {
+						formattedArguments[i] =
+							arguments[i].getBefore() +
+							arguments[i].getText() +
+							arguments[i].getAfter();
+					}
+				}
+
+				value = MessageFormat.format(pattern, formattedArguments);
+			}
+			else {
+				value = pattern;
+			}
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(e, e);
+			}
+		}
+
+		return value;
+	}
+
+	@Override
+	public String format(
+		HttpServletRequest request, String pattern, Object argument) {
+
+		return format(request, pattern, new Object[] {argument}, true);
+	}
+
+	@Override
+	public String format(
+		HttpServletRequest request, String pattern, Object argument,
+		boolean translateArguments) {
+
+		return format(
+			request, pattern, new Object[] {argument}, translateArguments);
+	}
+
+	@Override
+	public String format(
+		HttpServletRequest request, String pattern, Object[] arguments) {
+
+		return format(request, pattern, arguments, true);
+	}
+
+	@Override
+	public String format(
+		HttpServletRequest request, String pattern, Object[] arguments,
+		boolean translateArguments) {
+
+		if (PropsValues.TRANSLATIONS_DISABLED) {
+			return pattern;
+		}
+
+		String value = null;
+
+		try {
+			pattern = get(request, pattern);
+
+			if (ArrayUtil.isNotEmpty(arguments)) {
+				pattern = _escapePattern(pattern);
+
+				Object[] formattedArguments = new Object[arguments.length];
+
+				for (int i = 0; i < arguments.length; i++) {
+					if (translateArguments) {
+						formattedArguments[i] = get(
+							request, arguments[i].toString());
+					}
+					else {
+						formattedArguments[i] = arguments[i];
+					}
+				}
+
+				value = MessageFormat.format(pattern, formattedArguments);
+			}
+			else {
+				value = pattern;
+			}
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(e, e);
+			}
+		}
+
+		return value;
+	}
 
 	@Override
 	public String format(
@@ -132,147 +272,6 @@ public class LanguageImpl implements Language, Serializable {
 					if (translateArguments) {
 						formattedArguments[i] = get(
 							locale, arguments[i].toString());
-					}
-					else {
-						formattedArguments[i] = arguments[i];
-					}
-				}
-
-				value = MessageFormat.format(pattern, formattedArguments);
-			}
-			else {
-				value = pattern;
-			}
-		}
-		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
-			}
-		}
-
-		return value;
-	}
-
-	@Override
-	public String format(
-		PageContext pageContext, String pattern, LanguageWrapper argument) {
-
-		return format(
-			pageContext, pattern, new LanguageWrapper[] {argument}, true);
-	}
-
-	@Override
-	public String format(
-		PageContext pageContext, String pattern, LanguageWrapper argument,
-		boolean translateArguments) {
-
-		return format(
-			pageContext, pattern, new LanguageWrapper[] {argument},
-			translateArguments);
-	}
-
-	@Override
-	public String format(
-		PageContext pageContext, String pattern, LanguageWrapper[] arguments) {
-
-		return format(pageContext, pattern, arguments, true);
-	}
-
-	@Override
-	public String format(
-		PageContext pageContext, String pattern, LanguageWrapper[] arguments,
-		boolean translateArguments) {
-
-		if (PropsValues.TRANSLATIONS_DISABLED) {
-			return pattern;
-		}
-
-		String value = null;
-
-		try {
-			pattern = get(pageContext, pattern);
-
-			if (ArrayUtil.isNotEmpty(arguments)) {
-				pattern = _escapePattern(pattern);
-
-				Object[] formattedArguments = new Object[arguments.length];
-
-				for (int i = 0; i < arguments.length; i++) {
-					if (translateArguments) {
-						formattedArguments[i] =
-							arguments[i].getBefore() +
-							get(pageContext, arguments[i].getText()) +
-							arguments[i].getAfter();
-					}
-					else {
-						formattedArguments[i] =
-							arguments[i].getBefore() +
-							arguments[i].getText() +
-							arguments[i].getAfter();
-					}
-				}
-
-				value = MessageFormat.format(pattern, formattedArguments);
-			}
-			else {
-				value = pattern;
-			}
-		}
-		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
-			}
-		}
-
-		return value;
-	}
-
-	@Override
-	public String format(
-		PageContext pageContext, String pattern, Object argument) {
-
-		return format(pageContext, pattern, new Object[] {argument}, true);
-	}
-
-	@Override
-	public String format(
-		PageContext pageContext, String pattern, Object argument,
-		boolean translateArguments) {
-
-		return format(
-			pageContext, pattern, new Object[] {argument}, translateArguments);
-	}
-
-	@Override
-	public String format(
-		PageContext pageContext, String pattern, Object[] arguments) {
-
-		return format(pageContext, pattern, arguments, true);
-	}
-
-	@Override
-	public String format(
-		PageContext pageContext, String pattern, Object[] arguments,
-		boolean translateArguments) {
-
-		if (PropsValues.TRANSLATIONS_DISABLED) {
-			return pattern;
-		}
-
-		String value = null;
-
-		try {
-			pattern = get(pageContext, pattern);
-
-			if (ArrayUtil.isNotEmpty(arguments)) {
-				pattern = _escapePattern(pattern);
-
-				Object[] formattedArguments = new Object[arguments.length];
-
-				for (int i = 0; i < arguments.length; i++) {
-					if (translateArguments) {
-						formattedArguments[i] = get(
-							pageContext, arguments[i].toString());
 					}
 					else {
 						formattedArguments[i] = arguments[i];
@@ -363,6 +362,37 @@ public class LanguageImpl implements Language, Serializable {
 	}
 
 	@Override
+	public String get(HttpServletRequest request, String key) {
+		return get(request, key, key);
+	}
+
+	@Override
+	public String get(
+		HttpServletRequest request, String key, String defaultValue) {
+
+		if ((request == null) || (key == null)) {
+			return defaultValue;
+		}
+
+		PortletConfig portletConfig = (PortletConfig)request.getAttribute(
+			JavaConstants.JAVAX_PORTLET_CONFIG);
+
+		Locale locale = _getLocale(request);
+
+		if (portletConfig == null) {
+			return get(locale, key, defaultValue);
+		}
+
+		ResourceBundle resourceBundle = portletConfig.getResourceBundle(locale);
+
+		if (resourceBundle.containsKey(key)) {
+			return _get(resourceBundle, key);
+		}
+
+		return get(locale, key, defaultValue);
+	}
+
+	@Override
 	public String get(Locale locale, String key) {
 		return get(locale, key, key);
 	}
@@ -398,40 +428,6 @@ public class LanguageImpl implements Language, Serializable {
 		}
 
 		return defaultValue;
-	}
-
-	@Override
-	public String get(PageContext pageContext, String key) {
-		return get(pageContext, key, key);
-	}
-
-	@Override
-	public String get(
-		PageContext pageContext, String key, String defaultValue) {
-
-		if ((pageContext == null) || (key == null)) {
-			return defaultValue;
-		}
-
-		HttpServletRequest request =
-			(HttpServletRequest)pageContext.getRequest();
-
-		PortletConfig portletConfig = (PortletConfig)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_CONFIG);
-
-		Locale locale = _getLocale(request);
-
-		if (portletConfig == null) {
-			return get(locale, key, defaultValue);
-		}
-
-		ResourceBundle resourceBundle = portletConfig.getResourceBundle(locale);
-
-		if (resourceBundle.containsKey(key)) {
-			return _get(resourceBundle, key);
-		}
-
-		return get(locale, key, defaultValue);
 	}
 
 	@Override
@@ -557,6 +553,48 @@ public class LanguageImpl implements Language, Serializable {
 	}
 
 	@Override
+	public String getTimeDescription(
+		HttpServletRequest request, long milliseconds) {
+
+		return getTimeDescription(request, milliseconds, false);
+	}
+
+	@Override
+	public String getTimeDescription(
+		HttpServletRequest request, long milliseconds, boolean approximate) {
+
+		String description = Time.getDescription(milliseconds, approximate);
+
+		String value = null;
+
+		try {
+			int pos = description.indexOf(CharPool.SPACE);
+
+			String x = description.substring(0, pos);
+
+			value = x.concat(StringPool.SPACE).concat(
+				get(
+					request,
+					StringUtil.toLowerCase(
+						description.substring(pos + 1, description.length()))));
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(e, e);
+			}
+		}
+
+		return value;
+	}
+
+	@Override
+	public String getTimeDescription(
+		HttpServletRequest request, Long milliseconds) {
+
+		return getTimeDescription(request, milliseconds.longValue());
+	}
+
+	@Override
 	public String getTimeDescription(Locale locale, long milliseconds) {
 		return getTimeDescription(locale, milliseconds, false);
 	}
@@ -592,48 +630,6 @@ public class LanguageImpl implements Language, Serializable {
 	@Override
 	public String getTimeDescription(Locale locale, Long milliseconds) {
 		return getTimeDescription(locale, milliseconds.longValue());
-	}
-
-	@Override
-	public String getTimeDescription(
-		PageContext pageContext, long milliseconds) {
-
-		return getTimeDescription(pageContext, milliseconds, false);
-	}
-
-	@Override
-	public String getTimeDescription(
-		PageContext pageContext, long milliseconds, boolean approximate) {
-
-		String description = Time.getDescription(milliseconds, approximate);
-
-		String value = null;
-
-		try {
-			int pos = description.indexOf(CharPool.SPACE);
-
-			String x = description.substring(0, pos);
-
-			value = x.concat(StringPool.SPACE).concat(
-				get(
-					pageContext,
-					StringUtil.toLowerCase(
-						description.substring(pos + 1, description.length()))));
-		}
-		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
-			}
-		}
-
-		return value;
-	}
-
-	@Override
-	public String getTimeDescription(
-		PageContext pageContext, Long milliseconds) {
-
-		return getTimeDescription(pageContext, milliseconds.longValue());
 	}
 
 	@Override

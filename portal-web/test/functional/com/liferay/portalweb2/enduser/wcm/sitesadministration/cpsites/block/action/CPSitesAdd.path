@@ -30,12 +30,12 @@
 </tr>
 <tr>
 	<td>MANUAL_MEMBERSHIP_MANAGEMENT_CHECKBOX</td>
-	<td>//input[@id='_165_manualMembershipCheckbox']</td>
+	<td>//input[@id='_165_manualMembership']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENABLE_PROPAGATION_CHECKBOX</td>
-	<td>//label[contains(.,'Enable propagation')]/input[2]</td>
+	<td>//label[contains(.,'Enable propagation')]/input</td>
 	<td></td>
 </tr>
 <tr>

@@ -62,10 +62,10 @@ public class AUIUtil {
 
 		StringBundler sb = new StringBundler(9);
 
-		sb.append("control-group");
+		sb.append("form-group");
 
 		if (inlineField) {
-			sb.append(" control-group-inline");
+			sb.append(" form-group-inline");
 		}
 
 		if (Validator.isNotNull(inlineLabel)) {
@@ -125,8 +125,8 @@ public class AUIUtil {
 	 */
 	@Deprecated
 	public static String buildCss(
-			String prefix, String baseTypeCss, boolean disabled, boolean first,
-			boolean last, String cssClass) {
+		String prefix, String baseTypeCss, boolean disabled, boolean first,
+		boolean last, String cssClass) {
 
 		return buildCss(prefix, disabled, first, last, cssClass);
 	}

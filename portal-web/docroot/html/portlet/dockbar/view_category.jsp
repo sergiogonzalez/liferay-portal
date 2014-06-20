@@ -25,7 +25,7 @@ int portletCategoryIndex = GetterUtil.getInteger((String)request.getAttribute(We
 
 String oldCategoryPath = (String)request.getAttribute(WebKeys.PORTLET_CATEGORY_PATH);
 
-String newCategoryPath = LanguageUtil.get(pageContext, portletCategory.getName());
+String newCategoryPath = LanguageUtil.get(request, portletCategory.getName());
 
 Pattern pattern = Pattern.compile(".*");
 
@@ -75,13 +75,13 @@ portlets = ListUtil.sort(portlets, new PortletTitleComparator(application, local
 
 if (!categories.isEmpty() || !portlets.isEmpty()) {
 	String panelId = renderResponse.getNamespace() + "portletCategory" + portletCategoryIndex;
-	String title = Validator.isNotNull(externalPortletCategory) ? externalPortletCategory : LanguageUtil.get(pageContext, portletCategory.getName());
+	String title = Validator.isNotNull(externalPortletCategory) ? externalPortletCategory : LanguageUtil.get(request, portletCategory.getName());
 %>
 
 	<div class="lfr-add-content">
-		<liferay-ui:panel collapsible="<%= layout.isTypePortlet() %>" cssClass="lfr-content-category panel-page-category unstyled" defaultState="closed" extended="<%= true %>" id="<%= panelId %>" parentId="<%= panelContainerId %>" persistState="<%= true %>" title="<%= title %>">
+		<liferay-ui:panel collapsible="<%= layout.isTypePortlet() %>" cssClass="lfr-content-category list-unstyled panel-page-category" defaultState="closed" extended="<%= true %>" id="<%= panelId %>" parentId="<%= panelContainerId %>" persistState="<%= true %>" title="<%= title %>">
 
-			<aui:nav collapsible="<%= false %>" cssClass="nav-list">
+			<aui:nav collapsible="<%= false %>">
 
 				<%
 				for (PortletCategory category : categories) {
@@ -189,7 +189,7 @@ if (!categories.isEmpty() || !portlets.isEmpty()) {
 								portletItemData.put("title", HtmlUtil.escape(portletItem.getName()));
 							%>
 
-								<aui:nav-item cssClass="lfr-content-item lfr-archived-setup" href="">
+								<aui:nav-item cssClass="lfr-archived-setup lfr-content-item" href="">
 									<span <%= AUIUtil.buildData(portletItemData) %> class="<%= cssClass %>">
 										<i class="<%= portletInstanceable ? "icon-th-large" : "icon-stop" %>"></i>
 

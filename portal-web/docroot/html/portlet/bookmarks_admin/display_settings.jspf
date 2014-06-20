@@ -21,7 +21,7 @@
 <liferay-ui:panel-container extended="<%= true %>" id="bookmarksSettingsPanelContainer" persistState="<%= true %>">
 	<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="bookmarksFoldersListingPanel" persistState="<%= true %>" title="folders-listing">
 		<aui:fieldset>
-			<div class="control-group">
+			<div class="form-group">
 				<aui:input label="root-folder" name="rootFolderName" type="resource" value="<%= rootFolderName %>" />
 
 				<aui:button name="selectFolderButton" value="select" />
@@ -49,7 +49,7 @@
 				List leftList = new ArrayList();
 
 				for (String folderColumn : folderColumns) {
-					leftList.add(new KeyValuePair(folderColumn, LanguageUtil.get(pageContext, folderColumn)));
+					leftList.add(new KeyValuePair(folderColumn, LanguageUtil.get(request, folderColumn)));
 				}
 
 				// Right list
@@ -60,7 +60,7 @@
 
 				for (String folderColumn : availableFolderColumns) {
 					if (Arrays.binarySearch(folderColumns, folderColumn) < 0) {
-						rightList.add(new KeyValuePair(folderColumn, LanguageUtil.get(pageContext, folderColumn)));
+						rightList.add(new KeyValuePair(folderColumn, LanguageUtil.get(request, folderColumn)));
 					}
 				}
 
@@ -98,7 +98,7 @@
 				for (int i = 0; i < entryColumns.length; i++) {
 					String entryColumn = entryColumns[i];
 
-					leftList.add(new KeyValuePair(entryColumn, LanguageUtil.get(pageContext, entryColumn)));
+					leftList.add(new KeyValuePair(entryColumn, LanguageUtil.get(request, entryColumn)));
 				}
 
 				// Right list
@@ -109,7 +109,7 @@
 
 				for (String entryColumn : availableEntryColumns) {
 					if (Arrays.binarySearch(entryColumns, entryColumn) < 0) {
-						rightList.add(new KeyValuePair(entryColumn, LanguageUtil.get(pageContext, entryColumn)));
+						rightList.add(new KeyValuePair(entryColumn, LanguageUtil.get(request, entryColumn)));
 					}
 				}
 

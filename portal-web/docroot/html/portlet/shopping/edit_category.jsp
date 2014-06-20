@@ -45,7 +45,7 @@ long parentCategoryId = BeanParamUtil.getLong(category, request, "parentCategory
 
 	<c:if test="<%= parentCategoryId != ShoppingCategoryConstants.DEFAULT_PARENT_CATEGORY_ID %>">
 		<div class="breadcrumbs">
-			<%= ShoppingUtil.getBreadcrumbs(parentCategoryId, pageContext, renderRequest, renderResponse) %>
+			<%= ShoppingUtil.getBreadcrumbs(parentCategoryId, renderRequest, renderResponse) %>
 		</div>
 	</c:if>
 
@@ -66,7 +66,7 @@ long parentCategoryId = BeanParamUtil.getLong(category, request, "parentCategory
 			}
 			%>
 
-			<div class="control-group">
+			<div class="form-group">
 				<aui:input label="parent-category" name="parentCategoryName" type="resource" value="<%= parentCategoryName %>" />
 
 				<portlet:renderURL var="selectCategoryURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
@@ -130,14 +130,14 @@ long parentCategoryId = BeanParamUtil.getLong(category, request, "parentCategory
 			document.getElementById('<portlet:namespace />parentCategoryName').value = '';
 
 			var mergeWithParent = A.one('#<portlet:namespace />merge-with-parent-checkbox-div');
-			var mergeWithParentCategory = A.one('#<portlet:namespace />mergeWithParentCategoryCheckbox');
+			var mergeWithParentCategory = A.one('#<portlet:namespace />mergeWithParentCategory');
 
 			if (mergeWithParent) {
 				mergeWithParent.hide();
 			}
 
 			if (mergeWithParentCategory) {
-				mergeWithParentCategory.set('checked', false);
+				mergeWithParentCategory.attr('checked', false);
 			}
 		},
 		['aui-base']

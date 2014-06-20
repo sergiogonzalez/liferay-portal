@@ -65,7 +65,7 @@ if (showLinkTitle) {
 	<c:when test='<%= displayStyle.equals("icon") %>'>
 		<div class="app-view-entry app-view-entry-taglib display-<%= displayStyle %> entry-display-style <%= showCheckbox ? "selectable" : StringPool.BLANK %> <%= cssClass %>" <%= AUIUtil.buildData(data) %> data-draggable="<%= showCheckbox ? Boolean.TRUE.toString() : Boolean.FALSE.toString() %>" data-title="<%= HtmlUtil.escapeAttribute(shortTitle) %>">
 			<c:if test="<%= showCheckbox %>">
-				<aui:input cssClass="entry-selector overlay" id="<%= rowCheckerId %>" label="" name="<%= RowChecker.ROW_IDS + rowCheckerName %>" title='<%= LanguageUtil.format(pageContext, "select-x", HtmlUtil.escape(shortTitle)) %>' type="checkbox" value="<%= rowCheckerId %>" />
+				<aui:input cssClass="entry-selector overlay" id="<%= rowCheckerId %>" label="" name="<%= RowChecker.ROW_IDS + rowCheckerName %>" title='<%= LanguageUtil.format(request, "select-x", HtmlUtil.escape(shortTitle)) %>' type="checkbox" value="<%= rowCheckerId %>" />
 			</c:if>
 
 			<%
@@ -143,7 +143,7 @@ if (showLinkTitle) {
 				<div class="entry-thumbnail" style="<%= thumbnailDivStyle %>">
 					<c:choose>
 						<c:when test="<%= Validator.isNotNull(thumbnailSrc) %>">
-							<img alt="" class="img-polaroid" src="<%= HtmlUtil.escapeAttribute(thumbnailSrc) %>" style="<%= thumbnailStyle %>" />
+							<img alt="" class="img-thumbnail" src="<%= HtmlUtil.escapeAttribute(thumbnailSrc) %>" style="<%= thumbnailStyle %>" />
 						</c:when>
 						<c:when test="<%= Validator.isNotNull(iconCssClass) %>">
 							<i class="<%= iconCssClass %>" style="<%= thumbnailStyle %>"></i>
@@ -360,7 +360,7 @@ if (showLinkTitle) {
 			<liferay-util:include page="<%= actionJsp %>" />
 
 			<c:if test="<%= showCheckbox %>">
-				<aui:input cssClass="entry-selector overlay" id="<%= rowCheckerId %>" label="" name="<%= RowChecker.ROW_IDS + rowCheckerName %>" title='<%= LanguageUtil.format(pageContext, "select-x", HtmlUtil.escape(shortTitle)) %>' type="checkbox" value="<%= rowCheckerId %>" />
+				<aui:input cssClass="entry-selector overlay" id="<%= rowCheckerId %>" label="" name="<%= RowChecker.ROW_IDS + rowCheckerName %>" title='<%= LanguageUtil.format(request, "select-x", HtmlUtil.escape(shortTitle)) %>' type="checkbox" value="<%= rowCheckerId %>" />
 			</c:if>
 		</div>
 	</c:when>
@@ -380,7 +380,7 @@ if (showLinkTitle) {
 			/>
 
 			<c:if test="<%= locked %>">
-				<i class="pull-right icon-lock"></i>
+				<i class="icon-lock pull-right"></i>
 			</c:if>
 
 			<c:if test="<%= !folder && (status != WorkflowConstants.STATUS_ANY) && (status != WorkflowConstants.STATUS_APPROVED) %>">

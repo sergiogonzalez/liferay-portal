@@ -29,17 +29,13 @@ portletURL.setParameter("folderId", String.valueOf(folderId));
 
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm1" onSubmit="event.preventDefault();">
 	<aui:nav-bar>
-		<aui:nav collapsible="<%= false %>" cssClass="nav-display-style-buttons pull-right" id="displayStyleButtons">
-			<aui:nav-item>
-				<span class="display-style-buttons-container pull-left" id="<portlet:namespace />displayStyleButtonsContainer">
-					<c:if test='<%= !strutsAction.equals("/journal/search") %>'>
-						<liferay-util:include page="/html/portlet/journal/display_style_buttons.jsp" />
-					</c:if>
-				</span>
-			</aui:nav-item>
+		<aui:nav collapsible="<%= true %>" cssClass="nav-display-style-buttons navbar-nav" icon="th-list" id="displayStyleButtons">
+			<c:if test='<%= !strutsAction.equals("/journal/search") %>'>
+				<liferay-util:include page="/html/portlet/journal/display_style_buttons.jsp" />
+			</c:if>
 		</aui:nav>
 
-		<aui:nav id="toolbarContainer">
+		<aui:nav cssClass="navbar-nav" id="toolbarContainer">
 			<aui:nav-item cssClass="hide" dropdown="<%= true %>" id="actionsButtonContainer" label="actions">
 
 				<%
@@ -101,7 +97,7 @@ portletURL.setParameter("folderId", String.valueOf(folderId));
 			Liferay.Util.openWindow(
 				{
 					id: '<portlet:namespace />openFeedsView',
-					title: '<%= UnicodeLanguageUtil.get(pageContext, "feeds") %>',
+					title: '<%= UnicodeLanguageUtil.get(request, "feeds") %>',
 					uri: '<liferay-portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/journal/view_feeds" /></liferay-portlet:renderURL>'
 				}
 			);
@@ -113,7 +109,7 @@ portletURL.setParameter("folderId", String.valueOf(folderId));
 	%>
 
 	function <portlet:namespace />deleteEntries() {
-		if (<%= TrashUtil.isTrashEnabled(scopeGroupId) %> || confirm(' <%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-delete-the-selected-entries") %>')) {
+		if (<%= TrashUtil.isTrashEnabled(scopeGroupId) %> || confirm(' <%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-entries") %>')) {
 			Liferay.fire(
 				'<%= renderResponse.getNamespace() %>editEntry',
 				{
@@ -141,7 +137,7 @@ portletURL.setParameter("folderId", String.valueOf(folderId));
 				refererWebDAVToken: '<%= portlet.getWebDAVStorageToken() %>',
 				showAncestorScopes: true,
 				showManageTemplates: true,
-				title: '<%= UnicodeLanguageUtil.get(pageContext, "structures") %>'
+				title: '<%= UnicodeLanguageUtil.get(request, "structures") %>'
 			}
 		);
 	}
@@ -160,7 +156,7 @@ portletURL.setParameter("folderId", String.valueOf(folderId));
 				showAncestorScopes: true,
 				showHeader: false,
 				struts_action: '/dynamic_data_mapping/view_template',
-				title: '<%= UnicodeLanguageUtil.get(pageContext, "templates") %>'
+				title: '<%= UnicodeLanguageUtil.get(request, "templates") %>'
 			}
 		);
 	}

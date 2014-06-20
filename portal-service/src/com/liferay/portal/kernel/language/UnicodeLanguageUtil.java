@@ -21,13 +21,70 @@ import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermissio
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import javax.servlet.jsp.PageContext;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Brian Wing Shun Chan
  */
 @ProviderType
 public class UnicodeLanguageUtil {
+
+	public static String format(
+		HttpServletRequest request, String pattern, LanguageWrapper argument) {
+
+		return getUnicodeLanguage().format(request, pattern, argument);
+	}
+
+	public static String format(
+		HttpServletRequest request, String pattern, LanguageWrapper argument,
+		boolean translateArguments) {
+
+		return getUnicodeLanguage().format(
+			request, pattern, argument, translateArguments);
+	}
+
+	public static String format(
+		HttpServletRequest request, String pattern,
+		LanguageWrapper[] arguments) {
+
+		return getUnicodeLanguage().format(request, pattern, arguments);
+	}
+
+	public static String format(
+		HttpServletRequest request, String pattern, LanguageWrapper[] arguments,
+		boolean translateArguments) {
+
+		return getUnicodeLanguage().format(
+			request, pattern, arguments, translateArguments);
+	}
+
+	public static String format(
+		HttpServletRequest request, String pattern, Object argument) {
+
+		return getUnicodeLanguage().format(request, pattern, argument);
+	}
+
+	public static String format(
+		HttpServletRequest request, String pattern, Object argument,
+		boolean translateArguments) {
+
+		return getUnicodeLanguage().format(
+			request, pattern, argument, translateArguments);
+	}
+
+	public static String format(
+		HttpServletRequest request, String pattern, Object[] arguments) {
+
+		return getUnicodeLanguage().format(request, pattern, arguments);
+	}
+
+	public static String format(
+		HttpServletRequest request, String pattern, Object[] arguments,
+		boolean translateArguments) {
+
+		return getUnicodeLanguage().format(
+			request, pattern, arguments, translateArguments);
+	}
 
 	public static String format(
 		Locale locale, String pattern, Object argument) {
@@ -58,62 +115,6 @@ public class UnicodeLanguageUtil {
 	}
 
 	public static String format(
-		PageContext pageContext, String pattern, LanguageWrapper argument) {
-
-		return getUnicodeLanguage().format(pageContext, pattern, argument);
-	}
-
-	public static String format(
-		PageContext pageContext, String pattern, LanguageWrapper argument,
-		boolean translateArguments) {
-
-		return getUnicodeLanguage().format(
-			pageContext, pattern, argument, translateArguments);
-	}
-
-	public static String format(
-		PageContext pageContext, String pattern, LanguageWrapper[] arguments) {
-
-		return getUnicodeLanguage().format(pageContext, pattern, arguments);
-	}
-
-	public static String format(
-		PageContext pageContext, String pattern, LanguageWrapper[] arguments,
-		boolean translateArguments) {
-
-		return getUnicodeLanguage().format(
-			pageContext, pattern, arguments, translateArguments);
-	}
-
-	public static String format(
-		PageContext pageContext, String pattern, Object argument) {
-
-		return getUnicodeLanguage().format(pageContext, pattern, argument);
-	}
-
-	public static String format(
-		PageContext pageContext, String pattern, Object argument,
-		boolean translateArguments) {
-
-		return getUnicodeLanguage().format(
-			pageContext, pattern, argument, translateArguments);
-	}
-
-	public static String format(
-		PageContext pageContext, String pattern, Object[] arguments) {
-
-		return getUnicodeLanguage().format(pageContext, pattern, arguments);
-	}
-
-	public static String format(
-		PageContext pageContext, String pattern, Object[] arguments,
-		boolean translateArguments) {
-
-		return getUnicodeLanguage().format(
-			pageContext, pattern, arguments, translateArguments);
-	}
-
-	public static String format(
 		ResourceBundle resourceBundle, String pattern, Object argument) {
 
 		return getUnicodeLanguage().format(resourceBundle, pattern, argument);
@@ -141,22 +142,22 @@ public class UnicodeLanguageUtil {
 			resourceBundle, pattern, arguments, translateArguments);
 	}
 
+	public static String get(HttpServletRequest request, String key) {
+		return getUnicodeLanguage().get(request, key);
+	}
+
+	public static String get(
+		HttpServletRequest request, String key, String defaultValue) {
+
+		return getUnicodeLanguage().get(request, key, defaultValue);
+	}
+
 	public static String get(Locale locale, String key) {
 		return getUnicodeLanguage().get(locale, key);
 	}
 
 	public static String get(Locale locale, String key, String defaultValue) {
 		return getUnicodeLanguage().get(locale, key, defaultValue);
-	}
-
-	public static String get(PageContext pageContext, String key) {
-		return getUnicodeLanguage().get(pageContext, key);
-	}
-
-	public static String get(
-		PageContext pageContext, String key, String defaultValue) {
-
-		return getUnicodeLanguage().get(pageContext, key, defaultValue);
 	}
 
 	public static String get(ResourceBundle resourceBundle, String key) {
@@ -170,17 +171,15 @@ public class UnicodeLanguageUtil {
 	}
 
 	public static String getTimeDescription(
-		PageContext pageContext, long milliseconds) {
+		HttpServletRequest request, long milliseconds) {
 
-		return getUnicodeLanguage().getTimeDescription(
-			pageContext, milliseconds);
+		return getUnicodeLanguage().getTimeDescription(request, milliseconds);
 	}
 
 	public static String getTimeDescription(
-		PageContext pageContext, Long milliseconds) {
+		HttpServletRequest request, Long milliseconds) {
 
-		return getUnicodeLanguage().getTimeDescription(
-			pageContext, milliseconds);
+		return getUnicodeLanguage().getTimeDescription(request, milliseconds);
 	}
 
 	public static UnicodeLanguage getUnicodeLanguage() {

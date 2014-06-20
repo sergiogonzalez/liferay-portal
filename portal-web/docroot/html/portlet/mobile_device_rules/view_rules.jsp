@@ -45,11 +45,11 @@ portletURL.setParameter("redirect", redirect);
 <liferay-ui:header
 	backURL="<%= backURL %>"
 	localizeTitle="<%= false %>"
-	title='<%= LanguageUtil.format(pageContext, "classification-rules-for-x", ruleGroup.getName(locale), false) %>'
+	title='<%= LanguageUtil.format(request, "classification-rules-for-x", ruleGroup.getName(locale), false) %>'
 />
 
 <aui:nav-bar>
-	<aui:nav>
+	<aui:nav cssClass="navbar-nav">
 		<liferay-portlet:renderURL var="addURL">
 			<portlet:param name="struts_action" value="/mobile_device_rules/edit_rule" />
 			<portlet:param name="redirect" value="<%= portletURL.toString() %>" />

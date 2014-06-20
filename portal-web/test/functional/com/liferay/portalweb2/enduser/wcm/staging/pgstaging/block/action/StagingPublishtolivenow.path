@@ -117,12 +117,12 @@
 </tr>
 <tr>
 	<td>PAGES_DELETE_MISSING_PAGES_CHECKBOX</td>
-	<td>//input[@id='_88_DELETE_MISSING_LAYOUTSCheckbox']</td>
+	<td>//input[@id='_88_DELETE_MISSING_LAYOUTS']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGES_LOGO_CHECKBOX</td>
-	<td>//input[@id='_88_LOGOCheckbox']</td>
+	<td>//input[@id='_88_LOGO']</td>
 	<td></td>
 </tr>
 <tr>
@@ -174,12 +174,12 @@
 </tr>
 <tr>
 	<td>CONTENT_CHOOSE_CONTENT_DELETION_CHECKBOX</td>
-	<td>//label[contains(.,'Deletions')]/input[2]</td>
+	<td>//label[contains(.,'Deletions')]/input</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX</td>
-	<td>//ul[@class='portlet-list']/li/label[contains(.,'${key_contentName}')]/input[2]</td>
+	<td>//ul[@class='portlet-list']/li/label[contains(.,'${key_contentName}')]/input</td>
 	<td></td>
 </tr>
 <tr>
@@ -238,7 +238,7 @@
 <!--PERMISSIONS-->
 <tr>
 	<td>PERMISSIONS_CHECKBOX</td>
-	<td>//input[@id='_88_PERMISSIONSCheckbox']</td>
+	<td>//input[@id='_88_PERMISSIONS']</td>
 	<td></td>
 </tr>
 <tr>

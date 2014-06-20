@@ -111,6 +111,10 @@ public class Validator_IW {
 		return Validator.isBlank(s);
 	}
 
+	public boolean isBoolean(java.lang.String value) {
+		return Validator.isBoolean(value);
+	}
+
 	public boolean isChar(char c) {
 		return Validator.isChar(c);
 	}

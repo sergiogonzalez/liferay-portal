@@ -63,8 +63,8 @@ if (!dlFileEntries.isEmpty()) {
 	</c:when>
 	<c:otherwise>
 		<c:if test="<%= (expandoBridgeAttributeNames != null) && !expandoBridgeAttributeNames.isEmpty() %>">
-			<div class="alert alert-error">
-				<%= LanguageUtil.format(pageContext, "custom-fields-already-exist-for-these-extra-settings-x", StringUtil.merge(expandoBridgeAttributeNames), false) %>
+			<div class="alert alert-danger">
+				<%= LanguageUtil.format(request, "custom-fields-already-exist-for-these-extra-settings-x", StringUtil.merge(expandoBridgeAttributeNames), false) %>
 			</div>
 		</c:if>
 
@@ -82,7 +82,7 @@ if (!dlFileEntries.isEmpty()) {
 			%>
 
 				<aui:fieldset>
-					<%= LanguageUtil.format(pageContext, "convert-extra-settings-key-from-x-to", key, false) %>
+					<%= LanguageUtil.format(request, "convert-extra-settings-key-from-x-to", key, false) %>
 
 					<br />
 

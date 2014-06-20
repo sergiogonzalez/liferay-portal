@@ -76,7 +76,7 @@ boolean hasViewPagesPermission = (pagesCount > 0) && (liveGroup.isStaged() || se
 </div>
 
 <aui:nav-bar>
-	<aui:nav id="layoutsNav">
+	<aui:nav cssClass="navbar-nav" id="layoutsNav">
 		<c:if test="<%= hasViewPagesPermission %>">
 			<aui:nav-item data-value="view-pages" iconCssClass="icon-file" label="view-pages" />
 		</c:if>
@@ -191,13 +191,13 @@ boolean hasViewPagesPermission = (pagesCount > 0) && (liveGroup.isStaged() || se
 			var ok = false;
 
 			if (currentValue == 0) {
-				ok = confirm('<%= UnicodeLanguageUtil.format(pageContext, "are-you-sure-you-want-to-deactivate-staging-for-x", liveGroup.getDescriptiveName(locale), false) %>');
+				ok = confirm('<%= UnicodeLanguageUtil.format(request, "are-you-sure-you-want-to-deactivate-staging-for-x", liveGroup.getDescriptiveName(locale), false) %>');
 			}
 			else if (currentValue == 1) {
-				ok = confirm('<%= UnicodeLanguageUtil.format(pageContext, "are-you-sure-you-want-to-activate-local-staging-for-x", liveGroup.getDescriptiveName(locale), false) %>');
+				ok = confirm('<%= UnicodeLanguageUtil.format(request, "are-you-sure-you-want-to-activate-local-staging-for-x", liveGroup.getDescriptiveName(locale), false) %>');
 			}
 			else if (currentValue == 2) {
-				ok = confirm('<%= UnicodeLanguageUtil.format(pageContext, "are-you-sure-you-want-to-activate-remote-staging-for-x", liveGroup.getDescriptiveName(locale), false) %>');
+				ok = confirm('<%= UnicodeLanguageUtil.format(request, "are-you-sure-you-want-to-activate-remote-staging-for-x", liveGroup.getDescriptiveName(locale), false) %>');
 			}
 
 			if (ok) {
@@ -231,7 +231,7 @@ boolean hasViewPagesPermission = (pagesCount > 0) && (liveGroup.isStaged() || se
 							cssClass: 'lfr-add-dialog',
 							width: 600
 						},
-						title: '<%= UnicodeLanguageUtil.get(pageContext, "add-page") %>'
+						title: '<%= UnicodeLanguageUtil.get(request, "add-page") %>'
 					}
 				);
 			}

@@ -25,7 +25,7 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Locale;
 
-import javax.servlet.jsp.PageContext;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Brian Wing Shun Chan
@@ -68,12 +68,12 @@ public class ResourceActionsUtil {
 		getResourceActions().checkAction(name, actionId);
 	}
 
-	public static String getAction(Locale locale, String action) {
-		return getResourceActions().getAction(locale, action);
+	public static String getAction(HttpServletRequest request, String action) {
+		return getResourceActions().getAction(request, action);
 	}
 
-	public static String getAction(PageContext pageContext, String action) {
-		return getResourceActions().getAction(pageContext, action);
+	public static String getAction(Locale locale, String action) {
+		return getResourceActions().getAction(locale, action);
 	}
 
 	public static String getActionNamePrefix() {
@@ -81,16 +81,15 @@ public class ResourceActionsUtil {
 	}
 
 	public static List<String> getActionsNames(
-		PageContext pageContext, List<String> actions) {
+		HttpServletRequest request, List<String> actions) {
 
-		return getResourceActions().getActionsNames(pageContext, actions);
+		return getResourceActions().getActionsNames(request, actions);
 	}
 
 	public static List<String> getActionsNames(
-		PageContext pageContext, String name, long actionIds) {
+		HttpServletRequest request, String name, long actionIds) {
 
-		return getResourceActions().getActionsNames(
-			pageContext, name, actionIds);
+		return getResourceActions().getActionsNames(request, name, actionIds);
 	}
 
 	public static List<String> getModelNames() {
@@ -101,14 +100,14 @@ public class ResourceActionsUtil {
 		return getResourceActions().getModelPortletResources(name);
 	}
 
-	public static String getModelResource(Locale locale, String name) {
-		return getResourceActions().getModelResource(locale, name);
+	public static String getModelResource(
+		HttpServletRequest request, String name) {
+
+		return getResourceActions().getModelResource(request, name);
 	}
 
-	public static String getModelResource(
-		PageContext pageContext, String name) {
-
-		return getResourceActions().getModelResource(pageContext, name);
+	public static String getModelResource(Locale locale, String name) {
+		return getResourceActions().getModelResource(locale, name);
 	}
 
 	public static List<String> getModelResourceActions(String name) {

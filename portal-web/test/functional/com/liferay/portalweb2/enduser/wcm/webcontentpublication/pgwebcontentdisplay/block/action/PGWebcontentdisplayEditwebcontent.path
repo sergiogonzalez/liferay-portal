@@ -75,7 +75,7 @@
 </tr>
 <tr>
 	<td>AVAILABLE_TRANSLATION</td>
-	<td>//a[contains(@class,'journal-article-translation-') and contains(.,'${key_webContentTranslationLanguage}')]</td>
+	<td>//div[@id='_15_availableTranslationContainer']//a[contains(.,'${key_webContentTranslationLanguage}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -90,7 +90,7 @@
 </tr>
 <tr>
 	<td>SEARCHABLE_CHECKBOX</td>
-	<td>//input[@id='_15_indexableCheckbox']</td>
+	<td>//input[@id='_15_indexable']</td>
 	<td></td>
 </tr>
 <tr>

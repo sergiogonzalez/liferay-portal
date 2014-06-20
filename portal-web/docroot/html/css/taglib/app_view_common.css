@@ -89,7 +89,7 @@
 			display: inline;
 
 			.workflow-status {
-				padding-left: .2em;
+				padding-left: 0.2em;
 			}
 		}
 
@@ -106,7 +106,7 @@
 
 			.asset-category {
 				font-weight: normal;
-				margin-left: .8em;
+				margin-left: 0.8em;
 			}
 		}
 	}
@@ -147,6 +147,10 @@
 		&, &:focus, &:hover {
 			color: #FFF;
 		}
+
+		.lfr-icon-menu-arrow {
+			color: #333;
+		}
 	}
 
 	&.active-area, &.active-area.hover, &.active-area td {
@@ -163,7 +167,7 @@
 	}
 
 	.entry-title .entry-categories, a.entry-title .entry-tags {
-		font-size: 16px ;
+		font-size: 16px;
 	}
 
 	a.entry-link:hover {

@@ -21,14 +21,14 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem");
 %>
 
 <aui:nav-bar>
-	<aui:nav>
+	<aui:nav cssClass="navbar-nav">
 		<c:if test='<%= DeployManagerUtil.isDeployed("kaleo-designer-portlet") %>'>
 
 			<%
 			String taglibHREF = "javascript:Liferay.Util.getOpener()." + renderResponse.getNamespace() + "openKaleoDesigner('', '0', '', Liferay.Util.getWindowName());";
 			%>
 
-			<aui:nav-item href="<%= taglibHREF %>" iconCssClass="icon-plus" label='<%= LanguageUtil.format(pageContext, "add-new-x", "definition") %>' />
+			<aui:nav-item href="<%= taglibHREF %>" iconCssClass="icon-plus" label='<%= LanguageUtil.format(request, "add-new-x", "definition") %>' />
 		</c:if>
 
 		<portlet:renderURL var="viewDefinitionsURL">

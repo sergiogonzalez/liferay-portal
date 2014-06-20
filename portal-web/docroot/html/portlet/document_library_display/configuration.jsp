@@ -50,7 +50,7 @@ DLDisplayConfigurationDisplayContext dlDisplayConfigurationDisplayContext = new 
 
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="documentLibraryFoldersListingPanel" persistState="<%= true %>" title="folders-listing">
 			<aui:fieldset>
-				<div class="control-group">
+				<div class="form-group">
 					<aui:input label="root-folder" name="rootFolderName" type="resource" value="<%= rootFolderName %>" />
 
 					<aui:button name="openFolderSelectorButton" value="select" />
@@ -143,7 +143,7 @@ DLDisplayConfigurationDisplayContext dlDisplayConfigurationDisplayContext = new 
 		}
 	);
 
-	A.one('#<portlet:namespace />showActionsCheckbox').after(
+	A.one('#<portlet:namespace />showActions').after(
 		'change',
 		function(event) {
 			var currentFileEntryColumns = A.one('#<portlet:namespace />currentFileEntryColumns');
@@ -151,7 +151,7 @@ DLDisplayConfigurationDisplayContext dlDisplayConfigurationDisplayContext = new 
 			var showActionsInput = A.one('#<portlet:namespace />showActions');
 
 			if (showActionsInput.val() === 'false') {
-				var actionHTML = '<option value="action"><%= UnicodeLanguageUtil.get(pageContext, "action") %></option>';
+				var actionHTML = '<option value="action"><%= UnicodeLanguageUtil.get(request, "action") %></option>';
 
 				currentFileEntryColumns.append(actionHTML);
 				currentFolderColumns.append(actionHTML);

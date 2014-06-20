@@ -400,6 +400,21 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	@Override
 	public MBMessage addMessage(
 			long userId, String userName, long groupId, long categoryId,
+			String subject, String body, ServiceContext serviceContext)
+		throws PortalException {
+
+		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
+			Collections.emptyList();
+
+		return addMessage(
+			userId, userName, groupId, categoryId, 0, 0, subject, body,
+			MBMessageConstants.DEFAULT_FORMAT, inputStreamOVPs, false, 0.0,
+			false, serviceContext);
+	}
+
+	@Override
+	public MBMessage addMessage(
+			long userId, String userName, long groupId, long categoryId,
 			String subject, String body, String format,
 			List<ObjectValuePair<String, InputStream>> inputStreamOVPs,
 			boolean anonymous, double priority, boolean allowPingbacks,
@@ -415,22 +430,29 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			allowPingbacks, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #addMessage(long, String,
+	 *             long, long, String, String, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public MBMessage addMessage(
 			long userId, String userName, long categoryId, String subject,
 			String body, ServiceContext serviceContext)
 		throws PortalException {
 
-		MBCategory category = mbCategoryPersistence.findByPrimaryKey(
-			categoryId);
+		long groupId = serviceContext.getScopeGroupId();
 
-		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
-			Collections.emptyList();
+		if (categoryId != MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
+			MBCategory category = mbCategoryPersistence.findByPrimaryKey(
+				categoryId);
+
+			groupId = category.getGroupId();
+		}
 
 		return addMessage(
-			userId, userName, category.getGroupId(), categoryId, 0, 0, subject,
-			body, MBMessageConstants.DEFAULT_FORMAT, inputStreamOVPs, false,
-			0.0, false, serviceContext);
+			userId, userName, groupId, categoryId, subject, body,
+			serviceContext);
 	}
 
 	@Override
@@ -849,7 +871,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 	@Override
 	public int getCompanyMessagesCount(long companyId, int status) {
-
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return mbMessagePersistence.countByCompanyId(companyId);
 		}
@@ -968,7 +989,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 	@Override
 	public List<MBDiscussion> getDiscussions(String className) {
-
 		long classNameId = classNameLocalService.getClassNameId(className);
 
 		return mbDiscussionPersistence.findByClassNameId(classNameId);
@@ -1029,7 +1049,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 	@Override
 	public int getGroupMessagesCount(long groupId, int status) {
-
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return mbMessagePersistence.countByGroupId(groupId);
 		}
@@ -1040,7 +1059,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 	@Override
 	public int getGroupMessagesCount(long groupId, long userId, int status) {
-
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return mbMessagePersistence.countByG_U(groupId, userId);
 		}
@@ -1175,7 +1193,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 	@Override
 	public List<MBMessage> getThreadMessages(long threadId, int status) {
-
 		return getThreadMessages(
 			threadId, status, new MessageThreadComparator());
 	}
@@ -1210,7 +1227,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 	@Override
 	public int getThreadMessagesCount(long threadId, int status) {
-
 		if (status == WorkflowConstants.STATUS_ANY) {
 			return mbMessagePersistence.countByThreadId(threadId);
 		}
@@ -1789,7 +1805,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 	@Override
 	public void updateUserName(long userId, String userName) {
-
 		List<MBMessage> messages = mbMessagePersistence.findByUserId(userId);
 
 		for (MBMessage message : messages) {
@@ -2256,7 +2271,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	}
 
 	protected void updatePriorities(long threadId, double priority) {
-
 		List<MBMessage> messages = mbMessagePersistence.findByThreadId(
 			threadId);
 

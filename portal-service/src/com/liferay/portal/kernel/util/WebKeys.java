@@ -39,10 +39,6 @@ public interface WebKeys {
 
 	public static final String CLP_MESSAGE_LISTENERS = "CLP_MESSAGE_LISTENERS";
 
-	public static final String COMPANY = "COMPANY";
-
-	public static final String COMPANY_ID = "COMPANY_ID";
-
 	public static final String CTX = "CTX";
 
 	public static final String CTX_PATH = "CTX_PATH";
@@ -61,6 +57,8 @@ public interface WebKeys {
 	public static final String FORGOT_PASSWORD_REMINDER_USER = "FORGOT_PASSWORD_REMINDER_USER";
 
 	public static final String FORGOT_PASSWORD_REMINDER_USER_EMAIL_ADDRESS = "FORGOT_PASSWORD_REMINDER_USER_EMAIL_ADDRESS";
+
+	public static final String GROUP = "GROUP";
 
 	public static final String INVOKER_FILTER_URI = "INVOKER_FILTER_URI";
 

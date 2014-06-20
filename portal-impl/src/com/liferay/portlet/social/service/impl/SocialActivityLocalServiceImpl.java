@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.messaging.async.Async;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackRegistryUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.User;
@@ -32,6 +33,7 @@ import com.liferay.portlet.social.util.SocialActivityHierarchyEntryThreadLocal;
 
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 /**
  * The social activity local service. This service provides the means to record
@@ -116,7 +118,7 @@ public class SocialActivityLocalServiceImpl
 			}
 		}
 
-		SocialActivity activity = socialActivityPersistence.create(0);
+		final SocialActivity activity = socialActivityPersistence.create(0);
 
 		activity.setGroupId(groupId);
 		activity.setCompanyId(user.getCompanyId());
@@ -169,7 +171,21 @@ public class SocialActivityLocalServiceImpl
 			mirrorActivity.setAssetEntry(assetEntry);
 		}
 
-		socialActivityLocalService.addActivity(activity, mirrorActivity);
+		final SocialActivity finalMirrorActivity = mirrorActivity;
+
+		Callable<Void> callable = new Callable<Void>() {
+
+			@Override
+			public Void call() throws Exception {
+				socialActivityLocalService.addActivity(
+					activity, finalMirrorActivity);
+
+				return null;
+			}
+
+		};
+
+		TransactionCommitCallbackRegistryUtil.registerCallback(callable);
 	}
 
 	/**
@@ -779,7 +795,6 @@ public class SocialActivityLocalServiceImpl
 	 */
 	@Override
 	public int getGroupUsersActivitiesCount(long groupId) {
-
 		return socialActivityFinder.countByGroupUsers(groupId);
 	}
 
@@ -834,7 +849,6 @@ public class SocialActivityLocalServiceImpl
 	 */
 	@Override
 	public int getOrganizationActivitiesCount(long organizationId) {
-
 		return socialActivityFinder.countByOrganizationId(organizationId);
 	}
 
@@ -874,7 +888,6 @@ public class SocialActivityLocalServiceImpl
 	 */
 	@Override
 	public int getOrganizationUsersActivitiesCount(long organizationId) {
-
 		return socialActivityFinder.countByOrganizationUsers(organizationId);
 	}
 
@@ -956,7 +969,6 @@ public class SocialActivityLocalServiceImpl
 	 */
 	@Override
 	public int getRelationActivitiesCount(long userId, int type) {
-
 		return socialActivityFinder.countByRelationType(userId, type);
 	}
 
@@ -1031,7 +1043,6 @@ public class SocialActivityLocalServiceImpl
 	 */
 	@Override
 	public int getUserGroupsActivitiesCount(long userId) {
-
 		return socialActivityFinder.countByUserGroups(userId);
 	}
 
@@ -1071,7 +1082,6 @@ public class SocialActivityLocalServiceImpl
 	 */
 	@Override
 	public int getUserGroupsAndOrganizationsActivitiesCount(long userId) {
-
 		return socialActivityFinder.countByUserGroupsAndOrganizations(userId);
 	}
 
@@ -1110,12 +1120,10 @@ public class SocialActivityLocalServiceImpl
 	 */
 	@Override
 	public int getUserOrganizationsActivitiesCount(long userId) {
-
 		return socialActivityFinder.countByUserOrganizations(userId);
 	}
 
 	protected boolean isLogActivity(SocialActivity activity) {
-
 		if (activity.getType() == SocialActivityConstants.TYPE_DELETE) {
 			if (activity.getParentClassPK() == 0) {
 				return true;

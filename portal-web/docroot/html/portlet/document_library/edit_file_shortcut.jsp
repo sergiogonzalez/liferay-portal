@@ -84,7 +84,7 @@ portletURL.setParameter("fileShortcutId", String.valueOf(fileShortcutId));
 
 	<liferay-ui:header
 		backURL="<%= redirect %>"
-		title='<%= (fileShortcut != null)? LanguageUtil.format(pageContext, "shortcut-to-x", fileShortcut.getToTitle(), false) : "new-file-shortcut" %>'
+		title='<%= (fileShortcut != null)? LanguageUtil.format(request, "shortcut-to-x", fileShortcut.getToTitle(), false) : "new-file-shortcut" %>'
 	/>
 
 	<liferay-ui:error exception="<%= FileShortcutPermissionException.class %>" message="you-do-not-have-permission-to-create-a-shortcut-to-the-selected-document" />
@@ -99,7 +99,7 @@ portletURL.setParameter("fileShortcutId", String.valueOf(fileShortcutId));
 		String toGroupName = BeanPropertiesUtil.getString(toGroup, "name");
 		%>
 
-		<div class="control-group">
+		<div class="form-group">
 			<aui:input label="site" name="toGroupName" type="resource" value="<%= toGroupName %>" />
 
 			<aui:button name="selectGroupButton" value="select" />
@@ -109,7 +109,7 @@ portletURL.setParameter("fileShortcutId", String.valueOf(fileShortcutId));
 		String toFileEntryTitle = BeanPropertiesUtil.getString(toFileEntry, "title");
 		%>
 
-		<div class="control-group">
+		<div class="form-group">
 			<aui:input label="document" name="toFileEntryTitle" type="resource" url="<%= toFileEntryTitle %>" />
 
 			<aui:button disabled="<%= (toGroup == null) %>" name="selectToFileEntryButton" value="select" />
@@ -227,11 +227,11 @@ portletURL.setParameter("fileShortcutId", String.valueOf(fileShortcutId));
 if (fileShortcut != null) {
 	DLUtil.addPortletBreadcrumbEntries(fileShortcut, request, renderResponse);
 
-	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "edit"), currentURL);
+	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "edit"), currentURL);
 }
 else {
 	DLUtil.addPortletBreadcrumbEntries(folderId, request, renderResponse);
 
-	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "add-file-shortcut"), currentURL);
+	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "add-file-shortcut"), currentURL);
 }
 %>

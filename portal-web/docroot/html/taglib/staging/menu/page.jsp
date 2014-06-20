@@ -93,7 +93,7 @@ else {
 	}
 }
 
-String publishMessage = LanguageUtil.get(pageContext, publishDialogTitle);
+String publishMessage = LanguageUtil.get(request, publishDialogTitle);
 %>
 
 <liferay-portlet:renderURL plid="<%= plid %>" portletMode="<%= PortletMode.VIEW.toString() %>" portletName="<%= PortletKeys.LAYOUTS_ADMIN %>" varImpl="publishRenderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
@@ -112,7 +112,7 @@ String publishMessage = LanguageUtil.get(pageContext, publishDialogTitle);
 		</c:when>
 		<c:otherwise>
 			<aui:nav-bar>
-				<aui:nav>
+				<aui:nav cssClass="navbar-nav">
 					<aui:nav-item dropdown="<%= true %>" label="staging">
 						<aui:nav-item cssClass="<%= cssClass %>" label="<%= extended ? message : StringPool.BLANK %>">
 							<%@ include file="/html/taglib/staging/menu/staging_actions.jspf" %>

@@ -73,6 +73,10 @@ public class WebKeys implements com.liferay.portal.kernel.util.WebKeys {
 
 	public static final String COMIC_ENTRY = "COMIC_ENTRY";
 
+	public static final String COMPANY = "COMPANY";
+
+	public static final String COMPANY_ID = "COMPANY_ID";
+
 	public static final String CONFIGURATION_ACTION_PATH = "CONFIGURATION_ACTION_PATH";
 
 	public static final String CONTROL_PANEL_CATEGORIES_MAP = "CONTROL_PANEL_CATEGORIES_MAP";
@@ -142,8 +146,6 @@ public class WebKeys implements com.liferay.portal.kernel.util.WebKeys {
 	public static final String FTL_VARIABLES = "FTL_VARIABLES";
 
 	public static final String GOOGLE_GADGET = "GOOGLE_GADGET";
-
-	public static final String GROUP = "GROUP";
 
 	public static final String HTTPS_INITIAL = "HTTPS_INITIAL";
 

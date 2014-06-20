@@ -146,9 +146,9 @@ String discountType = BeanParamUtil.getString(coupon, request, "discountType");
 			</liferay-ui:error>
 
 			<aui:fieldset>
-				<aui:input label='<%= LanguageUtil.get(pageContext, "this-coupon-only-applies-to-items-that-are-children-of-this-comma-delimited-list-of-categories") + StringPool.SPACE + LanguageUtil.get(pageContext, "leave-this-blank-if-the-coupon-does-not-check-for-the-parent-categories-of-an-item") %>' name="limitCategories" />
+				<aui:input label='<%= LanguageUtil.get(request, "this-coupon-only-applies-to-items-that-are-children-of-this-comma-delimited-list-of-categories") + StringPool.SPACE + LanguageUtil.get(request, "leave-this-blank-if-the-coupon-does-not-check-for-the-parent-categories-of-an-item") %>' name="limitCategories" />
 
-				<aui:input label='<%= LanguageUtil.get(pageContext, "this-coupon-only-applies-to-items-with-a-sku-that-corresponds-to-this-comma-delimited-list-of-item-skus") + StringPool.SPACE + LanguageUtil.get(pageContext, "leave-this-blank-if-the-coupon-does-not-check-for-the-item-sku") %>' name="limitSkus" />
+				<aui:input label='<%= LanguageUtil.get(request, "this-coupon-only-applies-to-items-with-a-sku-that-corresponds-to-this-comma-delimited-list-of-item-skus") + StringPool.SPACE + LanguageUtil.get(request, "leave-this-blank-if-the-coupon-does-not-check-for-the-item-sku") %>' name="limitSkus" />
 			</aui:fieldset>
 		</liferay-ui:panel>
 	</liferay-ui:panel-container>
@@ -161,5 +161,5 @@ String discountType = BeanParamUtil.getString(coupon, request, "discountType");
 		submitForm(document.<portlet:namespace />fm);
 	}
 
-	Liferay.Util.disableToggleBoxes('<portlet:namespace />autoCodeCheckbox', '<portlet:namespace />code', true);
+	Liferay.Util.disableToggleBoxes('<portlet:namespace />autoCode', '<portlet:namespace />code', true);
 </aui:script>

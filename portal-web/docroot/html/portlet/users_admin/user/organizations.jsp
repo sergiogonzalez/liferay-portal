@@ -61,7 +61,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "organi
 
 		<liferay-ui:search-container-column-text
 			name="type"
-			value="<%= LanguageUtil.get(pageContext, organization.getType()) %>"
+			value="<%= LanguageUtil.get(request, organization.getType()) %>"
 		/>
 
 		<%
@@ -93,7 +93,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "organi
 		iconCssClass="icon-search"
 		id="selectOrganizationLink"
 		label="<%= true %>"
-		linkCssClass="btn"
+		linkCssClass="btn btn-default"
 		message="select"
 		method="get"
 		url="javascript:;"

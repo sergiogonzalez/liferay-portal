@@ -58,6 +58,10 @@ public class InputSearchTag extends IncludeTag {
 		_title = title;
 	}
 
+	public void setUseNamespace(boolean useNamespace) {
+		_useNamespace = useNamespace;
+	}
+
 	@Override
 	protected void cleanUp() {
 		super.cleanUp();
@@ -70,6 +74,7 @@ public class InputSearchTag extends IncludeTag {
 		_placeholder = null;
 		_showButton = true;
 		_title = null;
+		_useNamespace = true;
 	}
 
 	@Override
@@ -82,14 +87,10 @@ public class InputSearchTag extends IncludeTag {
 		String buttonLabel = _buttonLabel;
 
 		if (Validator.isNull(buttonLabel)) {
-			buttonLabel = LanguageUtil.get(pageContext, "search");
+			buttonLabel = LanguageUtil.get(request, "search");
 		}
 
 		String cssClass = _cssClass;
-
-		if (Validator.isNull(cssClass)) {
-			cssClass = "input-append";
-		}
 
 		String name = _name;
 
@@ -112,7 +113,7 @@ public class InputSearchTag extends IncludeTag {
 		String title = _title;
 
 		if (title == null) {
-			title = LanguageUtil.get(pageContext, "search");
+			title = LanguageUtil.get(request, "search");
 		}
 
 		request.setAttribute(
@@ -126,6 +127,8 @@ public class InputSearchTag extends IncludeTag {
 			"liferay-ui:input-search:placeholder", placeholder);
 		request.setAttribute("liferay-ui:input-search:showButton", _showButton);
 		request.setAttribute("liferay-ui:input-search:title", title);
+		request.setAttribute(
+			"liferay-ui:input-search:useNamespace", _useNamespace);
 	}
 
 	private static final String _PAGE = "/html/taglib/ui/input_search/page.jsp";
@@ -138,5 +141,6 @@ public class InputSearchTag extends IncludeTag {
 	private String _placeholder;
 	private boolean _showButton = true;
 	private String _title;
+	private boolean _useNamespace = true;
 
 }

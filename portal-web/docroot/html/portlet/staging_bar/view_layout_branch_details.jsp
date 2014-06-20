@@ -23,7 +23,7 @@ LayoutSetBranch layoutSetBranch = (LayoutSetBranch)request.getAttribute("view.js
 String stagingFriendlyURL = (String)request.getAttribute("view.jsp-stagingFriendlyURL");
 %>
 
-<div class="page-variations-options span5">
+<div class="col-md-5 page-variations-options">
 
 	<%
 	List<LayoutRevision> layoutRevisions = LayoutRevisionLocalServiceUtil.getChildLayoutRevisions(layoutRevision.getLayoutSetBranchId(), LayoutRevisionConstants.DEFAULT_PARENT_LAYOUT_REVISION_ID, plid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, new LayoutRevisionCreateDateComparator(true));
@@ -114,7 +114,7 @@ String stagingFriendlyURL = (String)request.getAttribute("view.jsp-stagingFriend
 				Liferay.Util.openWindow(
 					{
 						id: '<portlet:namespace />layoutRevisions',
-						title: '<%= UnicodeLanguageUtil.get(pageContext, "manage-page-variations") %>',
+						title: '<%= UnicodeLanguageUtil.get(request, "manage-page-variations") %>',
 						uri: event.currentTarget.attr('href')
 					}
 				);

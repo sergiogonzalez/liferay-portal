@@ -93,6 +93,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DETAILS_FRIENDLY_URL_LOCALIZED</td>
+	<td>//div[contains(@id,'friendlyURL')]//li[@data-value='${key_friendlyUrlLocalized}']/a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DETAILS_FRIENDLY_URL_SPANISH_SPAIN</td>
 	<td>//div[contains(@id,'friendlyURL')]//li[@data-value='es_ES']/a</td>
 	<td></td>
@@ -165,8 +170,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>CUSTOMIZATION_SETTINGS_CUSTOMIZABLE_COLUMN_RADIO</td>
-	<td>//input[contains(@id,'TypeSettingsProperties--column-${key_columnId}-customizable--Checkbox')]</td>
+	<td>CUSTOMIZATION_SETTINGS_CUSTOMIZABLE_COLUMN_CHECKBOX</td>
+	<td>//input[contains(@id,'TypeSettingsProperties--column-${key_columnId}-customizable--')]</td>
 	<td></td>
 </tr>
 </tbody>

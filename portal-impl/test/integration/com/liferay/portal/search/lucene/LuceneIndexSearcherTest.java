@@ -14,7 +14,6 @@
 
 package com.liferay.portal.search.lucene;
 
-import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
@@ -27,6 +26,7 @@ import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
@@ -38,7 +38,6 @@ import com.liferay.portal.util.test.UserTestUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -58,8 +57,6 @@ public class LuceneIndexSearcherTest {
 
 	@Before
 	public void setUp() throws Exception {
-		FinderCacheUtil.clearCache();
-
 		int initialUsersCount = 0;
 
 		do {
@@ -78,13 +75,6 @@ public class LuceneIndexSearcherTest {
 				new long[] {TestPropsValues.getGroupId()});
 
 			_users.add(user);
-		}
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		for (User user : _users) {
-			UserLocalServiceUtil.deleteUser(user);
 		}
 	}
 
@@ -263,6 +253,8 @@ public class LuceneIndexSearcherTest {
 	private static final int _USERS_COUNT = 5;
 
 	private String _randomLastName;
+
+	@DeleteAfterTestRun
 	private List<User> _users = new ArrayList<User>();
 
 }

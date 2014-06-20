@@ -30,23 +30,24 @@ String emailAddress2 = ParamUtil.getString(request, "emailAddress2");
 %>
 
 <aui:form action='<%= themeDisplay.getPathMain() + "/portal/update_email_address" %>' method="post" name="fm">
+	<aui:input name="p_auth" type="hidden" value="<%= AuthTokenUtil.getToken(request) %>" />
 	<aui:input name="doAsUserId" type="hidden" value="<%= themeDisplay.getDoAsUserId() %>" />
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="<%= WebKeys.REFERER %>" type="hidden" value="<%= referer %>" />
 
 	<c:choose>
 		<c:when test="<%= SessionErrors.contains(request, DuplicateUserEmailAddressException.class.getName()) %>">
-			<div class="alert alert-error">
+			<div class="alert alert-danger">
 				<liferay-ui:message key="the-email-address-you-requested-is-already-taken" />
 			</div>
 		</c:when>
 		<c:when test="<%= SessionErrors.contains(request, ReservedUserEmailAddressException.class.getName()) %>">
-			<div class="alert alert-error">
+			<div class="alert alert-danger">
 				<liferay-ui:message key="the-email-address-you-requested-is-reserved" />
 			</div>
 		</c:when>
 		<c:when test="<%= SessionErrors.contains(request, UserEmailAddressException.class.getName()) %>">
-			<div class="alert alert-error">
+			<div class="alert alert-danger">
 				<liferay-ui:message key="please-enter-a-valid-email-address" />
 			</div>
 		</c:when>

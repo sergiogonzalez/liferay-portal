@@ -47,7 +47,7 @@ String cssClass = StringPool.BLANK;
 boolean view = false;
 
 if (row == null) {
-	cssClass = "nav nav-list unstyled well";
+	cssClass = "list-group nav";
 
 	view = true;
 }
@@ -165,7 +165,7 @@ if (row == null) {
 
 				<liferay-ui:icon
 					iconCssClass="icon-plus"
-					message='<%= LanguageUtil.format(pageContext, "add-x", childrenType) %>'
+					message='<%= LanguageUtil.format(request, "add-x", childrenType) %>'
 					url="<%= addSuborganizationURL %>"
 				/>
 			</c:if>

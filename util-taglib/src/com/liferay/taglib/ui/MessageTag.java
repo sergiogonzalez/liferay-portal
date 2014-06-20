@@ -17,8 +17,10 @@ package com.liferay.taglib.ui;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.language.UnicodeLanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.servlet.http.HttpServletRequest;
@@ -50,27 +52,36 @@ public class MessageTag extends TagSupport {
 				if (!_localizeKey) {
 					value = _key;
 				}
+				else if (_escape) {
+					value = HtmlUtil.escape(LanguageUtil.get(request, _key));
+				}
+				else if (_escapeAttribute) {
+					value = HtmlUtil.escapeAttribute(
+						LanguageUtil.get(request, _key));
+				}
 				else if (_unicode) {
-					value = UnicodeLanguageUtil.get(pageContext, _key);
+					value = UnicodeLanguageUtil.get(request, _key);
 				}
 				else {
-					value = LanguageUtil.get(pageContext, _key);
+					value = LanguageUtil.get(request, _key);
 				}
 			}
 			else {
 				if (_unicode) {
 					value = UnicodeLanguageUtil.format(
-						pageContext, _key, _arguments, _translateArguments);
+						request, _key, _arguments, _translateArguments);
 				}
 				else {
 					value = LanguageUtil.format(
-						pageContext, _key, _arguments, _translateArguments);
+						request, _key, _arguments, _translateArguments);
 				}
 			}
 
-			JspWriter jspWriter = pageContext.getOut();
+			if (Validator.isNotNull(value)) {
+				JspWriter jspWriter = pageContext.getOut();
 
-			jspWriter.write(value);
+				jspWriter.write(value);
+			}
 
 			return EVAL_PAGE;
 		}
@@ -80,6 +91,8 @@ public class MessageTag extends TagSupport {
 		finally {
 			if (!ServerDetector.isResin()) {
 				_arguments = null;
+				_escape = false;
+				_escapeAttribute = false;
 				_key = null;
 				_localizeKey = true;
 				_translateArguments = true;
@@ -105,6 +118,14 @@ public class MessageTag extends TagSupport {
 		}
 	}
 
+	public void setEscape(boolean escape) {
+		_escape = escape;
+	}
+
+	public void setEscapeAttribute(boolean escapeAttribute) {
+		_escapeAttribute = escapeAttribute;
+	}
+
 	public void setKey(String key) {
 		_key = key;
 	}
@@ -122,6 +143,8 @@ public class MessageTag extends TagSupport {
 	}
 
 	private Object[] _arguments;
+	private boolean _escape;
+	private boolean _escapeAttribute;
 	private String _key;
 	private boolean _localizeKey = true;
 	private boolean _translateArguments = true;

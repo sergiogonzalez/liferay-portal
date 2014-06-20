@@ -18,7 +18,7 @@
 
 <aui:form name="fm">
 	<aui:nav-bar>
-		<aui:nav>
+		<aui:nav cssClass="navbar-nav">
 			<c:if test="<%= AssetPermission.contains(permissionChecker, themeDisplay.getSiteGroupId(), ActionKeys.ADD_TAG) %>">
 				<aui:nav-item id="addTagButton" label="add-tag" />
 			</c:if>
@@ -43,16 +43,18 @@
 		</aui:nav>
 
 		<aui:nav-bar-search cssClass="pull-right">
-			<liferay-ui:input-search cssClass="form-search" id="tagsAdminSearchInput" name="tagsAdminSearchInput" showButton="<%= false %>" />
+			<div class="col-xs-12 form-search">
+				<liferay-ui:input-search id="tagsAdminSearchInput" name="tagsAdminSearchInput" showButton="<%= false %>" />
+			</div>
 		</aui:nav-bar-search>
 	</aui:nav-bar>
 
-	<div class="tags-admin-container lfr-app-column-view">
+	<div class="lfr-app-column-view tags-admin-container">
 		<div class="tags-admin-content-wrapper">
 			<aui:row cssClass="tags-admin-content">
 				<aui:col cssClass="tags-admin-list-container" width="<%= 35 %>">
 					<div class="hide selected-tags-wrapper">
-						<h3 class="tags-header"><%= LanguageUtil.get(pageContext, "selected") %></h3>
+						<h3 class="tags-header"><%= LanguageUtil.get(request, "selected") %></h3>
 
 						<div class="tag-staging-area">
 							<div class="token-container"></div>
@@ -60,18 +62,18 @@
 					</div>
 
 					<div class="available-tags-wrapper">
-						<aui:input cssClass="select-tags" inline="<%= true %>" label="" name="checkAllTags" title='<%= LanguageUtil.get(pageContext, "check-all-tags") %>' type="checkbox" />
+						<aui:input cssClass="select-tags" inline="<%= true %>" label="" name="checkAllTags" title='<%= LanguageUtil.get(request, "check-all-tags") %>' type="checkbox" />
 
-						<h3 class="tags-header"><%= LanguageUtil.get(pageContext, "available") %></h3>
+						<h3 class="tags-header"><%= LanguageUtil.get(request, "available") %></h3>
 					</div>
 
-					<div class="tags-admin-list unstyled"></div>
+					<div class="list-unstyled tags-admin-list"></div>
 
 					<div class="tags-pagination"></div>
 				</aui:col>
 
 				<aui:col cssClass="tags-admin-edit-tag" width="<%= 65 %>">
-					<h3><%= LanguageUtil.get(pageContext, "tag-details") %></h3>
+					<h3><%= LanguageUtil.get(request, "tag-details") %></h3>
 
 					<div class="tag-view-container"></div>
 				</aui:col>
