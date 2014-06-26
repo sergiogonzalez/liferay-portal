@@ -17,7 +17,6 @@ package com.liferay.portal.repository;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.repository.BaseRepository;
 import com.liferay.portal.kernel.repository.InvalidRepositoryIdException;
 import com.liferay.portal.kernel.repository.RepositoryException;
@@ -145,9 +144,7 @@ public abstract class BaseRepositoryFactory<T> {
 
 		setupRepository(repositoryId, repository, baseRepository);
 
-		if (!ExportImportThreadLocal.isImportInProcess()) {
-			baseRepository.initRepository();
-		}
+		baseRepository.initRepository();
 
 		return baseRepository;
 	}
