@@ -87,7 +87,8 @@ public abstract class BaseModelUserNotificationHandler
 				HtmlUtil.escape(
 					StringUtil.shorten(jsonObject.getString("entryTitle")),
 					50),
-				getTitle(jsonObject, assetRenderer, serviceContext)
+				StringUtil.toLowerCase(
+					getTitle(jsonObject, assetRenderer, serviceContext))
 			});
 	}
 
@@ -132,7 +133,7 @@ public abstract class BaseModelUserNotificationHandler
 
 		return serviceContext.translate(
 			message, HtmlUtil.escape(assetRenderer.getUserName()),
-			StringUtil.toLowerCase(HtmlUtil.escape(typeName)));
+			HtmlUtil.escape(typeName));
 	}
 
 }
