@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.util.DigesterUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -2486,6 +2487,18 @@ public class DLFileEntryLocalServiceImpl
 
 		if (!title.endsWith(periodAndExtension)) {
 			title += periodAndExtension;
+
+			dlFileEntry = dlFileEntryPersistence.fetchByG_F_T(
+				groupId, folderId, title);
+
+			if ((dlFileEntry != null) &&
+				(dlFileEntry.getFileEntryId() != fileEntryId)) {
+
+				throw new DuplicateFileException(title);
+			}
+		}
+		else {
+			title = FileUtil.stripExtension(title);
 
 			dlFileEntry = dlFileEntryPersistence.fetchByG_F_T(
 				groupId, folderId, title);
