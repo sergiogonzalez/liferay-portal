@@ -206,9 +206,9 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		}
 
 		try {
-			addFileEntry(true);
+			FileEntry fileEntry = addFileEntry(true);
 
-			DLAppServiceUtil.deleteFileEntry(_fileEntry.getFileEntryId());
+			DLAppServiceUtil.deleteFileEntry(fileEntry.getFileEntryId());
 		}
 		catch (DuplicateFileException dfe) {
 			Assert.fail(
@@ -761,8 +761,8 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 	}
 	
-	private static final String _FILE_NAME = "Test.txt";
+	private static final String _FILE_NAME = "Title.txt";
 
-	private static final String _STRIPPED_FILE_NAME = "Test";
+	private static final String _STRIPPED_FILE_NAME = "Title";
 
 }
