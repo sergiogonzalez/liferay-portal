@@ -216,6 +216,42 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 					"folders");
 		}
 
+		try {
+			addFileEntry(false, "Title.txt", "Title");
+
+			Assert.fail(
+				"Able to add two files with the same title (without " +
+					"considering the extension)");
+		}
+		catch (DuplicateFileException dfe) {
+		}
+
+		try {
+			addFileEntry(false, "Title", "Title.txt");
+
+			Assert.fail(
+				"Able to add two files with the same title (without " +
+					"considering the extension)");
+		}
+		catch (DuplicateFileException dfe) {
+		}
+
+		FileEntry fileEntry = null;
+
+		try {
+			fileEntry = addFileEntry(true, "Title.txt", "Title");
+
+			addFileEntry(true, "Title.txt", "Title.txt");
+
+			Assert.fail(
+				"Able to add two files with the same title (without " +
+					"considering the extension)");
+		}
+		catch (DuplicateFileException dfe) {
+		}
+
+		DLAppServiceUtil.deleteFileEntry(fileEntry.getFileEntryId());
+
 		_fileEntry = null;
 	}
 
@@ -515,6 +551,19 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 	}
 
 	protected FileEntry addFileEntry(boolean rootFolder) throws Exception {
+		return addFileEntry(rootFolder, "Title.txt");
+	}
+
+	protected FileEntry addFileEntry(boolean rootFolder, String fileName)
+		throws Exception {
+
+		return addFileEntry(rootFolder, fileName, fileName);
+	}
+
+	protected FileEntry addFileEntry(
+			boolean rootFolder, String fileName, String title)
+		throws Exception {
+
 		long folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 
 		if (!rootFolder) {
@@ -522,7 +571,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		}
 
 		return DLAppTestUtil.addFileEntry(
-			group.getGroupId(), folderId, "Title.txt");
+			group.getGroupId(), folderId, fileName, title);
 	}
 
 	protected AtomicInteger registerDLSyncEventProcessorMessageListener(
