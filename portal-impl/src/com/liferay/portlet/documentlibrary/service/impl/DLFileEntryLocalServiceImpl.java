@@ -2462,7 +2462,7 @@ public class DLFileEntryLocalServiceImpl
 		return dlFileVersion;
 	}
 
-	protected void validateFile(
+	public void validateFile(
 			long groupId, long folderId, long fileEntryId, String title,
 			String extension)
 		throws PortalException {
