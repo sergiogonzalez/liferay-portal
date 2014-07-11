@@ -2487,11 +2487,11 @@ public class DLFileEntryLocalServiceImpl
 
 		String periodAndExtension = StringPool.PERIOD.concat(extension);
 
-		if (!title.endsWith(periodAndExtension)) {
-			title += periodAndExtension;
+		if (title.endsWith(periodAndExtension)) {
+			title = FileUtil.stripExtension(title);
 		}
 		else {
-			title = FileUtil.stripExtension(title);
+			title += periodAndExtension;
 		}
 
 		dlFileEntry = dlFileEntryPersistence.fetchByG_F_T(
