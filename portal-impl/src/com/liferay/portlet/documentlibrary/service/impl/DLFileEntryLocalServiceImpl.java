@@ -2489,29 +2489,19 @@ public class DLFileEntryLocalServiceImpl
 
 		if (!title.endsWith(periodAndExtension)) {
 			title += periodAndExtension;
-
-			dlFileEntry = dlFileEntryPersistence.fetchByG_F_T(
-				groupId, folderId, title);
-
-			if ((dlFileEntry != null) &&
-				(dlFileEntry.getFileEntryId() != fileEntryId) &&
-				(extension.equals(dlFileEntry.getExtension()))) {
-
-				throw new DuplicateFileException(title);
-			}
 		}
 		else {
 			title = FileUtil.stripExtension(title);
+		}
 
-			dlFileEntry = dlFileEntryPersistence.fetchByG_F_T(
-				groupId, folderId, title);
+		dlFileEntry = dlFileEntryPersistence.fetchByG_F_T(
+			groupId, folderId, title);
 
-			if ((dlFileEntry != null) &&
-				(dlFileEntry.getFileEntryId() != fileEntryId) &&
-				(extension.equals(dlFileEntry.getExtension()))) {
+		if ((dlFileEntry != null) &&
+			(dlFileEntry.getFileEntryId() != fileEntryId) &&
+			(extension.equals(dlFileEntry.getExtension()))) {
 
-				throw new DuplicateFileException(title);
-			}
+			throw new DuplicateFileException(title);
 		}
 	}
 
