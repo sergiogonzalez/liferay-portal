@@ -110,10 +110,12 @@ import com.liferay.portlet.expando.model.ExpandoTable;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
 
 import java.awt.image.RenderedImage;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -2481,7 +2483,7 @@ public class DLFileEntryLocalServiceImpl
 			throw new DuplicateFileException(title);
 		}
 
-		if(Validator.isNull(extension)) {
+		if (Validator.isNull(extension)) {
 			return;
 		}
 
@@ -2499,7 +2501,7 @@ public class DLFileEntryLocalServiceImpl
 
 		if ((dlFileEntry != null) &&
 			(dlFileEntry.getFileEntryId() != fileEntryId) &&
-			(extension.equals(dlFileEntry.getExtension()))) {
+			extension.equals(dlFileEntry.getExtension())) {
 
 			throw new DuplicateFileException(title);
 		}

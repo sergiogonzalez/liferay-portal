@@ -674,6 +674,10 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 			true, true);
 	}
 
+	private static final String _FILE_NAME = "Title.txt";
+
+	private static final String _STRIPPED_FILE_NAME = "Title";
+
 	private static Log _log = LogFactoryUtil.getLog(DLAppServiceTest.class);
 
 	private FileEntry _fileEntry;
@@ -760,9 +764,5 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		private boolean _success;
 
 	}
-	
-	private static final String _FILE_NAME = "Title.txt";
-
-	private static final String _STRIPPED_FILE_NAME = "Title";
 
 }
