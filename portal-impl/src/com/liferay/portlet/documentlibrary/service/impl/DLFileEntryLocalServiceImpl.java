@@ -2481,6 +2481,10 @@ public class DLFileEntryLocalServiceImpl
 			throw new DuplicateFileException(title);
 		}
 
+		if(Validator.isNull(extension)) {
+			return;
+		}
+
 		String periodAndExtension = StringPool.PERIOD.concat(extension);
 
 		if (!title.endsWith(periodAndExtension)) {
@@ -2490,7 +2494,8 @@ public class DLFileEntryLocalServiceImpl
 				groupId, folderId, title);
 
 			if ((dlFileEntry != null) &&
-				(dlFileEntry.getFileEntryId() != fileEntryId)) {
+				(dlFileEntry.getFileEntryId() != fileEntryId) &&
+				(extension.equals(dlFileEntry.getExtension()))) {
 
 				throw new DuplicateFileException(title);
 			}
@@ -2502,7 +2507,8 @@ public class DLFileEntryLocalServiceImpl
 				groupId, folderId, title);
 
 			if ((dlFileEntry != null) &&
-				(dlFileEntry.getFileEntryId() != fileEntryId)) {
+				(dlFileEntry.getFileEntryId() != fileEntryId) &&
+				(extension.equals(dlFileEntry.getExtension()))) {
 
 				throw new DuplicateFileException(title);
 			}
