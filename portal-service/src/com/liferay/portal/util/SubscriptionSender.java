@@ -134,7 +134,9 @@ public class SubscriptionSender implements Serializable {
 
 				for (Subscription subscription : subscriptions) {
 					try {
-						notifyPersistedSubscriber(subscription);
+						if (subscription.getUserId() != userId) {
+							notifyPersistedSubscriber(subscription);
+						}
 					}
 					catch (Exception e) {
 						_log.error(
