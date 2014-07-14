@@ -557,7 +557,10 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		List<WikiPage> pages = wikiPagePersistence.findByN_H(nodeId, true);
 
 		for (WikiPage page : pages) {
-			wikiPageLocalService.restoreDependentFromTrash(page, trashEntryId);
+			if (page.isInTrashImplicitly()) {
+				wikiPageLocalService.restoreDependentFromTrash(
+					page, trashEntryId);
+			}
 		}
 	}
 
