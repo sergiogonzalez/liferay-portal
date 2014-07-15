@@ -863,4 +863,8 @@ public class PortletDisplay implements Serializable {
 	private String _urlRefresh = StringPool.BLANK;
 	private boolean _webDAVEnabled;
 
+	public String getPortletResource() {
+		return _portletResource;
+	}
+
 }
