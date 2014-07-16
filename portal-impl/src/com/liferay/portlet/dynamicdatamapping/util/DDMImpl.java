@@ -385,9 +385,8 @@ public class DDMImpl implements DDM {
 	}
 
 	protected Field createField(
-			DDMStructure ddmStructure, String fieldName,
-			List<Serializable> fieldValues, ServiceContext serviceContext)
-		throws PortalException {
+		DDMStructure ddmStructure, String fieldName,
+		List<Serializable> fieldValues, ServiceContext serviceContext) {
 
 		Field field = new Field();
 

@@ -22,7 +22,6 @@ page import="com.liferay.portal.kernel.javadoc.JavadocManagerUtil" %><%@
 page import="com.liferay.portal.kernel.javadoc.JavadocMethod" %><%@
 page import="com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionMapping" %><%@
 page import="com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil" %><%@
-page import="com.liferay.portal.kernel.util.ContextPathUtil" %><%@
 page import="com.liferay.portal.kernel.util.MethodParameter" %>
 
 <%@ page import="java.io.File" %>
@@ -32,15 +31,7 @@ page import="com.liferay.portal.kernel.util.MethodParameter" %>
 <%
 String jsonWSPath = themeDisplay.getPathContext() + "/api/jsonws";
 
-String jsonWSContextPath = jsonWSPath;
+String contextName = ParamUtil.getString(request, "contextName");
 
-String contextPath = ParamUtil.getString(request, "contextPath");
-
-if (Validator.isNull(contextPath) || contextPath.equals(StringPool.SLASH)) {
-	contextPath = ContextPathUtil.getContextPath(application);
-}
-
-if (Validator.isNotNull(contextPath)) {
-	jsonWSContextPath += "?contextPath=" + contextPath;
-}
+String jsonWSContextPath = jsonWSPath + "?contextName=" + contextName;
 %>
