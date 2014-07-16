@@ -44,22 +44,20 @@ portletURL.setParameter("recordSetId", String.valueOf(recordSet.getRecordSetId()
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
 
 	<%
-	DDMStructure ddmStructure = recordSet.getDDMStructure(formDDMTemplateId);
-
-	String languageId = LanguageUtil.getLanguageId(request);
-
-	Map<String, Map<String, String>> fieldsMap = ddmStructure.getFieldsMap(languageId);
-
 	List<String> headerNames = new ArrayList<String>();
 
-	for (Map<String, String> fields : fieldsMap.values()) {
-		if (GetterUtil.getBoolean(fields.get(FieldConstants.PRIVATE))) {
+	DDMStructure ddmStructure = recordSet.getDDMStructure(formDDMTemplateId);
+
+	List<DDMFormField> ddmFormfields = ddmStructure.getDDMFormFields(false);
+
+	for (DDMFormField ddmFormField : ddmFormfields) {
+		if (ddmStructure.isFieldPrivate(ddmFormField.getName())) {
 			continue;
 		}
 
-		String label = fields.get(FieldConstants.LABEL);
+		LocalizedValue label = ddmFormField.getLabel();
 
-		headerNames.add(label);
+		headerNames.add(label.getValue(locale));
 	}
 
 	if (hasUpdatePermission) {
@@ -126,8 +124,8 @@ portletURL.setParameter("recordSetId", String.valueOf(recordSet.getRecordSetId()
 
 			// Columns
 
-			for (Map<String, String> fields : fieldsMap.values()) {
-				if (GetterUtil.getBoolean(fields.get(FieldConstants.PRIVATE))) {
+			for (DDMFormField ddmFormField : ddmFormfields) {
+				if (ddmStructure.isFieldPrivate(ddmFormField.getName())) {
 					continue;
 				}
 			%>

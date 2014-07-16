@@ -119,6 +119,7 @@ public abstract class BaseDDMFormSerializerTestCase extends BaseDDMTestCase {
 		return ddmFormField;
 	}
 
+	@Override
 	protected DDMFormField createTextDDMFormField(String name) {
 		DDMFormField ddmFormField = new DDMFormField(name, "text");
 
