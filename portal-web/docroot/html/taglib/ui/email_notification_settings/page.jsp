@@ -60,6 +60,7 @@ boolean showSubject = GetterUtil.getBoolean(request.getAttribute("liferay-ui:ema
 					fieldPrefix="<%= fieldPrefix %>"
 					fieldPrefixSeparator="<%= fieldPrefixSeparator %>"
 					name='<%= emailParam + "Body" %>'
+					toolbarSet='<%= "mail" %>'
 					type="editor"
 					xml="<%= emailBody %>"
 				/>
