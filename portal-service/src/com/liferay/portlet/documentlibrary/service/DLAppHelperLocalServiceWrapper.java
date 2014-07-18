@@ -52,6 +52,20 @@ public class DLAppHelperLocalServiceWrapper implements DLAppHelperLocalService,
 	}
 
 	@Override
+	public void cancelCheckOut(
+		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
+		com.liferay.portal.kernel.repository.model.FileVersion draftFileVersion)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_dlAppHelperLocalService.cancelCheckOut(fileEntry, draftFileVersion);
+	}
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #cancelCheckOut(FileEntry,
+	FileVersion)}
+	*/
+	@Deprecated
+	@Override
 	public void cancelCheckOut(long userId,
 		com.liferay.portal.kernel.repository.model.FileEntry fileEntry,
 		com.liferay.portal.kernel.repository.model.FileVersion sourceFileVersion,

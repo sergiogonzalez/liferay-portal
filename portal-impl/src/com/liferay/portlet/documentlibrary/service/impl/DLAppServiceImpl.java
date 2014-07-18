@@ -59,6 +59,7 @@ import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermiss
 import com.liferay.portlet.documentlibrary.service.permission.DLFileShortcutPermission;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
 import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
+import com.liferay.portlet.documentlibrary.util.DLAppHelperThreadLocal;
 import com.liferay.portlet.documentlibrary.util.DLAppUtil;
 import com.liferay.portlet.documentlibrary.util.DLProcessorRegistryUtil;
 import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelModifiedDateComparator;
@@ -460,13 +461,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		FileVersion draftFileVersion = repository.cancelCheckOut(fileEntryId);
 
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
-
-		dlAppHelperLocalService.cancelCheckOut(
-			getUserId(), fileEntry, null, fileEntry.getFileVersion(),
-			draftFileVersion, serviceContext);
+		dlAppHelperLocalService.cancelCheckOut(fileEntry, draftFileVersion);
 	}
 
 	/**
@@ -600,17 +595,13 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		Repository repository = getFileEntryRepository(fileEntryId);
 
-		FileEntry oldFileEntry = repository.getFileEntry(fileEntryId);
-
-		FileVersion oldFileVersion = oldFileEntry.getFileVersion();
-
 		FileEntry fileEntry = repository.checkOutFileEntry(
 			fileEntryId, serviceContext);
 
-		FileVersion fileVersion = fileEntry.getLatestFileVersion();
-
-		dlAppHelperLocalService.updateFileEntry(
-			getUserId(), fileEntry, oldFileVersion, fileVersion, fileEntryId);
+		if (DLAppHelperThreadLocal.isEnabled()) {
+			dlAppHelperLocalService.registerDLSyncEventCallback(
+				DLSyncConstants.EVENT_UPDATE, fileEntry);
+		}
 	}
 
 	/**
@@ -647,17 +638,13 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		Repository repository = getFileEntryRepository(fileEntryId);
 
-		FileEntry oldFileEntry = repository.getFileEntry(fileEntryId);
-
-		FileVersion oldFileVersion = oldFileEntry.getFileVersion();
-
 		FileEntry fileEntry = repository.checkOutFileEntry(
 			fileEntryId, owner, expirationTime, serviceContext);
 
-		FileVersion fileVersion = fileEntry.getLatestFileVersion();
-
-		dlAppHelperLocalService.updateFileEntry(
-			getUserId(), fileEntry, oldFileVersion, fileVersion, fileEntryId);
+		if (DLAppHelperThreadLocal.isEnabled()) {
+			dlAppHelperLocalService.registerDLSyncEventCallback(
+				DLSyncConstants.EVENT_UPDATE, fileEntry);
+		}
 
 		return fileEntry;
 	}

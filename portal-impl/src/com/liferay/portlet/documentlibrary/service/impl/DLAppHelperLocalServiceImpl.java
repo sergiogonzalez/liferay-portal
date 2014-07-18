@@ -164,6 +164,34 @@ public class DLAppHelperLocalServiceImpl
 
 	@Override
 	public void cancelCheckOut(
+			FileEntry fileEntry, FileVersion draftFileVersion)
+		throws PortalException, SystemException {
+
+		if (DLAppHelperThreadLocal.isEnabled()) {
+			registerDLSyncEventCallback(
+				DLSyncConstants.EVENT_UPDATE, fileEntry);
+		}
+
+		if (draftFileVersion == null) {
+			return;
+		}
+
+		AssetEntry draftAssetEntry = assetEntryLocalService.fetchEntry(
+			DLFileEntryConstants.getClassName(),
+			draftFileVersion.getPrimaryKey());
+
+		if (draftAssetEntry != null) {
+			assetEntryLocalService.deleteEntry(draftAssetEntry);
+		}
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #cancelCheckOut(FileEntry,
+	 *             FileVersion)}
+	 */
+	@Deprecated
+	@Override
+	public void cancelCheckOut(
 			long userId, FileEntry fileEntry, FileVersion sourceFileVersion,
 			FileVersion destinationFileVersion, FileVersion draftFileVersion,
 			ServiceContext serviceContext)
