@@ -135,7 +135,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			long userId, long nodeId, String title, double version,
 			String content, String summary, boolean minorEdit, String format,
 			boolean head, String parentTitle, String redirectTitle,
-			ServiceContext serviceContext)
+			boolean workflow, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Page
@@ -221,9 +221,31 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		// Workflow
 
-		startWorkflowInstance(userId, page, serviceContext);
+		if (!workflow) {
+			updateStatus(
+				userId, page, WorkflowConstants.STATUS_APPROVED, serviceContext,
+				new HashMap<String, Serializable>());
+		}
+		else {
+			startWorkflowInstance(userId, page, serviceContext);
+		}
 
 		return page;
+	}
+
+	@Override
+	public WikiPage addPage(
+			long userId, long nodeId, String title, double version,
+			String content, String summary, boolean minorEdit, String format,
+			boolean head, String parentTitle, String redirectTitle,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		// Page
+
+		return addPage(
+			userId, nodeId, title, version, content, summary, minorEdit, format,
+			head, parentTitle, redirectTitle, true, serviceContext);
 	}
 
 	@Override
@@ -2430,7 +2452,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		addPage(
 			userId, nodeId, title, version, content, summary, false, format,
-			head, parentTitle, redirectTitle, serviceContext);
+			head, parentTitle, redirectTitle, false, serviceContext);
 
 		// Move redirects to point to the page with the new title
 
