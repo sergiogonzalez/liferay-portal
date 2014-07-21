@@ -62,6 +62,19 @@ public class WikiPageLocalServiceUtil {
 			minorEdit, format, head, parentTitle, redirectTitle, serviceContext);
 	}
 
+	public static com.liferay.portlet.wiki.model.WikiPage addPage(long userId,
+		long nodeId, java.lang.String title, double version,
+		java.lang.String content, java.lang.String summary, boolean minorEdit,
+		java.lang.String format, boolean head, java.lang.String parentTitle,
+		java.lang.String redirectTitle, boolean workflow,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addPage(userId, nodeId, title, version, content, summary,
+			minorEdit, format, head, parentTitle, redirectTitle, workflow,
+			serviceContext);
+	}
+
 	public static void addPageAttachment(long userId, long nodeId,
 		java.lang.String title, java.lang.String fileName, java.io.File file,
 		java.lang.String mimeType)
@@ -863,6 +876,19 @@ public class WikiPageLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updatePage(userId, nodeId, title, version, content,
+			summary, minorEdit, format, parentTitle, redirectTitle,
+			serviceContext);
+	}
+
+	public static com.liferay.portlet.wiki.model.WikiPage updatePage(
+		long userId, com.liferay.portlet.wiki.model.WikiPage oldPage,
+		java.lang.String title, double version, java.lang.String content,
+		java.lang.String summary, boolean minorEdit, java.lang.String format,
+		java.lang.String parentTitle, java.lang.String redirectTitle,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updatePage(userId, oldPage, title, version, content,
 			summary, minorEdit, format, parentTitle, redirectTitle,
 			serviceContext);
 	}
