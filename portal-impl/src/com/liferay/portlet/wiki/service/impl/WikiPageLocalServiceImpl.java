@@ -125,6 +125,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author Marcellus Tavares
  * @author Zsigmond Rab
  * @author Zsolt Berentey
+ * @author Roberto Díaz
  */
 public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
@@ -2042,9 +2043,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		// Page
 
-		User user = userPersistence.findByPrimaryKey(userId);
-		Date now = new Date();
-
 		WikiPage oldPage = null;
 
 		try {
@@ -2057,6 +2055,23 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 				redirectTitle, serviceContext);
 		}
 
+		return updatePage(
+			userId, oldPage, title, version, content, summary, minorEdit,
+			format, parentTitle, redirectTitle, serviceContext);
+	}
+
+	@Override
+	public WikiPage updatePage(
+			long userId, WikiPage oldPage, String title, double version,
+			String content, String summary, boolean minorEdit, String format,
+			String parentTitle, String redirectTitle,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		User user = userPersistence.findByPrimaryKey(userId);
+		Date now = new Date();
+
+		long nodeId = oldPage.getNodeId();
 		long pageId = 0;
 
 		if (oldPage.isApproved()) {
@@ -2082,7 +2097,9 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			oldPage, PageVersionException.class);
 
 		long resourcePrimKey =
-			wikiPageResourceLocalService.getPageResourcePrimKey(nodeId, title);
+			wikiPageResourceLocalService.getPageResourcePrimKey(
+				nodeId, oldPage.getTitle());
+
 		long groupId = oldPage.getGroupId();
 
 		WikiPage page = oldPage;
