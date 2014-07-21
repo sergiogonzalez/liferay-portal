@@ -38,6 +38,7 @@ import java.util.Map;
 
 /**
  * @author Julio Camarero
+ * @author Roberto Díaz
  */
 public class WikiTestUtil {
 
@@ -60,9 +61,7 @@ public class WikiTestUtil {
 			RandomTestUtil.randomString(), "TestChildPage", true,
 			serviceContext);
 
-		WikiPageLocalServiceUtil.movePage(
-			TestPropsValues.getUserId(), nodeId, "TestPage", "B",
-			serviceContext);
+		movePage(nodeId, "TestPage", "B", serviceContext);
 
 		WikiPage page = WikiPageLocalServiceUtil.getPage(nodeId, "B");
 		WikiPage redirectPage = WikiPageLocalServiceUtil.getPage(
@@ -144,7 +143,8 @@ public class WikiTestUtil {
 				serviceContext);
 
 			if (approved) {
-				page = updateStatus(page, serviceContext);
+				page = updateStatus(
+					page, serviceContext, new HashMap<String, Serializable>());
 			}
 
 			return page;
@@ -166,6 +166,8 @@ public class WikiTestUtil {
 
 			serviceContext = (ServiceContext)serviceContext.clone();
 
+			serviceContext.setCommand(Constants.ADD);
+
 			serviceContext.setWorkflowAction(
 				WorkflowConstants.ACTION_SAVE_DRAFT);
 
@@ -175,7 +177,8 @@ public class WikiTestUtil {
 				false, parentTitle, null, serviceContext);
 
 			if (approved) {
-				page = updateStatus(page, serviceContext);
+				page = updateStatus(
+					page, serviceContext, new HashMap<String, Serializable>());
 			}
 
 			return page;
@@ -258,8 +261,7 @@ public class WikiTestUtil {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(groupId);
 
-		WikiPageLocalServiceUtil.movePage(
-			TestPropsValues.getUserId(), nodeId, "A", "B", serviceContext);
+		movePage(nodeId,  "A", "B", serviceContext);
 
 		WikiPage page = WikiPageLocalServiceUtil.getPage(nodeId, "B");
 		WikiPage redirectPage = WikiPageLocalServiceUtil.getPage(nodeId, "A");
@@ -332,8 +334,7 @@ public class WikiTestUtil {
 		WikiTestUtil.addPage(
 			TestPropsValues.getUserId(), groupId, nodeId, "A", true);
 
-		WikiPageLocalServiceUtil.movePage(
-			TestPropsValues.getUserId(), nodeId, "A", "B", serviceContext);
+		movePage(nodeId,  "A", "B", serviceContext);
 
 		WikiPage page = WikiPageLocalServiceUtil.getPage(nodeId, "B");
 		WikiPage redirectPage = WikiPageLocalServiceUtil.getPage(nodeId, "A");
@@ -452,7 +453,8 @@ public class WikiTestUtil {
 				page.getParentTitle(), page.getRedirectTitle(), serviceContext);
 
 			if (approved) {
-				page = updateStatus(page, serviceContext);
+				page = updateStatus(
+					page, serviceContext, new HashMap<String, Serializable>());
 			}
 
 			return page;
@@ -462,12 +464,24 @@ public class WikiTestUtil {
 		}
 	}
 
-	protected static WikiPage updateStatus(
-			WikiPage page, ServiceContext serviceContext)
+	protected static void movePage(
+			long nodeId, String title, String newTitle,
+			ServiceContext serviceContext)
 		throws Exception {
 
-		Map<String, Serializable> workflowContext =
-			new HashMap<String, Serializable>();
+		serviceContext = (ServiceContext)serviceContext.clone();
+
+		serviceContext.setCommand(Constants.RENAME);
+
+		WikiPageLocalServiceUtil.movePage(
+			TestPropsValues.getUserId(), nodeId, title, newTitle,
+			serviceContext);
+	}
+
+	protected static WikiPage updateStatus(
+			WikiPage page, ServiceContext serviceContext,
+			Map<String, Serializable> workflowContext)
+		throws Exception {
 
 		workflowContext.put(WorkflowConstants.CONTEXT_URL, "http://localhost");
 
