@@ -12,22 +12,21 @@
  * details.
  */
 
-package com.liferay.portal.format;
-
-import com.liferay.portal.kernel.format.PhoneNumberFormat;
-import com.liferay.portal.kernel.format.PhoneNumberFormatWrapper;
-import com.liferay.portal.kernel.util.InstancePool;
-import com.liferay.portal.util.PropsValues;
+package com.liferay.portal.kernel.util;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Michael C. Han
  */
-public class PhoneNumberFormatImpl extends PhoneNumberFormatWrapper {
+public class PortalRunMode {
 
-	public PhoneNumberFormatImpl() {
-		super(
-			(PhoneNumberFormat)InstancePool.get(
-				PropsValues.PHONE_NUMBER_FORMAT_IMPL));
+	public static boolean isTestMode() {
+		String liferayMode = SystemProperties.get("liferay.mode");
+
+		if (Validator.isNotNull(liferayMode) && liferayMode.equals("test")) {
+			return true;
+		}
+
+		return false;
 	}
 
 }

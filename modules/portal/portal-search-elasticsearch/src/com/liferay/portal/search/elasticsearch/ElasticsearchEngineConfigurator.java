@@ -14,11 +14,14 @@
 
 package com.liferay.portal.search.elasticsearch;
 
+import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.MessageBus;
+import com.liferay.portal.kernel.messaging.SynchronousDestination;
 import com.liferay.portal.kernel.search.AbstractSearchEngineConfigurator;
 import com.liferay.portal.kernel.search.IndexSearcher;
 import com.liferay.portal.kernel.search.IndexWriter;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
+import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnection;
 import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnectionManager;
 
@@ -54,6 +57,40 @@ public class ElasticsearchEngineConfigurator
 
 	public void setMessageBus(MessageBus messageBus) {
 		_messageBus = messageBus;
+	}
+
+	@Override
+	protected Destination createSearchReaderDestination(
+		String searchReaderDestinationName) {
+
+		if (!PortalRunMode.isTestMode()) {
+			return super.createSearchReaderDestination(
+				searchReaderDestinationName);
+		}
+
+		SynchronousDestination synchronousDestination =
+			new SynchronousDestination();
+
+		synchronousDestination.setName(searchReaderDestinationName);
+
+		return synchronousDestination;
+	}
+
+	@Override
+	protected Destination createSearchWriterDestination(
+		String searchWriterDestinationName) {
+
+		if (!PortalRunMode.isTestMode()) {
+			return super.createSearchReaderDestination(
+				searchWriterDestinationName);
+		}
+
+		SynchronousDestination synchronousDestination =
+			new SynchronousDestination();
+
+		synchronousDestination.setName(searchWriterDestinationName);
+
+		return synchronousDestination;
 	}
 
 	@Override

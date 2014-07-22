@@ -74,6 +74,7 @@ public class VerifyLayout extends VerifyProcess {
 	protected void doVerify() throws Exception {
 		deleteOrphanedLayouts();
 		verifyFriendlyURL();
+		verifyLayoutPrototypeLinkEnabled();
 		verifyUuid();
 	}
 
@@ -96,17 +97,20 @@ public class VerifyLayout extends VerifyProcess {
 		}
 	}
 
+	protected void verifyLayoutPrototypeLinkEnabled() throws Exception {
+		runSQL(
+			"update Layout set layoutPrototypeLinkEnabled = 0 where type_ = " +
+				"'link_to_layout' and layoutPrototypeLinkEnabled = 1");
+	}
+
 	protected void verifyUuid() throws Exception {
 		verifyUuid("AssetEntry");
 		verifyUuid("JournalArticle");
 
-		StringBundler sb = new StringBundler(3);
-
-		sb.append("update Layout set uuid_ = sourcePrototypeLayoutUuid where ");
-		sb.append("sourcePrototypeLayoutUuid != '' and ");
-		sb.append("uuid_ != sourcePrototypeLayoutUuid");
-
-		runSQL(sb.toString());
+		runSQL(
+			"update Layout set uuid_ = sourcePrototypeLayoutUuid where " +
+				"sourcePrototypeLayoutUuid != '' and uuid_ != " +
+					"sourcePrototypeLayoutUuid");
 	}
 
 	protected void verifyUuid(String tableName) throws Exception {
