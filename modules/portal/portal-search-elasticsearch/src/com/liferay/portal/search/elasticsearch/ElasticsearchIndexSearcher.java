@@ -139,6 +139,10 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		_elasticsearchConnectionManager = elasticsearchConnectionManager;
 	}
 
+	public void setMaxResultSize(int maxResultSize) {
+		_maxResultSize = maxResultSize;
+	}
+
 	protected void addFacets(
 		SearchRequestBuilder searchRequestBuilder,
 		SearchContext searchContext) {
@@ -187,7 +191,7 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		SearchRequestBuilder searchRequestBuilder, int start, int end) {
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS)) {
-			searchRequestBuilder.setSize(0);
+			searchRequestBuilder.setSize(_maxResultSize);
 		}
 		else {
 			searchRequestBuilder.setFrom(start);
@@ -414,6 +418,7 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		ElasticsearchIndexSearcher.class);
 
 	private ElasticsearchConnectionManager _elasticsearchConnectionManager;
+	private int _maxResultSize = 1000;
 	private Pattern _pattern = Pattern.compile("<em>(.*?)</em>");
 
 }

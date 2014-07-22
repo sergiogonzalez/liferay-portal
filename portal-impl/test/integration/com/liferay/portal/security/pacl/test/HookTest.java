@@ -84,7 +84,7 @@ public class HookTest {
 	}
 
 	@Test
-	public void testPortalProperties1() throws Exception {
+	public void testPortalProperties() throws Exception {
 		Assert.assertFalse(LanguageUtil.isBetaLocale(LocaleUtil.US));
 	}
 

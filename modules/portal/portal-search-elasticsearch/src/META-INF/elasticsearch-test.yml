@@ -3,7 +3,7 @@
 # for more information.
 #
 
-cluster.name: LiferayElasticSearch
+cluster.name: LiferayElasticSearchTest
 
 http.enabled: true
 
@@ -15,6 +15,8 @@ index.indexing.slowlog.threshold.index.warn: 10s
 index.number_of_shards: 1
 index.number_of_replicas: 0
 
+index.refresh_interval: 1ms
+
 index.search.slowlog.threshold.fetch.debug: 500ms
 index.search.slowlog.threshold.fetch.info: 800ms
 index.search.slowlog.threshold.fetch.trace: 200ms
@@ -24,6 +26,11 @@ index.search.slowlog.threshold.query.debug: 2s
 index.search.slowlog.threshold.query.info: 5s
 index.search.slowlog.threshold.query.trace: 500ms
 index.search.slowlog.threshold.query.warn: 10s
+
+index.store.type: memory
+
+index.translog.flush_threshold_ops: 1
+index.translog.interval: 1ms
 
 monitor.jvm.gc.old.debug: 2s
 monitor.jvm.gc.old.info: 5s
