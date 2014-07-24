@@ -44,6 +44,7 @@ import com.liferay.portlet.bookmarks.util.comparator.FolderIdComparator;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.model.TrashVersion;
+import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -333,9 +334,19 @@ public class BookmarksFolderLocalServiceImpl
 			folderId);
 
 		folder.setParentFolderId(parentFolderId);
-		folder.setTreePath(folder.buildTreePath());
 
 		bookmarksFolderPersistence.update(folder);
+
+		// Indexer
+
+		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			BookmarksFolder.class);
+
+		indexer.reindex(getReindexBookmarksFolders(folder));
+
+		indexer = IndexerRegistryUtil.nullSafeGetIndexer(BookmarksEntry.class);
+
+		indexer.reindex(getReindexBookmarksEntries(folder));
 
 		return folder;
 	}
@@ -670,6 +681,45 @@ public class BookmarksFolderLocalServiceImpl
 		}
 
 		return parentFolderId;
+	}
+
+	protected List<BookmarksEntry> getReindexBookmarksEntries(
+			BookmarksFolder bookmarksFolder)
+		throws PortalException {
+
+		List<BookmarksEntry> bookmarksEntries =
+			bookmarksEntryPersistence.findByC_T(
+				bookmarksFolder.getCompanyId(),
+				CustomSQLUtil.keywords(bookmarksFolder.getTreePath())[0],
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		for (BookmarksEntry bookmarksEntry : bookmarksEntries) {
+			bookmarksEntry.setTreePath(bookmarksEntry.buildTreePath());
+
+			bookmarksEntryPersistence.update(bookmarksEntry);
+		}
+
+		return bookmarksEntries;
+	}
+
+	protected List<BookmarksFolder> getReindexBookmarksFolders(
+			BookmarksFolder bookmarksFolder)
+		throws PortalException {
+
+		List<BookmarksFolder> bookmarksFolders =
+			bookmarksFolderPersistence.findByC_T(
+				bookmarksFolder.getCompanyId(),
+				CustomSQLUtil.keywords(bookmarksFolder.getTreePath())[0],
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				new FolderIdComparator(true));
+
+		for (BookmarksFolder curBookmarksFolder : bookmarksFolders) {
+			curBookmarksFolder.setTreePath(curBookmarksFolder.buildTreePath());
+
+			bookmarksFolderPersistence.update(curBookmarksFolder);
+		}
+
+		return bookmarksFolders;
 	}
 
 	protected void mergeFolders(BookmarksFolder fromFolder, long toFolderId)
