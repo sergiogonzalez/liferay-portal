@@ -60,6 +60,7 @@ import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.model.TrashVersion;
 import com.liferay.portlet.trash.util.TrashUtil;
+import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -482,10 +483,20 @@ public class JournalFolderLocalServiceImpl
 
 		folder.setModifiedDate(serviceContext.getModifiedDate(null));
 		folder.setParentFolderId(parentFolderId);
-		folder.setTreePath(folder.buildTreePath());
 		folder.setExpandoBridgeAttributes(serviceContext);
 
 		journalFolderPersistence.update(folder);
+
+		// Indexer
+
+		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			JournalFolder.class);
+
+		indexer.reindex(getReindexJournalFolders(folder));
+
+		indexer = IndexerRegistryUtil.nullSafeGetIndexer(JournalArticle.class);
+
+		indexer.reindex(getReindexJournalArticles(folder));
 
 		return folder;
 	}
@@ -1044,6 +1055,44 @@ public class JournalFolderLocalServiceImpl
 		}
 
 		return parentFolderId;
+	}
+
+	protected List<JournalArticle> getReindexJournalArticles(
+			JournalFolder journalFolder)
+		throws PortalException {
+
+		List<JournalArticle> JournalArticles =
+			journalArticlePersistence.findByC_T(
+				journalFolder.getCompanyId(),
+				CustomSQLUtil.keywords(journalFolder.getTreePath())[0],
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		for (JournalArticle journalArticle : JournalArticles) {
+			journalArticle.setTreePath(journalArticle.buildTreePath());
+
+			journalArticlePersistence.update(journalArticle);
+		}
+
+		return JournalArticles;
+	}
+
+	protected List<JournalFolder> getReindexJournalFolders(
+			JournalFolder journalFolder)
+		throws PortalException {
+
+		List<JournalFolder> JournalFolders =
+			journalFolderPersistence.findByC_T(
+				journalFolder.getCompanyId(),
+				CustomSQLUtil.keywords(journalFolder.getTreePath())[0],
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, new FolderIdComparator());
+
+		for (JournalFolder curJournalFolder : JournalFolders) {
+			curJournalFolder.setTreePath(curJournalFolder.buildTreePath());
+
+			journalFolderPersistence.update(curJournalFolder);
+		}
+
+		return JournalFolders;
 	}
 
 	protected void mergeFolders(JournalFolder fromFolder, long toFolderId)
