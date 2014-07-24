@@ -503,19 +503,28 @@ public class DLFileEntryIndexer extends BaseIndexer {
 
 	@Override
 	protected void doReindex(Object obj) throws Exception {
-		DLFileEntry dlFileEntry = (DLFileEntry)obj;
+		if (obj instanceof List<?>) {
+			List<DLFileEntry> dlFileEntries = (List<DLFileEntry>)obj;
 
-		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
-
-		if (!dlFileVersion.isApproved() && !dlFileEntry.isInTrash()) {
-			return;
+			for (DLFileEntry dlFileEntry : dlFileEntries) {
+				doReindex(dlFileEntry);
+			}
 		}
+		else if (obj instanceof DLFileEntry) {
+			DLFileEntry dlFileEntry = (DLFileEntry)obj;
 
-		Document document = getDocument(dlFileEntry);
+			DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
 
-		if (document != null) {
-			SearchEngineUtil.updateDocument(
-				getSearchEngineId(), dlFileEntry.getCompanyId(), document);
+			if (!dlFileVersion.isApproved() && !dlFileEntry.isInTrash()) {
+				return;
+			}
+
+			Document document = getDocument(dlFileEntry);
+
+			if (document != null) {
+				SearchEngineUtil.updateDocument(
+					getSearchEngineId(), dlFileEntry.getCompanyId(), document);
+			}
 		}
 	}
 
