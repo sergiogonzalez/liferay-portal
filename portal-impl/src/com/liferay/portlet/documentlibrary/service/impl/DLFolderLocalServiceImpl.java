@@ -707,7 +707,6 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			expirationTime);
 	}
 
-	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public DLFolder moveFolder(
 			long userId, long folderId, long parentFolderId,
