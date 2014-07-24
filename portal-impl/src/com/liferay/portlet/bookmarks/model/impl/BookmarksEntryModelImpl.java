@@ -119,9 +119,10 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 	public static long GROUPID_COLUMN_BITMASK = 4L;
 	public static long RESOURCEBLOCKID_COLUMN_BITMASK = 8L;
 	public static long STATUS_COLUMN_BITMASK = 16L;
-	public static long USERID_COLUMN_BITMASK = 32L;
-	public static long UUID_COLUMN_BITMASK = 64L;
-	public static long NAME_COLUMN_BITMASK = 128L;
+	public static long TREEPATH_COLUMN_BITMASK = 32L;
+	public static long USERID_COLUMN_BITMASK = 64L;
+	public static long UUID_COLUMN_BITMASK = 128L;
+	public static long NAME_COLUMN_BITMASK = 256L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -587,7 +588,17 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 
 	@Override
 	public void setTreePath(String treePath) {
+		_columnBitmask |= TREEPATH_COLUMN_BITMASK;
+
+		if (_originalTreePath == null) {
+			_originalTreePath = _treePath;
+		}
+
 		_treePath = treePath;
+	}
+
+	public String getOriginalTreePath() {
+		return GetterUtil.getString(_originalTreePath);
 	}
 
 	@JSON
@@ -1107,6 +1118,8 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 
 		bookmarksEntryModelImpl._setOriginalFolderId = false;
 
+		bookmarksEntryModelImpl._originalTreePath = bookmarksEntryModelImpl._treePath;
+
 		bookmarksEntryModelImpl._originalStatus = bookmarksEntryModelImpl._status;
 
 		bookmarksEntryModelImpl._setOriginalStatus = false;
@@ -1393,6 +1406,7 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 	private long _originalFolderId;
 	private boolean _setOriginalFolderId;
 	private String _treePath;
+	private String _originalTreePath;
 	private String _name;
 	private String _url;
 	private String _description;
