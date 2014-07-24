@@ -2207,9 +2207,10 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		wikiPagePersistence.update(page);
 
 		if (status == WorkflowConstants.STATUS_APPROVED) {
-			String cmd = serviceContext.getCommand();
+			String cmd = (String)workflowContext.get(
+				WorkflowConstants.CONTEXT_COMMAND);
 
-			if (cmd.equals(Constants.RENAME)) {
+			if (Validator.isNotNull(cmd) && cmd.equals(Constants.RENAME)) {
 				long resourcePrimKey = page.getResourcePrimKey();
 
 				WikiPage oldPage = getPage(resourcePrimKey, true);
@@ -2977,6 +2978,9 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		workflowContext.put(
 			WorkflowConstants.CONTEXT_URL, getPageURL(page, serviceContext));
+
+		workflowContext.put(
+			WorkflowConstants.CONTEXT_COMMAND, serviceContext.getCommand());
 
 		WorkflowHandlerRegistryUtil.startWorkflowInstance(
 			page.getCompanyId(), page.getGroupId(), userId,
