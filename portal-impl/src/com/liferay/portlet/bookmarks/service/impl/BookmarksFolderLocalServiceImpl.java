@@ -325,7 +325,6 @@ public class BookmarksFolderLocalServiceImpl
 		}
 	}
 
-	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public BookmarksFolder moveFolder(long folderId, long parentFolderId)
 		throws PortalException {
