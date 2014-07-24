@@ -117,8 +117,9 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 	public static long GROUPID_COLUMN_BITMASK = 8L;
 	public static long STATUS_COLUMN_BITMASK = 16L;
 	public static long TOFILEENTRYID_COLUMN_BITMASK = 32L;
-	public static long UUID_COLUMN_BITMASK = 64L;
-	public static long FILESHORTCUTID_COLUMN_BITMASK = 128L;
+	public static long TREEPATH_COLUMN_BITMASK = 64L;
+	public static long UUID_COLUMN_BITMASK = 128L;
+	public static long FILESHORTCUTID_COLUMN_BITMASK = 256L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -559,7 +560,17 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 
 	@Override
 	public void setTreePath(String treePath) {
+		_columnBitmask |= TREEPATH_COLUMN_BITMASK;
+
+		if (_originalTreePath == null) {
+			_originalTreePath = _treePath;
+		}
+
 		_treePath = treePath;
+	}
+
+	public String getOriginalTreePath() {
+		return GetterUtil.getString(_originalTreePath);
 	}
 
 	@JSON
@@ -1016,6 +1027,8 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 
 		dlFileShortcutModelImpl._setOriginalToFileEntryId = false;
 
+		dlFileShortcutModelImpl._originalTreePath = dlFileShortcutModelImpl._treePath;
+
 		dlFileShortcutModelImpl._originalActive = dlFileShortcutModelImpl._active;
 
 		dlFileShortcutModelImpl._setOriginalActive = false;
@@ -1263,6 +1276,7 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 	private long _originalToFileEntryId;
 	private boolean _setOriginalToFileEntryId;
 	private String _treePath;
+	private String _originalTreePath;
 	private boolean _active;
 	private boolean _originalActive;
 	private boolean _setOriginalActive;

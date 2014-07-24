@@ -125,7 +125,8 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 	public static long PARENTFOLDERID_COLUMN_BITMASK = 64L;
 	public static long REPOSITORYID_COLUMN_BITMASK = 128L;
 	public static long STATUS_COLUMN_BITMASK = 256L;
-	public static long UUID_COLUMN_BITMASK = 512L;
+	public static long TREEPATH_COLUMN_BITMASK = 512L;
+	public static long UUID_COLUMN_BITMASK = 1024L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -648,7 +649,17 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 
 	@Override
 	public void setTreePath(String treePath) {
+		_columnBitmask |= TREEPATH_COLUMN_BITMASK;
+
+		if (_originalTreePath == null) {
+			_originalTreePath = _treePath;
+		}
+
 		_treePath = treePath;
+	}
+
+	public String getOriginalTreePath() {
+		return GetterUtil.getString(_originalTreePath);
 	}
 
 	@JSON
@@ -1235,6 +1246,8 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 
 		dlFolderModelImpl._setOriginalParentFolderId = false;
 
+		dlFolderModelImpl._originalTreePath = dlFolderModelImpl._treePath;
+
 		dlFolderModelImpl._originalName = dlFolderModelImpl._name;
 
 		dlFolderModelImpl._originalHidden = dlFolderModelImpl._hidden;
@@ -1547,6 +1560,7 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 	private long _originalParentFolderId;
 	private boolean _setOriginalParentFolderId;
 	private String _treePath;
+	private String _originalTreePath;
 	private String _name;
 	private String _originalName;
 	private String _description;
