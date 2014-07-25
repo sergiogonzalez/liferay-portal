@@ -339,13 +339,13 @@ public class BookmarksFolderLocalServiceImpl
 		// Indexer
 
 		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-			BookmarksFolder.class);
-
-		indexer.reindex(getReindexBookmarksFolders(folder));
-
-		indexer = IndexerRegistryUtil.nullSafeGetIndexer(BookmarksEntry.class);
+			BookmarksEntry.class);
 
 		indexer.reindex(getReindexBookmarksEntries(folder));
+
+		indexer = IndexerRegistryUtil.nullSafeGetIndexer(BookmarksFolder.class);
+
+		indexer.reindex(getReindexBookmarksFolders(folder));
 
 		return folder;
 	}

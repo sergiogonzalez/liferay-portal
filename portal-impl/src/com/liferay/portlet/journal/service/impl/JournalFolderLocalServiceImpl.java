@@ -489,13 +489,13 @@ public class JournalFolderLocalServiceImpl
 		// Indexer
 
 		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-			JournalFolder.class);
-
-		indexer.reindex(getReindexJournalFolders(folder));
-
-		indexer = IndexerRegistryUtil.nullSafeGetIndexer(JournalArticle.class);
+			JournalArticle.class);
 
 		indexer.reindex(getReindexJournalArticles(folder));
+
+		indexer = IndexerRegistryUtil.nullSafeGetIndexer(JournalFolder.class);
+
+		indexer.reindex(getReindexJournalFolders(folder));
 
 		return folder;
 	}

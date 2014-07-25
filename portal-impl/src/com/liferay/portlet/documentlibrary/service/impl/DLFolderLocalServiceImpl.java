@@ -744,13 +744,13 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			// Indexer
 
 			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-				DLFolder.class);
-
-			indexer.reindex(getReindexFolders(dlFolder));
-
-			indexer = IndexerRegistryUtil.nullSafeGetIndexer(DLFileEntry.class);
+				DLFileEntry.class);
 
 			indexer.reindex(getReindexFileEntries(dlFolder));
+
+			indexer = IndexerRegistryUtil.nullSafeGetIndexer(DLFolder.class);
+
+			indexer.reindex(getReindexFolders(dlFolder));
 
 			return dlFolder;
 		}
