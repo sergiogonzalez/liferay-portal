@@ -117,7 +117,8 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 	public static long NAME_COLUMN_BITMASK = 8L;
 	public static long PARENTFOLDERID_COLUMN_BITMASK = 16L;
 	public static long STATUS_COLUMN_BITMASK = 32L;
-	public static long UUID_COLUMN_BITMASK = 64L;
+	public static long TREEPATH_COLUMN_BITMASK = 64L;
+	public static long UUID_COLUMN_BITMASK = 128L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -548,7 +549,17 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 
 	@Override
 	public void setTreePath(String treePath) {
+		_columnBitmask |= TREEPATH_COLUMN_BITMASK;
+
+		if (_originalTreePath == null) {
+			_originalTreePath = _treePath;
+		}
+
 		_treePath = treePath;
+	}
+
+	public String getOriginalTreePath() {
+		return GetterUtil.getString(_originalTreePath);
 	}
 
 	@JSON
@@ -1067,6 +1078,8 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 
 		journalFolderModelImpl._setOriginalParentFolderId = false;
 
+		journalFolderModelImpl._originalTreePath = journalFolderModelImpl._treePath;
+
 		journalFolderModelImpl._originalName = journalFolderModelImpl._name;
 
 		journalFolderModelImpl._originalStatus = journalFolderModelImpl._status;
@@ -1322,6 +1335,7 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 	private long _originalParentFolderId;
 	private boolean _setOriginalParentFolderId;
 	private String _treePath;
+	private String _originalTreePath;
 	private String _name;
 	private String _originalName;
 	private String _description;

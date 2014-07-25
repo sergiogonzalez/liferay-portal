@@ -41,6 +41,7 @@ import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
 
+import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
@@ -168,17 +169,26 @@ public class DLFolderIndexer extends BaseIndexer {
 
 	@Override
 	protected void doReindex(Object obj) throws Exception {
-		DLFolder dlFolder = (DLFolder)obj;
+		if (obj instanceof List<?>) {
+			List<DLFolder> dlFolders = (List<DLFolder>)obj;
 
-		if (!dlFolder.isApproved() && !dlFolder.isInTrash()) {
-			return;
+			for (DLFolder dlFolder : dlFolders) {
+				doReindex(dlFolder);
+			}
 		}
+		else if (obj instanceof DLFolder) {
+			DLFolder dlFolder = (DLFolder)obj;
 
-		Document document = getDocument(dlFolder);
+			if (!dlFolder.isApproved() && !dlFolder.isInTrash()) {
+				return;
+			}
 
-		if (document != null) {
-			SearchEngineUtil.updateDocument(
-				getSearchEngineId(), dlFolder.getCompanyId(), document);
+			Document document = getDocument(dlFolder);
+
+			if (document != null) {
+				SearchEngineUtil.updateDocument(
+					getSearchEngineId(), dlFolder.getCompanyId(), document);
+			}
 		}
 	}
 

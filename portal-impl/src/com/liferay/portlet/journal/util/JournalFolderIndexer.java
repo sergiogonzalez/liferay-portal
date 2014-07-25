@@ -38,6 +38,7 @@ import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.portlet.journal.service.permission.JournalFolderPermission;
 
+import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
@@ -161,12 +162,21 @@ public class JournalFolderIndexer extends BaseIndexer {
 
 	@Override
 	protected void doReindex(Object obj) throws Exception {
-		JournalFolder folder = (JournalFolder)obj;
+		if (obj instanceof List<?>) {
+			List<JournalFolder> journalFolders = (List<JournalFolder>)obj;
 
-		Document document = getDocument(folder);
+			for (JournalFolder journalFolder : journalFolders) {
+				doReindex(journalFolder);
+			}
+		}
+		else if (obj instanceof JournalFolder) {
+			JournalFolder folder = (JournalFolder)obj;
 
-		SearchEngineUtil.updateDocument(
-			getSearchEngineId(), folder.getCompanyId(), document);
+			Document document = getDocument(folder);
+
+			SearchEngineUtil.updateDocument(
+				getSearchEngineId(), folder.getCompanyId(), document);
+		}
 	}
 
 	@Override
