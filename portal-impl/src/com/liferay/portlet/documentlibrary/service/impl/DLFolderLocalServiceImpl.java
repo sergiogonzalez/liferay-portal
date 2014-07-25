@@ -1112,8 +1112,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		List<DLFileShortcut> dlFileShortcuts =
 			dlFileShortcutPersistence.findByC_T(
 				dlFolder.getCompanyId(),
-				CustomSQLUtil.keywords(dlFolder.getTreePath())[0],
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+				CustomSQLUtil.keywords(dlFolder.getTreePath())[0]);
 
 		for (DLFileShortcut dlFileShortcut : dlFileShortcuts) {
 			dlFileShortcut.setTreePath(dlFileShortcut.buildTreePath());
@@ -1174,8 +1173,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 		List<DLFileEntry> dlFileEntries = dlFileEntryPersistence.findByC_T(
 			dlFolder.getCompanyId(),
-			CustomSQLUtil.keywords(dlFolder.getTreePath())[0],
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+			CustomSQLUtil.keywords(dlFolder.getTreePath())[0]);
 
 		for (DLFileEntry dlFileEntry : dlFileEntries) {
 			dlFileEntry.setTreePath(dlFileEntry.buildTreePath());

@@ -1063,8 +1063,7 @@ public class JournalFolderLocalServiceImpl
 		List<JournalArticle> JournalArticles =
 			journalArticlePersistence.findByC_T(
 				journalFolder.getCompanyId(),
-				CustomSQLUtil.keywords(journalFolder.getTreePath())[0],
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+				CustomSQLUtil.keywords(journalFolder.getTreePath())[0]);
 
 		for (JournalArticle journalArticle : JournalArticles) {
 			journalArticle.setTreePath(journalArticle.buildTreePath());
