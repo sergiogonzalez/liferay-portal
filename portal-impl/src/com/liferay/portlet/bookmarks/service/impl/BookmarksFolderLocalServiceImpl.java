@@ -707,9 +707,7 @@ public class BookmarksFolderLocalServiceImpl
 		List<BookmarksFolder> bookmarksFolders =
 			bookmarksFolderPersistence.findByC_T(
 				bookmarksFolder.getCompanyId(),
-				CustomSQLUtil.keywords(bookmarksFolder.getTreePath())[0],
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				new FolderIdComparator(true));
+				CustomSQLUtil.keywords(bookmarksFolder.getTreePath())[0]);
 
 		for (BookmarksFolder curBookmarksFolder : bookmarksFolders) {
 			curBookmarksFolder.setTreePath(curBookmarksFolder.buildTreePath());

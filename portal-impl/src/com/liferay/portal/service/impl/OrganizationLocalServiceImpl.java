@@ -2042,9 +2042,7 @@ public class OrganizationLocalServiceImpl
 
 		List<Organization> organizations = organizationPersistence.findByC_T(
 			organization.getCompanyId(),
-			CustomSQLUtil.keywords(organization.getTreePath())[0],
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			new OrganizationNameComparator(true));
+			CustomSQLUtil.keywords(organization.getTreePath())[0]);
 
 		long[] organizationIds = new long[organizations.size()];
 

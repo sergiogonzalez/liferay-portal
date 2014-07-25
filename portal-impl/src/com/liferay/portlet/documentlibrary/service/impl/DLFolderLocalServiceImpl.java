@@ -1189,8 +1189,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 		List<DLFolder> dlFolders = dlFolderPersistence.findByC_T(
 			dlFolder.getCompanyId(),
-			CustomSQLUtil.keywords(dlFolder.getTreePath())[0],
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, new FolderIdComparator(true));
+			CustomSQLUtil.keywords(dlFolder.getTreePath())[0]);
 
 		for (DLFolder curDlFolder : dlFolders) {
 			curDlFolder.setTreePath(curDlFolder.buildTreePath());

@@ -1081,8 +1081,7 @@ public class JournalFolderLocalServiceImpl
 		List<JournalFolder> JournalFolders =
 			journalFolderPersistence.findByC_T(
 				journalFolder.getCompanyId(),
-				CustomSQLUtil.keywords(journalFolder.getTreePath())[0],
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, new FolderIdComparator());
+				CustomSQLUtil.keywords(journalFolder.getTreePath())[0]);
 
 		for (JournalFolder curJournalFolder : JournalFolders) {
 			curJournalFolder.setTreePath(curJournalFolder.buildTreePath());
