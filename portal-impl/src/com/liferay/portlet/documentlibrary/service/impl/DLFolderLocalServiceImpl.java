@@ -1106,7 +1106,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		addFolderResources(dlFolder, groupPermissions, guestPermissions);
 	}
 
-	protected List<DLFileShortcut> buildFileShortcutsTreePath(DLFolder dlFolder)
+	protected void buildFileShortcutsTreePath(DLFolder dlFolder)
 		throws PortalException {
 
 		List<DLFileShortcut> dlFileShortcuts =
@@ -1119,8 +1119,6 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 			dlFileShortcutPersistence.update(dlFileShortcut);
 		}
-
-		return dlFileShortcuts;
 	}
 
 	protected long getParentFolderId(DLFolder dlFolder, long parentFolderId) {
