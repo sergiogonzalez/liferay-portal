@@ -1486,11 +1486,11 @@ public class PortletPreferencesLocalServiceTest {
 
 		Object previousService = targetSource.getTarget();
 
-		ServiceWrapper<?> serviceWrapper =
+		ServiceWrapper<PortletPreferencesLocalService> serviceWrapper =
 			new TestPortletPreferencesLocalServiceWrapper(
 				(PortletPreferencesLocalService)previousService, strict);
 
-		_serviceBag = new ServiceBag(
+		_serviceBag = new ServiceBag<PortletPreferencesLocalService>(
 			ClassLoaderUtil.getPortalClassLoader(), advisedSupport,
 			PortletPreferencesLocalService.class, serviceWrapper);
 
@@ -1518,7 +1518,7 @@ public class PortletPreferencesLocalServiceTest {
 
 	private Layout _layout;
 	private Portlet _portlet;
-	private ServiceBag _serviceBag;
+	private ServiceBag<PortletPreferencesLocalService> _serviceBag;
 
 	private class TestPortletPreferencesLocalServiceWrapper
 		extends PortletPreferencesLocalServiceWrapper {

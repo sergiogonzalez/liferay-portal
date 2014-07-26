@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,18 +12,15 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-package com.liferay.portal.kernel.lock;
+<%@ include file="/html/portlet/shopping/init.jsp" %>
 
-/**
- * @author Alexander Chow
- */
-public interface LockListenerRegistry {
+<%
+ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
+int start = GetterUtil.getInteger(request.getAttribute("start"));
 
-	public LockListener getLockListener(String className);
+int rowNumber = start + row.getPos();
+%>
 
-	public void register(LockListener lockListener);
-
-	public void unregister(LockListener lockListener);
-
-}
+<aui:input label="" name='<%= "fieldsQuantity" + rowNumber %>' size="4" title="quantity" type="text" value="0" />
