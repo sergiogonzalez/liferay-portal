@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.repository.model.Folder;
 /**
  * @author Adolfo Pérez
  */
-public interface SyncCapability {
+public interface SyncCapability extends Capability {
 
 	public void addFolder(Folder folder) throws PortalException;
 

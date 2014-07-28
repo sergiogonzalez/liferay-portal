@@ -15,12 +15,14 @@
 package com.liferay.portal.repository.liferayrepository;
 
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.repository.capabilities.SyncCapability;
 import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.registry.BaseRepositoryRegistryPlugin;
 import com.liferay.portal.kernel.repository.registry.CapabilityRegistry;
 import com.liferay.portal.kernel.repository.registry.RepositoryCreator;
 import com.liferay.portal.kernel.repository.registry.RepositoryCreatorRegistry;
 import com.liferay.portal.kernel.repository.registry.RepositoryEventRegistry;
+import com.liferay.portal.repository.capabilities.LiferaySyncCapability;
 import com.liferay.portal.repository.capabilities.LiferayTrashCapability;
 import com.liferay.portal.service.ClassNameLocalService;
 
@@ -52,6 +54,9 @@ public class LiferayRepositoryRegistryPlugin
 	public void registerCapabilities(CapabilityRegistry capabilityRegistry) {
 		capabilityRegistry.addPublicCapability(
 			TrashCapability.class, _trashCapability);
+
+		capabilityRegistry.addPrivateCapability(
+			SyncCapability.class, _syncCapability);
 	}
 
 	@Override
@@ -66,6 +71,7 @@ public class LiferayRepositoryRegistryPlugin
 		RepositoryEventRegistry repositoryEventRegistry) {
 
 		_trashCapability.registerEventListeners(repositoryEventRegistry);
+		_syncCapability.registerEventListeners(repositoryEventRegistry);
 	}
 
 	public void setRepositoryCreator(RepositoryCreator repositoryCreator) {
@@ -78,6 +84,7 @@ public class LiferayRepositoryRegistryPlugin
 	private ClassNameLocalService _classNameLocalService;
 
 	private RepositoryCreator _repositoryCreator;
+	private LiferaySyncCapability _syncCapability = new LiferaySyncCapability();
 	private LiferayTrashCapability _trashCapability =
 		new LiferayTrashCapability();
 
