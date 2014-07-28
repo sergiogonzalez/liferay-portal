@@ -16,6 +16,8 @@ package com.liferay.portlet.messageboards.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceMode;
 import com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
@@ -98,6 +100,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 	 *             com.liferay.portal.service.ServiceContext)}
 	 */
 	@Deprecated
+	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
 	@Override
 	public MBMessage addMessage(
 			long groupId, long categoryId, long threadId, long parentMessageId,
@@ -112,6 +115,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			priority, allowPingbacks, serviceContext);
 	}
 
+	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
 	@Override
 	public MBMessage addMessage(
 			long groupId, long categoryId, String subject, String body,
@@ -163,6 +167,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			false, serviceContext);
 	}
 
+	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
 	@Override
 	public MBMessage addMessage(
 			long parentMessageId, String subject, String body, String format,
@@ -668,6 +673,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			serviceContext);
 	}
 
+	@JSONWebService(mode = JSONWebServiceMode.IGNORE)
 	@Override
 	public MBMessage updateMessage(
 			long messageId, String subject, String body,
