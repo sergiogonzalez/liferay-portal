@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.repository.registry;
 
+import com.liferay.portal.kernel.repository.event.RepositoryEventHandler;
+
 /**
  * @author Adolfo Pérez
  */
@@ -30,7 +32,9 @@ public abstract class BaseRepositoryRegistryPlugin
 	public abstract boolean isExternalRepository();
 
 	@Override
-	public void registerCapabilities(CapabilityRegistry capabilityRegistry) {
+	public void registerCapabilities(
+		CapabilityRegistry capabilityRegistry,
+		RepositoryEventHandler repositoryEventHandler) {
 	}
 
 	@Override

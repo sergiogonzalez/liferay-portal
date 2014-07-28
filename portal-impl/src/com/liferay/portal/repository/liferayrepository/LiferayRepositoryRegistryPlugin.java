@@ -17,6 +17,7 @@ package com.liferay.portal.repository.liferayrepository;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.repository.capabilities.SyncCapability;
 import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
+import com.liferay.portal.kernel.repository.event.RepositoryEventHandler;
 import com.liferay.portal.kernel.repository.registry.BaseRepositoryRegistryPlugin;
 import com.liferay.portal.kernel.repository.registry.CapabilityRegistry;
 import com.liferay.portal.kernel.repository.registry.RepositoryCreator;
@@ -51,7 +52,10 @@ public class LiferayRepositoryRegistryPlugin
 	}
 
 	@Override
-	public void registerCapabilities(CapabilityRegistry capabilityRegistry) {
+	public void registerCapabilities(
+		CapabilityRegistry capabilityRegistry,
+		RepositoryEventHandler repositoryEventHandler) {
+
 		capabilityRegistry.addPublicCapability(
 			TrashCapability.class, _trashCapability);
 

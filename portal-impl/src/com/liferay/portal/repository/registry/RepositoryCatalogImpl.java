@@ -138,7 +138,8 @@ public class RepositoryCatalogImpl implements RepositoryCatalog {
 			new DefaultRepositoryRegistry();
 
 		repositoryRegistryPlugin.registerRepositoryCreator(repositoryRegistry);
-		repositoryRegistryPlugin.registerCapabilities(repositoryRegistry);
+		repositoryRegistryPlugin.registerCapabilities(
+			repositoryRegistry, repositoryRegistry);
 		repositoryRegistryPlugin.registerRepositoryEventListeners(
 			repositoryRegistry);
 

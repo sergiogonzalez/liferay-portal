@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.repository.registry;
 
+import com.liferay.portal.kernel.repository.event.RepositoryEventHandler;
+
 /**
  * @author Adolfo Pérez
  */
@@ -25,7 +27,9 @@ public interface RepositoryRegistryPlugin {
 
 	public boolean isExternalRepository();
 
-	public void registerCapabilities(CapabilityRegistry capabilityRegistry);
+	public void registerCapabilities(
+		CapabilityRegistry capabilityRegistry,
+		RepositoryEventHandler repositoryEventHandler);
 
 	public void registerRepositoryCreator(
 		RepositoryCreatorRegistry repositoryCreatorRegistry);
