@@ -93,7 +93,7 @@ public class ComboServletStaticURLGeneratorTest extends PowerMockito {
 
 		assertURLs(
 			urls, "http://www.test.com/test2.css",
-			_URL_PREFIX + "&/css/more.css&t=0");
+			_URL_PREFIX + "&%2Fcss%2Fmore.css&t=0");
 	}
 
 	@Test
@@ -115,7 +115,7 @@ public class ComboServletStaticURLGeneratorTest extends PowerMockito {
 		List<String> urls = comboServletStaticURLGenerator.generate(
 			toList(portlet));
 
-		assertURLs(urls, _URL_PREFIX + "&/css/more.css&t=0");
+		assertURLs(urls, _URL_PREFIX + "&%2Fcss%2Fmore.css&t=0");
 	}
 
 	@Test
@@ -167,7 +167,8 @@ public class ComboServletStaticURLGeneratorTest extends PowerMockito {
 		List<String> urls = comboServletStaticURLGenerator.generate(
 			toList(portlet));
 
-		assertURLs(urls, _URL_PREFIX + "&/css/main.css&/css/more.css&t=0");
+		assertURLs(
+			urls, _URL_PREFIX + "&%2Fcss%2Fmain.css&%2Fcss%2Fmore.css&t=0");
 	}
 
 	@Test
@@ -210,7 +211,7 @@ public class ComboServletStaticURLGeneratorTest extends PowerMockito {
 		List<String> urls = comboServletStaticURLGenerator.generate(
 			toList(portlet));
 
-		assertURLs(urls, _URL_PREFIX + "&/css/main.css&t=10000");
+		assertURLs(urls, _URL_PREFIX + "&%2Fcss%2Fmain.css&t=10000");
 	}
 
 	@Test
@@ -231,7 +232,7 @@ public class ComboServletStaticURLGeneratorTest extends PowerMockito {
 		List<String> urls = comboServletStaticURLGenerator.generate(
 			toList(portlet));
 
-		assertURLs(urls, _URL_PREFIX + "&/css/main.css&t=20000");
+		assertURLs(urls, _URL_PREFIX + "&%2Fcss%2Fmain.css&t=20000");
 	}
 
 	@Test
@@ -254,7 +255,7 @@ public class ComboServletStaticURLGeneratorTest extends PowerMockito {
 
 		assertURLs(
 			urls, "http://www.test.com/test.css",
-			_URL_PREFIX + "&/css/main.css&t=0");
+			_URL_PREFIX + "&%2Fcss%2Fmain.css&t=0");
 	}
 
 	@Test
@@ -320,8 +321,8 @@ public class ComboServletStaticURLGeneratorTest extends PowerMockito {
 		assertURLs(
 			urls,
 			_URL_PREFIX + "&" + PortletKeys.ACTIVITIES +
-				":/css/main.css&" + PortletKeys.ACTIVITIES +
-				":/css/more.css&t=0");
+				":%2Fcss%2Fmain.css&" + PortletKeys.ACTIVITIES +
+				":%2Fcss%2Fmore.css&t=0");
 	}
 
 	@Test
@@ -342,7 +343,8 @@ public class ComboServletStaticURLGeneratorTest extends PowerMockito {
 		List<String> urls = comboServletStaticURLGenerator.generate(
 			toList(portlet));
 
-		assertURLs(urls, _URL_PREFIX + "&/css/main.css&/css/more.css&t=0");
+		assertURLs(
+			urls, _URL_PREFIX + "&%2Fcss%2Fmain.css&%2Fcss%2Fmore.css&t=0");
 	}
 
 	protected void assertURLs(List<String> urlsList, String... urls) {
