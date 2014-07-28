@@ -157,8 +157,6 @@ public class DLAppHelperLocalServiceImpl
 			userId, folder, serviceContext.getAssetCategoryIds(),
 			serviceContext.getAssetTagNames(),
 			serviceContext.getAssetLinkEntryIds());
-
-		registerDLSyncEventCallback(DLSyncConstants.EVENT_ADD, folder);
 	}
 
 	@Override
@@ -270,11 +268,6 @@ public class DLAppHelperLocalServiceImpl
 			dlFileShortcutLocalService.deleteFileShortcuts(
 				fileEntry.getFileEntryId());
 
-			// Sync
-
-			registerDLSyncEventCallback(
-				DLSyncConstants.EVENT_DELETE, fileEntry);
-
 			// Asset
 
 			assetEntryLocalService.deleteEntry(
@@ -300,10 +293,6 @@ public class DLAppHelperLocalServiceImpl
 		if (!DLAppHelperThreadLocal.isEnabled()) {
 			return;
 		}
-
-		// Sync
-
-		registerDLSyncEventCallback(DLSyncConstants.EVENT_DELETE, folder);
 
 		// Asset
 
@@ -560,7 +549,6 @@ public class DLAppHelperLocalServiceImpl
 
 	@Override
 	public void moveFileEntry(FileEntry fileEntry) throws PortalException {
-		registerDLSyncEventCallback(DLSyncConstants.EVENT_MOVE, fileEntry);
 	}
 
 	@Override
@@ -721,7 +709,6 @@ public class DLAppHelperLocalServiceImpl
 
 	@Override
 	public void moveFolder(Folder folder) {
-		registerDLSyncEventCallback(DLSyncConstants.EVENT_MOVE, folder);
 	}
 
 	@Override
@@ -1350,8 +1337,6 @@ public class DLAppHelperLocalServiceImpl
 		}
 
 		registerDLProcessorCallback(fileEntry, sourceFileVersion);
-
-		registerDLSyncEventCallback(DLSyncConstants.EVENT_UPDATE, fileEntry);
 	}
 
 	@Override
@@ -1371,8 +1356,6 @@ public class DLAppHelperLocalServiceImpl
 			serviceContext.getAssetLinkEntryIds());
 
 		registerDLProcessorCallback(fileEntry, sourceFileVersion);
-
-		registerDLSyncEventCallback(DLSyncConstants.EVENT_UPDATE, fileEntry);
 	}
 
 	@Override
@@ -1384,8 +1367,6 @@ public class DLAppHelperLocalServiceImpl
 			userId, folder, serviceContext.getAssetCategoryIds(),
 			serviceContext.getAssetTagNames(),
 			serviceContext.getAssetLinkEntryIds());
-
-		registerDLSyncEventCallback(DLSyncConstants.EVENT_UPDATE, folder);
 	}
 
 	@Override
