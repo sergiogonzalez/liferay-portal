@@ -22,10 +22,21 @@ import java.util.List;
  */
 public class MethodParameter {
 
-	public MethodParameter(String name, String signatures, Class<?> type) {
+	public MethodParameter(
+		String name, String signatures, Class<?> type, boolean initialize) {
+
 		_name = name;
 		_signatures = signatures;
 		_type = type;
+
+		if (initialize) {
+			try {
+				getGenericTypes();
+			}
+			catch (ClassNotFoundException cnfe) {
+				throw new IllegalArgumentException(cnfe);
+			}
+		}
 	}
 
 	public Class<?>[] getGenericTypes() throws ClassNotFoundException {
@@ -164,11 +175,24 @@ public class MethodParameter {
 				String extractedTopLevelGenericName = null;
 
 				if (c == 'L') {
+					int bracketIndex = generics.indexOf(
+						StringPool.LESS_THAN, index);
 					int endIndex =
 						generics.indexOf(StringPool.SEMICOLON, index) + 1;
 
-					extractedTopLevelGenericName = _getGenericName(
-						generics.substring(index - 1, endIndex));
+					if ((bracketIndex != -1) && (bracketIndex < endIndex)) {
+						endIndex = bracketIndex;
+
+						extractedTopLevelGenericName = _getGenericName(
+							generics.substring(index - 1, endIndex));
+						extractedTopLevelGenericName =
+							extractedTopLevelGenericName.concat(
+								StringPool.SEMICOLON);
+					}
+					else {
+						extractedTopLevelGenericName = _getGenericName(
+							generics.substring(index - 1, endIndex));
+					}
 
 					index = endIndex;
 				}

@@ -21,6 +21,7 @@ boolean supportedAudio = GetterUtil.getBoolean((String)request.getAttribute("vie
 boolean supportedVideo = GetterUtil.getBoolean((String)request.getAttribute("view_file_entry.jsp-supportedVideo"));
 
 String[] previewFileURLs = (String[])request.getAttribute("view_file_entry.jsp-previewFileURLs");
+String previewId = (String)request.getAttribute("view_file_entry.jsp-previewId");
 String videoThumbnailURL = (String)request.getAttribute("view_file_entry.jsp-videoThumbnailURL");
 
 String mp3PreviewFileURL = null;
@@ -49,7 +50,7 @@ for (String previewFileURL : previewFileURLs) {
 		<aui:script use="aui-audio">
 			var audio = new A.Audio(
 				{
-					contentBox: '#<portlet:namespace />previewFileContent',
+					contentBox: '#<portlet:namespace /><%= previewId %>previewFileContent',
 					fixedAttributes: {
 						allowfullscreen: 'true',
 						wmode: 'opaque'
@@ -70,7 +71,7 @@ for (String previewFileURL : previewFileURLs) {
 		<aui:script use="aui-base,aui-video">
 			new A.Video(
 				{
-					contentBox: '#<portlet:namespace />previewFileContent',
+					contentBox: '#<portlet:namespace /><%= previewId %>previewFileContent',
 					fixedAttributes: {
 						allowfullscreen: 'true',
 						bgColor: '#000000',

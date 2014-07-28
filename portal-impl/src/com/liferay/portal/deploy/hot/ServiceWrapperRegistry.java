@@ -54,13 +54,13 @@ public class ServiceWrapperRegistry {
 	private static Log _log = LogFactoryUtil.getLog(
 		ServiceWrapperRegistry.class);
 
-	private ServiceTracker<ServiceWrapper<?>, ServiceBag> _serviceTracker;
+	private ServiceTracker<ServiceWrapper<?>, ServiceBag<?>> _serviceTracker;
 
 	private class ServiceWrapperServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer<ServiceWrapper<?>, ServiceBag> {
+		implements ServiceTrackerCustomizer<ServiceWrapper<?>, ServiceBag<?>> {
 
 		@Override
-		public ServiceBag addingService(
+		public ServiceBag<?> addingService(
 			ServiceReference<ServiceWrapper<?>> serviceReference) {
 
 			Registry registry = RegistryUtil.getRegistry();
@@ -84,13 +84,13 @@ public class ServiceWrapperRegistry {
 		@Override
 		public void modifiedService(
 			ServiceReference<ServiceWrapper<?>> serviceReference,
-			ServiceBag serviceHolder) {
+			ServiceBag<?> serviceHolder) {
 		}
 
 		@Override
 		public void removedService(
 			ServiceReference<ServiceWrapper<?>> serviceReference,
-			ServiceBag serviceBag) {
+			ServiceBag<?> serviceBag) {
 
 			Registry registry = RegistryUtil.getRegistry();
 
@@ -106,7 +106,8 @@ public class ServiceWrapperRegistry {
 			}
 		}
 
-		private <T> ServiceBag _getServiceBag(ServiceWrapper<T> serviceWrapper)
+		private <T> ServiceBag<?> _getServiceBag(
+				ServiceWrapper<T> serviceWrapper)
 			throws Throwable {
 
 			Class<?> clazz = serviceWrapper.getClass();
@@ -134,11 +135,9 @@ public class ServiceWrapperRegistry {
 
 			TargetSource targetSource = advisedSupport.getTargetSource();
 
-			Object previousService = targetSource.getTarget();
+			serviceWrapper.setWrappedService((T)targetSource.getTarget());
 
-			serviceWrapper.setWrappedService((T)previousService);
-
-			return new ServiceBag(
+			return new ServiceBag<T>(
 				classLoader, advisedSupport, serviceTypeClass, serviceWrapper);
 		}
 

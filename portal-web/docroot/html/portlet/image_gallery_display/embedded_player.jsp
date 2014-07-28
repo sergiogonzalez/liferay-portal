@@ -27,6 +27,7 @@ String ogvPreviewURL = ParamUtil.getString(request, "ogvPreviewURL");
 String videoThumbnailURL = ParamUtil.getString(request, "thumbnailURL");
 
 List<String> previewFileURLs = new ArrayList<String>(4);
+String previewId = StringPool.BLANK;
 
 if (Validator.isNotNull(mp3PreviewURL)) {
 	previewFileURLs.add(mp3PreviewURL);
@@ -56,18 +57,19 @@ request.setAttribute("view_file_entry.jsp-supportedAudio", String.valueOf(suppor
 request.setAttribute("view_file_entry.jsp-supportedVideo", String.valueOf(supportedVideo));
 
 request.setAttribute("view_file_entry.jsp-previewFileURLs", previewFileURLs.toArray(new String[0]));
+request.setAttribute("view_file_entry.jsp-previewId", previewId);
 request.setAttribute("view_file_entry.jsp-videoThumbnailURL", videoThumbnailURL);
 %>
 
 <c:choose>
 	<c:when test="<%= supportedAudio %>">
-		<div class="lfr-preview-audio" id="<portlet:namespace />previewFile">
-			<div class="lfr-preview-audio-content" id="<portlet:namespace />previewFileContent"></div>
+		<div class="lfr-preview-audio" id="<portlet:namespace /><%= previewId %>previewFile">
+			<div class="lfr-preview-audio-content" id="<portlet:namespace /><%= previewId %>previewFileContent"></div>
 		</div>
 	</c:when>
 	<c:when test="<%= supportedVideo %>">
-		<div class="lfr-preview-file lfr-preview-video" id="<portlet:namespace />previewFile">
-			<div class="lfr-preview-file-content lfr-preview-video-content" id="<portlet:namespace />previewFileContent"></div>
+		<div class="lfr-preview-file lfr-preview-video" id="<portlet:namespace /><%= previewId %>previewFile">
+			<div class="lfr-preview-file-content lfr-preview-video-content" id="<portlet:namespace /><%= previewId %>previewFileContent"></div>
 		</div>
 	</c:when>
 </c:choose>
