@@ -1159,14 +1159,19 @@ public class DLAppHelperLocalServiceImpl
 		String[] assetTagNames = assetTagLocalService.getTagNames(
 			DLFileEntryConstants.getClassName(), assetClassPk);
 
-		AssetEntry assetEntry = assetEntryLocalService.getEntry(
+		AssetEntry assetEntry = assetEntryLocalService.fetchEntry(
 			DLFileEntryConstants.getClassName(), assetClassPk);
 
-		List<AssetLink> assetLinks = assetLinkLocalService.getDirectLinks(
-			assetEntry.getEntryId());
+		long[] assetLinkIds = {};
 
-		long[] assetLinkIds = StringUtil.split(
-			ListUtil.toString(assetLinks, AssetLink.ENTRY_ID2_ACCESSOR), 0L);
+		if (assetEntry != null) {
+			List<AssetLink> assetLinks = assetLinkLocalService.getDirectLinks(
+				assetEntry.getEntryId());
+
+			assetLinkIds = StringUtil.split(
+				ListUtil.toString(
+					assetLinks, AssetLink.ENTRY_ID2_ACCESSOR), 0L);
+		}
 
 		return updateAsset(
 			userId, fileEntry, fileVersion, assetCategoryIds, assetTagNames,
