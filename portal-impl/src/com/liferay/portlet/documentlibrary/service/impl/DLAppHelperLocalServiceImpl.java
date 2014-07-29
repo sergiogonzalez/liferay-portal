@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.capabilities.RepositoryEventTriggerCapability;
 import com.liferay.portal.kernel.repository.event.RepositoryEventType;
 import com.liferay.portal.kernel.repository.event.RepositoryEventTypeUtil;
+import com.liferay.portal.kernel.repository.event.TrashRepositoryEventType;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -1022,8 +1023,10 @@ public class DLAppHelperLocalServiceImpl
 
 			// Sync
 
-			registerDLSyncEventCallback(
-				DLSyncConstants.EVENT_RESTORE, fileEntry);
+			triggerRepositoryEvent(
+				fileEntry.getRepositoryId(),
+				TrashRepositoryEventType.EntryRestored.class, FileEntry.class,
+				fileEntry);
 		}
 
 		// Trash
@@ -1129,7 +1132,9 @@ public class DLAppHelperLocalServiceImpl
 
 		// Sync
 
-		registerDLSyncEventCallback(DLSyncConstants.EVENT_RESTORE, folder);
+		triggerRepositoryEvent(
+			folder.getRepositoryId(),
+			TrashRepositoryEventType.EntryRestored.class, Folder.class, folder);
 
 		// Trash
 
@@ -1604,7 +1609,10 @@ public class DLAppHelperLocalServiceImpl
 
 		// Sync
 
-		registerDLSyncEventCallback(DLSyncConstants.EVENT_RESTORE, fileEntry);
+		triggerRepositoryEvent(
+			fileEntry.getRepositoryId(),
+			TrashRepositoryEventType.EntryRestored.class, FileEntry.class,
+			fileEntry);
 
 		// Social
 
@@ -1662,7 +1670,10 @@ public class DLAppHelperLocalServiceImpl
 
 			// Sync
 
-			registerDLSyncEventCallback(DLSyncConstants.EVENT_TRASH, fileEntry);
+			triggerRepositoryEvent(
+				fileEntry.getRepositoryId(),
+				TrashRepositoryEventType.EntryTrashed.class, FileEntry.class,
+				fileEntry);
 		}
 
 		// Trash
@@ -1782,7 +1793,10 @@ public class DLAppHelperLocalServiceImpl
 
 			// Sync
 
-			registerDLSyncEventCallback(DLSyncConstants.EVENT_RESTORE, folder);
+			triggerRepositoryEvent(
+				folder.getRepositoryId(),
+				TrashRepositoryEventType.EntryRestored.class, Folder.class,
+				folder);
 
 			// Social
 
@@ -1844,7 +1858,9 @@ public class DLAppHelperLocalServiceImpl
 
 		// Sync
 
-		registerDLSyncEventCallback(DLSyncConstants.EVENT_TRASH, folder);
+		triggerRepositoryEvent(
+			folder.getRepositoryId(),
+			TrashRepositoryEventType.EntryTrashed.class, Folder.class, folder);
 
 		// Social
 
