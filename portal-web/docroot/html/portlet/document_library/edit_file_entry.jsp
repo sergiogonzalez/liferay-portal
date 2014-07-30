@@ -78,8 +78,12 @@ if (fileEntry != null) {
 
 DLFileEntryType dlFileEntryType = null;
 
+DocumentTypeHandler documentTypeHandler = null;
+
 if (fileEntryTypeId > 0) {
 	dlFileEntryType = DLFileEntryTypeLocalServiceUtil.getFileEntryType(fileEntryTypeId);
+
+	documentTypeHandler = DocumentTypeHandlerUtil.getDocumentTypeHandler(dlFileEntryType);
 }
 
 long assetClassPK = 0;
@@ -310,11 +314,25 @@ DLFileEntryActionsDisplayContext dlFileEntryActionsDisplayContext = new DLFileEn
 			</c:if>
 		</div>
 
-		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP) %>" name="file" onChange='<%= renderResponse.getNamespace() + "validateTitle();" %>' type="file">
-			<aui:validator name="acceptFiles">
-				'<%= StringUtil.merge(PrefsPropsUtil.getStringArray(PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA)) %>'
-			</aui:validator>
-		</aui:input>
+		<c:choose>
+
+			<c:when test="<%= documentTypeHandler == null %>">
+				<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP) %>" name="file" onChange='<%= renderResponse.getNamespace() + "validateTitle();" %>' type="file">
+					<aui:validator name="acceptFiles">
+						'<%= StringUtil.merge(PrefsPropsUtil.getStringArray(PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA)) %>'
+					</aui:validator>
+				</aui:input>
+			</c:when>
+
+			<c:otherwise>
+				<aui:field-wrapper label="document">
+					<%= documentTypeHandler.getSelectFileButtonHTML(dlFileEntryType, "window.onConnectorFileSelected") %>
+				</aui:field-wrapper>
+
+				<aui:input name="documentJSONPayload" type="hidden" />
+			</c:otherwise>
+
+		</c:choose>
 
 		<aui:input name="title">
 			<aui:validator errorMessage="you-must-specify-a-file-or-a-title" name="custom">
@@ -369,7 +387,7 @@ DLFileEntryActionsDisplayContext dlFileEntryActionsDisplayContext = new DLFileEn
 				<%
 				if (fileEntryTypeId > 0) {
 					try {
-						List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
+						List<DDMStructure> ddmStructures = documentTypeHandler.getVisibleDDMStructures(dlFileEntryType);
 
 						for (DDMStructure ddmStructure : ddmStructures) {
 							Fields fields = null;
@@ -530,6 +548,14 @@ DLFileEntryActionsDisplayContext dlFileEntryActionsDisplayContext = new DLFileEn
 
 	function <portlet:namespace />validateTitle() {
 		Liferay.Form.get('<portlet:namespace />fm').formValidator.validateField('<portlet:namespace />title');
+	}
+</aui:script>
+
+<aui:script use="json">
+	window.onConnectorFileSelected = function(doc) {
+		document.<portlet:namespace />fm.<portlet:namespace />title.value = doc.title;
+		document.<portlet:namespace />fm.<portlet:namespace />description.value = doc.description;
+		document.<portlet:namespace />fm.<portlet:namespace />documentJSONPayload.value = A.JSON.stringify(doc);
 	}
 </aui:script>
 

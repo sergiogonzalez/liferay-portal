@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.servlet.ServletResponseConstants;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.upload.FileItem;
 import com.liferay.portal.kernel.upload.LiferayFileItemException;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
@@ -74,6 +75,8 @@ import com.liferay.portlet.documentlibrary.NoSuchFileVersionException;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.SourceFileNameException;
 import com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerException;
+import com.liferay.portlet.documentlibrary.documenttype.DocumentTypeHandler;
+import com.liferay.portlet.documentlibrary.documenttype.DocumentTypeHandlerUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
@@ -86,6 +89,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.portlet.ActionRequest;
@@ -101,6 +105,7 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.portlet.WindowState;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.fileupload.FileUploadBase.IOFileUploadException;
@@ -952,6 +957,27 @@ public class EditFileEntryAction extends PortletAction {
 		}
 	}
 
+	protected void invokeDocumentTypeHandler(
+		boolean newFileEntry, FileEntry fileEntry, HttpServletRequest request) {
+
+		// TODO: si lanza excepcion borrar el fileEntry
+
+		Object fileEntryModel = fileEntry.getModel();
+
+		if (fileEntryModel instanceof DLFileEntry) {
+			DLFileEntry dlFileEntry = (DLFileEntry)fileEntryModel;
+
+			DocumentTypeHandler documentTypeHandler =
+				DocumentTypeHandlerUtil.getDocumentTypeHandler(dlFileEntry);
+
+			String jsonPayload = ParamUtil.getString(
+				request, "documentJSONPayload");
+
+			documentTypeHandler.processUpload(
+				newFileEntry, dlFileEntry, jsonPayload);
+		}
+	}
+
 	protected void revertFileEntry(ActionRequest actionRequest)
 		throws Exception {
 
@@ -1003,9 +1029,18 @@ public class EditFileEntryAction extends PortletAction {
 		InputStream inputStream = null;
 
 		try {
-			String contentType = uploadPortletRequest.getContentType("file");
+			String contentType = null;
 
-			long size = uploadPortletRequest.getSize("file");
+			long size = 0;
+
+			Map<String, FileItem[]> fileItemsMap =
+				uploadPortletRequest.getMultipartParameterMap();
+
+			if (fileItemsMap.containsKey("file")) {
+				contentType = uploadPortletRequest.getContentType("file");
+
+				size = uploadPortletRequest.getSize("file");
+			}
 
 			if ((cmd.equals(Constants.ADD) ||
 				 cmd.equals(Constants.ADD_DYNAMIC)) &&
@@ -1056,6 +1091,9 @@ public class EditFileEntryAction extends PortletAction {
 					actionRequest, DLFileEntry.class.getName(),
 					fileEntry.getFileEntryId(), -1);
 
+				invokeDocumentTypeHandler(
+					true, fileEntry, uploadPortletRequest);
+
 				if (cmd.equals(Constants.ADD_DYNAMIC)) {
 					JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
@@ -1072,6 +1110,9 @@ public class EditFileEntryAction extends PortletAction {
 					fileEntryId, sourceFileName, contentType, title,
 					description, changeLog, majorVersion, inputStream, size,
 					serviceContext);
+
+				invokeDocumentTypeHandler(
+					false, fileEntry, uploadPortletRequest);
 			}
 			else {
 
@@ -1081,6 +1122,9 @@ public class EditFileEntryAction extends PortletAction {
 					fileEntryId, sourceFileName, contentType, title,
 					description, changeLog, majorVersion, inputStream, size,
 					serviceContext);
+
+				invokeDocumentTypeHandler(
+					false, fileEntry, uploadPortletRequest);
 			}
 
 			AssetPublisherUtil.addRecentFolderId(

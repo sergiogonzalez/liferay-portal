@@ -389,7 +389,9 @@ DLActionsDisplayContext dlActionsDisplayContext = dlFileEntryActionsDisplayConte
 							try {
 								DLFileEntryType fileEntryType = DLFileEntryTypeServiceUtil.getFileEntryType(fileEntryTypeId);
 
-								List<DDMStructure> ddmStructures = fileEntryType.getDDMStructures();
+								DocumentTypeHandler documentTypeHandler = DocumentTypeHandlerUtil.getDocumentTypeHandler(fileEntryType);
+
+								List<DDMStructure> ddmStructures = documentTypeHandler.getVisibleDDMStructures(fileEntryType);
 
 								for (DDMStructure ddmStructure : ddmStructures) {
 									Fields fields = null;
@@ -401,7 +403,7 @@ DLActionsDisplayContext dlActionsDisplayContext = dlFileEntryActionsDisplayConte
 									}
 									catch (Exception e) {
 									}
-						%>
+									%>
 
 									<liferay-ui:panel collapsible="<%= true %>" cssClass="metadata" extended="<%= true %>" id="documentLibraryMetadataPanel" persistState="<%= true %>" title="<%= HtmlUtil.escape(ddmStructure.getName(locale)) %>">
 
@@ -416,7 +418,7 @@ DLActionsDisplayContext dlActionsDisplayContext = dlFileEntryActionsDisplayConte
 
 									</liferay-ui:panel>
 
-						<%
+									<%
 								}
 							}
 							catch (Exception e) {
