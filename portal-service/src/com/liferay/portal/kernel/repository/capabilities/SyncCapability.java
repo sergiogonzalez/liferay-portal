@@ -17,37 +17,34 @@ package com.liferay.portal.kernel.repository.capabilities;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.service.ServiceContext;
 
 /**
  * @author Adolfo Pérez
  */
-public interface TrashCapability extends Capability {
+public interface SyncCapability extends Capability {
+
+	public void addFileEntry(FileEntry fileEntry) throws PortalException;
+
+	public void addFolder(Folder folder) throws PortalException;
 
 	public void deleteFileEntry(FileEntry fileEntry) throws PortalException;
 
 	public void deleteFolder(Folder folder) throws PortalException;
 
-	public FileEntry moveFileEntryFromTrash(
-			long userId, FileEntry fileEntry, Folder destinationFolder,
-			ServiceContext serviceContext)
-		throws PortalException;
+	public void moveFileEntry(FileEntry fileEntry) throws PortalException;
 
-	public FileEntry moveFileEntryToTrash(long userId, FileEntry fileEntry)
-		throws PortalException;
+	public void moveFolder(Folder folder) throws PortalException;
 
-	public Folder moveFolderFromTrash(
-			long userId, Folder folder, Folder destinationFolder,
-			ServiceContext serviceContext)
-		throws PortalException;
+	public void restoreFileEntry(FileEntry fileEntry) throws PortalException;
 
-	public Folder moveFolderToTrash(long userId, Folder folder)
-		throws PortalException;
+	public void restoreFolder(Folder folder) throws PortalException;
 
-	public void restoreFileEntryFromTrash(long userId, FileEntry fileEntry)
-		throws PortalException;
+	public void trashFileEntry(FileEntry fileEntry) throws PortalException;
 
-	public void restoreFolderFromTrash(long userId, Folder folder)
-		throws PortalException;
+	public void trashFolder(Folder folder) throws PortalException;
+
+	public void updateFileEntry(FileEntry fileEntry) throws PortalException;
+
+	public void updateFolder(Folder folder) throws PortalException;
 
 }
