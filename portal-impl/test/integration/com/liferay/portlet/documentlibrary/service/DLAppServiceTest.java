@@ -118,6 +118,16 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		}
 
 		@Test
+		public void shouldFireSyncEvent() throws Exception {
+			AtomicInteger counter = registerDLSyncEventProcessorMessageListener(
+				DLSyncConstants.EVENT_ADD);
+
+			addFileEntry(group.getGroupId(), parentFolder.getFolderId());
+
+			Assert.assertEquals(1, counter.get());
+		}
+
+		@Test
 		public void shouldHaveVersion1_0() throws Exception {
 			String fileName = "TestVersion.txt";
 
@@ -432,6 +442,121 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		})
 	@RunWith(LiferayIntegrationJUnitTestRunner.class)
 	@Sync
+	public static class WhenDeletingAFileEntry extends BaseDLAppTestCase {
+
+		@Test
+		public void shouldFireSyncEvent() throws Exception {
+			AtomicInteger counter = registerDLSyncEventProcessorMessageListener(
+				DLSyncConstants.EVENT_DELETE);
+
+			FileEntry fileEntry = addFileEntry(
+				group.getGroupId(), parentFolder.getFolderId());
+
+			DLAppServiceUtil.deleteFileEntry(fileEntry.getFileEntryId());
+
+			Assert.assertEquals(1, counter.get());
+		}
+
+	}
+
+	@ExecutionTestListeners(
+		listeners = {
+			MainServletExecutionTestListener.class,
+			SynchronousDestinationExecutionTestListener.class
+		})
+	@RunWith(LiferayIntegrationJUnitTestRunner.class)
+	@Sync
+	public static class WhenDeletingAFolder extends BaseDLAppTestCase {
+
+		@Test
+		public void shouldFireSyncEvent() throws Exception {
+			AtomicInteger counter = registerDLSyncEventProcessorMessageListener(
+				DLSyncConstants.EVENT_DELETE);
+
+			Folder folder = DLAppTestUtil.addFolder(
+				group.getGroupId(), parentFolder.getFolderId());
+
+			DLAppServiceUtil.deleteFolder(folder.getFolderId());
+
+			Assert.assertEquals(1, counter.get());
+		}
+
+	}
+
+	@ExecutionTestListeners(
+		listeners = {
+			MainServletExecutionTestListener.class,
+			SynchronousDestinationExecutionTestListener.class
+		})
+	@RunWith(LiferayIntegrationJUnitTestRunner.class)
+	@Sync
+	public static class WhenMovingAFileEntry extends BaseDLAppTestCase {
+
+		@Test
+		public void shouldFireSyncEvent() throws Exception {
+			AtomicInteger addCounter =
+				registerDLSyncEventProcessorMessageListener(
+					DLSyncConstants.EVENT_ADD);
+
+			AtomicInteger deleteCounter =
+				registerDLSyncEventProcessorMessageListener(
+					DLSyncConstants.EVENT_DELETE);
+
+			FileEntry fileEntry = DLAppTestUtil.addFileEntry(
+				group.getGroupId(), parentFolder.getFolderId(),
+				RandomTestUtil.randomString());
+
+			DLAppServiceUtil.moveFileEntry(
+				fileEntry.getFileEntryId(),
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				ServiceContextTestUtil.getServiceContext());
+
+			Assert.assertEquals(2, addCounter.get());
+			Assert.assertEquals(1, deleteCounter.get());
+		}
+
+	}
+
+	@ExecutionTestListeners(
+		listeners = {
+			MainServletExecutionTestListener.class,
+			SynchronousDestinationExecutionTestListener.class
+		})
+	@RunWith(LiferayIntegrationJUnitTestRunner.class)
+	@Sync
+	public static class WhenMovingAFolder extends BaseDLAppTestCase {
+
+		@Test
+		public void shouldFireSyncEvent() throws Exception {
+			AtomicInteger addCounter =
+				registerDLSyncEventProcessorMessageListener(
+					DLSyncConstants.EVENT_ADD);
+
+			AtomicInteger deleteCounter =
+				registerDLSyncEventProcessorMessageListener(
+					DLSyncConstants.EVENT_DELETE);
+
+			Folder folder = DLAppTestUtil.addFolder(
+				group.getGroupId(), parentFolder.getFolderId());
+
+			DLAppServiceUtil.moveFolder(
+				folder.getFolderId(),
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				ServiceContextTestUtil.getServiceContext());
+
+			Assert.assertEquals(2, addCounter.get());
+			Assert.assertEquals(1, deleteCounter.get());
+		}
+
+	}
+
+	@ExecutionTestListeners(
+		listeners = {
+			MainServletExecutionTestListener.class,
+			SynchronousDestinationExecutionTestListener.class
+		})
+	@RunWith(LiferayIntegrationJUnitTestRunner.class)
+	@Sync
 	public static class WhenSearchingFileEntries extends BaseDLAppTestCase {
 
 		@Test
@@ -541,6 +666,21 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 			AssertUtils.assertEqualsSorted(
 				assetTagNames, assetEntry.getTagNames());
+		}
+
+		@Test
+		public void shouldFireSyncEvent() throws Exception {
+			AtomicInteger counter = registerDLSyncEventProcessorMessageListener(
+				DLSyncConstants.EVENT_UPDATE);
+
+			FileEntry fileEntry = addFileEntry(
+				group.getGroupId(), parentFolder.getFolderId());
+
+			updateFileEntry(
+				fileEntry.getGroupId(), fileEntry.getFileEntryId(),
+				fileEntry.getTitle(), true);
+
+			Assert.assertEquals(2, counter.get());
 		}
 
 		@Test
@@ -658,6 +798,32 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 				fileEntry.getFileEntryId(), name, ContentTypes.TEXT_PLAIN, name,
 				StringPool.BLANK, StringPool.BLANK, true, null, 0,
 				serviceContext);
+		}
+
+	}
+
+	@ExecutionTestListeners(
+		listeners = {
+			MainServletExecutionTestListener.class,
+			SynchronousDestinationExecutionTestListener.class
+		})
+	@RunWith(LiferayIntegrationJUnitTestRunner.class)
+	@Sync
+	public static class WhenUpdatingAFolder extends BaseDLAppTestCase {
+
+		@Test
+		public void shouldFireSyncEvent() throws Exception {
+			AtomicInteger counter = registerDLSyncEventProcessorMessageListener(
+				DLSyncConstants.EVENT_UPDATE);
+
+			Folder folder = DLAppTestUtil.addFolder(
+				group.getGroupId(), parentFolder.getFolderId());
+
+			DLAppServiceUtil.updateFolder(
+				folder.getFolderId(), folder.getName(), folder.getDescription(),
+				ServiceContextTestUtil.getServiceContext());
+
+			Assert.assertEquals(1, counter.get());
 		}
 
 	}
