@@ -49,6 +49,8 @@ import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.proxy.MessageValuesThreadLocal;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.scripting.ScriptingException;
 import com.liferay.portal.kernel.scripting.ScriptingHelperUtil;
 import com.liferay.portal.kernel.scripting.ScriptingUtil;
@@ -104,7 +106,12 @@ import com.liferay.portal.util.ShutdownUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.ActionResponseImpl;
 import com.liferay.portlet.admin.util.CleanUpPermissionsUtil;
+import com.liferay.portlet.documentlibrary.DuplicateFileException;
+import com.liferay.portlet.documentlibrary.lar.FileEntryUtil;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLPreviewableProcessor;
+import com.liferay.portlet.documentlibrary.util.ImageProcessorUtil;
 import com.liferay.util.log4j.Log4JUtil;
 
 import java.io.File;
@@ -187,6 +194,8 @@ public class EditServerAction extends PortletAction {
 		}
 		else if (cmd.equals("dlPreviews")) {
 			DLPreviewableProcessor.deleteFiles();
+
+			regenerateImages();
 		}
 		else if (cmd.equals("gc")) {
 			gc();
@@ -374,6 +383,41 @@ public class EditServerAction extends PortletAction {
 		}
 
 		progressTracker.finish(actionRequest);
+	}
+
+	protected void regenerateImages() throws Exception {
+		int count = DLFileEntryLocalServiceUtil.getDLFileEntriesCount();
+
+		int pages = count / _REGENERATION_RANGE;
+
+		for (int i = 0; i <= pages; i++) {
+			int start = (i * _REGENERATION_RANGE);
+			int end = start + _REGENERATION_RANGE;
+
+			List<DLFileEntry> dlFileEntries =
+				DLFileEntryLocalServiceUtil.getDLFileEntries(start, end);
+
+			for (DLFileEntry dlFileEntry : dlFileEntries) {
+				FileEntry fileEntry =
+					FileEntryUtil.fetchByPrimaryKey(
+						dlFileEntry.getFileEntryId());
+
+				FileVersion latestFileVersion =
+					fileEntry.getLatestFileVersion();
+
+				Set<String> imageMimeTypes =
+					ImageProcessorUtil.getImageMimeTypes();
+
+				if (imageMimeTypes.contains(latestFileVersion.getMimeType())) {
+					try {
+						ImageProcessorUtil.generateImages(
+							null, latestFileVersion);
+					}
+					catch (DuplicateFileException dfe) {
+					}
+				}
+			}
+		}
 	}
 
 	protected void reindex(ActionRequest actionRequest) throws Exception {
@@ -966,6 +1010,8 @@ public class EditServerAction extends PortletAction {
 	protected void verifyPluginTables() throws Exception {
 		ServiceComponentLocalServiceUtil.verifyDB();
 	}
+
+	private static final int _REGENERATION_RANGE = 100;
 
 	private static Log _log = LogFactoryUtil.getLog(EditServerAction.class);
 
