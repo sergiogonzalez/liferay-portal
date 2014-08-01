@@ -605,6 +605,12 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		FileVersion fileVersion = fileEntry.getFileVersion();
 
 		if (!hasThumbnail(fileVersion, index)) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"No thumbnail found for file entry " +
+						fileEntry.getFileEntryId());
+			}
+
 			return;
 		}
 
@@ -634,16 +640,6 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		FileVersion fileVersion = fileEntry.getFileVersion();
 
 		if (!isSupported(fileVersion)) {
-			return;
-		}
-
-		if (!hasThumbnails(fileVersion)) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"No thumbnail found for file entry " +
-						fileEntry.getFileEntryId());
-			}
-
 			return;
 		}
 
