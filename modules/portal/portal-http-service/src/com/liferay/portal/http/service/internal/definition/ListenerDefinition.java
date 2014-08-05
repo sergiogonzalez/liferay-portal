@@ -14,19 +14,21 @@
 
 package com.liferay.portal.http.service.internal.definition;
 
+import java.util.EventListener;
+
 /**
  * @author Raymond Augé
  */
 public class ListenerDefinition {
 
-	public Object getListener() {
-		return _listener;
+	public EventListener getEventListener() {
+		return _eventListener;
 	}
 
-	public void setListener(Object listener) {
-		_listener = listener;
+	public void setEventListener(EventListener eventListener) {
+		_eventListener = eventListener;
 	}
 
-	private Object _listener;
+	private EventListener _eventListener;
 
 }

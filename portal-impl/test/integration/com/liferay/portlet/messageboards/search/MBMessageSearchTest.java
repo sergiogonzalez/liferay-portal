@@ -152,6 +152,11 @@ public class MBMessageSearchTest extends BaseSearchTestCase {
 	}
 
 	@Override
+	protected void deleteBaseModel(long primaryKey) throws Exception {
+		MBMessageLocalServiceUtil.deleteMBMessage(primaryKey);
+	}
+
+	@Override
 	protected Class<?> getBaseModelClass() {
 		return MBMessage.class;
 	}
@@ -197,6 +202,19 @@ public class MBMessageSearchTest extends BaseSearchTestCase {
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		return hits.getLength();
+	}
+
+	@Override
+	protected BaseModel<?> updateBaseModel(
+			BaseModel<?> baseModel, String keywords,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		MBMessage message = (MBMessage)baseModel;
+
+		message.setSubject(keywords);
+
+		return MBTestUtil.updateMessage(message, true);
 	}
 
 }

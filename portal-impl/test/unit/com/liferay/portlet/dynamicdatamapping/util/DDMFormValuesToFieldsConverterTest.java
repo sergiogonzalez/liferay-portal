@@ -273,6 +273,7 @@ public class DDMFormValuesToFieldsConverterTest extends BaseDDMTestCase {
 		return value;
 	}
 
+	@Override
 	protected List<Serializable> createValuesList(String... valuesString) {
 		List<Serializable> values = new ArrayList<Serializable>();
 

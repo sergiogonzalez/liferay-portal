@@ -15,12 +15,13 @@
 package com.liferay.portal.repository;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.repository.BaseRepository;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.LocalRepositoryFactory;
-import com.liferay.portal.kernel.repository.registry.RepositoryCreator;
+import com.liferay.portal.kernel.repository.RepositoryFactoryUtil;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.repository.capabilities.CapabilityLocalRepository;
-import com.liferay.portal.repository.registry.RepositoryConfiguration;
+import com.liferay.portal.repository.liferayrepository.LiferayLocalRepository;
 import com.liferay.portal.service.RepositoryLocalService;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
@@ -41,19 +42,14 @@ public class LocalRepositoryFactoryImpl
 			long repositoryId, long classNameId)
 		throws PortalException {
 
-		RepositoryConfiguration repositoryConfiguration =
-			getRepositoryConfiguration(classNameId);
+		BaseRepository baseRepository = createExternalRepositoryImpl(
+			repositoryId, classNameId);
 
-		RepositoryCreator repositoryCreator =
-			repositoryConfiguration.getRepositoryCreator();
-
-		LocalRepository localRepository =
-			repositoryCreator.createLocalRepository(repositoryId);
+		LocalRepository localRepository = baseRepository.getLocalRepository();
 
 		return new CapabilityLocalRepository(
-			localRepository, repositoryConfiguration.getSupportedCapabilities(),
-			repositoryConfiguration.getExportedCapabilities(),
-			repositoryConfiguration.getRepositoryEventHandler());
+			localRepository, getExternalSupportedCapabilities(),
+			getExternalExportedCapabilityClasses());
 	}
 
 	@Override
@@ -64,26 +60,38 @@ public class LocalRepositoryFactoryImpl
 		long repositoryId = getRepositoryId(
 			folderId, fileEntryId, fileVersionId);
 
-		return create(repositoryId);
+		BaseRepository baseRepository =
+			(BaseRepository)RepositoryFactoryUtil.create(repositoryId);
+
+		LocalRepository localRepository = baseRepository.getLocalRepository();
+
+		return new CapabilityLocalRepository(
+			localRepository, getExternalSupportedCapabilities(),
+			getExternalExportedCapabilityClasses());
 	}
 
 	@Override
-	protected LocalRepository createInternalRepository(long repositoryId)
-		throws PortalException {
+	protected LocalRepository createInternalRepositoryInstance(
+		long groupId, long repositoryId, long dlFolderId) {
 
-		RepositoryConfiguration repositoryConfiguration =
-			getRepositoryConfiguration(getDefaultClassNameId());
-
-		RepositoryCreator repositoryCreator =
-			repositoryConfiguration.getRepositoryCreator();
-
-		LocalRepository localRepository =
-			repositoryCreator.createLocalRepository(repositoryId);
+		LocalRepository localRepository = createLiferayInternalRepository(
+			groupId, repositoryId, dlFolderId);
 
 		return new CapabilityLocalRepository(
-			localRepository, repositoryConfiguration.getSupportedCapabilities(),
-			repositoryConfiguration.getExportedCapabilities(),
-			repositoryConfiguration.getRepositoryEventHandler());
+			localRepository, getInternalSupportedCapabilities(),
+			getInternalExportedCapabilityClasses());
+	}
+
+	protected LocalRepository createLiferayInternalRepository(
+		long groupId, long repositoryId, long dlFolderId) {
+
+		return new LiferayLocalRepository(
+			getRepositoryLocalService(), getRepositoryService(),
+			getDlAppHelperLocalService(), getDlFileEntryLocalService(),
+			getDlFileEntryService(), getDlFileEntryTypeLocalService(),
+			getDlFileVersionLocalService(), getDlFileVersionService(),
+			getDlFolderLocalService(), getDlFolderService(),
+			getResourceLocalService(), groupId, repositoryId, dlFolderId);
 	}
 
 	@Override

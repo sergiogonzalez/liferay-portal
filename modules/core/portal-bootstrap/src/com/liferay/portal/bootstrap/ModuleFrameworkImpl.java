@@ -206,7 +206,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 			for (Bundle bundle : bundleContext.getBundles()) {
 				Version curBundleVersion = Version.parseVersion(
-					bundle.getVersion().toString());
+					String.valueOf(bundle.getVersion()));
 
 				if (bundleSymbolicName.equals(bundle.getSymbolicName()) &&
 					bundleVersion.equals(curBundleVersion)) {

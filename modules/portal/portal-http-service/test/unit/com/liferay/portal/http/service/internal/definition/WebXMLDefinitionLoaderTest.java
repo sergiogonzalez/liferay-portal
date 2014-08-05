@@ -22,6 +22,7 @@ import com.liferay.portal.xml.SAXReaderImpl;
 
 import java.net.URL;
 
+import java.util.EventListener;
 import java.util.List;
 import java.util.Map;
 
@@ -88,9 +89,9 @@ public class WebXMLDefinitionLoaderTest {
 		Assert.assertEquals(numfOfListeners, listenerDefinitions.size());
 
 		for (ListenerDefinition listenerDefinition : listenerDefinitions) {
-			Object listener = listenerDefinition.getListener();
+			EventListener eventListener = listenerDefinition.getEventListener();
 
-			Assert.assertTrue(listener instanceof ServletContextListener);
+			Assert.assertTrue(eventListener instanceof ServletContextListener);
 		}
 
 		Map<String, ServletDefinition> servletDefinitions =

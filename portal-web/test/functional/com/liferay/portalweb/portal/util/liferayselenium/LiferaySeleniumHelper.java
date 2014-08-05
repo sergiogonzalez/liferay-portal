@@ -1044,7 +1044,11 @@ public class LiferaySeleniumHelper {
 		int x = 0;
 		int y = value.indexOf("${line.separator}");
 
-		String line = value.substring(x, y);
+		String line = value;
+
+		if (y != -1) {
+			line = value.substring(x, y);
+		}
 
 		liferaySelenium.typeKeys(locator, line.trim(), true);
 
@@ -1072,15 +1076,21 @@ public class LiferaySeleniumHelper {
 
 		StringBundler sb = new StringBundler();
 
-		String titleAttibute = liferaySelenium.getAttribute(locator + "@title");
+		String titleAttribute = liferaySelenium.getAttribute(
+			locator + "@title");
 
-		int x = titleAttibute.indexOf(",");
+		int x = titleAttribute.indexOf(",");
+		int y = titleAttribute.indexOf(",", x + 1);
 
-		sb.append(titleAttibute.substring(x + 1));
+		if (y == -1) {
+			y = titleAttribute.length();
+		}
+
+		sb.append(titleAttribute.substring(x + 1, y));
 
 		sb.append(".setHTML(\"");
 		sb.append(HtmlUtil.escapeJS(value.replace("\\", "\\\\")));
-		sb.append("\");");
+		sb.append("\")");
 
 		liferaySelenium.runScript(sb.toString());
 	}
