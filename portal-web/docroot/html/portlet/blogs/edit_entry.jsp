@@ -24,6 +24,8 @@ String referringPortletResource = ParamUtil.getString(request, "referringPortlet
 
 BlogsEntry entry = (BlogsEntry)request.getAttribute(WebKeys.BLOGS_ENTRY);
 
+long groupId = BeanParamUtil.getLong(entry, request, "groupId", scopeGroupId);
+
 long entryId = BeanParamUtil.getLong(entry, request, "entryId");
 
 String content = BeanParamUtil.getString(entry, request, "content");
@@ -43,6 +45,42 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 	/>
 </c:if>
 
+<liferay-ui:error exception="<%= EntryContentException.class %>" message="please-enter-valid-content" />
+<liferay-ui:error exception="<%= EntryTitleException.class %>" message="please-enter-a-valid-title" />
+
+<liferay-ui:error exception="<%= LiferayFileItemException.class %>">
+	<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(LiferayFileItem.THRESHOLD_SIZE, locale) %>" key="please-enter-valid-content-with-valid-content-size-no-larger-than-x" translateArguments="<%= false %>" />
+</liferay-ui:error>
+
+<liferay-ui:error exception="<%= FileSizeException.class %>">
+
+	<%
+		long fileMaxSize = PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE);
+
+		if (fileMaxSize == 0) {
+			fileMaxSize = PrefsPropsUtil.getLong(PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE);
+		}
+	%>
+
+	<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(fileMaxSize, locale) %>" key="please-enter-a-file-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />
+</liferay-ui:error>
+
+<liferay-ui:asset-categories-error />
+
+<liferay-ui:asset-tags-error />
+
+<aui:model-context bean="<%= entry %>" model="<%= BlogsEntry.class %>" />
+
+<c:if test="<%= (entry == null) || !entry.isApproved() %>">
+	<div class="save-status" id="<portlet:namespace />saveStatus"></div>
+</c:if>
+
+<c:if test="<%= entry != null %>">
+	<aui:workflow-status id="<%= String.valueOf(entry.getEntryId()) %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= entry.getStatus() %>" />
+</c:if>
+
+<%@ include file="/html/portlet/blogs/cover_image_uploader.jspf" %>
+
 <portlet:actionURL var="editEntryURL">
 	<portlet:param name="struts_action" value="/blogs/edit_entry" />
 </portlet:actionURL>
@@ -52,43 +90,15 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
 	<aui:input name="referringPortletResource" type="hidden" value="<%= referringPortletResource %>" />
+	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
 	<aui:input name="entryId" type="hidden" value="<%= entryId %>" />
 	<aui:input name="preview" type="hidden" value="<%= false %>" />
 	<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_PUBLISH %>" />
-
-	<liferay-ui:error exception="<%= EntryContentException.class %>" message="please-enter-valid-content" />
-	<liferay-ui:error exception="<%= EntryTitleException.class %>" message="please-enter-a-valid-title" />
-
-	<liferay-ui:error exception="<%= LiferayFileItemException.class %>">
-		<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(LiferayFileItem.THRESHOLD_SIZE, locale) %>" key="please-enter-valid-content-with-valid-content-size-no-larger-than-x" translateArguments="<%= false %>" />
-	</liferay-ui:error>
-
-	<liferay-ui:error exception="<%= FileSizeException.class %>">
-
-		<%
-		long fileMaxSize = PrefsPropsUtil.getLong(PropsKeys.DL_FILE_MAX_SIZE);
-
-		if (fileMaxSize == 0) {
-			fileMaxSize = PrefsPropsUtil.getLong(PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE);
-		}
-		%>
-
-		<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(fileMaxSize, locale) %>" key="please-enter-a-file-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />
-	</liferay-ui:error>
-
-	<liferay-ui:asset-categories-error />
-
-	<liferay-ui:asset-tags-error />
-
-	<aui:model-context bean="<%= entry %>" model="<%= BlogsEntry.class %>" />
-
-	<c:if test="<%= (entry == null) || !entry.isApproved() %>">
-		<div class="save-status" id="<portlet:namespace />saveStatus"></div>
-	</c:if>
-
-	<c:if test="<%= entry != null %>">
-		<aui:workflow-status id="<%= String.valueOf(entry.getEntryId()) %>" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= entry.getStatus() %>" />
-	</c:if>
+	<aui:input name="coverImageId" type="hidden" value="<%= entry != null ? entry.getCoverImageId() : 0 %>" />
+	<aui:input name="xPos" type="hidden" />
+	<aui:input name="yPos" type="hidden" />
+	<aui:input name="width" type="hidden" />
+	<aui:input name="height" type="hidden" />
 
 	<aui:fieldset>
 		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP) %>" name="title" />
@@ -334,6 +344,39 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 
 			var saveStatus = A.one('#<portlet:namespace />saveStatus');
 			var saveText = '<%= UnicodeLanguageUtil.format(request, ((entry != null) && entry.isPending()) ? "entry-saved-at-x" : "draft-saved-at-x", "[TIME]", false) %>';
+
+			<%--Crop image --%>
+
+			var image = A.one('#<portlet:namespace />imagePreview');
+
+			var naturalHeight = image.get('naturalHeight');
+			var naturalWidth = image.get('naturalWidth');
+
+			if (naturalHeight === undefined || naturalHeight === undefined) {
+				var tmp = new Image();
+
+				tmp.src = image.attr('src');
+
+				naturalHeight = tmp.height;
+				naturalWidth = tmp.width;
+			}
+
+			var imagePreviewWrapper = document.querySelector('#<portlet:namespace />imagePreviewWrapper');
+
+			var imagePreviewWrapperHeight = A.DOM.region(imagePreviewWrapper).height;
+			var imagePreviewWrapperY = A.DOM.region(imagePreviewWrapper).top;
+
+			var imagePreview = document.querySelector('#<portlet:namespace />imagePreview');
+
+			var imagePreviewHeight = A.DOM.region(imagePreview).height;
+			var imagePreviewY = A.DOM.region(imagePreview).top;
+
+			var scaleY = naturalHeight / imagePreviewHeight;
+
+			document.<portlet:namespace />fm.<portlet:namespace />xPos.value = 0;
+			document.<portlet:namespace />fm.<portlet:namespace />yPos.value = (imagePreviewWrapperY - imagePreviewY) * scaleY;
+			document.<portlet:namespace />fm.<portlet:namespace />width.value = naturalWidth;
+			document.<portlet:namespace />fm.<portlet:namespace />height.value = imagePreviewWrapperHeight;
 
 			if (draft && ajax) {
 				if ((title == '') || (content == '')) {
