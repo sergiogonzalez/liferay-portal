@@ -544,6 +544,8 @@ public class PropsValues {
 
 	public static final boolean DL_FILE_ENTRY_IG_THUMBNAIL_GENERATION = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.DL_FILE_ENTRY_IG_THUMBNAIL_GENERATION));
 
+	public static final boolean DL_FILE_ENTRY_IMAGES_REGENERATE_ON_RESET = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.DL_FILE_ENTRY_IMAGES_REGENERATE_ON_RESET));
+
 	public static final int DL_FILE_ENTRY_LOCK_POLICY = GetterUtil.getInteger(PropsUtil.get(PropsKeys.DL_FILE_ENTRY_LOCK_POLICY));
 
 	public static boolean DL_FILE_ENTRY_OPEN_IN_MS_OFFICE_MANUAL_CHECK_IN_REQUIRED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.DL_FILE_ENTRY_OPEN_IN_MS_OFFICE_MANUAL_CHECK_IN_REQUIRED));

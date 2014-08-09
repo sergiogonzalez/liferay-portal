@@ -195,7 +195,9 @@ public class EditServerAction extends PortletAction {
 		else if (cmd.equals("dlPreviews")) {
 			DLPreviewableProcessor.deleteFiles();
 
-			regenerateImages();
+			if (PropsValues.DL_FILE_ENTRY_IMAGES_REGENERATE_ON_RESET) {
+				regenerateImages();
+			}
 		}
 		else if (cmd.equals("gc")) {
 			gc();
