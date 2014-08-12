@@ -147,6 +147,8 @@ public class BlogsEntryPersistenceTest {
 
 		newBlogsEntry.setContent(RandomTestUtil.randomString());
 
+		newBlogsEntry.setCoverImageId(RandomTestUtil.nextLong());
+
 		newBlogsEntry.setDisplayDate(RandomTestUtil.nextDate());
 
 		newBlogsEntry.setAllowPingbacks(RandomTestUtil.randomBoolean());
@@ -201,6 +203,8 @@ public class BlogsEntryPersistenceTest {
 			newBlogsEntry.getDescription());
 		Assert.assertEquals(existingBlogsEntry.getContent(),
 			newBlogsEntry.getContent());
+		Assert.assertEquals(existingBlogsEntry.getCoverImageId(),
+			newBlogsEntry.getCoverImageId());
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingBlogsEntry.getDisplayDate()),
 			Time.getShortTimestamp(newBlogsEntry.getDisplayDate()));
@@ -608,10 +612,11 @@ public class BlogsEntryPersistenceTest {
 			"entryId", true, "groupId", true, "companyId", true, "userId",
 			true, "userName", true, "createDate", true, "modifiedDate", true,
 			"title", true, "subtitle", true, "urlTitle", true, "description",
-			true, "content", true, "displayDate", true, "allowPingbacks", true,
-			"allowTrackbacks", true, "trackbacks", true, "smallImage", true,
-			"smallImageId", true, "smallImageURL", true, "status", true,
-			"statusByUserId", true, "statusByUserName", true, "statusDate", true);
+			true, "content", true, "coverImageId", true, "displayDate", true,
+			"allowPingbacks", true, "allowTrackbacks", true, "trackbacks",
+			true, "smallImage", true, "smallImageId", true, "smallImageURL",
+			true, "status", true, "statusByUserId", true, "statusByUserName",
+			true, "statusDate", true);
 	}
 
 	@Test
@@ -861,6 +866,8 @@ public class BlogsEntryPersistenceTest {
 		blogsEntry.setDescription(RandomTestUtil.randomString());
 
 		blogsEntry.setContent(RandomTestUtil.randomString());
+
+		blogsEntry.setCoverImageId(RandomTestUtil.nextLong());
 
 		blogsEntry.setDisplayDate(RandomTestUtil.nextDate());
 
