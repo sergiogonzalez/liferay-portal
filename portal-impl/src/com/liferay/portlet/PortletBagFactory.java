@@ -33,10 +33,7 @@ import com.liferay.portal.kernel.portlet.PortletLayoutListener;
 import com.liferay.portal.kernel.portlet.ResourceBundleTracker;
 import com.liferay.portal.kernel.portlet.Route;
 import com.liferay.portal.kernel.portlet.Router;
-import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerEntry;
-import com.liferay.portal.kernel.scheduler.SchedulerException;
-import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.OpenSearch;
 import com.liferay.portal.kernel.servlet.URLEncoder;
@@ -47,7 +44,6 @@ import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyFactory;
@@ -68,7 +64,6 @@ import com.liferay.portal.model.Portlet;
 import com.liferay.portal.notifications.UserNotificationHandlerImpl;
 import com.liferay.portal.security.permission.PermissionPropagator;
 import com.liferay.portal.service.PortletLocalServiceUtil;
-import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.JavaFieldsParser;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
@@ -85,6 +80,7 @@ import com.liferay.util.portlet.PortletProps;
 
 import java.io.InputStream;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -115,6 +111,9 @@ public class PortletBagFactory {
 		List<Indexer> indexerInstances = newIndexers(portlet);
 
 		List<OpenSearch> openSearchInstances = newOpenSearches(portlet);
+
+		List<SchedulerEntry> schedulerEntryInstances =
+			newSchedulerEntryInstances(portlet);
 
 		List<FriendlyURLMapper> friendlyURLMapperInstances =
 			newFriendlyURLMappers(portlet);
@@ -209,11 +208,12 @@ public class PortletBagFactory {
 		PortletBag portletBag = new PortletBagImpl(
 			portlet.getPortletId(), _servletContext, portletInstance,
 			resourceBundleTracker, configurationActionInstances,
-			indexerInstances, openSearchInstances, friendlyURLMapperInstances,
-			urlEncoderInstances, portletDataHandlerInstances,
-			stagedModelDataHandlerInstances, templateHandlerInstances,
-			portletLayoutListenerInstances, pollerProcessorInstances,
-			popMessageListenerInstances, socialActivityInterpreterInstances,
+			indexerInstances, openSearchInstances, schedulerEntryInstances,
+			friendlyURLMapperInstances, urlEncoderInstances,
+			portletDataHandlerInstances, stagedModelDataHandlerInstances,
+			templateHandlerInstances, portletLayoutListenerInstances,
+			pollerProcessorInstances, popMessageListenerInstances,
+			socialActivityInterpreterInstances,
 			socialRequestInterpreterInstances, userNotificationHandlerInstances,
 			webDAVStorageInstances, xmlRpcMethodInstances,
 			controlPanelEntryInstances, assetRendererFactoryInstances,
@@ -223,8 +223,6 @@ public class PortletBagFactory {
 			preferencesValidatorInstances);
 
 		PortletBagPool.put(portlet.getRootPortletId(), portletBag);
-
-		initSchedulers(portlet);
 
 		try {
 			PortletInstanceFactoryUtil.create(portlet, _servletContext);
@@ -413,60 +411,6 @@ public class PortletBagFactory {
 			if (_log.isWarnEnabled()) {
 				_log.warn(e.getMessage());
 			}
-		}
-	}
-
-	protected void initScheduler(
-			SchedulerEntry schedulerEntry, String portletId)
-		throws Exception {
-
-		String propertyKey = schedulerEntry.getPropertyKey();
-
-		if (Validator.isNotNull(propertyKey)) {
-			String triggerValue = null;
-
-			if (_warFile) {
-				triggerValue = getPluginPropertyValue(propertyKey);
-			}
-			else {
-				triggerValue = PrefsPropsUtil.getString(propertyKey);
-			}
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Scheduler property key " + propertyKey +
-						" has trigger value " + triggerValue);
-			}
-
-			if (Validator.isNull(triggerValue)) {
-				throw new SchedulerException(
-					"Property key " + propertyKey + " requires a value");
-			}
-
-			schedulerEntry.setTriggerValue(triggerValue);
-		}
-
-		if (_classLoader == ClassLoaderUtil.getPortalClassLoader()) {
-			portletId = null;
-		}
-
-		SchedulerEngineHelperUtil.schedule(
-			schedulerEntry, StorageType.MEMORY_CLUSTERED, portletId, 0);
-	}
-
-	protected void initSchedulers(Portlet portlet) throws Exception {
-		if (!PropsValues.SCHEDULER_ENABLED) {
-			return;
-		}
-
-		List<SchedulerEntry> schedulerEntries = portlet.getSchedulerEntries();
-
-		if ((schedulerEntries == null) || schedulerEntries.isEmpty()) {
-			return;
-		}
-
-		for (SchedulerEntry schedulerEntry : schedulerEntries) {
-			initScheduler(schedulerEntry, portlet.getPortletId());
 		}
 	}
 
@@ -945,6 +889,19 @@ public class PortletBagFactory {
 		}
 
 		return preferencesValidatorInstances;
+	}
+
+	protected List<SchedulerEntry> newSchedulerEntryInstances(Portlet portlet) {
+		if (!PropsValues.SCHEDULER_ENABLED) {
+			return new ArrayList<SchedulerEntry>();
+		}
+
+		ServiceTrackerList<SchedulerEntry> schedulerEntries =
+			getServiceTrackerList(SchedulerEntry.class, portlet);
+
+		schedulerEntries.addAll(portlet.getSchedulerEntries());
+
+		return schedulerEntries;
 	}
 
 	protected List<SocialActivityInterpreter>

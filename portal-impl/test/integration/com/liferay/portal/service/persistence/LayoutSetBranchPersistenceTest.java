@@ -33,18 +33,16 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.LayoutSetBranch;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.impl.LayoutSetBranchModelImpl;
 import com.liferay.portal.service.LayoutSetBranchLocalServiceUtil;
 import com.liferay.portal.test.TransactionalTestRule;
-import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.runners.PersistenceIntegrationJUnitTestRunner;
 import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.test.RandomTestUtil;
 
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Test;
@@ -63,7 +61,7 @@ import java.util.Set;
 /**
  * @generated
  */
-@RunWith(LiferayIntegrationJUnitTestRunner.class)
+@RunWith(PersistenceIntegrationJUnitTestRunner.class)
 public class LayoutSetBranchPersistenceTest {
 	@ClassRule
 	public static TransactionalTestRule transactionalTestRule = new TransactionalTestRule(Propagation.REQUIRED);
@@ -80,15 +78,6 @@ public class LayoutSetBranchPersistenceTest {
 		TemplateManagerUtil.init();
 	}
 
-	@Before
-	public void setUp() {
-		_modelListeners = _persistence.getListeners();
-
-		for (ModelListener<LayoutSetBranch> modelListener : _modelListeners) {
-			_persistence.unregisterListener(modelListener);
-		}
-	}
-
 	@After
 	public void tearDown() throws Exception {
 		Iterator<LayoutSetBranch> iterator = _layoutSetBranchs.iterator();
@@ -97,10 +86,6 @@ public class LayoutSetBranchPersistenceTest {
 			_persistence.remove(iterator.next());
 
 			iterator.remove();
-		}
-
-		for (ModelListener<LayoutSetBranch> modelListener : _modelListeners) {
-			_persistence.registerListener(modelListener);
 		}
 	}
 
@@ -609,6 +594,5 @@ public class LayoutSetBranchPersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(LayoutSetBranchPersistenceTest.class);
 	private List<LayoutSetBranch> _layoutSetBranchs = new ArrayList<LayoutSetBranch>();
-	private ModelListener<LayoutSetBranch>[] _modelListeners;
 	private LayoutSetBranchPersistence _persistence = LayoutSetBranchUtil.getPersistence();
 }

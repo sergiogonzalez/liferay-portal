@@ -18,7 +18,7 @@
 
 <liferay-ui:error-marker key="errorSection" value="displaySettings" />
 
-<h3><liferay-ui:message key="display-settings" /><h3>
+<h3><liferay-ui:message key="display-settings" /></h3>
 
 <h4><liferay-ui:message key="language-and-time-zone" /></h4>
 
@@ -204,14 +204,3 @@
 		</c:if>
 	</aui:select>
 </aui:fieldset>
-
-<aui:script use="liferay-util-list-fields">
-	Liferay.provide(
-		window,
-		'<portlet:namespace />saveLocales',
-		function() {
-			document.<portlet:namespace />fm.<portlet:namespace /><%= PropsKeys.LOCALES %>.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />currentLanguageIds);
-		},
-		['liferay-util-list-fields']
-	);
-</aui:script>

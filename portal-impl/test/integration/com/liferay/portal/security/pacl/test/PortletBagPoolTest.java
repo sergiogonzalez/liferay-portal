@@ -70,7 +70,8 @@ public class PortletBagPoolTest {
 				new PortletBagImpl(
 					null, null, null, null, null, null, null, null, null, null,
 					null, null, null, null, null, null, null, null, null, null,
-					null, null, null, null, null, null, null, null, null));
+					null, null, null, null, null, null, null, null, null,
+					null));
 		}
 		catch (SecurityException se) {
 			Assert.fail();
@@ -85,7 +86,8 @@ public class PortletBagPoolTest {
 				new PortletBagImpl(
 					null, null, null, null, null, null, null, null, null, null,
 					null, null, null, null, null, null, null, null, null, null,
-					null, null, null, null, null, null, null, null, null));
+					null, null, null, null, null, null, null, null, null,
+					null));
 
 			Assert.fail();
 		}
@@ -101,7 +103,8 @@ public class PortletBagPoolTest {
 				new PortletBagImpl(
 					null, null, null, null, null, null, null, null, null, null,
 					null, null, null, null, null, null, null, null, null, null,
-					null, null, null, null, null, null, null, null, null));
+					null, null, null, null, null, null, null, null, null,
+					null));
 		}
 		catch (SecurityException se) {
 			Assert.fail();

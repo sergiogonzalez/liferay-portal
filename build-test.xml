@@ -123,6 +123,12 @@
 
 					<delete dir="${app.server.dir}/patching-tool" />
 
+					<loadresource property="patching.tool.version">
+						<url url="${test.fix.pack.base.url}patching-tool/LATEST.txt" />
+					</loadresource>
+
+					<property name="test.build.patching.tool.zip.url" value="${test.fix.pack.base.url}patching-tool/patching-tool-${patching.tool.version}.zip" />
+
 					<get
 						dest="${basedir}"
 						src="${test.build.patching.tool.zip.url}"
@@ -495,6 +501,10 @@
 		<attribute default="${app.server.bin.dir}" name="app.server.bin.dir" />
 
 		<sequential>
+			<antcall target="clean-up-logs" />
+
+			<record action="start" name="log" />
+
 			<exec dir="@{app.server.bin.dir}" executable="${app.server.stop.executable}" resolveexecutable="true">
 				<arg line="${app.server.stop.executable.arg.line}" />
 			</exec>
@@ -2635,15 +2645,6 @@ plugins.includes=marketplace-portlet</echo>
 				</then>
 			</elseif>
 			<else>
-				<if>
-					<equals arg1="${liferay.portal.bundle}" arg2="6.1.20" />
-					<then>
-						<echo file="app.server.${user.name}.properties" append="true">
-							app.server.tomcat.version=7.0.27
-						</echo>
-					</then>
-				</if>
-
 				<mkdir dir="${app.server.parent.dir}" />
 
 				<tstamp>
@@ -2670,6 +2671,22 @@ plugins.includes=marketplace-portlet</echo>
 				</unzip>
 
 				<delete file="${tstamp.value}.zip" />
+
+				<if>
+					<and>
+						<equals arg1="${app.server.type}" arg2="tomcat" />
+						<equals arg1="${liferay.portal.bundle}" arg2="6.1.20" />
+					</and>
+					<then>
+						<echo file="app.server.${user.name}.properties" append="true">
+							app.server.tomcat.version=7.0.27
+						</echo>
+
+						<var name="test.app.server.bin.dir" unset="true" />
+
+						<var name="test.app.server.bin.dir" value="${app.server.parent.dir}/tomcat-7.0.27/bin" />
+					</then>
+				</if>
 
 				<chmod perm="a+x">
 					<fileset dir="${test.app.server.bin.dir}">

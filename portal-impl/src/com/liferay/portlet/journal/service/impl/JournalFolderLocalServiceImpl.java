@@ -898,9 +898,7 @@ public class JournalFolderLocalServiceImpl
 		validateArticleDDMStructures(folderId, ddmStructureIds);
 	}
 
-	protected void deleteWorkflowDefinitionLink(JournalFolder folder)
-		throws PortalException {
-
+	protected void deleteWorkflowDefinitionLink(JournalFolder folder) {
 		List<Long> ddmStructureIds = new ArrayList<Long>();
 
 		for (DDMStructure ddmStructure :

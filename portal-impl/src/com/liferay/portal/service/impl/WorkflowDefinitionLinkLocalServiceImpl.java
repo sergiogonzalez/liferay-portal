@@ -80,9 +80,8 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 
 	@Override
 	public void deleteWorkflowDefinitionLink(
-			long companyId, long groupId, String className, long classPK,
-			long typePK)
-		throws PortalException {
+		long companyId, long groupId, String className, long classPK,
+		long typePK) {
 
 		WorkflowDefinitionLink workflowDefinitionLink =
 			fetchWorkflowDefinitionLink(
@@ -110,9 +109,8 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 
 	@Override
 	public WorkflowDefinitionLink fetchWorkflowDefinitionLink(
-			long companyId, long groupId, String className, long classPK,
-			long typePK)
-		throws PortalException {
+		long companyId, long groupId, String className, long classPK,
+		long typePK) {
 
 		return fetchWorkflowDefinitionLink(
 			companyId, groupId, className, classPK, typePK, false);
@@ -120,9 +118,8 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 
 	@Override
 	public WorkflowDefinitionLink fetchWorkflowDefinitionLink(
-			long companyId, long groupId, String className, long classPK,
-			long typePK, boolean strict)
-		throws PortalException {
+		long companyId, long groupId, String className, long classPK,
+		long typePK, boolean strict) {
 
 		if (!WorkflowEngineManagerUtil.isDeployed()) {
 			return null;
@@ -221,8 +218,7 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 	@Override
 	@Skip
 	public boolean hasWorkflowDefinitionLink(
-			long companyId, long groupId, String className)
-		throws PortalException {
+		long companyId, long groupId, String className) {
 
 		return hasWorkflowDefinitionLink(companyId, groupId, className, 0);
 	}
@@ -230,8 +226,7 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 	@Override
 	@Skip
 	public boolean hasWorkflowDefinitionLink(
-			long companyId, long groupId, String className, long classPK)
-		throws PortalException {
+		long companyId, long groupId, String className, long classPK) {
 
 		return hasWorkflowDefinitionLink(
 			companyId, groupId, className, classPK, 0);
@@ -240,9 +235,8 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 	@Override
 	@Skip
 	public boolean hasWorkflowDefinitionLink(
-			long companyId, long groupId, String className, long classPK,
-			long typePK)
-		throws PortalException {
+		long companyId, long groupId, String className, long classPK,
+		long typePK) {
 
 		if (!WorkflowEngineManagerUtil.isDeployed()) {
 			return false;

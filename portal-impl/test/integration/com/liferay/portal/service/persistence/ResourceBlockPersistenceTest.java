@@ -31,19 +31,17 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.ResourceBlock;
 import com.liferay.portal.model.impl.ResourceBlockModelImpl;
 import com.liferay.portal.service.ResourceBlockLocalServiceUtil;
 import com.liferay.portal.test.TransactionalTestRule;
-import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.runners.PersistenceIntegrationJUnitTestRunner;
 import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.test.RandomTestUtil;
 
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Test;
@@ -62,7 +60,7 @@ import java.util.Set;
 /**
  * @generated
  */
-@RunWith(LiferayIntegrationJUnitTestRunner.class)
+@RunWith(PersistenceIntegrationJUnitTestRunner.class)
 public class ResourceBlockPersistenceTest {
 	@ClassRule
 	public static TransactionalTestRule transactionalTestRule = new TransactionalTestRule(Propagation.REQUIRED);
@@ -79,15 +77,6 @@ public class ResourceBlockPersistenceTest {
 		TemplateManagerUtil.init();
 	}
 
-	@Before
-	public void setUp() {
-		_modelListeners = _persistence.getListeners();
-
-		for (ModelListener<ResourceBlock> modelListener : _modelListeners) {
-			_persistence.unregisterListener(modelListener);
-		}
-	}
-
 	@After
 	public void tearDown() throws Exception {
 		Iterator<ResourceBlock> iterator = _resourceBlocks.iterator();
@@ -96,10 +85,6 @@ public class ResourceBlockPersistenceTest {
 			_persistence.remove(iterator.next());
 
 			iterator.remove();
-		}
-
-		for (ModelListener<ResourceBlock> modelListener : _modelListeners) {
-			_persistence.registerListener(modelListener);
 		}
 	}
 
@@ -497,6 +482,5 @@ public class ResourceBlockPersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(ResourceBlockPersistenceTest.class);
 	private List<ResourceBlock> _resourceBlocks = new ArrayList<ResourceBlock>();
-	private ModelListener<ResourceBlock>[] _modelListeners;
 	private ResourceBlockPersistence _persistence = ResourceBlockUtil.getPersistence();
 }

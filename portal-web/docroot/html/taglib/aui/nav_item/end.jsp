@@ -16,15 +16,13 @@
 
 <%@ include file="/html/taglib/aui/nav_item/init.jsp" %>
 
-<%@ page import="javax.servlet.jsp.tagext.BodyContent" %>
-
 <%
-BodyContent bodyContent = (BodyContent)request.getAttribute("aui:nav-item:bodyContent");
+Object bodyContent = request.getAttribute("aui:nav-item:bodyContent");
 
 String bodyContentString = StringPool.BLANK;
 
 if (bodyContent != null) {
-	bodyContentString = bodyContent.getString();
+	bodyContentString = bodyContent.toString();
 }
 
 if (Validator.isNull(title)) {
@@ -36,7 +34,7 @@ if (Validator.isNull(title)) {
 	<li class="<%= cssClass %><%= selected ? " active " : StringPool.SPACE %><%= state %>" id="<%= id %>" role="presentation" <%= AUIUtil.buildData(data) %> <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>>
 		<c:if test="<%= Validator.isNotNull(iconCssClass) || Validator.isNotNull(label) %>">
 			<c:if test="<%= Validator.isNotNull(href) %>">
-				<a <%= Validator.isNotNull(ariaLabel) ? "aria-label=\"" + ariaLabel + "\"" : StringPool.BLANK %> class="<%= anchorCssClass %>" <%= AUIUtil.buildData(anchorData) %> href="<%= href %>" id="<%= anchorId %>" role="<%= Validator.isNull(ariaRole) ? "menuitem" : ariaRole %>" title="<liferay-ui:message key="<%= title %>" />">
+				<a <%= Validator.isNotNull(ariaLabel) ? "aria-label=\"" + ariaLabel + "\"" : StringPool.BLANK %> class="<%= anchorCssClass %>" <%= AUIUtil.buildData(anchorData) %> href="<%= HtmlUtil.escapeAttribute(href) %>" id="<%= anchorId %>" role="<%= Validator.isNull(ariaRole) ? "menuitem" : ariaRole %>" title="<liferay-ui:message key="<%= title %>" />">
 
 				<c:if test="<%= useDialog %>">
 					<aui:script>

@@ -925,8 +925,6 @@ public class MBUtil {
 		Role guestRole = RoleLocalServiceUtil.getRole(
 			companyId, RoleConstants.GUEST);
 
-		long[] roleIds = {defaultGroupRole.getRoleId(), guestRole.getRoleId()};
-
 		List<String> actionIds = ResourceActionsUtil.getModelResourceActions(
 			MBMessage.class.getName());
 
@@ -935,8 +933,7 @@ public class MBUtil {
 				getAvailableResourcePermissionActionIds(
 					companyId, MBMessage.class.getName(),
 					ResourceConstants.SCOPE_INDIVIDUAL,
-					String.valueOf(parentMessage.getMessageId()), roleIds,
-					actionIds);
+					String.valueOf(parentMessage.getMessageId()), actionIds);
 
 		Set<String> defaultGroupActionIds = roleIdsToActionIds.get(
 			defaultGroupRole.getRoleId());

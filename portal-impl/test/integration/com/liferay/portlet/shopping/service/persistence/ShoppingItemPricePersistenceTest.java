@@ -29,9 +29,8 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.test.TransactionalTestRule;
-import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.runners.PersistenceIntegrationJUnitTestRunner;
 import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.util.test.RandomTestUtil;
 
@@ -41,7 +40,6 @@ import com.liferay.portlet.shopping.service.ShoppingItemPriceLocalServiceUtil;
 
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Test;
@@ -60,7 +58,7 @@ import java.util.Set;
 /**
  * @generated
  */
-@RunWith(LiferayIntegrationJUnitTestRunner.class)
+@RunWith(PersistenceIntegrationJUnitTestRunner.class)
 public class ShoppingItemPricePersistenceTest {
 	@ClassRule
 	public static TransactionalTestRule transactionalTestRule = new TransactionalTestRule(Propagation.REQUIRED);
@@ -77,15 +75,6 @@ public class ShoppingItemPricePersistenceTest {
 		TemplateManagerUtil.init();
 	}
 
-	@Before
-	public void setUp() {
-		_modelListeners = _persistence.getListeners();
-
-		for (ModelListener<ShoppingItemPrice> modelListener : _modelListeners) {
-			_persistence.unregisterListener(modelListener);
-		}
-	}
-
 	@After
 	public void tearDown() throws Exception {
 		Iterator<ShoppingItemPrice> iterator = _shoppingItemPrices.iterator();
@@ -94,10 +83,6 @@ public class ShoppingItemPricePersistenceTest {
 			_persistence.remove(iterator.next());
 
 			iterator.remove();
-		}
-
-		for (ModelListener<ShoppingItemPrice> modelListener : _modelListeners) {
-			_persistence.registerListener(modelListener);
 		}
 	}
 
@@ -455,6 +440,5 @@ public class ShoppingItemPricePersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(ShoppingItemPricePersistenceTest.class);
 	private List<ShoppingItemPrice> _shoppingItemPrices = new ArrayList<ShoppingItemPrice>();
-	private ModelListener<ShoppingItemPrice>[] _modelListeners;
 	private ShoppingItemPricePersistence _persistence = ShoppingItemPriceUtil.getPersistence();
 }

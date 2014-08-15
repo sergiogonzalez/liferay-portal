@@ -123,7 +123,10 @@
 
 <#if show_my_account>
 	<#assign my_account_text = languageUtil.get(locale, "my-account") />
-	<#assign my_account_url = htmlUtil.escape(theme_display.getURLMyAccount().toString()) />
+
+	<#if theme_display.getURLMyAccount()??>
+		<#assign my_account_url = htmlUtil.escape(theme_display.getURLMyAccount().toString()) />
+	</#if>
 </#if>
 
 <#assign show_page_settings = theme_display.isShowPageSettingsIcon() />
@@ -387,6 +390,7 @@
 <#-- ---------- Date ---------- -->
 
 <#assign date = dateUtil />
+
 <#assign current_time = date.newDate() />
 <#assign the_year = current_time?date?string("yyyy") />
 

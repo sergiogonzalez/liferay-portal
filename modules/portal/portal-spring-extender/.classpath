@@ -31,6 +31,7 @@
 	<classpathentry kind="lib" path="/portal-master/util-taglib/util-taglib.jar" />
 	<classpathentry kind="lib" path="lib/org.eclipse.gemini.blueprint.core.jar" />
 	<classpathentry kind="lib" path="lib/org.eclipse.gemini.blueprint.extender.jar" />
+	<classpathentry kind="lib" path="lib/org.eclipse.gemini.blueprint.io.jar" />
 	<classpathentry kind="lib" path="lib/org.osgi.core.jar" />
 	<classpathentry kind="output" path="bin" />
 </classpath>

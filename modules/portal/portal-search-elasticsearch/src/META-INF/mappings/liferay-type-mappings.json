@@ -45,25 +45,7 @@
 				"index": "not_analyzed",
 				"store": "yes",
 				"type": "string"
-			},
-			"uid": {
-				"index": "not_analyzed",
-				"store": "yes",
-				"type": "string"
 			}
-		},
-		"dynamic_templates": [
-			{
-				"template_ddm": {
-					"match": "ddm*",
-					"match_mapping_type": "string",
-					"mapping": {
-						"index": "analyzed",
-						"store": "yes",
-						"type": "string"
-					}
-				}
-			}
-		]
+		}
 	}
 }

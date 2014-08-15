@@ -884,6 +884,10 @@
 		<put name="portlet_content" value="/portlet/layouts_admin/add_layout.jsp" />
 	</definition>
 
+	<definition name="portlet.layouts_admin.confirmation" extends="portlet.layouts_admin">
+		<put name="portlet_content" value="/portlet/layouts_admin/export_configuration/confirmation.jsp" />
+	</definition>
+
 	<definition name="portlet.layouts_admin.edit_layouts" extends="portlet.layouts_admin">
 		<put name="portlet_content" value="/portlet/layouts_admin/view.jsp" />
 	</definition>
@@ -1881,13 +1885,5 @@
 
 	<definition name="portlet.workflow_tasks.view" extends="portlet.workflow_tasks">
 		<put name="portlet_content" value="/portlet/workflow_tasks/view.jsp" />
-	</definition>
-
-	<!-- XSL Content -->
-
-	<definition name="portlet.xsl_content" extends="portlet" />
-
-	<definition name="portlet.xsl_content.view" extends="portlet.xsl_content">
-		<put name="portlet_content" value="/portlet/xsl_content/view.jsp" />
 	</definition>
 </tiles-definitions>

@@ -6,7 +6,6 @@
 	<property name="original.lib.url" value="https://repository.liferay.com/nexus/content/groups/public/org/eclipse/equinox/console/" />
 	<property name="original.lib.version" value="1.0.0.v20120522-1841" />
 	<property name="osgi.runtime.dependencies" value="org.apache.felix.gogo.*.jar" />
-	<property name="plugin.name" value="com.liferay.portal.console" />
 
 	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
 

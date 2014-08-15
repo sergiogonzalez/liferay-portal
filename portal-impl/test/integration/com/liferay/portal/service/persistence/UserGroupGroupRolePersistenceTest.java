@@ -26,17 +26,15 @@ import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.IntegerWrapper;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.UserGroupGroupRole;
 import com.liferay.portal.service.UserGroupGroupRoleLocalServiceUtil;
 import com.liferay.portal.test.TransactionalTestRule;
-import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.runners.PersistenceIntegrationJUnitTestRunner;
 import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.util.test.RandomTestUtil;
 
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Test;
@@ -55,7 +53,7 @@ import java.util.Set;
 /**
  * @generated
  */
-@RunWith(LiferayIntegrationJUnitTestRunner.class)
+@RunWith(PersistenceIntegrationJUnitTestRunner.class)
 public class UserGroupGroupRolePersistenceTest {
 	@ClassRule
 	public static TransactionalTestRule transactionalTestRule = new TransactionalTestRule(Propagation.REQUIRED);
@@ -72,15 +70,6 @@ public class UserGroupGroupRolePersistenceTest {
 		TemplateManagerUtil.init();
 	}
 
-	@Before
-	public void setUp() {
-		_modelListeners = _persistence.getListeners();
-
-		for (ModelListener<UserGroupGroupRole> modelListener : _modelListeners) {
-			_persistence.unregisterListener(modelListener);
-		}
-	}
-
 	@After
 	public void tearDown() throws Exception {
 		Iterator<UserGroupGroupRole> iterator = _userGroupGroupRoles.iterator();
@@ -89,10 +78,6 @@ public class UserGroupGroupRolePersistenceTest {
 			_persistence.remove(iterator.next());
 
 			iterator.remove();
-		}
-
-		for (ModelListener<UserGroupGroupRole> modelListener : _modelListeners) {
-			_persistence.registerListener(modelListener);
 		}
 	}
 
@@ -457,6 +442,5 @@ public class UserGroupGroupRolePersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(UserGroupGroupRolePersistenceTest.class);
 	private List<UserGroupGroupRole> _userGroupGroupRoles = new ArrayList<UserGroupGroupRole>();
-	private ModelListener<UserGroupGroupRole>[] _modelListeners;
 	private UserGroupGroupRolePersistence _persistence = UserGroupGroupRoleUtil.getPersistence();
 }

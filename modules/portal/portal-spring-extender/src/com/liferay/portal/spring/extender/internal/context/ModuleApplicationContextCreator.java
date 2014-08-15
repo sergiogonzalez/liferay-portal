@@ -15,29 +15,21 @@
 package com.liferay.portal.spring.extender.internal.context;
 
 import com.liferay.portal.spring.extender.internal.blueprint.ModuleBeanFactoryPostProcessor;
+import com.liferay.portal.spring.extender.internal.bundle.CompositeResourceLoaderBundle;
 import com.liferay.portal.spring.extender.internal.classloader.BundleResolverClassLoader;
 
-import java.io.IOException;
-import java.io.InputStream;
-
-import java.net.URL;
-
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Dictionary;
-import java.util.Enumeration;
+import java.util.List;
 
 import org.eclipse.gemini.blueprint.context.DelegatedExecutionOsgiBundleApplicationContext;
-import org.eclipse.gemini.blueprint.context.support.OsgiBundleXmlApplicationContext;
 import org.eclipse.gemini.blueprint.extender.OsgiApplicationContextCreator;
 import org.eclipse.gemini.blueprint.extender.support.internal.ConfigUtils;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
-
-import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.GenericApplicationContext;
-import org.springframework.core.io.InputStreamResource;
 
 /**
  * @author Miguel Pastor
@@ -60,64 +52,40 @@ public class ModuleApplicationContextCreator
 			return null;
 		}
 
-		String[] locations = ConfigUtils.getHeaderLocations(headers);
-
-		ApplicationContext applicationContext = null;
-
 		Bundle extenderBundle = _getExtenderBundle();
 
 		ClassLoader classLoader = new BundleResolverClassLoader(
 			bundle, extenderBundle);
 
-		String liferayService = headers.get("Liferay-Service");
+		Bundle compositeResourceLoaderBundle =
+			new CompositeResourceLoaderBundle(bundle, extenderBundle);
 
-		if (liferayService != null) {
-			applicationContext = _buildParentContext(
-				extenderBundle, classLoader);
-		}
+		ServiceBuilderApplicationContext serviceBuilderApplicationContext =
+			new ServiceBuilderApplicationContext(
+				compositeResourceLoaderBundle, buildConfigLocations(headers));
 
-		OsgiBundleXmlApplicationContext osgiBundleXmlApplicationContext =
-			new OsgiBundleXmlApplicationContext(locations, applicationContext);
+		serviceBuilderApplicationContext.setBundleContext(bundleContext);
+		serviceBuilderApplicationContext.setClassLoader(classLoader);
 
-		osgiBundleXmlApplicationContext.setBundleContext(bundleContext);
-
-		osgiBundleXmlApplicationContext.addBeanFactoryPostProcessor(
+		serviceBuilderApplicationContext.addBeanFactoryPostProcessor(
 			new ModuleBeanFactoryPostProcessor(classLoader));
 
-		return osgiBundleXmlApplicationContext;
+		return serviceBuilderApplicationContext;
 	}
 
-	private ApplicationContext _buildParentContext(
-			Bundle bundle, ClassLoader classLoader)
-		throws IOException {
+	protected String[] buildConfigLocations(
+		Dictionary<String, String> headers) {
 
-		GenericApplicationContext genericApplicationContext =
-			new GenericApplicationContext();
+		List<String> configLocations = new ArrayList<String>();
 
-		genericApplicationContext.setClassLoader(classLoader);
+		Collections.addAll(
+			configLocations, ConfigUtils.getHeaderLocations(headers));
 
-		XmlBeanDefinitionReader xmlBeanDefinitionReader =
-			new XmlBeanDefinitionReader(genericApplicationContext);
-
-		xmlBeanDefinitionReader.setValidating(false);
-		xmlBeanDefinitionReader.setValidationMode(
-			XmlBeanDefinitionReader.VALIDATION_NONE);
-
-		Enumeration<URL> enumeration = bundle.findEntries(
-			"META-INF/spring/parent", "*.xml", true);
-
-		while (enumeration.hasMoreElements()) {
-			URL url = enumeration.nextElement();
-
-			InputStream inputStream = url.openStream();
-
-			xmlBeanDefinitionReader.loadBeanDefinitions(
-				new InputStreamResource(inputStream));
+		if (headers.get("Liferay-Service") != null) {
+			configLocations.add(0, "META-INF/spring/parent/*.xml");
 		}
 
-		genericApplicationContext.refresh();
-
-		return genericApplicationContext;
+		return configLocations.toArray(new String[configLocations.size()]);
 	}
 
 	private Bundle _getExtenderBundle() {

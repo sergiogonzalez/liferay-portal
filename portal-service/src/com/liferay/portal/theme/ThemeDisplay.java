@@ -371,7 +371,7 @@ public class ThemeDisplay
 	 * Returns the site's page.
 	 *
 	 * <p>
-	 * Layout is Liferay's technical name for a page
+	 * Layout is Liferay's technical name for a page.
 	 * </p>
 	 *
 	 * @return the site's page
@@ -384,7 +384,7 @@ public class ThemeDisplay
 	 * Returns the site's top-level pages.
 	 *
 	 * <p>
-	 * Layout is Liferay's technical name for a page
+	 * Layout is Liferay's technical name for a page.
 	 * </p>
 	 *
 	 * @return the site's top-level pages
@@ -759,7 +759,7 @@ public class ThemeDisplay
 	 * @deprecated As of 6.2.0 renamed to {@link #getSiteGroupIdOrLiveGroupId}
 	 */
 	@Deprecated
-	public long getScopeGroupIdOrLiveGroupId() throws PortalException {
+	public long getScopeGroupIdOrLiveGroupId() {
 		return getSiteGroupIdOrLiveGroupId();
 	}
 
@@ -839,7 +839,7 @@ public class ThemeDisplay
 		return _siteGroupId;
 	}
 
-	public long getSiteGroupIdOrLiveGroupId() throws PortalException {
+	public long getSiteGroupIdOrLiveGroupId() {
 		return StagingUtil.getLiveGroupId(_siteGroupId);
 	}
 

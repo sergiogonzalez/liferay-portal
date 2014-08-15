@@ -20,7 +20,7 @@
 boolean autoFocus = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-field:autoFocus"));
 boolean autoSize = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-field:autoSize"));
 Object bean = request.getAttribute("liferay-ui:input-field:bean");
-String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-field:cssClass"));
+String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-field:cssClass")) + " form-control";
 String dateTogglerCheckboxLabel = GetterUtil.getString((String) request.getAttribute("liferay-ui:input-field:dateTogglerCheckboxLabel"));
 String defaultLanguageId = (String)request.getAttribute("liferay-ui:input-field:defaultLanguageId");
 Object defaultValue = request.getAttribute("liferay-ui:input-field:defaultValue");
@@ -41,10 +41,6 @@ Map<String, String> hints = ModelHintsUtil.getHints(model, field);
 
 if (hints != null) {
 	type = GetterUtil.getString(hints.get("type"), type);
-}
-
-if (type.equals("String")) {
-	cssClass += " form-control";
 }
 %>
 
@@ -516,7 +512,7 @@ if (type.equals("String")) {
 							/>
 						</c:when>
 						<c:otherwise>
-							<textarea class="<%= cssClass + " lfr-textarea" %>" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= namespace %><%= id %>" name="<%= namespace %><%= fieldParam %>" <%= Validator.isNotNull(placeholder) ? "placeholder=\"" + LanguageUtil.get(request, placeholder) + "\"" : StringPool.BLANK %> style="<%= !autoSize ? "height: " + displayHeight + (Validator.isDigit(displayHeight) ? "px" : StringPool.BLANK) + ";" : StringPool.BLANK %>" wrap="soft" onKeyDown="<%= checkTab ? "Liferay.Util.checkTab(this); " : "" %> Liferay.Util.disableEsc();"><%= autoEscape ? HtmlUtil.escape(value) : value %></textarea>
+							<textarea class="<%= cssClass + " lfr-textarea" %>" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= namespace %><%= id %>" name="<%= namespace %><%= fieldParam %>" <%= Validator.isNotNull(placeholder) ? "placeholder=\"" + LanguageUtil.get(request, placeholder) + "\"" : StringPool.BLANK %> style="<%= !autoSize ? "height: " + displayHeight + (Validator.isDigit(displayHeight) ? "px" : StringPool.BLANK) + ";" : StringPool.BLANK %>" onKeyDown="<%= checkTab ? "Liferay.Util.checkTab(this); " : "" %> Liferay.Util.disableEsc();" wrap="soft"><%= autoEscape ? HtmlUtil.escape(value) : value %></textarea>
 						</c:otherwise>
 					</c:choose>
 

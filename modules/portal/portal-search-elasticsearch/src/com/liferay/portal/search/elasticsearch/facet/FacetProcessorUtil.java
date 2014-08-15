@@ -29,8 +29,9 @@ public class FacetProcessorUtil {
 	public static void processFacet(
 		SearchRequestBuilder searchRequestBuilder, Facet facet) {
 
-		FacetProcessor facetProcessor = _facetProcessors.get(
-			facet.getClass().getName());
+		Class<?> clazz = facet.getClass();
+
+		FacetProcessor facetProcessor = _facetProcessors.get(clazz.getName());
 
 		if (facetProcessor == null) {
 			facetProcessor = _defaultFacetProcessor;

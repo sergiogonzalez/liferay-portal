@@ -28,9 +28,8 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.test.TransactionalTestRule;
-import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.runners.PersistenceIntegrationJUnitTestRunner;
 import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.util.test.RandomTestUtil;
 
@@ -40,7 +39,6 @@ import com.liferay.portlet.shopping.service.ShoppingItemFieldLocalServiceUtil;
 
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Test;
@@ -59,7 +57,7 @@ import java.util.Set;
 /**
  * @generated
  */
-@RunWith(LiferayIntegrationJUnitTestRunner.class)
+@RunWith(PersistenceIntegrationJUnitTestRunner.class)
 public class ShoppingItemFieldPersistenceTest {
 	@ClassRule
 	public static TransactionalTestRule transactionalTestRule = new TransactionalTestRule(Propagation.REQUIRED);
@@ -76,15 +74,6 @@ public class ShoppingItemFieldPersistenceTest {
 		TemplateManagerUtil.init();
 	}
 
-	@Before
-	public void setUp() {
-		_modelListeners = _persistence.getListeners();
-
-		for (ModelListener<ShoppingItemField> modelListener : _modelListeners) {
-			_persistence.unregisterListener(modelListener);
-		}
-	}
-
 	@After
 	public void tearDown() throws Exception {
 		Iterator<ShoppingItemField> iterator = _shoppingItemFields.iterator();
@@ -93,10 +82,6 @@ public class ShoppingItemFieldPersistenceTest {
 			_persistence.remove(iterator.next());
 
 			iterator.remove();
-		}
-
-		for (ModelListener<ShoppingItemField> modelListener : _modelListeners) {
-			_persistence.registerListener(modelListener);
 		}
 	}
 
@@ -423,6 +408,5 @@ public class ShoppingItemFieldPersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(ShoppingItemFieldPersistenceTest.class);
 	private List<ShoppingItemField> _shoppingItemFields = new ArrayList<ShoppingItemField>();
-	private ModelListener<ShoppingItemField>[] _modelListeners;
 	private ShoppingItemFieldPersistence _persistence = ShoppingItemFieldUtil.getPersistence();
 }

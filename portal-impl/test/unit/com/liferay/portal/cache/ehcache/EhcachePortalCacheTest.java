@@ -21,12 +21,15 @@ import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import java.io.Serializable;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Ehcache;
 import net.sf.ehcache.Element;
+import net.sf.ehcache.config.CacheConfiguration;
+import net.sf.ehcache.config.Configuration;
 import net.sf.ehcache.event.CacheEventListener;
 import net.sf.ehcache.event.RegisteredEventListeners;
 
@@ -50,7 +53,15 @@ public class EhcachePortalCacheTest {
 
 	@BeforeClass
 	public static void setUpClass() {
-		_cacheManager = CacheManager.getInstance();
+		Configuration configuration = new Configuration();
+
+		CacheConfiguration cacheConfiguration = new CacheConfiguration();
+
+		cacheConfiguration.setMaxEntriesLocalHeap(100);
+
+		configuration.addDefaultCache(cacheConfiguration);
+
+		_cacheManager = CacheManager.newInstance(configuration);
 	}
 
 	@AfterClass
@@ -245,6 +256,17 @@ public class EhcachePortalCacheTest {
 	}
 
 	@Test
+	public void testGetKeys() {
+		_ehcachePortalCache.put(_KEY_2, _VALUE_2);
+
+		List<String> keys = _ehcachePortalCache.getKeys();
+
+		Assert.assertEquals(2, keys.size());
+		Assert.assertTrue(keys.contains(_KEY_1));
+		Assert.assertTrue(keys.contains(_KEY_2));
+	}
+
+	@Test
 	public void testGetName() {
 		Assert.assertEquals(_CACHE_NAME, _ehcachePortalCache.getName());
 	}
@@ -430,7 +452,7 @@ public class EhcachePortalCacheTest {
 		Assert.assertEquals(_VALUE_2, element.getObjectValue());
 		Assert.assertEquals(timeToLive, element.getTimeToLive());
 
-		_defaultCacheListener.assertPut(_KEY_2, _VALUE_2);
+		_defaultCacheListener.assertPut(_KEY_2, _VALUE_2, timeToLive);
 
 		_defaultCacheListener.reset();
 
@@ -446,7 +468,7 @@ public class EhcachePortalCacheTest {
 		Assert.assertEquals(_VALUE_2, element.getObjectValue());
 		Assert.assertEquals(timeToLive, element.getTimeToLive());
 
-		_defaultCacheListener.assertPut(_KEY_2, _VALUE_2);
+		_defaultCacheListener.assertPut(_KEY_2, _VALUE_2, timeToLive);
 
 		_defaultCacheListener.reset();
 
@@ -462,7 +484,7 @@ public class EhcachePortalCacheTest {
 		Assert.assertEquals(_VALUE_2, element.getObjectValue());
 		Assert.assertEquals(timeToLive, element.getTimeToLive());
 
-		_defaultCacheListener.assertUpdated(_KEY_1, _VALUE_2);
+		_defaultCacheListener.assertUpdated(_KEY_1, _VALUE_2, timeToLive);
 
 		_defaultCacheListener.reset();
 
@@ -484,7 +506,7 @@ public class EhcachePortalCacheTest {
 		Assert.assertEquals(timeToLive, element.getTimeToLive());
 
 		_defaultCacheListener.assertPut(_KEY_1, _VALUE_1);
-		_defaultCacheListener.assertUpdated(_KEY_1, _VALUE_2);
+		_defaultCacheListener.assertUpdated(_KEY_1, _VALUE_2, timeToLive);
 
 		_defaultCacheListener.reset();
 	}

@@ -14,12 +14,16 @@
 
 package com.liferay.portal.repository;
 
+import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
-import com.liferay.portal.kernel.repository.registry.RepositoryCreator;
+import com.liferay.portal.kernel.repository.capabilities.Capability;
+import com.liferay.portal.kernel.repository.cmis.CMISRepositoryHandler;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.repository.capabilities.CapabilityRepository;
-import com.liferay.portal.repository.registry.RepositoryConfiguration;
+import com.liferay.portal.repository.liferayrepository.LiferayRepository;
+import com.liferay.portal.repository.proxy.BaseRepositoryProxyBean;
 import com.liferay.portal.service.RepositoryLocalService;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
@@ -27,6 +31,9 @@ import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryService;
 import com.liferay.portlet.documentlibrary.service.DLFileVersionService;
 import com.liferay.portlet.documentlibrary.service.DLFolderService;
+
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Adolfo Pérez
@@ -39,17 +46,26 @@ public class RepositoryFactoryImpl extends BaseRepositoryFactory<Repository>
 			long repositoryId, long classNameId)
 		throws PortalException {
 
-		RepositoryConfiguration repositoryConfiguration =
-			getRepositoryConfiguration(classNameId);
+		Repository repository = createExternalRepositoryImpl(
+			repositoryId, classNameId);
+		Map<Class<? extends Capability>, Capability>
+			externalSupportedCapabilities = getExternalSupportedCapabilities();
+		Set<Class<? extends Capability>> externalExportedCapabilityClasses =
+			getExternalExportedCapabilityClasses();
 
-		RepositoryCreator repositoryCreator =
-			repositoryConfiguration.getRepositoryCreator();
+		CMISRepositoryHandler cmisRepositoryHandler = getCMISRepositoryHandler(
+			repository);
+
+		if (cmisRepositoryHandler != null) {
+			externalSupportedCapabilities.put(
+				CMISRepositoryHandler.class, cmisRepositoryHandler);
+
+			externalExportedCapabilityClasses.add(CMISRepositoryHandler.class);
+		}
 
 		return new CapabilityRepository(
-			repositoryCreator.createRepository(repositoryId),
-			repositoryConfiguration.getSupportedCapabilities(),
-			repositoryConfiguration.getExportedCapabilities(),
-			repositoryConfiguration.getRepositoryEventHandler());
+			repository, externalSupportedCapabilities,
+			externalExportedCapabilityClasses);
 	}
 
 	@Override
@@ -60,26 +76,54 @@ public class RepositoryFactoryImpl extends BaseRepositoryFactory<Repository>
 		long repositoryId = getRepositoryId(
 			folderId, fileEntryId, fileVersionId);
 
-		return create(repositoryId);
+		long classNameId = getRepositoryClassNameId(repositoryId);
+
+		return createExternalRepository(repositoryId, classNameId);
 	}
 
 	@Override
-	protected Repository createInternalRepository(long repositoryId)
-		throws PortalException {
+	protected Repository createInternalRepositoryInstance(
+		long groupId, long repositoryId, long dlFolderId) {
 
-		RepositoryConfiguration repositoryConfiguration =
-			getRepositoryConfiguration(getDefaultClassNameId());
-
-		RepositoryCreator repositoryCreator =
-			repositoryConfiguration.getRepositoryCreator();
-
-		Repository repository = repositoryCreator.createRepository(
-			repositoryId);
+		Repository repository = createLiferayInternalRepository(
+			groupId, repositoryId, dlFolderId);
 
 		return new CapabilityRepository(
-			repository, repositoryConfiguration.getSupportedCapabilities(),
-			repositoryConfiguration.getExportedCapabilities(),
-			repositoryConfiguration.getRepositoryEventHandler());
+			repository, getInternalSupportedCapabilities(),
+			getInternalExportedCapabilityClasses());
+	}
+
+	protected Repository createLiferayInternalRepository(
+		long groupId, long repositoryId, long dlFolderId) {
+
+		return new LiferayRepository(
+			getRepositoryLocalService(), getRepositoryService(),
+			getDlAppHelperLocalService(), getDlFileEntryLocalService(),
+			getDlFileEntryService(), getDlFileEntryTypeLocalService(),
+			getDlFileVersionLocalService(), getDlFileVersionService(),
+			getDlFolderLocalService(), getDlFolderService(),
+			getResourceLocalService(), groupId, repositoryId, dlFolderId);
+	}
+
+	protected CMISRepositoryHandler getCMISRepositoryHandler(
+		Repository repository) {
+
+		if (repository instanceof BaseRepositoryProxyBean) {
+			BaseRepositoryProxyBean baseRepositoryProxyBean =
+				(BaseRepositoryProxyBean)repository;
+
+			ClassLoaderBeanHandler classLoaderBeanHandler =
+				(ClassLoaderBeanHandler)ProxyUtil.getInvocationHandler(
+					baseRepositoryProxyBean.getProxyBean());
+
+			Object bean = classLoaderBeanHandler.getBean();
+
+			if (bean instanceof CMISRepositoryHandler) {
+				return (CMISRepositoryHandler)bean;
+			}
+		}
+
+		return null;
 	}
 
 	@Override

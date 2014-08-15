@@ -295,6 +295,10 @@ body > .lfr-menu-list ul, .active-area-proxy, .entry-display-style .entry-thumbn
 			@include border-radius(15px);
 		}
 
+		.content-link {
+			@include border-radius(4px);
+		}
+
 		@include respond-to(phone, tablet) {
 			.add-content-item {
 				@include border-radius(4px);
@@ -324,7 +328,7 @@ body > .lfr-menu-list ul, .active-area-proxy, .entry-display-style .entry-thumbn
 	@include border-radius(0);
 }
 
-.site-variations-tabview-list .tab-content, .staging-tabview-list .tab-active .tab-content, .tagselector-content .textboxlistentry-holder .lfr-tag-selector-input:focus {
+.site-variations-tabview-list .tab-content, .staging-tabview-list .tab-active .tab-content, .tagselector-content .textboxlistentry-holder .lfr-tag-selector-input:focus, .alloy-editor-toolbar .yui3-button {
 	@include box-shadow(none);
 }
 
@@ -427,6 +431,14 @@ body:first-of-type {
 			@extend %portlet-action-bar-fx-text;
 
 			@extend %portlet-action-bar-fx-hover-text;
+
+			@include border-bottom-left-radius(20px);
+			@include border-top-left-radius(20px);
+		}
+
+		.portlet-title-default {
+			@include border-bottom-right-radius(20px);
+			@include border-top-right-radius(20px);
 		}
 	}
 

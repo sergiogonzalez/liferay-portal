@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.dynamicdatamapping.action;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.template.TemplateConstants;
@@ -198,6 +199,25 @@ public class EditTemplateAction extends PortletAction {
 		}
 	}
 
+	protected String getFileScriptContent(
+			UploadPortletRequest uploadPortletRequest)
+		throws Exception {
+
+		File file = uploadPortletRequest.getFile("script");
+
+		if (file == null) {
+			return null;
+		}
+
+		String fileScriptContent = FileUtil.read(file);
+
+		if (Validator.isNotNull(fileScriptContent) && !isValidFile(file)) {
+			throw new TemplateScriptException();
+		}
+
+		return fileScriptContent;
+	}
+
 	protected String getSaveAndContinueRedirect(
 			PortletConfig portletConfig, ActionRequest actionRequest,
 			DDMTemplate template, String redirect)
@@ -237,23 +257,24 @@ public class EditTemplateAction extends PortletAction {
 	protected String getScript(UploadPortletRequest uploadPortletRequest)
 		throws Exception {
 
+		String fileScriptContent = getFileScriptContent(uploadPortletRequest);
+
+		if (Validator.isNotNull(fileScriptContent)) {
+			return fileScriptContent;
+		}
+
 		String scriptContent = ParamUtil.getString(
 			uploadPortletRequest, "scriptContent");
-
-		File file = uploadPortletRequest.getFile("script");
-
-		if (file != null) {
-			scriptContent = FileUtil.read(file);
-
-			if (Validator.isNotNull(scriptContent) && !isValidFile(file)) {
-				throw new TemplateScriptException();
-			}
-		}
 
 		String type = ParamUtil.getString(uploadPortletRequest, "type");
 
 		if (type.equals(DDMTemplateConstants.TEMPLATE_TYPE_FORM)) {
-			scriptContent = DDMXSDUtil.getXSD(scriptContent);
+			try {
+				scriptContent = DDMXSDUtil.getXSD(scriptContent);
+			}
+			catch (PortalException pe) {
+				throw new TemplateScriptException();
+			}
 		}
 
 		return scriptContent;

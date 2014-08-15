@@ -4,8 +4,6 @@
 <project>
 	<property name="import.shared" value="registry-api" />
 	<property name="osgi.runtime.dependencies" value="org.eclipse.osgi.jar" />
-	<property name="plugin.full.version" value="7.0.0.1" />
-	<property name="plugin.name" value="com.liferay.registry.impl" />
 
 	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
 

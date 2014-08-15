@@ -158,7 +158,7 @@ public class JournalArticleIndexer extends BaseIndexer {
 			Validator.isNotNull(ddmStructureFieldValue)) {
 
 			String[] ddmStructureFieldNameParts = StringUtil.split(
-				ddmStructureFieldName, StringPool.SLASH);
+				ddmStructureFieldName, StringPool.DOUBLE_UNDERLINE);
 
 			DDMStructure structure = DDMStructureLocalServiceUtil.getStructure(
 				GetterUtil.getLong(ddmStructureFieldNameParts[1]));
@@ -637,7 +637,7 @@ public class JournalArticleIndexer extends BaseIndexer {
 			content = HtmlUtil.replaceNewLine(content);
 
 			if (Validator.isNull(content)) {
-				content = HtmlUtil.stripHtml(articleDisplay.getContent());
+				content = HtmlUtil.extractText(articleDisplay.getContent());
 			}
 		}
 		catch (Exception e) {

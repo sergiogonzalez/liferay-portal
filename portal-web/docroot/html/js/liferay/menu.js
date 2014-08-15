@@ -343,7 +343,7 @@ AUI.add(
 								modal: true,
 								width: '90%'
 							}
-						);
+						).align();
 					}
 					else {
 						var align = overlay.get('align');
@@ -591,10 +591,17 @@ AUI.add(
 
 				var activeTrigger = instance._activeTrigger;
 
-				if (activeTrigger && (activeTrigger != trigger)) {
-					activeTrigger.removeClass(CSS_BTN_PRIMARY);
+				if (activeTrigger) {
+					if (activeTrigger != trigger) {
+						activeTrigger.removeClass(CSS_BTN_PRIMARY);
 
-					activeTrigger.get(PARENT_NODE).removeClass(CSS_OPEN);
+						activeTrigger.get(PARENT_NODE).removeClass(CSS_OPEN);
+					}
+					else {
+						instance._closeActiveMenu();
+
+						return;
+					}
 				}
 
 				if (!trigger.hasClass('disabled')) {

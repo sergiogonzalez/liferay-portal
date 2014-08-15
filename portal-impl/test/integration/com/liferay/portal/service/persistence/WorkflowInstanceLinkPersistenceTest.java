@@ -30,17 +30,15 @@ import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.WorkflowInstanceLink;
 import com.liferay.portal.service.WorkflowInstanceLinkLocalServiceUtil;
 import com.liferay.portal.test.TransactionalTestRule;
-import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.runners.PersistenceIntegrationJUnitTestRunner;
 import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.util.test.RandomTestUtil;
 
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Test;
@@ -59,7 +57,7 @@ import java.util.Set;
 /**
  * @generated
  */
-@RunWith(LiferayIntegrationJUnitTestRunner.class)
+@RunWith(PersistenceIntegrationJUnitTestRunner.class)
 public class WorkflowInstanceLinkPersistenceTest {
 	@ClassRule
 	public static TransactionalTestRule transactionalTestRule = new TransactionalTestRule(Propagation.REQUIRED);
@@ -76,15 +74,6 @@ public class WorkflowInstanceLinkPersistenceTest {
 		TemplateManagerUtil.init();
 	}
 
-	@Before
-	public void setUp() {
-		_modelListeners = _persistence.getListeners();
-
-		for (ModelListener<WorkflowInstanceLink> modelListener : _modelListeners) {
-			_persistence.unregisterListener(modelListener);
-		}
-	}
-
 	@After
 	public void tearDown() throws Exception {
 		Iterator<WorkflowInstanceLink> iterator = _workflowInstanceLinks.iterator();
@@ -93,10 +82,6 @@ public class WorkflowInstanceLinkPersistenceTest {
 			_persistence.remove(iterator.next());
 
 			iterator.remove();
-		}
-
-		for (ModelListener<WorkflowInstanceLink> modelListener : _modelListeners) {
-			_persistence.registerListener(modelListener);
 		}
 	}
 
@@ -472,6 +457,5 @@ public class WorkflowInstanceLinkPersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(WorkflowInstanceLinkPersistenceTest.class);
 	private List<WorkflowInstanceLink> _workflowInstanceLinks = new ArrayList<WorkflowInstanceLink>();
-	private ModelListener<WorkflowInstanceLink>[] _modelListeners;
 	private WorkflowInstanceLinkPersistence _persistence = WorkflowInstanceLinkUtil.getPersistence();
 }

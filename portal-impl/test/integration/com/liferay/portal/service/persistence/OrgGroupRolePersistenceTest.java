@@ -24,16 +24,14 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.OrgGroupRole;
 import com.liferay.portal.test.TransactionalTestRule;
-import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.test.runners.PersistenceIntegrationJUnitTestRunner;
 import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.util.test.RandomTestUtil;
 
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Test;
@@ -52,7 +50,7 @@ import java.util.Set;
 /**
  * @generated
  */
-@RunWith(LiferayIntegrationJUnitTestRunner.class)
+@RunWith(PersistenceIntegrationJUnitTestRunner.class)
 public class OrgGroupRolePersistenceTest {
 	@ClassRule
 	public static TransactionalTestRule transactionalTestRule = new TransactionalTestRule(Propagation.REQUIRED);
@@ -69,15 +67,6 @@ public class OrgGroupRolePersistenceTest {
 		TemplateManagerUtil.init();
 	}
 
-	@Before
-	public void setUp() {
-		_modelListeners = _persistence.getListeners();
-
-		for (ModelListener<OrgGroupRole> modelListener : _modelListeners) {
-			_persistence.unregisterListener(modelListener);
-		}
-	}
-
 	@After
 	public void tearDown() throws Exception {
 		Iterator<OrgGroupRole> iterator = _orgGroupRoles.iterator();
@@ -86,10 +75,6 @@ public class OrgGroupRolePersistenceTest {
 			_persistence.remove(iterator.next());
 
 			iterator.remove();
-		}
-
-		for (ModelListener<OrgGroupRole> modelListener : _modelListeners) {
-			_persistence.registerListener(modelListener);
 		}
 	}
 
@@ -393,6 +378,5 @@ public class OrgGroupRolePersistenceTest {
 
 	private static Log _log = LogFactoryUtil.getLog(OrgGroupRolePersistenceTest.class);
 	private List<OrgGroupRole> _orgGroupRoles = new ArrayList<OrgGroupRole>();
-	private ModelListener<OrgGroupRole>[] _modelListeners;
 	private OrgGroupRolePersistence _persistence = OrgGroupRoleUtil.getPersistence();
 }

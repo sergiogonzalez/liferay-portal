@@ -519,8 +519,11 @@ public interface LayoutService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Layout> getLayouts(
 		long groupId, boolean privateLayout, long parentLayoutId,
-		boolean incomplete, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		boolean incomplete, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getLayoutsCount(long groupId, boolean privateLayout,
+		long parentLayoutId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.String[] getTempFileEntryNames(long groupId,

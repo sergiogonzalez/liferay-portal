@@ -42,6 +42,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.tagext.BodyContent;
 
 /**
  * @author Brian Wing Shun Chan
@@ -165,7 +166,7 @@ public class IncludeTag extends AttributesTagSupport {
 			request = _trackedRequest;
 		}
 
-		setNamespacedAttribute(request, "bodyContent", getBodyContent());
+		setNamespacedAttribute(request, "bodyContent", getBodyContentWrapper());
 		setNamespacedAttribute(
 			request, "dynamicAttributes", getDynamicAttributes());
 		setNamespacedAttribute(
@@ -214,6 +215,23 @@ public class IncludeTag extends AttributesTagSupport {
 		Theme theme = (Theme)request.getAttribute(WebKeys.THEME);
 
 		ThemeUtil.include(servletContext, request, response, page, theme);
+	}
+
+	protected Object getBodyContentWrapper() {
+		final BodyContent bodyContent = getBodyContent();
+
+		if (bodyContent == null) {
+			return null;
+		}
+
+		return new Object() {
+
+			@Override
+			public String toString() {
+				return bodyContent.getString();
+			}
+
+		};
 	}
 
 	protected String getCustomPage(

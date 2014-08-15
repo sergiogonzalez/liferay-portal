@@ -497,6 +497,9 @@
 	</target>
 
 	<target name="build-dist-tcat-tomcat">
+		<mkdir dir="${app.server.tcat.dir}/admin/temp" />
+		<mkdir dir="${app.server.tcat.dir}/agent/temp" />
+
 		<mkdir dir="${app.server.tcat.dir}/tomcat" />
 
 		<copy todir="${app.server.tcat.dir}/tomcat">
@@ -514,8 +517,6 @@
 		</replace>
 
 		<move file="${app.server.tcat.dir}/tomcat" tofile="${app.server.tcat.dir}/admin" />
-
-		<mkdir dir="${app.server.tcat.dir}/agent" />
 
 		<copy todir="${app.server.tcat.dir}/agent">
 			<fileset dir="${app.server.tcat.dir}/admin" />
@@ -2714,6 +2715,21 @@ plugins.includes=</echo>
 						prefix="liferay-portal-${lp.version}"
 					/>
 				</zip>
+
+				<if>
+					<available file="${zip.executable.dir}/../osgi" />
+					<then>
+						<zip
+							destfile="dist/${zip.executable.file}-${lp.version}.zip"
+							update="true"
+						>
+							<zipfileset
+								dir="${zip.executable.dir}/../osgi"
+								prefix="liferay-portal-${lp.version}/osgi"
+							/>
+						</zip>
+					</then>
+				</if>
 
 				<delete dir="${zip.executable.dir}/../patching-tool" />
 

@@ -172,18 +172,6 @@ public class PortletExporter {
 			return;
 		}
 
-		long lastPublishDate = GetterUtil.getLong(
-			jxPortletPreferences.getValue(
-				"last-publish-date", StringPool.BLANK));
-
-		Date startDate = portletDataContext.getStartDate();
-
-		if ((lastPublishDate > 0) && (startDate != null) &&
-			(lastPublishDate < startDate.getTime())) {
-
-			portletDataContext.setStartDate(new Date(lastPublishDate));
-		}
-
 		String data = null;
 
 		long groupId = portletDataContext.getGroupId();
@@ -204,7 +192,6 @@ public class PortletExporter {
 		}
 		finally {
 			portletDataContext.setGroupId(groupId);
-			portletDataContext.setStartDate(startDate);
 		}
 
 		if (Validator.isNull(data)) {
@@ -266,8 +253,6 @@ public class PortletExporter {
 		StopWatch stopWatch = new StopWatch();
 
 		stopWatch.start();
-
-		LayoutCache layoutCache = new LayoutCache();
 
 		Layout layout = LayoutLocalServiceUtil.getLayout(plid);
 
@@ -394,7 +379,7 @@ public class PortletExporter {
 				layout.getCompanyId(), portletId, parameterMap);
 
 		exportPortlet(
-			portletDataContext, layoutCache, portletId, layout, rootElement,
+			portletDataContext, portletId, layout, rootElement,
 			exportPermissions,
 			exportPortletControlsMap.get(
 				PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS),
@@ -653,11 +638,10 @@ public class PortletExporter {
 	}
 
 	protected void exportPortlet(
-			PortletDataContext portletDataContext, LayoutCache layoutCache,
-			String portletId, Layout layout, Element parentElement,
-			boolean exportPermissions, boolean exportPortletArchivedSetups,
-			boolean exportPortletData, boolean exportPortletSetup,
-			boolean exportPortletUserPreferences)
+			PortletDataContext portletDataContext, String portletId,
+			Layout layout, Element parentElement, boolean exportPermissions,
+			boolean exportPortletArchivedSetups, boolean exportPortletData,
+			boolean exportPortletSetup, boolean exportPortletUserPreferences)
 		throws Exception {
 
 		long plid = PortletKeys.PREFS_OWNER_ID_DEFAULT;
@@ -849,8 +833,7 @@ public class PortletExporter {
 
 		if (exportPermissions) {
 			_permissionExporter.exportPortletPermissions(
-				portletDataContext, layoutCache, portletId, layout,
-				portletElement);
+				portletDataContext, portletId, layout, portletElement);
 		}
 
 		// Zip

@@ -15,8 +15,11 @@
 package com.liferay.portal.test.runners;
 
 import com.liferay.portal.kernel.test.AbstractIntegrationJUnitTestRunner;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.test.jdbc.ResetDatabaseUtilDataSource;
 import com.liferay.portal.util.InitUtil;
+import com.liferay.portal.util.PropsUtil;
 
 import java.util.List;
 
@@ -44,9 +47,21 @@ public abstract class CustomizableSpringContextJUnitTestRunner
 
 		ResetDatabaseUtilDataSource.initialize();
 
-		InitUtil.initWithSpringAndModuleFramework(getExtraConfigLocations());
+		List<String> configLocations = ListUtil.fromArray(
+			PropsUtil.getArray(PropsKeys.SPRING_CONFIGS));
+
+		configLocations.addAll(getExtraConfigLocations());
+
+		InitUtil.initWithSpringAndModuleFramework(
+			false, processConfigLocations(configLocations), false);
 
 		afterApplicationContextInit();
+	}
+
+	protected List<String> processConfigLocations(
+		List<String> configLocations) {
+
+		return configLocations;
 	}
 
 }

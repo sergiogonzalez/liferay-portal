@@ -16,6 +16,8 @@ package com.liferay.portal.repository.util;
 
 import com.liferay.portal.kernel.repository.BaseRepository;
 import com.liferay.portal.kernel.repository.RepositoryException;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
+import com.liferay.portal.util.PropsValues;
 
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -26,12 +28,6 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class ExternalRepositoryFactoryUtil {
 
-	/**
-	 *
-	 * @deprecated As of 7.0.0 replaced by {@link
-	 *             com.liferay.portal.repository.registry.RepositoryCatalogUtil#getExternalRepositoryClassNames()}
-	 */
-	@Deprecated
 	public static String[] getExternalRepositoryClassNames() {
 		Set<String> classNames = externalRepositoryFactories.keySet();
 
@@ -71,5 +67,17 @@ public class ExternalRepositoryFactoryUtil {
 	private static ConcurrentHashMap<String, ExternalRepositoryFactory>
 		externalRepositoryFactories =
 			new ConcurrentHashMap<String, ExternalRepositoryFactory>();
+
+	static {
+		ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
+
+		for (String className : PropsValues.DL_REPOSITORY_IMPL) {
+			ExternalRepositoryFactory externalRepositoryFactory =
+				new ExternalRepositoryFactoryImpl(className, classLoader);
+
+			externalRepositoryFactories.put(
+				className, externalRepositoryFactory);
+		}
+	}
 
 }

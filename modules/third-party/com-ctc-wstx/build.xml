@@ -5,8 +5,6 @@
 	<property name="original.lib.name" value="wstx-asl" />
 	<property name="original.lib.url" value="http://search.maven.org/remotecontent?filepath=woodstox" />
 	<property name="original.lib.version" value="3.2.4" />
-	<property name="plugin.full.version" value="3.2.4.LIFERAY-PATCHED-1" />
-	<property name="plugin.name" value="com.ctc.wstx" />
 
 	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
 

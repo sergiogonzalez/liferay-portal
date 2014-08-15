@@ -27,6 +27,7 @@ import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetCategoryConstants;
 import com.liferay.portlet.asset.model.AssetVocabulary;
+import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetCategoryServiceUtil;
 import com.liferay.portlet.asset.service.AssetVocabularyServiceUtil;
 
@@ -54,6 +55,12 @@ public class AssetCategorySearchTest extends BaseSearchTestCase {
 	@Override
 	@Test
 	public void testSearchAttachments() throws Exception {
+	}
+
+	@Ignore()
+	@Override
+	@Test
+	public void testSearchBaseModelWithTrash() throws Exception {
 	}
 
 	@Ignore()
@@ -142,6 +149,11 @@ public class AssetCategorySearchTest extends BaseSearchTestCase {
 	}
 
 	@Override
+	protected void deleteBaseModel(long primaryKey) throws Exception {
+		AssetCategoryServiceUtil.deleteCategory(primaryKey);
+	}
+
+	@Override
 	protected Class<?> getBaseModelClass() {
 		return AssetCategory.class;
 	}
@@ -158,6 +170,19 @@ public class AssetCategorySearchTest extends BaseSearchTestCase {
 	@Override
 	protected String getSearchKeywords() {
 		return "Title";
+	}
+
+	@Override
+	protected BaseModel<?> updateBaseModel(
+			BaseModel<?> baseModel, String keywords,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		AssetCategory category = (AssetCategory)baseModel;
+
+		category.setTitle(keywords);
+
+		return AssetCategoryLocalServiceUtil.updateAssetCategory(category);
 	}
 
 }

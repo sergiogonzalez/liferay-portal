@@ -221,8 +221,6 @@ public class LiferaySeleniumHelper {
 					continue;
 				}
 
-				FileUtil.write(fileName, "");
-
 				Element throwableElement = eventElement.element("throwable");
 
 				if (throwableElement != null) {
@@ -690,6 +688,69 @@ public class LiferaySeleniumHelper {
 			return true;
 		}
 
+		// LPS-46161
+
+		if (line.matches(
+				".*The web application \\[\\] created a ThreadLocal with key " +
+					"of type.*")) {
+
+			if (line.contains(
+					"[com.google.javascript.jscomp.Tracer.ThreadTrace]")) {
+
+				return true;
+			}
+		}
+
+		// LPS-49204
+
+		if (line.matches(
+				".*The web application \\[\\] appears to have started a " +
+					"thread named \\[elasticsearch\\[.*")) {
+
+			return true;
+		}
+
+		if (line.matches(
+				".*The web application \\[\\] created a ThreadLocal with key " +
+					"of type.*")) {
+
+			if (line.contains("[org.elasticsearch.common.inject]")) {
+				return true;
+			}
+
+			if (line.contains("[org.elasticsearch.index.mapper]")) {
+				return true;
+			}
+		}
+
+		// LPS-49228
+
+		if (line.matches(
+				".*The web application \\[/sharepoint-hook\\] created a " +
+					"ThreadLocal with key of type.*")) {
+
+			if (line.contains(
+					"[org.apache.axis.utils.XMLUtils." +
+						"ThreadLocalDocumentBuilder]")) {
+
+				return true;
+			}
+		}
+
+		// LPS-49229
+
+		if (line.matches(
+				".*The web application \\[\\] created a ThreadLocal with key " +
+					"of type.*")) {
+
+			if (line.contains(
+					"[org.apache.xmlbeans.impl.schema." +
+						"SchemaTypeLoaderImpl$1]")) {
+
+				return true;
+			}
+		}
+
 		if (Validator.equals(
 				TestPropsValues.LIFERAY_PORTAL_BUNDLE, "6.2.10.1") ||
 			Validator.equals(
@@ -990,7 +1051,24 @@ public class LiferaySeleniumHelper {
 
 		liferaySelenium.pause("1000");
 
-		_screen.type(value);
+		if (value.contains("${line.separator}")) {
+			String[] tokens = StringUtil.split(value, "${line.separator}");
+
+			for (int i = 0; i < tokens.length; i++) {
+				_screen.type(tokens[i]);
+
+				if ((i + 1) < tokens.length) {
+					_screen.type(Key.ENTER);
+				}
+			}
+
+			if (value.endsWith("${line.separator}")) {
+				_screen.type(Key.ENTER);
+			}
+		}
+		else {
+			_screen.type(value);
+		}
 	}
 
 	public static void sikuliUploadCommonFile(
@@ -1044,7 +1122,11 @@ public class LiferaySeleniumHelper {
 		int x = 0;
 		int y = value.indexOf("${line.separator}");
 
-		String line = value.substring(x, y);
+		String line = value;
+
+		if (y != -1) {
+			line = value.substring(x, y);
+		}
 
 		liferaySelenium.typeKeys(locator, line.trim(), true);
 
@@ -1072,15 +1154,21 @@ public class LiferaySeleniumHelper {
 
 		StringBundler sb = new StringBundler();
 
-		String titleAttibute = liferaySelenium.getAttribute(locator + "@title");
+		String titleAttribute = liferaySelenium.getAttribute(
+			locator + "@title");
 
-		int x = titleAttibute.indexOf(",");
+		int x = titleAttribute.indexOf(",");
+		int y = titleAttribute.indexOf(",", x + 1);
 
-		sb.append(titleAttibute.substring(x + 1));
+		if (y == -1) {
+			y = titleAttribute.length();
+		}
+
+		sb.append(titleAttribute.substring(x + 1, y));
 
 		sb.append(".setHTML(\"");
 		sb.append(HtmlUtil.escapeJS(value.replace("\\", "\\\\")));
-		sb.append("\");");
+		sb.append("\")");
 
 		liferaySelenium.runScript(sb.toString());
 	}

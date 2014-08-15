@@ -5,9 +5,11 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd"
 >
-	<info module="${plugin.name}" organisation="com.liferay" />
+	<info module="${plugin.name}" organisation="com.liferay">
+		<extends extendType="configurations,description,info" location="${sdk.dir}/ivy.xml" module="com.liferay.sdk" organisation="com.liferay" revision="latest.integration" />
+	</info>
 
 	<dependencies defaultconf="default">
-		<dependency name="org.apache.taglibs.standard.glassfish" org="org.eclipse.jetty.orbit" rev="1.2.0.v201112081803" />
+		<dependency name="javax.servlet.jsp.jstl" org="org.glassfish.web" rev="1.2.3" />
 	</dependencies>
 </ivy-module>

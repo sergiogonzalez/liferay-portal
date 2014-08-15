@@ -205,7 +205,14 @@ public class InitUtil {
 	}
 
 	public synchronized static void initWithSpringAndModuleFramework(
-		boolean force, List<String> extraConfigLocations) {
+		boolean force, List<String> configLocations) {
+
+		initWithSpringAndModuleFramework(force, configLocations, true);
+	}
+
+	public synchronized static void initWithSpringAndModuleFramework(
+		boolean force, List<String> configLocations,
+		boolean addDefaultConfigLocations) {
 
 		if (force) {
 			_initialized = false;
@@ -230,7 +237,14 @@ public class InitUtil {
 
 			ModuleFrameworkUtilAdapter.startFramework();
 
-			SpringUtil.loadContext(extraConfigLocations);
+			if (addDefaultConfigLocations) {
+				SpringUtil.loadContext(configLocations);
+			}
+			else {
+				SpringUtil.loadContext(
+					configLocations.toArray(
+						new String[configLocations.size()]));
+			}
 
 			BeanLocatorImpl beanLocatorImpl =
 				(BeanLocatorImpl)PortalBeanLocatorUtil.getBeanLocator();
@@ -248,9 +262,9 @@ public class InitUtil {
 	}
 
 	public synchronized static void initWithSpringAndModuleFramework(
-		List<String> extraConfigLocations) {
+		List<String> configLocations) {
 
-		initWithSpringAndModuleFramework(false, extraConfigLocations);
+		initWithSpringAndModuleFramework(false, configLocations);
 	}
 
 	public synchronized static void stopModuleFramework() {
