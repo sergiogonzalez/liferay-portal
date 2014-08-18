@@ -219,7 +219,7 @@ public abstract class BaseWebDriverImpl
 				// LPS-42469
 
 				if (javaScriptErrorValue.contains(
-						"https://apis.google.com/_/+1/fastbutton")) {
+						"Permission denied to access property 'type'")) {
 
 					continue;
 				}
@@ -717,6 +717,15 @@ public abstract class BaseWebDriverImpl
 	@Override
 	public void sendKeys(String locator, String value) {
 		typeKeys(locator, value);
+	}
+
+	@Override
+	public void sendKeysAceEditor(String locator, String value) {
+		WebElement webElement = getWebElement(locator);
+
+		webElement.sendKeys(Keys.chord(Keys.CONTROL, Keys.END));
+
+		LiferaySeleniumHelper.typeAceEditor(this, locator, value);
 	}
 
 	@Override

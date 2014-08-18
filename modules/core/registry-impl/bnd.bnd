@@ -1,6 +1,7 @@
 Bundle-Activator: com.liferay.registry.internal.ServiceRegistryActivator
 Bundle-Name: Liferay Portal Registry Implementation
-Bundle-Version: ${plugin.full.version}
+Bundle-SymbolicName: com.liferay.registry.impl
+Bundle-Version: 1.0.0
 Import-Package:\
 	com.liferay.registry;version='[1.0.0,2.0.0)',\
 	org.osgi.framework;version='[1.2.0,2.0.0)',\

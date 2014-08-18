@@ -45,7 +45,7 @@ public class WeavingClassLoader extends URLClassLoader {
 
 		_dumpDir = dumpDir;
 
-		_urlWeavingAdaptor = new URLWeavingAdaptor(urls, aspectClasses);
+		_urlWeavingAdapter = new URLWeavingAdapter(urls, aspectClasses);
 	}
 
 	@Override
@@ -61,7 +61,7 @@ public class WeavingClassLoader extends URLClassLoader {
 
 				// It may be a generated inner class
 
-				data = _urlWeavingAdaptor.removeGeneratedClassDate(name);
+				data = _urlWeavingAdapter.removeGeneratedClassDate(name);
 			}
 			else {
 				UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
@@ -80,7 +80,7 @@ public class WeavingClassLoader extends URLClassLoader {
 			byte[] oldData = data;
 
 			try {
-				data = _urlWeavingAdaptor.weaveClass(name, data, false);
+				data = _urlWeavingAdapter.weaveClass(name, data, false);
 			}
 			catch (AbortException ae) {
 				if (_log.isWarnEnabled()) {
@@ -152,6 +152,6 @@ public class WeavingClassLoader extends URLClassLoader {
 	private static Log _log = LogFactoryUtil.getLog(WeavingClassLoader.class);
 
 	private File _dumpDir;
-	private URLWeavingAdaptor _urlWeavingAdaptor;
+	private URLWeavingAdapter _urlWeavingAdapter;
 
 }

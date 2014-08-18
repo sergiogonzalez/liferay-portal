@@ -123,9 +123,11 @@
 
 					for (Portlet portlet : portlets) {
 						String portletId = portlet.getPortletId();
+
+						String portletTitle = PortalUtil.getPortletTitle(portletId, themeDisplay.getLocale());
 					%>
 
-						<li class="<%= ppid.equals(portletId) ? "selected-portlet" : "" %>" role="presentation">
+						<li class="<%= ppid.equals(portletId) ? "selected-portlet" : "" %>" data-search="<%= HtmlUtil.escape(LanguageUtil.get(request, "category." + siteAdministrationCategory) + "-" + portletTitle) %>" role="presentation">
 							<liferay-portlet:renderURL
 								doAsGroupId="<%= themeDisplay.getScopeGroupId() %>"
 								portletName="<%= portlet.getRootPortletId() %>"

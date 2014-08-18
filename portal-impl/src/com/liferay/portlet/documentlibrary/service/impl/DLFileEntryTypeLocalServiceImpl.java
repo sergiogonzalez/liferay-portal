@@ -446,9 +446,8 @@ public class DLFileEntryTypeLocalServiceImpl
 
 	@Override
 	public void updateFolderFileEntryTypes(
-			DLFolder dlFolder, List<Long> fileEntryTypeIds,
-			long defaultFileEntryTypeId, ServiceContext serviceContext)
-		throws PortalException {
+		DLFolder dlFolder, List<Long> fileEntryTypeIds,
+		long defaultFileEntryTypeId, ServiceContext serviceContext) {
 
 		List<Long> originalFileEntryTypeIds = getFileEntryTypeIds(
 			dlFolderPersistence.getDLFileEntryTypes(dlFolder.getFolderId()));

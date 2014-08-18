@@ -117,27 +117,33 @@ public class InvokerFilterHelper {
 	public void registerFilterMapping(
 		FilterMapping filterMapping, String filterName, boolean after) {
 
-		int i = 0;
+		int x = 0;
+		int y = 0;
 
 		if (Validator.isNotNull(filterName)) {
 			Filter filter = _filters.get(filterName);
 
 			if (filter != null) {
-				for (; i < _filterMappings.size(); i++) {
-					FilterMapping currentFilterMapping = _filterMappings.get(i);
+				for (; x < _filterMappings.size(); x++) {
+					FilterMapping currentFilterMapping = _filterMappings.get(x);
 
 					if (currentFilterMapping.getFilter() == filter) {
-						break;
+						if (after) {
+							y = x;
+						}
+						else {
+							break;
+						}
 					}
 				}
 			}
 		}
 
 		if (after) {
-			i++;
+			x = ++y;
 		}
 
-		_filterMappings.add(i, filterMapping);
+		_filterMappings.add(x, filterMapping);
 
 		for (InvokerFilter invokerFilter : _invokerFilters) {
 			invokerFilter.clearFilterChainsCache();

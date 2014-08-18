@@ -1,4 +1,5 @@
 Bundle-Name: Liferay Ant Arquillian
-Bundle-Version: ${plugin.full.version}
+Bundle-SymbolicName: com.liferay.ant.arquillian
+Bundle-Version: 1.0.0
 Export-Package: com.liferay.ant.arquilian
 Include-Resource: classes

@@ -1,5 +1,4 @@
 Bundle-Name: Liferay Portal Bootstrap
-Bundle-Version: ${plugin.full.version}
+Bundle-SymbolicName: com.liferay.portal.bootstrap
+Bundle-Version: 1.0.0
 Include-Resource: classes
-
--baseline: *;version="6.2.0"

@@ -15,6 +15,10 @@
 			<bean class="com.liferay.portal.events.StartupHelper" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.cache.configurator.PortalCacheConfigurator" class="com.liferay.portal.cache.configurator.impl.PortalCacheConfiguratorImpl" />
+	<bean id="com.liferay.portal.cache.configurator.util.PortalCacheConfiguratorUtil" class="com.liferay.portal.cache.configurator.util.PortalCacheConfiguratorUtil">
+		<property name="portalCacheConfigurator" ref="com.liferay.portal.cache.configurator.PortalCacheConfigurator" />
+	</bean>
 	<bean id="com.liferay.portal.format.IdenticalPhoneNumberFormatImpl" class="com.liferay.portal.format.IdenticalPhoneNumberFormatImpl" />
 	<bean id="com.liferay.portal.kernel.audit.AuditMessageFactoryUtil" class="com.liferay.portal.kernel.audit.AuditMessageFactoryUtil">
 		<property name="auditMessageFactory">
@@ -551,22 +555,6 @@
 	<bean id="com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil" class="com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil">
 		<property name="portletFileRepository" ref="com.liferay.portal.portletfilerepository.PortletFileRepository" />
 	</bean>
-	<bean id="com.liferay.portal.repository.registry.RepositoryCatalog" class="com.liferay.portal.repository.registry.RepositoryCatalogImpl" init-method="loadDefaultRepositoryRegistryPlugins">
-		<property name="classNameLocalService" ref="com.liferay.portal.service.ClassNameLocalService" />
-		<property name="legacyExternalRepositoryCreator">
-			<bean class="com.liferay.portal.repository.external.LegacyExternalRepositoryCreator" />
-		</property>
-		<property name="liferayRepositoryRegistryPlugin">
-			<bean class="com.liferay.portal.repository.liferayrepository.LiferayRepositoryRegistryPlugin">
-				<property name="repositoryCreator">
-					<bean class="com.liferay.portal.repository.liferayrepository.LiferayRepositoryCreator" />
-				</property>
-			</bean>
-		</property>
-	</bean>
-	<bean id="com.liferay.portal.repository.registry.RepositoryCatalogUtil" class="com.liferay.portal.repository.registry.RepositoryCatalogUtil">
-		<property name="repositoryCatalog" ref="com.liferay.portal.repository.registry.RepositoryCatalog" />
-	</bean>
 	<bean id="com.liferay.portal.resiliency.mpi.portlet.PortalResiliencyPortletContainerWrapper" class="com.liferay.portal.resiliency.mpi.portlet.PortalResiliencyPortletContainerWrapper" factory-method="createPortalResiliencyPortletContainerWrapper">
 		<constructor-arg name="portletContainer" ref="com.liferay.portlet.PortletContainerImpl" />
 	</bean>
@@ -620,7 +608,9 @@
 	<bean id="com.liferay.portal.security.ldap.DefaultAttributesTransformer" class="com.liferay.portal.security.ldap.DefaultAttributesTransformer" />
 	<bean id="com.liferay.portal.security.membershippolicy.DefaultSiteMembershipPolicy" class="com.liferay.portal.security.membershippolicy.DefaultSiteMembershipPolicy" />
 	<bean id="com.liferay.portal.security.membershippolicy.DummyOrganizationMembershipPolicy" class="com.liferay.portal.security.membershippolicy.DummyOrganizationMembershipPolicy" />
+	<bean id="com.liferay.portal.security.membershippolicy.DummyRoleMembershipPolicy" class="com.liferay.portal.security.membershippolicy.DummyRoleMembershipPolicy" />
 	<bean id="com.liferay.portal.security.membershippolicy.DummySiteMembershipPolicy" class="com.liferay.portal.security.membershippolicy.DummySiteMembershipPolicy" />
+	<bean id="com.liferay.portal.security.membershippolicy.DummyUserGroupMembershipPolicy" class="com.liferay.portal.security.membershippolicy.DummyUserGroupMembershipPolicy" />
 	<bean id="com.liferay.portal.security.membershippolicy.OrganizationMembershipPolicyFactoryUtil" class="com.liferay.portal.security.membershippolicy.OrganizationMembershipPolicyFactoryUtil">
 		<property name="organizationMembershipPolicyFactory">
 			<bean class="com.liferay.portal.security.membershippolicy.OrganizationMembershipPolicyFactoryImpl" />
@@ -1003,6 +993,11 @@
 	<bean id="com.liferay.portlet.dynamicdatamapping.util.DDMXSDUtil" class="com.liferay.portlet.dynamicdatamapping.util.DDMXSDUtil">
 		<property name="DDMXSD">
 			<bean class="com.liferay.portlet.dynamicdatamapping.util.DDMXSDImpl" />
+		</property>
+	</bean>
+	<bean id="com.liferay.portlet.dynamicdatamapping.util.FieldsToDDMFormValuesConverterUtil" class="com.liferay.portlet.dynamicdatamapping.util.FieldsToDDMFormValuesConverterUtil">
+		<property name="FieldsToDDMFormValuesConverter">
+			<bean class="com.liferay.portlet.dynamicdatamapping.util.FieldsToDDMFormValuesConverterImpl" />
 		</property>
 	</bean>
 	<bean id="com.liferay.portlet.expando.service.permission.ExpandoColumnPermissionUtil" class="com.liferay.portlet.expando.service.permission.ExpandoColumnPermissionUtil">

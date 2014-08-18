@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.elasticsearch.common.text.Text;
 import org.elasticsearch.search.facet.Facet;
 import org.elasticsearch.search.facet.range.RangeFacet;
 import org.elasticsearch.search.facet.terms.TermsFacet;
@@ -100,7 +101,9 @@ public class ElasticsearchFacetFieldCollector implements FacetCollector {
 		_facet = termsFacet;
 
 		for (TermsFacet.Entry entry : termsFacet.getEntries()) {
-			_counts.put(entry.getTerm().string(), entry.getCount());
+			Text term = entry.getTerm();
+
+			_counts.put(term.string(), entry.getCount());
 		}
 	}
 

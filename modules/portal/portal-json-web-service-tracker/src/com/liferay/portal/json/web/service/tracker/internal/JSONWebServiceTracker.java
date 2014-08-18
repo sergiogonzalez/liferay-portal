@@ -15,10 +15,13 @@
 package com.liferay.portal.json.web.service.tracker.internal;
 
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManager;
+import com.liferay.portal.util.ClassLoaderUtil;
 
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
+import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -84,11 +87,10 @@ public class JSONWebServiceTracker
 		unregisterService(service);
 	}
 
-	@Reference
-	public void setJSONWebServiceActionsManager(
-		JSONWebServiceActionsManager jsonWebServiceActionsManager) {
+	protected ClassLoader getBundleClassLoader(Bundle bundle) {
+		BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
 
-		_jsonWebServiceActionsManager = jsonWebServiceActionsManager;
+		return bundleWiring.getClassLoader();
 	}
 
 	protected Object getService(ServiceReference<Object> serviceReference) {
@@ -104,13 +106,39 @@ public class JSONWebServiceTracker
 			"json.web.service.path");
 		Object service = getService(serviceReference);
 
-		_jsonWebServiceActionsManager.registerService(path, service);
+		ClassLoader contextClassLoader =
+			ClassLoaderUtil.getContextClassLoader();
+
+		ClassLoader classLoader = getBundleClassLoader(
+			serviceReference.getBundle());
+
+		ClassLoaderUtil.setContextClassLoader(classLoader);
+
+		try {
+			_jsonWebServiceActionsManager.registerService(path, service);
+		}
+		finally {
+			ClassLoaderUtil.setContextClassLoader(contextClassLoader);
+		}
 
 		return service;
 	}
 
-	private void unregisterService(Object service) {
+	@Reference
+	protected void setJSONWebServiceActionsManager(
+		JSONWebServiceActionsManager jsonWebServiceActionsManager) {
+
+		_jsonWebServiceActionsManager = jsonWebServiceActionsManager;
+	}
+
+	protected void unregisterService(Object service) {
 		_jsonWebServiceActionsManager.unregisterJSONWebServiceActions(service);
+	}
+
+	protected void unsetJSONWebServiceActionsManager(
+		JSONWebServiceActionsManager jsonWebServiceActionsManager) {
+
+		_jsonWebServiceActionsManager = null;
 	}
 
 	private ComponentContext _componentContext;

@@ -3,7 +3,7 @@
 
 <project>
 	<path id="plugins.includes.path">
-		<dirset dir="analytics" includes="*" />
+		<dirset dir="xsl-content" includes="*" />
 	</path>
 
 	<pathconvert pathsep="," property="plugins.includes.path" refid="plugins.includes.path" targetos="unix" />

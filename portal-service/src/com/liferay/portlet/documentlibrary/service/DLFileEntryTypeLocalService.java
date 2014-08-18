@@ -486,6 +486,5 @@ public interface DLFileEntryTypeLocalService extends BaseLocalService,
 		com.liferay.portlet.documentlibrary.model.DLFolder dlFolder,
 		java.util.List<java.lang.Long> fileEntryTypeIds,
 		long defaultFileEntryTypeId,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		com.liferay.portal.service.ServiceContext serviceContext);
 }

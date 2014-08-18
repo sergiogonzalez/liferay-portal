@@ -14,24 +14,17 @@
 
 package com.liferay.portal.portlet.tracker.internal;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.PluginContextListener;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.IOException;
 import java.io.InputStream;
 
 import java.net.URL;
 
-import java.util.Enumeration;
-import java.util.HashSet;
 import java.util.Set;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
-
-import org.osgi.framework.Bundle;
 
 /**
  * @author Raymond Augé
@@ -39,10 +32,11 @@ import org.osgi.framework.Bundle;
 public class BundleServletContext {
 
 	public BundleServletContext(
-		ServletContext servletContext, Bundle bundle, ClassLoader classLoader) {
+		ServletContext servletContext, BundlePortletApp bundlePortletApp,
+		ClassLoader classLoader) {
 
 		_servletContext = servletContext;
-		_bundle = bundle;
+		_bundlePortletApp = bundlePortletApp;
 		_classLoader = classLoader;
 	}
 
@@ -59,63 +53,47 @@ public class BundleServletContext {
 	}
 
 	public RequestDispatcher getRequestDispatcher(String path) {
+		URL url = _bundlePortletApp.getResource(path);
+
+		if (url != null) {
+			String portletAppContextPath = _bundlePortletApp.getContextPath();
+			String servletContextContextPath = _servletContext.getContextPath();
+
+			int index = servletContextContextPath.length();
+
+			path = portletAppContextPath.substring(index) + path;
+		}
+
 		return _servletContext.getRequestDispatcher(path);
 	}
 
 	public URL getResource(String name) {
-		if (name == null) {
-			return null;
-		}
-
-		if (name.startsWith(StringPool.SLASH)) {
-			name = name.substring(1);
-		}
-
-		return _bundle.getResource(name);
+		return _bundlePortletApp.getResource(name);
 	}
 
 	public InputStream getResourceAsStream(String path) {
-		try {
-			URL url = getResource(path);
+		URL url = getResource(path);
 
-			if (url == null) {
-				return null;
+		if (url != null) {
+			try {
+				return url.openStream();
 			}
-
-			return url.openStream();
-		}
-		catch (IOException ioe) {
-			_log.error(ioe, ioe);
+			catch (IOException ioe) {
+			}
 		}
 
 		return null;
 	}
 
 	public Set<String> getResourcePaths(String path) {
-		if (path == null) {
-			return null;
-		}
-
-		Enumeration<URL> enumeration = _bundle.findEntries(path, null, false);
-
-		if (enumeration == null) {
-			return null;
-		}
-
-		Set<String> paths = new HashSet<String>();
-
-		while (enumeration.hasMoreElements()) {
-			URL url = enumeration.nextElement();
-
-			paths.add(url.toExternalForm());
-		}
-
-		return paths;
+		return _bundlePortletApp.getResourcePaths(path);
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(BundleServletContext.class);
+	public String getServletContextName() {
+		return _bundlePortletApp.getServletContextName();
+	}
 
-	private Bundle _bundle;
+	private BundlePortletApp _bundlePortletApp;
 	private ClassLoader _classLoader;
 	private ServletContext _servletContext;
 

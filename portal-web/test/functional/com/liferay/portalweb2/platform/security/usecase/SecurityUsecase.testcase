@@ -80,6 +80,36 @@
 		</execute>
 	</command>
 
+	<command name="NoGuestRoleFromWCDArticleHistoryURL" priority="5">
+		<var name="url" value="http://localhost:8080/web/guest/home?&amp;p_p_id=15&amp;p_p_lifecycle=0&amp;p_p_state=maximized&amp;p_p_mode=view&amp;_15_struts_action=%2Fjournal%2Fview_article_history&amp;_15_groupId=10180&amp;_15_articleId=" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Web Content Display Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Web Content Display" />
+		</execute>
+
+		<execute macro="WebContent#addPGViaWCD">
+			<var name="pageName" value="Web Content Display Page" />
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute action="PGWebcontentdisplay#click" locator-key1="EDIT_WEB_CONTENT" />
+
+		<execute action="PGWebcontentdisplayEditwebcontent#selectFrame" locator-key1="WEB_CONTENT_IFRAME" />
+
+		<var locator-key="ARTICLE_ID" name="articleID" path="PGWebcontentdisplayEditwebcontent" />
+
+		<execute macro="User#logoutPG" />
+
+		<execute action="Home#open" locator1="${url}${articleID}" />
+
+		<execute action="Home#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="You do not have the roles required to access this portlet." />
+	</command>
+
 	<command name="ValidateBeanIdentifierUserPermissions" priority="4">
 		<var name="url" value="http://localhost:8080/c/portal/json_service?serviceClassName=com.liferay.portal.service.AccountServiceUtil&amp;serviceMethodName=getBeanIdentifier&amp;p_auth=" />
 
@@ -262,6 +292,43 @@
 		<execute action="PGOpensocialgadget#assertTextEquals" locator-key1="PORTLET_TITLE" value1="To-Do List" />
 	</command>
 
+	<command name="ViewGoogleAnalyticsIDNoXSS" priority="5">
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Site Settings" />
+		</execute>
+
+		<execute macro="Site#editGoogleAnalyticsIDCP">
+			<var name="googleAnalyticsID"><![CDATA[']);alert(/googleAnalyticsId/);//]]></var>
+		</execute>
+
+		<execute macro="Page#openURL" />
+		<execute action="Home#assertAlertNotPresent" />
+	</command>
+
+	<command name="ViewJSONWSNoXSS" priority="5">
+		<var name="url" value="http://localhost:8080/api/jsonws?contextPath=%22%3E%3Cimg%20src=x%20onerror=alert%28/contextPath/%29%3E" />
+
+		<execute action="Home#open" locator1="${url}" />
+		<execute action="Home#assertAlertNotPresent" />
+	</command>
+
+	<command name="ViewLiferayPortletListNoXSS" priority="5">
+		<var name="url" value="http://localhost:8080/web/guest/home?p_p_id=86&amp;p_p_state=pop_up&amp;_86_portletResource=101_INSTANCE_S1GhHANAwleV;alert(1)//%22;alert(2)//%22;alert(3)//%E2%80%93%3E%3C/script%3E%22%3E%27%3E%3Cscript%3Ealert(4)%3C/script%3E&amp;_86_resourcePrimKey=asdfxxx&amp;_86_struts_action=%2Fportlet_configuration%2Fedit_configuration" />
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Asset Publisher" />
+		</execute>
+
+		<execute action="Home#open" locator1="${url}" />
+		<execute action="Home#confirm" locator-key1="CONFIRMATION" value1="4" />
+
+		<execute action="Home#refresh" />
+		<execute action="Home#confirm" locator-key1="CONFIRMATION" value1="4" />
+
+		<execute macro="Page#openURL" />
+		<execute action="Home#assertAlertNotPresent" />
+	</command>
+
 	<command name="ViewLookAndFeelNoXSS" priority="4">
 		<var name="pageName"><![CDATA[<script>alert(123)</script>]]></var>
 
@@ -283,6 +350,23 @@
 		</execute>
 
 		<execute action="Home#assertAlertNotPresent" />
+	</command>
+
+	<command name="ViewNoDisplayPortletConfigurationPermission" priority="5">
+		<var name="url1" value="http://localhost:8080/testxxx/?p_p_id=86&amp;p_p_lifecycle=0&amp;p_p_state=maximized&amp;_86_struts_action=%2Fportlet_configuration%2Fedit_configuration&amp;_86_portletResource=125" />
+		<var name="url2" value="http://localhost:8080/testxxx/?p_p_id=125&amp;p_p_state=maximized" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="testxxx" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute action="Home#open" locator1="${url1}" />
+		<execute action="Home#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="You do not have the required permissions." />
+
+		<execute action="Home#open" locator1="${url2}" />
+		<execute action="Home#assertTextEquals" locator-key1="ERROR_MESSAGE" value1="You do not have the roles required to access this portlet." />
 	</command>
 
 	<command name="ViewRecycleBinNoXSS" priority="4">

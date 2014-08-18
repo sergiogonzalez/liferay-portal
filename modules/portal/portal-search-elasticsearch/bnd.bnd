@@ -1,5 +1,6 @@
 Bundle-Name: Liferay Portal Elasticsearch Adapter
-Bundle-Version: ${plugin.full.version}
+Bundle-SymbolicName: com.liferay.portal.search.elasticsearch
+Bundle-Version: 1.0.0
 libs: ${lsr;lib;*.jar}
 Import-Package:\
 	com.liferay.portal.kernel.dao.orm.*,\

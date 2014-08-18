@@ -986,8 +986,18 @@ $editLayoutPanelWidth: 460px;
 		top: 0;
 		z-index: 1100;
 
+		.add-content-menu .content-link {
+			border-color: #488F06;
+			color: #488F06;
+
+			&:active, &:hover {
+				background-color: #488F06;
+				color: #F1FBD1;
+				text-decoration: none;
+			}
+		}
+
 		@include respond-to(phone, tablet) {
-			margin: 0 0 0 -20px;
 			position: static;
 			width: auto;
 
@@ -1034,16 +1044,9 @@ $editLayoutPanelWidth: 460px;
 
 		@include respond-to(phone, tablet) {
 			height: auto;
+			padding-left: 0;
 			position: static;
 			width: auto;
-		}
-
-		@include respond-to(phone) {
-			padding-left: 20px;
-		}
-
-		@include respond-to(tablet) {
-			padding-left: 0;
 		}
 
 		#wrapper {

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.lar.StagedModelDataHandler;
 import com.liferay.portal.kernel.notifications.UserNotificationHandler;
 import com.liferay.portal.kernel.poller.PollerProcessor;
 import com.liferay.portal.kernel.pop.MessageListener;
+import com.liferay.portal.kernel.scheduler.SchedulerEntry;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.OpenSearch;
 import com.liferay.portal.kernel.servlet.URLEncoder;
@@ -94,6 +95,8 @@ public interface PortletBag extends Cloneable {
 	public ResourceBundle getResourceBundle(Locale locale);
 
 	public ResourceBundleTracker getResourceBundleTracker();
+
+	public List<SchedulerEntry> getSchedulerEntryInstances();
 
 	public ServletContext getServletContext();
 

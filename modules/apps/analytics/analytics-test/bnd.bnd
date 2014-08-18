@@ -1,3 +1,0 @@
-Bundle-Name: Liferay Analytics Test
-Bundle-Version: ${plugin.full.version}
-Include-Resource: classes

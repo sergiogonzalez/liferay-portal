@@ -16,15 +16,13 @@
 
 <%@ include file="/html/taglib/aui/nav_item/init.jsp" %>
 
-<%@ page import="javax.servlet.jsp.tagext.BodyContent" %>
-
 <%
-BodyContent bodyContent = (BodyContent)request.getAttribute("aui:nav-item:bodyContent");
+Object bodyContent = request.getAttribute("aui:nav-item:bodyContent");
 
 String bodyContentString = StringPool.BLANK;
 
 if (bodyContent != null) {
-	bodyContentString = bodyContent.getString();
+	bodyContentString = bodyContent.toString();
 }
 
 if (Validator.isNull(title)) {

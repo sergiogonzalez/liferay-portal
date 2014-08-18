@@ -5,8 +5,6 @@
 	<property name="original.lib.name" value="ivy" />
 	<property name="original.lib.url" value="http://search.maven.org/remotecontent?filepath=org/apache/ivy" />
 	<property name="original.lib.version" value="2.3.0" />
-	<property name="plugin.full.version" value="2.3.0.LIFERAY-PATCHED-1" />
-	<property name="plugin.name" value="org.apache.ivy" />
 
 	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
 

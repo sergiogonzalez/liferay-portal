@@ -163,7 +163,9 @@ public class PluginsEnvironmentBuilder {
 			dirName = ivyDirName + "/cache/" + dependencyName + "/jars";
 
 			if (!_fileUtil.exists(dirName)) {
-				throw new RuntimeException("Unable to find jars in " + dirName);
+				System.out.println("Unable to find jars in " + dirName);
+
+				return;
 			}
 		}
 

@@ -85,7 +85,16 @@ public class SettingsFactoryImpl implements SettingsFactory {
 
 	@Override
 	public List<String> getMultiValuedKeys(String settingsId) {
-		return _multiValuedKeysMap.get(settingsId);
+		settingsId = PortletConstants.getRootPortletId(settingsId);
+
+		List<String> multiValuedKeys = _multiValuedKeysMap.get(settingsId);
+
+		if (multiValuedKeys == null) {
+			throw new IllegalStateException(
+				"No multi valued keys found for settings ID " + settingsId);
+		}
+
+		return multiValuedKeys;
 	}
 
 	@Override
@@ -168,6 +177,13 @@ public class SettingsFactoryImpl implements SettingsFactory {
 	public void registerSettingsMetadata(
 		String settingsId, FallbackKeys fallbackKeys,
 		String[] multiValuedKeysArray) {
+
+		settingsId = PortletConstants.getRootPortletId(settingsId);
+
+		if (_multiValuedKeysMap.get(settingsId) != null) {
+			throw new IllegalStateException(
+				"Unable to overwrite multi valued keys for " + settingsId);
+		}
 
 		_fallbackKeysMap.put(settingsId, fallbackKeys);
 

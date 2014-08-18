@@ -5,8 +5,6 @@
 	<property name="original.lib.name" value="commons-fileupload" />
 	<property name="original.lib.url" value="http://search.maven.org/remotecontent?filepath=commons-fileupload" />
 	<property name="original.lib.version" value="1.2.2" />
-	<property name="plugin.full.version" value="1.2.2.LIFERAY-PATCHED-1" />
-	<property name="plugin.name" value="org.apache.commons.fileupload" />
 
 	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
 

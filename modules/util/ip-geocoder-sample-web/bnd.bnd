@@ -1,4 +1,6 @@
 Bundle-Name: Liferay IP Geocoder Sample Web
+Bundle-SymbolicName: com.liferay.ip.geocoder.sample.web
+Bundle-Version: 1.0.0
 Import-Package:\
 	com.liferay.ip.geocoder,\
 	com.liferay.portal.http.service.servlet,\
