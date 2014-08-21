@@ -342,23 +342,6 @@ else if ((searchType == DLSearchConstants.SINGLE) && !ajax) {
 		</aui:form>
 	</div>
 
-	<aui:script>
-		Liferay.fire(
-			'<portlet:namespace />pageLoaded',
-			{
-				pagination: {
-					name: 'entryPagination',
-					state: {
-						page: <%= (total == 0) ? 0 : entryEnd / (entryEnd - entryStart) %>,
-						rowsPerPage: <%= (entryEnd - entryStart) %>,
-						total: <%= total %>
-					}
-				},
-				repositoryId: '<%= searchRepositoryId %>',
-				src: Liferay.DL_SEARCH
-			}
-		);
-	</aui:script>
 </liferay-util:buffer>
 
 <c:choose>
