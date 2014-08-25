@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.repository.capabilities.CapabilityRepository;
 import com.liferay.portal.repository.proxy.BaseRepositoryProxyBean;
 import com.liferay.portal.repository.registry.RepositoryDefinition;
-import com.liferay.portal.service.RepositoryLocalService;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
@@ -76,17 +75,6 @@ public class RepositoryFactoryImpl extends BaseRepositoryFactory<Repository>
 			repository, externalSupportedCapabilities,
 			externalExportedCapabilityClasses,
 			repositoryDefinition.getRepositoryEventTrigger());
-	}
-
-	@Override
-	protected Repository createExternalRepository(
-			long folderId, long fileEntryId, long fileVersionId)
-		throws PortalException {
-
-		long repositoryId = getExternalRepositoryId(
-			folderId, fileEntryId, fileVersionId);
-
-		return create(repositoryId);
 	}
 
 	@Override
@@ -159,16 +147,6 @@ public class RepositoryFactoryImpl extends BaseRepositoryFactory<Repository>
 		DLFolder dlFolder = dlFolderService.getFolder(folderId);
 
 		return dlFolder.getRepositoryId();
-	}
-
-	@Override
-	protected com.liferay.portal.model.Repository getRepository(
-		long repositoryId) {
-
-		RepositoryLocalService repositoryLocalService =
-			getRepositoryLocalService();
-
-		return repositoryLocalService.fetchRepository(repositoryId);
 	}
 
 }
