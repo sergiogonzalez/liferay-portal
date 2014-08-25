@@ -27,9 +27,6 @@ import com.liferay.portal.service.ClassNameLocalService;
 import com.liferay.portal.service.RepositoryEntryLocalService;
 import com.liferay.portal.service.RepositoryLocalService;
 import com.liferay.portal.util.RepositoryUtil;
-import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
-import com.liferay.portlet.documentlibrary.NoSuchFileVersionException;
-import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryService;
 import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalService;
@@ -71,33 +68,8 @@ public abstract class BaseRepositoryFactory<T> {
 			long repositoryId, long classNameId)
 		throws PortalException;
 
-	protected abstract T createExternalRepository(
-			long folderId, long fileEntryId, long fileVersionId)
-		throws PortalException;
-
 	protected abstract T createInternalRepository(long repositoryId)
 		throws PortalException;
-
-	protected T createInternalRepository(
-			long folderId, long fileEntryId, long fileVersionId)
-		throws PortalException {
-
-		try {
-			long repositoryId = getInternalRepositoryId(
-				folderId, fileEntryId, fileVersionId);
-
-			return createInternalRepository(repositoryId);
-		}
-		catch (NoSuchFileEntryException nsfee) {
-			return null;
-		}
-		catch (NoSuchFileVersionException nsfve) {
-			return null;
-		}
-		catch (NoSuchFolderException nsfe) {
-			return null;
-		}
-	}
 
 	protected long getDefaultClassNameId() {
 		if (_defaultClassNameId == 0) {
@@ -178,7 +150,12 @@ public abstract class BaseRepositoryFactory<T> {
 		return repositoryId;
 	}
 
-	protected abstract Repository getRepository(long repositoryId);
+	protected Repository getRepository(long repositoryId) {
+		RepositoryLocalService repositoryLocalService =
+			getRepositoryLocalService();
+
+		return repositoryLocalService.fetchRepository(repositoryId);
+	}
 
 	protected long getRepositoryClassNameId(long repositoryId) {
 		Repository repository = _repositoryLocalService.fetchRepository(
