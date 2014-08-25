@@ -482,7 +482,7 @@ AUI.add(
 						if (searchData.showRepositoryTabs || searchData.showSearchInfo) {
 							var entriesContainer = instance._entriesContainer;
 
-							var searchingTPL = Lang.sub(TPL_MESSAGE_SEARCHING, [Liferay.Language.get('searching,-please-wait')]);
+							var searchingTPL = Lang.sub(TPL_MESSAGE_SEARCHING, [Liferay.Language.get('searching, -please-wait')]);
 
 							entriesContainer.html(searchingTPL);
 						}
