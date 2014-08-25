@@ -82,22 +82,8 @@ public abstract class BaseRepositoryFactory<T> {
 		throws PortalException {
 
 		try {
-			long repositoryId = 0;
-
-			if (folderId != 0) {
-				repositoryId = getFolderRepositoryId(folderId);
-			}
-			else if (fileEntryId != 0) {
-				repositoryId = getFileEntryRepositoryId(fileEntryId);
-			}
-			else if (fileVersionId != 0) {
-				repositoryId = getFileVersionRepositoryId(fileVersionId);
-			}
-			else {
-				throw new InvalidRepositoryIdException(
-					"Missing a valid ID for folder, file entry, or file " +
-						"version");
-			}
+			long repositoryId = getInternalRepositoryId(
+				folderId, fileEntryId, fileVersionId);
 
 			return createInternalRepository(repositoryId);
 		}
@@ -145,6 +131,19 @@ public abstract class BaseRepositoryFactory<T> {
 		return _dlFolderService;
 	}
 
+	protected long getExternalRepositoryId(
+			long folderId, long fileEntryId, long fileVersionId)
+		throws PortalException {
+
+		long repositoryEntryId = RepositoryUtil.getRepositoryEntryId(
+			folderId, fileEntryId, fileVersionId);
+
+		RepositoryEntry repositoryEntry =
+			_repositoryEntryLocalService.getRepositoryEntry(repositoryEntryId);
+
+		return repositoryEntry.getRepositoryId();
+	}
+
 	protected abstract long getFileEntryRepositoryId(long fileEntryId)
 		throws PortalException;
 
@@ -153,6 +152,30 @@ public abstract class BaseRepositoryFactory<T> {
 
 	protected abstract long getFolderRepositoryId(long folderId)
 		throws PortalException;
+
+	protected long getInternalRepositoryId(
+			long folderId, long fileEntryId, long fileVersionId)
+		throws PortalException {
+
+		long repositoryId = 0;
+
+		if (folderId != 0) {
+			repositoryId = getFolderRepositoryId(folderId);
+		}
+		else if (fileEntryId != 0) {
+			repositoryId = getFileEntryRepositoryId(fileEntryId);
+		}
+		else if (fileVersionId != 0) {
+			repositoryId = getFileVersionRepositoryId(fileVersionId);
+		}
+		else {
+			throw new InvalidRepositoryIdException(
+				"Missing a valid ID for folder, file entry, or file " +
+					"version");
+		}
+
+		return repositoryId;
+	}
 
 	protected abstract Repository getRepository(long repositoryId);
 
@@ -175,19 +198,6 @@ public abstract class BaseRepositoryFactory<T> {
 
 		return _repositoryDefinitionCatalog.getRepositoryDefinition(
 			className.getClassName());
-	}
-
-	protected long getRepositoryId(
-			long folderId, long fileEntryId, long fileVersionId)
-		throws PortalException {
-
-		long repositoryEntryId = RepositoryUtil.getRepositoryEntryId(
-			folderId, fileEntryId, fileVersionId);
-
-		RepositoryEntry repositoryEntry =
-			_repositoryEntryLocalService.getRepositoryEntry(repositoryEntryId);
-
-		return repositoryEntry.getRepositoryId();
 	}
 
 	protected RepositoryLocalService getRepositoryLocalService() {
