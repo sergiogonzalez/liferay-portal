@@ -56,14 +56,15 @@ public abstract class BaseRepositoryFactory<T> {
 	public T create(long folderId, long fileEntryId, long fileVersionId)
 		throws PortalException {
 
-		T liferayRepository = createInternalRepository(
+		long repositoryId = getInternalRepositoryId(
 			folderId, fileEntryId, fileVersionId);
 
-		if (liferayRepository != null) {
-			return liferayRepository;
+		if (repositoryId == 0) {
+			repositoryId = getExternalRepositoryId(
+				folderId, fileEntryId, fileVersionId);
 		}
 
-		return createExternalRepository(folderId, fileEntryId, fileVersionId);
+		return create(repositoryId);
 	}
 
 	protected abstract T createExternalRepository(
