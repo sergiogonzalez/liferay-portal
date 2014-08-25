@@ -95,10 +95,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 	<aui:input name="preview" type="hidden" value="<%= false %>" />
 	<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_PUBLISH %>" />
 	<aui:input name="coverImageId" type="hidden" value="<%= entry != null ? entry.getCoverImageId() : 0 %>" />
-	<aui:input name="xPos" type="hidden" />
-	<aui:input name="yPos" type="hidden" />
-	<aui:input name="width" type="hidden" />
-	<aui:input name="height" type="hidden" />
+	<aui:input name="coverImageCropRegion" type="hidden" />
 
 	<aui:fieldset>
 		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP) %>" name="title" />
@@ -345,39 +342,6 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 			var saveStatus = A.one('#<portlet:namespace />saveStatus');
 			var saveText = '<%= UnicodeLanguageUtil.format(request, ((entry != null) && entry.isPending()) ? "entry-saved-at-x" : "draft-saved-at-x", "[TIME]", false) %>';
 
-			<%--Crop image --%>
-
-			var image = A.one('#<portlet:namespace />imagePreview');
-
-			var naturalHeight = image.get('naturalHeight');
-			var naturalWidth = image.get('naturalWidth');
-
-			if (naturalHeight === undefined || naturalHeight === undefined) {
-				var tmp = new Image();
-
-				tmp.src = image.attr('src');
-
-				naturalHeight = tmp.height;
-				naturalWidth = tmp.width;
-			}
-
-			var imagePreviewWrapper = document.querySelector('#<portlet:namespace />imagePreviewWrapper');
-
-			var imagePreviewWrapperHeight = A.DOM.region(imagePreviewWrapper).height;
-			var imagePreviewWrapperY = A.DOM.region(imagePreviewWrapper).top;
-
-			var imagePreview = document.querySelector('#<portlet:namespace />imagePreview');
-
-			var imagePreviewHeight = A.DOM.region(imagePreview).height;
-			var imagePreviewY = A.DOM.region(imagePreview).top;
-
-			var scaleY = naturalHeight / imagePreviewHeight;
-
-			document.<portlet:namespace />fm.<portlet:namespace />xPos.value = 0;
-			document.<portlet:namespace />fm.<portlet:namespace />yPos.value = (imagePreviewWrapperY - imagePreviewY) * scaleY;
-			document.<portlet:namespace />fm.<portlet:namespace />width.value = naturalWidth;
-			document.<portlet:namespace />fm.<portlet:namespace />height.value = imagePreviewWrapperHeight;
-
 			if (draft && ajax) {
 				if ((title == '') || (content == '')) {
 					return;
@@ -531,6 +495,14 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 		<portlet:namespace />oldTitle = document.<portlet:namespace />fm.<portlet:namespace />title.value;
 		<portlet:namespace />oldContent = <portlet:namespace />initEditor();
 	</c:if>
+
+	Liferay.on(
+		'coverImageUpdated',
+		function(event) {
+			document.<portlet:namespace />fm.<portlet:namespace />coverImageCropRegion.value = A.JSON.stringify(event.cropRegion);
+			document.<portlet:namespace />fm.<portlet:namespace />coverImageId.value = event.fileEntryId;
+		}
+	);
 </aui:script>
 
 <aui:script use="aui-toggler">

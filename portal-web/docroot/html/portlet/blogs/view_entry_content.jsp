@@ -52,7 +52,7 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 					FileEntry coverImage = PortletFileRepositoryUtil.getPortletFileEntry(coverImageId);
 				%>
 
-					<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="preview" />" class="lfr-preview-cover-image" src="<%= PortletFileRepositoryUtil.getPortletFileEntryURL(themeDisplay, coverImage, StringPool.BLANK) %>" />
+					<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="preview" />" class="cover-image" src="<%= PortletFileRepositoryUtil.getPortletFileEntryURL(themeDisplay, coverImage, StringPool.BLANK) %>" />
 
 				<%
 				}

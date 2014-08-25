@@ -1,3 +1,6 @@
+@import "compass";
+@import "mixins";
+
 .portlet-blogs {
 	.lfr-blogs-small-image-content {
 		background-color: #F5F5F5;
@@ -22,25 +25,51 @@
 		display: block;
 	}
 
+	.cover-image {
+		width: 100%;
+	}
+
 	.cover-image-selector {
 		border: dashed 1px #8D8D8D;
 
+		.cover-image-input-wrapper {
+			height: 100%;
+			margin-bottom: 0;
+			position: absolute;
+			top: 0;
+			width: 100%;
+
+			input {
+				cursor: pointer;
+				height: 100%;
+
+				@include opacity(0);
+
+				overflow: hidden;
+			}
+		}
+
 		.cover-image-upload-wrapper {
 			height: 100px;
-			padding: 20px 0;
+			padding: 20px;
+			position: relative;
 			text-align: center;
 		}
 
-		.cover-image-upload-file {
-			visibility: hidden;
+		.cover-image-change-wrapper {
+			display: inline-block;
+			position: relative;
+		}
+
+		.cover-image {
 			position: absolute;
+
+			&.cover-image-preview {
+				cursor: move;
+			}
 		}
 
-		.cover-image-preview-wrapper {
-			cursor: move;
-		}
-
-		.cover-image-preview-wrapper, .cover-image-view-wrapper {
+		.cover-image-preview-wrapper, {
 			height: 400px;
 			overflow: hidden;
 			position: relative;
@@ -52,11 +81,15 @@
 				right: 30px;
 			}
 
-			.cover-image-view-wrapper-mask {
-				background: #000000;
-				height: 400px;
-				opacity: 0.4;
-				margin: -400px;
+			.cover-image-preview-mask {
+				background: #000;
+				bottom: 0;
+
+				@include opacity(0.4);
+
+				position: absolute;
+				top: 0;
+				width: 100%;
 			}
 		}
 	}

@@ -16,6 +16,8 @@ package com.liferay.portlet.blogs.action;
 
 import com.liferay.portal.kernel.image.ImageBag;
 import com.liferay.portal.kernel.image.ImageToolUtil;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.CharPool;
@@ -114,39 +116,47 @@ public class ActionUtil {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			com.liferay.portal.kernel.util.WebKeys.THEME_DISPLAY);
 
-		Double xPos = ParamUtil.getDouble(actionRequest, "xPos");
-		Double yPos = ParamUtil.getDouble(actionRequest, "yPos");
-		int width = ParamUtil.getInteger(actionRequest, "width");
-		int height = ParamUtil.getInteger(actionRequest, "height");
-
 		FileEntry fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
 			coverImageId);
 
-		if ((xPos > 0) || (yPos > 0) || (width > 0) || (height > 0)) {
-			ImageBag imageBag = ImageToolUtil.read(
-				fileEntry.getContentStream());
+		String coverImageCropRegionJSON = ParamUtil.getString(
+			actionRequest, "coverImageCropRegion");
 
-			RenderedImage renderedImage = imageBag.getRenderedImage();
+		if (Validator.isNotNull(coverImageCropRegionJSON)) {
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+				coverImageCropRegionJSON);
 
-			renderedImage = ImageToolUtil.crop(
-				renderedImage, height, width, xPos.intValue(), yPos.intValue());
+			int height = jsonObject.getInt("height");
+			int width = jsonObject.getInt("width");
+			int x = jsonObject.getInt("x");
+			int y = jsonObject.getInt("y");
 
-			byte[] bytes = ImageToolUtil.getBytes(
-				renderedImage, imageBag.getType());
+			if ((x > 0) || (y > 0) || (width > 0) || (height > 0)) {
+				ImageBag imageBag = ImageToolUtil.read(
+					fileEntry.getContentStream());
 
-			File file = FileUtil.createTempFile(bytes);
+				RenderedImage renderedImage = imageBag.getRenderedImage();
 
-			FileEntry resizedFileEntry =
-				PortletFileRepositoryUtil.addPortletFileEntry(
-					themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
-					"", 0, PortletKeys.BLOGS,
-					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, file,
-					fileEntry.getTitle() + "_resized",
-					MimeTypesUtil.getContentType(fileEntry.getTitle()), true);
+				renderedImage = ImageToolUtil.crop(
+					renderedImage, height, width, x, y);
 
-			TempFileUtil.deleteTempFile(coverImageId);
+				byte[] bytes = ImageToolUtil.getBytes(
+					renderedImage, imageBag.getType());
 
-			return resizedFileEntry;
+				File file = FileUtil.createTempFile(bytes);
+
+				FileEntry resizedFileEntry =
+					PortletFileRepositoryUtil.addPortletFileEntry(
+						themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
+						"", 0, PortletKeys.BLOGS,
+						DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, file,
+						fileEntry.getTitle() + "_resized",
+						MimeTypesUtil.getContentType(fileEntry.getTitle()), true);
+
+				TempFileUtil.deleteTempFile(coverImageId);
+
+				return resizedFileEntry;
+			}
 		}
 
 		return fileEntry;
@@ -162,8 +172,9 @@ public class ActionUtil {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String fileName = uploadPortletRequest.getFileName("file");
-		InputStream inputStream = uploadPortletRequest.getFileAsStream("file");
+		String fileName = uploadPortletRequest.getFileName("coverImageFile");
+		InputStream inputStream = uploadPortletRequest.getFileAsStream(
+			"coverImageFile");
 
 		String tempImageFolderName = clazz.getName();
 

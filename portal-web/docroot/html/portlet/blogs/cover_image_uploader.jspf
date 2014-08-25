@@ -27,10 +27,10 @@ if ((entry != null) && (entry.getCoverImageId() != 0)) {
 	currentImageURL = PortletFileRepositoryUtil.getPortletFileEntryURL(themeDisplay, coverImage, StringPool.BLANK);
 }
 
-boolean showImageView = false;
+boolean hasCoverImage = false;
 
 if (coverImageId > 0) {
-	showImageView = true;
+	hasCoverImage = true;
 }
 %>
 
@@ -38,165 +38,58 @@ if (coverImageId > 0) {
 	<portlet:param name="struts_action" value="/blogs/edit_cover" />
 </portlet:actionURL>
 
-<aui:form action="<%= uploadImageURL %>" cssClass="cover-image-selector-form" enctype="multipart/form-data" method="post" name="imageSelectorFM" onSubmit="event.preventDefault();">
+<liferay-util:buffer var="coverImageInput">
+	<aui:input label="" name="coverImageFile" size="50" type="file" wrapperCssClass="cover-image-input-wrapper">
+		<aui:validator name="acceptFiles">
+			'<%= StringUtil.merge(PrefsPropsUtil.getStringArray(PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA)) %>'
+		</aui:validator>
+	</aui:input>
+</liferay-util:buffer>
+
+<aui:form action="<%= uploadImageURL %>" enctype="multipart/form-data" method="post" name="coverImageSelectorForm" onSubmit="event.preventDefault();">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPLOAD_IMAGE %>" />
 	<aui:input name="fileEntryId" type="hidden" value="<%= entry != null ? entry.getCoverImageId() : 0 %>" />
 
 	<aui:fieldset cssClass="cover-image-selector">
-		<div class='<%= showImageView ? "hide" : StringPool.BLANK %> cover-image-upload-wrapper' id="<portlet:namespace/>imageUploadWrapper">
-			<aui:a href="javascript:;" id="imageUploadLink"><liferay-ui:message key="upload" /></aui:a>
-			<aui:input id="imageUploadFile" label="" name="file" onChange='<%= renderResponse.getNamespace() + "uploadCoverImage();" %>' size="50" type="file" wrapperCssClass="hidden image-upload-file">
-				<aui:validator name="acceptFiles">
-					'<%= StringUtil.merge(PrefsPropsUtil.getStringArray(PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA)) %>'
-				</aui:validator>
-			</aui:input>
+		<div class='<%= hasCoverImage ? "hide" : StringPool.BLANK %> cover-image-upload-wrapper' id="<portlet:namespace/>imageUploadWrapper">
+			<aui:a cssClass="btn btn-primary btn-default" href="javascript:;">
+				<liferay-ui:message key="upload" />
+			</aui:a>
+
+			<c:if test="<%= !hasCoverImage %>">
+				<%= coverImageInput %>
+			</c:if>
 		</div>
 
-		<div class="hide cover-image-preview-wrapper" id="<portlet:namespace/>imagePreviewWrapper">
-			<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="image-preview" />" id="<portlet:namespace/>imagePreview" src="<%= currentImageURL %>" width="" />
+		<div class="<%= hasCoverImage ? StringPool.BLANK : "hide" %> cover-image-preview-wrapper">
+			<img class="cover-image cover-image-preview" id="<portlet:namespace/>coverImagePreview" src="<%= currentImageURL %>" />
+
+			<div class="cover-image-preview-mask <%= hasCoverImage ? StringPool.BLANK : "hide" %>"></div>
 
 			<div class="cover-image-action-buttons">
-				<aui:button cssClass="change-image" name="change" type="submit" value="change-image" />
+				<div class="cover-image-change-wrapper">
+					<aui:button name="change" type="submit" value="change-image" />
 
-				<aui:button cssClass="delete-image" name="cancel" value="cancel" />
+					<c:if test="<%= hasCoverImage %>">
+						<%= coverImageInput %>
+					</c:if>
+				</div>
+
+				<aui:button cssClass='<%= hasCoverImage ? "hide" : StringPool.BLANK %>' name="cancelImage" value="cancel" />
+				<aui:button cssClass='<%= hasCoverImage ? StringPool.BLANK : "hide" %>' name="deleteImage" value="delete-image" />
 			</div>
-		</div>
-
-		<div class='<%= showImageView ? StringPool.BLANK : "hide" %> cover-image-view-wrapper' id="<portlet:namespace/>imageViewWrapper">
-			<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="image-preview" />" id="<portlet:namespace/>imagePreview" onChange='<%= "showImageView();" %>' src="<%= currentImageURL %>" />
-
-			<div class="cover-image-view-wrapper-mask"></div>
-
-			<div class="cover-image-action-buttons">
-				<aui:button cssClass="change-image" name="change" type="submit" value="change-image" />
-
-				<aui:button cssClass="delete-image" name="delete" value="delete" />
-			</div>
-
 		</div>
 	</aui:fieldset>
 </aui:form>
 
-<aui:script>
-	Liferay.provide(
-		window,
-		'<portlet:namespace />uploadCoverImage',
-		function() {
-			var A = AUI();
-
-			var form = A.one('#<portlet:namespace />imageSelectorFM');
-
-			A.io.request(
-				form.get('action'),
-					{
-						dataType: 'JSON',
-						form: {
-							id: form,
-							upload: true
-					},
-					on: {
-						complete: function(event, id, obj) {
-							var responseText = obj.responseText;
-
-							var responseData = A.JSON.parse(responseText);
-
-							if (responseData.success) {
-								document.<portlet:namespace />fm.<portlet:namespace />coverImageId.value = responseData.fileEntryId;
-
-								var fileEntryIdNode = A.one('#<portlet:namespace />fileEntryId');
-
-								fileEntryIdNode.val(responseData.fileEntryId);
-
-								var imagePreviewNode = A.one('#<portlet:namespace />imagePreview');
-
-								var imageViewWrapper = A.one('#<portlet:namespace />imageViewWrapper');
-
-								imagePreviewNode.attr('src', responseData.fileEntryURL);
-
-								imagePreviewNode.attr('width', imageViewWrapper.width());
-
-								showImagePreview();
-							}
-						}
-					}
-				}
-			);
-		}
-	);
-
-	Liferay.provide(
-		window,
-		'showImagePreview',
-		function() {
-			var A = AUI();
-
-			var imagePreviewWrapper = A.one('#<portlet:namespace />imagePreviewWrapper');
-
-			imagePreviewWrapper.show();
-
-			var imageUploadWrapper = A.one('#<portlet:namespace />imageUploadWrapper');
-
-			imageUploadWrapper.hide();
-
-			var imageViewWrapper = A.one('#<portlet:namespace />imageViewWrapper');
-
-			imageViewWrapper.hide();
-		}
-	);
-
-	Liferay.provide(
-		window,
-		'showImageSelector',
-		function() {
-			var A = AUI();
-
-			var imageUploadWrapper = A.one('#<portlet:namespace />imageUploadWrapper');
-
-			imageUploadWrapper.show();
-
-			var imagePreviewWrapper = A.one('#<portlet:namespace />imagePreviewWrapper');
-
-			imagePreviewWrapper.hide();
-
-			var imageViewWrapper = A.one('#<portlet:namespace />imageViewWrapper');
-
-			imageViewWrapper.hide();
-		}
-	);
-</aui:script>
-
-<aui:script use="dd-drag">
-	var imageUploadLink = A.one('#<portlet:namespace />imageUploadLink');
-	var imageUploadFile = A.one('#<portlet:namespace />imageUploadFile');
-
-	imageUploadLink.on(
-		'click',
-		function(event) {
-			imageUploadFile.simulate('click');
-		}
-	);
-
-	A.one('.cover-image-selector').delegate(
-		'click',
-		function(event) {
-			document.<portlet:namespace />fm.<portlet:namespace />coverImageId.value = 0;
-
-			showImageSelector();
-		},
-		'.delete-image'
-	);
-
-	A.one('.cover-image-selector').delegate(
-		'click',
-		function(event) {
-			imageUploadFile.simulate('click');
-		},
-		'.change-image'
-	);
-
-	new A.DD.Drag(
+<aui:script use="liferay-blogs-cover-uploader">
+	new Liferay.BlogsCoverUploader(
 		{
-			node: '#<portlet:namespace />imagePreview'
+			fileEntry: {
+				id: <%= entry != null ? entry.getCoverImageId() : 0 %>,
+				url: '<%= currentImageURL %>'
+			},
+			namespace: '<portlet:namespace />'
 		}
 	);
 </aui:script>
