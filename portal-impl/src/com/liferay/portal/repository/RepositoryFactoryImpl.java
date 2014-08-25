@@ -83,7 +83,7 @@ public class RepositoryFactoryImpl extends BaseRepositoryFactory<Repository>
 			long folderId, long fileEntryId, long fileVersionId)
 		throws PortalException {
 
-		long repositoryId = getRepositoryId(
+		long repositoryId = getExternalRepositoryId(
 			folderId, fileEntryId, fileVersionId);
 
 		return create(repositoryId);
