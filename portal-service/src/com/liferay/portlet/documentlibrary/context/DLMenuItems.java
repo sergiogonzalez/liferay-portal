@@ -33,7 +33,8 @@ public class DLMenuItems {
 
 	public static final String MENU_ITEM_ID_MOVE = "move";
 
-	public static final String MENU_ITEM_ID_OPEN_DOCUMENT = "open-document";
+	public static final String MENU_ITEM_ID_OPEN_IN_MS_OFFICE =
+		"open-in-ms-office";
 
 	public static final String MENU_ITEM_ID_PERMISSIONS = "permissions";
 

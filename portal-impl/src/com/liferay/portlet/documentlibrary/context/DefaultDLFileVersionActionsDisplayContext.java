@@ -125,7 +125,7 @@ public class DefaultDLFileVersionActionsDisplayContext
 
 		_addDownloadMenuItem(menuItems);
 
-		_addOpenDocumentMenuItem(menuItems);
+		_addOpenInMsOfficeMenuItem(menuItems);
 
 		_addEditMenuItem(menuItems);
 
@@ -578,7 +578,7 @@ public class DefaultDLFileVersionActionsDisplayContext
 		menuItems.add(urlMenuItem);
 	}
 
-	private void _addOpenDocumentMenuItem(List<MenuItem> menuItems)
+	private void _addOpenInMsOfficeMenuItem(List<MenuItem> menuItems)
 		throws PortalException {
 
 		if (!isOpenInMsOfficeButtonVisible()) {
@@ -588,7 +588,7 @@ public class DefaultDLFileVersionActionsDisplayContext
 		JavascriptMenuItem javaScriptMenuItem = new JavascriptMenuItem();
 
 		javaScriptMenuItem.setIconCssClass("icon-file-alt");
-		javaScriptMenuItem.setId(DLMenuItems.MENU_ITEM_ID_OPEN_DOCUMENT);
+		javaScriptMenuItem.setId(DLMenuItems.MENU_ITEM_ID_OPEN_IN_MS_OFFICE);
 
 		Map<String, String> context = new HashMap<String, String>();
 
@@ -601,7 +601,7 @@ public class DefaultDLFileVersionActionsDisplayContext
 
 		String javaScript = _processFreeMarkerTemplate(
 			"/com/liferay/portlet/documentlibrary/context/dependencies" +
-				"open_document_js.ftl",
+				"open_in_ms_office_js.ftl",
 			context);
 
 		javaScriptMenuItem.setJavascript(javaScript);
