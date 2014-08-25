@@ -25,12 +25,6 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.repository.capabilities.CapabilityRepository;
 import com.liferay.portal.repository.proxy.BaseRepositoryProxyBean;
 import com.liferay.portal.repository.registry.RepositoryDefinition;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
-import com.liferay.portlet.documentlibrary.model.DLFileVersion;
-import com.liferay.portlet.documentlibrary.model.DLFolder;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryService;
-import com.liferay.portlet.documentlibrary.service.DLFileVersionService;
-import com.liferay.portlet.documentlibrary.service.DLFolderService;
 
 import java.util.Map;
 import java.util.Set;
@@ -115,38 +109,6 @@ public class RepositoryFactoryImpl extends BaseRepositoryFactory<Repository>
 		}
 
 		return null;
-	}
-
-	@Override
-	protected long getFileEntryRepositoryId(long fileEntryId)
-		throws PortalException {
-
-		DLFileEntryService dlFileEntryService = getDlFileEntryService();
-
-		DLFileEntry dlFileEntry = dlFileEntryService.getFileEntry(fileEntryId);
-
-		return dlFileEntry.getRepositoryId();
-	}
-
-	@Override
-	protected long getFileVersionRepositoryId(long fileVersionId)
-		throws PortalException {
-
-		DLFileVersionService dlFileVersionService = getDlFileVersionService();
-
-		DLFileVersion dlFileVersion = dlFileVersionService.getFileVersion(
-			fileVersionId);
-
-		return dlFileVersion.getRepositoryId();
-	}
-
-	@Override
-	protected long getFolderRepositoryId(long folderId) throws PortalException {
-		DLFolderService dlFolderService = getDlFolderService();
-
-		DLFolder dlFolder = dlFolderService.getFolder(folderId);
-
-		return dlFolder.getRepositoryId();
 	}
 
 }

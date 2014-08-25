@@ -26,14 +26,6 @@ public class RepositoryFactoryUtil {
 		return getRepositoryFactory().create(repositoryId);
 	}
 
-	public static Repository create(
-			long folderId, long fileEntryId, long fileVersionId)
-		throws PortalException {
-
-		return getRepositoryFactory().create(
-			folderId, fileEntryId, fileVersionId);
-	}
-
 	public static RepositoryFactory getRepositoryFactory() {
 		PortalRuntimePermission.checkGetBeanProperty(
 			RepositoryFactoryUtil.class);

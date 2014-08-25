@@ -20,12 +20,6 @@ import com.liferay.portal.kernel.repository.LocalRepositoryFactory;
 import com.liferay.portal.kernel.repository.registry.RepositoryCreator;
 import com.liferay.portal.repository.capabilities.CapabilityLocalRepository;
 import com.liferay.portal.repository.registry.RepositoryDefinition;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
-import com.liferay.portlet.documentlibrary.model.DLFileVersion;
-import com.liferay.portlet.documentlibrary.model.DLFolder;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalService;
-import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalService;
-import com.liferay.portlet.documentlibrary.service.DLFolderLocalService;
 
 /**
  * @author Adolfo Pérez
@@ -71,41 +65,6 @@ public class LocalRepositoryFactoryImpl
 			localRepository, repositoryDefinition.getSupportedCapabilities(),
 			repositoryDefinition.getExportedCapabilities(),
 			repositoryDefinition.getRepositoryEventTrigger());
-	}
-
-	@Override
-	protected long getFileEntryRepositoryId(long fileEntryId)
-		throws PortalException {
-
-		DLFileEntryLocalService dlFileEntryLocalService =
-			getDlFileEntryLocalService();
-
-		DLFileEntry dlFileEntry = dlFileEntryLocalService.getFileEntry(
-			fileEntryId);
-
-		return dlFileEntry.getRepositoryId();
-	}
-
-	@Override
-	protected long getFileVersionRepositoryId(long fileVersionId)
-		throws PortalException {
-
-		DLFileVersionLocalService dlFileVersionLocalService =
-			getDlFileVersionLocalService();
-
-		DLFileVersion dlFileVersion = dlFileVersionLocalService.getFileVersion(
-			fileVersionId);
-
-		return dlFileVersion.getRepositoryId();
-	}
-
-	@Override
-	protected long getFolderRepositoryId(long folderId) throws PortalException {
-		DLFolderLocalService dlFolderLocalService = getDlFolderLocalService();
-
-		DLFolder dlFolder = dlFolderLocalService.getFolder(folderId);
-
-		return dlFolder.getRepositoryId();
 	}
 
 }

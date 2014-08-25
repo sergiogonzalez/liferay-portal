@@ -28,14 +28,6 @@ public class LocalRepositoryFactoryUtil {
 		return getLocalRepositoryFactory().create(repositoryId);
 	}
 
-	public static LocalRepository create(
-			long folderId, long fileEntryId, long fileVersionId)
-		throws PortalException {
-
-		return getLocalRepositoryFactory().create(
-			folderId, fileEntryId, fileVersionId);
-	}
-
 	public static LocalRepositoryFactory getLocalRepositoryFactory() {
 		PortalRuntimePermission.checkGetBeanProperty(
 			LocalRepositoryFactoryUtil.class);

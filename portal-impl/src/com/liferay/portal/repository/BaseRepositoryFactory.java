@@ -16,17 +16,13 @@ package com.liferay.portal.repository;
 
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.repository.InvalidRepositoryIdException;
 import com.liferay.portal.model.ClassName;
 import com.liferay.portal.model.Repository;
-import com.liferay.portal.model.RepositoryEntry;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
 import com.liferay.portal.repository.registry.RepositoryDefinition;
 import com.liferay.portal.repository.registry.RepositoryDefinitionCatalog;
 import com.liferay.portal.service.ClassNameLocalService;
-import com.liferay.portal.service.RepositoryEntryLocalService;
 import com.liferay.portal.service.RepositoryLocalService;
-import com.liferay.portal.util.RepositoryUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryService;
 import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalService;
@@ -48,20 +44,6 @@ public abstract class BaseRepositoryFactory<T> {
 		else {
 			return createExternalRepository(repositoryId, classNameId);
 		}
-	}
-
-	public T create(long folderId, long fileEntryId, long fileVersionId)
-		throws PortalException {
-
-		long repositoryId = getInternalRepositoryId(
-			folderId, fileEntryId, fileVersionId);
-
-		if (repositoryId == 0) {
-			repositoryId = getExternalRepositoryId(
-				folderId, fileEntryId, fileVersionId);
-		}
-
-		return create(repositoryId);
 	}
 
 	protected abstract T createExternalRepository(
@@ -102,52 +84,6 @@ public abstract class BaseRepositoryFactory<T> {
 
 	protected DLFolderService getDlFolderService() {
 		return _dlFolderService;
-	}
-
-	protected long getExternalRepositoryId(
-			long folderId, long fileEntryId, long fileVersionId)
-		throws PortalException {
-
-		long repositoryEntryId = RepositoryUtil.getRepositoryEntryId(
-			folderId, fileEntryId, fileVersionId);
-
-		RepositoryEntry repositoryEntry =
-			_repositoryEntryLocalService.getRepositoryEntry(repositoryEntryId);
-
-		return repositoryEntry.getRepositoryId();
-	}
-
-	protected abstract long getFileEntryRepositoryId(long fileEntryId)
-		throws PortalException;
-
-	protected abstract long getFileVersionRepositoryId(long fileVersionId)
-		throws PortalException;
-
-	protected abstract long getFolderRepositoryId(long folderId)
-		throws PortalException;
-
-	protected long getInternalRepositoryId(
-			long folderId, long fileEntryId, long fileVersionId)
-		throws PortalException {
-
-		long repositoryId = 0;
-
-		if (folderId != 0) {
-			repositoryId = getFolderRepositoryId(folderId);
-		}
-		else if (fileEntryId != 0) {
-			repositoryId = getFileEntryRepositoryId(fileEntryId);
-		}
-		else if (fileVersionId != 0) {
-			repositoryId = getFileVersionRepositoryId(fileVersionId);
-		}
-		else {
-			throw new InvalidRepositoryIdException(
-				"Missing a valid ID for folder, file entry, or file " +
-					"version");
-		}
-
-		return repositoryId;
 	}
 
 	protected Repository getRepository(long repositoryId) {
@@ -207,9 +143,6 @@ public abstract class BaseRepositoryFactory<T> {
 
 	@BeanReference(type = RepositoryDefinitionCatalog.class)
 	private RepositoryDefinitionCatalog _repositoryDefinitionCatalog;
-
-	@BeanReference(type = RepositoryEntryLocalService.class)
-	private RepositoryEntryLocalService _repositoryEntryLocalService;
 
 	@BeanReference(type = RepositoryLocalService.class)
 	private RepositoryLocalService _repositoryLocalService;
