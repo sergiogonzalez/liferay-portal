@@ -40,6 +40,8 @@ import com.liferay.portlet.documentlibrary.service.DLFileVersionService;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFolderService;
 
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -94,8 +96,16 @@ public class RepositoryFactoryImpl implements RepositoryFactory {
 			repository);
 
 		if (cmisRepositoryHandler != null) {
+			externalSupportedCapabilities =
+				new HashMap<Class<? extends Capability>, Capability>(
+					externalSupportedCapabilities);
+
 			externalSupportedCapabilities.put(
 				CMISRepositoryHandler.class, cmisRepositoryHandler);
+
+			externalExportedCapabilityClasses =
+				new HashSet<Class<? extends Capability>>(
+					externalExportedCapabilityClasses);
 
 			externalExportedCapabilityClasses.add(CMISRepositoryHandler.class);
 		}
