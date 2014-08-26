@@ -147,11 +147,12 @@ public class ActionUtil {
 
 				FileEntry resizedFileEntry =
 					PortletFileRepositoryUtil.addPortletFileEntry(
-						themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
-						"", 0, PortletKeys.BLOGS,
+						themeDisplay.getScopeGroupId(),
+						themeDisplay.getUserId(), "", 0, PortletKeys.BLOGS,
 						DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, file,
 						fileEntry.getTitle() + "_resized",
-						MimeTypesUtil.getContentType(fileEntry.getTitle()), true);
+						MimeTypesUtil.getContentType(fileEntry.getTitle()),
+						true);
 
 				TempFileUtil.deleteTempFile(coverImageId);
 
