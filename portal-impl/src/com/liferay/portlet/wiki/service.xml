@@ -138,8 +138,8 @@
 			<finder-column name="status" />
 		</finder>
 		<finder name="N_T" return-type="Collection">
-			<finder-column name="nodeId" />
-			<finder-column name="title" case-sensitive="false" />
+			<finder-column name="nodeId" arrayable-operator="OR" />
+			<finder-column name="title" case-sensitive="false" arrayable-operator="OR" />
 		</finder>
 		<finder name="N_H" return-type="Collection">
 			<finder-column name="nodeId" />

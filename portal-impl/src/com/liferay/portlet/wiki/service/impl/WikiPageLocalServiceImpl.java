@@ -2385,17 +2385,12 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		// Version pages
 
 		List<WikiPage> versionPages = wikiPagePersistence.findByN_T(
-			nodeId, title);
+			new long[] {nodeId, newNodeId}, new String[] {title});
 
-		WikiPage page = fetchLatestPage(
-			newNodeId, title, WorkflowConstants.STATUS_ANY, false);
-
-		if (page == null) {
-			page = getLatestPage(
-				nodeId, title, WorkflowConstants.STATUS_ANY, false);
-		}
+		WikiPage page = versionPages.get(versionPages.size() - 1);
 
 		for (WikiPage versionPage : versionPages) {
+			versionPage.setContent(page.getContent());
 			versionPage.setParentTitle(page.getParentTitle());
 			versionPage.setNodeId(newNodeId);
 
@@ -2440,15 +2435,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		// Version pages
 
 		List<WikiPage> versionPages = wikiPagePersistence.findByN_T(
-			nodeId, title);
-
-		WikiPage page = fetchLatestPage(
-			nodeId, newTitle, WorkflowConstants.STATUS_ANY, false);
-
-		if (page == null) {
-			page = getLatestPage(
-				nodeId, title, WorkflowConstants.STATUS_ANY, false);
-		}
+			new long[] {nodeId}, new String[] {title, newTitle});
 
 		for (WikiPage versionPage : versionPages) {
 			versionPage.setTitle(newTitle);
@@ -2464,6 +2451,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		// Page resource
 
+		WikiPage page = versionPages.get(versionPages.size() - 1);
+
 		long resourcePrimKey = page.getResourcePrimKey();
 
 		WikiPageResource pageResource =
@@ -2477,7 +2466,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		double version = WikiPageConstants.VERSION_DEFAULT;
 		String summary = LanguageUtil.format(
-			serviceContext.getLocale(), "moved-to-x", newTitle);
+			serviceContext.getLocale(), "renamed-as-x", newTitle);
 		String format = page.getFormat();
 		boolean head = true;
 		String parentTitle = page.getParentTitle();
