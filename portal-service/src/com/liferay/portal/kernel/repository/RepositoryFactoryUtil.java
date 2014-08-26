@@ -22,6 +22,12 @@ import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermissio
  */
 public class RepositoryFactoryUtil {
 
+	public static LocalRepository createLocalRepository(long repositoryId)
+		throws PortalException {
+
+		return getRepositoryFactory().createLocalRepository(repositoryId);
+	}
+
 	public static Repository createRepository(long repositoryId)
 		throws PortalException {
 

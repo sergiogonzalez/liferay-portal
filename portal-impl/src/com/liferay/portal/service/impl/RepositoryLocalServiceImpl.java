@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.InvalidRepositoryIdException;
 import com.liferay.portal.kernel.repository.LocalRepository;
-import com.liferay.portal.kernel.repository.LocalRepositoryFactoryUtil;
 import com.liferay.portal.kernel.repository.RepositoryException;
 import com.liferay.portal.kernel.repository.RepositoryFactoryUtil;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
@@ -234,7 +233,7 @@ public class RepositoryLocalServiceImpl
 			return localRepositoryImpl;
 		}
 
-		localRepositoryImpl = LocalRepositoryFactoryUtil.createLocalRepository(
+		localRepositoryImpl = RepositoryFactoryUtil.createLocalRepository(
 			repositoryId);
 
 		checkRepository(repositoryId);
@@ -262,7 +261,7 @@ public class RepositoryLocalServiceImpl
 		long repositoryId = getRepositoryId(
 			folderId, fileEntryId, fileVersionId);
 
-		localRepositoryImpl = LocalRepositoryFactoryUtil.createLocalRepository(
+		localRepositoryImpl = RepositoryFactoryUtil.createLocalRepository(
 			repositoryId);
 
 		checkRepository(localRepositoryImpl.getRepositoryId());
