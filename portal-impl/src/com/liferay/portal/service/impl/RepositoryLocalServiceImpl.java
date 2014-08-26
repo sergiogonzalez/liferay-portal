@@ -15,7 +15,6 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.portal.InvalidRepositoryException;
-import com.liferay.portal.NoSuchRepositoryEntryException;
 import com.liferay.portal.NoSuchRepositoryException;
 import com.liferay.portal.kernel.cache.CacheRegistryItem;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
@@ -259,13 +258,8 @@ public class RepositoryLocalServiceImpl
 			return localRepositoryImpl;
 		}
 
-		long repositoryId = getInternalRepositoryId(
+		long repositoryId = getRepositoryId(
 			folderId, fileEntryId, fileVersionId);
-
-		if (repositoryId == 0) {
-			repositoryId = getExternalRepositoryId(
-				folderId, fileEntryId, fileVersionId);
-		}
 
 		localRepositoryImpl = LocalRepositoryFactoryUtil.create(repositoryId);
 
@@ -332,13 +326,8 @@ public class RepositoryLocalServiceImpl
 			return repositoryImpl;
 		}
 
-		long repositoryId = getInternalRepositoryId(
+		long repositoryId = getRepositoryId(
 			folderId, fileEntryId, fileVersionId);
-
-		if (repositoryId == 0) {
-			repositoryId = getExternalRepositoryId(
-				folderId, fileEntryId, fileVersionId);
-		}
 
 		repositoryImpl = RepositoryFactoryUtil.create(repositoryId);
 
@@ -427,32 +416,57 @@ public class RepositoryLocalServiceImpl
 			long folderId, long fileEntryId, long fileVersionId)
 		throws PortalException {
 
-		long repositoryId = 0;
-
 		if (folderId != 0) {
 			DLFolder dlFolder = dlFolderLocalService.fetchDLFolder(folderId);
 
-			repositoryId = dlFolder.getRepositoryId();
+			if (dlFolder == null) {
+				return 0;
+			}
+			else {
+				return dlFolder.getRepositoryId();
+			}
 		}
 		else if (fileEntryId != 0) {
 			DLFileEntry dlFileEntry = dlFileEntryLocalService.fetchDLFileEntry(
 				fileEntryId);
 
-			repositoryId = dlFileEntry.getRepositoryId();
+			if (dlFileEntry == null) {
+				return 0;
+			}
+			else {
+				return dlFileEntry.getRepositoryId();
+			}
 		}
 		else if (fileVersionId != 0) {
 			DLFileVersion dlFileVersion =
 				dlFileVersionLocalService.fetchDLFileVersion(fileVersionId);
 
-			repositoryId = dlFileVersion.getRepositoryId();
+			if (dlFileVersion == null) {
+				return 0;
+			}
+			else {
+				return dlFileVersion.getRepositoryId();
+			}
 		}
 		else {
 			throw new InvalidRepositoryIdException(
 				"Missing a valid ID for folder, file entry, or file " +
 					"version");
 		}
+	}
 
-		return repositoryId;
+	protected long getRepositoryId(
+			long folderId, long fileEntryId, long fileVersionId)
+		throws PortalException {
+
+		long repositoryId = getInternalRepositoryId(
+			folderId, fileEntryId, fileVersionId);
+
+		if (repositoryId != 0) {
+			return repositoryId;
+		}
+
+		return getExternalRepositoryId(folderId, fileEntryId, fileVersionId);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
