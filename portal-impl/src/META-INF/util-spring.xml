@@ -549,13 +549,13 @@
 		<property name="portletFileRepository" ref="com.liferay.portal.portletfilerepository.PortletFileRepository" />
 	</bean>
 	<bean id="com.liferay.portal.repository.registry.RepositoryDefinitionCatalog" class="com.liferay.portal.repository.registry.RepositoryDefinitionCatalogImpl" init-method="loadDefaultRepositoryDefiners">
-		<property name="legacyExternalRepositoryCreator">
-			<bean class="com.liferay.portal.repository.external.LegacyExternalRepositoryCreator" />
+		<property name="legacyExternalRepositoryFactory">
+			<bean class="com.liferay.portal.repository.external.LegacyExternalRepositoryFactory" />
 		</property>
 		<property name="liferayRepositoryDefiner">
 			<bean class="com.liferay.portal.repository.liferayrepository.LiferayRepositoryDefiner">
-				<property name="repositoryCreator">
-					<bean class="com.liferay.portal.repository.liferayrepository.LiferayRepositoryCreator" />
+				<property name="repositoryFactory">
+					<bean class="com.liferay.portal.repository.liferayrepository.LiferayRepositoryFactory" />
 				</property>
 			</bean>
 		</property>

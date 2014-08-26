@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
 import com.liferay.portal.kernel.repository.capabilities.Capability;
 import com.liferay.portal.kernel.repository.cmis.CMISRepositoryHandler;
-import com.liferay.portal.kernel.repository.registry.RepositoryCreator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.model.ClassName;
 import com.liferay.portal.repository.capabilities.CapabilityLocalRepository;
@@ -59,11 +58,11 @@ public class RepositoryFactoryImpl implements RepositoryFactory {
 		RepositoryDefinition repositoryDefinition = getRepositoryDefinition(
 			classNameId);
 
-		RepositoryCreator repositoryCreator =
-			repositoryDefinition.getRepositoryCreator();
+		RepositoryFactory repositoryFactory =
+			repositoryDefinition.getRepositoryFactory();
 
 		LocalRepository localRepository =
-			repositoryCreator.createLocalRepository(repositoryId);
+			repositoryFactory.createLocalRepository(repositoryId);
 
 		return new CapabilityLocalRepository(
 			localRepository, repositoryDefinition.getSupportedCapabilities(),
@@ -80,10 +79,10 @@ public class RepositoryFactoryImpl implements RepositoryFactory {
 		RepositoryDefinition repositoryDefinition = getRepositoryDefinition(
 			classNameId);
 
-		RepositoryCreator repositoryCreator =
-			repositoryDefinition.getRepositoryCreator();
+		RepositoryFactory repositoryFactory =
+			repositoryDefinition.getRepositoryFactory();
 
-		Repository repository = repositoryCreator.createRepository(
+		Repository repository = repositoryFactory.createRepository(
 			repositoryId);
 
 		Map<Class<? extends Capability>, Capability>
