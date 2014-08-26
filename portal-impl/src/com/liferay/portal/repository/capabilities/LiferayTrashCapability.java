@@ -87,28 +87,8 @@ public class LiferayTrashCapability implements TrashCapability {
 				repositoryId, DLFolder.class.getName());
 		}
 		else {
-			QueryDefinition<Object> queryDefinition =
-				new QueryDefinition<Object>();
-
-			queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
-
-			List<Object> foldersAndFileEntriesAndFileShortcuts =
-				DLFolderLocalServiceUtil.
-					getFoldersAndFileEntriesAndFileShortcuts(
-						repository.getGroupId(), repository.getDlFolderId(),
-						null, true, queryDefinition);
-
-			for (Object folderFileEntryOrFileShortcut :
-					foldersAndFileEntriesAndFileShortcuts) {
-
-				if (folderFileEntryOrFileShortcut instanceof DLFileEntry) {
-					deleteTrashEntry(
-						(DLFileEntry)folderFileEntryOrFileShortcut);
-				}
-				else if (folderFileEntryOrFileShortcut instanceof DLFolder) {
-					deleteTrashEntry((DLFolder)folderFileEntryOrFileShortcut);
-				}
-			}
+			deleteDescendantTrashEntries(
+				repository.getGroupId(), repository.getDlFolderId());
 		}
 	}
 
@@ -177,6 +157,35 @@ public class LiferayTrashCapability implements TrashCapability {
 		throws PortalException {
 
 		DLAppHelperLocalServiceUtil.restoreFolderFromTrash(userId, folder);
+	}
+
+	protected void deleteDescendantTrashEntries(long groupId, long dlFolderId)
+		throws PortalException {
+
+		QueryDefinition<Object> queryDefinition = new QueryDefinition<Object>();
+
+		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
+
+		List<Object> foldersAndFileEntriesAndFileShortcuts =
+			DLFolderLocalServiceUtil.
+				getFoldersAndFileEntriesAndFileShortcuts(
+					groupId, dlFolderId, null, true, queryDefinition);
+
+		for (Object folderFileEntryOrFileShortcut :
+				foldersAndFileEntriesAndFileShortcuts) {
+
+			if (folderFileEntryOrFileShortcut instanceof DLFileEntry) {
+				deleteTrashEntry((DLFileEntry)folderFileEntryOrFileShortcut);
+			}
+			else if (folderFileEntryOrFileShortcut instanceof DLFolder) {
+				DLFolder dlFolder = (DLFolder)folderFileEntryOrFileShortcut;
+
+				deleteDescendantTrashEntries(
+					dlFolder.getGroupId(), dlFolder.getFolderId());
+
+				deleteTrashEntry(dlFolder);
+			}
+		}
 	}
 
 	protected void deleteRepositoryTrashEntries(
