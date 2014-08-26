@@ -343,6 +343,20 @@ public class WikiPagePersistenceTest {
 	}
 
 	@Test
+	public void testCountByN_TArrayable() {
+		try {
+			_persistence.countByN_T(new long[] { RandomTestUtil.nextLong(), 0L },
+				new String[] {
+					RandomTestUtil.randomString(), StringPool.BLANK,
+					StringPool.NULL, null, null
+				});
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
 	public void testCountByN_H() {
 		try {
 			_persistence.countByN_H(RandomTestUtil.nextLong(),
