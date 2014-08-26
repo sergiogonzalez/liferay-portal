@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.LocalRepository;
-import com.liferay.portal.kernel.repository.LocalRepositoryFactoryUtil;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
 import com.liferay.portal.kernel.repository.capabilities.Capability;
@@ -26,6 +25,7 @@ import com.liferay.portal.kernel.repository.cmis.CMISRepositoryHandler;
 import com.liferay.portal.kernel.repository.registry.RepositoryCreator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.model.ClassName;
+import com.liferay.portal.repository.capabilities.CapabilityLocalRepository;
 import com.liferay.portal.repository.capabilities.CapabilityRepository;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
 import com.liferay.portal.repository.proxy.BaseRepositoryProxyBean;
@@ -52,7 +52,14 @@ public class RepositoryFactoryImpl implements RepositoryFactory {
 	public LocalRepository createLocalRepository(long repositoryId)
 		throws PortalException {
 
-		return LocalRepositoryFactoryUtil.createLocalRepository(repositoryId);
+		long classNameId = getRepositoryClassNameId(repositoryId);
+
+		if (classNameId == getDefaultClassNameId()) {
+			return createInternalLocalRepository(repositoryId);
+		}
+		else {
+			return createExternalLocalRepository(repositoryId, classNameId);
+		}
 	}
 
 	@Override
@@ -67,6 +74,25 @@ public class RepositoryFactoryImpl implements RepositoryFactory {
 		else {
 			return createExternalRepository(repositoryId, classNameId);
 		}
+	}
+
+	protected LocalRepository createExternalLocalRepository(
+			long repositoryId, long classNameId)
+		throws PortalException {
+
+		RepositoryDefinition repositoryDefinition = getRepositoryDefinition(
+			classNameId);
+
+		RepositoryCreator repositoryCreator =
+			repositoryDefinition.getRepositoryCreator();
+
+		LocalRepository localRepository =
+			repositoryCreator.createLocalRepository(repositoryId);
+
+		return new CapabilityLocalRepository(
+			localRepository, repositoryDefinition.getSupportedCapabilities(),
+			repositoryDefinition.getExportedCapabilities(),
+			repositoryDefinition.getRepositoryEventTrigger());
 	}
 
 	protected Repository createExternalRepository(
@@ -101,6 +127,24 @@ public class RepositoryFactoryImpl implements RepositoryFactory {
 		return new CapabilityRepository(
 			repository, externalSupportedCapabilities,
 			externalExportedCapabilityClasses,
+			repositoryDefinition.getRepositoryEventTrigger());
+	}
+
+	protected LocalRepository createInternalLocalRepository(long repositoryId)
+		throws PortalException {
+
+		RepositoryDefinition repositoryDefinition = getRepositoryDefinition(
+			getDefaultClassNameId());
+
+		RepositoryCreator repositoryCreator =
+			repositoryDefinition.getRepositoryCreator();
+
+		LocalRepository localRepository =
+			repositoryCreator.createLocalRepository(repositoryId);
+
+		return new CapabilityLocalRepository(
+			localRepository, repositoryDefinition.getSupportedCapabilities(),
+			repositoryDefinition.getExportedCapabilities(),
 			repositoryDefinition.getRepositoryEventTrigger());
 	}
 
