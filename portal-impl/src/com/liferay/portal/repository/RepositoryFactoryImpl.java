@@ -54,12 +54,7 @@ public class RepositoryFactoryImpl implements RepositoryFactory {
 
 		long classNameId = getRepositoryClassNameId(repositoryId);
 
-		if (classNameId == getDefaultClassNameId()) {
-			return createInternalLocalRepository(repositoryId);
-		}
-		else {
-			return createExternalLocalRepository(repositoryId, classNameId);
-		}
+		return createExternalLocalRepository(repositoryId, classNameId);
 	}
 
 	@Override
@@ -68,12 +63,7 @@ public class RepositoryFactoryImpl implements RepositoryFactory {
 
 		long classNameId = getRepositoryClassNameId(repositoryId);
 
-		if (classNameId == getDefaultClassNameId()) {
-			return createInternalRepository(repositoryId);
-		}
-		else {
-			return createExternalRepository(repositoryId, classNameId);
-		}
+		return createExternalRepository(repositoryId, classNameId);
 	}
 
 	protected LocalRepository createExternalLocalRepository(
@@ -130,42 +120,6 @@ public class RepositoryFactoryImpl implements RepositoryFactory {
 			repositoryDefinition.getRepositoryEventTrigger());
 	}
 
-	protected LocalRepository createInternalLocalRepository(long repositoryId)
-		throws PortalException {
-
-		RepositoryDefinition repositoryDefinition = getRepositoryDefinition(
-			getDefaultClassNameId());
-
-		RepositoryCreator repositoryCreator =
-			repositoryDefinition.getRepositoryCreator();
-
-		LocalRepository localRepository =
-			repositoryCreator.createLocalRepository(repositoryId);
-
-		return new CapabilityLocalRepository(
-			localRepository, repositoryDefinition.getSupportedCapabilities(),
-			repositoryDefinition.getExportedCapabilities(),
-			repositoryDefinition.getRepositoryEventTrigger());
-	}
-
-	protected Repository createInternalRepository(long repositoryId)
-		throws PortalException {
-
-		RepositoryDefinition repositoryDefinition = getRepositoryDefinition(
-			getDefaultClassNameId());
-
-		RepositoryCreator repositoryCreator =
-			repositoryDefinition.getRepositoryCreator();
-
-		Repository repository = repositoryCreator.createRepository(
-			repositoryId);
-
-		return new CapabilityRepository(
-			repository, repositoryDefinition.getSupportedCapabilities(),
-			repositoryDefinition.getExportedCapabilities(),
-			repositoryDefinition.getRepositoryEventTrigger());
-	}
-
 	protected CMISRepositoryHandler getCMISRepositoryHandler(
 		Repository repository) {
 
@@ -185,15 +139,6 @@ public class RepositoryFactoryImpl implements RepositoryFactory {
 		}
 
 		return null;
-	}
-
-	protected long getDefaultClassNameId() {
-		if (_defaultClassNameId == 0) {
-			_defaultClassNameId = _classNameLocalService.getClassNameId(
-				LiferayRepository.class.getName());
-		}
-
-		return _defaultClassNameId;
 	}
 
 	protected DLFileEntryLocalService getDlFileEntryLocalService() {
@@ -256,8 +201,6 @@ public class RepositoryFactoryImpl implements RepositoryFactory {
 
 	@BeanReference(type = ClassNameLocalService.class)
 	private ClassNameLocalService _classNameLocalService;
-
-	private long _defaultClassNameId;
 
 	@BeanReference(type = DLFileEntryLocalService.class)
 	private DLFileEntryLocalService _dlFileEntryLocalService;
