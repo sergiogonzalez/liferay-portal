@@ -1263,7 +1263,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 		Map<Locale, String> localizedBodyMap = getEmailAssetEntryAddedBodyMap(
 			portletPreferences);
 
-		SubscriptionSender subscriptionSender = new SubscriptionSender();
+		SubscriptionSender subscriptionSender = new SubscriptionSender(true);
 
 		subscriptionSender.setCompanyId(assetEntry.getCompanyId());
 		subscriptionSender.setContextAttributes(

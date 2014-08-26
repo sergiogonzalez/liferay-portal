@@ -222,7 +222,7 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 
 		Date now = new Date();
 
-		SubscriptionSender subscriptionSender = new SubscriptionSender();
+		SubscriptionSender subscriptionSender = new SubscriptionSender(true);
 
 		subscriptionSender.setBody(body);
 		subscriptionSender.setCompanyId(company.getCompanyId());

@@ -2000,7 +2000,7 @@ public class DLAppHelperLocalServiceImpl
 			folderName = folder.getName();
 		}
 
-		SubscriptionSender subscriptionSender = new SubscriptionSender();
+		SubscriptionSender subscriptionSender = new SubscriptionSender(true);
 
 		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
 

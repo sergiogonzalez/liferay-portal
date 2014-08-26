@@ -644,7 +644,7 @@ public class ShoppingOrderLocalServiceImpl
 				shoppingSettings.getEmailOrderShippingBody();
 		}
 
-		SubscriptionSender subscriptionSender = new SubscriptionSender();
+		SubscriptionSender subscriptionSender = new SubscriptionSender(true);
 
 		subscriptionSender.setCompanyId(order.getCompanyId());
 		subscriptionSender.setContextAttributes(

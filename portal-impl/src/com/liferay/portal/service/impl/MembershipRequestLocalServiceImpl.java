@@ -319,7 +319,7 @@ public class
 			statusKey = "pending";
 		}
 
-		SubscriptionSender subscriptionSender = new SubscriptionSender();
+		SubscriptionSender subscriptionSender = new SubscriptionSender(true);
 
 		subscriptionSender.setBody(body);
 		subscriptionSender.setCompanyId(membershipRequest.getCompanyId());
