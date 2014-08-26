@@ -54,22 +54,6 @@ public class RepositoryFactoryImpl implements RepositoryFactory {
 
 		long classNameId = getRepositoryClassNameId(repositoryId);
 
-		return createExternalLocalRepository(repositoryId, classNameId);
-	}
-
-	@Override
-	public Repository createRepository(long repositoryId)
-		throws PortalException {
-
-		long classNameId = getRepositoryClassNameId(repositoryId);
-
-		return createExternalRepository(repositoryId, classNameId);
-	}
-
-	protected LocalRepository createExternalLocalRepository(
-			long repositoryId, long classNameId)
-		throws PortalException {
-
 		RepositoryDefinition repositoryDefinition = getRepositoryDefinition(
 			classNameId);
 
@@ -85,9 +69,11 @@ public class RepositoryFactoryImpl implements RepositoryFactory {
 			repositoryDefinition.getRepositoryEventTrigger());
 	}
 
-	protected Repository createExternalRepository(
-			long repositoryId, long classNameId)
+	@Override
+	public Repository createRepository(long repositoryId)
 		throws PortalException {
+
+		long classNameId = getRepositoryClassNameId(repositoryId);
 
 		RepositoryDefinition repositoryDefinition = getRepositoryDefinition(
 			classNameId);
