@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public interface RepositoryFactory {
 
-	public Repository create(long repositoryId) throws PortalException;
+	public Repository createRepository(long repositoryId)
+		throws PortalException;
 
 }

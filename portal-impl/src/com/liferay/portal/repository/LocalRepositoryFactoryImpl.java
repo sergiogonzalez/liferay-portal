@@ -39,7 +39,9 @@ import com.liferay.portlet.documentlibrary.service.DLFolderService;
  */
 public class LocalRepositoryFactoryImpl implements LocalRepositoryFactory {
 
-	public LocalRepository create(long repositoryId) throws PortalException {
+	public LocalRepository createLocalRepository(long repositoryId)
+		throws PortalException {
+
 		long classNameId = getRepositoryClassNameId(repositoryId);
 
 		if (classNameId == getDefaultClassNameId()) {

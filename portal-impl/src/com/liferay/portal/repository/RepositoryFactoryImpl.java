@@ -46,7 +46,9 @@ import java.util.Set;
  */
 public class RepositoryFactoryImpl implements RepositoryFactory {
 
-	public Repository create(long repositoryId) throws PortalException {
+	public Repository createRepository(long repositoryId)
+		throws PortalException {
+
 		long classNameId = getRepositoryClassNameId(repositoryId);
 
 		if (classNameId == getDefaultClassNameId()) {
