@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.Accessor;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
@@ -38,7 +37,6 @@ import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil;
-import com.liferay.portlet.trash.service.TrashEntryServiceUtil;
 import com.liferay.portlet.trash.service.TrashVersionLocalServiceUtil;
 
 import java.util.List;
@@ -188,10 +186,9 @@ public class LiferayTrashCapability implements TrashCapability {
 		List<TrashEntry> trashEntries = TrashEntryLocalServiceUtil.getEntries(
 			repositoryId, className);
 
-		long[] trashEntryIds = ListUtil.toLongArray(
-			trashEntries, _TRASH_ENTRY_ID_ACCESSOR);
-
-		TrashEntryServiceUtil.deleteEntries(trashEntryIds);
+		for (TrashEntry trashEntry : trashEntries) {
+			TrashEntryLocalServiceUtil.deleteTrashEntry(trashEntry);
+		}
 	}
 
 	protected void deleteTrashEntry(DLFileEntry dlFileEntry)
