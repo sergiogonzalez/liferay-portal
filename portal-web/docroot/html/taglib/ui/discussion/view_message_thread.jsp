@@ -14,23 +14,21 @@
  */
 --%>
 
-<%@ include file="/html/portlet/message_boards/init.jsp" %>
+<%@ include file="/html/taglib/ui/discussion/init.jsp" %>
 
 <%
-MBTreeWalker treeWalker = (MBTreeWalker)request.getAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER);
-MBMessage selMessage = (MBMessage)request.getAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_SEL_MESSAGE);
-MBMessage message = (MBMessage)request.getAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CUR_MESSAGE);
-MBCategory category = (MBCategory)request.getAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CATEGORY);
-MBThread thread = (MBThread)request.getAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_THREAD);
-boolean lastNode = ((Boolean)request.getAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_LAST_NODE)).booleanValue();
-int depth = ((Integer)request.getAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_DEPTH)).intValue();
+Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
+
+CommentTreeNodeDisplay commentTreeNodeDisplay =(CommentTreeNodeDisplay)request.getAttribute(DiscussionWebKeys.COMMENT_TREE_NODE_DISPLAY);
+
+Comment message = commentTreeNodeDisplay.getComment();
 %>
 
 <tr>
-	<td class="table-cell" style="padding-left: <%= depth * 10 %>px; width: 90%">
+	<td class="table-cell" style="padding-left: <%= commentTreeNodeDisplay.getDepth() * 10 %>px; width: 90%">
 		<c:if test="<%= !message.isRoot() %>">
 			<c:choose>
-				<c:when test="<%= !lastNode %>">
+				<c:when test="<%= !commentTreeNodeDisplay.isLastNode() %>">
 					<img alt="" src="<%= themeDisplay.getPathThemeImages() %>/message_boards/t.png" />
 				</c:when>
 				<c:otherwise>
@@ -40,7 +38,7 @@ int depth = ((Integer)request.getAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_DE
 		</c:if>
 
 		<%
-		String rowHREF = "#" + renderResponse.getNamespace() + "message_" + message.getMessageId();
+		String rowHREF = "#" + renderResponse.getNamespace() + "message_" + message.getCommentId();
 		%>
 
 		<a href="<%= rowHREF %>"><%= HtmlUtil.escape(StringUtil.shorten(message.getBody(), 50, StringPool.TRIPLE_PERIOD)) %></a>
@@ -61,7 +59,7 @@ int depth = ((Integer)request.getAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_DE
 				</c:choose>
 			</c:when>
 			<c:otherwise>
-				<%= HtmlUtil.escape(PortalUtil.getUserName(message)) %>
+				<%= HtmlUtil.escape(message.getUserNameNonAnonymous()) %>
 			</c:otherwise>
 		</c:choose>
 
@@ -76,27 +74,8 @@ int depth = ((Integer)request.getAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_DE
 </tr>
 
 <%
-List messages = treeWalker.getMessages();
-int[] range = treeWalker.getChildrenRange(message);
-
-depth++;
-
-for (int i = range[0]; i < range[1]; i++) {
-	MBMessage curMessage = (MBMessage)messages.get(i);
-
-	boolean lastChildNode = false;
-
-	if ((i + 1) == range[1]) {
-		lastChildNode = true;
-	}
-
-	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER, treeWalker);
-	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CATEGORY, category);
-	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CUR_MESSAGE, curMessage);
-	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_DEPTH, new Integer(depth));
-	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_LAST_NODE, Boolean.valueOf(lastChildNode));
-	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_SEL_MESSAGE, selMessage);
-	request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_THREAD, thread);
+for (CommentTreeNodeDisplay childCommentTreeNodeDisplay : commentTreeNodeDisplay.getChildren()) {
+	request.setAttribute(DiscussionWebKeys.COMMENT_TREE_NODE_DISPLAY, childCommentTreeNodeDisplay);
 %>
 
 	<liferay-util:include page="/html/taglib/ui/discussion/view_message_thread.jsp" />

@@ -15,8 +15,13 @@
 package com.liferay.portal.comment;
 
 import com.liferay.portal.kernel.comment.CommentManager;
+import com.liferay.portal.kernel.comment.CommentSectionDisplay;
+import com.liferay.portal.kernel.comment.DiscussionThreadView;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.Function;
+import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.theme.ThemeDisplay;
 
 /**
  * @author André de Oliveira
@@ -42,6 +47,18 @@ public class DummyCommentManagerImpl implements CommentManager {
 	public void addDiscussion(
 		long userId, long groupId, String className, long classPK,
 		String userName) {
+	}
+
+	@Override
+	public CommentSectionDisplay createCommentSectionDisplay(
+			long companyId, long userId, long scopeGroupId, String className,
+			long classPK, String permissionClassName, long permissionClassPK,
+			PermissionChecker permissionChecker, boolean hideControls,
+			boolean ratingsEnabled, DiscussionThreadView discussionThreadView,
+			ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		return new DummyCommentSectionDisplayImpl();
 	}
 
 	@Override

@@ -33,34 +33,18 @@ long userId = GetterUtil.getLong((String)request.getAttribute("liferay-ui:discus
 
 String strutsAction = ParamUtil.getString(request, "struts_action");
 
-String threadView = PropsValues.DISCUSSION_THREAD_VIEW;
+DiscussionThreadView discussionThreadView = DiscussionThreadView.valueOf(StringUtil.toUpperCase(PropsValues.DISCUSSION_THREAD_VIEW));
 
-MBMessageDisplay messageDisplay = MBMessageLocalServiceUtil.getDiscussionMessageDisplay(userId, scopeGroupId, className, classPK, WorkflowConstants.STATUS_ANY, threadView);
+CommentManager commentManager = CommentManagerUtil.getCommentManager();
 
-MBCategory category = messageDisplay.getCategory();
-MBThread thread = messageDisplay.getThread();
-MBTreeWalker treeWalker = messageDisplay.getTreeWalker();
-MBMessage rootMessage = null;
-List<MBMessage> messages = null;
-int messagesCount = 0;
-SearchContainer searchContainer = null;
-
-if (treeWalker != null) {
-	rootMessage = treeWalker.getRoot();
-	messages = treeWalker.getMessages();
-	messagesCount = messages.size();
-}
-else {
-	rootMessage = MBMessageLocalServiceUtil.getMessage(thread.getRootMessageId());
-	messagesCount = MBMessageLocalServiceUtil.getThreadMessagesCount(rootMessage.getThreadId(), WorkflowConstants.STATUS_ANY);
-}
+CommentSectionDisplay commentSectionDisplay = commentManager.createCommentSectionDisplay(company.getCompanyId(), userId, scopeGroupId, className, classPK, permissionClassName, permissionClassPK, permissionChecker, hideControls, ratingsEnabled, discussionThreadView, themeDisplay);
 
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>
 
 <div class="hide lfr-message-response" id="<portlet:namespace />discussion-status-messages"></div>
 
-<c:if test="<%= (messagesCount > 1) || MBDiscussionPermission.contains(permissionChecker, company.getCompanyId(), scopeGroupId, permissionClassName, permissionClassPK, userId, ActionKeys.VIEW) %>">
+<c:if test="<%= commentSectionDisplay.isDiscussionVisible() %>">
 	<div class="taglib-discussion" id="<portlet:namespace />discussion-container">
 		<aui:form action="<%= formAction %>" method="post" name="<%= formName %>">
 			<aui:input name="randomNamespace" type="hidden" value="<%= randomNamespace %>" />
@@ -74,7 +58,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 			<aui:input name="permissionClassPK" type="hidden" value="<%= permissionClassPK %>" />
 			<aui:input name="permissionOwnerId" type="hidden" value="<%= String.valueOf(userId) %>" />
 			<aui:input name="messageId" type="hidden" />
-			<aui:input name="threadId" type="hidden" value="<%= thread.getThreadId() %>" />
+			<aui:input name="threadId" type="hidden" value="<%= commentSectionDisplay.getThreadId() %>" />
 			<aui:input name="parentMessageId" type="hidden" />
 			<aui:input name="body" type="hidden" />
 			<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(WorkflowConstants.ACTION_PUBLISH) %>" />
@@ -82,15 +66,18 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 
 			<%
 			int i = 0;
-
-			MBMessage message = rootMessage;
 			%>
 
-			<c:if test="<%= !hideControls && MBDiscussionPermission.contains(permissionChecker, company.getCompanyId(), scopeGroupId, permissionClassName, permissionClassPK, userId, ActionKeys.ADD_DISCUSSION) %>">
+			<c:if test="<%= !hideControls && commentSectionDisplay.hasAddPermission() %>">
 				<aui:fieldset cssClass="add-comment" id='<%= randomNamespace + "messageScroll0" %>'>
-					<div id="<%= randomNamespace %>messageScroll<%= message.getMessageId() %>">
-						<aui:input name='<%= "messageId" + i %>' type="hidden" value="<%= message.getMessageId() %>" />
-						<aui:input name='<%= "parentMessageId" + i %>' type="hidden" value="<%= message.getMessageId() %>" />
+
+					<%
+					long rootMessageId = commentSectionDisplay.getRootCommentMessageId();
+					%>
+
+					<div id="<%= randomNamespace %>messageScroll<%= rootMessageId %>">
+						<aui:input name='<%= "messageId" + i %>' type="hidden" value="<%= rootMessageId %>" />
+						<aui:input name='<%= "parentMessageId" + i %>' type="hidden" value="<%= rootMessageId %>" />
 					</div>
 
 					<%
@@ -105,7 +92,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 						</c:when>
 						<c:otherwise>
 							<c:choose>
-								<c:when test="<%= messagesCount == 1 %>">
+								<c:when test="<%= !commentSectionDisplay.hasComments() %>">
 									<liferay-ui:message key="no-comments-yet" /> <a href="<%= taglibPostReplyURL %>"><liferay-ui:message key="be-the-first" /></a>
 								</c:when>
 								<c:otherwise>
@@ -126,7 +113,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 					String subscriptionURL = "javascript:" + randomNamespace + "subscribeToComments(" + !subscribed + ");";
 					%>
 
-					<c:if test="<%= themeDisplay.isSignedIn() && !TrashUtil.isInTrash(className, classPK) %>">
+					<c:if test="<%= commentSectionDisplay.isSubscriptionButtonVisible() %>">
 						<c:choose>
 							<c:when test="<%= subscribed %>">
 								<liferay-ui:icon
@@ -161,7 +148,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 							postReplyButtonLabel = LanguageUtil.get(request, "reply-as");
 						}
 
-						if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, MBDiscussion.class.getName()) && !strutsAction.contains("workflow")) {
+						if (commentSectionDisplay.hasWorkflowDefinitionLink() && !strutsAction.contains("workflow")) {
 							postReplyButtonLabel = LanguageUtil.get(request, "submit-for-publication");
 						}
 						%>
@@ -183,95 +170,53 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 				</aui:fieldset>
 			</c:if>
 
-			<c:if test="<%= messagesCount > 1 %>">
+			<c:if test="<%= commentSectionDisplay.hasComments() %>">
 				<a name="<%= randomNamespace %>messages_top"></a>
 
-				<c:if test="<%= treeWalker != null %>">
-				<table class="table table-bordered table-hover table-striped tree-walker">
-					<thead class="table-columns">
-					<tr>
-						<th class="table-header" colspan="2">
-							<liferay-ui:message key="threaded-replies" />
-						</th>
-						<th class="table-header" colspan="2">
-							<liferay-ui:message key="author" />
-						</th>
-						<th class="table-header">
-							<liferay-ui:message key="date" />
-						</th>
-					</tr>
-					</thead>
+				<c:if test="<%= commentSectionDisplay.isThreadedRepliesVisible() %>">
+					<table class="table table-bordered table-hover table-striped tree-walker">
+						<thead class="table-columns">
+							<tr>
+								<th class="table-header" colspan="2">
+									<liferay-ui:message key="threaded-replies" />
+								</th>
+								<th class="table-header" colspan="2">
+									<liferay-ui:message key="author" />
+								</th>
+								<th class="table-header">
+									<liferay-ui:message key="date" />
+								</th>
+							</tr>
+						</thead>
+						<tbody class="table-data">
 
-					<tbody class="table-data">
+						<%
+						for (CommentTreeNodeDisplay commentTreeNodeDisplay : commentSectionDisplay.getCommentTreeNodeDisplays()) {
+							request.setAttribute(DiscussionWebKeys.COMMENT_TREE_NODE_DISPLAY, commentTreeNodeDisplay);
+						%>
 
-					<%
-					int[] range = treeWalker.getChildrenRange(rootMessage);
+							<liferay-util:include page="/html/taglib/ui/discussion/view_message_thread.jsp" />
 
-					for (i = range[0]; i < range[1]; i++) {
-						message = (MBMessage)messages.get(i);
-
-						boolean lastChildNode = false;
-
-						if ((i + 1) == range[1]) {
-							lastChildNode = true;
+						<%
 						}
+						%>
 
-						request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER, treeWalker);
-						request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CATEGORY, category);
-						request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CUR_MESSAGE, message);
-						request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_DEPTH, new Integer(0));
-						request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_LAST_NODE, Boolean.valueOf(lastChildNode));
-						request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_SEL_MESSAGE, rootMessage);
-						request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_THREAD, thread);
-					%>
-
-						<liferay-util:include page="/html/taglib/ui/discussion/view_message_thread.jsp" />
-
-					<%
-					}
-					%>
-
-					</tbody>
-				</table>
-
+						</tbody>
+					</table>
 					<br />
 				</c:if>
 
 				<aui:row>
 
 					<%
-					if (messages != null) {
-						messages = ListUtil.sort(messages, new MessageCreateDateComparator(true));
+					List<Comment> comments = commentSectionDisplay.initComments(renderRequest, renderResponse);
 
-						messages = ListUtil.copy(messages);
+					int size = comments.size();
 
-						messages.remove(0);
-					}
-					else {
-						PortletURL currentURLObj = PortletURLUtil.getCurrent(renderRequest, renderResponse);
+					for (i = 1; i <= size; i++) {
+						Comment message = comments.get(i - 1);
 
-						searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, currentURLObj, null, null);
-
-						searchContainer.setTotal(messagesCount - 1);
-
-						messages = MBMessageLocalServiceUtil.getThreadRepliesMessages(message.getThreadId(), WorkflowConstants.STATUS_ANY, searchContainer.getStart(), searchContainer.getEnd());
-
-						searchContainer.setResults(messages);
-					}
-
-					List<Long> classPKs = new ArrayList<Long>();
-
-					for (MBMessage curMessage : messages) {
-						classPKs.add(curMessage.getMessageId());
-					}
-
-					List<RatingsEntry> ratingsEntries = RatingsEntryLocalServiceUtil.getEntries(themeDisplay.getUserId(), MBDiscussion.class.getName(), classPKs);
-					List<RatingsStats> ratingsStatsList = RatingsStatsLocalServiceUtil.getStats(MBDiscussion.class.getName(), classPKs);
-
-					for (i = 1; i <= messages.size(); i++) {
-						message = messages.get(i - 1);
-
-						if ((!message.isApproved() && ((message.getUserId() != user.getUserId()) || user.isDefaultUser()) && !permissionChecker.isGroupAdmin(scopeGroupId)) || !MBDiscussionPermission.contains(permissionChecker, company.getCompanyId(), scopeGroupId, permissionClassName, permissionClassPK, userId, ActionKeys.VIEW)) {
+						if (!commentSectionDisplay.isVisible(message)) {
 							continue;
 						}
 
@@ -280,17 +225,22 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 						if (i == 1) {
 							cssClass = "first";
 						}
-						else if (i == messages.size()) {
+						else if (i == size) {
 							cssClass = "last";
 						}
 					%>
 
 						<div class="lfr-discussion <%= cssClass %>">
-							<div id="<%= randomNamespace %>messageScroll<%= message.getMessageId() %>">
-								<a name="<%= randomNamespace %>message_<%= message.getMessageId() %>"></a>
 
-								<aui:input name='<%= "messageId" + i %>' type="hidden" value="<%= message.getMessageId() %>" />
-								<aui:input name='<%= "parentMessageId" + i %>' type="hidden" value="<%= message.getMessageId() %>" />
+							<%
+							long commentId = message.getMessageId();
+							%>
+
+							<div id="<%= randomNamespace %>messageScroll<%= commentId %>">
+								<a name="<%= randomNamespace %>message_<%= commentId %>"></a>
+
+								<aui:input name='<%= "messageId" + i %>' type="hidden" value="<%= commentId %>" />
+								<aui:input name='<%= "parentMessageId" + i %>' type="hidden" value="<%= commentId %>" />
 							</div>
 
 							<aui:row fluid="<%= true %>">
@@ -303,47 +253,32 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 								</aui:col>
 
 								<aui:col cssClass="lfr-discussion-body" width="75">
-									<c:if test="<%= (message != null) && !message.isApproved() %>">
-										<aui:model-context bean="<%= message %>" model="<%= MBMessage.class %>" />
+									<c:if test="<%= commentSectionDisplay.isWorkflowStatusVisible(message) %>">
+										<aui:model-context bean="<%= message %>" model="<%= message.getWorkflowStatusModelContextClass() %>" />
 
 										<div>
-											<aui:workflow-status model="<%= MBDiscussion.class %>" status="<%= message.getStatus() %>" />
+											<aui:workflow-status model="<%= message.getWorkflowStatusModelClass() %>" status="<%= message.getStatus() %>" />
 										</div>
 									</c:if>
 
 									<div class="lfr-discussion-message">
-
-										<%
-										String msgBody = message.getBody();
-
-										if (message.isFormatBBCode()) {
-											msgBody = MBUtil.getBBCodeHTML(msgBody, themeDisplay.getPathThemeImages());
-										}
-										%>
-
-										<%= msgBody %>
+										<%= commentSectionDisplay.getBodyFormatted(message) %>
 									</div>
 
 									<div class="lfr-discussion-controls">
-										<c:if test="<%= ratingsEnabled && !TrashUtil.isInTrash(message.getClassName(), message.getClassPK()) %>">
-
-											<%
-											RatingsEntry ratingsEntry = getRatingsEntry(ratingsEntries, message.getMessageId());
-											RatingsStats ratingStats = getRatingsStats(ratingsStatsList, message.getMessageId());
-											%>
-
+										<c:if test="<%= commentSectionDisplay.isRatingsVisible(message) %>">
 											<liferay-ui:ratings
-												className="<%= MBDiscussion.class.getName() %>"
-												classPK="<%= message.getMessageId() %>"
-												ratingsEntry="<%= ratingsEntry %>"
-												ratingsStats="<%= ratingStats %>"
+												className="<%= commentSectionDisplay.getRatingsClassName() %>"
+												classPK="<%= message.getRatingsClassPK() %>"
+												ratingsEntry="<%= commentSectionDisplay.getRatingsEntry(message) %>"
+												ratingsStats="<%= commentSectionDisplay.getRatingsStats(message) %>"
 												type="thumbs"
 											/>
 										</c:if>
 
-										<c:if test="<%= !hideControls && !TrashUtil.isInTrash(message.getClassName(), message.getClassPK()) %>">
+										<c:if test="<%= commentSectionDisplay.isDiscussionActionsVisible(message) %>">
 											<ul class="lfr-discussion-actions">
-												<c:if test="<%= MBDiscussionPermission.contains(permissionChecker, company.getCompanyId(), scopeGroupId, permissionClassName, permissionClassPK, userId, ActionKeys.ADD_DISCUSSION) %>">
+												<c:if test="<%= commentSectionDisplay.hasAddPermission() %>">
 													<li class="lfr-discussion-reply-to">
 
 														<%
@@ -374,7 +309,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 														/>
 													</li>
 
-													<c:if test="<%= MBDiscussionPermission.contains(permissionChecker, company.getCompanyId(), scopeGroupId, permissionClassName, permissionClassPK, message.getMessageId(), message.getUserId(), ActionKeys.UPDATE_DISCUSSION) %>">
+													<c:if test="<%= commentSectionDisplay.hasEditPermission(message) %>">
 
 														<%
 														String taglibEditURL = "javascript:" + randomNamespace + "showForm('" + randomNamespace + "editForm" + i + "', '" + namespace + randomNamespace + "editReplyBody" + i + "');" + randomNamespace + "hideForm('" + randomNamespace + "postReplyForm" + i + "', '" + namespace + randomNamespace + "postReplyBody" + i + "', '')";
@@ -390,7 +325,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 														</li>
 													</c:if>
 
-													<c:if test="<%= MBDiscussionPermission.contains(permissionChecker, company.getCompanyId(), scopeGroupId, permissionClassName, permissionClassPK, message.getMessageId(), message.getUserId(), ActionKeys.DELETE_DISCUSSION) %>">
+													<c:if test="<%= commentSectionDisplay.hasDeletePermission(message) %>">
 
 														<%
 														String taglibDeleteURL = "javascript:" + randomNamespace + "deleteMessage(" + i + ");";
@@ -432,17 +367,15 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 									</aui:button-row>
 								</div>
 
-								<c:if test="<%= !hideControls && MBDiscussionPermission.contains(permissionChecker, company.getCompanyId(), scopeGroupId, permissionClassName, permissionClassPK, message.getMessageId(), message.getUserId(), ActionKeys.UPDATE_DISCUSSION) %>">
+								<c:if test="<%= !hideControls && commentSectionDisplay.hasEditPermission(message) %>">
 									<div class="col-md-12 lfr-discussion-form lfr-discussion-form-edit" id="<%= randomNamespace %>editForm<%= i %>" style='<%= "display: none; max-width: " + ModelHintsConstants.TEXTAREA_DISPLAY_WIDTH + "px;" %>'>
 										<aui:input id='<%= randomNamespace + "editReplyBody" + i %>' label="" name='<%= "editReplyBody" + i %>' style='<%= "height: " + ModelHintsConstants.TEXTAREA_DISPLAY_HEIGHT + "px;" %>' title="reply-body" type="textarea" value="<%= message.getBody() %>" wrap="soft" />
 
 										<%
-										boolean pending = message.isPending();
-
 										String publishButtonLabel = LanguageUtil.get(request, "publish");
 
-										if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, MBDiscussion.class.getName())) {
-											if (pending) {
+										if (commentSectionDisplay.hasWorkflowDefinitionLink()) {
+											if (message.isPending()) {
 												publishButtonLabel = "save";
 											}
 											else {
@@ -466,13 +399,13 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 
 							<div class="lfr-discussion-posted-on">
 								<c:choose>
-									<c:when test="<%= message.getParentMessageId() == rootMessage.getMessageId() %>">
+									<c:when test="<%= commentSectionDisplay.isTopChild(message) %>">
 										<%= LanguageUtil.format(request, "posted-on-x", dateFormatDateTime.format(message.getModifiedDate()), false) %>
 									</c:when>
 									<c:otherwise>
 
 										<%
-										MBMessage parentMessage = MBMessageLocalServiceUtil.getMessage(message.getParentMessageId());
+										Comment parentMessage = commentSectionDisplay.getParentComment(message);
 										%>
 
 										<liferay-util:buffer var="buffer">
@@ -524,8 +457,8 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 
 				</aui:row>
 
-				<c:if test="<%= (searchContainer != null) && (searchContainer.getTotal() > searchContainer.getDelta()) %>">
-					<liferay-ui:search-paginator searchContainer="<%= searchContainer %>" />
+				<c:if test="<%= commentSectionDisplay.isSearchPaginatorVisible() %>">
+					<liferay-ui:search-paginator searchContainer="<%= commentSectionDisplay.getSearchContainer() %>" />
 				</c:if>
 			</c:if>
 		</aui:form>
@@ -833,25 +766,3 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 		);
 	</aui:script>
 </c:if>
-
-<%!
-private RatingsEntry getRatingsEntry(List<RatingsEntry> ratingEntries, long classPK) {
-	for (RatingsEntry ratingsEntry : ratingEntries) {
-		if (ratingsEntry.getClassPK() == classPK) {
-			return ratingsEntry;
-		}
-	}
-
-	return RatingsEntryUtil.create(0);
-}
-
-private RatingsStats getRatingsStats(List<RatingsStats> ratingsStatsList, long classPK) {
-	for (RatingsStats ratingsStats : ratingsStatsList) {
-		if (ratingsStats.getClassPK() == classPK) {
-			return ratingsStats;
-		}
-	}
-
-	return RatingsStatsUtil.create(0);
-}
-%>

@@ -16,7 +16,9 @@ package com.liferay.portal.kernel.comment;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.Function;
+import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.theme.ThemeDisplay;
 
 /**
  * @author André de Oliveira
@@ -37,6 +39,14 @@ public interface CommentManager {
 	public void addDiscussion(
 			long userId, long groupId, String className, long classPK,
 			String userName)
+		throws PortalException;
+
+	public CommentSectionDisplay createCommentSectionDisplay(
+			long companyId, long userId, long scopeGroupId, String className,
+			long classPK, String permissionClassName, long permissionClassPK,
+			PermissionChecker permissionChecker, boolean hideControls,
+			boolean ratingsEnabled, DiscussionThreadView discussionThreadView,
+			ThemeDisplay themeDisplay)
 		throws PortalException;
 
 	public void deleteComment(long commentId) throws PortalException;
