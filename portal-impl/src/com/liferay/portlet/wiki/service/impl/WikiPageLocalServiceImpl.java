@@ -1688,9 +1688,14 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			}
 		}
 
+		serviceContext.setCommand(Constants.RENAME);
+
 		WikiPage page = getPage(nodeId, title);
 
-		serviceContext.setCommand(Constants.RENAME);
+		if (Validator.isNotNull(page.getRedirectTitle())) {
+			page.setRedirectTitle(StringPool.BLANK);
+			page.setSummary(StringPool.BLANK);
+		}
 
 		updatePage(
 			userId, page, 0, newTitle, page.getContent(), page.getSummary(),
@@ -2391,8 +2396,11 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			newNodeId, title, WorkflowConstants.STATUS_ANY, false);
 
 		if (page == null) {
-			page = getLatestPage(
-				nodeId, title, WorkflowConstants.STATUS_ANY, false);
+			if (versionPages.isEmpty()) {
+				throw new NoSuchPageException();
+			}
+
+			page = versionPages.get(versionPages.size() - 1);
 		}
 
 		for (WikiPage versionPage : versionPages) {
@@ -2446,18 +2454,17 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			nodeId, newTitle, WorkflowConstants.STATUS_ANY, false);
 
 		if (page == null) {
-			page = getLatestPage(
-				nodeId, title, WorkflowConstants.STATUS_ANY, false);
+			if (versionPages.isEmpty()) {
+				throw new NoSuchPageException();
+			}
+
+			page = versionPages.get(versionPages.size() - 1);
 		}
 
 		for (WikiPage versionPage : versionPages) {
+			versionPage.setRedirectTitle(page.getRedirectTitle());
+			versionPage.setSummary(page.getSummary());
 			versionPage.setTitle(newTitle);
-
-			if (Validator.isNotNull(versionPage.getRedirectTitle())) {
-				versionPage.setRedirectTitle(StringPool.BLANK);
-
-				versionPage.setSummary(StringPool.BLANK);
-			}
 
 			wikiPagePersistence.update(versionPage);
 		}
@@ -2477,7 +2484,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		double version = WikiPageConstants.VERSION_DEFAULT;
 		String summary = LanguageUtil.format(
-			serviceContext.getLocale(), "moved-to-x", newTitle);
+			serviceContext.getLocale(), "renamed-as-x", newTitle);
 		String format = page.getFormat();
 		boolean head = true;
 		String parentTitle = page.getParentTitle();
