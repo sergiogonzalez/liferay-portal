@@ -54,7 +54,8 @@ public class LocalRepositoryFactoryTest {
 
 		DLFolder dlFolder = DLTestUtil.addDLFolder(_group.getGroupId());
 
-		LocalRepositoryFactoryUtil.create(dlFolder.getRepositoryId());
+		LocalRepositoryFactoryUtil.createLocalRepository(
+			dlFolder.getRepositoryId());
 	}
 
 	@Test
@@ -63,7 +64,7 @@ public class LocalRepositoryFactoryTest {
 
 		long repositoryId = RandomTestUtil.nextLong();
 
-		LocalRepositoryFactoryUtil.create(repositoryId);
+		LocalRepositoryFactoryUtil.createLocalRepository(repositoryId);
 	}
 
 	@DeleteAfterTestRun

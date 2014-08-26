@@ -46,7 +46,9 @@ import java.util.Set;
  */
 public class RepositoryFactoryImpl implements RepositoryFactory {
 
-	public Repository create(long repositoryId) throws PortalException {
+	public Repository createRepository(long repositoryId)
+		throws PortalException {
+
 		long classNameId = getRepositoryClassNameId(repositoryId);
 
 		if (classNameId == getDefaultClassNameId()) {
@@ -164,7 +166,9 @@ public class RepositoryFactoryImpl implements RepositoryFactory {
 		return _dlFolderService;
 	}
 
-	protected com.liferay.portal.model.Repository getRepository(long repositoryId) {
+	protected com.liferay.portal.model.Repository getRepository(
+		long repositoryId) {
+
 		RepositoryLocalService repositoryLocalService =
 			getRepositoryLocalService();
 
@@ -172,8 +176,8 @@ public class RepositoryFactoryImpl implements RepositoryFactory {
 	}
 
 	protected long getRepositoryClassNameId(long repositoryId) {
-		com.liferay.portal.model.Repository repository = _repositoryLocalService.fetchRepository(
-			repositoryId);
+		com.liferay.portal.model.Repository repository =
+			_repositoryLocalService.fetchRepository(repositoryId);
 
 		if (repository != null) {
 			return repository.getClassNameId();

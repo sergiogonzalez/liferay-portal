@@ -89,7 +89,7 @@ public class RepositoryLocalServiceImpl
 		repositoryPersistence.update(repository);
 
 		try {
-			RepositoryFactoryUtil.create(repositoryId);
+			RepositoryFactoryUtil.createRepository(repositoryId);
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {
@@ -234,7 +234,8 @@ public class RepositoryLocalServiceImpl
 			return localRepositoryImpl;
 		}
 
-		localRepositoryImpl = LocalRepositoryFactoryUtil.create(repositoryId);
+		localRepositoryImpl = LocalRepositoryFactoryUtil.createLocalRepository(
+			repositoryId);
 
 		checkRepository(repositoryId);
 
@@ -261,7 +262,8 @@ public class RepositoryLocalServiceImpl
 		long repositoryId = getRepositoryId(
 			folderId, fileEntryId, fileVersionId);
 
-		localRepositoryImpl = LocalRepositoryFactoryUtil.create(repositoryId);
+		localRepositoryImpl = LocalRepositoryFactoryUtil.createLocalRepository(
+			repositoryId);
 
 		checkRepository(localRepositoryImpl.getRepositoryId());
 
@@ -302,7 +304,7 @@ public class RepositoryLocalServiceImpl
 			return repositoryImpl;
 		}
 
-		repositoryImpl = RepositoryFactoryUtil.create(repositoryId);
+		repositoryImpl = RepositoryFactoryUtil.createRepository(repositoryId);
 
 		checkRepository(repositoryId);
 
@@ -329,7 +331,7 @@ public class RepositoryLocalServiceImpl
 		long repositoryId = getRepositoryId(
 			folderId, fileEntryId, fileVersionId);
 
-		repositoryImpl = RepositoryFactoryUtil.create(repositoryId);
+		repositoryImpl = RepositoryFactoryUtil.createRepository(repositoryId);
 
 		checkRepository(repositoryImpl.getRepositoryId());
 
