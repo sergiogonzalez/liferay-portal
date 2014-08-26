@@ -197,6 +197,10 @@ public class LiferayTrashCapability implements TrashCapability {
 	protected void deleteTrashEntry(DLFileEntry dlFileEntry)
 		throws PortalException {
 
+		if (!dlFileEntry.isInTrash()) {
+			return;
+		}
+
 		if (dlFileEntry.isInTrashExplicitly()) {
 			TrashEntryLocalServiceUtil.deleteEntry(
 				DLFileEntryConstants.getClassName(),
@@ -215,6 +219,10 @@ public class LiferayTrashCapability implements TrashCapability {
 	}
 
 	protected void deleteTrashEntry(DLFolder dlFolder) throws PortalException {
+		if (!dlFolder.isInTrash()) {
+			return;
+		}
+
 		if (dlFolder.isInTrashExplicitly()) {
 			TrashEntryLocalServiceUtil.deleteEntry(
 				DLFolderConstants.getClassName(), dlFolder.getFolderId());
