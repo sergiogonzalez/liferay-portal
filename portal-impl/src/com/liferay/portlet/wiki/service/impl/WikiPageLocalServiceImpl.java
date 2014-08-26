@@ -101,6 +101,7 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -2400,6 +2401,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 				throw new NoSuchPageException();
 			}
 
+			Collections.sort(versionPages, new PageVersionComparator());
+
 			page = versionPages.get(versionPages.size() - 1);
 		}
 
@@ -2457,6 +2460,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			if (versionPages.isEmpty()) {
 				throw new NoSuchPageException();
 			}
+
+			Collections.sort(versionPages, new PageVersionComparator());
 
 			page = versionPages.get(versionPages.size() - 1);
 		}
