@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.notifications.UserNotificationManagerUtil;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackRegistryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ClassLoaderPool;
 import com.liferay.portal.kernel.util.EscapableObject;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -36,6 +37,7 @@ import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Subscription;
@@ -75,6 +77,14 @@ import javax.mail.internet.InternetAddress;
  * @author Sergio González
  */
 public class SubscriptionSender implements Serializable {
+
+	public SubscriptionSender() {
+		this(DEFAULT_ADD_UNIQUE_MAIL_ID);
+	}
+
+	public SubscriptionSender(boolean addUniqueMailId) {
+		this.addUniqueMailId = addUniqueMailId;
+	}
 
 	public void addFileAttachment(File file) {
 		addFileAttachment(file, null);
@@ -219,6 +229,10 @@ public class SubscriptionSender implements Serializable {
 		);
 	}
 
+	public boolean getAddUniqueMailId() {
+		return addUniqueMailId;
+	}
+
 	public Object getContextAttribute(String key) {
 		return _context.get(key);
 	}
@@ -260,8 +274,19 @@ public class SubscriptionSender implements Serializable {
 				PortalUtil.getUserName(userId, StringPool.BLANK));
 		}
 
-		mailId = PortalUtil.getMailId(
-			company.getMx(), _mailIdPopPortletPrefix, _mailIdIds);
+		if (addUniqueMailId) {
+			mailId = PortalUtil.getMailId(
+				company.getMx(), _mailIdPopPortletPrefix,
+				ArrayUtil.append(_mailIdIds, PortalUUIDUtil.generate()));
+		}
+		else {
+			mailId = PortalUtil.getMailId(
+				company.getMx(), _mailIdPopPortletPrefix, _mailIdIds);
+		}
+	}
+
+	public void setAddUniqueMailId(boolean addUniqueMailId) {
+		this.addUniqueMailId = addUniqueMailId;
 	}
 
 	public void setBody(String body) {
@@ -795,6 +820,9 @@ public class SubscriptionSender implements Serializable {
 		}
 	}
 
+	protected static final boolean DEFAULT_ADD_UNIQUE_MAIL_ID = false;
+
+	protected boolean addUniqueMailId;
 	protected String body;
 	protected boolean bulk;
 	protected long companyId;
