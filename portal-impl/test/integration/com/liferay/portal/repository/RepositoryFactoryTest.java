@@ -49,6 +49,24 @@ public class RepositoryFactoryTest {
 	}
 
 	@Test
+	public void testCreateLocalRepositoryFromExistingRepositoryId()
+		throws Exception {
+
+		DLFolder dlFolder = DLTestUtil.addDLFolder(_group.getGroupId());
+
+		RepositoryFactoryUtil.createLocalRepository(dlFolder.getRepositoryId());
+	}
+
+	@Test
+	public void testCreateLocalRepositoryFromNonexistentRepositoryId()
+		throws Exception {
+
+		long repositoryId = RandomTestUtil.nextLong();
+
+		RepositoryFactoryUtil.createLocalRepository(repositoryId);
+	}
+
+	@Test
 	public void testCreateRepositoryFromExistingRepositoryId()
 		throws Exception {
 

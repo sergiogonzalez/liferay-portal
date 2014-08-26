@@ -17,6 +17,8 @@ package com.liferay.portal.repository;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.repository.LocalRepository;
+import com.liferay.portal.kernel.repository.LocalRepositoryFactoryUtil;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
 import com.liferay.portal.kernel.repository.capabilities.Capability;
@@ -46,6 +48,14 @@ import java.util.Set;
  */
 public class RepositoryFactoryImpl implements RepositoryFactory {
 
+	@Override
+	public LocalRepository createLocalRepository(long repositoryId)
+		throws PortalException {
+
+		return LocalRepositoryFactoryUtil.createLocalRepository(repositoryId);
+	}
+
+	@Override
 	public Repository createRepository(long repositoryId)
 		throws PortalException {
 
