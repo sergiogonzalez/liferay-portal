@@ -15,6 +15,7 @@
 package com.liferay.portal.comment;
 
 import com.liferay.portal.kernel.comment.Comment;
+import com.liferay.portal.kernel.comment.CommentPermissionChecker;
 import com.liferay.portal.kernel.comment.CommentSectionDisplay;
 import com.liferay.portal.kernel.comment.CommentTreeNodeDisplay;
 import com.liferay.portal.kernel.comment.DiscussionThreadView;
@@ -25,7 +26,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.parsers.bbcode.BBCodeUtil;
-import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -37,7 +37,6 @@ import com.liferay.portlet.messageboards.model.MBMessageDisplay;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.model.MBTreeWalker;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
-import com.liferay.portlet.messageboards.service.permission.MBDiscussionPermission;
 import com.liferay.portlet.messageboards.util.comparator.MessageCreateDateComparator;
 import com.liferay.portlet.ratings.model.RatingsEntry;
 import com.liferay.portlet.ratings.model.RatingsStats;
@@ -60,10 +59,11 @@ import javax.portlet.RenderResponse;
 public class CommentSectionDisplayImpl implements CommentSectionDisplay {
 
 	public CommentSectionDisplayImpl(
-			long companyId, long userId, long scopeGroupId, String className,
-			long classPK, String permissionClassName, long permissionClassPK,
+			long userId, long scopeGroupId, String className, long classPK,
 			PermissionChecker permissionChecker, boolean hideControls,
-			boolean ratingsEnabled, DiscussionThreadView discussionThreadView,
+			boolean ratingsEnabled,
+			CommentPermissionChecker commentPermissionChecker,
+			DiscussionThreadView discussionThreadView,
 			ThemeDisplay themeDisplay)
 		throws PortalException {
 
@@ -95,13 +95,11 @@ public class CommentSectionDisplayImpl implements CommentSectionDisplay {
 
 		_className = className;
 		_classPK = classPK;
-		_companyId = companyId;
+		_commentPermissionChecker = commentPermissionChecker;
 		_hideControls = hideControls;
 		_messages = messages;
 		_messagesCount = messagesCount;
 		_permissionChecker = permissionChecker;
-		_permissionClassName = permissionClassName;
-		_permissionClassPK = permissionClassPK;
 		_rootMessage = rootMessage;
 		_searchContainer = searchContainer;
 		_ratingsEnabled = ratingsEnabled;
@@ -110,7 +108,6 @@ public class CommentSectionDisplayImpl implements CommentSectionDisplay {
 		_thread = thread;
 		_treeWalker = treeWalker;
 		_user = themeDisplay.getUser();
-		_userId = userId;
 	}
 
 	@Override
@@ -188,9 +185,7 @@ public class CommentSectionDisplayImpl implements CommentSectionDisplay {
 
 	@Override
 	public boolean hasAddPermission() {
-		return MBDiscussionPermission.contains(
-			_permissionChecker, _companyId, _scopeGroupId, _permissionClassName,
-			_permissionClassPK, _userId, ActionKeys.ADD_DISCUSSION);
+		return _commentPermissionChecker.hasAddPermission();
 	}
 
 	@Override
@@ -200,18 +195,12 @@ public class CommentSectionDisplayImpl implements CommentSectionDisplay {
 
 	@Override
 	public boolean hasDeletePermission(Comment comment) throws PortalException {
-		return MBDiscussionPermission.contains(
-			_permissionChecker, _companyId, _scopeGroupId, _permissionClassName,
-			_permissionClassPK, comment.getMessageId(), comment.getUserId(),
-			ActionKeys.DELETE_DISCUSSION);
+		return _commentPermissionChecker.hasDeletePermission(comment);
 	}
 
 	@Override
 	public boolean hasEditPermission(Comment comment) throws PortalException {
-		return MBDiscussionPermission.contains(
-			_permissionChecker, _companyId, _scopeGroupId, _permissionClassName,
-			_permissionClassPK, comment.getMessageId(), comment.getUserId(),
-			ActionKeys.UPDATE_DISCUSSION);
+		return _commentPermissionChecker.hasEditPermission(comment);
 	}
 
 	@Override
@@ -283,10 +272,7 @@ public class CommentSectionDisplayImpl implements CommentSectionDisplay {
 	@Override
 	public boolean isDiscussionVisible() {
 		return (_messagesCount > 1) ||
-			MBDiscussionPermission.contains(
-				_permissionChecker, _companyId, _scopeGroupId,
-				_permissionClassName, _permissionClassPK, _userId,
-				ActionKeys.VIEW);
+			_commentPermissionChecker.hasViewPermission();
 	}
 
 	@Override
@@ -325,10 +311,7 @@ public class CommentSectionDisplayImpl implements CommentSectionDisplay {
 			((comment.getUserId() != _user.getUserId()) ||
 				_user.isDefaultUser()) &&
 					!_permissionChecker.isGroupAdmin(_scopeGroupId)) ||
-						!MBDiscussionPermission.contains(
-							_permissionChecker, _companyId, _scopeGroupId,
-							_permissionClassName, _permissionClassPK, _userId,
-							ActionKeys.VIEW));
+						!_commentPermissionChecker.hasViewPermission());
 	}
 
 	@Override
@@ -342,13 +325,11 @@ public class CommentSectionDisplayImpl implements CommentSectionDisplay {
 
 	private final String _className;
 	private final long _classPK;
-	private final long _companyId;
+	private final CommentPermissionChecker _commentPermissionChecker;
 	private final boolean _hideControls;
 	private final List<MBMessage> _messages;
 	private final int _messagesCount;
 	private final PermissionChecker _permissionChecker;
-	private final String _permissionClassName;
-	private final long _permissionClassPK;
 	private final boolean _ratingsEnabled;
 	private List<RatingsEntry> _ratingsEntries;
 	private List<RatingsStats> _ratingsStatsList;
@@ -359,6 +340,5 @@ public class CommentSectionDisplayImpl implements CommentSectionDisplay {
 	private final MBThread _thread;
 	private final MBTreeWalker _treeWalker;
 	private final User _user;
-	private final long _userId;
 
 }

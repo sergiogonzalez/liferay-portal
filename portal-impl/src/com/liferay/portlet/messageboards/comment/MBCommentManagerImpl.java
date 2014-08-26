@@ -16,6 +16,7 @@ package com.liferay.portlet.messageboards.comment;
 
 import com.liferay.portal.comment.CommentSectionDisplayImpl;
 import com.liferay.portal.kernel.comment.CommentManager;
+import com.liferay.portal.kernel.comment.CommentPermissionChecker;
 import com.liferay.portal.kernel.comment.CommentSectionDisplay;
 import com.liferay.portal.kernel.comment.DiscussionThreadView;
 import com.liferay.portal.kernel.comment.DuplicateCommentException;
@@ -117,10 +118,15 @@ public class MBCommentManagerImpl implements CommentManager {
 			ThemeDisplay themeDisplay)
 		throws PortalException {
 
+		CommentPermissionChecker commentPermissionChecker =
+			new MBCommentPermissionCheckerImpl(
+				companyId, userId, scopeGroupId, permissionClassName,
+				permissionClassPK, permissionChecker);
+
 		return new CommentSectionDisplayImpl(
-			companyId, userId, scopeGroupId, className, classPK,
-			permissionClassName, permissionClassPK, permissionChecker,
-			hideControls, ratingsEnabled, discussionThreadView, themeDisplay);
+			userId, scopeGroupId, className, classPK, permissionChecker,
+			hideControls, ratingsEnabled, commentPermissionChecker,
+			discussionThreadView, themeDisplay);
 	}
 
 	@Override
