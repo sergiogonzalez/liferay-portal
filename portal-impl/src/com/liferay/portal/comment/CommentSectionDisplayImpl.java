@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.User;
+import com.liferay.portal.parsers.bbcode.BBCodeUtil;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.WorkflowDefinitionLinkLocalServiceUtil;
@@ -37,7 +38,6 @@ import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.model.MBTreeWalker;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.permission.MBDiscussionPermission;
-import com.liferay.portlet.messageboards.util.MBUtil;
 import com.liferay.portlet.messageboards.util.comparator.MessageCreateDateComparator;
 import com.liferay.portlet.ratings.model.RatingsEntry;
 import com.liferay.portlet.ratings.model.RatingsStats;
@@ -118,7 +118,7 @@ public class CommentSectionDisplayImpl implements CommentSectionDisplay {
 		String msgBody = comment.getBody();
 
 		if (comment.isFormatBBCode()) {
-			msgBody = MBUtil.getBBCodeHTML(
+			msgBody = BBCodeUtil.getBBCodeHTML(
 				msgBody, _themeDisplay.getPathThemeImages());
 		}
 

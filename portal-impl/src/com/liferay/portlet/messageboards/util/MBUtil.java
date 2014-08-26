@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
@@ -50,6 +49,8 @@ import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.Subscription;
 import com.liferay.portal.model.ThemeConstants;
 import com.liferay.portal.model.UserGroup;
+import com.liferay.portal.parsers.bbcode.BBCodeConstants;
+import com.liferay.portal.parsers.bbcode.BBCodeUtil;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
@@ -116,7 +117,7 @@ public class MBUtil {
 		"editor.wysiwyg.portal-web.docroot.html.portlet.message_boards." +
 			"edit_message.bb_code.jsp";
 
-	public static final String EMOTICONS = "/emoticons";
+	public static final String EMOTICONS = BBCodeConstants.EMOTICONS_PATH;
 
 	public static final String MESSAGE_POP_PORTLET_PREFIX = "mb_message.";
 
@@ -312,10 +313,7 @@ public class MBUtil {
 	}
 
 	public static String getBBCodeHTML(String msgBody, String pathThemeImages) {
-		return StringUtil.replace(
-			BBCodeTranslatorUtil.getHTML(msgBody),
-			ThemeConstants.TOKEN_THEME_IMAGES_PATH + EMOTICONS,
-			pathThemeImages + EMOTICONS);
+		return BBCodeUtil.getBBCodeHTML(msgBody, pathThemeImages);
 	}
 
 	public static long getCategoryId(
