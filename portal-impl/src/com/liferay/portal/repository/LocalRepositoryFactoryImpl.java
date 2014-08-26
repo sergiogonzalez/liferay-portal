@@ -45,14 +45,14 @@ public class LocalRepositoryFactoryImpl implements LocalRepositoryFactory {
 		long classNameId = getRepositoryClassNameId(repositoryId);
 
 		if (classNameId == getDefaultClassNameId()) {
-			return createInternalRepository(repositoryId);
+			return createInternalLocalRepository(repositoryId);
 		}
 		else {
-			return createExternalRepository(repositoryId, classNameId);
+			return createExternalLocalRepository(repositoryId, classNameId);
 		}
 	}
 
-	protected LocalRepository createExternalRepository(
+	protected LocalRepository createExternalLocalRepository(
 			long repositoryId, long classNameId)
 		throws PortalException {
 
@@ -71,7 +71,7 @@ public class LocalRepositoryFactoryImpl implements LocalRepositoryFactory {
 			repositoryDefinition.getRepositoryEventTrigger());
 	}
 
-	protected LocalRepository createInternalRepository(long repositoryId)
+	protected LocalRepository createInternalLocalRepository(long repositoryId)
 		throws PortalException {
 
 		RepositoryDefinition repositoryDefinition = getRepositoryDefinition(
