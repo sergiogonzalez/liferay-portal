@@ -14,12 +14,15 @@
 
 package com.liferay.portlet.messageboards.comment;
 
+import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.DiscussionDisplay;
 import com.liferay.portal.kernel.comment.DiscussionRootComment;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBMessageDisplay;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.model.MBTreeWalker;
+import com.liferay.portlet.messageboards.service.MBMessageLocalService;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 /**
@@ -28,12 +31,14 @@ import com.liferay.portlet.trash.util.TrashUtil;
 public class MBDiscussionDisplayImpl implements DiscussionDisplay {
 
 	public MBDiscussionDisplayImpl(
-			String className, long classPK, MBMessageDisplay mbMessageDisplay)
+			String className, long classPK, MBMessageDisplay mbMessageDisplay,
+			MBMessageLocalService mbMessageLocalService)
 		throws PortalException {
 
 		_className = className;
 		_classPK = classPK;
 		_mbMessageDisplay = mbMessageDisplay;
+		_mbMessageLocalService = mbMessageLocalService;
 	}
 
 	@Override
@@ -51,6 +56,16 @@ public class MBDiscussionDisplayImpl implements DiscussionDisplay {
 	}
 
 	@Override
+	public Comment getParent(Comment comment) throws PortalException {
+		MBMessage mbMessage = getMBMessage(comment);
+
+		MBMessage parent = _mbMessageLocalService.getMessage(
+			mbMessage.getParentMessageId());
+
+		return new MBCommentImpl(parent);
+	}
+
+	@Override
 	public long getThreadId() {
 		MBThread mbThread = _mbMessageDisplay.getThread();
 
@@ -62,8 +77,13 @@ public class MBDiscussionDisplayImpl implements DiscussionDisplay {
 		return TrashUtil.isInTrash(_className, _classPK);
 	}
 
+	protected MBMessage getMBMessage(Comment comment) {
+		return ((MBCommentImpl)comment).getMBMessage();
+	}
+
 	private final String _className;
 	private final long _classPK;
 	private final MBMessageDisplay _mbMessageDisplay;
+	private final MBMessageLocalService _mbMessageLocalService;
 
 }

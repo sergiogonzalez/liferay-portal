@@ -34,7 +34,6 @@ import com.liferay.portlet.messageboards.comment.MBThreadDiscussionRootCommentIm
 import com.liferay.portlet.messageboards.comment.MBTreeWalkerDiscussionRootCommentImpl;
 import com.liferay.portlet.messageboards.model.MBDiscussion;
 import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.util.comparator.MessageCreateDateComparator;
 import com.liferay.portlet.ratings.model.RatingsEntry;
 import com.liferay.portlet.ratings.model.RatingsStats;
@@ -105,9 +104,7 @@ public class CommentSectionDisplayImpl implements CommentSectionDisplay {
 
 	@Override
 	public Comment getParentComment(Comment comment) throws PortalException {
-		MBMessage message = getMBMessage(comment);
-		return new MBCommentImpl(
-			MBMessageLocalServiceUtil.getMessage(message.getParentMessageId()));
+		return _discussionDisplay.getParent(comment);
 	}
 
 	@Override

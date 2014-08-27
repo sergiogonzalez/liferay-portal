@@ -173,7 +173,7 @@ public class MBCommentManagerImpl implements CommentManager {
 				WorkflowConstants.STATUS_ANY, threadView);
 
 		return new MBDiscussionDisplayImpl(
-			className, classPK, mbMessageDisplay);
+			className, classPK, mbMessageDisplay, _mbMessageLocalService);
 	}
 
 	private MBMessageLocalService _mbMessageLocalService;
