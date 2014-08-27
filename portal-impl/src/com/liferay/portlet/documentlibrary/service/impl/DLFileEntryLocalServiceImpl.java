@@ -166,8 +166,6 @@ public class DLFileEntryLocalServiceImpl
 			}
 		}
 
-		String filename = getFilename(title);
-
 		// File entry
 
 		User user = userPersistence.findByPrimaryKey(userId);
@@ -176,6 +174,7 @@ public class DLFileEntryLocalServiceImpl
 		String name = String.valueOf(
 			counterLocalService.increment(DLFileEntry.class.getName()));
 		String extension = DLAppUtil.getExtension(title, sourceFileName);
+		String filename = getFilename(title, extension);
 
 		if (fileEntryTypeId == -1) {
 			fileEntryTypeId =
@@ -2022,9 +2021,17 @@ public class DLFileEntryLocalServiceImpl
 		}
 	}
 
-	protected String getFilename(String title) {
-		return StringUtil.replace(
+	protected String getFilename(String title, String extension) {
+		String filename = StringUtil.replace(
 			title, StringPool.SLASH, StringPool.UNDERLINE);
+
+		if (Validator.isNotNull(extension) &&
+			!filename.endsWith(StringPool.PERIOD + extension)) {
+
+			filename += StringPool.PERIOD + extension;
+		}
+
+		return filename;
 	}
 
 	protected String getNextVersion(
@@ -2364,7 +2371,7 @@ public class DLFileEntryLocalServiceImpl
 				}
 			}
 
-			String filename = getFilename(title);
+			String filename = getFilename(title, extension);
 
 			Date now = new Date();
 
