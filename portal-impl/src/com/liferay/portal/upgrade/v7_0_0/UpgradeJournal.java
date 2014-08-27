@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -102,11 +103,16 @@ public class UpgradeJournal extends UpgradeProcess {
 			increment(), groupId, companyId, name, localizedName,
 			localizedDescription, xsd);
 
-		String templateFileName = structureElement.elementText("template");
+		Element templateElement = structureElement.element("template");
+
+		String fileName = templateElement.elementText("file-name");
+		boolean cacheable = GetterUtil.getBoolean(
+			templateElement.elementText("cacheable"));
 
 		addDDMTemplate(
 			increment(), groupId, companyId, ddmStructureId, name,
-			localizedName, localizedDescription, getContent(templateFileName));
+			localizedName, localizedDescription, getContent(fileName),
+			cacheable);
 
 		return name;
 	}
@@ -188,7 +194,7 @@ public class UpgradeJournal extends UpgradeProcess {
 	protected long addDDMTemplate(
 			long ddmTemplateId, long groupId, long companyId,
 			long ddmStructureId, String templateKey, String localizedName,
-			String localizedDescription, String script)
+			String localizedDescription, String script, boolean cacheable)
 		throws Exception {
 
 		Timestamp now = new Timestamp(System.currentTimeMillis());
@@ -229,7 +235,7 @@ public class UpgradeJournal extends UpgradeProcess {
 			ps.setString(15, DDMTemplateConstants.TEMPLATE_MODE_CREATE);
 			ps.setString(16, TemplateConstants.LANG_TYPE_FTL);
 			ps.setString(17, script);
-			ps.setBoolean(18, false);
+			ps.setBoolean(18, cacheable);
 			ps.setBoolean(19, false);
 			ps.setLong(20, 0);
 			ps.setString(21, StringPool.BLANK);
