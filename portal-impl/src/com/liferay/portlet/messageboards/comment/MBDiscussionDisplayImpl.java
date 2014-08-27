@@ -15,6 +15,7 @@
 package com.liferay.portlet.messageboards.comment;
 
 import com.liferay.portal.kernel.comment.DiscussionDisplay;
+import com.liferay.portal.kernel.comment.DiscussionRootComment;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portlet.messageboards.model.MBMessageDisplay;
 import com.liferay.portlet.messageboards.model.MBThread;
@@ -35,8 +36,18 @@ public class MBDiscussionDisplayImpl implements DiscussionDisplay {
 		_mbMessageDisplay = mbMessageDisplay;
 	}
 
-	public MBThread getThread() {
-		return _mbMessageDisplay.getThread();
+	@Override
+	public DiscussionRootComment createDiscussionRootComment()
+		throws PortalException {
+
+		MBTreeWalker mbTreeWalker = _mbMessageDisplay.getTreeWalker();
+
+		if (mbTreeWalker != null) {
+			return new MBTreeWalkerDiscussionRootCommentImpl(mbTreeWalker);
+		}
+
+		return new MBThreadDiscussionRootCommentImpl(
+			_mbMessageDisplay.getThread());
 	}
 
 	@Override
@@ -44,10 +55,6 @@ public class MBDiscussionDisplayImpl implements DiscussionDisplay {
 		MBThread mbThread = _mbMessageDisplay.getThread();
 
 		return mbThread.getThreadId();
-	}
-
-	public MBTreeWalker getTreeWalker() {
-		return _mbMessageDisplay.getTreeWalker();
 	}
 
 	@Override

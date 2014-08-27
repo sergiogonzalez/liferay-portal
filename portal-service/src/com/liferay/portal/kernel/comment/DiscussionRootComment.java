@@ -14,18 +14,13 @@
 
 package com.liferay.portal.kernel.comment;
 
-import com.liferay.portal.kernel.exception.PortalException;
-
 /**
  * @author André de Oliveira
  */
-public interface DiscussionDisplay {
+public interface DiscussionRootComment {
 
-	public DiscussionRootComment createDiscussionRootComment()
-		throws PortalException;
+	public int getCommentsCount();
 
-	public long getThreadId();
-
-	public boolean isInTrash() throws PortalException;
+	public long getRootCommentId();
 
 }

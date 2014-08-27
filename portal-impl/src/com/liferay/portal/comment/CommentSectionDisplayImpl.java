@@ -19,10 +19,10 @@ import com.liferay.portal.kernel.comment.CommentPermissionChecker;
 import com.liferay.portal.kernel.comment.CommentSectionDisplay;
 import com.liferay.portal.kernel.comment.CommentTreeNodeDisplay;
 import com.liferay.portal.kernel.comment.DiscussionDisplay;
+import com.liferay.portal.kernel.comment.DiscussionRootComment;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.parsers.bbcode.BBCodeUtil;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -30,11 +30,10 @@ import com.liferay.portal.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.PortletURLUtil;
 import com.liferay.portlet.messageboards.comment.MBCommentImpl;
-import com.liferay.portlet.messageboards.comment.MBDiscussionDisplayImpl;
+import com.liferay.portlet.messageboards.comment.MBThreadDiscussionRootCommentImpl;
+import com.liferay.portlet.messageboards.comment.MBTreeWalkerDiscussionRootCommentImpl;
 import com.liferay.portlet.messageboards.model.MBDiscussion;
 import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.messageboards.model.MBThread;
-import com.liferay.portlet.messageboards.model.MBTreeWalker;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.util.comparator.MessageCreateDateComparator;
 import com.liferay.portlet.ratings.model.RatingsEntry;
@@ -65,48 +64,16 @@ public class CommentSectionDisplayImpl implements CommentSectionDisplay {
 			PermissionChecker permissionChecker)
 		throws PortalException {
 
-		List<MBMessage> messages = null;
-		int messagesCount = 0;
-		MBMessage rootMessage = null;
-		MBThread thread = null;
-		MBTreeWalker treeWalker = null;
-		SearchContainer searchContainer = null;
-
-		// TODO This cast is going away in a few commits
-
-		MBDiscussionDisplayImpl mbDiscussionDisplay =
-			(MBDiscussionDisplayImpl)discussionDisplay;
-
-		thread = mbDiscussionDisplay.getThread();
-		treeWalker = mbDiscussionDisplay.getTreeWalker();
-
-		if (treeWalker != null) {
-			rootMessage = treeWalker.getRoot();
-			messages = treeWalker.getMessages();
-			messagesCount = messages.size();
-		}
-		else {
-			rootMessage = MBMessageLocalServiceUtil.getMessage(
-				thread.getRootMessageId());
-			messagesCount =
-				MBMessageLocalServiceUtil.getThreadMessagesCount(
-					rootMessage.getThreadId(), WorkflowConstants.STATUS_ANY);
-		}
-
-		_commentPermissionChecker = commentPermissionChecker;
-		_discussionDisplay = discussionDisplay;
-		_hideControls = hideControls;
-		_messages = messages;
-		_messagesCount = messagesCount;
-		_permissionChecker = permissionChecker;
-		_rootMessage = rootMessage;
-		_searchContainer = searchContainer;
-		_ratingsEnabled = ratingsEnabled;
 		_scopeGroupId = scopeGroupId;
-		_themeDisplay = themeDisplay;
-		_thread = thread;
-		_treeWalker = treeWalker;
 		_user = user;
+		_themeDisplay = themeDisplay;
+		_hideControls = hideControls;
+		_ratingsEnabled = ratingsEnabled;
+		_discussionDisplay = discussionDisplay;
+		_discussionRootComment =
+			discussionDisplay.createDiscussionRootComment();
+		_commentPermissionChecker = commentPermissionChecker;
+		_permissionChecker = permissionChecker;
 	}
 
 	@Override
@@ -123,8 +90,15 @@ public class CommentSectionDisplayImpl implements CommentSectionDisplay {
 
 	@Override
 	public List<CommentTreeNodeDisplay> getCommentTreeNodeDisplays() {
+
+		// TODO This cast is going away in a few commits
+
+		MBTreeWalkerDiscussionRootCommentImpl tree =
+			(MBTreeWalkerDiscussionRootCommentImpl)_discussionRootComment;
+
 		CommentTreeNodeDisplay commentTreeNodeDisplay =
-			new CommentTreeNodeDisplayImpl(_rootMessage, _treeWalker);
+			new CommentTreeNodeDisplayImpl(
+				tree.getRootMBMessage(), tree.getMBTreeWalker());
 
 		return commentTreeNodeDisplay.getChildren();
 	}
@@ -169,7 +143,7 @@ public class CommentSectionDisplayImpl implements CommentSectionDisplay {
 
 	@Override
 	public long getRootCommentMessageId() {
-		return _rootMessage.getMessageId();
+		return _discussionRootComment.getRootCommentId();
 	}
 
 	@Override
@@ -179,7 +153,7 @@ public class CommentSectionDisplayImpl implements CommentSectionDisplay {
 
 	@Override
 	public long getThreadId() {
-		return _thread.getThreadId();
+		return _discussionDisplay.getThreadId();
 	}
 
 	@Override
@@ -189,7 +163,7 @@ public class CommentSectionDisplayImpl implements CommentSectionDisplay {
 
 	@Override
 	public boolean hasComments() {
-		return _messagesCount > 1;
+		return _discussionRootComment.getCommentsCount() > 0;
 	}
 
 	@Override
@@ -215,10 +189,17 @@ public class CommentSectionDisplayImpl implements CommentSectionDisplay {
 
 		List<MBMessage> messages;
 
-		if (_messages != null) {
+		// TODO This instanceof is going away in a few commits
+
+		if (_discussionRootComment instanceof
+				MBTreeWalkerDiscussionRootCommentImpl) {
+
+			MBTreeWalkerDiscussionRootCommentImpl discussionRoot =
+				(MBTreeWalkerDiscussionRootCommentImpl)_discussionRootComment;
 			messages = ListUtil.copy(
 				ListUtil.sort(
-					_messages, new MessageCreateDateComparator(true)));
+					discussionRoot.getMessages(),
+					new MessageCreateDateComparator(true)));
 
 			messages.remove(0);
 		}
@@ -230,10 +211,14 @@ public class CommentSectionDisplayImpl implements CommentSectionDisplay {
 				renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM,
 				SearchContainer.DEFAULT_DELTA, currentURLObj, null, null);
 
-			_searchContainer.setTotal(_messagesCount - 1);
+			_searchContainer.setTotal(
+				_discussionRootComment.getCommentsCount());
 
-			messages = MBMessageLocalServiceUtil.getThreadRepliesMessages(
-				_rootMessage.getThreadId(), WorkflowConstants.STATUS_ANY,
+			// TODO This cast is going away in a few commits
+
+			MBThreadDiscussionRootCommentImpl discussionRoot =
+				(MBThreadDiscussionRootCommentImpl)_discussionRootComment;
+			messages = discussionRoot.getThreadRepliesMessages(
 				_searchContainer.getStart(), _searchContainer.getEnd());
 
 			_searchContainer.setResults(messages);
@@ -270,8 +255,7 @@ public class CommentSectionDisplayImpl implements CommentSectionDisplay {
 
 	@Override
 	public boolean isDiscussionVisible() {
-		return (_messagesCount > 1) ||
-			_commentPermissionChecker.hasViewPermission();
+		return hasComments() || _commentPermissionChecker.hasViewPermission();
 	}
 
 	@Override
@@ -294,13 +278,16 @@ public class CommentSectionDisplayImpl implements CommentSectionDisplay {
 
 	@Override
 	public boolean isThreadedRepliesVisible() {
-		return _treeWalker != null;
+
+		// TODO This instanceof is going away in a few commits
+
+		return _discussionRootComment instanceof
+			MBTreeWalkerDiscussionRootCommentImpl;
 	}
 
 	@Override
 	public boolean isTopChild(Comment comment) throws PortalException {
-		MBMessage message = getMBMessage(comment);
-		return message.getParentMessageId() == _rootMessage.getMessageId();
+		return comment.isChildOf(_discussionRootComment.getRootCommentId());
 	}
 
 	@Override
@@ -323,19 +310,15 @@ public class CommentSectionDisplayImpl implements CommentSectionDisplay {
 
 	private final CommentPermissionChecker _commentPermissionChecker;
 	private final DiscussionDisplay _discussionDisplay;
+	private final DiscussionRootComment _discussionRootComment;
 	private final boolean _hideControls;
-	private final List<MBMessage> _messages;
-	private final int _messagesCount;
 	private final PermissionChecker _permissionChecker;
 	private final boolean _ratingsEnabled;
 	private List<RatingsEntry> _ratingsEntries;
 	private List<RatingsStats> _ratingsStatsList;
-	private final MBMessage _rootMessage;
 	private final long _scopeGroupId;
 	private SearchContainer _searchContainer;
 	private final ThemeDisplay _themeDisplay;
-	private final MBThread _thread;
-	private final MBTreeWalker _treeWalker;
 	private final User _user;
 
 }
