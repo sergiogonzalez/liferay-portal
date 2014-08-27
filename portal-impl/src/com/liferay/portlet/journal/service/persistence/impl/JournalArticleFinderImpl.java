@@ -146,10 +146,11 @@ public class JournalArticleFinderImpl
 	@Override
 	public int countByG_U_F_C(
 		long groupId, long userId, List<Long> folderIds, long classNameId,
-		QueryDefinition<JournalArticle> queryDefinition) {
+		long ownerId, QueryDefinition<JournalArticle> queryDefinition) {
 
 		return doCountByG_U_F_C(
-			groupId, userId, folderIds, classNameId, queryDefinition, false);
+			groupId, userId, folderIds, classNameId, ownerId, queryDefinition,
+			false);
 	}
 
 	@Override
@@ -267,10 +268,11 @@ public class JournalArticleFinderImpl
 	@Override
 	public int filterCountByG_U_F_C(
 		long groupId, long userId, List<Long> folderIds, long classNameId,
-		QueryDefinition<JournalArticle> queryDefinition) {
+		long ownerId, QueryDefinition<JournalArticle> queryDefinition) {
 
 		return doCountByG_U_F_C(
-			groupId, userId, folderIds, classNameId, queryDefinition, true);
+			groupId, userId, folderIds, classNameId, ownerId, queryDefinition,
+			true);
 	}
 
 	@Override
@@ -390,10 +392,11 @@ public class JournalArticleFinderImpl
 	@Override
 	public List<JournalArticle> filterFindByG_U_F_C(
 		long groupId, long userId, List<Long> folderIds, long classNameId,
-		QueryDefinition<JournalArticle> queryDefinition) {
+		long ownerId, QueryDefinition<JournalArticle> queryDefinition) {
 
 		return doFindByG_U_F_C(
-			groupId, userId, folderIds, classNameId, queryDefinition, true);
+			groupId, userId, folderIds, classNameId, ownerId, queryDefinition,
+			true);
 	}
 
 	@Override
@@ -632,10 +635,11 @@ public class JournalArticleFinderImpl
 	@Override
 	public List<JournalArticle> findByG_U_F_C(
 		long groupId, long userId, List<Long> folderIds, long classNameId,
-		QueryDefinition<JournalArticle> queryDefinition) {
+		long ownerId, QueryDefinition<JournalArticle> queryDefinition) {
 
 		return doFindByG_U_F_C(
-			groupId, userId, folderIds, classNameId, queryDefinition, false);
+			groupId, userId, folderIds, classNameId, ownerId, queryDefinition,
+			false);
 	}
 
 	@Override
@@ -830,7 +834,7 @@ public class JournalArticleFinderImpl
 
 	protected int doCountByG_U_F_C(
 		long groupId, long userId, List<Long> folderIds, long classNameId,
-		QueryDefinition<JournalArticle> queryDefinition,
+		long ownerId, QueryDefinition<JournalArticle> queryDefinition,
 		boolean inlineSQLHelper) {
 
 		Session session = null;
@@ -853,9 +857,20 @@ public class JournalArticleFinderImpl
 					getFolderIds(folderIds, JournalArticleImpl.TABLE_NAME));
 			}
 
-			if (userId <= 0) {
+			String ownerClause = StringPool.BLANK;
+
+			if (ownerId > 0) {
+				ownerClause =
+					"((JournalArticle.userId = ?) AND (JournalArticle.status" +
+						"!= ?)) OR";
+			}
+
+			if (userId > 0) {
 				sql = StringUtil.replace(
-					sql, "(JournalArticle.userId = ?) AND", StringPool.BLANK);
+					sql, "[$OWNER$] OR", "(JournalArticle.userId = ?) AND");
+			}
+			else {
+				sql = StringUtil.replace(sql, "[$OWNER$] OR", ownerClause);
 			}
 
 			if (inlineSQLHelper) {
@@ -875,6 +890,10 @@ public class JournalArticleFinderImpl
 
 			if (userId > 0) {
 				qPos.add(userId);
+			}
+			else if (ownerId > 0) {
+				qPos.add(ownerId);
+				qPos.add(WorkflowConstants.STATUS_IN_TRASH);
 			}
 
 			for (long folderId : folderIds) {
@@ -1187,7 +1206,7 @@ public class JournalArticleFinderImpl
 
 	protected List<JournalArticle> doFindByG_U_F_C(
 		long groupId, long userId, List<Long> folderIds, long classNameId,
-		QueryDefinition<JournalArticle> queryDefinition,
+		long ownerId, QueryDefinition<JournalArticle> queryDefinition,
 		boolean inlineSQLHelper) {
 
 		Session session = null;
@@ -1213,9 +1232,20 @@ public class JournalArticleFinderImpl
 					getFolderIds(folderIds, JournalArticleImpl.TABLE_NAME));
 			}
 
-			if (userId <= 0) {
+			String ownerClause = StringPool.BLANK;
+
+			if (ownerId > 0) {
+				ownerClause =
+					"((JournalArticle.userId = ?) AND (JournalArticle.status " +
+						"!= ?)) OR";
+			}
+
+			if (userId > 0) {
 				sql = StringUtil.replace(
-					sql, "(JournalArticle.userId = ?) AND", StringPool.BLANK);
+					sql, "[$OWNER$] OR", "(JournalArticle.userId = ?) AND");
+			}
+			else {
+				sql = StringUtil.replace(sql, "[$OWNER$] OR", ownerClause);
 			}
 
 			if (inlineSQLHelper) {
@@ -1236,6 +1266,10 @@ public class JournalArticleFinderImpl
 
 			if (userId > 0) {
 				qPos.add(userId);
+			}
+			else if (ownerId > 0) {
+				qPos.add(ownerId);
+				qPos.add(WorkflowConstants.STATUS_IN_TRASH);
 			}
 
 			for (long folderId : folderIds) {

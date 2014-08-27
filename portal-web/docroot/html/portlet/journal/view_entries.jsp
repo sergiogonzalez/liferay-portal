@@ -134,11 +134,11 @@ int totalVar = 0;
 			status = WorkflowConstants.STATUS_ANY;
 		}
 
-		totalVar = JournalArticleServiceUtil.getGroupArticlesCount(scopeGroupId, userId, folderId, status);
+		totalVar = JournalArticleServiceUtil.getGroupArticlesCount(scopeGroupId, userId, folderId, status, themeDisplay.getUserId());
 
 		articleSearchContainer.setTotal(totalVar);
 
-		resultsList = JournalArticleServiceUtil.getGroupArticles(scopeGroupId, userId, folderId, status, articleSearchContainer.getStart(), articleSearchContainer.getEnd(), articleSearchContainer.getOrderByComparator());
+		resultsList = JournalArticleServiceUtil.getGroupArticles(scopeGroupId, userId, folderId, status, themeDisplay.getUserId(), articleSearchContainer.getStart(), articleSearchContainer.getEnd(), articleSearchContainer.getOrderByComparator());
 		%>
 
 	</c:when>
@@ -167,11 +167,11 @@ int totalVar = 0;
 	<c:otherwise>
 
 		<%
-		totalVar = JournalFolderServiceUtil.getFoldersAndArticlesCount(scopeGroupId, folderId, status);
+		totalVar = JournalFolderServiceUtil.getFoldersAndArticlesCount(scopeGroupId, themeDisplay.getUserId(), folderId, status);
 
 		articleSearchContainer.setTotal(totalVar);
 
-		resultsList = JournalFolderServiceUtil.getFoldersAndArticles(scopeGroupId, folderId, status, articleSearchContainer.getStart(), articleSearchContainer.getEnd(), articleSearchContainer.getOrderByComparator());
+		resultsList = JournalFolderServiceUtil.getFoldersAndArticles(scopeGroupId, themeDisplay.getUserId(), folderId, status, articleSearchContainer.getStart(), articleSearchContainer.getEnd(), articleSearchContainer.getOrderByComparator());
 		%>
 
 	</c:otherwise>

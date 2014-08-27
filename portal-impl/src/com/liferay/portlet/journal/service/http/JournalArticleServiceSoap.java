@@ -944,6 +944,51 @@ public class JournalArticleServiceSoap {
 	}
 
 	/**
+	* Returns an ordered range of all the web content articles matching the
+	* group, user, the root folder or any of its subfolders.
+	*
+	* @param groupId the primary key of the web content article's group
+	* @param userId the primary key of the user (optionally <code>0</code>)
+	* @param rootFolderId the primary key of the root folder to begin the
+	search
+	* @param status the web content article's workflow status. For more
+	information see {@link WorkflowConstants} for constants starting
+	with the "STATUS_" prefix.
+	* @param start the lower bound of the range of web content articles to
+	return
+	* @param ownerId the userId of the web content article's owner
+	(optionally <code>0</code>). Only used if userId is
+	<code>0</code>
+	* @param end the upper bound of the range of web content articles to
+	return (not inclusive)
+	* @param orderByComparator the comparator to order the web content
+	articles
+	* @return the range of matching web content articles ordered by the
+	comparator
+	* @throws PortalException if the root folder could not be found, if the
+	current user did not have permission to view the root folder, or
+	if a portal exception occurred
+	*/
+	public static com.liferay.portlet.journal.model.JournalArticleSoap[] getGroupArticles(
+		long groupId, long userId, long rootFolderId, int status, long ownerId,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.portlet.journal.model.JournalArticle> returnValue =
+				JournalArticleServiceUtil.getGroupArticles(groupId, userId,
+					rootFolderId, status, ownerId, start, end, orderByComparator);
+
+			return com.liferay.portlet.journal.model.JournalArticleSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
 	* Returns the number of web content articles matching the group, user, and
 	* the root folder or any of its subfolders.
 	*
@@ -976,6 +1021,41 @@ public class JournalArticleServiceSoap {
 		try {
 			int returnValue = JournalArticleServiceUtil.getGroupArticlesCount(groupId,
 					userId, rootFolderId, status);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
+	* Returns the number of web content articles matching the group, user,
+	* the root folder or any of its subfolders.
+	*
+	* @param groupId the primary key of the web content article's group
+	* @param userId the primary key of the user (optionally <code>0</code>)
+	* @param rootFolderId the primary key of the root folder to begin the
+	search
+	* @param status the web content article's workflow status. For more
+	information see {@link WorkflowConstants} for constants starting
+	with the "STATUS_" prefix.
+	* @param ownerId the userId of the web content article's owner
+	(optionally <code>0</code>). Only used if userId is
+	<code>0</code>
+	* @return the range of matching web content articles ordered by the
+	comparator
+	* @throws PortalException if the root folder could not be found, if the
+	current user did not have permission to view the root folder, or
+	if a portal exception occurred
+	*/
+	public static int getGroupArticlesCount(long groupId, long userId,
+		long rootFolderId, int status, long ownerId) throws RemoteException {
+		try {
+			int returnValue = JournalArticleServiceUtil.getGroupArticlesCount(groupId,
+					userId, rootFolderId, status, ownerId);
 
 			return returnValue;
 		}
