@@ -12,19 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.kernel.repository;
+package com.liferay.portal.kernel.repository.registry;
 
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.repository.RepositoryFactory;
 
 /**
  * @author Adolfo Pérez
  */
-public interface LocalRepositoryFactory {
+public interface RepositoryFactoryRegistry {
 
-	public LocalRepository create(long repositoryId) throws PortalException;
-
-	public LocalRepository create(
-			long folderId, long fileEntryId, long fileVersionId)
-		throws PortalException;
+	public void setRepositoryFactory(RepositoryFactory repositoryFactory);
 
 }

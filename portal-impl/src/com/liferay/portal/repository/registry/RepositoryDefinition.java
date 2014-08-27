@@ -12,19 +12,27 @@
  * details.
  */
 
-package com.liferay.portal.kernel.repository;
+package com.liferay.portal.repository.registry;
 
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.repository.RepositoryFactory;
+import com.liferay.portal.kernel.repository.capabilities.Capability;
+import com.liferay.portal.kernel.repository.event.RepositoryEventTrigger;
+
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Adolfo Pérez
  */
-public interface RepositoryFactory {
+public interface RepositoryDefinition {
 
-	public LocalRepository createLocalRepository(long repositoryId)
-		throws PortalException;
+	public Set<Class<? extends Capability>> getExportedCapabilities();
 
-	public Repository createRepository(long repositoryId)
-		throws PortalException;
+	public RepositoryEventTrigger getRepositoryEventTrigger();
+
+	public RepositoryFactory getRepositoryFactory();
+
+	public Map<Class<? extends Capability>, Capability>
+		getSupportedCapabilities();
 
 }

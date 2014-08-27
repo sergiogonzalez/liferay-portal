@@ -12,19 +12,14 @@
  * details.
  */
 
-package com.liferay.portal.kernel.repository;
-
-import com.liferay.portal.kernel.exception.PortalException;
+package com.liferay.portal.kernel.repository.event;
 
 /**
  * @author Adolfo Pérez
  */
-public interface RepositoryFactory {
+public interface RepositoryEventType {
 
-	public LocalRepository createLocalRepository(long repositoryId)
-		throws PortalException;
-
-	public Repository createRepository(long repositoryId)
-		throws PortalException;
+	public interface Delete extends RepositoryEventType {
+	}
 
 }

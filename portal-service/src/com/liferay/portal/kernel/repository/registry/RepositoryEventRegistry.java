@@ -12,19 +12,19 @@
  * details.
  */
 
-package com.liferay.portal.kernel.repository;
+package com.liferay.portal.kernel.repository.registry;
 
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.repository.event.RepositoryEventListener;
+import com.liferay.portal.kernel.repository.event.RepositoryEventType;
 
 /**
  * @author Adolfo Pérez
  */
-public interface RepositoryFactory {
+public interface RepositoryEventRegistry {
 
-	public LocalRepository createLocalRepository(long repositoryId)
-		throws PortalException;
-
-	public Repository createRepository(long repositoryId)
-		throws PortalException;
+	public <S extends RepositoryEventType, T>
+		void registerRepositoryEventListener(
+			Class<S> repositoryEventTypeClass, Class<T> modelClass,
+			RepositoryEventListener<S, T> repositoryEventListeners);
 
 }

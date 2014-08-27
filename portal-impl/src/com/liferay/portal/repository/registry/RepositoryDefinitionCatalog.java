@@ -12,19 +12,24 @@
  * details.
  */
 
-package com.liferay.portal.kernel.repository;
+package com.liferay.portal.repository.registry;
 
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.repository.util.ExternalRepositoryFactory;
+
+import java.util.Collection;
 
 /**
  * @author Adolfo Pérez
  */
-public interface RepositoryFactory {
+public interface RepositoryDefinitionCatalog {
 
-	public LocalRepository createLocalRepository(long repositoryId)
-		throws PortalException;
+	public Collection<String> getExternalRepositoryClassNames();
 
-	public Repository createRepository(long repositoryId)
-		throws PortalException;
+	public RepositoryDefinition getRepositoryDefinition(String className);
+
+	public void registerLegacyExternalRepositoryFactory(
+		String className, ExternalRepositoryFactory externalRepositoryFactory);
+
+	public void unregisterLegacyExternalRepositoryFactory(String className);
 
 }

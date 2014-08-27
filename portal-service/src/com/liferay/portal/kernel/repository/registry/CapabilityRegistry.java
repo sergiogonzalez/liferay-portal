@@ -12,19 +12,19 @@
  * details.
  */
 
-package com.liferay.portal.kernel.repository;
+package com.liferay.portal.kernel.repository.registry;
 
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.repository.capabilities.Capability;
 
 /**
  * @author Adolfo Pérez
  */
-public interface RepositoryFactory {
+public interface CapabilityRegistry {
 
-	public LocalRepository createLocalRepository(long repositoryId)
-		throws PortalException;
+	public <S extends Capability, T extends S> void addExportedCapability(
+		Class<S> capabilityClass, T capability);
 
-	public Repository createRepository(long repositoryId)
-		throws PortalException;
+	public <S extends Capability, T extends S> void addSupportedCapability(
+		Class<S> capabilityClass, T capability);
 
 }
