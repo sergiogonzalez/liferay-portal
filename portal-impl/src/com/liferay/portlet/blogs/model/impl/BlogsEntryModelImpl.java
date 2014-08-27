@@ -94,6 +94,7 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 			{ "urlTitle", Types.VARCHAR },
 			{ "description", Types.VARCHAR },
 			{ "content", Types.CLOB },
+			{ "coverImageId", Types.BIGINT },
 			{ "displayDate", Types.TIMESTAMP },
 			{ "allowPingbacks", Types.BOOLEAN },
 			{ "allowTrackbacks", Types.BOOLEAN },
@@ -106,7 +107,7 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 			{ "statusByUserName", Types.VARCHAR },
 			{ "statusDate", Types.TIMESTAMP }
 		};
-	public static final String TABLE_SQL_CREATE = "create table BlogsEntry (uuid_ VARCHAR(75) null,entryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,title VARCHAR(150) null,subtitle STRING null,urlTitle VARCHAR(150) null,description STRING null,content TEXT null,displayDate DATE null,allowPingbacks BOOLEAN,allowTrackbacks BOOLEAN,trackbacks TEXT null,smallImage BOOLEAN,smallImageId LONG,smallImageURL STRING null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table BlogsEntry (uuid_ VARCHAR(75) null,entryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,title VARCHAR(150) null,subtitle STRING null,urlTitle VARCHAR(150) null,description STRING null,content TEXT null,coverImageId LONG,displayDate DATE null,allowPingbacks BOOLEAN,allowTrackbacks BOOLEAN,trackbacks TEXT null,smallImage BOOLEAN,smallImageId LONG,smallImageURL STRING null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table BlogsEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY blogsEntry.displayDate DESC, blogsEntry.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY BlogsEntry.displayDate DESC, BlogsEntry.createDate DESC";
@@ -157,6 +158,7 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 		model.setUrlTitle(soapModel.getUrlTitle());
 		model.setDescription(soapModel.getDescription());
 		model.setContent(soapModel.getContent());
+		model.setCoverImageId(soapModel.getCoverImageId());
 		model.setDisplayDate(soapModel.getDisplayDate());
 		model.setAllowPingbacks(soapModel.getAllowPingbacks());
 		model.setAllowTrackbacks(soapModel.getAllowTrackbacks());
@@ -245,6 +247,7 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 		attributes.put("urlTitle", getUrlTitle());
 		attributes.put("description", getDescription());
 		attributes.put("content", getContent());
+		attributes.put("coverImageId", getCoverImageId());
 		attributes.put("displayDate", getDisplayDate());
 		attributes.put("allowPingbacks", getAllowPingbacks());
 		attributes.put("allowTrackbacks", getAllowTrackbacks());
@@ -341,6 +344,12 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 
 		if (content != null) {
 			setContent(content);
+		}
+
+		Long coverImageId = (Long)attributes.get("coverImageId");
+
+		if (coverImageId != null) {
+			setCoverImageId(coverImageId);
 		}
 
 		Date displayDate = (Date)attributes.get("displayDate");
@@ -658,6 +667,17 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 	@Override
 	public void setContent(String content) {
 		_content = content;
+	}
+
+	@JSON
+	@Override
+	public long getCoverImageId() {
+		return _coverImageId;
+	}
+
+	@Override
+	public void setCoverImageId(long coverImageId) {
+		_coverImageId = coverImageId;
 	}
 
 	@JSON
@@ -1114,6 +1134,7 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 		blogsEntryImpl.setUrlTitle(getUrlTitle());
 		blogsEntryImpl.setDescription(getDescription());
 		blogsEntryImpl.setContent(getContent());
+		blogsEntryImpl.setCoverImageId(getCoverImageId());
 		blogsEntryImpl.setDisplayDate(getDisplayDate());
 		blogsEntryImpl.setAllowPingbacks(getAllowPingbacks());
 		blogsEntryImpl.setAllowTrackbacks(getAllowTrackbacks());
@@ -1306,6 +1327,8 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 			blogsEntryCacheModel.content = null;
 		}
 
+		blogsEntryCacheModel.coverImageId = getCoverImageId();
+
 		Date displayDate = getDisplayDate();
 
 		if (displayDate != null) {
@@ -1365,7 +1388,7 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(49);
+		StringBundler sb = new StringBundler(51);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1393,6 +1416,8 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 		sb.append(getDescription());
 		sb.append(", content=");
 		sb.append(getContent());
+		sb.append(", coverImageId=");
+		sb.append(getCoverImageId());
 		sb.append(", displayDate=");
 		sb.append(getDisplayDate());
 		sb.append(", allowPingbacks=");
@@ -1422,7 +1447,7 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(76);
+		StringBundler sb = new StringBundler(79);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.blogs.model.BlogsEntry");
@@ -1479,6 +1504,10 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 		sb.append(
 			"<column><column-name>content</column-name><column-value><![CDATA[");
 		sb.append(getContent());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>coverImageId</column-name><column-value><![CDATA[");
+		sb.append(getCoverImageId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>displayDate</column-name><column-value><![CDATA[");
@@ -1555,6 +1584,7 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 	private String _originalUrlTitle;
 	private String _description;
 	private String _content;
+	private long _coverImageId;
 	private Date _displayDate;
 	private Date _originalDisplayDate;
 	private boolean _allowPingbacks;
