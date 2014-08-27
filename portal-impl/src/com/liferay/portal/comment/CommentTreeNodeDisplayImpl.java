@@ -15,10 +15,8 @@
 package com.liferay.portal.comment;
 
 import com.liferay.portal.kernel.comment.Comment;
+import com.liferay.portal.kernel.comment.CommentTreeNode;
 import com.liferay.portal.kernel.comment.CommentTreeNodeDisplay;
-import com.liferay.portlet.messageboards.comment.MBCommentImpl;
-import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.messageboards.model.MBTreeWalker;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,42 +26,34 @@ import java.util.List;
  */
 public class CommentTreeNodeDisplayImpl implements CommentTreeNodeDisplay {
 
-	public CommentTreeNodeDisplayImpl(
-		int depth, boolean lastNode, MBMessage message,
-		MBTreeWalker treeWalker) {
+	public CommentTreeNodeDisplayImpl(CommentTreeNode commentTreeNode) {
 
-		_depth = depth;
-		_message = message;
-		_lastNode = lastNode;
-		_treeWalker = treeWalker;
+		this(-1, false, commentTreeNode);
 	}
 
 	public CommentTreeNodeDisplayImpl(
-		MBMessage message, MBTreeWalker treeWalker) {
+		int depth, boolean lastNode, CommentTreeNode commentTreeNode) {
 
-		this(-1, false, message, treeWalker);
+		_commentTreeNode = commentTreeNode;
+		_depth = depth;
+		_lastNode = lastNode;
 	}
 
 	@Override
 	public List<CommentTreeNodeDisplay> getChildren() {
-		List<MBMessage> messages = _treeWalker.getMessages();
-		int[] range = _treeWalker.getChildrenRange(_message);
+		List<CommentTreeNode> commentTreeNodes = _commentTreeNode.getChildren();
 
-		int size = range[1] - range[0];
+		int size = commentTreeNodes.size();
 
 		List<CommentTreeNodeDisplay> children =
 			new ArrayList<CommentTreeNodeDisplay>(size);
 
-		for (int i = range[0]; i < range[1]; i++) {
-			MBMessage message = messages.get(i);
-
-			boolean lastChildNode = false;
-
-			if ((i + 1) == range[1]) {
-				lastChildNode = true;
+		if (size > 0) {
+			for (int i = 0; i < size - 1; i++) {
+				children.add(createChild(false, commentTreeNodes.get(i)));
 			}
 
-			children.add(createChild(lastChildNode, message));
+			children.add(createChild(true, commentTreeNodes.get(size - 1)));
 		}
 
 		return children;
@@ -71,7 +61,7 @@ public class CommentTreeNodeDisplayImpl implements CommentTreeNodeDisplay {
 
 	@Override
 	public Comment getComment() {
-		return new MBCommentImpl(_message);
+		return _commentTreeNode.getComment();
 	}
 
 	@Override
@@ -85,15 +75,14 @@ public class CommentTreeNodeDisplayImpl implements CommentTreeNodeDisplay {
 	}
 
 	protected CommentTreeNodeDisplayImpl createChild(
-		boolean lastNode, MBMessage message) {
+		boolean lastNode, CommentTreeNode commentTreeNode) {
 
 		return new CommentTreeNodeDisplayImpl(
-			_depth + 1, lastNode, message, _treeWalker);
+			_depth + 1, lastNode, commentTreeNode);
 	}
 
+	private CommentTreeNode _commentTreeNode;
 	private int _depth;
 	private boolean _lastNode;
-	private MBMessage _message;
-	private MBTreeWalker _treeWalker;
 
 }

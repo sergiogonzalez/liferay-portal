@@ -45,10 +45,6 @@ public class MBCommentImpl implements Comment {
 		return _mbMessage.getCreateDate();
 	}
 
-	public MBMessage getMBMessage() {
-		return _mbMessage;
-	}
-
 	@Override
 	public long getMessageId() {
 		return _mbMessage.getMessageId();
@@ -122,6 +118,10 @@ public class MBCommentImpl implements Comment {
 	@Override
 	public boolean isRoot() {
 		return _mbMessage.isRoot();
+	}
+
+	protected MBMessage getMBMessage() {
+		return _mbMessage;
 	}
 
 	private final MBMessage _mbMessage;

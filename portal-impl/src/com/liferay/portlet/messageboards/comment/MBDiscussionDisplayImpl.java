@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.DiscussionDisplay;
 import com.liferay.portal.kernel.comment.DiscussionRootComment;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portlet.messageboards.model.MBDiscussion;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBMessageDisplay;
 import com.liferay.portlet.messageboards.model.MBThread;
@@ -66,6 +67,11 @@ public class MBDiscussionDisplayImpl implements DiscussionDisplay {
 	}
 
 	@Override
+	public String getRatingsClassName() {
+		return MBDiscussion.class.getName();
+	}
+
+	@Override
 	public long getThreadId() {
 		MBThread mbThread = _mbMessageDisplay.getThread();
 
@@ -73,8 +79,21 @@ public class MBDiscussionDisplayImpl implements DiscussionDisplay {
 	}
 
 	@Override
+	public String getWorkflowDefinitionLinkClassName() {
+		return MBDiscussion.class.getName();
+	}
+
+	@Override
 	public boolean isInTrash() throws PortalException {
 		return TrashUtil.isInTrash(_className, _classPK);
+	}
+
+	@Override
+	public boolean isInTrash(Comment comment) throws PortalException {
+		MBMessage mbMessage = getMBMessage(comment);
+
+		return TrashUtil.isInTrash(
+			mbMessage.getClassName(), mbMessage.getClassPK());
 	}
 
 	protected MBMessage getMBMessage(Comment comment) {

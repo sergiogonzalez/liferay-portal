@@ -14,9 +14,14 @@
 
 package com.liferay.portlet.messageboards.comment;
 
+import com.liferay.portal.kernel.comment.CommentTreeNode;
+import com.liferay.portal.kernel.comment.CommentsContainer;
 import com.liferay.portal.kernel.comment.DiscussionRootComment;
+import com.liferay.portal.kernel.comment.DiscussionTree;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBTreeWalker;
+import com.liferay.portlet.messageboards.util.comparator.MessageCreateDateComparator;
 
 import java.util.List;
 
@@ -24,15 +29,21 @@ import java.util.List;
  * @author André de Oliveira
  */
 public class MBTreeWalkerDiscussionRootCommentImpl
-	implements DiscussionRootComment {
+	implements DiscussionRootComment, DiscussionTree {
+
+	@Override
+	public CommentsContainer createCommentsContainer() {
+		List<MBMessage> mbMessages = ListUtil.copy(
+			ListUtil.sort(_mbMessages, new MessageCreateDateComparator(true)));
+
+		mbMessages.remove(0);
+
+		return new MBCommentsContainerImpl(mbMessages);
+	}
 
 	@Override
 	public int getCommentsCount() {
 		return _mbMessages.size() - 1;
-	}
-
-	public List<MBMessage> getMessages() {
-		return _mbMessages;
 	}
 
 	@Override
@@ -40,18 +51,9 @@ public class MBTreeWalkerDiscussionRootCommentImpl
 		return _rootMBMessage.getMessageId();
 	}
 
-	public MBMessage getRootMBMessage() {
-
-		// TODO This getter is going away in a few commits
-
-		return _rootMBMessage;
-	}
-
-	public MBTreeWalker getMBTreeWalker() {
-
-		// TODO This getter is going away in a few commits
-
-		return _mbTreeWalker;
+	@Override
+	public CommentTreeNode getRootCommentTreeNode() {
+		return new MBCommentTreeNodeImpl(_rootMBMessage, _mbTreeWalker);
 	}
 
 	MBTreeWalkerDiscussionRootCommentImpl(MBTreeWalker mbTreeWalker) {

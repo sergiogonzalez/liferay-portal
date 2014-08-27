@@ -17,33 +17,28 @@ package com.liferay.portal.comment;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentPermissionChecker;
 import com.liferay.portal.kernel.comment.CommentSectionDisplay;
+import com.liferay.portal.kernel.comment.CommentTreeNode;
 import com.liferay.portal.kernel.comment.CommentTreeNodeDisplay;
+import com.liferay.portal.kernel.comment.CommentsContainer;
 import com.liferay.portal.kernel.comment.DiscussionDisplay;
+import com.liferay.portal.kernel.comment.DiscussionPage;
 import com.liferay.portal.kernel.comment.DiscussionRootComment;
+import com.liferay.portal.kernel.comment.DiscussionTree;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.model.User;
 import com.liferay.portal.parsers.bbcode.BBCodeUtil;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.PortletURLUtil;
-import com.liferay.portlet.messageboards.comment.MBCommentImpl;
-import com.liferay.portlet.messageboards.comment.MBThreadDiscussionRootCommentImpl;
-import com.liferay.portlet.messageboards.comment.MBTreeWalkerDiscussionRootCommentImpl;
-import com.liferay.portlet.messageboards.model.MBDiscussion;
-import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.messageboards.util.comparator.MessageCreateDateComparator;
 import com.liferay.portlet.ratings.model.RatingsEntry;
 import com.liferay.portlet.ratings.model.RatingsStats;
 import com.liferay.portlet.ratings.service.RatingsEntryLocalServiceUtil;
 import com.liferay.portlet.ratings.service.RatingsStatsLocalServiceUtil;
 import com.liferay.portlet.ratings.service.persistence.RatingsEntryUtil;
 import com.liferay.portlet.ratings.service.persistence.RatingsStatsUtil;
-import com.liferay.portlet.trash.util.TrashUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.PortletURL;
@@ -89,15 +84,13 @@ public class CommentSectionDisplayImpl implements CommentSectionDisplay {
 
 	@Override
 	public List<CommentTreeNodeDisplay> getCommentTreeNodeDisplays() {
+		DiscussionTree discussionTree = (DiscussionTree)_discussionRootComment;
 
-		// TODO This cast is going away in a few commits
-
-		MBTreeWalkerDiscussionRootCommentImpl tree =
-			(MBTreeWalkerDiscussionRootCommentImpl)_discussionRootComment;
+		CommentTreeNode commentTreeNode =
+			discussionTree.getRootCommentTreeNode();
 
 		CommentTreeNodeDisplay commentTreeNodeDisplay =
-			new CommentTreeNodeDisplayImpl(
-				tree.getRootMBMessage(), tree.getMBTreeWalker());
+			new CommentTreeNodeDisplayImpl(commentTreeNode);
 
 		return commentTreeNodeDisplay.getChildren();
 	}
@@ -109,7 +102,7 @@ public class CommentSectionDisplayImpl implements CommentSectionDisplay {
 
 	@Override
 	public String getRatingsClassName() {
-		return MBDiscussion.class.getName();
+		return _discussionDisplay.getRatingsClassName();
 	}
 
 	@Override
@@ -177,77 +170,60 @@ public class CommentSectionDisplayImpl implements CommentSectionDisplay {
 	public boolean hasWorkflowDefinitionLink() {
 		return WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(
 			_themeDisplay.getCompanyId(), _scopeGroupId,
-			MBDiscussion.class.getName());
+			_discussionDisplay.getWorkflowDefinitionLinkClassName());
 	}
 
 	@Override
 	public List<Comment> initComments(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		List<MBMessage> messages;
+		CommentsContainer commentsContainer;
 
-		// TODO This instanceof is going away in a few commits
+		if (_discussionRootComment instanceof DiscussionTree) {
+			DiscussionTree discussionTree =
+				(DiscussionTree)_discussionRootComment;
 
-		if (_discussionRootComment instanceof
-				MBTreeWalkerDiscussionRootCommentImpl) {
-
-			MBTreeWalkerDiscussionRootCommentImpl discussionRoot =
-				(MBTreeWalkerDiscussionRootCommentImpl)_discussionRootComment;
-			messages = ListUtil.copy(
-				ListUtil.sort(
-					discussionRoot.getMessages(),
-					new MessageCreateDateComparator(true)));
-
-			messages.remove(0);
+			commentsContainer = discussionTree.createCommentsContainer();
 		}
 		else {
 			PortletURL currentURLObj = PortletURLUtil.getCurrent(
 				renderRequest, renderResponse);
 
-			_searchContainer = new SearchContainer(
+			SearchContainer searchContainer = new SearchContainer<>(
 				renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM,
 				SearchContainer.DEFAULT_DELTA, currentURLObj, null, null);
 
-			_searchContainer.setTotal(
-				_discussionRootComment.getCommentsCount());
+			searchContainer.setTotal(_discussionRootComment.getCommentsCount());
 
-			// TODO This cast is going away in a few commits
+			DiscussionPage discussionPage =
+				(DiscussionPage)_discussionRootComment;
 
-			MBThreadDiscussionRootCommentImpl discussionRoot =
-				(MBThreadDiscussionRootCommentImpl)_discussionRootComment;
-			messages = discussionRoot.getThreadRepliesMessages(
-				_searchContainer.getStart(), _searchContainer.getEnd());
+			commentsContainer = discussionPage.createCommentsContainer(
+				searchContainer.getStart(), searchContainer.getEnd());
 
-			_searchContainer.setResults(messages);
+			searchContainer.setResults(
+				commentsContainer.getSearchContainerResults());
+
+			_searchContainer = searchContainer;
 		}
 
-		List<Comment> comments = new ArrayList<Comment>(messages.size());
+		List<Long> classPKs = commentsContainer.getClassPKs();
 
-		for (MBMessage mbMessage : messages) {
-			comments.add(new MBCommentImpl(mbMessage));
-		}
-
-		List<Long> classPKs = new ArrayList<Long>();
-
-		for (MBMessage curMessage : messages) {
-			classPKs.add(curMessage.getMessageId());
-		}
+		String ratingsClassName = _discussionDisplay.getRatingsClassName();
 
 		_ratingsEntries = RatingsEntryLocalServiceUtil.getEntries(
-			_themeDisplay.getUserId(), MBDiscussion.class.getName(), classPKs);
+			_themeDisplay.getUserId(), ratingsClassName, classPKs);
 		_ratingsStatsList = RatingsStatsLocalServiceUtil.getStats(
-			MBDiscussion.class.getName(), classPKs);
+			ratingsClassName, classPKs);
 
-		return comments;
+		return commentsContainer.getComments();
 	}
 
 	@Override
 	public boolean isDiscussionActionsVisible(Comment comment)
 		throws PortalException {
 
-		MBMessage message = getMBMessage(comment);
-		return !_hideControls &&
-			!TrashUtil.isInTrash(message.getClassName(), message.getClassPK());
+		return !_hideControls && !_discussionDisplay.isInTrash(comment);
 	}
 
 	@Override
@@ -257,9 +233,7 @@ public class CommentSectionDisplayImpl implements CommentSectionDisplay {
 
 	@Override
 	public boolean isRatingsVisible(Comment comment) throws PortalException {
-		MBMessage message = getMBMessage(comment);
-		return _ratingsEnabled &&
-			!TrashUtil.isInTrash(message.getClassName(), message.getClassPK());
+		return _ratingsEnabled && !_discussionDisplay.isInTrash(comment);
 	}
 
 	@Override
@@ -275,11 +249,7 @@ public class CommentSectionDisplayImpl implements CommentSectionDisplay {
 
 	@Override
 	public boolean isThreadedRepliesVisible() {
-
-		// TODO This instanceof is going away in a few commits
-
-		return _discussionRootComment instanceof
-			MBTreeWalkerDiscussionRootCommentImpl;
+		return _discussionRootComment instanceof DiscussionTree;
 	}
 
 	@Override
@@ -301,10 +271,6 @@ public class CommentSectionDisplayImpl implements CommentSectionDisplay {
 		return !comment.isApproved();
 	}
 
-	protected MBMessage getMBMessage(Comment comment) {
-		return ((MBCommentImpl)comment).getMBMessage();
-	}
-
 	private final CommentPermissionChecker _commentPermissionChecker;
 	private final DiscussionDisplay _discussionDisplay;
 	private final DiscussionRootComment _discussionRootComment;
@@ -314,7 +280,7 @@ public class CommentSectionDisplayImpl implements CommentSectionDisplay {
 	private List<RatingsEntry> _ratingsEntries;
 	private List<RatingsStats> _ratingsStatsList;
 	private final long _scopeGroupId;
-	private SearchContainer _searchContainer;
+	private SearchContainer<?> _searchContainer;
 	private final ThemeDisplay _themeDisplay;
 	private final User _user;
 
