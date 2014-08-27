@@ -190,6 +190,8 @@ public interface TrashHandler {
 
 	public String getContainerModelClassName(long classPK);
 
+	public long getContainerModelId(long classPK) throws PortalException;
+
 	/**
 	 * Returns the name of the container model (e.g. folder name).
 	 *
@@ -343,6 +345,11 @@ public interface TrashHandler {
 	 */
 	public String getRootContainerModelName();
 
+	public List<ContainerModel> getRootContainerModels(long groupId)
+		throws PortalException;
+
+	public int getRootContainerModelsCount(long groupId) throws PortalException;
+
 	/**
 	 * Returns the name of the subcontainer model (e.g. for a folder the
 	 * subcontainer model name may be "subfolder").
@@ -488,6 +495,8 @@ public interface TrashHandler {
 	 *         be found
 	 */
 	public TrashRenderer getTrashRenderer(long classPK) throws PortalException;
+
+	public boolean hasRootContainerModel();
 
 	/**
 	 * Returns <code>true</code> if the user has the required permission to

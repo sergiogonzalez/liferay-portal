@@ -40,10 +40,12 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.trash.RestoreEntryException;
 import com.liferay.portlet.trash.TrashEntryConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
+import com.liferay.portlet.wiki.NoSuchPageResourceException;
 import com.liferay.portlet.wiki.asset.WikiPageAssetRenderer;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.model.WikiPageResource;
+import com.liferay.portlet.wiki.service.WikiNodeLocalServiceUtil;
 import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.portlet.wiki.service.WikiPageResourceLocalServiceUtil;
 import com.liferay.portlet.wiki.service.WikiPageServiceUtil;
@@ -163,6 +165,13 @@ public class WikiPageTrashHandler extends BaseTrashHandler {
 		return WikiNode.class.getName();
 	}
 
+	public long getContainerModelId(long classPK) throws PortalException {
+		WikiPage page = WikiPageLocalServiceUtil.getLatestPage(
+			classPK, WorkflowConstants.STATUS_ANY, false);
+
+		return page.getNodeId();
+	}
+
 	@Override
 	public String getContainerModelName() {
 		return "wiki-page";
@@ -180,9 +189,21 @@ public class WikiPageTrashHandler extends BaseTrashHandler {
 		String parentTitle = StringPool.BLANK;
 
 		if (containerModelId > 0) {
-			page = WikiPageLocalServiceUtil.getPage(containerModelId);
+			try {
+				page = WikiPageLocalServiceUtil.getPage(containerModelId);
 
-			parentTitle = page.getTitle();
+				parentTitle = page.getTitle();
+			}
+			catch (NoSuchPageResourceException nspre) {
+				List<WikiPage> pages = WikiPageLocalServiceUtil.getPages(
+					containerModelId, start, end);
+
+				for (WikiPage curPage : pages) {
+					containerModels.add(curPage);
+				}
+
+				return containerModels;
+			}
 		}
 		else {
 			page = WikiPageLocalServiceUtil.getPage(classPK);
@@ -207,9 +228,14 @@ public class WikiPageTrashHandler extends BaseTrashHandler {
 		String parentTitle = StringPool.BLANK;
 
 		if (containerModelId > 0) {
-			page = WikiPageLocalServiceUtil.getPage(containerModelId);
+			try {
+				page = WikiPageLocalServiceUtil.getPage(containerModelId);
 
-			parentTitle = page.getTitle();
+				parentTitle = page.getTitle();
+			}
+			catch (NoSuchPageResourceException nspre) {
+				return WikiPageLocalServiceUtil.getPagesCount(containerModelId);
+			}
 		}
 		else {
 			page = WikiPageLocalServiceUtil.getPage(classPK);
@@ -332,6 +358,25 @@ public class WikiPageTrashHandler extends BaseTrashHandler {
 		return "wiki-node";
 	}
 
+	public List<ContainerModel> getRootContainerModels(long groupId)
+		throws PortalException {
+
+		List<ContainerModel> containerModels = new ArrayList<ContainerModel>();
+
+		List<WikiNode> nodes = WikiNodeLocalServiceUtil.getNodes(
+			groupId, WorkflowConstants.STATUS_APPROVED);
+
+		for (WikiNode node : nodes) {
+			containerModels.add(node);
+		}
+
+		return containerModels;
+	}
+
+	public int getRootContainerModelsCount(long groupId) {
+		return WikiNodeLocalServiceUtil.getNodesCount(groupId);
+	}
+
 	@Override
 	public String getTrashContainerModelName() {
 		return "children-pages";
@@ -389,6 +434,11 @@ public class WikiPageTrashHandler extends BaseTrashHandler {
 			classPK, WorkflowConstants.STATUS_ANY, false);
 
 		return new WikiPageAssetRenderer(page);
+	}
+
+	@Override
+	public boolean hasRootContainerModel() {
+		return true;
 	}
 
 	@Override
@@ -467,19 +517,22 @@ public class WikiPageTrashHandler extends BaseTrashHandler {
 		WikiPage page = WikiPageLocalServiceUtil.getPage(classPK);
 
 		String parentPageTitle = StringPool.BLANK;
+		long newNodeId = 0;
 
-		try {
-			WikiPage parentPage = WikiPageLocalServiceUtil.getPage(
-				containerModelId);
+		WikiPage parentPage = WikiPageLocalServiceUtil.fetchPage(
+			containerModelId);
 
+		if (parentPage != null) {
 			parentPageTitle = parentPage.getTitle();
+			newNodeId = parentPage.getNodeId();
 		}
-		catch (Exception e) {
+		else {
+			newNodeId = containerModelId;
 		}
 
 		WikiPageLocalServiceUtil.movePageFromTrash(
-			userId, page.getNodeId(), page.getTitle(), parentPageTitle,
-			serviceContext);
+			userId, page.getNodeId(), page.getTitle(), newNodeId,
+			parentPageTitle, serviceContext);
 	}
 
 	@Override
