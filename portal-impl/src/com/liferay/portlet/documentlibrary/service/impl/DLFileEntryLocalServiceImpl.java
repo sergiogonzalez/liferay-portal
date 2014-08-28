@@ -2587,19 +2587,6 @@ public class DLFileEntryLocalServiceImpl
 
 			throw new DuplicateFileException(title);
 		}
-
-		if (!filename.endsWith(periodAndExtension)) {
-			filename += periodAndExtension;
-
-			dlFileEntry = dlFileEntryPersistence.fetchByG_F_FN(
-				groupId, folderId, filename);
-
-			if ((dlFileEntry != null) &&
-				(dlFileEntry.getFileEntryId() != fileEntryId)) {
-
-				throw new DuplicateFileException(title);
-			}
-		}
 	}
 
 	protected void validateFile(
