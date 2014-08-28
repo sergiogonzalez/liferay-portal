@@ -103,7 +103,7 @@ public class ComboServletTest extends PowerMockito {
 
 					Object[] args = invocation.getArguments();
 
-					if (PortletKeys.ACTIVITIES.equals(args[0])) {
+					if (PortletKeys.PORTAL.equals(args[0])) {
 						return _activitiesPortlet;
 					}
 					else if (PortletKeys.PORTAL.equals(args[0])) {
@@ -225,8 +225,7 @@ public class ComboServletTest extends PowerMockito {
 	@Test
 	public void testGetResourceWithPortletId() throws Exception {
 		_comboServlet.getResourceURL(
-			_mockHttpServletRequest,
-			PortletKeys.ACTIVITIES + ":/js/javascript.js");
+			_mockHttpServletRequest, PortletKeys.PORTAL + ":/js/javascript.js");
 
 		verify(_pluginServletContext);
 
