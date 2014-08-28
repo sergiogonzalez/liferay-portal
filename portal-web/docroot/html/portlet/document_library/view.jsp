@@ -63,12 +63,6 @@ if (!ArrayUtil.contains(displayViews, displayStyle)) {
 	displayStyle = displayViews[0];
 }
 
-int entryStart = ParamUtil.getInteger(request, "entryStart");
-int entryEnd = ParamUtil.getInteger(request, "entryEnd", dlPortletInstanceSettings.getEntriesPerPage());
-
-int folderStart = ParamUtil.getInteger(request, "folderStart");
-int folderEnd = ParamUtil.getInteger(request, "folderEnd", SearchContainer.DEFAULT_DELTA);
-
 int total = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, WorkflowConstants.STATUS_ANY, false);
 
 boolean showSelectAll = false;
@@ -173,14 +167,6 @@ request.setAttribute("view.jsp-repositoryId", String.valueOf(repositoryId));
 </div>
 
 <%
-int entriesTotal = GetterUtil.getInteger((String)request.getAttribute("view.jsp-total"));
-int foldersTotal = GetterUtil.getInteger((String)request.getAttribute("view_folders.jsp-total"));
-
-entryEnd = GetterUtil.getInteger(request.getAttribute("view_entries.jsp-entryEnd"), entryEnd);
-entryStart = GetterUtil.getInteger(request.getAttribute("view_entries.jsp-entryStart"), entryStart);
-
-folderEnd = GetterUtil.getInteger(request.getAttribute("view_folders.jsp-folderEnd"), folderEnd);
-folderStart = GetterUtil.getInteger(request.getAttribute("view_folders.jsp-folderStart"), folderStart);
 
 if (!defaultFolderView && (folder != null) && (portletName.equals(PortletKeys.DOCUMENT_LIBRARY) || portletName.equals(PortletKeys.DOCUMENT_LIBRARY_ADMIN))) {
 	PortalUtil.setPageSubtitle(folder.getName(), request);
@@ -210,7 +196,6 @@ if (!defaultFolderView && (folder != null) && (portletName.equals(PortletKeys.DO
 </aui:script>
 
 <aui:script use="liferay-document-library">
-
 	<%
 	String[] entryColumns = dlEntriesListDisplayContext.getEntryColumns();
 	String[] escapedEntryColumns = new String[entryColumns.length];
@@ -273,17 +258,6 @@ if (!defaultFolderView && (folder != null) && (portletName.equals(PortletKeys.DO
 				updateable: <%= DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.UPDATE) %>
 			},
 			namespace: '<portlet:namespace />',
-			paginator: {
-				entriesTotal: <%= entriesTotal %>,
-				entryEnd: <%= entryEnd %>,
-				entryRowsPerPage: <%= entryEnd - entryStart %>,
-				entryStart: <%= entryStart %>,
-				folderEnd: <%= folderEnd %>,
-				folderId: <%= folderId %>,
-				folderRowsPerPage: <%= folderEnd - folderStart %>,
-				folderStart: <%= folderStart %>,
-				foldersTotal: <%= foldersTotal %>
-			},
 			portletId: '<%= HtmlUtil.escapeJS(portletId) %>',
 			redirect: encodeURIComponent('<%= currentURL %>'),
 			repositories: [
