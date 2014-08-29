@@ -51,6 +51,7 @@ public class UserGroupIndexer extends BaseIndexer {
 	public static final String PORTLET_ID = PortletKeys.USER_GROUPS_ADMIN;
 
 	public UserGroupIndexer() {
+		setCommitImmediately(true);
 		setDefaultSelectedFieldNames(
 			Field.COMPANY_ID, Field.UID, Field.USER_GROUP_ID);
 		setIndexerEnabled(PropsValues.USER_GROUPS_INDEXER_ENABLED);
@@ -186,7 +187,8 @@ public class UserGroupIndexer extends BaseIndexer {
 				Collection<Document> documents = entry.getValue();
 
 				SearchEngineUtil.updateDocuments(
-					getSearchEngineId(), companyId, documents);
+					getSearchEngineId(), companyId, documents,
+					isCommitImmediately());
 			}
 		}
 		else if (obj instanceof UserGroup) {
@@ -195,7 +197,8 @@ public class UserGroupIndexer extends BaseIndexer {
 			Document document = getDocument(userGroup);
 
 			SearchEngineUtil.updateDocument(
-				getSearchEngineId(), userGroup.getCompanyId(), document);
+				getSearchEngineId(), userGroup.getCompanyId(), document,
+				isCommitImmediately());
 		}
 	}
 

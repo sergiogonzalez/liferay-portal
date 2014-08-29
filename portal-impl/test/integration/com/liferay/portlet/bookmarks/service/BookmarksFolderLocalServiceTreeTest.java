@@ -25,6 +25,11 @@ import com.liferay.portlet.bookmarks.model.BookmarksFolder;
 import com.liferay.portlet.bookmarks.model.BookmarksFolderConstants;
 import com.liferay.portlet.bookmarks.util.test.BookmarksTestUtil;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.Assert;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -34,6 +39,36 @@ import org.junit.runner.RunWith;
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class BookmarksFolderLocalServiceTreeTest
 	extends BaseLocalServiceTreeTestCase {
+
+	@Test
+	public void testFolderTreePathWhenMovingFolderWithSubfolder()
+		throws Exception {
+
+		List<BookmarksFolder> folders = new ArrayList<BookmarksFolder>();
+
+		BookmarksFolder folderA = BookmarksTestUtil.addFolder(
+			group.getGroupId(), "Folder A");
+
+		folders.add(folderA);
+
+		BookmarksFolder folderAA = BookmarksTestUtil.addFolder(
+			group.getGroupId(), folderA.getFolderId(), "Folder AA");
+
+		folders.add(folderAA);
+
+		BookmarksFolder folderAAA = BookmarksTestUtil.addFolder(
+			group.getGroupId(), folderAA.getFolderId(), "Folder AAA");
+
+		folders.add(folderAAA);
+
+		BookmarksFolderServiceUtil.moveFolder(
+			folderAA.getFolderId(),
+			BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		for (BookmarksFolder folder : folders) {
+			Assert.assertEquals(folder.buildTreePath(), folder.getTreePath());
+		}
+	}
 
 	@Override
 	protected TreeModel addTreeModel(TreeModel parentTreeModel)

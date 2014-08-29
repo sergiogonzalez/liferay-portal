@@ -513,12 +513,11 @@
 				<classpath mode="compile">lib/portal/spring-jms.jar</classpath>
 				<classpath mode="compile">lib/portal/spring-orm.jar</classpath>
 				<classpath mode="compile">lib/portal/spring-oxm.jar</classpath>
-				<classpath mode="compile">lib/portal/spring-transaction.jar</classpath>
+				<classpath mode="compile">lib/portal/spring-struts.jar</classpath>
+				<classpath mode="compile">lib/portal/spring-tx.jar</classpath>
 				<classpath mode="compile">lib/portal/spring-web.jar</classpath>
-				<classpath mode="compile">lib/portal/spring-web-mvc.jar</classpath>
-				<classpath mode="compile">lib/portal/spring-web-portlet.jar</classpath>
-				<classpath mode="compile">lib/portal/spring-web-servlet.jar</classpath>
-				<classpath mode="compile">lib/portal/spring-web-struts.jar</classpath>
+				<classpath mode="compile">lib/portal/spring-webmvc.jar</classpath>
+				<classpath mode="compile">lib/portal/spring-webmvc-portlet.jar</classpath>
 				<classpath mode="compile">lib/portal/stax-ex.jar</classpath>
 				<classpath mode="compile">lib/portal/stax.jar</classpath>
 				<classpath mode="compile">lib/portal/streambuffer.jar</classpath>
