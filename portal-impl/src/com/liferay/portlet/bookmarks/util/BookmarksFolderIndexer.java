@@ -103,8 +103,8 @@ public class BookmarksFolderIndexer extends BaseIndexer {
 		document.addUID(PORTLET_ID, folder.getFolderId(), folder.getName());
 
 		SearchEngineUtil.deleteDocument(
-			getSearchEngineId(), folder.getCompanyId(),
-			document.get(Field.UID));
+			getSearchEngineId(), folder.getCompanyId(), document.get(Field.UID),
+			isCommitImmediately());
 	}
 
 	@Override
@@ -172,11 +172,13 @@ public class BookmarksFolderIndexer extends BaseIndexer {
 
 		if (document != null) {
 			SearchEngineUtil.updateDocument(
-				getSearchEngineId(), folder.getCompanyId(), document);
+				getSearchEngineId(), folder.getCompanyId(), document,
+				isCommitImmediately());
 		}
 
 		SearchEngineUtil.updateDocument(
-			getSearchEngineId(), folder.getCompanyId(), document);
+			getSearchEngineId(), folder.getCompanyId(), document,
+			isCommitImmediately());
 	}
 
 	@Override
