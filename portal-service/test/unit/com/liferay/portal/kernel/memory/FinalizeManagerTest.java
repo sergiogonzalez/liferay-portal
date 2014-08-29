@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.ThreadUtil;
 
 import java.lang.ref.Reference;
-import java.lang.reflect.InvocationTargetException;
 
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
@@ -51,7 +50,7 @@ public class FinalizeManagerTest {
 	}
 
 	@Test
-	public void testBadFinalizeAction() throws Exception {
+	public void testBadFinalizeAction() {
 		final RuntimeException runtimeException = new RuntimeException();
 
 		Reference<Object> reference = FinalizeManager.register(
@@ -77,8 +76,8 @@ public class FinalizeManagerTest {
 
 			Assert.fail();
 		}
-		catch (InvocationTargetException ite) {
-			Assert.assertSame(runtimeException, ite.getCause());
+		catch (Exception e) {
+			Assert.assertSame(runtimeException, e.getCause());
 		}
 
 		Assert.assertNull(getReferent(reference));
@@ -90,7 +89,7 @@ public class FinalizeManagerTest {
 	}
 
 	@Test
-	public void testManuelClear() throws Exception {
+	public void testManuelClear() throws InterruptedException {
 		System.setProperty(_THREAD_ENABLED_KEY, StringPool.FALSE);
 
 		Object object = new Object();
@@ -127,7 +126,7 @@ public class FinalizeManagerTest {
 	}
 
 	@Test
-	public void testRegisterationIdentity() throws Exception {
+	public void testRegisterationIdentity() {
 		System.setProperty(_THREAD_ENABLED_KEY, StringPool.FALSE);
 
 		String testString = new String("testString");
@@ -180,38 +179,38 @@ public class FinalizeManagerTest {
 	}
 
 	@Test
-	public void testRegisterPhantomWithoutThread() throws Exception {
+	public void testRegisterPhantomWithoutThread() throws InterruptedException {
 		doTestRegister(false, ReferenceType.PHANTOM);
 	}
 
 	@Test
-	public void testRegisterPhantomWithThread() throws Exception {
+	public void testRegisterPhantomWithThread() throws InterruptedException {
 		doTestRegister(true, ReferenceType.PHANTOM);
 	}
 
 	@Test
-	public void testRegisterSoftWithoutThread() throws Exception {
+	public void testRegisterSoftWithoutThread() throws InterruptedException {
 		doTestRegister(false, ReferenceType.SOFT);
 	}
 
 	@Test
-	public void testRegisterSoftWithThread() throws Exception {
+	public void testRegisterSoftWithThread() throws InterruptedException {
 		doTestRegister(true, ReferenceType.SOFT);
 	}
 
 	@Test
-	public void testRegisterWeakWithoutThread() throws Exception {
+	public void testRegisterWeakWithoutThread() throws InterruptedException {
 		doTestRegister(false, ReferenceType.WEAK);
 	}
 
 	@Test
-	public void testRegisterWeakWithThread() throws Exception {
+	public void testRegisterWeakWithThread() throws InterruptedException {
 		doTestRegister(true, ReferenceType.WEAK);
 	}
 
 	protected void doTestRegister(
 			boolean threadEnabled, ReferenceType referenceType)
-		throws Exception {
+		throws InterruptedException {
 
 		System.setProperty(
 			_THREAD_ENABLED_KEY, Boolean.toString(threadEnabled));
@@ -325,12 +324,7 @@ public class FinalizeManagerTest {
 	}
 
 	private <T> T getReferent(Reference<T> reference) {
-		try {
-			return (T)ReflectionTestUtil.getFieldValue(reference, "referent");
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
+		return (T)ReflectionTestUtil.getFieldValue(reference, "referent");
 	}
 
 	private void waitUntilMarked(MarkFinalizeAction markFinalizeAction)

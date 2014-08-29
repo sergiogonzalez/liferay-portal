@@ -77,7 +77,7 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 		}
 	)
 	@Test
-	public void testDestroy2() throws Exception {
+	public void testDestroy2() {
 		TransportationConfigurationAdvice.setChannelCount(2);
 
 		ClusterLinkImpl clusterLinkImpl = null;
@@ -126,7 +126,7 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 		}
 	)
 	@Test
-	public void testGetChannel() throws Exception {
+	public void testGetChannel() {
 		TransportationConfigurationAdvice.setChannelCount(2);
 
 		CaptureHandler captureHandler = JDKLoggerTestUtil.configureJDKLogger(
@@ -196,7 +196,7 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 		}
 	)
 	@Test
-	public void testGetLocalTransportAddresses2() throws Exception {
+	public void testGetLocalTransportAddresses2() {
 		TransportationConfigurationAdvice.setChannelCount(2);
 
 		ClusterLinkImpl clusterLinkImpl = null;
@@ -244,7 +244,7 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 		}
 	)
 	@Test
-	public void testGetTransportAddressesByPriority2() throws Exception {
+	public void testGetTransportAddressesByPriority2() {
 		TransportationConfigurationAdvice.setChannelCount(2);
 
 		ClusterLinkImpl clusterLinkImpl1 = null;
@@ -424,7 +424,7 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 
 	)
 	@Test
-	public void testSendMulticastMessage3() throws Exception {
+	public void testSendMulticastMessage3() {
 		TransportationConfigurationAdvice.setChannelCount(1);
 
 		CaptureHandler captureHandler = null;
@@ -473,7 +473,7 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 
 	)
 	@Test
-	public void testSendMulticastMessage4() throws Exception {
+	public void testSendMulticastMessage4() {
 		TransportationConfigurationAdvice.setChannelCount(1);
 
 		CaptureHandler captureHandler = null;
@@ -589,7 +589,7 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 
 	)
 	@Test
-	public void testSendUnicastMessage3() throws Exception {
+	public void testSendUnicastMessage3() {
 		TransportationConfigurationAdvice.setChannelCount(1);
 
 		CaptureHandler captureHandler = null;
@@ -639,7 +639,7 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 
 	)
 	@Test
-	public void testSendUnicastMessage4() throws Exception {
+	public void testSendUnicastMessage4() {
 		TransportationConfigurationAdvice.setChannelCount(1);
 
 		CaptureHandler captureHandler = null;
@@ -726,7 +726,7 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 		return message;
 	}
 
-	protected ClusterLinkImpl getClusterLinkImpl() throws Exception {
+	protected ClusterLinkImpl getClusterLinkImpl() {
 		ClusterLinkImpl clusterLinkImpl = new ClusterLinkImpl();
 
 		clusterLinkImpl.setClusterForwardMessageListener(
@@ -750,9 +750,7 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 		return clusterLinkImpl;
 	}
 
-	protected List<JChannel> getJChannels(ClusterLinkImpl clusterLinkImpl)
-		throws Exception {
-
+	protected List<JChannel> getJChannels(ClusterLinkImpl clusterLinkImpl) {
 		return (List<JChannel>)ReflectionTestUtil.getFieldValue(
 			clusterLinkImpl, "_transportJChannels");
 	}
