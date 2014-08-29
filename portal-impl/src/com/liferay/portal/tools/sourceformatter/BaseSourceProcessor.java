@@ -93,39 +93,48 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	protected static boolean isExcluded(
-		List<String> exclusions, String fileName) {
+		List<String> exclusions, String absolutePath) {
 
-		return isExcluded(exclusions, fileName, -1);
+		return isExcluded(exclusions, absolutePath, -1);
 	}
 
 	protected static boolean isExcluded(
-		List<String> exclusions, String fileName, int lineCount) {
+		List<String> exclusions, String absolutePath, int lineCount) {
 
-		return isExcluded(exclusions, fileName, lineCount, null);
+		return isExcluded(exclusions, absolutePath, lineCount, null);
 	}
 
 	protected static boolean isExcluded(
-		List<String> exclusions, String fileName, int lineCount,
+		List<String> exclusions, String absolutePath, int lineCount,
 		String javaTermName) {
 
 		if (ListUtil.isEmpty(exclusions)) {
 			return false;
 		}
 
-		if (exclusions.contains(fileName)) {
-			return true;
+		String absolutePathWithJavaTermName = null;
+
+		if (Validator.isNotNull(javaTermName)) {
+			absolutePathWithJavaTermName =
+				absolutePath + StringPool.AT + javaTermName;
 		}
 
-		if ((lineCount > 0) &&
-			exclusions.contains(fileName + StringPool.AT + lineCount)) {
+		String absolutePathWithLineCount = null;
 
-			return true;
+		if (lineCount > 0) {
+			absolutePathWithLineCount =
+				absolutePath + StringPool.AT + lineCount;
 		}
 
-		if (Validator.isNotNull(javaTermName) &&
-			exclusions.contains(fileName + StringPool.AT + javaTermName)) {
+		for (String exclusion : exclusions) {
+			if (absolutePath.endsWith(exclusion) ||
+				((absolutePathWithJavaTermName != null) &&
+				 absolutePathWithJavaTermName.endsWith(exclusion)) ||
+				((absolutePathWithLineCount != null) &&
+				 absolutePathWithLineCount.endsWith(exclusion))) {
 
-			return true;
+				return true;
+			}
 		}
 
 		return false;
@@ -380,29 +389,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		processErrorMessage(fileName, "plus: " + fileName + " " + lineCount);
 	}
 
-	protected void compareAndAutoFixContent(
-			File file, String fileName, String content, String newContent)
-		throws IOException {
-
-		if ((newContent == null) || content.equals(newContent)) {
-			return;
-		}
-
-		fileName = StringUtil.replace(
-			fileName, StringPool.BACK_SLASH, StringPool.SLASH);
-
-		if (_autoFix) {
-			fileUtil.write(file, newContent);
-		}
-		else if (_firstSourceMismatchException == null) {
-			_firstSourceMismatchException =
-				new SourceMismatchException(fileName, content, newContent);
-		}
-
-		if (_printErrors) {
-			sourceFormatterHelper.printError(fileName, file);
-		}
-	}
+	protected abstract String doFormat(
+			File file, String fileName, String absolutePath, String content)
+		throws Exception;
 
 	protected String fixCompatClassImports(String absolutePath, String content)
 		throws IOException {
@@ -651,17 +640,48 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	protected abstract void format() throws Exception;
 
 	protected String format(String fileName) throws Exception {
-		return null;
+		File file = new File(BASEDIR + fileName);
+
+		fileName = StringUtil.replace(
+			fileName, StringPool.BACK_SLASH, StringPool.SLASH);
+
+		String absolutePath = getAbsolutePath(file);
+
+		String content = fileUtil.read(file);
+
+		String newContent = format(file, fileName, absolutePath, content);
+
+		if (!content.equals(newContent)) {
+			processFormattedFile(file, fileName, content, newContent);
+		}
+
+		return newContent;
+	}
+
+	protected String format(
+			File file, String fileName, String absolutePath, String content)
+		throws Exception {
+
+		String newContent = doFormat(file, fileName, absolutePath, content);
+
+		newContent = StringUtil.replace(
+			newContent, StringPool.RETURN, StringPool.BLANK);
+
+		if (content.equals(newContent)) {
+			return content;
+		}
+
+		return format(file, fileName, absolutePath, newContent);
 	}
 
 	protected String formatJavaTerms(
-			String fileName, String content, String javaClassContent,
-			List<String> javaTermSortExclusions,
+			String fileName, String absolutePath, String content,
+			String javaClassContent, List<String> javaTermSortExclusions,
 			List<String> testAnnotationsExclusions)
 		throws Exception {
 
 		JavaClass javaClass = new JavaClass(
-			fileName, javaClassContent, StringPool.TAB);
+			fileName, absolutePath, javaClassContent, StringPool.TAB);
 
 		String newJavaClassContent = javaClass.formatJavaTerms(
 			javaTermSortExclusions, testAnnotationsExclusions);
@@ -672,6 +692,12 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		return content;
+	}
+
+	protected String getAbsolutePath(File file) {
+		String absolutePath = fileUtil.getAbsolutePath(file);
+
+		return StringUtil.replace(absolutePath, "/./", StringPool.SLASH);
 	}
 
 	protected Map<String, String> getCompatClassNamesMap() throws IOException {
@@ -985,6 +1011,23 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		return false;
+	}
+
+	protected void processFormattedFile(
+			File file, String fileName, String content, String newContent)
+		throws IOException {
+
+		if (_autoFix) {
+			fileUtil.write(file, newContent);
+		}
+		else if (_firstSourceMismatchException == null) {
+			_firstSourceMismatchException =
+				new SourceMismatchException(fileName, content, newContent);
+		}
+
+		if (_printErrors) {
+			sourceFormatterHelper.printError(fileName, file);
+		}
 	}
 
 	protected String replacePrimitiveWrapperInstantiation(

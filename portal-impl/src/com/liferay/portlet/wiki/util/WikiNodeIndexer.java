@@ -89,7 +89,8 @@ public class WikiNodeIndexer extends BaseIndexer {
 		document.addUID(PORTLET_ID, node.getNodeId(), node.getName());
 
 		SearchEngineUtil.deleteDocument(
-			getSearchEngineId(), node.getCompanyId(), document.get(Field.UID));
+			getSearchEngineId(), node.getCompanyId(), document.get(Field.UID),
+			isCommitImmediately());
 	}
 
 	@Override
@@ -125,13 +126,14 @@ public class WikiNodeIndexer extends BaseIndexer {
 		if (!node.isInTrash()) {
 			SearchEngineUtil.deleteDocument(
 				getSearchEngineId(), node.getCompanyId(),
-				document.get(Field.UID));
+				document.get(Field.UID), isCommitImmediately());
 
 			return;
 		}
 
 		SearchEngineUtil.updateDocument(
-			getSearchEngineId(), node.getCompanyId(), document);
+			getSearchEngineId(), node.getCompanyId(), document,
+			isCommitImmediately());
 	}
 
 	@Override
