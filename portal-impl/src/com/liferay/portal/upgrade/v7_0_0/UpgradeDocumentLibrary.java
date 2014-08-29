@@ -158,7 +158,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 
 				String filename = DLUtil.getFilename(title, extension);
 
-				updateFileEntryFilename(fileEntryId, filename);
+				updateFileVersionFilename(fileEntryId, filename);
 			}
 		}
 		finally {
