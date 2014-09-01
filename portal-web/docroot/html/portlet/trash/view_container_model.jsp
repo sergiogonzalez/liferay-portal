@@ -84,7 +84,7 @@ if (hasRootContainerModel) {
 				data.put("redirect", redirect);
 			%>
 
-			<aui:button cssClass="selector-button" data="<%= data %>" value='<%= LanguageUtil.format(request, "choose-this-x", containerModelName) %>' />
+			<aui:button cssClass="selector-button" data="<%= data %>" value='<%= LanguageUtil.format(request, "choose-this-x", trashHandler.hasRootContainerModel() ? trashHandler.getRootContainerModelName() : containerModelName) %>' />
 		</aui:button-row>
 
 		<br />
