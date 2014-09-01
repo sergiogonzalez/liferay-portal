@@ -25,6 +25,7 @@ import java.net.URLClassLoader;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 import org.junit.rules.TestRule;
@@ -71,7 +72,8 @@ public class CodeCoverageAssertor implements TestRule {
 					includes = _generateIncludes(className);
 				}
 
-				_dynamicallyInstrumentMethod.invoke(null, includes, _excludes);
+				_DYNAMICALLY_INSTRUMENT_METHOD.invoke(
+					null, includes, _excludes);
 
 				try {
 					statement.evaluate();
@@ -87,7 +89,9 @@ public class CodeCoverageAssertor implements TestRule {
 
 					appendAssertClasses(assertClasses);
 
-					_assertCoverageMethod.invoke(
+					_purgeSyntheticClasses(assertClasses);
+
+					_ASSERT_COVERAGE_METHOD.invoke(
 						null, _includeInnerClasses,
 						assertClasses.toArray(
 							new Class<?>[assertClasses.size()]));
@@ -101,6 +105,18 @@ public class CodeCoverageAssertor implements TestRule {
 		Class<?> clazz = getClass();
 
 		return clazz.getClassLoader();
+	}
+
+	private static void _purgeSyntheticClasses(List<Class<?>> assertClasses) {
+		Iterator<Class<?>> iterator = assertClasses.iterator();
+
+		while (iterator.hasNext()) {
+			Class<?> assertClass = iterator.next();
+
+			if (assertClass.isSynthetic()) {
+				iterator.remove();
+			}
+		}
 	}
 
 	private String[] _generateIncludes(String mainClassName) throws Exception {
@@ -138,6 +154,8 @@ public class CodeCoverageAssertor implements TestRule {
 			appendAssertClassesMethod.invoke(reloadedObject, assertClasses);
 		}
 
+		_purgeSyntheticClasses(assertClasses);
+
 		String[] includes = new String[assertClasses.size()];
 
 		for (int i = 0; i < assertClasses.size(); i++) {
@@ -151,8 +169,9 @@ public class CodeCoverageAssertor implements TestRule {
 		return includes;
 	}
 
-	private static final Method _assertCoverageMethod;
-	private static final Method _dynamicallyInstrumentMethod;
+	private static final Method _ASSERT_COVERAGE_METHOD;
+
+	private static final Method _DYNAMICALLY_INSTRUMENT_METHOD;
 
 	private final String[] _excludes;
 	private final boolean _includeInnerClasses;
@@ -165,10 +184,11 @@ public class CodeCoverageAssertor implements TestRule {
 			Class<?> instrumentationAgentClass = systemClassLoader.loadClass(
 				"com.liferay.cobertura.instrument.InstrumentationAgent");
 
-			_assertCoverageMethod = instrumentationAgentClass.getMethod(
+			_ASSERT_COVERAGE_METHOD = instrumentationAgentClass.getMethod(
 				"assertCoverage", boolean.class, Class[].class);
-			_dynamicallyInstrumentMethod = instrumentationAgentClass.getMethod(
-				"dynamicallyInstrument", String[].class, String[].class);
+			_DYNAMICALLY_INSTRUMENT_METHOD =
+				instrumentationAgentClass.getMethod(
+					"dynamicallyInstrument", String[].class, String[].class);
 		}
 		catch (Exception e) {
 			throw new ExceptionInInitializerError(e);

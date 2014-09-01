@@ -19,6 +19,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NOTIFICATIONS_LIST_LINK</td>
+	<td>//a[contains(@class,'non-actionable') and contains(.,'Notifications')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REQUESTS_LIST_LINK</td>
+	<td>//a[contains(@class,'actionable') and contains(.,'Requests')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOTIFICATION_DELIVERY_LINK</td>
+	<td>//a[contains(@class,'manage') and contains(.,'Notification Delivery')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONFIRM_BUTTON</td>
 	<td>//a[contains(.,'Confirm')]</td>
 	<td></td>
@@ -26,6 +41,11 @@
 <tr>
 	<td>NOTIFICATIONS_NONE_MESSAGE</td>
 	<td>//div[@class='message'][contains(.,'You do not have any notifications.')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REQUESTS_NONE_MESSAGE</td>
+	<td>//div[@class='message'][contains(.,'You do not have any requests.')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -46,37 +66,6 @@
 <tr>
 	<td>NEXT_BUTTON</td>
 	<td>//a[contains(.,'Next')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--SCREENSHOTS-->
-<tr>
-	<td>SCREENSHOTS_NOTIFICATIONS_ANNOUNCEMENTS_ENTRY_IMPORTANT_PNG</td>
-	<td>so/screenshots/notifications/notifications_announcements_entry_important.png</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SCREENSHOTS_NOTIFICATIONS_ANNOUNCEMENTS_ENTRY_BOLD_PNG</td>
-	<td>so/screenshots/notifications/notifications_announcements_entry_bold.png</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SCREENSHOTS_NOTIFICATIONS_ANNOUNCEMENTS_ENTRY_ITALIC_PNG</td>
-	<td>so/screenshots/notifications/notifications_announcements_entry_italic.png</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SCREENSHOTS_NOTIFICATIONS_ANNOUNCEMENTS_ENTRY_STRIKE_THROUGH_PNG</td>
-	<td>so/screenshots/notifications/notifications_announcements_entry_strike_through.png</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SCREENSHOTS_NOTIFICATIONS_ANNOUNCEMENTS_ENTRY_UNDERLINE_PNG</td>
-	<td>so/screenshots/notifications/notifications_announcements_entry_underline.png</td>
 	<td></td>
 </tr>
 <tr>

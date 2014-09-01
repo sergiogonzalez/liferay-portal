@@ -3,6 +3,8 @@
 
 <project>
 	<path id="plugins.includes.path">
+		<dirset dir="amazon-rankings" includes="*" />
+		<dirset dir="currency-converter" includes="*" />
 		<dirset dir="dictionary" includes="*" />
 		<dirset dir="social" includes="*" />
 		<dirset dir="web-proxy" includes="*" />

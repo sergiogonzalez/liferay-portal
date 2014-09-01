@@ -259,6 +259,8 @@ public class VerifyProperties extends VerifyProcess {
 	};
 
 	private static final String[] _OBSOLETE_PORTAL_KEYS = new String[] {
+		"amazon.access.key.id", "amazon.associate.tag",
+		"amazon.secret.access.key",
 		"asset.entry.increment.view.counter.enabled", "auth.max.failures.limit",
 		"buffered.increment.parallel.queue.size",
 		"buffered.increment.serial.queue.size", "cas.validate.url",

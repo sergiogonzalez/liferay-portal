@@ -57,15 +57,16 @@ public class SocialActivitiesUpgrade {
 						"116",
 						"com_liferay_social_activities_portlet_" +
 							"SocialActivitiesPortlet"
-						}
-					};
-				}
-			};
+					}
+				};
+			}
 
-			_releaseLocalService.updateRelease(
-				SocialActivitiesPortlet.class.getName(),
-				Collections.<UpgradeProcess>singletonList(upgradePortletId), 1,
-				0, false);
+		};
+
+		_releaseLocalService.updateRelease(
+			SocialActivitiesPortlet.class.getName(),
+			Collections.<UpgradeProcess>singletonList(upgradePortletId), 1, 0,
+			false);
 	}
 
 	private ReleaseLocalService _releaseLocalService;

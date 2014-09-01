@@ -198,10 +198,6 @@
 			<forward name="portlet.announcements.view" path="portlet.announcements.view" />
 		</action>
 
-		<!-- Amazon Rankings -->
-
-		<action path="/amazon_rankings/view" forward="portlet.amazon_rankings.view" />
-
 		<!-- Announcements -->
 
 		<action path="/announcements/edit_entry" type="com.liferay.portlet.announcements.action.EditEntryAction">
@@ -421,14 +417,6 @@
 		<!-- Control Panel Menu -->
 
 		<action path="/control_panel_menu/view" forward="portlet.control_panel_menu.view" />
-
-		<!-- Currency Converter -->
-
-		<action path="/currency_converter/edit" type="com.liferay.portlet.currencyconverter.action.EditPreferencesAction">
-			<forward name="portlet.currency_converter.edit" path="portlet.currency_converter.edit" />
-		</action>
-
-		<action path="/currency_converter/view" forward="portlet.currency_converter.view" />
 
 		<!-- Directory -->
 

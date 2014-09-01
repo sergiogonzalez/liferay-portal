@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.wiki.service.impl;
 
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.diff.DiffHtmlUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -417,11 +418,11 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		checkNodeChange(nodeId, title, newNodeId);
 
-		serviceContext.setCommand(Constants.MOVE);
-
 		WikiPage oldPage = getPage(nodeId, title);
 
 		oldPage.setParentTitle(StringPool.BLANK);
+
+		serviceContext.setCommand(Constants.MOVE);
 
 		updatePage(
 			userId, oldPage, newNodeId, oldPage.getTitle(),
@@ -1690,10 +1691,18 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		WikiPage page = getPage(nodeId, title);
 
+		String summary = page.getSummary();
+
+		if (Validator.isNotNull(page.getRedirectTitle())) {
+			page.setRedirectTitle(StringPool.BLANK);
+
+			summary = StringPool.BLANK;
+		}
+
 		serviceContext.setCommand(Constants.RENAME);
 
 		updatePage(
-			userId, page, 0, newTitle, page.getContent(), page.getSummary(),
+			userId, page, 0, newTitle, page.getContent(), summary,
 			page.getMinorEdit(), page.getFormat(), page.getParentTitle(),
 			page.getRedirectTitle(), serviceContext);
 	}
@@ -2385,7 +2394,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		// Version pages
 
 		List<WikiPage> versionPages = wikiPagePersistence.findByN_T(
-			nodeId, title);
+			nodeId, title, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			new PageVersionComparator());
 
 		WikiPage page = fetchLatestPage(
 			newNodeId, title, WorkflowConstants.STATUS_ANY, false);
@@ -2440,7 +2450,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		// Version pages
 
 		List<WikiPage> versionPages = wikiPagePersistence.findByN_T(
-			nodeId, title);
+			nodeId, title, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			new PageVersionComparator());
 
 		WikiPage page = fetchLatestPage(
 			nodeId, newTitle, WorkflowConstants.STATUS_ANY, false);
@@ -2451,13 +2462,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		}
 
 		for (WikiPage versionPage : versionPages) {
+			versionPage.setRedirectTitle(page.getRedirectTitle());
 			versionPage.setTitle(newTitle);
-
-			if (Validator.isNotNull(versionPage.getRedirectTitle())) {
-				versionPage.setRedirectTitle(StringPool.BLANK);
-
-				versionPage.setSummary(StringPool.BLANK);
-			}
 
 			wikiPagePersistence.update(versionPage);
 		}
@@ -2477,7 +2483,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		double version = WikiPageConstants.VERSION_DEFAULT;
 		String summary = LanguageUtil.format(
-			serviceContext.getLocale(), "moved-to-x", newTitle);
+			serviceContext.getLocale(), "renamed-as-x", newTitle);
 		String format = page.getFormat();
 		boolean head = true;
 		String parentTitle = page.getParentTitle();
