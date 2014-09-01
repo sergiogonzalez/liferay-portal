@@ -14,8 +14,6 @@
 
 package com.liferay.registry.collections;
 
-import com.liferay.registry.ServiceReference;
-
 /**
  * @author Carlos Sierra Andrés
  */
@@ -25,8 +23,10 @@ public interface ServiceTrackerBucket<S, R> {
 
 	public boolean isDisposable();
 
-	public void remove(ServiceReference<S> serviceReference);
+	public void remove(
+		ServiceReferenceServiceTuple<S> serviceReferenceServiceTuple);
 
-	public void store(ServiceReference<S> serviceReference);
+	public void store(
+		ServiceReferenceServiceTuple<S> serviceReferenceServiceTuple);
 
 }

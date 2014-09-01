@@ -145,19 +145,6 @@
 		<add-default-resource>true</add-default-resource>
 	</portlet>
 	<portlet>
-		<portlet-name>16</portlet-name>
-		<icon>/html/icons/currency_converter.png</icon>
-		<struts-path>currency_converter</struts-path>
-		<preferences-owned-by-group>false</preferences-owned-by-group>
-		<use-default-template>false</use-default-template>
-		<remoteable>true</remoteable>
-		<private-request-attributes>false</private-request-attributes>
-		<private-session-attributes>false</private-session-attributes>
-		<render-weight>0</render-weight>
-		<header-portlet-css>/html/portlet/currency_converter/css/main.css</header-portlet-css>
-		<css-class-wrapper>portlet-currency-converter</css-class-wrapper>
-	</portlet>
-	<portlet>
 		<portlet-name>19</portlet-name>
 		<icon>/html/icons/message_boards.png</icon>
 		<struts-path>message_boards</struts-path>
@@ -671,19 +658,6 @@
 		<render-weight>50</render-weight>
 		<header-portlet-css>/html/portlet/recent_documents/css/main.css</header-portlet-css>
 		<css-class-wrapper>portlet-recent-documents</css-class-wrapper>
-	</portlet>
-	<portlet>
-		<portlet-name>67</portlet-name>
-		<icon>/html/icons/default.png</icon>
-		<struts-path>amazon_rankings</struts-path>
-		<configuration-action-class>com.liferay.portlet.amazonrankings.action.ConfigurationActionImpl</configuration-action-class>
-		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>false</use-default-template>
-		<remoteable>true</remoteable>
-		<private-request-attributes>false</private-request-attributes>
-		<private-session-attributes>false</private-session-attributes>
-		<render-weight>0</render-weight>
-		<css-class-wrapper>portlet-amazon-rankings</css-class-wrapper>
 	</portlet>
 	<portlet>
 		<portlet-name>70</portlet-name>

@@ -690,7 +690,7 @@ public class PortletTracker
 			SetUtil.fromArray(new String[] {toLowerCase(PortletMode.VIEW)}));
 
 		List<String> portletModesStrings = StringPlus.asList(
-			serviceReference.getProperty("javax.portlet.portletModes"));
+			serviceReference.getProperty("javax.portlet.portlet.modes"));
 
 		for (String portletModesString : portletModesStrings) {
 			String[] portletModesStringParts = StringUtil.split(
@@ -900,7 +900,7 @@ public class PortletTracker
 				}));
 
 		List<String> windowStatesStrings = StringPlus.asList(
-			serviceReference.getProperty("javax.portlet.windowStates"));
+			serviceReference.getProperty("javax.portlet.window.states"));
 
 		for (String windowStatesString : windowStatesStrings) {
 			String[] windowStatesStringParts = StringUtil.split(
@@ -957,7 +957,7 @@ public class PortletTracker
 
 		String contextName = String.valueOf(bundle.getBundleId());
 
-		String contextPath = "/".concat(contextName);
+		String contextPath = StringPool.SLASH.concat(contextName);
 
 		BundlePortletApp bundlePortletApp = new BundlePortletApp(
 			bundle, portalPortletModel, contextName, contextPath,

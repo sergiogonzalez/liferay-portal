@@ -757,7 +757,7 @@ public class RemoteSPITest {
 	}
 
 	@Test
-	public void testSPIShutdownHookRun7() throws Exception {
+	public void testSPIShutdownHookRun7() throws RemoteException {
 
 		// Unregister returns true, MPI waiting timed out, with log
 
@@ -918,7 +918,7 @@ public class RemoteSPITest {
 			new Callable<Object>() {
 
 				@Override
-				public Object call() throws Exception {
+				public Object call() {
 					AbstractQueuedSynchronizer abstractQueuedSynchronizer =
 						(AbstractQueuedSynchronizer)
 							ReflectionTestUtil.getFieldValue(

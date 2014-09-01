@@ -1166,8 +1166,12 @@ print AdminControl.invoke(appManager, 'startApplication', 'liferay-portal')
 			ant setup-sdk
 
 			ant -f modules/build.xml clean
+
 			ant -f modules/core/registry-api/build.xml deploy
+			ant -f modules/core/registry-test/build.xml compile-test
+
 			ant -f modules/build.xml compile
+
 			ant -f modules/sdk/ant-arquillian/build.xml clean compile
 		</execute>
 	</target>

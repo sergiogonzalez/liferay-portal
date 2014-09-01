@@ -26,13 +26,18 @@ import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 
 import com.thoughtworks.qdox.JavaDocBuilder;
+import com.thoughtworks.qdox.model.ClassLibrary;
+import com.thoughtworks.qdox.model.JavaField;
 import com.thoughtworks.qdox.model.JavaSource;
+import com.thoughtworks.qdox.model.Type;
+import com.thoughtworks.qdox.parser.ParseException;
 
 import java.io.File;
 import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -318,6 +323,87 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return ifClause;
 	}
 
+	protected String checkImmutableAndStaticableFieldTypes(
+			String fileName, String packagePath, String className,
+			String content)
+		throws IOException {
+
+		ClassLibrary classLibrary = new ClassLibrary();
+
+		classLibrary.addClassLoader(JavaSourceProcessor.class.getClassLoader());
+
+		JavaDocBuilder javaDocBuilder = new JavaDocBuilder(classLibrary);
+
+		try {
+			javaDocBuilder.addSource(
+				new UnsyncStringReader(sanitizeContent(content)));
+		}
+		catch (ParseException pe) {
+			System.err.println(
+				"Unable to parse " + fileName + StringPool.COMMA_AND_SPACE +
+					pe.getMessage());
+
+			return content;
+		}
+
+		com.thoughtworks.qdox.model.JavaClass javaClass =
+			javaDocBuilder.getClassByName(
+				packagePath.concat(StringPool.PERIOD).concat(className));
+
+		String[] lines = null;
+
+		for (JavaField javaField : javaClass.getFields()) {
+			Type type = javaField.getType();
+
+			String fieldTypeName = type.getFullyQualifiedName();
+
+			if (!javaField.isPrivate() || !javaField.isFinal() ||
+				!_immutableFieldTypes.contains(fieldTypeName)) {
+
+				continue;
+			}
+
+			String oldName = javaField.getName();
+
+			if (!type.isArray() && javaField.isStatic() &&
+				!oldName.equals("serialVersionUID")) {
+
+				Matcher matcher = _camelCasePattern.matcher(oldName);
+
+				String newName = matcher.replaceAll("$1_$2");
+
+				newName = StringUtil.toUpperCase(newName);
+
+				if (newName.charAt(0) != CharPool.UNDERLINE) {
+					newName = StringPool.UNDERLINE.concat(newName);
+				}
+
+				content = content.replaceAll(
+					"(?<=[\\W&&[^.\"]])(" + oldName + ")\\b", newName);
+			}
+
+			String initializationExpression =
+				StringUtil.trim(javaField.getInitializationExpression());
+
+			if (javaField.isStatic() || initializationExpression.isEmpty()) {
+				continue;
+			}
+
+			if (lines == null) {
+				lines = StringUtil.splitLines(content);
+			}
+
+			String line = lines[javaField.getLineNumber() - 1];
+
+			String newLine = StringUtil.replace(
+				line, "private final", "private static final");
+
+			content = StringUtil.replace(content, line, newLine);
+		}
+
+		return content;
+	}
+
 	protected void checkLogLevel(
 		String content, String fileName, String logLevel) {
 
@@ -577,6 +663,335 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
+	@Override
+	protected String doFormat(
+			File file, String fileName, String absolutePath, String content)
+		throws Exception {
+
+		if (isGenerated(content)) {
+			return content;
+		}
+
+		String className = file.getName();
+
+		int pos = className.lastIndexOf(StringPool.PERIOD);
+
+		className = className.substring(0, pos);
+
+		String packagePath = fileName;
+
+		int packagePathX = packagePath.indexOf("/src/");
+
+		if (packagePathX == -1) {
+			packagePathX = packagePath.indexOf("/integration/") + 8;
+		}
+
+		int packagePathY = packagePath.lastIndexOf(StringPool.SLASH);
+
+		if ((packagePathX + 5) >= packagePathY) {
+			packagePath = StringPool.BLANK;
+		}
+		else {
+			packagePath = packagePath.substring(packagePathX + 5, packagePathY);
+		}
+
+		packagePath = StringUtil.replace(
+			packagePath, StringPool.SLASH, StringPool.PERIOD);
+
+		if (packagePath.endsWith(".model")) {
+			if (content.contains("extends " + className + "Model")) {
+				return content;
+			}
+		}
+
+		String newContent = content;
+
+		if (newContent.contains("$\n */")) {
+			processErrorMessage(fileName, "*: " + fileName);
+
+			newContent = StringUtil.replace(newContent, "$\n */", "$\n *\n */");
+		}
+
+		newContent = fixCopyright(newContent, absolutePath, fileName);
+
+		if (newContent.contains(className + ".java.html")) {
+			processErrorMessage(fileName, "Java2HTML: " + fileName);
+		}
+
+		if (newContent.contains(" * @author Raymond Aug") &&
+			!newContent.contains(" * @author Raymond Aug\u00e9")) {
+
+			newContent = newContent.replaceFirst(
+				"Raymond Aug.++", "Raymond Aug\u00e9");
+
+			processErrorMessage(fileName, "UTF-8: " + fileName);
+		}
+
+		newContent = fixDataAccessConnection(className, newContent);
+		newContent = fixSessionKey(fileName, newContent, sessionKeyPattern);
+
+		newContent = StringUtil.replace(
+			newContent,
+			new String[] {
+				"com.liferay.portal.PortalException",
+				"com.liferay.portal.SystemException",
+				"com.liferay.util.LocalizationUtil",
+				"private static final Log _log"
+			},
+			new String[] {
+				"com.liferay.portal.kernel.exception.PortalException",
+				"com.liferay.portal.kernel.exception.SystemException",
+				"com.liferay.portal.kernel.util.LocalizationUtil",
+				"private static Log _log"
+			});
+
+		newContent = fixCompatClassImports(absolutePath, newContent);
+
+		newContent = stripJavaImports(newContent, packagePath, className);
+
+		newContent = StringUtil.replace(
+			newContent,
+			new String[] {
+				";\n/**", "\t/*\n\t *", "catch(", "else{", "if(", "for(",
+				"while(", "List <", "){\n", "]{\n", ";;\n"
+			},
+			new String[] {
+				";\n\n/**", "\t/**\n\t *", "catch (", "else {", "if (", "for (",
+				"while (", "List<", ") {\n", "] {\n", ";\n"
+			});
+
+		while (true) {
+			Matcher matcher = _incorrectLineBreakPattern.matcher(newContent);
+
+			if (!matcher.find()) {
+				break;
+			}
+
+			newContent = StringUtil.replaceFirst(
+				newContent, StringPool.NEW_LINE, StringPool.BLANK,
+				matcher.start());
+		}
+
+		newContent = sortAnnotations(newContent, StringPool.BLANK);
+
+		Matcher matcher = _logPattern.matcher(newContent);
+
+		if (matcher.find()) {
+			String logClassName = matcher.group(1);
+
+			if (!logClassName.equals(className)) {
+				newContent = StringUtil.replaceLast(
+					newContent, logClassName + ".class)",
+					className + ".class)");
+			}
+		}
+
+		if (!isExcluded(_staticLogVariableExclusions, absolutePath)) {
+			newContent = StringUtil.replace(
+				newContent, "private Log _log", "private static Log _log");
+		}
+
+		if (newContent.contains("*/\npackage ")) {
+			processErrorMessage(fileName, "package: " + fileName);
+		}
+
+		if (!newContent.endsWith("\n\n}") && !newContent.endsWith("{\n}")) {
+			processErrorMessage(fileName, "}: " + fileName);
+		}
+
+		if (portalSource &&
+			mainReleaseVersion.equals(MAIN_RELEASE_LATEST_VERSION) &&
+			!className.equals("BaseServiceImpl") &&
+			className.endsWith("ServiceImpl") &&
+			newContent.contains("ServiceUtil.")) {
+
+			processErrorMessage(fileName, "ServiceUtil: " + fileName);
+		}
+
+		// LPS-34911
+
+		if (portalSource &&
+			!isExcluded(_upgradeServiceUtilExclusions, absolutePath) &&
+			fileName.contains("/portal/upgrade/") &&
+			!fileName.contains("/test/") &&
+			newContent.contains("ServiceUtil.")) {
+
+			processErrorMessage(fileName, "ServiceUtil: " + fileName);
+		}
+
+		if (!isRunsOutsidePortal(absolutePath) &&
+			!isExcluded(_proxyExclusions, absolutePath) &&
+			newContent.contains("import java.lang.reflect.Proxy;")) {
+
+			processErrorMessage(fileName, "Proxy: " + fileName);
+		}
+
+		if (newContent.contains("import edu.emory.mathcs.backport.java")) {
+			processErrorMessage(
+				fileName, "edu.emory.mathcs.backport.java: " + fileName);
+		}
+
+		if (newContent.contains("import jodd.util.StringPool")) {
+			processErrorMessage(fileName, "jodd.util.StringPool: " + fileName);
+		}
+
+		// LPS-45027
+
+		if (newContent.contains(
+				"com.liferay.portal.kernel.util.UnmodifiableList")) {
+
+			processErrorMessage(
+				fileName,
+				"Use java.util.Collections.unmodifiableList instead of " +
+					"com.liferay.portal.kernel.util.UnmodifiableList: " +
+						fileName);
+		}
+
+		// LPS-28266
+
+		for (int pos1 = -1;;) {
+			pos1 = newContent.indexOf(StringPool.TAB + "try {", pos1 + 1);
+
+			if (pos1 == -1) {
+				break;
+			}
+
+			int pos2 = newContent.indexOf(StringPool.TAB + "try {", pos1 + 1);
+			int pos3 = newContent.indexOf("\"select count(", pos1);
+
+			if ((pos2 != -1) && (pos3 != -1) && (pos2 < pos3)) {
+				continue;
+			}
+
+			int pos4 = newContent.indexOf("rs.getLong(1)", pos1);
+			int pos5 = newContent.indexOf(StringPool.TAB + "finally {", pos1);
+
+			if ((pos3 == -1) || (pos4 == -1) || (pos5 == -1)) {
+				break;
+			}
+
+			if ((pos3 < pos4) && (pos4 < pos5)) {
+				processErrorMessage(
+					fileName, "Use getInt(1) for count: " + fileName);
+			}
+		}
+
+		// LPS-33070
+
+		if (content.contains("implements ProcessCallable") &&
+			!content.contains("private static final long serialVersionUID")) {
+
+			processErrorMessage(
+				fileName,
+				"Assign ProcessCallable implementation a serialVersionUID: " +
+					fileName);
+		}
+
+		checkLanguageKeys(fileName, newContent, languageKeyPattern);
+
+		newContent = StringUtil.replace(
+			newContent, StringPool.TAB + "for (;;) {",
+			StringPool.TAB + "while (true) {");
+
+		// LPS-36174
+
+		if (_checkUnprocessedExceptions && !fileName.contains("/test/")) {
+			checkUnprocessedExceptions(newContent, file, packagePath, fileName);
+		}
+
+		// LPS-39508
+
+		if (!isExcluded(_secureRandomExclusions, absolutePath) &&
+			!isRunsOutsidePortal(absolutePath) &&
+			content.contains("java.security.SecureRandom") &&
+			!content.contains("javax.crypto.KeyGenerator")) {
+
+			processErrorMessage(
+				fileName,
+				"Use SecureRandomUtil or com.liferay.portal.kernel.security." +
+					"SecureRandom instead of java.security.SecureRandom: " +
+						fileName);
+		}
+
+		// LPS-41315
+
+		checkLogLevel(newContent, fileName, "debug");
+		checkLogLevel(newContent, fileName, "info");
+		checkLogLevel(newContent, fileName, "trace");
+		checkLogLevel(newContent, fileName, "warn");
+
+		// LPS-46632
+
+		checkSystemEventAnnotations(newContent, fileName);
+
+		// LPS-41205
+
+		if (fileName.contains("/upgrade/") &&
+			newContent.contains("LocaleUtil.getDefault()")) {
+
+			processErrorMessage(
+				fileName,
+				"Use UpgradeProcessUtil.getDefaultLanguageId(companyId) " +
+					"instead of LocaleUtil.getDefault(): " + fileName);
+		}
+
+		// LPS-46017
+
+		newContent = StringUtil.replace(
+			newContent, " static interface ", " interface ");
+
+		// LPS-47055
+
+		newContent = fixSystemExceptions(newContent);
+
+		// LPS-47648
+
+		if (portalSource && fileName.contains("/test/integration/")) {
+			newContent = StringUtil.replace(
+				newContent, "FinderCacheUtil.clearCache();", StringPool.BLANK);
+		}
+
+		// LPS-47682
+
+		newContent = fixIncorrectParameterTypeForLanguageUtil(
+			newContent, false, fileName);
+
+		if (portalSource && fileName.contains("/portal-service/") &&
+			content.contains("import javax.servlet.jsp.")) {
+
+			processErrorMessage(
+				fileName,
+				"Never import javax.servlet.jsp.* from portal-service " +
+					fileName);
+		}
+
+		// LPS-48153
+
+		//newContent = applyDiamondOperator(newContent);
+
+		// LPS-49294
+
+		newContent = checkImmutableAndStaticableFieldTypes(
+			fileName, packagePath, className, newContent);
+
+		newContent = fixIncorrectEmptyLineBeforeCloseCurlyBrace(
+			newContent, fileName);
+
+		pos = newContent.indexOf("\npublic ");
+
+		if (pos != -1) {
+			String javaClassContent = newContent.substring(pos);
+
+			newContent = formatJavaTerms(
+				fileName, absolutePath, newContent, javaClassContent,
+				_javaTermSortExclusions, _testAnnotationsExclusions);
+		}
+
+		newContent = formatJava(fileName, absolutePath, newContent);
+
+		return StringUtil.replace(newContent, "\n\n\n", "\n\n");
+	}
+
 	protected String fixDataAccessConnection(String className, String content) {
 		int x = content.indexOf("package ");
 
@@ -749,364 +1164,23 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			fileNames = getPluginJavaFiles();
 		}
 
-		_fitOnSingleLineExclusions = getExclusions(
+		_fitOnSingleLineExclusions = getPropertyList(
 			"fit.on.single.line.exludes");
-		_hibernateSQLQueryExclusions = getExclusions(
+		_hibernateSQLQueryExclusions = getPropertyList(
 			"hibernate.sql.query.excludes");
-		_javaTermSortExclusions = getExclusions("javaterm.sort.excludes");
-		_lineLengthExclusions = getExclusions("line.length.excludes");
-		_proxyExclusions = getExclusions("proxy.excludes");
-		_secureRandomExclusions = getExclusions("secure.random.excludes");
-		_staticLogVariableExclusions = getExclusions("static.log.excludes");
-		_testAnnotationsExclusions = getExclusions("test.annotations.excludes");
-		_upgradeServiceUtilExclusions = getExclusions(
+		_javaTermSortExclusions = getPropertyList("javaterm.sort.excludes");
+		_lineLengthExclusions = getPropertyList("line.length.excludes");
+		_proxyExclusions = getPropertyList("proxy.excludes");
+		_secureRandomExclusions = getPropertyList("secure.random.excludes");
+		_staticLogVariableExclusions = getPropertyList("static.log.excludes");
+		_testAnnotationsExclusions = getPropertyList(
+			"test.annotations.excludes");
+		_upgradeServiceUtilExclusions = getPropertyList(
 			"upgrade.service.util.excludes");
 
 		for (String fileName : fileNames) {
 			format(fileName);
 		}
-	}
-
-	@Override
-	protected String format(String fileName) throws Exception {
-		File file = new File(BASEDIR + fileName);
-
-		fileName = StringUtil.replace(
-			fileName, StringPool.BACK_SLASH, StringPool.SLASH);
-
-		String absolutePath = fileUtil.getAbsolutePath(file);
-
-		String content = fileUtil.read(file);
-
-		if (isGenerated(content)) {
-			return null;
-		}
-
-		String newContent = format(file, fileName, absolutePath, content);
-
-		compareAndAutoFixContent(file, fileName, content, newContent);
-
-		return newContent;
-	}
-
-	protected String format(
-			File file, String fileName, String absolutePath, String content)
-		throws Exception {
-
-		String className = file.getName();
-
-		int pos = className.lastIndexOf(StringPool.PERIOD);
-
-		className = className.substring(0, pos);
-
-		String packagePath = fileName;
-
-		int packagePathX = packagePath.indexOf("/src/");
-		int packagePathY = packagePath.lastIndexOf(StringPool.SLASH);
-
-		if ((packagePathX + 5) >= packagePathY) {
-			packagePath = StringPool.BLANK;
-		}
-		else {
-			packagePath = packagePath.substring(packagePathX + 5, packagePathY);
-		}
-
-		packagePath = StringUtil.replace(
-			packagePath, StringPool.SLASH, StringPool.PERIOD);
-
-		if (packagePath.endsWith(".model")) {
-			if (content.contains("extends " + className + "Model")) {
-				return null;
-			}
-		}
-
-		String newContent = content;
-
-		if (newContent.contains("$\n */")) {
-			processErrorMessage(fileName, "*: " + fileName);
-
-			newContent = StringUtil.replace(newContent, "$\n */", "$\n *\n */");
-		}
-
-		newContent = fixCopyright(newContent, absolutePath, fileName);
-
-		if (newContent.contains(className + ".java.html")) {
-			processErrorMessage(fileName, "Java2HTML: " + fileName);
-		}
-
-		if (newContent.contains(" * @author Raymond Aug") &&
-			!newContent.contains(" * @author Raymond Aug\u00e9")) {
-
-			newContent = newContent.replaceFirst(
-				"Raymond Aug.++", "Raymond Aug\u00e9");
-
-			processErrorMessage(fileName, "UTF-8: " + fileName);
-		}
-
-		newContent = fixDataAccessConnection(className, newContent);
-		newContent = fixSessionKey(fileName, newContent, sessionKeyPattern);
-
-		newContent = StringUtil.replace(
-			newContent,
-			new String[] {
-				"com.liferay.portal.PortalException",
-				"com.liferay.portal.SystemException",
-				"com.liferay.util.LocalizationUtil",
-				"private static final Log _log"
-			},
-			new String[] {
-				"com.liferay.portal.kernel.exception.PortalException",
-				"com.liferay.portal.kernel.exception.SystemException",
-				"com.liferay.portal.kernel.util.LocalizationUtil",
-				"private static Log _log"
-			});
-
-		newContent = fixCompatClassImports(absolutePath, newContent);
-
-		newContent = stripJavaImports(newContent, packagePath, className);
-
-		newContent = StringUtil.replace(
-			newContent,
-			new String[] {
-				";\n/**", "\t/*\n\t *", "catch(", "else{", "if(", "for(",
-				"while(", "List <", "){\n", "]{\n", ";;\n"
-			},
-			new String[] {
-				";\n\n/**", "\t/**\n\t *", "catch (", "else {", "if (", "for (",
-				"while (", "List<", ") {\n", "] {\n", ";\n"
-			});
-
-		while (true) {
-			Matcher matcher = _incorrectLineBreakPattern.matcher(newContent);
-
-			if (!matcher.find()) {
-				break;
-			}
-
-			newContent = StringUtil.replaceFirst(
-				newContent, StringPool.NEW_LINE, StringPool.BLANK,
-				matcher.start());
-		}
-
-		newContent = sortAnnotations(newContent, StringPool.BLANK);
-
-		Matcher matcher = _logPattern.matcher(newContent);
-
-		if (matcher.find()) {
-			String logClassName = matcher.group(1);
-
-			if (!logClassName.equals(className)) {
-				newContent = StringUtil.replaceLast(
-					newContent, logClassName + ".class)",
-					className + ".class)");
-			}
-		}
-
-		if (!isExcluded(_staticLogVariableExclusions, fileName)) {
-			newContent = StringUtil.replace(
-				newContent, "private Log _log", "private static Log _log");
-		}
-
-		if (newContent.contains("*/\npackage ")) {
-			processErrorMessage(fileName, "package: " + fileName);
-		}
-
-		if (!newContent.endsWith("\n\n}") && !newContent.endsWith("{\n}")) {
-			processErrorMessage(fileName, "}: " + fileName);
-		}
-
-		if (portalSource &&
-			mainReleaseVersion.equals(MAIN_RELEASE_LATEST_VERSION) &&
-			!className.equals("BaseServiceImpl") &&
-			className.endsWith("ServiceImpl") &&
-			newContent.contains("ServiceUtil.")) {
-
-			processErrorMessage(fileName, "ServiceUtil: " + fileName);
-		}
-
-		// LPS-34911
-
-		if (portalSource &&
-			!isExcluded(_upgradeServiceUtilExclusions, fileName) &&
-			fileName.contains("/portal/upgrade/") &&
-			!fileName.contains("/test/") &&
-			newContent.contains("ServiceUtil.")) {
-
-			processErrorMessage(fileName, "ServiceUtil: " + fileName);
-		}
-
-		if (!isRunsOutsidePortal(absolutePath) &&
-			!isExcluded(_proxyExclusions, fileName) &&
-			newContent.contains("import java.lang.reflect.Proxy;")) {
-
-			processErrorMessage(fileName, "Proxy: " + fileName);
-		}
-
-		if (newContent.contains("import edu.emory.mathcs.backport.java")) {
-			processErrorMessage(
-				fileName, "edu.emory.mathcs.backport.java: " + fileName);
-		}
-
-		if (newContent.contains("import jodd.util.StringPool")) {
-			processErrorMessage(fileName, "jodd.util.StringPool: " + fileName);
-		}
-
-		// LPS-45027
-
-		if (newContent.contains(
-				"com.liferay.portal.kernel.util.UnmodifiableList")) {
-
-			processErrorMessage(
-				fileName,
-				"Use java.util.Collections.unmodifiableList instead of " +
-					"com.liferay.portal.kernel.util.UnmodifiableList: " +
-						fileName);
-		}
-
-		// LPS-28266
-
-		for (int pos1 = -1;;) {
-			pos1 = newContent.indexOf(StringPool.TAB + "try {", pos1 + 1);
-
-			if (pos1 == -1) {
-				break;
-			}
-
-			int pos2 = newContent.indexOf(StringPool.TAB + "try {", pos1 + 1);
-			int pos3 = newContent.indexOf("\"select count(", pos1);
-
-			if ((pos2 != -1) && (pos3 != -1) && (pos2 < pos3)) {
-				continue;
-			}
-
-			int pos4 = newContent.indexOf("rs.getLong(1)", pos1);
-			int pos5 = newContent.indexOf(StringPool.TAB + "finally {", pos1);
-
-			if ((pos3 == -1) || (pos4 == -1) || (pos5 == -1)) {
-				break;
-			}
-
-			if ((pos3 < pos4) && (pos4 < pos5)) {
-				processErrorMessage(
-					fileName, "Use getInt(1) for count: " + fileName);
-			}
-		}
-
-		// LPS-33070
-
-		if (content.contains("implements ProcessCallable") &&
-			!content.contains("private static final long serialVersionUID")) {
-
-			processErrorMessage(
-				fileName,
-				"Assign ProcessCallable implementation a serialVersionUID: " +
-					fileName);
-		}
-
-		checkLanguageKeys(fileName, newContent, languageKeyPattern);
-
-		newContent = StringUtil.replace(
-			newContent, StringPool.TAB + "for (;;) {",
-			StringPool.TAB + "while (true) {");
-
-		// LPS-36174
-
-		if (_checkUnprocessedExceptions && !fileName.contains("/test/")) {
-			checkUnprocessedExceptions(newContent, file, packagePath, fileName);
-		}
-
-		// LPS-39508
-
-		if (!isExcluded(_secureRandomExclusions, fileName) &&
-			!isRunsOutsidePortal(absolutePath) &&
-			content.contains("java.security.SecureRandom") &&
-			!content.contains("javax.crypto.KeyGenerator")) {
-
-			processErrorMessage(
-				fileName,
-				"Use SecureRandomUtil or com.liferay.portal.kernel.security." +
-					"SecureRandom instead of java.security.SecureRandom: " +
-						fileName);
-		}
-
-		// LPS-41315
-
-		checkLogLevel(newContent, fileName, "debug");
-		checkLogLevel(newContent, fileName, "info");
-		checkLogLevel(newContent, fileName, "trace");
-		checkLogLevel(newContent, fileName, "warn");
-
-		// LPS-46632
-
-		checkSystemEventAnnotations(newContent, fileName);
-
-		// LPS-41205
-
-		if (fileName.contains("/upgrade/") &&
-			newContent.contains("LocaleUtil.getDefault()")) {
-
-			processErrorMessage(
-				fileName,
-				"Use UpgradeProcessUtil.getDefaultLanguageId(companyId) " +
-					"instead of LocaleUtil.getDefault(): " + fileName);
-		}
-
-		// LPS-46017
-
-		newContent = StringUtil.replace(
-			newContent, " static interface ", " interface ");
-
-		// LPS-47055
-
-		newContent = fixSystemExceptions(newContent);
-
-		// LPS-47648
-
-		if (portalSource && fileName.contains("/test/integration/")) {
-			newContent = StringUtil.replace(
-				newContent, "FinderCacheUtil.clearCache();", StringPool.BLANK);
-		}
-
-		// LPS-47682
-
-		newContent = fixIncorrectParameterTypeForLanguageUtil(
-			newContent, false, fileName);
-
-		if (portalSource && fileName.contains("/portal-service/") &&
-			content.contains("import javax.servlet.jsp.")) {
-
-			processErrorMessage(
-				fileName,
-				"Never import javax.servlet.jsp.* from portal-service " +
-					fileName);
-		}
-
-		// LPS-48153
-
-		//newContent = applyDiamondOperator(newContent);
-
-		newContent = fixIncorrectEmptyLineBeforeCloseCurlyBrace(
-			newContent, fileName);
-
-		pos = newContent.indexOf("\npublic ");
-
-		if (pos != -1) {
-			String javaClassContent = newContent.substring(pos);
-
-			newContent = formatJavaTerms(
-				fileName, newContent, javaClassContent, _javaTermSortExclusions,
-				_testAnnotationsExclusions);
-		}
-
-		newContent = formatJava(fileName, absolutePath, newContent);
-
-		newContent = StringUtil.replace(newContent, "\n\n\n", "\n\n");
-
-		if (content.equals(newContent)) {
-			return newContent;
-		}
-
-		return format(file, fileName, absolutePath, newContent);
 	}
 
 	protected String formatJava(
@@ -1124,7 +1198,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		int lineCount = 0;
 		int lineToSkipIfEmpty = 0;
 
-		String componentAnnotationPropertyValue = null;
 		String ifClause = StringPool.BLANK;
 		String packageName = StringPool.BLANK;
 		String regexPattern = StringPool.BLANK;
@@ -1174,7 +1247,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 			// LPS-42599
 
-			if (!isExcluded(_hibernateSQLQueryExclusions, fileName) &&
+			if (!isExcluded(_hibernateSQLQueryExclusions, absolutePath) &&
 				line.contains("= session.createSQLQuery(") &&
 				content.contains("com.liferay.portal.kernel.dao.orm.Session")) {
 
@@ -1575,8 +1648,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			Tuple combinedLines = null;
 			int lineLength = getLineLength(line);
 
-			if (!isExcluded(_lineLengthExclusions, fileName, lineCount) &&
-				!line.startsWith("import ") && !line.startsWith("package ") &&
+			if (!line.startsWith("import ") && !line.startsWith("package ") &&
 				!line.matches("\\s*\\*.*")) {
 
 				if (fileName.endsWith("Table.java") &&
@@ -1589,19 +1661,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 						 line.contains(" index IX_")) {
 				}
 				else if (lineLength > 80) {
-					if (componentAnnotationPropertyValue == null) {
-						Matcher matcher = _componentAnnotationPattern.matcher(
-							content);
+					if (!isExcluded(
+							_lineLengthExclusions, absolutePath, lineCount) &&
+						!isAnnotationParameter(content, trimmedLine)) {
 
-						if (matcher.find()) {
-							componentAnnotationPropertyValue = matcher.group(2);
-						}
-						else {
-							componentAnnotationPropertyValue = StringPool.BLANK;
-						}
-					}
-
-					if (!componentAnnotationPropertyValue.contains(line)) {
 						processErrorMessage(
 							fileName, "> 80: " + fileName + " " + lineCount);
 					}
@@ -1714,7 +1777,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					}
 
 					if (!isExcluded(
-							_fitOnSingleLineExclusions, fileName, lineCount)) {
+							_fitOnSingleLineExclusions, absolutePath,
+							lineCount)) {
 
 						combinedLines = getCombinedLines(
 							trimmedLine, previousLine, lineLeadingTabCount,
@@ -2211,6 +2275,24 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return fileNames;
 	}
 
+	protected boolean isAnnotationParameter(String content, String line) {
+		if (!line.contains(" = ") && (!line.startsWith(StringPool.QUOTE))) {
+			return false;
+		}
+
+		Matcher matcher = _annotationPattern.matcher(content);
+
+		while (matcher.find()) {
+			String annotationParameters = matcher.group(3);
+
+			if (annotationParameters.contains(line)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	protected boolean isGenerated(String content) {
 		if (content.contains("* @generated") || content.contains("$ANTLR")) {
 			return true;
@@ -2250,6 +2332,20 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return false;
+	}
+
+	protected String sanitizeContent(String content) {
+		Matcher componentPropertyMatcher = _componentPropertyPattern.matcher(
+			content);
+
+		if (!componentPropertyMatcher.find()) {
+			return content;
+		}
+
+		String prefix = content.substring(0, componentPropertyMatcher.start(1));
+		String postfix = content.substring(componentPropertyMatcher.end(1));
+
+		return prefix.concat(postfix);
 	}
 
 	protected String sortExceptions(String line) {
@@ -2302,16 +2398,22 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private static Pattern _importsPattern = Pattern.compile(
 		"(^[ \t]*import\\s+.*;\n+)+", Pattern.MULTILINE);
 
+	private Pattern _annotationPattern = Pattern.compile(
+		"\n(\t*)@(.+)\\(\n([\\s\\S]*?)\n(\t*)\\)");
+	private final Pattern _camelCasePattern = Pattern.compile(
+		"([a-z])([A-Z0-9])");
 	private Pattern _catchExceptionPattern = Pattern.compile(
 		"\n(\t+)catch \\((.+Exception) (.+)\\) \\{\n");
 	private boolean _checkUnprocessedExceptions;
-	private Pattern _componentAnnotationPattern = Pattern.compile(
-		"\n@Component\\(\n([\\s\\S]*?)\tproperty = \\{([\\s\\S]*?)\t\\}");
+	private final Pattern _componentPropertyPattern = Pattern.compile(
+		"(?s)@Component\\(.*?\\sproperty = \\{(.*?)\\}");
 	private Pattern _diamondOperatorPattern = Pattern.compile(
 		"(return|=)\n?(\t+| )new ([A-Za-z]+)(Map|Set|List)<(.+)>" +
 			"\\(\n*\t*(.*)\\);\n");
 	private List<String> _fitOnSingleLineExclusions;
 	private List<String> _hibernateSQLQueryExclusions;
+	private Set<String> _immutableFieldTypes = new HashSet<String>(
+		getPropertyList("immutable.field.types"));
 	private Pattern _incorrectCloseCurlyBracePattern = Pattern.compile(
 		"\n(.+)\n\n(\t+)}\n");
 	private Pattern _incorrectLineBreakPattern = Pattern.compile(

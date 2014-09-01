@@ -238,11 +238,6 @@
 	<bean id="com.liferay.portal.kernel.portlet.PortletContainerUtil" class="com.liferay.portal.kernel.portlet.PortletContainerUtil">
 		<property name="portletContainer" ref="com.liferay.portlet.RestrictPortletContainerWrapper" />
 	</bean>
-	<bean id="com.liferay.portal.kernel.repository.LocalRepositoryFactoryUtil" class="com.liferay.portal.kernel.repository.LocalRepositoryFactoryUtil">
-		<property name="localRepositoryFactory">
-			<bean class="com.liferay.portal.repository.LocalRepositoryFactoryImpl" depends-on="com.liferay.portal.model.ModelHintsUtil" />
-		</property>
-	</bean>
 	<bean id="com.liferay.portal.kernel.repository.RepositoryFactoryUtil" class="com.liferay.portal.kernel.repository.RepositoryFactoryUtil">
 		<property name="repositoryFactory">
 			<bean class="com.liferay.portal.repository.RepositoryFactoryImpl" depends-on="com.liferay.portal.model.ModelHintsUtil" />
@@ -553,6 +548,21 @@
 	<bean id="com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil" class="com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil">
 		<property name="portletFileRepository" ref="com.liferay.portal.portletfilerepository.PortletFileRepository" />
 	</bean>
+	<bean id="com.liferay.portal.repository.registry.RepositoryDefinitionCatalog" class="com.liferay.portal.repository.registry.RepositoryDefinitionCatalogImpl" init-method="loadDefaultRepositoryDefiners">
+		<property name="legacyExternalRepositoryFactory">
+			<bean class="com.liferay.portal.repository.external.LegacyExternalRepositoryFactory" />
+		</property>
+		<property name="liferayRepositoryDefiner">
+			<bean class="com.liferay.portal.repository.liferayrepository.LiferayRepositoryDefiner">
+				<property name="repositoryFactory">
+					<bean class="com.liferay.portal.repository.liferayrepository.LiferayRepositoryFactory" />
+				</property>
+			</bean>
+		</property>
+	</bean>
+	<bean id="com.liferay.portal.repository.registry.RepositoryDefinitionCatalogUtil" class="com.liferay.portal.repository.registry.RepositoryDefinitionCatalogUtil">
+		<property name="repositoryDefinitionCatalog" ref="com.liferay.portal.repository.registry.RepositoryDefinitionCatalog" />
+	</bean>
 	<bean id="com.liferay.portal.resiliency.mpi.portlet.PortalResiliencyPortletContainerWrapper" class="com.liferay.portal.resiliency.mpi.portlet.PortalResiliencyPortletContainerWrapper" factory-method="createPortalResiliencyPortletContainerWrapper">
 		<constructor-arg name="portletContainer" ref="com.liferay.portlet.PortletContainerImpl" />
 	</bean>
@@ -649,10 +659,6 @@
 		<property name="resourceActions" ref="com.liferay.portal.security.permission.ResourceActions" />
 	</bean>
 	<bean id="com.liferay.portal.security.pwd.PasswordPolicyToolkit" class="com.liferay.portal.security.pwd.PasswordPolicyToolkit" />
-	<bean id="com.liferay.portal.service.configuration.configurator.ServiceConfigurator" class="com.liferay.portal.service.configuration.configurator.impl.ServiceConfiguratorImpl">
-		<property name="portalCacheConfigurator" ref="com.liferay.portal.cache.configurator.PortalCacheConfigurator" />
-		<property name="serviceComponentLocalService" ref="com.liferay.portal.service.ServiceComponentLocalService" />
-	</bean>
 	<bean id="com.liferay.portal.service.impl.LayoutLocalServiceHelper" class="com.liferay.portal.service.impl.LayoutLocalServiceHelper" />
 	<bean id="com.liferay.portal.service.PersistedModelLocalServiceRegistry" class="com.liferay.portal.service.PersistedModelLocalServiceRegistryImpl" />
 	<bean id="com.liferay.portal.service.PersistedModelLocalServiceRegistryUtil" class="com.liferay.portal.service.PersistedModelLocalServiceRegistryUtil">

@@ -287,6 +287,10 @@ public class PluginsEnvironmentBuilder {
 
 		File libDir = new File(projectDir, "lib");
 
+		if (!libDir.exists()) {
+			libDir = new File(projectDir, "docroot/WEB-INF/lib");
+		}
+
 		writeEclipseFiles(libDir, projectDir, dependencyJars);
 
 		List<String> importSharedJars = getImportSharedJars(projectDir);
