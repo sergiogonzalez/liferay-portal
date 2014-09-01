@@ -364,21 +364,7 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 			newTitle = newTitle.replace(
 				StringPool.BACK_SLASH, StringPool.UNDERLINE);
 
-			dlFileEntry.setTitle(newTitle);
-
-			DLFileEntryLocalServiceUtil.updateDLFileEntry(dlFileEntry);
-
-			DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
-
-			dlFileVersion.setTitle(newTitle);
-
-			DLFileVersionLocalServiceUtil.updateDLFileVersion(dlFileVersion);
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Invalid document title " + title + "renamed to " +
-						newTitle);
-			}
+			renameFileEntryTitle(dlFileEntry, newTitle);
 		}
 	}
 
@@ -527,11 +513,18 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 			}
 		}
 
-		String title = dlFileEntry.getTitle();
-
-		if (newTitle.equals(title)) {
+		if (newTitle.equals(dlFileEntry.getTitle())) {
 			return;
 		}
+
+		renameFileEntryTitle(dlFileEntry, newTitle);
+	}
+
+	protected void renameFileEntryTitle(
+			DLFileEntry dlFileEntry, String newTitle)
+		throws PortalException {
+
+		String title = dlFileEntry.getTitle();
 
 		dlFileEntry.setTitle(newTitle);
 
