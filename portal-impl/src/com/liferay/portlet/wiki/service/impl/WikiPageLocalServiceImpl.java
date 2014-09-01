@@ -915,6 +915,25 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	}
 
 	@Override
+	public List<WikiPage> getDependentPages(
+		long nodeId, boolean head, String redirectTitle, int status) {
+
+		List<WikiPage> dependentPages = new ArrayList<>();
+
+		List<WikiPage> childPages = getChildren(
+			nodeId, head, redirectTitle, status);
+
+		dependentPages.addAll(childPages);
+
+		List<WikiPage> redirectPages = getRedirectPages(
+			nodeId, head, redirectTitle, status);
+
+		dependentPages.addAll(redirectPages);
+
+		return dependentPages;
+	}
+
+	@Override
 	public WikiPage getDraftPage(long nodeId, String title)
 		throws PortalException {
 
@@ -1425,6 +1444,14 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		return wikiPageFinder.countByCreateDate(
 			groupId, nodeId, cal.getTime(), false);
+	}
+
+	@Override
+	public List<WikiPage> getRedirectPages(
+		long nodeId, boolean head, String redirectTitle, int status) {
+
+		return wikiPagePersistence.findByN_H_R_S(
+			nodeId, head, redirectTitle, status);
 	}
 
 	@Override
@@ -3060,7 +3087,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			long trashEntryId)
 		throws PortalException {
 
-		List<WikiPage> childPages = wikiPagePersistence.findByN_H_P_S(
+		List<WikiPage> childPages = getChildren(
 			node, true, trashTitle, WorkflowConstants.STATUS_IN_TRASH);
 
 		for (WikiPage curPage : childPages) {
@@ -3081,7 +3108,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			long trashEntryId)
 		throws PortalException {
 
-		List<WikiPage> redirectPages = wikiPagePersistence.findByN_H_R_S(
+		List<WikiPage> redirectPages = getRedirectPages(
 			nodeId, true, trashTitle, WorkflowConstants.STATUS_IN_TRASH);
 
 		for (WikiPage curPage : redirectPages) {
