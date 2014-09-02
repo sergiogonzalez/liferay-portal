@@ -500,7 +500,7 @@ public class AnnouncementsEntryLocalServiceImpl
 
 		boolean notifyUsers = false;
 
-		SubscriptionSender subscriptionSender = new SubscriptionSender(true);
+		SubscriptionSender subscriptionSender = new SubscriptionSender();
 
 		for (User user : users) {
 			AnnouncementsDelivery announcementsDelivery =
