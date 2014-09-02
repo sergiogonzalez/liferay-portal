@@ -2908,7 +2908,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			bodyLocalizedValuesMap = wikiSettings.getEmailPageAddedBody();
 		}
 
-		SubscriptionSender subscriptionSender = new SubscriptionSender(true);
+		SubscriptionSender subscriptionSender = new SubscriptionSender();
 
 		subscriptionSender.setClassName(page.getModelClassName());
 		subscriptionSender.setClassPK(page.getPageId());

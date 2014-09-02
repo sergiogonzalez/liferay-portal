@@ -1466,7 +1466,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			bodyLocalizedValuesMap = blogsSettings.getEmailEntryAddedBody();
 		}
 
-		SubscriptionSender subscriptionSender = new SubscriptionSender(true);
+		SubscriptionSender subscriptionSender = new SubscriptionSender();
 
 		subscriptionSender.setClassPK(entry.getEntryId());
 		subscriptionSender.setClassName(entry.getModelClassName());

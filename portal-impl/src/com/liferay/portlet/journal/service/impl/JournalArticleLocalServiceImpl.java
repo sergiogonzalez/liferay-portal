@@ -6905,7 +6905,7 @@ public class JournalArticleLocalServiceImpl
 		catch (Exception e) {
 		}
 
-		SubscriptionSender subscriptionSender = new SubscriptionSender(true);
+		SubscriptionSender subscriptionSender = new SubscriptionSender();
 
 		subscriptionSender.setClassName(article.getModelClassName());
 		subscriptionSender.setClassPK(article.getId());
@@ -7095,7 +7095,7 @@ public class JournalArticleLocalServiceImpl
 				preferences);
 		}
 
-		SubscriptionSender subscriptionSender = new SubscriptionSender(true);
+		SubscriptionSender subscriptionSender = new SubscriptionSender();
 
 		subscriptionSender.setCompanyId(company.getCompanyId());
 		subscriptionSender.setContextAttributes(
