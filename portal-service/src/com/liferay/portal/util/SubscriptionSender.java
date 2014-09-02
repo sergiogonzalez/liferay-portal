@@ -78,14 +78,6 @@ import javax.mail.internet.InternetAddress;
  */
 public class SubscriptionSender implements Serializable {
 
-	public SubscriptionSender() {
-		this(DEFAULT_ADD_UNIQUE_MAIL_ID);
-	}
-
-	public SubscriptionSender(boolean addUniqueMailId) {
-		this.addUniqueMailId = addUniqueMailId;
-	}
-
 	public void addFileAttachment(File file) {
 		addFileAttachment(file, null);
 	}
@@ -229,10 +221,6 @@ public class SubscriptionSender implements Serializable {
 		);
 	}
 
-	public boolean getAddUniqueMailId() {
-		return addUniqueMailId;
-	}
-
 	public Object getContextAttribute(String key) {
 		return _context.get(key);
 	}
@@ -275,14 +263,11 @@ public class SubscriptionSender implements Serializable {
 		}
 
 		if (addUniqueMailId) {
-			mailId = PortalUtil.getMailId(
-				company.getMx(), _mailIdPopPortletPrefix,
-				ArrayUtil.append(_mailIdIds, PortalUUIDUtil.generate()));
+			ArrayUtil.append(_mailIdIds, PortalUUIDUtil.generate());
 		}
-		else {
-			mailId = PortalUtil.getMailId(
-				company.getMx(), _mailIdPopPortletPrefix, _mailIdIds);
-		}
+
+		mailId = PortalUtil.getMailId(
+			company.getMx(), _mailIdPopPortletPrefix, _mailIdIds);
 	}
 
 	public void setAddUniqueMailId(boolean addUniqueMailId) {
@@ -820,9 +805,7 @@ public class SubscriptionSender implements Serializable {
 		}
 	}
 
-	protected static final boolean DEFAULT_ADD_UNIQUE_MAIL_ID = false;
-
-	protected boolean addUniqueMailId;
+	protected boolean addUniqueMailId = true;
 	protected String body;
 	protected boolean bulk;
 	protected long companyId;
