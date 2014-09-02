@@ -218,8 +218,9 @@ public class DefaultSiteMembershipPolicy extends BaseSiteMembershipPolicy {
 
 		int pages = count / Indexer.DEFAULT_INTERVAL;
 
+		int start = 0;
+
 		for (int i = 0; i <= pages; i++) {
-			int start = (i * Indexer.DEFAULT_INTERVAL);
 			int end = start + Indexer.DEFAULT_INTERVAL;
 
 			List<User> users = UserLocalServiceUtil.getGroupUsers(
@@ -232,6 +233,9 @@ public class DefaultSiteMembershipPolicy extends BaseSiteMembershipPolicy {
 					UserLocalServiceUtil.unsetGroupUsers(
 						group.getGroupId(), new long[] {user.getUserId()},
 						null);
+				}
+				else {
+					start++;
 				}
 			}
 		}
