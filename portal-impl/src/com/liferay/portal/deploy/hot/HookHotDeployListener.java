@@ -84,7 +84,7 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.ModelListener;
-import com.liferay.portal.repository.registry.RepositoryDefinitionCatalogUtil;
+import com.liferay.portal.repository.registry.RepositoryClassDefinitionCatalogUtil;
 import com.liferay.portal.repository.util.ExternalRepositoryFactory;
 import com.liferay.portal.repository.util.ExternalRepositoryFactoryImpl;
 import com.liferay.portal.security.auth.AuthFailure;
@@ -2551,7 +2551,7 @@ public class HookHotDeployListener
 			String className,
 			ExternalRepositoryFactory externalRepositoryFactory) {
 
-			RepositoryDefinitionCatalogUtil.
+			RepositoryClassDefinitionCatalogUtil.
 				registerLegacyExternalRepositoryFactory(
 					className, externalRepositoryFactory);
 
@@ -2560,7 +2560,7 @@ public class HookHotDeployListener
 
 		public void unregisterRepositoryFactories() {
 			for (String className : _classNames) {
-				RepositoryDefinitionCatalogUtil.
+				RepositoryClassDefinitionCatalogUtil.
 					unregisterLegacyExternalRepositoryFactory(className);
 			}
 
