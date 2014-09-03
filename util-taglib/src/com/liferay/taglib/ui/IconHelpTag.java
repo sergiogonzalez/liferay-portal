@@ -52,8 +52,8 @@ public class IconHelpTag extends IconTag {
 		jspWriter.write(id);
 		jspWriter.write("\" ");
 		jspWriter.write("onBlur=\"Liferay.Portal.ToolTip.hide();\" ");
-		jspWriter.write("onFocus=\"Liferay.Portal.ToolTip.show(this);\" ");
-		jspWriter.write("onMouseOver=\"Liferay.Portal.ToolTip.show(this);\" ");
+		jspWriter.write("onFocus=\"Liferay.Portal.ToolTip.show(this, null, true);\" ");
+		jspWriter.write("onMouseOver=\"Liferay.Portal.ToolTip.show(this, null, true);\" ");
 		jspWriter.write("src=\"");
 		jspWriter.write(themeDisplay.getPathThemeImages());
 		jspWriter.write("/portlet/help.png\" tabIndex=\"0\" ");
