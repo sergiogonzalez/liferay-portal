@@ -108,19 +108,24 @@
 	Liferay.provide(
 		ToolTip,
 		'show',
-		function(obj, text) {
+		function(obj, text, html) {
 			var instance = this;
 
 			var cached = instance._cached;
 
 			if (!cached) {
+				if (html == null) {
+					html = false;
+				}
+				
 				cached = new A.Tooltip(
 					{
 						cssClass: 'tooltip-help',
 						opacity: 1,
 						stickDuration: 300,
 						visible: false,
-						zIndex: Liferay.zIndex.TOOLTIP
+						zIndex: Liferay.zIndex.TOOLTIP,
+						html: html
 					}
 				).render();
 
