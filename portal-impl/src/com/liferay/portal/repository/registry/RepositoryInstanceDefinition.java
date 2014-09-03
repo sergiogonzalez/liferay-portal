@@ -12,22 +12,21 @@
  * details.
  */
 
-package com.liferay.portal.kernel.repository.registry;
+package com.liferay.portal.repository.registry;
 
-import com.liferay.portal.kernel.repository.DocumentRepository;
 import com.liferay.portal.kernel.repository.capabilities.Capability;
 
+import java.util.Map;
+import java.util.Set;
+
 /**
- * @author Adolfo Pérez
+ * @author Iván Zaera
  */
-public interface CapabilityRegistry {
+public interface RepositoryInstanceDefinition {
 
-	public <S extends Capability, T extends S> void addExportedCapability(
-		Class<S> capabilityClass, T capability);
+	public Set<Class<? extends Capability>> getExportedCapabilities();
 
-	public <S extends Capability, T extends S> void addSupportedCapability(
-		Class<S> capabilityClass, T capability);
-
-	public DocumentRepository getDocumentRepository();
+	public Map<Class<? extends Capability>, Capability>
+		getSupportedCapabilities();
 
 }

@@ -12,22 +12,28 @@
  * details.
  */
 
-package com.liferay.portal.kernel.repository.registry;
+package com.liferay.portal.kernel.repository;
 
-import com.liferay.portal.kernel.repository.DocumentRepository;
-import com.liferay.portal.kernel.repository.capabilities.Capability;
+import com.liferay.portal.model.ClassName;
 
 /**
- * @author Adolfo Pérez
+ * @author Ivan Zaera
  */
-public interface CapabilityRegistry {
+public class UndeployedExternalRepositoryException extends RepositoryException {
 
-	public <S extends Capability, T extends S> void addExportedCapability(
-		Class<S> capabilityClass, T capability);
+	public UndeployedExternalRepositoryException(ClassName className) {
+		super(
+			"Unable to load external repository of class " +
+				className.getClassName() + " because its plugin is currently " +
+				"not deployed");
 
-	public <S extends Capability, T extends S> void addSupportedCapability(
-		Class<S> capabilityClass, T capability);
+		_className = className;
+	}
 
-	public DocumentRepository getDocumentRepository();
+	public ClassName getClassName() {
+		return _className;
+	}
+
+	private ClassName _className;
 
 }

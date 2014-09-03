@@ -15,12 +15,12 @@
 package com.liferay.portal.repository.registry;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.repository.DocumentRepository;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
-import com.liferay.portal.kernel.repository.capabilities.Capability;
 import com.liferay.portal.kernel.repository.event.RepositoryEventListener;
 import com.liferay.portal.kernel.repository.event.RepositoryEventTrigger;
 import com.liferay.portal.kernel.repository.event.RepositoryEventType;
-import com.liferay.portal.kernel.repository.registry.CapabilityRegistry;
+import com.liferay.portal.kernel.repository.registry.RepositoryDefiner;
 import com.liferay.portal.kernel.repository.registry.RepositoryEventRegistry;
 import com.liferay.portal.kernel.repository.registry.RepositoryFactoryRegistry;
 import com.liferay.portal.kernel.util.Tuple;
@@ -28,44 +28,35 @@ import com.liferay.portal.kernel.util.Tuple;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * @author Adolfo Pérez
  */
-public class DefaultRepositoryDefinition
-	implements CapabilityRegistry, RepositoryDefinition,
-			   RepositoryEventRegistry, RepositoryEventTrigger,
-			   RepositoryFactoryRegistry {
+public class DefaultRepositoryClassDefinition
+	implements RepositoryClassDefinition, RepositoryEventRegistry,
+		RepositoryEventTrigger, RepositoryFactoryRegistry {
 
-	public DefaultRepositoryDefinition() {
-		_exportedCapabilities = new HashSet<Class<? extends Capability>>();
+	public DefaultRepositoryClassDefinition(
+		RepositoryDefiner repositoryDefiner) {
 
-		_supportedCapabilities =
-			new HashMap<Class<? extends Capability>, Capability>();
+		_repositoryDefiner = repositoryDefiner;
 	}
 
 	@Override
-	public <S extends Capability, T extends S> void addExportedCapability(
-		Class<S> capabilityClass, T capability) {
+	public RepositoryInstanceDefinition createRepositoryInstanceDefinition(
+		DocumentRepository documentRepository) {
 
-		_exportedCapabilities.add(capabilityClass);
+		RepositoryDefiner repositoryDefiner = _repositoryDefiner;
 
-		addSupportedCapability(capabilityClass, capability);
-	}
+		DefaultRepositoryInstanceDefinition
+			defaultRepositoryInstanceDefinition =
+				new DefaultRepositoryInstanceDefinition(documentRepository);
 
-	@Override
-	public <S extends Capability, T extends S> void addSupportedCapability(
-		Class<S> capabilityClass, T capability) {
+		repositoryDefiner.registerCapabilities(
+			defaultRepositoryInstanceDefinition);
 
-		_supportedCapabilities.put(capabilityClass, capability);
-	}
-
-	@Override
-	public Set<Class<? extends Capability>> getExportedCapabilities() {
-		return _exportedCapabilities;
+		return defaultRepositoryInstanceDefinition;
 	}
 
 	@Override
@@ -76,13 +67,6 @@ public class DefaultRepositoryDefinition
 	@Override
 	public RepositoryFactory getRepositoryFactory() {
 		return _repositoryFactory;
-	}
-
-	@Override
-	public Map<Class<? extends Capability>, Capability>
-		getSupportedCapabilities() {
-
-		return _supportedCapabilities;
 	}
 
 	@Override
@@ -134,11 +118,10 @@ public class DefaultRepositoryDefinition
 		}
 	}
 
-	private Set<Class<? extends Capability>> _exportedCapabilities;
+	private RepositoryDefiner _repositoryDefiner;
 	private Map<Tuple, Collection<RepositoryEventListener<?, ?>>>
 		_repositoryEventListeners =
 			new HashMap<Tuple, Collection<RepositoryEventListener<?, ?>>>();
 	private RepositoryFactory _repositoryFactory;
-	private Map<Class<? extends Capability>, Capability> _supportedCapabilities;
 
 }
