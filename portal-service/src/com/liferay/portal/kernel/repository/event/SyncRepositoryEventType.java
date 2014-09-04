@@ -15,20 +15,14 @@
 package com.liferay.portal.kernel.repository.event;
 
 /**
- * @author Adolfo Pérez
- */
-public interface RepositoryEventType {
+* @author Adolfo Pérez
+*/
+public interface SyncRepositoryEventType extends RepositoryEventType {
 
-	public interface Add extends RepositoryEventType {
+	public interface DelayedAdd extends SyncRepositoryEventType {
 	}
 
-	public interface Delete extends RepositoryEventType {
-	}
-
-	public interface Move extends RepositoryEventType {
-	}
-
-	public interface Update extends RepositoryEventType {
+	public interface DelayedUpdate extends SyncRepositoryEventType {
 	}
 
 }

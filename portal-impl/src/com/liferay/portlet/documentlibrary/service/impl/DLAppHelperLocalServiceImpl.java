@@ -25,31 +25,33 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.repository.LocalRepository;
+import com.liferay.portal.kernel.repository.Repository;
+import com.liferay.portal.kernel.repository.capabilities.RepositoryEventTriggerCapability;
+import com.liferay.portal.kernel.repository.event.RepositoryEventType;
+import com.liferay.portal.kernel.repository.event.RepositoryEventTypeUtil;
+import com.liferay.portal.kernel.repository.event.TrashRepositoryEventType;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.repository.model.RepositoryModel;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackRegistryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.SubscriptionSender;
-import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLink;
 import com.liferay.portlet.asset.model.AssetLinkConstants;
@@ -84,11 +86,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.Callable;
-
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * Provides the local service helper for the document library application.
@@ -157,8 +154,6 @@ public class DLAppHelperLocalServiceImpl
 			userId, folder, serviceContext.getAssetCategoryIds(),
 			serviceContext.getAssetTagNames(),
 			serviceContext.getAssetLinkEntryIds());
-
-		registerDLSyncEventCallback(DLSyncConstants.EVENT_ADD, folder);
 	}
 
 	@Override
@@ -270,11 +265,6 @@ public class DLAppHelperLocalServiceImpl
 			dlFileShortcutLocalService.deleteFileShortcuts(
 				fileEntry.getFileEntryId());
 
-			// Sync
-
-			registerDLSyncEventCallback(
-				DLSyncConstants.EVENT_DELETE, fileEntry);
-
 			// Asset
 
 			assetEntryLocalService.deleteEntry(
@@ -300,10 +290,6 @@ public class DLAppHelperLocalServiceImpl
 		if (!DLAppHelperThreadLocal.isEnabled()) {
 			return;
 		}
-
-		// Sync
-
-		registerDLSyncEventCallback(DLSyncConstants.EVENT_DELETE, folder);
 
 		// Asset
 
@@ -560,7 +546,6 @@ public class DLAppHelperLocalServiceImpl
 
 	@Override
 	public void moveFileEntry(FileEntry fileEntry) throws PortalException {
-		registerDLSyncEventCallback(DLSyncConstants.EVENT_MOVE, fileEntry);
 	}
 
 	@Override
@@ -721,7 +706,6 @@ public class DLAppHelperLocalServiceImpl
 
 	@Override
 	public void moveFolder(Folder folder) {
-		registerDLSyncEventCallback(DLSyncConstants.EVENT_MOVE, folder);
 	}
 
 	@Override
@@ -785,6 +769,11 @@ public class DLAppHelperLocalServiceImpl
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, see {@link
+	 *             com.liferay.portal.kernel.repository.capabilities.SyncCapability}
+	 */
+	@Deprecated
 	@Override
 	public void registerDLSyncEventCallback(String event, FileEntry fileEntry)
 		throws PortalException {
@@ -809,6 +798,11 @@ public class DLAppHelperLocalServiceImpl
 			event, DLSyncConstants.TYPE_FILE, fileEntry.getFileEntryId());
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, see {@link
+	 *             com.liferay.portal.kernel.repository.capabilities.SyncCapability}
+	 */
+	@Deprecated
 	@Override
 	public void registerDLSyncEventCallback(String event, Folder folder) {
 		if (isStagingGroup(folder.getGroupId()) ||
@@ -1020,8 +1014,10 @@ public class DLAppHelperLocalServiceImpl
 
 			// Sync
 
-			registerDLSyncEventCallback(
-				DLSyncConstants.EVENT_RESTORE, fileEntry);
+			triggerRepositoryEvent(
+				fileEntry.getRepositoryId(),
+				TrashRepositoryEventType.EntryRestored.class, FileEntry.class,
+				fileEntry);
 		}
 
 		// Trash
@@ -1127,7 +1123,9 @@ public class DLAppHelperLocalServiceImpl
 
 		// Sync
 
-		registerDLSyncEventCallback(DLSyncConstants.EVENT_RESTORE, folder);
+		triggerRepositoryEvent(
+			folder.getRepositoryId(),
+			TrashRepositoryEventType.EntryRestored.class, Folder.class, folder);
 
 		// Trash
 
@@ -1340,8 +1338,6 @@ public class DLAppHelperLocalServiceImpl
 		}
 
 		registerDLProcessorCallback(fileEntry, sourceFileVersion);
-
-		registerDLSyncEventCallback(DLSyncConstants.EVENT_UPDATE, fileEntry);
 	}
 
 	@Override
@@ -1361,8 +1357,6 @@ public class DLAppHelperLocalServiceImpl
 			serviceContext.getAssetLinkEntryIds());
 
 		registerDLProcessorCallback(fileEntry, sourceFileVersion);
-
-		registerDLSyncEventCallback(DLSyncConstants.EVENT_UPDATE, fileEntry);
 	}
 
 	@Override
@@ -1374,8 +1368,6 @@ public class DLAppHelperLocalServiceImpl
 			userId, folder, serviceContext.getAssetCategoryIds(),
 			serviceContext.getAssetTagNames(),
 			serviceContext.getAssetLinkEntryIds());
-
-		registerDLSyncEventCallback(DLSyncConstants.EVENT_UPDATE, folder);
 	}
 
 	@Override
@@ -1451,7 +1443,10 @@ public class DLAppHelperLocalServiceImpl
 			String event = (String)workflowContext.get("event");
 
 			if (Validator.isNotNull(event)) {
-				registerDLSyncEventCallback(event, fileEntry);
+				triggerRepositoryEvent(
+					fileEntry.getRepositoryId(),
+					RepositoryEventTypeUtil.toSyncEvent(event), FileEntry.class,
+					fileEntry);
 			}
 
 			if ((oldStatus != WorkflowConstants.STATUS_IN_TRASH) &&
@@ -1605,7 +1600,10 @@ public class DLAppHelperLocalServiceImpl
 
 		// Sync
 
-		registerDLSyncEventCallback(DLSyncConstants.EVENT_RESTORE, fileEntry);
+		triggerRepositoryEvent(
+			fileEntry.getRepositoryId(),
+			TrashRepositoryEventType.EntryRestored.class, FileEntry.class,
+			fileEntry);
 
 		// Social
 
@@ -1663,7 +1661,10 @@ public class DLAppHelperLocalServiceImpl
 
 			// Sync
 
-			registerDLSyncEventCallback(DLSyncConstants.EVENT_TRASH, fileEntry);
+			triggerRepositoryEvent(
+				fileEntry.getRepositoryId(),
+				TrashRepositoryEventType.EntryTrashed.class, FileEntry.class,
+				fileEntry);
 		}
 
 		// Trash
@@ -1783,7 +1784,10 @@ public class DLAppHelperLocalServiceImpl
 
 			// Sync
 
-			registerDLSyncEventCallback(DLSyncConstants.EVENT_RESTORE, folder);
+			triggerRepositoryEvent(
+				folder.getRepositoryId(),
+				TrashRepositoryEventType.EntryRestored.class, Folder.class,
+				folder);
 
 			// Social
 
@@ -1845,7 +1849,9 @@ public class DLAppHelperLocalServiceImpl
 
 		// Sync
 
-		registerDLSyncEventCallback(DLSyncConstants.EVENT_TRASH, folder);
+		triggerRepositoryEvent(
+			folder.getRepositoryId(),
+			TrashRepositoryEventType.EntryTrashed.class, Folder.class, folder);
 
 		// Social
 
@@ -1885,43 +1891,6 @@ public class DLAppHelperLocalServiceImpl
 		return dlFileVersionStatusOVPs;
 	}
 
-	protected String getEntryURL(
-			long groupId, long fileEntryId, ServiceContext serviceContext)
-		throws PortalException {
-
-		HttpServletRequest request = serviceContext.getRequest();
-
-		if (request == null) {
-			return StringPool.BLANK;
-		}
-
-		String portletId = PortletKeys.DOCUMENT_LIBRARY;
-
-		long plid = serviceContext.getPlid();
-
-		long controlPanelPlid = PortalUtil.getControlPanelPlid(
-			serviceContext.getCompanyId());
-
-		if (plid == controlPanelPlid) {
-			plid = PortalUtil.getPlidFromPortletId(
-				groupId, PortletKeys.DOCUMENT_LIBRARY);
-		}
-
-		if (plid == LayoutConstants.DEFAULT_PLID) {
-			portletId = PortletKeys.DOCUMENT_LIBRARY_ADMIN;
-			plid = controlPanelPlid;
-		}
-
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			request, portletId, plid, PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter(
-			"struts_action", "/document_library/view_file_entry");
-		portletURL.setParameter("fileEntryId", String.valueOf(fileEntryId));
-
-		return portletURL.toString();
-	}
-
 	protected long getFileEntryTypeId(FileEntry fileEntry) {
 		if (fileEntry instanceof LiferayFileEntry) {
 			DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
@@ -1933,6 +1902,10 @@ public class DLAppHelperLocalServiceImpl
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0  As of 7.0.0, with no direct replacement.
+	 */
+	@Deprecated
 	protected boolean isStagingGroup(long groupId) {
 		try {
 			Group group = groupLocalService.getGroup(groupId);
@@ -2091,6 +2064,11 @@ public class DLAppHelperLocalServiceImpl
 			});
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, see {@link
+	 *             com.liferay.portal.kernel.repository.capabilities.SyncCapability}
+	 */
+	@Deprecated
 	protected void registerDLSyncEventCallback(
 		final String event, final String type, final long typePK) {
 
@@ -2124,6 +2102,25 @@ public class DLAppHelperLocalServiceImpl
 
 			}
 		);
+	}
+
+	protected <T extends RepositoryModel<T>> void triggerRepositoryEvent(
+			long repositoryId, Class<? extends RepositoryEventType> eventType,
+			Class<T> modelClass, T model)
+		throws PortalException {
+
+		Repository repository = repositoryLocalService.getRepositoryImpl(
+			repositoryId);
+
+		if (repository.isCapabilityProvided(
+				RepositoryEventTriggerCapability.class)) {
+
+			RepositoryEventTriggerCapability eventTriggerCapability =
+				repository.getCapability(
+					RepositoryEventTriggerCapability.class);
+
+			eventTriggerCapability.trigger(eventType, modelClass, model);
+		}
 	}
 
 }

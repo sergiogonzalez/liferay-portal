@@ -14,21 +14,26 @@
 
 package com.liferay.portal.kernel.repository.event;
 
+import com.liferay.portlet.documentlibrary.model.DLSyncConstants;
+
 /**
  * @author Adolfo Pérez
  */
-public interface RepositoryEventType {
+public class RepositoryEventTypeUtil {
 
-	public interface Add extends RepositoryEventType {
-	}
+	public static Class<? extends SyncRepositoryEventType> toSyncEvent(
+		String event) {
 
-	public interface Delete extends RepositoryEventType {
-	}
-
-	public interface Move extends RepositoryEventType {
-	}
-
-	public interface Update extends RepositoryEventType {
+		if (event.equals(DLSyncConstants.EVENT_ADD)) {
+			return SyncRepositoryEventType.DelayedAdd.class;
+		}
+		else if (event.equals(DLSyncConstants.EVENT_UPDATE)) {
+			return SyncRepositoryEventType.DelayedUpdate.class;
+		}
+		else {
+			throw new IllegalArgumentException(
+				String.format("Unsupported sync event %s", event));
+		}
 	}
 
 }
