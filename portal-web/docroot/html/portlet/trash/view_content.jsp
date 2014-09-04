@@ -105,7 +105,9 @@
 										<portlet:param name="redirect" value="<%= backURL %>" />
 										<portlet:param name="className" value="<%= entry.getClassName() %>" />
 										<portlet:param name="classPK" value="<%= String.valueOf(entry.getClassPK()) %>" />
-										<portlet:param name="containerModelClassName" value="<%= trashHandler.getContainerModelClassName() %>" />
+										<portlet:param name="containerModelClassName" value="<%= trashHandler.getContainerModelClassName(entry.getClassPK()) %>" />
+										<portlet:param name="containerModelId" value="<%= String.valueOf(trashHandler.getContainerModelId(entry.getClassPK())) %>" />
+										<portlet:param name="hasRootContainerModel" value="<%= String.valueOf(trashHandler.hasRootContainerModel()) %>" />
 									</portlet:renderURL>
 
 									<%
@@ -151,6 +153,8 @@
 										<portlet:param name="className" value="<%= trashRenderer.getClassName() %>" />
 										<portlet:param name="classPK" value="<%= String.valueOf(trashRenderer.getClassPK()) %>" />
 										<portlet:param name="containerModelClassName" value="<%= trashHandler.getContainerModelClassName(classPK) %>" />
+										<portlet:param name="containerModelId" value="<%= String.valueOf(trashHandler.getContainerModelId(classPK)) %>" />
+										<portlet:param name="hasRootContainerModel" value="<%= String.valueOf(trashHandler.hasRootContainerModel()) %>" />
 									</portlet:renderURL>
 
 									A.one('#<portlet:namespace />moveEntryButton').on(

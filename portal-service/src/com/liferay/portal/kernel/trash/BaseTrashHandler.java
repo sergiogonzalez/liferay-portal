@@ -130,6 +130,11 @@ public abstract class BaseTrashHandler implements TrashHandler {
 	}
 
 	@Override
+	public long getContainerModelId(long classPK) throws PortalException {
+		return 0;
+	}
+
+	@Override
 	public String getContainerModelName() {
 		return StringPool.BLANK;
 	}
@@ -225,6 +230,18 @@ public abstract class BaseTrashHandler implements TrashHandler {
 		return StringPool.BLANK;
 	}
 
+	public List<ContainerModel> getRootContainerModels(long groupId)
+		throws PortalException {
+
+		return Collections.emptyList();
+	}
+
+	public int getRootContainerModelsCount(long groupId)
+		throws PortalException {
+
+		return 0;
+	}
+
 	@Override
 	public String getSubcontainerModelName() {
 		return StringPool.BLANK;
@@ -299,6 +316,11 @@ public abstract class BaseTrashHandler implements TrashHandler {
 		}
 
 		return null;
+	}
+
+	@Override
+	public boolean hasRootContainerModel() {
+		return false;
 	}
 
 	@Override

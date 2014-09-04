@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -87,6 +88,20 @@ public class WikiNodeTrashHandler extends BaseTrashHandler {
 	@Override
 	public String getClassName() {
 		return WikiNode.class.getName();
+	}
+
+	@Override
+	public ContainerModel getContainerModel(long containerModelId)
+		throws PortalException {
+
+		return WikiNodeLocalServiceUtil.getNode(containerModelId);
+	}
+
+	@Override
+	public int getContainerModelsCount(long classPK, long containerModelId)
+		throws PortalException {
+
+		return WikiPageLocalServiceUtil.getPagesCount(containerModelId);
 	}
 
 	@Override

@@ -40,10 +40,12 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.trash.RestoreEntryException;
 import com.liferay.portlet.trash.TrashEntryConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
+import com.liferay.portlet.wiki.NoSuchPageResourceException;
 import com.liferay.portlet.wiki.asset.WikiPageAssetRenderer;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.model.WikiPageResource;
+import com.liferay.portlet.wiki.service.WikiNodeLocalServiceUtil;
 import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.portlet.wiki.service.WikiPageResourceLocalServiceUtil;
 import com.liferay.portlet.wiki.service.WikiPageServiceUtil;
@@ -79,40 +81,24 @@ public class WikiPageTrashHandler extends BaseTrashHandler {
 
 	@Override
 	public void checkRestorableEntry(
-			TrashEntry trashEntry, long containerModelId, String newName)
+			long classPK, long containerModelId, String newName)
 		throws PortalException {
 
 		WikiPage page = WikiPageLocalServiceUtil.getLatestPage(
-			trashEntry.getClassPK(), WorkflowConstants.STATUS_ANY, false);
+			classPK, WorkflowConstants.STATUS_ANY, false);
 
-		if (containerModelId == TrashEntryConstants.DEFAULT_CONTAINER_ID) {
-			containerModelId = page.getNodeId();
-		}
+		checkRestorableEntry(
+			classPK, 0, containerModelId, page.getTitle(), newName);
+	}
 
-		String originalTitle = trashEntry.getTypeSettingsProperty("title");
+	@Override
+	public void checkRestorableEntry(
+			TrashEntry trashEntry, long containerModelId, String newName)
+		throws PortalException {
 
-		if (Validator.isNotNull(newName)) {
-			originalTitle = newName;
-		}
-
-		WikiPageResource pageResource =
-			WikiPageResourceLocalServiceUtil.fetchPageResource(
-				containerModelId, originalTitle);
-
-		if (pageResource != null) {
-			RestoreEntryException ree = new RestoreEntryException(
-				RestoreEntryException.DUPLICATE);
-
-			WikiPage duplicatePage = WikiPageLocalServiceUtil.getLatestPage(
-				pageResource.getResourcePrimKey(), WorkflowConstants.STATUS_ANY,
-				false);
-
-			ree.setDuplicateEntryId(duplicatePage.getResourcePrimKey());
-			ree.setOldName(duplicatePage.getTitle());
-			ree.setTrashEntryId(trashEntry.getEntryId());
-
-			throw ree;
-		}
+		checkRestorableEntry(
+			trashEntry.getClassPK(), trashEntry.getEntryId(), containerModelId,
+			trashEntry.getTypeSettingsProperty("title"), newName);
 	}
 
 	@Override
@@ -163,6 +149,13 @@ public class WikiPageTrashHandler extends BaseTrashHandler {
 		return WikiNode.class.getName();
 	}
 
+	public long getContainerModelId(long classPK) throws PortalException {
+		WikiPage page = WikiPageLocalServiceUtil.getLatestPage(
+			classPK, WorkflowConstants.STATUS_ANY, false);
+
+		return page.getNodeId();
+	}
+
 	@Override
 	public String getContainerModelName() {
 		return "wiki-page";
@@ -180,9 +173,21 @@ public class WikiPageTrashHandler extends BaseTrashHandler {
 		String parentTitle = StringPool.BLANK;
 
 		if (containerModelId > 0) {
-			page = WikiPageLocalServiceUtil.getPage(containerModelId);
+			try {
+				page = WikiPageLocalServiceUtil.getPage(containerModelId);
 
-			parentTitle = page.getTitle();
+				parentTitle = page.getTitle();
+			}
+			catch (NoSuchPageResourceException nspre) {
+				List<WikiPage> pages = WikiPageLocalServiceUtil.getPages(
+					containerModelId, start, end);
+
+				for (WikiPage curPage : pages) {
+					containerModels.add(curPage);
+				}
+
+				return containerModels;
+			}
 		}
 		else {
 			page = WikiPageLocalServiceUtil.getPage(classPK);
@@ -207,9 +212,14 @@ public class WikiPageTrashHandler extends BaseTrashHandler {
 		String parentTitle = StringPool.BLANK;
 
 		if (containerModelId > 0) {
-			page = WikiPageLocalServiceUtil.getPage(containerModelId);
+			try {
+				page = WikiPageLocalServiceUtil.getPage(containerModelId);
 
-			parentTitle = page.getTitle();
+				parentTitle = page.getTitle();
+			}
+			catch (NoSuchPageResourceException nspre) {
+				return WikiPageLocalServiceUtil.getPagesCount(containerModelId);
+			}
 		}
 		else {
 			page = WikiPageLocalServiceUtil.getPage(classPK);
@@ -332,6 +342,25 @@ public class WikiPageTrashHandler extends BaseTrashHandler {
 		return "wiki-node";
 	}
 
+	public List<ContainerModel> getRootContainerModels(long groupId)
+		throws PortalException {
+
+		List<ContainerModel> containerModels = new ArrayList<ContainerModel>();
+
+		List<WikiNode> nodes = WikiNodeLocalServiceUtil.getNodes(
+			groupId, WorkflowConstants.STATUS_APPROVED);
+
+		for (WikiNode node : nodes) {
+			containerModels.add(node);
+		}
+
+		return containerModels;
+	}
+
+	public int getRootContainerModelsCount(long groupId) {
+		return WikiNodeLocalServiceUtil.getNodesCount(groupId);
+	}
+
 	@Override
 	public String getTrashContainerModelName() {
 		return "children-pages";
@@ -389,6 +418,11 @@ public class WikiPageTrashHandler extends BaseTrashHandler {
 			classPK, WorkflowConstants.STATUS_ANY, false);
 
 		return new WikiPageAssetRenderer(page);
+	}
+
+	@Override
+	public boolean hasRootContainerModel() {
+		return true;
 	}
 
 	@Override
@@ -467,19 +501,22 @@ public class WikiPageTrashHandler extends BaseTrashHandler {
 		WikiPage page = WikiPageLocalServiceUtil.getPage(classPK);
 
 		String parentPageTitle = StringPool.BLANK;
+		long newNodeId = 0;
 
-		try {
-			WikiPage parentPage = WikiPageLocalServiceUtil.getPage(
-				containerModelId);
+		WikiPage parentPage = WikiPageLocalServiceUtil.fetchPage(
+			containerModelId);
 
+		if (parentPage != null) {
 			parentPageTitle = parentPage.getTitle();
+			newNodeId = parentPage.getNodeId();
 		}
-		catch (Exception e) {
+		else {
+			newNodeId = containerModelId;
 		}
 
 		WikiPageLocalServiceUtil.movePageFromTrash(
-			userId, page.getNodeId(), page.getTitle(), parentPageTitle,
-			serviceContext);
+			userId, page.getNodeId(), page.getTitle(), newNodeId,
+			parentPageTitle, serviceContext);
 	}
 
 	@Override
@@ -525,6 +562,53 @@ public class WikiPageTrashHandler extends BaseTrashHandler {
 		pageResource.setTitle(name);
 
 		WikiPageResourceLocalServiceUtil.updateWikiPageResource(pageResource);
+	}
+
+	protected void checkRestorableEntry(
+			long classPK, long trashEntryId, long containerModelId,
+			String originalTitle, String newName)
+		throws PortalException {
+
+		WikiPage page = WikiPageLocalServiceUtil.getLatestPage(
+			classPK, WorkflowConstants.STATUS_ANY, false);
+
+		if (containerModelId == TrashEntryConstants.DEFAULT_CONTAINER_ID) {
+			containerModelId = page.getNodeId();
+		}
+
+		if (Validator.isNotNull(newName)) {
+			originalTitle = newName;
+		}
+
+		WikiPageResource duplicatePageResource =
+			WikiPageResourceLocalServiceUtil.fetchPageResource(
+				containerModelId, originalTitle);
+
+		if (duplicatePageResource != null) {
+			RestoreEntryException ree = new RestoreEntryException(
+				RestoreEntryException.DUPLICATE);
+
+			WikiPage duplicatePage = WikiPageLocalServiceUtil.getLatestPage(
+				duplicatePageResource.getResourcePrimKey(),
+				WorkflowConstants.STATUS_ANY, false);
+
+			ree.setDuplicateEntryId(duplicatePage.getResourcePrimKey());
+			ree.setOldName(duplicatePage.getTitle());
+			ree.setTrashEntryId(trashEntryId);
+
+			throw ree;
+		}
+		else {
+			List<WikiPage> pages = WikiPageLocalServiceUtil.getDependentPages(
+				page.getNodeId(), true, page.getTitle(),
+				WorkflowConstants.STATUS_IN_TRASH);
+
+			for (WikiPage curPage : pages) {
+				checkRestorableEntry(
+					curPage.getResourcePrimKey(), 0, containerModelId,
+					curPage.getTitle(), StringPool.BLANK);
+			}
+		}
 	}
 
 	protected PortletURL getRestoreURL(
