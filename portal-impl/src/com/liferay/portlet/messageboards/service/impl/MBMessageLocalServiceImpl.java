@@ -1955,7 +1955,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);
 		subscriptionSender.setMailId(
-			"mb_discussion", message.getCategoryId(), message.getMessageId());
+			"mb_discussion", message.getCategoryId(), message.getMessageId(),
+			message.getModifiedDate().getTime());
 
 		int notificationType =
 			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY;
@@ -2107,14 +2108,19 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		if (message.getParentMessageId() !=
 				MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID) {
 
+			MBMessage parentMessage = mbMessageLocalService.getMessage(
+				message.getParentMessageId());
+
 			inReplyTo = PortalUtil.getMailId(
 				company.getMx(), MBUtil.MESSAGE_POP_PORTLET_PREFIX,
-				message.getCategoryId(), message.getParentMessageId());
+				message.getCategoryId(), parentMessage.getMessageId(),
+				parentMessage.getModifiedDate().getTime());
 		}
 
 		SubscriptionSender subscriptionSenderPrototype =
 			new MBSubscriptionSender();
 
+		subscriptionSenderPrototype.setAddUniqueMailId(false);
 		subscriptionSenderPrototype.setBulk(
 			PropsValues.MESSAGE_BOARDS_EMAIL_BULK);
 		subscriptionSenderPrototype.setClassName(message.getModelClassName());
@@ -2138,7 +2144,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			subjectLocalizedValuesMap);
 		subscriptionSenderPrototype.setMailId(
 			MBUtil.MESSAGE_POP_PORTLET_PREFIX, message.getCategoryId(),
-			message.getMessageId());
+			message.getMessageId(), message.getModifiedDate().getTime());
 
 		int notificationType =
 			UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY;
