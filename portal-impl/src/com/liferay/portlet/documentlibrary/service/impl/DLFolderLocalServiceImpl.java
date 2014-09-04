@@ -50,8 +50,10 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.DuplicateFolderNameException;
 import com.liferay.portlet.documentlibrary.FolderNameException;
+import com.liferay.portlet.documentlibrary.InvalidFolderException;
 import com.liferay.portlet.documentlibrary.NoSuchDirectoryException;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
+import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.RequiredFileEntryTypeException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
@@ -87,7 +89,8 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		// Folder
 
 		User user = userPersistence.findByPrimaryKey(userId);
-		parentFolderId = getParentFolderId(groupId, parentFolderId);
+		parentFolderId = getParentFolderId(
+			groupId, repositoryId, parentFolderId);
 		Date now = new Date();
 
 		validateFolder(groupId, parentFolderId, name);
@@ -1137,22 +1140,34 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		addFolderResources(dlFolder, groupPermissions, guestPermissions);
 	}
 
-	protected long getParentFolderId(DLFolder dlFolder, long parentFolderId) {
+	protected long getParentFolderId(DLFolder dlFolder, long parentFolderId)
+		throws InvalidFolderException, NoSuchFolderException {
+
 		if (parentFolderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			return parentFolderId;
 		}
 
 		if (dlFolder.getFolderId() == parentFolderId) {
-			return dlFolder.getParentFolderId();
+			throw new InvalidFolderException(
+				String.format(
+					"Cannot move folder %s into itself", parentFolderId));
 		}
 
-		DLFolder parentDLFolder = dlFolderPersistence.fetchByPrimaryKey(
+		DLFolder parentDLFolder = dlFolderPersistence.findByPrimaryKey(
 			parentFolderId);
 
-		if ((parentDLFolder == null) ||
-			(dlFolder.getGroupId() != parentDLFolder.getGroupId())) {
+		if (dlFolder.getGroupId() != parentDLFolder.getGroupId()) {
+			throw new NoSuchFolderException(
+				String.format(
+					"No DLFolder with primary key %s found on group %s",
+					parentFolderId, dlFolder.getGroupId()));
+		}
 
-			return dlFolder.getParentFolderId();
+		if (dlFolder.getRepositoryId() != parentDLFolder.getRepositoryId()) {
+			throw new NoSuchFolderException(
+				String.format(
+					"No DLFolder with primary key %s found on repository %s",
+					parentFolderId, dlFolder.getGroupId()));
 		}
 
 		List<Long> subfolderIds = new ArrayList<Long>();
@@ -1161,25 +1176,42 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			subfolderIds, dlFolder.getGroupId(), dlFolder.getFolderId());
 
 		if (subfolderIds.contains(parentFolderId)) {
-			return dlFolder.getParentFolderId();
+			throw new InvalidFolderException(
+				String.format(
+					"Cannot move folder %s into one of its children",
+					parentFolderId));
 		}
 
 		return parentFolderId;
 	}
 
-	protected long getParentFolderId(long groupId, long parentFolderId) {
-		if (parentFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			DLFolder parentDLFolder = dlFolderPersistence.fetchByPrimaryKey(
-				parentFolderId);
+	protected long getParentFolderId(
+			long groupId, long repositoryId, long parentFolderId)
+		throws NoSuchFolderException {
 
-			if ((parentDLFolder == null) ||
-				(groupId != parentDLFolder.getGroupId())) {
-
-				parentFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
-			}
+		if (parentFolderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			return parentFolderId;
 		}
 
-		return parentFolderId;
+		DLFolder parentDLFolder = dlFolderPersistence.findByPrimaryKey(
+			parentFolderId);
+
+		if (parentDLFolder.getGroupId() != groupId) {
+			throw new NoSuchFolderException(
+				String.format(
+					"No DLFolder exists with primary key %s in group %s",
+					parentFolderId, groupId));
+		}
+
+		if (parentDLFolder.getRepositoryId() != repositoryId) {
+			throw new NoSuchFolderException(
+				String.format(
+					"No DLFolder exists with primary key %s in " +
+						"repository %s",
+					parentFolderId, repositoryId));
+		}
+
+		return parentDLFolder.getFolderId();
 	}
 
 	protected void validateFolder(
