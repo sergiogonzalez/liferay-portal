@@ -342,6 +342,11 @@ public class DLFileEntryLocalServiceUtil {
 		return getService().fetchFileEntryByAnyImageId(imageId);
 	}
 
+	public static com.liferay.portlet.documentlibrary.model.DLFileEntry fetchFileEntryByFileName(
+		long groupId, long folderId, java.lang.String fileName) {
+		return getService().fetchFileEntryByFileName(groupId, folderId, fileName);
+	}
+
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntry fetchFileEntryByName(
 		long groupId, long folderId, java.lang.String name) {
 		return getService().fetchFileEntryByName(groupId, folderId, name);
@@ -832,6 +837,13 @@ public class DLFileEntryLocalServiceUtil {
 		return getService()
 				   .updateStatus(userId, fileVersionId, status, serviceContext,
 			workflowContext);
+	}
+
+	public static void validateFile(long groupId, long folderId,
+		long fileEntryId, java.lang.String fileName, java.lang.String title)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.validateFile(groupId, folderId, fileEntryId, fileName, title);
 	}
 
 	public static boolean verifyFileEntryCheckOut(long fileEntryId,

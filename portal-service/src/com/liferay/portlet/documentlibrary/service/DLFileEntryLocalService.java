@@ -286,6 +286,10 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 		long imageId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portlet.documentlibrary.model.DLFileEntry fetchFileEntryByFileName(
+		long groupId, long folderId, java.lang.String fileName);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.documentlibrary.model.DLFileEntry fetchFileEntryByName(
 		long groupId, long folderId, java.lang.String name);
 
@@ -653,6 +657,10 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 		long userId, long fileVersionId, int status,
 		com.liferay.portal.service.ServiceContext serviceContext,
 		java.util.Map<java.lang.String, java.io.Serializable> workflowContext)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public void validateFile(long groupId, long folderId, long fileEntryId,
+		java.lang.String fileName, java.lang.String title)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public boolean verifyFileEntryCheckOut(long fileEntryId,
