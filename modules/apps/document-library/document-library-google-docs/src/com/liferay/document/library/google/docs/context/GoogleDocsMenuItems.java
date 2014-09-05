@@ -12,15 +12,15 @@
  * details.
  */
 
-package com.liferay.document.library.google.docs.util;
+package com.liferay.document.library.google.docs.context;
 
 /**
- * @author Iván Zaera
+ * @author Ivan Zaera
  */
-public class GoogleDocsConstants {
+public class GoogleDocsMenuItems {
 
-	public static final String DDM_FIELD_NAME_EDIT_URL = "Edit_URL";
-
-	public static final String DDM_STRUCTURE_KEY_GOOGLE_DOCS = "GOOGLE_DOCS";
+	public static final String MENU_ITEM_ID_EDIT_IN_GOOGLE =
+		"com.liferay.document.library.google.docs.context. " +
+			"GoogleDocsMenuItems.edit-in-google";
 
 }
