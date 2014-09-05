@@ -548,7 +548,6 @@ public class DefaultDLFileVersionActionsDisplayContext
 
 		urlMenuItem.setIconCssClass("icon-move");
 		urlMenuItem.setMessage("move");
-		urlMenuItem.setTarget("_blank");
 
 		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
 
