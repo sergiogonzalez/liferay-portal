@@ -119,7 +119,7 @@
 		<execute action="Jsonwebservices#assertElementNotPresent" locator-key1="SECURITY_TEST_PAGE_POPULATED" />
 	</command>
 
-	<command name="ValidateCannotStealAdminAccount" priority="5">
+	<command known-issues="LPS-49848" name="ValidateCannotStealAdminAccount" priority="5">
 		<var name="url" value="http://localhost:8080/c/portal/json_service?serviceClassName=com.liferay.portal.service.UserServiceUtil&amp;serviceMethodName=updateStatus&amp;serviceParameters=[userId,status]&amp;userId=10202&amp;status=6&amp;p_auth=" />
 
 		<execute macro="Api#gotoPAuthURL" />
@@ -320,10 +320,10 @@
 		</execute>
 
 		<execute action="Home#open" locator1="${url}" />
-		<execute action="Home#confirm" locator-key1="CONFIRMATION" value1="4" />
+		<execute action="Home#assertAlertNotPresent" />
 
 		<execute action="Home#refresh" />
-		<execute action="Home#confirm" locator-key1="CONFIRMATION" value1="4" />
+		<execute action="Home#assertAlertNotPresent" />
 
 		<execute macro="Page#openURL" />
 		<execute action="Home#assertAlertNotPresent" />

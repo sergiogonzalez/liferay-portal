@@ -19,6 +19,6 @@ package com.liferay.portal.kernel.json;
  */
 public interface JSONTransformer {
 
-	public void transform(Object object);
+	public void transform(JSONContext jsonContext, Object object);
 
 }

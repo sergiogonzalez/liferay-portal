@@ -292,6 +292,7 @@ public class VerifyProperties extends VerifyProcess {
 			"email_notifications.jsp",
 		"ehcache.statistics.enabled", "index.filter.search.limit",
 		"javax.persistence.validation.mode", "jbi.workflow.url",
+		"json.deserializer.strict.mode",
 		"journal.template.language.parser[css]",
 		"journal.template.language.parser[ftl]",
 		"journal.template.language.parser[vm]",

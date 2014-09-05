@@ -55,8 +55,11 @@ public class JSONWebServiceInvokerInnerTest extends BaseJSONWebServiceTestCase {
 
 		commandMap.put("$p = /foo/get-foo-data-page", pParams);
 
-		Assert.assertEquals(
-			prepareExpectedResult(false, false, false), invoke(commandMap));
+		Map<String, Object> expectedMap = prepareExpectedMap(
+			false, false, false);
+		Map<String, Object> actualMap = invokeAndReturnMap(commandMap);
+
+		Assert.assertEquals(expectedMap, actualMap);
 	}
 
 	@Test
@@ -81,8 +84,11 @@ public class JSONWebServiceInvokerInnerTest extends BaseJSONWebServiceTestCase {
 
 		commandMap.put("$p = /foo/get-foo-data-page", pParams);
 
-		Assert.assertEquals(
-			prepareExpectedResult(true, false, false), invoke(commandMap));
+		Map<String, Object> expectedMap = prepareExpectedMap(
+			true, false, false);
+		Map<String, Object> actualMap = invokeAndReturnMap(commandMap);
+
+		Assert.assertEquals(expectedMap, actualMap);
 	}
 
 	@Test
@@ -114,8 +120,10 @@ public class JSONWebServiceInvokerInnerTest extends BaseJSONWebServiceTestCase {
 
 		commandMap.put("$p = /foo/get-foo-data-page", pParams);
 
-		Assert.assertEquals(
-			prepareExpectedResult(true, true, false), invoke(commandMap));
+		Map<String, Object> expectedMap = prepareExpectedMap(true, true, false);
+		Map<String, Object> actualMap = invokeAndReturnMap(commandMap);
+
+		Assert.assertEquals(expectedMap, actualMap);
 	}
 
 	@Test
@@ -149,8 +157,10 @@ public class JSONWebServiceInvokerInnerTest extends BaseJSONWebServiceTestCase {
 
 		commandMap.put("$p = /foo/get-foo-data-page", pParams);
 
-		Assert.assertEquals(
-			prepareExpectedResult(true, true, true), invoke(commandMap));
+		Map<String, Object> expectedMap = prepareExpectedMap(true, true, true);
+		Map<String, Object> actualMap = invokeAndReturnMap(commandMap);
+
+		Assert.assertEquals(expectedMap, actualMap);
 	}
 
 	protected String invoke(Object command) throws Exception {
@@ -165,27 +175,41 @@ public class JSONWebServiceInvokerInnerTest extends BaseJSONWebServiceTestCase {
 		return invokerResult.toJSONString();
 	}
 
-	protected String prepareExpectedResult(
+	protected Map<String, Object> invokeAndReturnMap(Object command)
+		throws Exception {
+
+		String json = invoke(command);
+
+		return toMap(json);
+	}
+
+	protected Map<String, Object> prepareExpectedMap(
 		boolean xxx1, boolean xxx3, boolean index) {
 
-		LinkedHashMap<String, Object> resultMap =
-			new LinkedHashMap<String, Object>();
+		Map<String, Object> expectedMap = new LinkedHashMap<String, Object>();
 
 		if (xxx1) {
-			resultMap.put("XXX1", "Welcome 3 to galaxy");
+			expectedMap.put("XXX1", "Welcome 3 to galaxy");
 		}
 
-		resultMap.put("page", 3);
+		expectedMap.put("page", 3);
 
 		Map<String, Object> data = new LinkedHashMap<String, Object>();
+
+		List<Integer> list = new ArrayList<>();
+
+		list.add(9);
+		list.add(5);
+		list.add(7);
+
+		data.put("array", list);
 
 		data.put("id", 2);
 		data.put("height", 8);
 		data.put("XXX2", "Welcome 3 to star");
 		data.put("name", "life");
-		data.put("array", new int[] {9, 5, 7});
 
-		resultMap.put("data", data);
+		expectedMap.put("data", data);
 
 		List<Map<String, Object>> resultList =
 			new ArrayList<Map<String, Object>>();
@@ -234,9 +258,10 @@ public class JSONWebServiceInvokerInnerTest extends BaseJSONWebServiceTestCase {
 
 		resultList.add(resultListElement);
 
-		resultMap.put("list", resultList);
+		expectedMap.put("list", resultList);
 
-		return toJSON(resultMap, "list", "data.array");
+		//return toJSON(expectedMap, "list", "data.array");
+		return expectedMap;
 	}
 
 	protected JSONWebServiceAction prepareInvokerAction(String content)
