@@ -85,15 +85,24 @@ public class MBDiscussionDisplayImpl implements DiscussionDisplay {
 
 	@Override
 	public boolean isInTrash() throws PortalException {
-		return TrashUtil.isInTrash(_className, _classPK);
+		if (TrashUtil.isInTrash(_className, _classPK)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override
 	public boolean isInTrash(Comment comment) throws PortalException {
 		MBMessage mbMessage = getMBMessage(comment);
 
-		return TrashUtil.isInTrash(
-			mbMessage.getClassName(), mbMessage.getClassPK());
+		if (TrashUtil.isInTrash(
+				mbMessage.getClassName(), mbMessage.getClassPK())) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	protected MBMessage getMBMessage(Comment comment) {

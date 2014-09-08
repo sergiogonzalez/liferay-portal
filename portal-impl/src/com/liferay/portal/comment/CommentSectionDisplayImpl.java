@@ -221,52 +221,101 @@ public class CommentSectionDisplayImpl implements CommentSectionDisplay {
 	public boolean isDiscussionActionsVisible(Comment comment)
 		throws PortalException {
 
-		return !_hideControls && !_discussionDisplay.isInTrash(comment);
+		if (_hideControls || _discussionDisplay.isInTrash(comment)) {
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override
 	public boolean isDiscussionVisible() {
-		return hasComments() || _commentPermissionChecker.hasViewPermission();
+		if (hasComments()) {
+			return true;
+		}
+
+		return _commentPermissionChecker.hasViewPermission();
 	}
 
 	@Override
 	public boolean isRatingsVisible(Comment comment) throws PortalException {
-		return _ratingsEnabled && !_discussionDisplay.isInTrash(comment);
+		if (_ratingsEnabled && !_discussionDisplay.isInTrash(comment)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override
 	public boolean isSearchPaginatorVisible() {
-		return (_searchContainer != null) &&
-			(_searchContainer.getTotal() > _searchContainer.getDelta());
+		if (_searchContainer == null) {
+			return false;
+		}
+
+		if (_searchContainer.getTotal() > _searchContainer.getDelta()) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override
 	public boolean isSubscriptionButtonVisible() throws PortalException {
-		return _themeDisplay.isSignedIn() && !_discussionDisplay.isInTrash();
+		if (_themeDisplay.isSignedIn() && !_discussionDisplay.isInTrash()) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override
 	public boolean isThreadedRepliesVisible() {
-		return _discussionRootComment instanceof DiscussionTree;
+		if (_discussionRootComment instanceof DiscussionTree) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override
 	public boolean isTopChild(Comment comment) throws PortalException {
-		return comment.isChildOf(_discussionRootComment.getRootCommentId());
+		if (comment.isChildOf(_discussionRootComment.getRootCommentId())) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override
 	public boolean isVisible(Comment comment) {
-		return !((!comment.isApproved() &&
-			((comment.getUserId() != _user.getUserId()) ||
-				_user.isDefaultUser()) &&
-					!_permissionChecker.isGroupAdmin(_scopeGroupId)) ||
-						!_commentPermissionChecker.hasViewPermission());
+		if (!_commentPermissionChecker.hasViewPermission()) {
+			return false;
+		}
+
+		if (comment.isApproved()) {
+			return true;
+		}
+
+		if ((comment.getUserId() == _user.getUserId()) &&
+			!_user.isDefaultUser()) {
+
+			return true;
+		}
+
+		if (_permissionChecker.isGroupAdmin(_scopeGroupId)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override
 	public boolean isWorkflowStatusVisible(Comment comment) {
-		return !comment.isApproved();
+		if (comment.isApproved()) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private CommentPermissionChecker _commentPermissionChecker;
