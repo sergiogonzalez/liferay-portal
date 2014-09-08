@@ -420,7 +420,8 @@
 						path: 'image-selector.js',
 						requires: [
 							'aui-base',
-							'liferay-portlet-base'
+							'liferay-portlet-base',
+							'uploader'
 						]
 					},
 					'liferay-inline-editor-base': {

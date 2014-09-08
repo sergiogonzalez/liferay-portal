@@ -12,6 +12,10 @@ AUI.add(
 
 					paramName: {
 						validator: Lang.isString
+					},
+
+					uploadURL: {
+						validator: Lang.isString
 					}
 				},
 
@@ -29,6 +33,7 @@ AUI.add(
 
 						instance.rootNode = instance.one('#taglibImageSelector');
 
+						instance._renderUploader();
 						instance._bindUI();
 					},
 
@@ -64,6 +69,49 @@ AUI.add(
 							},
 							instance._updateFileEntryDataFn
 						);
+					},
+
+					_renderUploader: function() {
+						var instance = this;
+
+						var uploader = new A.Uploader(
+							{
+								boundingBox: instance.rootNode,
+								dragAndDropArea: instance.rootNode,
+								fileFieldName: 'file',
+								on: {
+									render: function(event) {
+										//debugger;
+									}
+								},
+								simLimit: 2,
+								uploadURL: instance.get('uploadURL')
+							}
+						).render();
+
+						var getLogFn = function(logMsg) {
+							var logFn = function(event) {
+								console.log(logMsg);
+								console.log(event);
+
+								if (event.type === 'uploader:fileselect') {
+									uploader.uploadAll();
+								}
+								else if (event.type === 'file:uploadcomplete') {
+									debugger;
+								}
+							};
+
+							return logFn;
+						}
+
+						uploader.after('fileselect', getLogFn('fileselect'), instance);
+
+						uploader.on('alluploadscomplete', getLogFn('alluploadscomplete'), instance);
+						uploader.on('fileuploadstart', getLogFn('fileuploadstart'), instance);
+						uploader.on('uploadcomplete', getLogFn('uploadcomplete'), instance);
+						uploader.on('uploadprogress', getLogFn('uploadprogress'), instance);
+
 					},
 
 					_updateFileEntryData: function(event) {
@@ -103,6 +151,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'liferay-portlet-base']
+		requires: ['aui-base', 'liferay-portlet-base', 'uploader']
 	}
 );

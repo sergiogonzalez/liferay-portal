@@ -64,12 +64,20 @@ if (fileEntryId != 0) {
 	<portlet:param name="eventName" value='<%= randomNamespace + "selectImage" %>' />
 </liferay-portlet:renderURL>
 
+<portlet:actionURL var="uploadURL">
+	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD %>" />
+	<portlet:param name="folderId" value="0" />
+	<portlet:param name="repositoryId" value="<%= String.valueOf(scopeGroupId) %>" />
+	<portlet:param name="struts_action" value="/document_library/edit_file_entry" />
+</portlet:actionURL>
+
 <aui:script use="liferay-image-selector">
 	var sel = new Liferay.ImageSelector(
 		{
 			documentSelectorURL: '<%= documentSelectorURL.toString() %>',
 			namespace: '<%= randomNamespace %>',
-			paramName: '<portlet:namespace /><%= paramName %>'
+			paramName: '<portlet:namespace /><%= paramName %>',
+			uploadURL: '<%= uploadURL %>'
 		}
 	);
 </aui:script>
