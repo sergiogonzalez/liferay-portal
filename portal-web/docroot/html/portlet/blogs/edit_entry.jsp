@@ -93,6 +93,10 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 	</c:if>
 
 	<aui:fieldset>
+		<div class="asdfa" style="width:200px; height: 200px">
+			<liferay-ui:image-selector fileEntryId='<%= ParamUtil.getLong(request, "imageSelectorFileEntryId") %>' validExtensions="png,jpg,gif" />
+		</div>
+
 		<liferay-ui:input-editor contents="<%= title %>" editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name="title" placeholder="title" />
 
 		<aui:input name="title" type="hidden" />
