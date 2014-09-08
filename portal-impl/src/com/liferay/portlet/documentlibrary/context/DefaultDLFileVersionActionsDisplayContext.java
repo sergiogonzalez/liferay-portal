@@ -86,7 +86,7 @@ public class DefaultDLFileVersionActionsDisplayContext
 		}
 
 		_dlFileEntryActionsDisplayContextHelper =
-			new DLFileEntryActionsDisplayContextHelper(
+			new DefaultDLFileVersionActionsDisplayContextHelper(
 				_themeDisplay.getPermissionChecker(), _fileEntry, fileVersion);
 
 		_fileEntryTypeId = ParamUtil.getLong(request, "fileEntryTypeId", -1);
@@ -795,7 +795,7 @@ public class DefaultDLFileVersionActionsDisplayContext
 	private long _companyId;
 	private String _currentURL;
 	private DLActionsDisplayContext _dlActionsDisplayContext;
-	private DLFileEntryActionsDisplayContextHelper
+	private DefaultDLFileVersionActionsDisplayContextHelper
 		_dlFileEntryActionsDisplayContextHelper;
 	private FileEntry _fileEntry;
 	private long _fileEntryTypeId;
