@@ -72,14 +72,12 @@ public class CommentSectionDisplayImpl implements CommentSectionDisplay {
 
 	@Override
 	public String getBodyFormatted(Comment comment) {
-		String msgBody = comment.getBody();
-
 		if (comment.isFormatBBCode()) {
-			msgBody = BBCodeUtil.getBBCodeHTML(
-				msgBody, _themeDisplay.getPathThemeImages());
+			return BBCodeUtil.getBBCodeHTML(
+				comment.getBody(), _themeDisplay.getPathThemeImages());
 		}
 
-		return msgBody;
+		return comment.getBody();
 	}
 
 	@Override
