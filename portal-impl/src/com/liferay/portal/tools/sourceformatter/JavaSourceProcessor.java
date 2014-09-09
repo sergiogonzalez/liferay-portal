@@ -570,6 +570,13 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			String localServiceImplContent = fileUtil.read(
 				localServiceImplFileName);
 
+			if (localServiceImplContent == null) {
+				System.out.println(
+					"Unable to read " + localServiceImplFileName);
+
+				return;
+			}
+
 			if (!localServiceImplContent.contains("@SystemEvent")) {
 				processErrorMessage(
 					fileName,
@@ -2196,7 +2203,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				"java.lang.Character", "java.lang.Class", "java.lang.Double",
 				"java.lang.Float", "java.lang.Int", "java.lang.Long",
 				"java.lang.Number", "java.lang.Short", "java.lang.String",
-				"java.lang.reflect.Field", "java.lang.reflect.Method"
+				"java.lang.reflect.Constructor", "java.lang.reflect.Field",
+				"java.lang.reflect.Method"
 			});
 
 		immutableFieldTypes.addAll(getPropertyList("immutable.field.types"));

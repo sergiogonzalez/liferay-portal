@@ -20,6 +20,7 @@ import com.germinus.easyconf.ComponentProperties;
 import com.germinus.easyconf.ConfigurationNotFoundException;
 import com.germinus.easyconf.Conventions;
 
+import com.liferay.portal.kernel.exception.LoggedExceptionInInitializerError;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
@@ -126,7 +127,7 @@ public class ClassLoaderComponentConfiguration extends ComponentConfiguration {
 		}
 
 		try {
-			_properties = _constructor.newInstance(
+			_properties = _CONSTRUCTOR.newInstance(
 				new Object[] {classLoaderAggregateProperties});
 		}
 		catch (Exception e) {
@@ -136,26 +137,30 @@ public class ClassLoaderComponentConfiguration extends ComponentConfiguration {
 		return _properties;
 	}
 
+	private static final Constructor<ComponentProperties> _CONSTRUCTOR;
+
+	static {
+		Constructor<ComponentProperties> constructor = null;
+
+		try {
+			constructor = ComponentProperties.class.getDeclaredConstructor(
+				AggregatedProperties.class);
+
+			constructor.setAccessible(true);
+		}
+		catch (Exception e) {
+			throw new LoggedExceptionInInitializerError(e);
+		}
+
+		_CONSTRUCTOR = constructor;
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(
 		ClassLoaderComponentConfiguration.class);
 
-	private static Constructor<ComponentProperties> _constructor;
-
-	static {
-		try {
-			_constructor = ComponentProperties.class.getDeclaredConstructor(
-				AggregatedProperties.class);
-
-			_constructor.setAccessible(true);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-	}
-
-	private ClassLoader _classLoader;
-	private String _companyId;
-	private String _componentName;
+	private final ClassLoader _classLoader;
+	private final String _companyId;
+	private final String _componentName;
 	private ComponentProperties _properties;
 
 }
