@@ -12,23 +12,24 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.context;
+package com.liferay.portal.kernel.exception;
 
-import com.liferay.portal.kernel.repository.model.FileVersion;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 /**
- * @author Iván Zaera
+ * @author Brian Wing Shun Chan
  */
-public interface DLFileVersionActionsDisplayContextFactory {
+public class LoggedExceptionInInitializerError
+	extends ExceptionInInitializerError {
 
-	public DLFileVersionActionsDisplayContext
-		getDLFileVersionActionsDisplayContext(
-			DLFileVersionActionsDisplayContext
-				parentDLFileVersionActionsDisplayContext,
-			HttpServletRequest request, HttpServletResponse response,
-			FileVersion fileVersion);
+	public LoggedExceptionInInitializerError(Throwable cause) {
+		super(cause);
+
+		_log.error(cause, cause);
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		LoggedExceptionInInitializerError.class);
 
 }
