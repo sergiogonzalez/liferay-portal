@@ -271,17 +271,17 @@ public class CommentSectionDisplayImpl implements CommentSectionDisplay {
 		return !comment.isApproved();
 	}
 
-	private final CommentPermissionChecker _commentPermissionChecker;
-	private final DiscussionDisplay _discussionDisplay;
-	private final DiscussionRootComment _discussionRootComment;
-	private final boolean _hideControls;
-	private final PermissionChecker _permissionChecker;
-	private final boolean _ratingsEnabled;
+	private CommentPermissionChecker _commentPermissionChecker;
+	private DiscussionDisplay _discussionDisplay;
+	private DiscussionRootComment _discussionRootComment;
+	private boolean _hideControls;
+	private PermissionChecker _permissionChecker;
+	private boolean _ratingsEnabled;
 	private List<RatingsEntry> _ratingsEntries;
 	private List<RatingsStats> _ratingsStatsList;
-	private final long _scopeGroupId;
+	private long _scopeGroupId;
 	private SearchContainer<?> _searchContainer;
-	private final ThemeDisplay _themeDisplay;
-	private final User _user;
+	private ThemeDisplay _themeDisplay;
+	private User _user;
 
 }
