@@ -14,6 +14,7 @@
 
 package com.liferay.util.axis;
 
+import com.liferay.portal.kernel.exception.LoggedExceptionInInitializerError;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.BaseFilter;
@@ -51,7 +52,7 @@ public class AxisCleanUpFilter extends BaseFilter {
 		finally {
 			try {
 				ThreadLocal<?> cacheThreadLocal =
-					(ThreadLocal<?>)_cacheField.get(null);
+					(ThreadLocal<?>)_CACHE_FIELD.get(null);
 
 				if (cacheThreadLocal != null) {
 					cacheThreadLocal.remove();
@@ -63,18 +64,22 @@ public class AxisCleanUpFilter extends BaseFilter {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(AxisCleanUpFilter.class);
-
-	private static Field _cacheField;
+	private static final Field _CACHE_FIELD;
 
 	static {
+		Field cacheField = null;
+
 		try {
-			_cacheField = ReflectionUtil.getDeclaredField(
+			cacheField = ReflectionUtil.getDeclaredField(
 				MethodCache.class, "cache");
 		}
 		catch (Exception e) {
-			_log.error(e, e);
+			throw new LoggedExceptionInInitializerError(e);
 		}
+
+		_CACHE_FIELD = cacheField;
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(AxisCleanUpFilter.class);
 
 }
