@@ -715,6 +715,17 @@ public class DLFileEntryLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> getRepositoryFileEntries(
+		long groupId, long repositoryId, int start, int end) {
+		return getService()
+				   .getRepositoryFileEntries(groupId, repositoryId, start, end);
+	}
+
+	public static int getRepositoryFileEntriesCount(long groupId,
+		long repositoryId) {
+		return getService().getRepositoryFileEntriesCount(groupId, repositoryId);
+	}
+
 	public static boolean hasExtraSettings() {
 		return getService().hasExtraSettings();
 	}
