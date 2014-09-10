@@ -15,6 +15,7 @@
 package com.liferay.portlet.documentlibrary.context.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
@@ -72,6 +73,25 @@ public class FileVersionHelper {
 		}
 
 		return _ddmStructures;
+	}
+
+	public DLFileEntryType getDLFileEntryType() {
+		if (_fileVersion.getModel() instanceof DLFileVersion) {
+			DLFileVersion dlFileVersion =
+				(DLFileVersion)_fileVersion.getModel();
+
+			long fileEntryTypeId = dlFileVersion.getFileEntryTypeId();
+
+			try {
+				return DLFileEntryTypeLocalServiceUtil.getFileEntryType(
+					fileEntryTypeId);
+			}
+			catch (PortalException pe) {
+				throw new SystemException(pe);
+			}
+		}
+
+		return null;
 	}
 
 	public Fields getFields(DDMStructure ddmStructure) throws PortalException {
