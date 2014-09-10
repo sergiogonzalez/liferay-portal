@@ -461,9 +461,9 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 
 	@Override
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> getDependentPages(
-		long nodeId, boolean head, java.lang.String redirectTitle, int status) {
-		return _wikiPageLocalService.getDependentPages(nodeId, head,
-			redirectTitle, status);
+		long nodeId, boolean head, java.lang.String title, int status) {
+		return _wikiPageLocalService.getDependentPages(nodeId, head, title,
+			status);
 	}
 
 	@Override
@@ -892,11 +892,10 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 	@Override
 	public com.liferay.portlet.wiki.model.WikiPage movePageFromTrash(
 		long userId, long nodeId, java.lang.String title, long newNodeId,
-		java.lang.String newParentTitle,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		java.lang.String newParentTitle)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiPageLocalService.movePageFromTrash(userId, nodeId, title,
-			newNodeId, newParentTitle, serviceContext);
+			newNodeId, newParentTitle);
 	}
 
 	/**
@@ -955,15 +954,6 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 	}
 
 	@Override
-	public void restoreDependentFromTrash(
-		com.liferay.portlet.wiki.model.WikiPage page, long newNodeId,
-		java.lang.String newParentTitle, long trashEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_wikiPageLocalService.restoreDependentFromTrash(page, newNodeId,
-			newParentTitle, trashEntryId);
-	}
-
-	@Override
 	public void restorePageAttachmentFromTrash(long userId, long nodeId,
 		java.lang.String title, java.lang.String fileName)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -976,15 +966,6 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 		com.liferay.portlet.wiki.model.WikiPage page)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_wikiPageLocalService.restorePageFromTrash(userId, page);
-	}
-
-	@Override
-	public void restorePageFromTrash(long userId,
-		com.liferay.portlet.wiki.model.WikiPage page, long newNodeId,
-		java.lang.String newParentTitle)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_wikiPageLocalService.restorePageFromTrash(userId, page, newNodeId,
-			newParentTitle);
 	}
 
 	@Override

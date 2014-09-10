@@ -429,9 +429,8 @@ public class WikiPageLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portlet.wiki.model.WikiPage> getDependentPages(
-		long nodeId, boolean head, java.lang.String redirectTitle, int status) {
-		return getService()
-				   .getDependentPages(nodeId, head, redirectTitle, status);
+		long nodeId, boolean head, java.lang.String title, int status) {
+		return getService().getDependentPages(nodeId, head, title, status);
 	}
 
 	public static com.liferay.portlet.wiki.model.WikiPage getDraftPage(
@@ -803,12 +802,11 @@ public class WikiPageLocalServiceUtil {
 
 	public static com.liferay.portlet.wiki.model.WikiPage movePageFromTrash(
 		long userId, long nodeId, java.lang.String title, long newNodeId,
-		java.lang.String newParentTitle,
-		com.liferay.portal.service.ServiceContext serviceContext)
+		java.lang.String newParentTitle)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .movePageFromTrash(userId, nodeId, title, newNodeId,
-			newParentTitle, serviceContext);
+			newParentTitle);
 	}
 
 	/**
@@ -859,15 +857,6 @@ public class WikiPageLocalServiceUtil {
 			.renamePage(userId, nodeId, title, newTitle, strict, serviceContext);
 	}
 
-	public static void restoreDependentFromTrash(
-		com.liferay.portlet.wiki.model.WikiPage page, long newNodeId,
-		java.lang.String newParentTitle, long trashEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.restoreDependentFromTrash(page, newNodeId, newParentTitle,
-			trashEntryId);
-	}
-
 	public static void restorePageAttachmentFromTrash(long userId, long nodeId,
 		java.lang.String title, java.lang.String fileName)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -879,14 +868,6 @@ public class WikiPageLocalServiceUtil {
 		com.liferay.portlet.wiki.model.WikiPage page)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().restorePageFromTrash(userId, page);
-	}
-
-	public static void restorePageFromTrash(long userId,
-		com.liferay.portlet.wiki.model.WikiPage page, long newNodeId,
-		java.lang.String newParentTitle)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.restorePageFromTrash(userId, page, newNodeId, newParentTitle);
 	}
 
 	public static com.liferay.portlet.wiki.model.WikiPage revertPage(
