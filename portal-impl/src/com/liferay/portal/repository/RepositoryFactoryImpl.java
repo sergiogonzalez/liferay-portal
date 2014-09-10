@@ -22,11 +22,13 @@ import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
 import com.liferay.portal.kernel.repository.UndeployedExternalRepositoryException;
 import com.liferay.portal.kernel.repository.capabilities.Capability;
+import com.liferay.portal.kernel.repository.capabilities.RepositoryEventTriggerCapability;
 import com.liferay.portal.kernel.repository.cmis.CMISRepositoryHandler;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.model.ClassName;
 import com.liferay.portal.repository.capabilities.CapabilityLocalRepository;
 import com.liferay.portal.repository.capabilities.CapabilityRepository;
+import com.liferay.portal.repository.capabilities.LiferayRepositoryEventTriggerCapability;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
 import com.liferay.portal.repository.proxy.BaseRepositoryProxyBean;
 import com.liferay.portal.repository.registry.RepositoryClassDefinition;
@@ -70,10 +72,29 @@ public class RepositoryFactoryImpl implements RepositoryFactory {
 			repositoryClassDefinition.createRepositoryInstanceDefinition(
 				localRepository);
 
+		Map<Class<? extends Capability>, Capability>
+			externalSupportedCapabilities =
+				new HashMap<Class<? extends Capability>, Capability>(
+					repositoryInstanceDefinition.getSupportedCapabilities());
+		Set<Class<? extends Capability>> externalExportedCapabilityClasses =
+			new HashSet<Class<? extends Capability>>(
+				repositoryInstanceDefinition.getExportedCapabilities());
+
+		if (!externalSupportedCapabilities.containsKey(
+				RepositoryEventTriggerCapability.class)) {
+
+			externalExportedCapabilityClasses.add(
+				RepositoryEventTriggerCapability.class);
+
+			externalSupportedCapabilities.put(
+				RepositoryEventTriggerCapability.class,
+				new LiferayRepositoryEventTriggerCapability(
+					repositoryClassDefinition.getRepositoryEventTrigger()));
+		}
+
 		return new CapabilityLocalRepository(
-			localRepository,
-			repositoryInstanceDefinition.getSupportedCapabilities(),
-			repositoryInstanceDefinition.getExportedCapabilities(),
+			localRepository, externalSupportedCapabilities,
+			externalExportedCapabilityClasses,
 			repositoryClassDefinition.getRepositoryEventTrigger());
 	}
 
@@ -98,26 +119,32 @@ public class RepositoryFactoryImpl implements RepositoryFactory {
 
 		Map<Class<? extends Capability>, Capability>
 			externalSupportedCapabilities =
-				repositoryInstanceDefinition.getSupportedCapabilities();
+				new HashMap<Class<? extends Capability>, Capability>(
+					repositoryInstanceDefinition.getSupportedCapabilities());
 		Set<Class<? extends Capability>> externalExportedCapabilityClasses =
-			repositoryInstanceDefinition.getExportedCapabilities();
+			new HashSet<Class<? extends Capability>>(
+				repositoryInstanceDefinition.getExportedCapabilities());
 
 		CMISRepositoryHandler cmisRepositoryHandler = getCMISRepositoryHandler(
 			repository);
 
 		if (cmisRepositoryHandler != null) {
-			externalSupportedCapabilities =
-				new HashMap<Class<? extends Capability>, Capability>(
-					externalSupportedCapabilities);
-
 			externalSupportedCapabilities.put(
 				CMISRepositoryHandler.class, cmisRepositoryHandler);
 
-			externalExportedCapabilityClasses =
-				new HashSet<Class<? extends Capability>>(
-					externalExportedCapabilityClasses);
-
 			externalExportedCapabilityClasses.add(CMISRepositoryHandler.class);
+		}
+
+		if (!externalSupportedCapabilities.containsKey(
+				RepositoryEventTriggerCapability.class)) {
+
+			externalExportedCapabilityClasses.add(
+				RepositoryEventTriggerCapability.class);
+
+			externalSupportedCapabilities.put(
+				RepositoryEventTriggerCapability.class,
+				new LiferayRepositoryEventTriggerCapability(
+					repositoryClassDefinition.getRepositoryEventTrigger()));
 		}
 
 		return new CapabilityRepository(
