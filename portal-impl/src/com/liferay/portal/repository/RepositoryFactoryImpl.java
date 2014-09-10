@@ -76,17 +76,9 @@ public class RepositoryFactoryImpl implements RepositoryFactory {
 		Set<Class<? extends Capability>> externalExportedCapabilityClasses =
 			repositoryInstanceDefinition.getExportedCapabilities();
 
-		if (!externalSupportedCapabilities.containsKey(
-				RepositoryEventTriggerCapability.class)) {
-
-			externalExportedCapabilityClasses.add(
-				RepositoryEventTriggerCapability.class);
-
-			externalSupportedCapabilities.put(
-				RepositoryEventTriggerCapability.class,
-				new LiferayRepositoryEventTriggerCapability(
-					repositoryClassDefinition.getRepositoryEventTrigger()));
-		}
+		_setupCommonCapabilities(
+			repositoryClassDefinition, externalSupportedCapabilities,
+			externalExportedCapabilityClasses);
 
 		return new CapabilityLocalRepository(
 			localRepository, externalSupportedCapabilities,
@@ -129,17 +121,9 @@ public class RepositoryFactoryImpl implements RepositoryFactory {
 			externalExportedCapabilityClasses.add(CMISRepositoryHandler.class);
 		}
 
-		if (!externalSupportedCapabilities.containsKey(
-				RepositoryEventTriggerCapability.class)) {
-
-			externalExportedCapabilityClasses.add(
-				RepositoryEventTriggerCapability.class);
-
-			externalSupportedCapabilities.put(
-				RepositoryEventTriggerCapability.class,
-				new LiferayRepositoryEventTriggerCapability(
-					repositoryClassDefinition.getRepositoryEventTrigger()));
-		}
+		_setupCommonCapabilities(
+			repositoryClassDefinition, externalSupportedCapabilities,
+			externalExportedCapabilityClasses);
 
 		return new CapabilityRepository(
 			repository, externalSupportedCapabilities,
@@ -232,6 +216,24 @@ public class RepositoryFactoryImpl implements RepositoryFactory {
 
 	protected RepositoryLocalService getRepositoryLocalService() {
 		return _repositoryLocalService;
+	}
+
+	private void _setupCommonCapabilities(
+		RepositoryClassDefinition repositoryClassDefinition,
+		Map<Class<? extends Capability>, Capability> supportedCapabilities,
+		Set<Class<? extends Capability>> exportedCapabilityClasses) {
+
+		if (!supportedCapabilities.containsKey(
+				RepositoryEventTriggerCapability.class)) {
+
+			exportedCapabilityClasses.add(
+				RepositoryEventTriggerCapability.class);
+
+			supportedCapabilities.put(
+				RepositoryEventTriggerCapability.class,
+				new LiferayRepositoryEventTriggerCapability(
+					repositoryClassDefinition.getRepositoryEventTrigger()));
+		}
 	}
 
 	@BeanReference(type = ClassNameLocalService.class)
