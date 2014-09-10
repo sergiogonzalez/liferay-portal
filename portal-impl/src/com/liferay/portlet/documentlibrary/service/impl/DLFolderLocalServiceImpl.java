@@ -662,6 +662,18 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	}
 
 	@Override
+	public List<DLFolder> getRepositoryFolders(
+		long groupId, long repositoryId, int start, int end) {
+
+		return dlFolderPersistence.findByG_R(groupId, repositoryId, start, end);
+	}
+
+	@Override
+	public int getRepositoryFoldersCount(long groupId, long repositoryId) {
+		return dlFolderPersistence.countByG_R(groupId, repositoryId);
+	}
+
+	@Override
 	public void getSubfolderIds(
 		List<Long> folderIds, long groupId, long folderId) {
 

@@ -206,6 +206,10 @@
 			<finder-column name="folderId" arrayable-operator="OR" />
 			<finder-column name="fileEntryTypeId" />
 		</finder>
+		<finder name="G_R" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="repositoryId" />
+		</finder>
 
 		<!-- References -->
 
@@ -633,6 +637,10 @@
 			<finder-column name="parentFolderId" />
 			<finder-column name="hidden" />
 			<finder-column name="status" />
+		</finder>
+		<finder name="G_R" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="repositoryId" />
 		</finder>
 
 		<!-- References -->
