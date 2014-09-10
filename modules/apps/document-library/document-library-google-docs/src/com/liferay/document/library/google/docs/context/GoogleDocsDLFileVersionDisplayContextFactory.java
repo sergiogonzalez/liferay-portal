@@ -17,7 +17,6 @@ package com.liferay.document.library.google.docs.context;
 import com.liferay.document.library.google.docs.util.GoogleDocsDLFileEntryTypeHelper;
 import com.liferay.document.library.google.docs.util.GoogleDocsMetadataHelper;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.service.ClassNameLocalService;
@@ -68,18 +67,13 @@ public class GoogleDocsDLFileVersionDisplayContextFactory
 			HttpServletRequest request, HttpServletResponse response,
 			FileVersion fileVersion) {
 
-		try {
-			GoogleDocsMetadataHelper googleDocsMetadataHelper =
-				new GoogleDocsMetadataHelper(fileVersion);
+		GoogleDocsMetadataHelper googleDocsMetadataHelper =
+			new GoogleDocsMetadataHelper(fileVersion);
 
-			if (googleDocsMetadataHelper.isGoogleDocs()) {
-				return new GoogleDocsDLFileVersionDisplayContext(
-					parentDLFileEntryActionsDisplayContext, request, response,
-					fileVersion);
-			}
-		}
-		catch (PortalException pe) {
-			throw new SystemException(pe);
+		if (googleDocsMetadataHelper.isGoogleDocs()) {
+			return new GoogleDocsDLFileVersionDisplayContext(
+				parentDLFileEntryActionsDisplayContext, request, response,
+				fileVersion);
 		}
 
 		return parentDLFileEntryActionsDisplayContext;
