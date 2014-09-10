@@ -70,19 +70,17 @@ public class RepositoryFactoryImpl implements RepositoryFactory {
 			repositoryClassDefinition.createRepositoryInstanceDefinition(
 				localRepository);
 
-		Map<Class<? extends Capability>, Capability>
-			externalSupportedCapabilities =
-				repositoryInstanceDefinition.getSupportedCapabilities();
-		Set<Class<? extends Capability>> externalExportedCapabilityClasses =
+		Map<Class<? extends Capability>, Capability> supportedCapabilities =
+			repositoryInstanceDefinition.getSupportedCapabilities();
+		Set<Class<? extends Capability>> exportedCapabilityClasses =
 			repositoryInstanceDefinition.getExportedCapabilities();
 
 		_setupCommonCapabilities(
-			repositoryClassDefinition, externalSupportedCapabilities,
-			externalExportedCapabilityClasses);
+			repositoryClassDefinition, supportedCapabilities,
+			exportedCapabilityClasses);
 
 		return new CapabilityLocalRepository(
-			localRepository, externalSupportedCapabilities,
-			externalExportedCapabilityClasses,
+			localRepository, supportedCapabilities, exportedCapabilityClasses,
 			repositoryClassDefinition.getRepositoryEventTrigger());
 	}
 
@@ -105,29 +103,27 @@ public class RepositoryFactoryImpl implements RepositoryFactory {
 			repositoryClassDefinition.createRepositoryInstanceDefinition(
 				repository);
 
-		Map<Class<? extends Capability>, Capability>
-			externalSupportedCapabilities =
-				repositoryInstanceDefinition.getSupportedCapabilities();
-		Set<Class<? extends Capability>> externalExportedCapabilityClasses =
+		Map<Class<? extends Capability>, Capability> supportedCapabilities =
+			repositoryInstanceDefinition.getSupportedCapabilities();
+		Set<Class<? extends Capability>> exportedCapabilityClasses =
 			repositoryInstanceDefinition.getExportedCapabilities();
 
 		CMISRepositoryHandler cmisRepositoryHandler = getCMISRepositoryHandler(
 			repository);
 
 		if (cmisRepositoryHandler != null) {
-			externalSupportedCapabilities.put(
+			supportedCapabilities.put(
 				CMISRepositoryHandler.class, cmisRepositoryHandler);
 
-			externalExportedCapabilityClasses.add(CMISRepositoryHandler.class);
+			exportedCapabilityClasses.add(CMISRepositoryHandler.class);
 		}
 
 		_setupCommonCapabilities(
-			repositoryClassDefinition, externalSupportedCapabilities,
-			externalExportedCapabilityClasses);
+			repositoryClassDefinition, supportedCapabilities,
+			exportedCapabilityClasses);
 
 		return new CapabilityRepository(
-			repository, externalSupportedCapabilities,
-			externalExportedCapabilityClasses,
+			repository, supportedCapabilities, exportedCapabilityClasses,
 			repositoryClassDefinition.getRepositoryEventTrigger());
 	}
 
