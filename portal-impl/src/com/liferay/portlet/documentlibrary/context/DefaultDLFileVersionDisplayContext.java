@@ -43,7 +43,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletURLUtil;
 import com.liferay.portlet.documentlibrary.DLPortletInstanceSettings;
-import com.liferay.portlet.documentlibrary.context.util.FileVersionMetadataHelper;
+import com.liferay.portlet.documentlibrary.context.util.FileVersionHelper;
 import com.liferay.portlet.documentlibrary.context.util.JspRenderer;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
@@ -109,8 +109,7 @@ public class DefaultDLFileVersionDisplayContext
 
 		_fileEntryTypeId = fileEntryTypeId;
 
-		_fileVersionMetadataHelper = new FileVersionMetadataHelper(
-			_fileVersion);
+		_fileVersionHelper = new FileVersionHelper(_fileVersion);
 
 		_folderId = BeanParamUtil.getLong(_fileEntry, request, "folderId");
 
@@ -134,12 +133,12 @@ public class DefaultDLFileVersionDisplayContext
 
 	@Override
 	public List<DDMStructure> getDDMStructures() throws PortalException {
-		return _fileVersionMetadataHelper.getDDMStructures();
+		return _fileVersionHelper.getDDMStructures();
 	}
 
 	@Override
 	public Fields getFields(DDMStructure ddmStructure) throws PortalException {
-		return _fileVersionMetadataHelper.getFields(ddmStructure);
+		return _fileVersionHelper.getFields(ddmStructure);
 	}
 
 	@Override
@@ -849,7 +848,7 @@ public class DefaultDLFileVersionDisplayContext
 	private FileEntry _fileEntry;
 	private long _fileEntryTypeId;
 	private FileVersion _fileVersion;
-	private FileVersionMetadataHelper _fileVersionMetadataHelper;
+	private FileVersionHelper _fileVersionHelper;
 	private long _folderId;
 	private Boolean _ieOnWin32;
 	private LiferayPortletRequest _liferayPortletRequest;

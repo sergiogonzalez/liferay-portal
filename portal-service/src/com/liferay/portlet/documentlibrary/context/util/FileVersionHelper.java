@@ -34,16 +34,16 @@ import java.util.List;
 /**
  * @author Ivan Zaera
  */
-public class FileVersionMetadataHelper {
+public class FileVersionHelper {
 
-	public FileVersionMetadataHelper(FileVersion fileVersion) {
+	public FileVersionHelper(FileVersion fileVersion) {
 		this(
 			fileVersion, DLFileEntryMetadataLocalServiceUtil.getService(),
 			DLFileEntryTypeLocalServiceUtil.getService(),
 			StorageEngineUtil.getStorageEngine());
 	}
 
-	public FileVersionMetadataHelper(
+	public FileVersionHelper(
 		FileVersion fileVersion,
 		DLFileEntryMetadataLocalService dlFileEntryMetadataLocalService,
 		DLFileEntryTypeLocalService dlFileEntryTypeLocalService,

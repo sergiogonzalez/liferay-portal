@@ -20,7 +20,7 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalService;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeService;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalService;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageEngine;
@@ -39,12 +39,12 @@ import org.testng.Assert;
 /**
  * @author Ivan Zaera
  */
-public class FileVersionMetadataHelperTest extends PowerMockito {
+public class FileVersionHelperTest extends PowerMockito {
 
-	public FileVersionMetadataHelperTest() {
-		_fileVersionMetadataHelper = new FileVersionMetadataHelper(
+	public FileVersionHelperTest() {
+		_fileVersionHelper = new FileVersionHelper(
 			_fileVersion, _dlFileEntryMetadataLocalService,
-			_dlFileEntryTypeService, _storageEngine);
+			_dlFileEntryTypeLocalService, _storageEngine);
 	}
 
 	@Test
@@ -54,7 +54,7 @@ public class FileVersionMetadataHelperTest extends PowerMockito {
 		mockDDMStructures(dlFileVersion);
 
 		List<DDMStructure> ddmStructures =
-			_fileVersionMetadataHelper.getDDMStructures();
+			_fileVersionHelper.getDDMStructures();
 
 		Assert.assertEquals(2, ddmStructures.size());
 	}
@@ -66,7 +66,7 @@ public class FileVersionMetadataHelperTest extends PowerMockito {
 		mockDDMStructures(object);
 
 		List<DDMStructure> ddmStructures =
-			_fileVersionMetadataHelper.getDDMStructures();
+			_fileVersionHelper.getDDMStructures();
 
 		Assert.assertEquals(0, ddmStructures.size());
 	}
@@ -78,13 +78,13 @@ public class FileVersionMetadataHelperTest extends PowerMockito {
 		mockDDMStructures(dlFileVersion);
 
 		List<DDMStructure> ddmStructures =
-			_fileVersionMetadataHelper.getDDMStructures();
+			_fileVersionHelper.getDDMStructures();
 
 		DDMStructure ddmStructure = ddmStructures.get(0);
 
 		mockFields();
 
-		Fields fields = _fileVersionMetadataHelper.getFields(ddmStructure);
+		Fields fields = _fileVersionHelper.getFields(ddmStructure);
 
 		Assert.assertNotNull(fields);
 	}
@@ -97,7 +97,7 @@ public class FileVersionMetadataHelperTest extends PowerMockito {
 
 		DDMStructure ddmStructure = mock(DDMStructure.class);
 
-		_fileVersionMetadataHelper.getFields(ddmStructure);
+		_fileVersionHelper.getFields(ddmStructure);
 	}
 
 	protected void mockDDMStructures(Object model) throws PortalException {
@@ -110,7 +110,7 @@ public class FileVersionMetadataHelperTest extends PowerMockito {
 		DLFileEntryType dlFileEntryType = mock(DLFileEntryType.class);
 
 		when(
-			_dlFileEntryTypeService.getFileEntryType(Matchers.anyLong())
+			_dlFileEntryTypeLocalService.getFileEntryType(Matchers.anyLong())
 		).thenReturn(
 			dlFileEntryType
 		);
@@ -149,10 +149,10 @@ public class FileVersionMetadataHelperTest extends PowerMockito {
 
 	private DLFileEntryMetadataLocalService _dlFileEntryMetadataLocalService =
 		mock(DLFileEntryMetadataLocalService.class);
-	private DLFileEntryTypeService _dlFileEntryTypeService = mock(
-		DLFileEntryTypeService.class);
+	private DLFileEntryTypeLocalService _dlFileEntryTypeLocalService = mock(
+		DLFileEntryTypeLocalService.class);
 	private FileVersion _fileVersion = mock(FileVersion.class);
-	private FileVersionMetadataHelper _fileVersionMetadataHelper;
+	private FileVersionHelper _fileVersionHelper;
 	private StorageEngine _storageEngine = mock(StorageEngine.class);
 
 }
