@@ -178,6 +178,11 @@ public class CapabilityLocalRepository
 	}
 
 	@Override
+	public long getGroupId() {
+		return getRepository().getGroupId();
+	}
+
+	@Override
 	public List<FileEntry> getRepositoryFileEntries(
 			long rootFolderId, int start, int end,
 			OrderByComparator<FileEntry> obc)

@@ -444,6 +444,11 @@ public class CapabilityRepository
 	}
 
 	@Override
+	public long getGroupId() {
+		return getRepository().getGroupId();
+	}
+
+	@Override
 	public List<Folder> getMountFolders(
 			long parentFolderId, int start, int end,
 			OrderByComparator<Folder> obc)
