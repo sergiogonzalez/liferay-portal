@@ -21,7 +21,7 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
@@ -49,7 +49,8 @@ public class GoogleDocsMetadataHelper {
 			long fileEntryTypeId = dlFileVersion.getFileEntryTypeId();
 
 			DLFileEntryType dlFileEntryType =
-				DLFileEntryTypeServiceUtil.getFileEntryType(fileEntryTypeId);
+				DLFileEntryTypeLocalServiceUtil.getFileEntryType(
+					fileEntryTypeId);
 
 			List<DDMStructure> ddmStructures =
 				dlFileEntryType.getDDMStructures();
