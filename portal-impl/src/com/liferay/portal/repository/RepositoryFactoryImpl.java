@@ -43,8 +43,6 @@ import com.liferay.portlet.documentlibrary.service.DLFileVersionService;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFolderService;
 
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -74,11 +72,9 @@ public class RepositoryFactoryImpl implements RepositoryFactory {
 
 		Map<Class<? extends Capability>, Capability>
 			externalSupportedCapabilities =
-				new HashMap<Class<? extends Capability>, Capability>(
-					repositoryInstanceDefinition.getSupportedCapabilities());
+				repositoryInstanceDefinition.getSupportedCapabilities();
 		Set<Class<? extends Capability>> externalExportedCapabilityClasses =
-			new HashSet<Class<? extends Capability>>(
-				repositoryInstanceDefinition.getExportedCapabilities());
+			repositoryInstanceDefinition.getExportedCapabilities();
 
 		if (!externalSupportedCapabilities.containsKey(
 				RepositoryEventTriggerCapability.class)) {
@@ -119,11 +115,9 @@ public class RepositoryFactoryImpl implements RepositoryFactory {
 
 		Map<Class<? extends Capability>, Capability>
 			externalSupportedCapabilities =
-				new HashMap<Class<? extends Capability>, Capability>(
-					repositoryInstanceDefinition.getSupportedCapabilities());
+				repositoryInstanceDefinition.getSupportedCapabilities();
 		Set<Class<? extends Capability>> externalExportedCapabilityClasses =
-			new HashSet<Class<? extends Capability>>(
-				repositoryInstanceDefinition.getExportedCapabilities());
+			repositoryInstanceDefinition.getExportedCapabilities();
 
 		CMISRepositoryHandler cmisRepositoryHandler = getCMISRepositoryHandler(
 			repository);
