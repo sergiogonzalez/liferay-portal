@@ -46,7 +46,6 @@ public interface TemporaryFilesCapability extends Capability {
 
 	public long getTemporaryFilesTimeout();
 
-	public void setTemporaryFilesTimeout(
-		long temporaryFilesTimeout);
+	public void setTemporaryFilesTimeout(long temporaryFilesTimeout);
 
 }
