@@ -389,6 +389,40 @@ public class ChannelImpl extends BaseChannelImpl {
 	}
 
 	@Override
+	public void storeNotificationEvent(
+		NotificationEvent notificationEvent, long currentTime) {
+
+		if (isRemoveNotificationEvent(notificationEvent, currentTime)) {
+			return;
+		}
+
+		if (PropsValues.USER_NOTIFICATION_EVENT_CONFIRMATION_ENABLED &&
+			notificationEvent.isDeliveryRequired()) {
+
+			Map<String, NotificationEvent> unconfirmedNotificationEvents =
+				_getUnconfirmedNotificationEvents();
+
+			unconfirmedNotificationEvents.put(
+				notificationEvent.getUuid(), notificationEvent);
+		}
+		else {
+			TreeSet<NotificationEvent> notificationEvents =
+				_getNotificationEvents();
+
+			notificationEvents.add(notificationEvent);
+
+			if (notificationEvents.size() >
+					PropsValues.NOTIFICATIONS_MAX_EVENTS) {
+
+				NotificationEvent firstNotificationEvent =
+					notificationEvents.first();
+
+				notificationEvents.remove(firstNotificationEvent);
+			}
+		}
+	}
+
+	@Override
 	protected void doCleanUp() throws Exception {
 		_reentrantLock.lock();
 
@@ -587,39 +621,6 @@ public class ChannelImpl extends BaseChannelImpl {
 		}
 		else {
 			return false;
-		}
-	}
-
-	protected void storeNotificationEvent(
-		NotificationEvent notificationEvent, long currentTime) {
-
-		if (isRemoveNotificationEvent(notificationEvent, currentTime)) {
-			return;
-		}
-
-		if (PropsValues.USER_NOTIFICATION_EVENT_CONFIRMATION_ENABLED &&
-			notificationEvent.isDeliveryRequired()) {
-
-			Map<String, NotificationEvent> unconfirmedNotificationEvents =
-				_getUnconfirmedNotificationEvents();
-
-			unconfirmedNotificationEvents.put(
-				notificationEvent.getUuid(), notificationEvent);
-		}
-		else {
-			TreeSet<NotificationEvent> notificationEvents =
-				_getNotificationEvents();
-
-			notificationEvents.add(notificationEvent);
-
-			if (notificationEvents.size() >
-					PropsValues.NOTIFICATIONS_MAX_EVENTS) {
-
-				NotificationEvent firstNotificationEvent =
-					notificationEvents.first();
-
-				notificationEvents.remove(firstNotificationEvent);
-			}
 		}
 	}
 
