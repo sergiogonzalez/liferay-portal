@@ -427,6 +427,11 @@ public class BaseRepositoryProxyBean
 	}
 
 	@Override
+	public long getGroupId() {
+		return _baseRepository.getGroupId();
+	}
+
+	@Override
 	public LocalRepository getLocalRepository() {
 		LocalRepository localRepository = _baseRepository.getLocalRepository();
 

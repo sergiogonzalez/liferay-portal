@@ -640,6 +640,16 @@ public class DLFolderLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFolder> getRepositoryFolders(
+		long groupId, long repositoryId, int start, int end) {
+		return getService()
+				   .getRepositoryFolders(groupId, repositoryId, start, end);
+	}
+
+	public static int getRepositoryFoldersCount(long groupId, long repositoryId) {
+		return getService().getRepositoryFoldersCount(groupId, repositoryId);
+	}
+
 	public static void getSubfolderIds(
 		java.util.List<java.lang.Long> folderIds, long groupId, long folderId) {
 		getService().getSubfolderIds(folderIds, groupId, folderId);

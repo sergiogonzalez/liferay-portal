@@ -412,6 +412,19 @@ public class DLFolderPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_R() {
+		try {
+			_persistence.countByG_R(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong());
+
+			_persistence.countByG_R(0L, 0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		DLFolder newDLFolder = addDLFolder();
 

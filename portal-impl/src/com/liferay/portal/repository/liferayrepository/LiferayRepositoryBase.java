@@ -88,6 +88,10 @@ public abstract class LiferayRepositoryBase implements CapabilityProvider {
 				capabilityClass.getName(), getRepositoryId()));
 	}
 
+	public long getGroupId() {
+		return _groupId;
+	}
+
 	public long getRepositoryId() {
 		return _repositoryId;
 	}
@@ -169,10 +173,6 @@ public abstract class LiferayRepositoryBase implements CapabilityProvider {
 		}
 
 		return fieldsMap;
-	}
-
-	protected long getGroupId() {
-		return _groupId;
 	}
 
 	protected SortedArrayList<Long> getLongList(
