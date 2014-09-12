@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.bean.BeanLocator;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.uuid.PortalUUID;
+import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.CompanyLocalService;
@@ -92,6 +94,12 @@ public class SubscriptionSenderTest extends PowerMockito {
 
 		PortalBeanLocatorUtil.setBeanLocator(_beanLocator);
 
+		PortalUUIDUtil portalUUIDUtil = new PortalUUIDUtil();
+
+		PortalUUID portalUUID = mock(PortalUUID.class);
+
+		portalUUIDUtil.setPortalUUID(portalUUID);
+
 		PortalUtil portalUtil = new PortalUtil();
 
 		Portal portal = mock(Portal.class);
@@ -125,6 +133,7 @@ public class SubscriptionSenderTest extends PowerMockito {
 		SubscriptionSender subscriptionSender = new SubscriptionSender();
 
 		subscriptionSender.setGroupId(100);
+		subscriptionSender.setMailId("test-mail-id");
 
 		subscriptionSender.initialize();
 
@@ -138,6 +147,8 @@ public class SubscriptionSenderTest extends PowerMockito {
 	public void testGetPortalURLWithoutGroupId() throws Exception {
 		SubscriptionSender subscriptionSender = new SubscriptionSender();
 
+		subscriptionSender.setMailId("test-mail-id");
+
 		subscriptionSender.initialize();
 
 		String portalURL = String.valueOf(
@@ -148,11 +159,13 @@ public class SubscriptionSenderTest extends PowerMockito {
 
 	@Test
 	public void testGetPortalURLWithServiceContext() throws Exception {
+		SubscriptionSender subscriptionSender = new SubscriptionSender();
+
+		subscriptionSender.setMailId("test-mail-id");
+
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setScopeGroupId(100l);
-
-		SubscriptionSender subscriptionSender = new SubscriptionSender();
 
 		subscriptionSender.setServiceContext(serviceContext);
 

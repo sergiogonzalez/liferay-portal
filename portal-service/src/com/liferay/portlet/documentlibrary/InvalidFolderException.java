@@ -11,17 +11,32 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+package com.liferay.portlet.documentlibrary;
 
-package com.liferay.portal.metadata;
+import aQute.bnd.annotation.ProviderType;
 
-import org.apache.tika.metadata.Property;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
- * @author Alexander Chow
+ * @author Brian Wing Shun Chan
  */
-public interface XMPDM extends org.apache.tika.metadata.XMPDM {
+@ProviderType
+public class InvalidFolderException extends PortalException {
 
-	public static final Property DURATION = Property.externalText(
-		"xmpDM:duration");
+	public InvalidFolderException() {
+		super();
+	}
+
+	public InvalidFolderException(String msg) {
+		super(msg);
+	}
+
+	public InvalidFolderException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
+
+	public InvalidFolderException(Throwable cause) {
+		super(cause);
+	}
 
 }

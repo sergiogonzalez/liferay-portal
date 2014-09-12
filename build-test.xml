@@ -56,38 +56,38 @@
 	<macrodef name="prepare-additional-bundles">
 		<sequential>
 			<if>
-				<isset property="app.server.bundle.count" />
+				<isset property="app.server.bundles.size" />
 				<then>
-					<var name="bundle.count" value="1" />
+					<var name="bundles.size" value="1" />
 
-					<antelope:repeat count="${app.server.bundle.count}">
-						<delete dir="${app.server.parent.dir}-${bundle.count}" />
+					<antelope:repeat count="${app.server.bundles.size}">
+						<delete dir="${app.server.parent.dir}-${bundles.size}" />
 
-						<copy todir="${app.server.parent.dir}-${bundle.count}/${app.server.type}-${app.server.version}">
+						<copy todir="${app.server.parent.dir}-${bundles.size}/${app.server.type}-${app.server.version}">
 							<fileset dir="${app.server.dir}" />
 						</copy>
 
 						<if>
 	  					 	<available file="${liferay.home}/osgi" />
 							<then>
-								<copy todir="${app.server.parent.dir}-${bundle.count}/osgi">
+								<copy todir="${app.server.parent.dir}-${bundles.size}/osgi">
 									<fileset dir="${liferay.home}/osgi" />
 								</copy>
 							</then>
 						</if>
 
 						<chmod perm="a+x">
-							<fileset dir="${app.server.parent.dir}-${bundle.count}/${app.server.type}-${app.server.version}/bin">
+							<fileset dir="${app.server.parent.dir}-${bundles.size}/${app.server.type}-${app.server.version}/bin">
 								<include name="*.sh" />
 							</fileset>
 						</chmod>
 
 						<math
 							datatype="int"
-							operand1="${bundle.count}"
+							operand1="${bundles.size}"
 							operand2="1"
 							operation="+"
-							result="bundle.count"
+							result="bundles.size"
 						/>
 					</antelope:repeat>
 				</then>
@@ -198,13 +198,13 @@
 			/>
 
 			<if>
-				<isset property="app.server.bundle.count" />
+				<isset property="app.server.bundles.size" />
 				<then>
-					<var name="app.server.bundle.number" value="1" />
+					<var name="app.server.bundle.index" value="1" />
 
-					<antelope:repeat count="${app.server.bundle.count}">
+					<antelope:repeat count="${app.server.bundles.size}">
 						<set-app-server-properties
-							app.server.bundle.number="${app.server.bundle.number}"
+							app.server.bundle.index="${app.server.bundle.index}"
 						/>
 
 						<replaceregexp
@@ -228,14 +228,14 @@
 
 						<math
 							datatype="int"
-							operand1="${app.server.bundle.number}"
+							operand1="${app.server.bundle.index}"
 							operand2="1"
 							operation="+"
-							result="app.server.bundle.number"
+							result="app.server.bundle.index"
 						/>
 					</antelope:repeat>
 
-					<var name="app.server.bundle.number" unset="true" />
+					<var name="app.server.bundle.index" unset="true" />
 				</then>
 			</if>
 		</sequential>
@@ -423,7 +423,7 @@
 
 	<macrodef name="set-app-server-properties">
 		<attribute default="${app.server.bin.dir}" name="app.server.bin.dir" />
-		<attribute default="0" name="app.server.bundle.number" />
+		<attribute default="0" name="app.server.bundle.index" />
 
 		<sequential>
 			<var name="test.app.server.bin.dir" unset="true" />
@@ -435,14 +435,14 @@
 
 			<math
 				datatype="int"
-				operand1="@{app.server.bundle.number}"
+				operand1="@{app.server.bundle.index}"
 				operand2="8"
 				operation="+"
 				result="test.app.server.leading.port.number"
 			/>
 
 			<if>
-				 <equals arg1="@{app.server.bundle.number}" arg2="0" />
+				 <equals arg1="@{app.server.bundle.index}" arg2="0" />
 				 <then>
 					<var name="test.app.server.bin.dir" value="@{app.server.bin.dir}" />
 					<var name="test.app.server.classes.portal.dir" value="${app.server.classes.portal.dir}" />
@@ -452,23 +452,23 @@
 				 </then>
 				 <else>
 					<antelope:stringutil property="test.app.server.bin.dir" string="@{app.server.bin.dir}">
-						<antelope:replace regex="(${app.server.parent.dir})(.*)" replacement="$1-@{app.server.bundle.number}$2" />
+						<antelope:replace regex="(${app.server.parent.dir})(.*)" replacement="$1-@{app.server.bundle.index}$2" />
 					</antelope:stringutil>
 
 					<antelope:stringutil property="test.app.server.classes.portal.dir" string="${app.server.classes.portal.dir}">
-						<antelope:replace regex="(${app.server.parent.dir})(.*)" replacement="$1-@{app.server.bundle.number}$2" />
+						<antelope:replace regex="(${app.server.parent.dir})(.*)" replacement="$1-@{app.server.bundle.index}$2" />
 					</antelope:stringutil>
 
 					<antelope:stringutil property="test.app.server.deploy.dir" string="${app.server.deploy.dir}">
-						<antelope:replace regex="(${app.server.parent.dir})(.*)" replacement="$1-@{app.server.bundle.number}$2" />
+						<antelope:replace regex="(${app.server.parent.dir})(.*)" replacement="$1-@{app.server.bundle.index}$2" />
 					</antelope:stringutil>
 
 					<antelope:stringutil property="test.app.server.dir" string="${app.server.dir}">
-						<antelope:replace regex="(${app.server.parent.dir})(.*)" replacement="$1-@{app.server.bundle.number}$2" />
+						<antelope:replace regex="(${app.server.parent.dir})(.*)" replacement="$1-@{app.server.bundle.index}$2" />
 					</antelope:stringutil>
 
 					<antelope:stringutil property="test.app.server.parent.dir" string="${app.server.parent.dir}">
-						<antelope:replace regex="(${app.server.parent.dir})(.*)" replacement="$1-@{app.server.bundle.number}$2" />
+						<antelope:replace regex="(${app.server.parent.dir})(.*)" replacement="$1-@{app.server.bundle.index}$2" />
 					</antelope:stringutil>
 				 </else>
 			</if>
@@ -476,7 +476,7 @@
 	</macrodef>
 
 	<macrodef name="start-app-server">
-		<attribute default="0" name="app.server.bundle.number" />
+		<attribute default="0" name="app.server.bundle.index" />
 
 		<sequential>
 			<if>
@@ -484,17 +484,17 @@
 				<then>
 					<start-app-server-cmd
 						app.server.bin.dir="${app.server.tcat.admin.bin.dir}"
-						app.server.bundle.number="@{app.server.bundle.number}"
+						app.server.bundle.index="@{app.server.bundle.index}"
 					/>
 
 					<start-app-server-cmd
 						app.server.bin.dir="${app.server.tcat.agent.bin.dir}"
-						app.server.bundle.number="@{app.server.bundle.number}"
+						app.server.bundle.index="@{app.server.bundle.index}"
 					/>
 				</then>
 				<else>
 					<start-app-server-cmd
-						app.server.bundle.number="@{app.server.bundle.number}"
+						app.server.bundle.index="@{app.server.bundle.index}"
 					/>
 				</else>
 			</if>
@@ -503,12 +503,12 @@
 
 	<macrodef name="start-app-server-cmd">
 		<attribute default="${app.server.bin.dir}" name="app.server.bin.dir" />
-		<attribute default="0" name="app.server.bundle.number" />
+		<attribute default="0" name="app.server.bundle.index" />
 
 		<sequential>
 			<set-app-server-properties
 				app.server.bin.dir="@{app.server.bin.dir}"
-				app.server.bundle.number="@{app.server.bundle.number}"
+				app.server.bundle.index="@{app.server.bundle.index}"
 			/>
 
 			<if>
@@ -564,7 +564,7 @@
 	</macrodef>
 
 	<macrodef name="stop-app-server">
-		<attribute default="0" name="app.server.bundle.number" />
+		<attribute default="0" name="app.server.bundle.index" />
 
 		<sequential>
 			<if>
@@ -572,17 +572,17 @@
 				<then>
 					<stop-app-server-cmd
 						app.server.bin.dir="${app.server.tcat.admin.bin.dir}"
-						app.server.bundle.number="@{app.server.bundle.number}"
+						app.server.bundle.index="@{app.server.bundle.index}"
 					/>
 
 					<stop-app-server-cmd
 						app.server.bin.dir="${app.server.tcat.agent.bin.dir}"
-						app.server.bundle.number="@{app.server.bundle.number}"
+						app.server.bundle.index="@{app.server.bundle.index}"
 					/>
 				</then>
 				<else>
 					<stop-app-server-cmd
-						app.server.bundle.number="@{app.server.bundle.number}"
+						app.server.bundle.index="@{app.server.bundle.index}"
 					/>
 				</else>
 			</if>
@@ -591,12 +591,12 @@
 
 	<macrodef name="stop-app-server-cmd">
 		<attribute default="${app.server.bin.dir}" name="app.server.bin.dir" />
-		<attribute default="0" name="app.server.bundle.number" />
+		<attribute default="0" name="app.server.bundle.index" />
 
 		<sequential>
 			<set-app-server-properties
 				app.server.bin.dir="@{app.server.bin.dir}"
-				app.server.bundle.number="@{app.server.bundle.number}"
+				app.server.bundle.index="@{app.server.bundle.index}"
 			/>
 
 			<antcall target="clean-up-logs" />
@@ -3158,49 +3158,110 @@ if (ppstate.equals("normal")) {
 
 	<target name="record-test-package-names">
 		<script classpathref="project.classpath" language="beanshell">
-			import com.liferay.portal.kernel.util.OSDetector;
-			import com.liferay.portal.kernel.util.StringUtil;
+			<![CDATA[
+				import com.liferay.portal.kernel.util.GetterUtil;
+				import com.liferay.portal.kernel.util.OSDetector;
+				import com.liferay.portal.kernel.util.StringBundler;
+				import com.liferay.portal.kernel.util.StringUtil;
 
-			import org.apache.tools.ant.DirectoryScanner;
+				import org.apache.tools.ant.DirectoryScanner;
 
-			DirectoryScanner directoryScanner = new DirectoryScanner();
+				Map getPackageGroups(Set packageNames, int packageGroupsSize) {
+					Map packageGroups = new HashMap();
 
-			directoryScanner.setBasedir(project.getBaseDir());
-			directoryScanner.setIncludes(new String[] {"**/test/integration/**/*Test.java", "**/test/unit/**/*Test.java"});
+					Iterator iterator = packageNames.iterator();
 
-			directoryScanner.scan();
+					for (int i = 0; i < packageNames.size(); i++) {
+						int index = i % packageGroupsSize;
 
-			String[] fileNames = directoryScanner.getIncludedFiles();
+						Set packageGroup = packageGroups.get(index);
 
-			Arrays.sort(fileNames);
+						if (packageGroup == null) {
+							packageGroup = new TreeSet();
+						}
 
-			Set packageNames = new TreeSet();
+						packageGroup.add(iterator.next());
 
-			for (String fileName : fileNames) {
-				int x = fileName.indexOf("com/");
-				int y = fileName.lastIndexOf("/");
+						packageGroups.put(index, packageGroup);
+					}
 
-				if (OSDetector.isWindows()) {
-					x = fileName.indexOf("com\\");
-					y = fileName.lastIndexOf("\\");
+					return packageGroups;
 				}
 
-				if (fileName.endsWith("ServiceHttpTest.java") || fileName.endsWith("ServiceJsonTest.java") || fileName.endsWith("ServiceSoapTest.java")) {
-					continue;
+				Set getPackageNames() {
+					Set packageNames = new TreeSet();
+
+					DirectoryScanner directoryScanner = new DirectoryScanner();
+
+					directoryScanner.setBasedir(project.getBaseDir());
+					directoryScanner.setIncludes(new String[] {"**/test/integration/**/*Test.java", "**/test/unit/**/*Test.java"});
+
+					directoryScanner.scan();
+
+					String[] fileNames = directoryScanner.getIncludedFiles();
+
+					Arrays.sort(fileNames);
+
+					for (String fileName : fileNames) {
+						int x = fileName.indexOf("com/");
+						int y = fileName.lastIndexOf("/");
+
+						if (OSDetector.isWindows()) {
+							x = fileName.indexOf("com\\");
+							y = fileName.lastIndexOf("\\");
+						}
+
+						if (fileName.endsWith("ServiceHttpTest.java") || fileName.endsWith("ServiceJsonTest.java") || fileName.endsWith("ServiceSoapTest.java")) {
+							continue;
+						}
+
+						String packageName = fileName.substring(x, y);
+
+						packageName = StringUtil.replace(packageName, "/", ".");
+						packageName = StringUtil.replace(packageName, "\\", ".");
+
+						packageNames.add(packageName);
+					}
+
+					return packageNames;
 				}
 
-				String packageName = fileName.substring(x, y);
+				StringBundler sb = new StringBundler();
 
-				packageName = StringUtil.replace(packageName, "/", ".");
-				packageName = StringUtil.replace(packageName, "\\", ".");
+				Set packageNames = getPackageNames();
+				int packageGroupsSize = GetterUtil.getInteger(project.getProperty("test.package.groups.size"));
 
-				packageNames.add(packageName);
-			}
+				Map packageGroups = getPackageGroups(packageNames, packageGroupsSize);
 
-			project.setProperty("test.package.names", StringUtil.merge(packageNames, " "));
+				for (int i = 0; i < packageGroupsSize; i++) {
+					Set packageGroup = packageGroups.get(i);
+
+					sb.append("TEST_PACKAGE_GROUP_");
+					sb.append(i);
+					sb.append("=");
+					sb.append(StringUtil.merge(packageGroup));
+					sb.append("\n\n");
+				}
+
+				sb.append("TEST_PACKAGE_GROUPS=");
+
+				for (int i = 0; i < packageGroupsSize; i++) {
+					sb.append(i);
+
+					if (i < packageGroupsSize - 1) {
+						sb.append(" ");
+					}
+				}
+
+				sb.append("\n\n");
+				sb.append("TEST_PACKAGE_NAMES=");
+				sb.append(StringUtil.merge(packageNames, " "));
+
+				project.setProperty("test.package.names.properties.content", sb.toString());
+			]]>
 		</script>
 
-		<echo file="test.package.names.properties">TEST_PACKAGE_NAMES=${test.package.names}</echo>
+		<echo file="test.package.names.properties">${test.package.names.properties.content}</echo>
 	</target>
 
 	<target name="revert-test-properties">
@@ -3511,23 +3572,23 @@ if (ppstate.equals("normal")) {
 		<if>
 			<equals arg1="${cluster.enabled}" arg2="true" />
 			<then>
-				<var name="app.server.bundle.number" value="1" />
+				<var name="app.server.bundle.index" value="1" />
 
-				<antelope:repeat count="${app.server.bundle.count}">
+				<antelope:repeat count="${app.server.bundles.size}">
 					<start-app-server
-						app.server.bundle.number="${app.server.bundle.number}"
+						app.server.bundle.index="${app.server.bundle.index}"
 					/>
 
 					<math
 						datatype="int"
-						operand1="${app.server.bundle.number}"
+						operand1="${app.server.bundle.index}"
 						operand2="1"
 						operation="+"
-						result="app.server.bundle.number"
+						result="app.server.bundle.index"
 					/>
 				</antelope:repeat>
 
-				<var name="app.server.bundle.number" unset="true" />
+				<var name="app.server.bundle.index" unset="true" />
 			</then>
 		</if>
 
@@ -3616,23 +3677,23 @@ if (ppstate.equals("normal")) {
 		<if>
 			<equals arg1="${cluster.enabled}" arg2="true" />
 			<then>
-				<var name="app.server.bundle.number" value="1" />
+				<var name="app.server.bundle.index" value="1" />
 
-				<antelope:repeat count="${app.server.bundle.count}">
+				<antelope:repeat count="${app.server.bundles.size}">
 					<stop-app-server
-						app.server.bundle.number="${app.server.bundle.number}"
+						app.server.bundle.index="${app.server.bundle.index}"
 					/>
 
 					<math
 						datatype="int"
-						operand1="${app.server.bundle.number}"
+						operand1="${app.server.bundle.index}"
 						operand2="1"
 						operation="+"
-						result="app.server.bundle.number"
+						result="app.server.bundle.index"
 					/>
 				</antelope:repeat>
 
-				<var name="app.server.bundle.number" unset="true" />
+				<var name="app.server.bundle.index" unset="true" />
 			</then>
 		</if>
 
@@ -3699,14 +3760,14 @@ if (ppstate.equals("normal")) {
 	<target name="start-app-server">
 		<if>
 			<not>
-				<isset property="app.server.bundle.number" />
+				<isset property="app.server.bundle.index" />
 			</not>
 			<then>
-				<var name="app.server.bundle.number" value="0" />
+				<var name="app.server.bundle.index" value="0" />
 			</then>
 		</if>
 
-		<start-app-server  app.server.bundle.number="${app.server.bundle.number}" />
+		<start-app-server  app.server.bundle.index="${app.server.bundle.index}" />
 	</target>
 
 	<target name="start-chrome-driver">
@@ -3818,14 +3879,16 @@ Please set "ie.driver.zip" in test.properties to point to "IEDriverServer_x64_2.
 	<target name="stop-app-server">
 		<if>
 			<not>
-				<isset property="app.server.bundle.number" />
+				<isset property="app.server.bundle.index" />
 			</not>
 			<then>
-				<var name="app.server.bundle.number" value="0" />
+				<var name="app.server.bundle.index" value="0" />
 			</then>
 		</if>
 
-		<stop-app-server app.server.bundle.number="${app.server.bundle.number}" />
+		<stop-app-server
+			app.server.bundle.index="${app.server.bundle.index}"
+		/>
 	</target>
 
 	<target name="stop-chrome-driver">

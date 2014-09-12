@@ -129,11 +129,15 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 		ClusterAdminClient clusterAdminClient =
 			_elasticsearchConnectionManager.getClusterAdminClient();
 
-		DeleteSnapshotRequestBuilder deleteSnapshotRequestBuilder =
-			clusterAdminClient.prepareDeleteSnapshot(
-				_BACKUP_REPOSITORY_NAME, backupName);
-
 		try {
+			if (!hasBackupRepository(clusterAdminClient)) {
+				return;
+			}
+
+			DeleteSnapshotRequestBuilder deleteSnapshotRequestBuilder =
+				clusterAdminClient.prepareDeleteSnapshot(
+					_BACKUP_REPOSITORY_NAME, backupName);
+
 			Future<DeleteSnapshotResponse> future =
 				deleteSnapshotRequestBuilder.execute();
 
@@ -191,6 +195,9 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 		RestoreSnapshotRequestBuilder restoreSnapshotRequestBuilder =
 			clusterAdminClient.prepareRestoreSnapshot(
 				_BACKUP_REPOSITORY_NAME, backupName);
+
+		restoreSnapshotRequestBuilder.setIndices(String.valueOf(companyId));
+		restoreSnapshotRequestBuilder.setWaitForCompletion(true);
 
 		try {
 			Future<RestoreSnapshotResponse> future =
@@ -258,32 +265,8 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 	protected void createBackupRepository(ClusterAdminClient clusterAdminClient)
 		throws Exception {
 
-		GetRepositoriesRequestBuilder getRepositoriesRequestBuilder =
-			clusterAdminClient.prepareGetRepositories(_BACKUP_REPOSITORY_NAME);
-
-		try {
-			Future<GetRepositoriesResponse> getRepositoriesResponseFuture =
-				getRepositoriesRequestBuilder.execute();
-
-			GetRepositoriesResponse getRepositoriesResponse =
-				getRepositoriesResponseFuture.get();
-
-			ImmutableList<RepositoryMetaData> repositoryMetaDatas =
-				getRepositoriesResponse.repositories();
-
-			if (!repositoryMetaDatas.isEmpty()) {
-				return;
-			}
-		}
-		catch (ExecutionException ee) {
-			if (ee.getCause() instanceof RepositoryMissingException) {
-				if (_log.isInfoEnabled()) {
-					_log.info("Creating a new backup repository", ee);
-				}
-			}
-			else {
-				throw ee;
-			}
+		if (hasBackupRepository(clusterAdminClient)) {
+			return;
 		}
 
 		PutRepositoryRequestBuilder putRepositoryRequestBuilder =
@@ -306,6 +289,38 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 			putRepositoryResponseFuture.get();
 
 		LogUtil.logActionResponse(_log, putRepositoryResponse);
+	}
+
+	protected boolean hasBackupRepository(ClusterAdminClient clusterAdminClient)
+		throws Exception {
+
+		GetRepositoriesRequestBuilder getRepositoriesRequestBuilder =
+			clusterAdminClient.prepareGetRepositories(_BACKUP_REPOSITORY_NAME);
+
+		try {
+			Future<GetRepositoriesResponse> getRepositoriesResponseFuture =
+				getRepositoriesRequestBuilder.execute();
+
+			GetRepositoriesResponse getRepositoriesResponse =
+				getRepositoriesResponseFuture.get();
+
+			ImmutableList<RepositoryMetaData> repositoryMetaDatas =
+				getRepositoriesResponse.repositories();
+
+			if (repositoryMetaDatas.isEmpty()) {
+				return false;
+			}
+
+			return true;
+		}
+		catch (ExecutionException ee) {
+			if (ee.getCause() instanceof RepositoryMissingException) {
+				return false;
+			}
+			else {
+				throw ee;
+			}
+		}
 	}
 
 	private static final String _BACKUP_REPOSITORY_NAME = "liferay_backup";
