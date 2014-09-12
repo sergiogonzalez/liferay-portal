@@ -8,6 +8,19 @@
 		<metadata>
 			<![CDATA[{"xy":[36,51]}]]>
 		</metadata>
+		<actions>
+			<notification>
+				<name>Notification</name>
+				<template><![CDATA[A file has been submitted.
+				]]></template>
+				<template-language>freemarker</template-language>
+				<notification-type>email</notification-type>
+				<recipients>
+					<user/>
+				</recipients>
+				<execution-type>onEntry</execution-type>
+			</notification>
+		</actions>
 		<initial>true</initial>
 		<transitions>
 			<transition>

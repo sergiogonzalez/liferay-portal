@@ -144,15 +144,13 @@ public class RepositoryLocalServiceImpl
 	}
 
 	@Override
-	public void deleteRepositories(long groupId) throws PortalException {
+	public void deleteRepositories(long groupId) {
 		List<Repository> repositories = repositoryPersistence.findByGroupId(
 			groupId);
 
 		for (Repository repository : repositories) {
 			deleteRepository(repository.getRepositoryId());
 		}
-
-		dlFolderLocalService.deleteAll(groupId);
 	}
 
 	@Override
@@ -163,6 +161,10 @@ public class RepositoryLocalServiceImpl
 		if (repository != null) {
 			repositoryLocalService.deleteRepository(repository);
 		}
+
+		_localRepositoriesByRepositoryId.remove(repositoryId);
+
+		_repositoriesByRepositoryId.remove(repositoryId);
 
 		return repository;
 	}

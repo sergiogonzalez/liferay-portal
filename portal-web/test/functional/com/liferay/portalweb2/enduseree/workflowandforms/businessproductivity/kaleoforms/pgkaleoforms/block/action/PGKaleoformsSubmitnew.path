@@ -31,7 +31,7 @@
 </tr>
 <tr>
 	<td>CANCEL_BUTTON</td>
-	<td>//a[contains(.,'Cancel')]</td>
+	<td>//button[contains(.,'Cancel')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -58,6 +58,11 @@
 <tr>
 	<td>NEW_PROCESS_RADIO_OPTION_RADIO</td>
 	<td>//div[contains(@class,'control-group field-wrapper') and contains(@data-fieldname,'${key_fieldName}')]/label[contains(.,'${key_kfProcessFieldData}')]/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NEW_PROCESS_FIELDS_FIELD</td>
+	<td>//div[contains(@class,'control-group field-wrapper') and contains (@data-fieldname,'${key_fieldName}')]</td>
 	<td></td>
 </tr>
 <tr>
