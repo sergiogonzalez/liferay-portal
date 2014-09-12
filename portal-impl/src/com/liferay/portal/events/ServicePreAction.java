@@ -707,10 +707,20 @@ public class ServicePreAction extends Action {
 			request.setAttribute(WebKeys.COLOR_SCHEME, colorScheme);
 		}
 
-		boolean themeCssFastLoad = SessionParamUtil.getBoolean(
-			request, "css_fast_load", PropsValues.THEME_CSS_FAST_LOAD);
-		boolean themeImagesFastLoad = SessionParamUtil.getBoolean(
-			request, "images_fast_load", PropsValues.THEME_IMAGES_FAST_LOAD);
+		boolean themeCssFastLoad = PropsValues.THEME_CSS_FAST_LOAD;
+
+		if (PropsValues.THEME_CSS_FAST_LOAD_CHECK_REQUEST_PARAMETER) {
+			themeCssFastLoad = SessionParamUtil.getBoolean(
+				request, "css_fast_load", PropsValues.THEME_CSS_FAST_LOAD);
+		}
+
+		boolean themeImagesFastLoad = PropsValues.THEME_IMAGES_FAST_LOAD;
+
+		if (PropsValues.THEME_IMAGES_FAST_LOAD_CHECK_REQUEST_PARAMETER) {
+			SessionParamUtil.getBoolean(
+				request, "images_fast_load",
+				PropsValues.THEME_IMAGES_FAST_LOAD);
+		}
 
 		boolean themeJsBarebone = PropsValues.JAVASCRIPT_BAREBONE_ENABLED;
 

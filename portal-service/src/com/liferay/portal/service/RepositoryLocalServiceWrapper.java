@@ -103,8 +103,7 @@ public class RepositoryLocalServiceWrapper implements RepositoryLocalService,
 	}
 
 	@Override
-	public void deleteRepositories(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public void deleteRepositories(long groupId) {
 		_repositoryLocalService.deleteRepositories(groupId);
 	}
 
