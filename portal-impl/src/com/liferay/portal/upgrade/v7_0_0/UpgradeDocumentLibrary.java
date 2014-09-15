@@ -67,7 +67,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 	}
 
 	protected boolean hasFileNameFileEntry(
-			long groupId, long folderId, String fileName)
+			long groupId, long folderId, long fileEntryId, String fileName)
 		throws Exception {
 
 		Connection con = null;
@@ -79,11 +79,12 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 
 			ps = con.prepareStatement(
 				"select count(*) from DLFileEntry where groupId = ? and " +
-					"folderId = ? and fileName = ?");
+					"folderId = ? and fileEntryId <> ? and fileName = ?");
 
 			ps.setLong(1, groupId);
 			ps.setLong(2, folderId);
-			ps.setString(3, fileName);
+			ps.setLong(3, fileEntryId);
+			ps.setString(4, fileName);
 
 			rs = ps.executeQuery();
 
@@ -165,7 +166,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 				int count = 0;
 
 				while (hasFileNameFileEntry(
-							groupId, folderId, uniqueFileName)) {
+							groupId, folderId, fileEntryId, uniqueFileName)) {
 
 					count++;
 
