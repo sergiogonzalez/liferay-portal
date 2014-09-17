@@ -119,7 +119,7 @@ public class UpgradeDefaultDataTranslations extends UpgradeProcess {
 	}
 
 	protected void upgradeDLFileEntryType(
-			DLFileEntryTypeData dlFileEntryTypeData,
+			long dlFileEntryTypeId, String nameXml, String descriptionXml,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
 			Locale defaultLocale)
 		throws SQLException {
@@ -136,16 +136,15 @@ public class UpgradeDefaultDataTranslations extends UpgradeProcess {
 
 			String languageId = LanguageUtil.getLanguageId(defaultLocale);
 
-			String name = LocalizationUtil.updateLocalization(
-				nameMap, dlFileEntryTypeData.getName(), "Name", languageId);
+			nameXml = LocalizationUtil.updateLocalization(
+				nameMap, nameXml, "Name", languageId);
 
-			String description = LocalizationUtil.updateLocalization(
-				descriptionMap, dlFileEntryTypeData.getDescription(),
-				"Description", languageId);
+			descriptionXml = LocalizationUtil.updateLocalization(
+				descriptionMap, descriptionXml, "Description", languageId);
 
-			ps.setString(1, name);
-			ps.setString(2, description);
-			ps.setLong(3, dlFileEntryTypeData.getDlFileEntryTypeId());
+			ps.setString(1, nameXml);
+			ps.setString(2, descriptionXml);
+			ps.setLong(3, dlFileEntryTypeId);
 
 			int rowCount = ps.executeUpdate();
 
@@ -154,7 +153,7 @@ public class UpgradeDefaultDataTranslations extends UpgradeProcess {
 					String.format(
 						"Updated %s rows with fileEntryTypeId = %s in table" +
 							"DLFileEntryTypeId; expected 1 row",
-						rowCount, dlFileEntryTypeData.getDlFileEntryTypeId()));
+						rowCount, dlFileEntryTypeId));
 			}
 		}
 		finally {
@@ -212,7 +211,10 @@ public class UpgradeDefaultDataTranslations extends UpgradeProcess {
 
 		if (needsUpdate) {
 			upgradeDLFileEntryType(
-				dlFileEntryTypeData, nameMap, descriptionMap, defaultLocale);
+				dlFileEntryTypeData.getDlFileEntryTypeId(),
+				dlFileEntryTypeData.getName(),
+				dlFileEntryTypeData.getDescription(), nameMap, descriptionMap,
+				defaultLocale);
 		}
 	}
 
