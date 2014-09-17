@@ -210,27 +210,6 @@ public class UpgradeDefaultDataTranslations extends UpgradeProcess {
 		}
 	}
 
-	protected void upgradeGroupDLFileEntryTypes(
-			long companyId, long groupId, String nameLanguageKey,
-			String dlFileEntryTypeKey)
-		throws SQLException {
-
-		DLFileEntryTypeData dlFileEntryTypeData = getDLFileEntryTypeData(
-			groupId, dlFileEntryTypeKey);
-
-		if (dlFileEntryTypeData == null) {
-			return;
-		}
-
-		long dlFileEntryTypeId = dlFileEntryTypeData.getDlFileEntryTypeId();
-		String nameXml = dlFileEntryTypeData.getName();
-		String descriptionXml = dlFileEntryTypeData.getDescription();
-
-		upgradeDLFileEntryTypeTranslation(
-			companyId, dlFileEntryTypeId, nameLanguageKey, nameXml,
-			descriptionXml);
-	}
-
 	protected void upgradeTranslations(long companyId, long groupId)
 		throws PortalException {
 
@@ -238,9 +217,21 @@ public class UpgradeDefaultDataTranslations extends UpgradeProcess {
 			for (Map.Entry<String, String> nameAndKey :
 					_DEFAULT_FILE_ENTRY_TYPE_MAP.entrySet()) {
 
-				upgradeGroupDLFileEntryTypes(
-					companyId, groupId, nameAndKey.getKey(),
-					nameAndKey.getValue());
+				DLFileEntryTypeData dlFileEntryTypeData =
+					getDLFileEntryTypeData(groupId, nameAndKey.getValue());
+
+				if (dlFileEntryTypeData == null) {
+					continue;
+				}
+
+				long dlFileEntryTypeId =
+					dlFileEntryTypeData.getDlFileEntryTypeId();
+				String nameXml = dlFileEntryTypeData.getName();
+				String descriptionXml = dlFileEntryTypeData.getDescription();
+
+				upgradeDLFileEntryTypeTranslation(
+					companyId, dlFileEntryTypeId, nameAndKey.getKey(), nameXml,
+					descriptionXml);
 			}
 		}
 		catch (SQLException sqle) {
