@@ -161,27 +161,21 @@ public class UpgradeDefaultDataTranslations extends UpgradeProcess {
 		}
 	}
 
-	protected void upgradeGroupDLFileEntryTypes(
-			long companyId, long groupId, String nameLanguageKey,
-			String dlFileEntryTypeKey)
+	protected void upgradeDLFileEntryTypeTranslation(
+			long companyId, long dlFileEntryTypeId, String nameLanguageKey,
+			String nameXml, String descriptionXml)
 		throws SQLException {
-
-		DLFileEntryTypeData dlFileEntryTypeData = getDLFileEntryTypeData(
-			groupId, dlFileEntryTypeKey);
-
-		if (dlFileEntryTypeData == null) {
-			return;
-		}
-
-		Map<Locale, String> descriptionMap =
-			dlFileEntryTypeData.getDescriptionMap();
-		Map<Locale, String> nameMap = dlFileEntryTypeData.getNameMap();
-
-		boolean needsUpdate = false;
 
 		Locale defaultLocale = LocaleUtil.fromLanguageId(
 			UpgradeProcessUtil.getDefaultLanguageId(companyId));
 		String defaultValue = LanguageUtil.get(defaultLocale, nameLanguageKey);
+
+		boolean needsUpdate = false;
+
+		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
+			nameXml);
+		Map<Locale, String> descriptionMap =
+			LocalizationUtil.getLocalizationMap(descriptionXml);
 
 		for (Locale locale : LanguageUtil.getSupportedLocales()) {
 			String localizedValue = LanguageUtil.get(locale, nameLanguageKey);
@@ -211,11 +205,30 @@ public class UpgradeDefaultDataTranslations extends UpgradeProcess {
 
 		if (needsUpdate) {
 			upgradeDLFileEntryType(
-				dlFileEntryTypeData.getDlFileEntryTypeId(),
-				dlFileEntryTypeData.getName(),
-				dlFileEntryTypeData.getDescription(), nameMap, descriptionMap,
-				defaultLocale);
+				dlFileEntryTypeId, nameXml, descriptionXml, nameMap,
+				descriptionMap, defaultLocale);
 		}
+	}
+
+	protected void upgradeGroupDLFileEntryTypes(
+			long companyId, long groupId, String nameLanguageKey,
+			String dlFileEntryTypeKey)
+		throws SQLException {
+
+		DLFileEntryTypeData dlFileEntryTypeData = getDLFileEntryTypeData(
+			groupId, dlFileEntryTypeKey);
+
+		if (dlFileEntryTypeData == null) {
+			return;
+		}
+
+		long dlFileEntryTypeId = dlFileEntryTypeData.getDlFileEntryTypeId();
+		String nameXml = dlFileEntryTypeData.getName();
+		String descriptionXml = dlFileEntryTypeData.getDescription();
+
+		upgradeDLFileEntryTypeTranslation(
+			companyId, dlFileEntryTypeId, nameLanguageKey, nameXml,
+			descriptionXml);
 	}
 
 	protected void upgradeTranslations(long companyId, long groupId)
