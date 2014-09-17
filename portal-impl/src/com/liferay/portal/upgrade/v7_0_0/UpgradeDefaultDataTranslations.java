@@ -70,8 +70,9 @@ public class UpgradeDefaultDataTranslations extends UpgradeProcess {
 		}
 	}
 
-	protected DLFileEntryTypeData getDLFileEntryTypeData(
-			long groupId, String dlFileEntryTypeKey)
+	protected void upgradeDLFileEntryType(
+			long companyId, long groupId, String dlFileEntryTypeKey,
+			String nameLanguageKey)
 		throws SQLException {
 
 		Connection con = null;
@@ -92,7 +93,7 @@ public class UpgradeDefaultDataTranslations extends UpgradeProcess {
 			rs = ps.executeQuery();
 
 			if (!rs.next()) {
-				return null;
+				return;
 			}
 
 			long fileEntryTypeId = rs.getLong(1);
@@ -108,10 +109,8 @@ public class UpgradeDefaultDataTranslations extends UpgradeProcess {
 						groupId, dlFileEntryTypeKey));
 			}
 
-			DLFileEntryTypeData dlFileEntryTypeData = new DLFileEntryTypeData(
-				fileEntryTypeId, name, description);
-
-			return dlFileEntryTypeData;
+			upgradeDLFileEntryTypeTranslation(
+				companyId, fileEntryTypeId, nameLanguageKey, name, description);
 		}
 		finally {
 			DataAccess.cleanUp(con, ps, rs);
@@ -217,62 +216,16 @@ public class UpgradeDefaultDataTranslations extends UpgradeProcess {
 			for (Map.Entry<String, String> nameAndKey :
 					_DEFAULT_FILE_ENTRY_TYPE_MAP.entrySet()) {
 
-				DLFileEntryTypeData dlFileEntryTypeData =
-					getDLFileEntryTypeData(groupId, nameAndKey.getValue());
+				String dlFileEntryTypeKey = nameAndKey.getValue();
+				String nameLanguageKey = nameAndKey.getKey();
 
-				if (dlFileEntryTypeData == null) {
-					continue;
-				}
-
-				long dlFileEntryTypeId =
-					dlFileEntryTypeData.getDlFileEntryTypeId();
-				String nameXml = dlFileEntryTypeData.getName();
-				String descriptionXml = dlFileEntryTypeData.getDescription();
-
-				upgradeDLFileEntryTypeTranslation(
-					companyId, dlFileEntryTypeId, nameAndKey.getKey(), nameXml,
-					descriptionXml);
+				upgradeDLFileEntryType(
+					companyId, groupId, dlFileEntryTypeKey, nameLanguageKey);
 			}
 		}
 		catch (SQLException sqle) {
 			throw new UpgradeException(sqle);
 		}
-	}
-
-	protected class DLFileEntryTypeData {
-
-		public DLFileEntryTypeData(
-			long dlFileEntryTypeId, String name, String description) {
-
-			_description = description;
-			_dlFileEntryTypeId = dlFileEntryTypeId;
-			_name = name;
-		}
-
-		public String getDescription() {
-			return _description;
-		}
-
-		public Map<Locale, String> getDescriptionMap() {
-			return LocalizationUtil.getLocalizationMap(_description);
-		}
-
-		public long getDlFileEntryTypeId() {
-			return _dlFileEntryTypeId;
-		}
-
-		public String getName() {
-			return _name;
-		}
-
-		public Map<Locale, String> getNameMap() {
-			return LocalizationUtil.getLocalizationMap(_name);
-		}
-
-		private String _description;
-		private long _dlFileEntryTypeId;
-		private String _name;
-
 	}
 
 	private static Map<String, String> _DEFAULT_FILE_ENTRY_TYPE_MAP;
