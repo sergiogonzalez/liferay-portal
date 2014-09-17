@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,16 +11,20 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/html/taglib/init.jsp" %>
+package com.liferay.portal.kernel.comment;
 
-<%@ page import="com.liferay.portal.comment.DiscussionWebKeys" %><%@
-page import="com.liferay.portal.kernel.comment.Comment" %><%@
-page import="com.liferay.portal.kernel.comment.CommentManager" %><%@
-page import="com.liferay.portal.kernel.comment.CommentManagerUtil" %><%@
-page import="com.liferay.portal.kernel.comment.CommentSectionDisplay" %><%@
-page import="com.liferay.portal.kernel.comment.CommentTreeNodeDisplay" %><%@
-page import="com.liferay.portal.kernel.comment.DiscussionThreadView" %>
+import java.util.List;
 
-<portlet:defineObjects />
+/**
+ * @author André de Oliveira
+ */
+public interface CommentsContainer {
+
+	public List<Long> getClassPKs();
+
+	public List<Comment> getComments();
+
+	public List<?> getSearchContainerResults();
+
+}

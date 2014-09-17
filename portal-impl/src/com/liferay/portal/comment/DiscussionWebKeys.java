@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,16 +11,15 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/html/taglib/init.jsp" %>
+package com.liferay.portal.comment;
 
-<%@ page import="com.liferay.portal.comment.DiscussionWebKeys" %><%@
-page import="com.liferay.portal.kernel.comment.Comment" %><%@
-page import="com.liferay.portal.kernel.comment.CommentManager" %><%@
-page import="com.liferay.portal.kernel.comment.CommentManagerUtil" %><%@
-page import="com.liferay.portal.kernel.comment.CommentSectionDisplay" %><%@
-page import="com.liferay.portal.kernel.comment.CommentTreeNodeDisplay" %><%@
-page import="com.liferay.portal.kernel.comment.DiscussionThreadView" %>
+/**
+ * @author André de Oliveira
+ */
+public class DiscussionWebKeys {
 
-<portlet:defineObjects />
+	public static final String COMMENT_TREE_NODE_DISPLAY =
+		"COMMENT_TREE_NODE_DISPLAY";
+
+}

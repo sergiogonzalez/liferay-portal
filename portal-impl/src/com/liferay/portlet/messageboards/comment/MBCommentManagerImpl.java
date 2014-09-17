@@ -14,13 +14,21 @@
 
 package com.liferay.portlet.messageboards.comment;
 
+import com.liferay.portal.comment.CommentSectionDisplayImpl;
 import com.liferay.portal.kernel.comment.CommentManager;
+import com.liferay.portal.kernel.comment.CommentPermissionChecker;
+import com.liferay.portal.kernel.comment.CommentSectionDisplay;
+import com.liferay.portal.kernel.comment.DiscussionDisplay;
+import com.liferay.portal.kernel.comment.DiscussionThreadView;
 import com.liferay.portal.kernel.comment.DuplicateCommentException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.Function;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBMessageDisplay;
@@ -104,6 +112,29 @@ public class MBCommentManagerImpl implements CommentManager {
 	}
 
 	@Override
+	public CommentSectionDisplay createCommentSectionDisplay(
+			long companyId, long userId, long scopeGroupId, String className,
+			long classPK, String permissionClassName, long permissionClassPK,
+			PermissionChecker permissionChecker, boolean hideControls,
+			boolean ratingsEnabled, DiscussionThreadView discussionThreadView,
+			ThemeDisplay themeDisplay)
+		throws PortalException {
+
+		DiscussionDisplay discussionDisplay = createDiscussionDisplay(
+			userId, scopeGroupId, className, classPK, discussionThreadView);
+
+		CommentPermissionChecker commentPermissionChecker =
+			new MBCommentPermissionCheckerImpl(
+				companyId, userId, scopeGroupId, permissionClassName,
+				permissionClassPK, permissionChecker);
+
+		return new CommentSectionDisplayImpl(
+			scopeGroupId, themeDisplay.getUser(), hideControls, ratingsEnabled,
+			discussionDisplay, themeDisplay, commentPermissionChecker,
+			permissionChecker);
+	}
+
+	@Override
 	public void deleteComment(long commentId) throws PortalException {
 		_mbMessageLocalService.deleteDiscussionMessage(commentId);
 	}
@@ -127,6 +158,22 @@ public class MBCommentManagerImpl implements CommentManager {
 		MBMessageLocalService mbMessageLocalService) {
 
 		_mbMessageLocalService = mbMessageLocalService;
+	}
+
+	protected DiscussionDisplay createDiscussionDisplay(
+			long userId, long groupId, String className, long classPK,
+			DiscussionThreadView discussionThreadView)
+		throws PortalException {
+
+		String threadView = StringUtil.toLowerCase(discussionThreadView.name());
+
+		MBMessageDisplay mbMessageDisplay =
+			_mbMessageLocalService.getDiscussionMessageDisplay(
+				userId, groupId, className, classPK,
+				WorkflowConstants.STATUS_ANY, threadView);
+
+		return new MBDiscussionDisplayImpl(
+			className, classPK, mbMessageDisplay, _mbMessageLocalService);
 	}
 
 	private MBMessageLocalService _mbMessageLocalService;

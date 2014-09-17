@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ThemeConstants;
-import com.liferay.portlet.messageboards.util.MBUtil;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -90,7 +89,7 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 
 			sb.append("<img alt=\"emoticon\" src=\"");
 			sb.append(ThemeConstants.TOKEN_THEME_IMAGES_PATH);
-			sb.append(MBUtil.EMOTICONS);
+			sb.append(BBCodeConstants.EMOTICONS_PATH);
 			sb.append("/");
 			sb.append(image);
 			sb.append("\" >");
