@@ -75,7 +75,7 @@ public class UpgradeProcessUtil {
 				return languageId;
 			}
 			else {
-				return StringPool.BLANK;
+				return "en_US";
 			}
 		}
 		finally {
