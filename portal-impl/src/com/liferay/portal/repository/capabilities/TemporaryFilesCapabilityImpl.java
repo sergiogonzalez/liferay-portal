@@ -66,9 +66,11 @@ public class TemporaryFilesCapabilityImpl implements TemporaryFilesCapability {
 			serviceContext.setAddGroupPermissions(true);
 			serviceContext.setAddGuestPermissions(true);
 
-			return _localRepository.addFileEntry(
+			FileEntry fileEntry = _localRepository.addFileEntry(
 				userId, folder.getFolderId(), fileName, mimeType, fileName,
 				StringPool.BLANK, StringPool.BLANK, file, serviceContext);
+
+			return fileEntry;
 		}
 		catch (IOException ioe) {
 			throw new SystemException("Unable to write temporary file", ioe);
@@ -115,7 +117,8 @@ public class TemporaryFilesCapabilityImpl implements TemporaryFilesCapability {
 			Folder folder = getTempFolder(callerUuid, folderPath);
 
 			return _localRepository.getRepositoryFileEntries(
-				folder.getFolderId(), 0, QueryUtil.ALL_POS, null);
+				folder.getFolderId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				null);
 		}
 		catch (NoSuchModelException nsme) {
 			return Collections.emptyList();
