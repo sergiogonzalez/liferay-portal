@@ -188,17 +188,7 @@ public class DefaultDLViewFileVersionDisplayContext
 
 	@Override
 	public String getPublishButtonLabel() {
-		String publishButtonLabel = "publish";
-
-		if (_hasWorkflowDefinitionLink()) {
-			publishButtonLabel = "submit-for-publication";
-		}
-
-		if (_isFileEntrySaveAsDraft()) {
-			publishButtonLabel = "save";
-		}
-
-		return publishButtonLabel;
+		return _fileEntryDisplayContextHelper.getPublishButtonLabel();
 	}
 
 	@Override
@@ -668,22 +658,6 @@ public class DefaultDLViewFileVersionDisplayContext
 		return _dlActionsDisplayContext;
 	}
 
-	private boolean _hasWorkflowDefinitionLink() {
-		try {
-			return DLUtil.hasWorkflowDefinitionLink(
-				_companyId, _scopeGroupId, _folderId, _fileEntryTypeId);
-		}
-		catch (Exception e) {
-			throw new SystemException(
-				"Unable to check if file entry has workflow definition link",
-				e);
-		}
-	}
-
-	private boolean _isDLFileEntryDraftsEnabled() {
-		return _dlPortletInstanceSettings.isEnableFileEntryDrafts();
-	}
-
 	private boolean _isFileEntryCheckedOutByOther() {
 		if (_fileEntryDisplayContextHelper.isCheckedOut() &&
 			!_fileEntryDisplayContextHelper.isLockedByMe()) {
@@ -697,17 +671,6 @@ public class DefaultDLViewFileVersionDisplayContext
 	private boolean _isFileEntryDeletable() throws PortalException {
 		if (_fileEntryDisplayContextHelper.hasDeletePermission() &&
 			!_isFileEntryCheckedOutByOther()) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	private boolean _isFileEntrySaveAsDraft() {
-		if ((_fileEntryDisplayContextHelper.isCheckedOut() ||
-			 _fileVersionDisplayContextHelper.isPending()) &&
-			!_isDLFileEntryDraftsEnabled()) {
 
 			return true;
 		}

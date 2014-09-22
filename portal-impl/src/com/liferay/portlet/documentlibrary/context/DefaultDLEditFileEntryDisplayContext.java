@@ -84,17 +84,7 @@ public class DefaultDLEditFileEntryDisplayContext
 
 	@Override
 	public String getPublishButtonLabel() {
-		String publishButtonLabel = "publish";
-
-		if (_hasWorkflowDefinitionLink()) {
-			publishButtonLabel = "submit-for-publication";
-		}
-
-		if (_isEnableFileEntryDrafts()) {
-			publishButtonLabel = "save";
-		}
-
-		return publishButtonLabel;
+		return _fileEntryDisplayContextHelper.getPublishButtonLabel();
 	}
 
 	@Override
@@ -143,7 +133,7 @@ public class DefaultDLEditFileEntryDisplayContext
 
 	@Override
 	public boolean isCheckinButtonVisible() throws PortalException {
-		return _fileEntryDisplayContextHelper. isCheckinButtonVisible();
+		return _fileEntryDisplayContextHelper.isCheckinButtonVisible();
 	}
 
 	@Override
@@ -250,17 +240,6 @@ public class DefaultDLEditFileEntryDisplayContext
 
 	private boolean _isEnableFileEntryDrafts() {
 		return _dlPortletInstanceSettings.isEnableFileEntryDrafts();
-	}
-
-	private boolean _isFileEntrySaveAsDraft() {
-		if ((_fileEntryDisplayContextHelper.isCheckedOut() ||
-			 _fileVersionDisplayContextHelper.isPending()) &&
-			!_dlPortletInstanceSettings.isEnableFileEntryDrafts()) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	private static final UUID _UUID = UUID.fromString(
