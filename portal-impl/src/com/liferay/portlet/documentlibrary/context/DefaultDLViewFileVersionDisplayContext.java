@@ -43,6 +43,8 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletURLUtil;
 import com.liferay.portlet.documentlibrary.DLPortletInstanceSettings;
+import com.liferay.portlet.documentlibrary.context.helper.FileEntryDisplayContextHelper;
+import com.liferay.portlet.documentlibrary.context.helper.FileVersionDisplayContextHelper;
 import com.liferay.portlet.documentlibrary.context.util.JSPRenderer;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
@@ -96,9 +98,10 @@ public class DefaultDLViewFileVersionDisplayContext
 			_fileEntry = fileVersion.getFileEntry();
 		}
 
-		_defaultDLFileEntryActionsDisplayContextHelper =
-			new DefaultDLFileVersionDisplayContextHelper(
-				_themeDisplay.getPermissionChecker(), _fileEntry, fileVersion);
+		_fileEntryDisplayContextHelper = new FileEntryDisplayContextHelper(
+			request, _fileEntry);
+		_fileVersionDisplayContextHelper = new FileVersionDisplayContextHelper(
+			request, fileVersion);
 
 		long fileEntryTypeId = ParamUtil.getLong(
 			request, "fileEntryTypeId", -1);
@@ -131,6 +134,9 @@ public class DefaultDLViewFileVersionDisplayContext
 
 		_portletDisplay = _themeDisplay.getPortletDisplay();
 		_scopeGroupId = _themeDisplay.getScopeGroupId();
+
+		_dlPortletInstanceSettings = DLPortletInstanceSettings.getInstance(
+			_themeDisplay.getLayout(), _portletDisplay.getId());
 	}
 
 	@Override
@@ -196,23 +202,6 @@ public class DefaultDLViewFileVersionDisplayContext
 	}
 
 	@Override
-	public String getSaveButtonLabel() {
-		String saveButtonLabel = "save";
-
-		FileVersion fileVersion =
-			_defaultDLFileEntryActionsDisplayContextHelper.getFileVersion();
-
-		if ((fileVersion == null) ||
-			_defaultDLFileEntryActionsDisplayContextHelper.isApproved() ||
-			_defaultDLFileEntryActionsDisplayContextHelper.isDraft()) {
-
-			saveButtonLabel = "save-as-draft";
-		}
-
-		return saveButtonLabel;
-	}
-
-	@Override
 	public UUID getUuid() {
 		return _UUID;
 	}
@@ -237,61 +226,21 @@ public class DefaultDLViewFileVersionDisplayContext
 	}
 
 	@Override
-	public boolean isCancelCheckoutDocumentButtonDisabled() {
-		return false;
-	}
-
-	@Override
 	public boolean isCancelCheckoutDocumentButtonVisible()
 		throws PortalException {
 
-		if (isCheckinButtonVisible() ||
-			(_defaultDLFileEntryActionsDisplayContextHelper.isCheckedOut() &&
-			 _defaultDLFileEntryActionsDisplayContextHelper.
-				 hasOverrideCheckoutPermission())) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public boolean isCheckinButtonDisabled() {
-		return false;
+		return _fileEntryDisplayContextHelper.
+			isCancelCheckoutDocumentButtonVisible();
 	}
 
 	@Override
 	public boolean isCheckinButtonVisible() throws PortalException {
-		if (_defaultDLFileEntryActionsDisplayContextHelper.
-				hasUpdatePermission() &&
-			_defaultDLFileEntryActionsDisplayContextHelper.isLockedByMe() &&
-			_defaultDLFileEntryActionsDisplayContextHelper.
-				isSupportsLocking()) {
-
-			return true;
-		}
-
-		return false;
+		return _fileEntryDisplayContextHelper.isCheckinButtonVisible();
 	}
 
 	@Override
 	public boolean isCheckoutDocumentButtonVisible() throws PortalException {
-		if (_defaultDLFileEntryActionsDisplayContextHelper.
-				hasUpdatePermission() &&
-			!_defaultDLFileEntryActionsDisplayContextHelper.isCheckedOut() &&
-			_defaultDLFileEntryActionsDisplayContextHelper.
-				isSupportsLocking()) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public boolean isCheckoutDocumentDisabled() {
-		return false;
+		return _fileEntryDisplayContextHelper.isCheckoutDocumentButtonVisible();
 	}
 
 	@Override
@@ -305,14 +254,12 @@ public class DefaultDLViewFileVersionDisplayContext
 
 	@Override
 	public boolean isDownloadButtonVisible() throws PortalException {
-		return _defaultDLFileEntryActionsDisplayContextHelper.
-			hasViewPermission();
+		return _fileEntryDisplayContextHelper.hasViewPermission();
 	}
 
 	@Override
 	public boolean isEditButtonVisible() throws PortalException {
-		if (_defaultDLFileEntryActionsDisplayContextHelper.
-				hasUpdatePermission() &&
+		if (_fileEntryDisplayContextHelper.hasUpdatePermission() &&
 			!_isFileEntryCheckedOutByOther()) {
 
 			return true;
@@ -323,8 +270,7 @@ public class DefaultDLViewFileVersionDisplayContext
 
 	@Override
 	public boolean isMoveButtonVisible() throws PortalException {
-		if (_defaultDLFileEntryActionsDisplayContextHelper.
-				hasUpdatePermission() &&
+		if (_fileEntryDisplayContextHelper.hasUpdatePermission() &&
 			!_isFileEntryCheckedOutByOther()) {
 
 			return true;
@@ -344,9 +290,8 @@ public class DefaultDLViewFileVersionDisplayContext
 
 	@Override
 	public boolean isOpenInMsOfficeButtonVisible() throws PortalException {
-		if (_defaultDLFileEntryActionsDisplayContextHelper.
-				hasViewPermission() &&
-			_defaultDLFileEntryActionsDisplayContextHelper.isOfficeDoc() &&
+		if (_fileEntryDisplayContextHelper.hasViewPermission() &&
+			_fileVersionDisplayContextHelper.isOfficeDoc() &&
 			_isWebDAVEnabled() && _isIEOnWin32()) {
 
 			return true;
@@ -357,55 +302,17 @@ public class DefaultDLViewFileVersionDisplayContext
 
 	@Override
 	public boolean isPermissionsButtonVisible() throws PortalException {
-		return
-			_defaultDLFileEntryActionsDisplayContextHelper.
-				hasPermissionsPermission();
-	}
-
-	@Override
-	public boolean isPublishButtonDisabled() {
-		if ((_defaultDLFileEntryActionsDisplayContextHelper.isCheckedOut() &&
-			 !_defaultDLFileEntryActionsDisplayContextHelper.isLockedByMe()) ||
-			(_defaultDLFileEntryActionsDisplayContextHelper.isPending() &&
-			 _isDLFileEntryDraftsEnabled())) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public boolean isPublishButtonVisible() {
-		return true;
-	}
-
-	@Override
-	public boolean isSaveButtonDisabled() {
-		if (_defaultDLFileEntryActionsDisplayContextHelper.isCheckedOut() &&
-			!_defaultDLFileEntryActionsDisplayContextHelper.isLockedByMe()) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public boolean isSaveButtonVisible() {
-		return _isDLFileEntryDraftsEnabled();
+		return _fileEntryDisplayContextHelper.hasPermissionsPermission();
 	}
 
 	@Override
 	public boolean isViewButtonVisible() throws PortalException {
-		return _defaultDLFileEntryActionsDisplayContextHelper.
-			hasViewPermission();
+		return _fileEntryDisplayContextHelper.hasViewPermission();
 	}
 
 	@Override
 	public boolean isViewOriginalFileButtonVisible() throws PortalException {
-		return _defaultDLFileEntryActionsDisplayContextHelper.
-			hasViewPermission();
+		return _fileEntryDisplayContextHelper.hasViewPermission();
 	}
 
 	@Override
@@ -425,7 +332,10 @@ public class DefaultDLViewFileVersionDisplayContext
 	private void _addCancelCheckoutMenuItem(List<MenuItem> menuItems)
 		throws PortalException {
 
-		if (!_isShowActions() || !isCancelCheckoutDocumentButtonVisible()) {
+		if (!_isShowActions() ||
+			!_fileEntryDisplayContextHelper.
+				isCancelCheckoutDocumentButtonVisible()) {
+
 			return;
 		}
 
@@ -452,8 +362,10 @@ public class DefaultDLViewFileVersionDisplayContext
 	private void _addCheckinMenuItem(List<MenuItem> menuItems)
 		throws PortalException {
 
-		if (!_isShowActions() || !isCheckinButtonVisible()) {
-			return;
+		if (!_isShowActions() ||
+			!_fileEntryDisplayContextHelper.isCheckinButtonVisible()) {
+
+				return;
 		}
 
 		URLMenuItem urlMenuItem = new URLMenuItem();
@@ -479,7 +391,9 @@ public class DefaultDLViewFileVersionDisplayContext
 	private void _addCheckoutMenuItem(List<MenuItem> menuItems)
 		throws PortalException {
 
-		if (!_isShowActions() || !isCheckoutDocumentButtonVisible()) {
+		if (!_isShowActions() ||
+			!_fileEntryDisplayContextHelper.isCheckoutDocumentButtonVisible()) {
+
 			return;
 		}
 
@@ -767,12 +681,12 @@ public class DefaultDLViewFileVersionDisplayContext
 	}
 
 	private boolean _isDLFileEntryDraftsEnabled() {
-		return PropsValues.DL_FILE_ENTRY_DRAFTS_ENABLED;
+		return _dlPortletInstanceSettings.isEnableFileEntryDrafts();
 	}
 
 	private boolean _isFileEntryCheckedOutByOther() {
-		if (_defaultDLFileEntryActionsDisplayContextHelper.isCheckedOut() &&
-			!_defaultDLFileEntryActionsDisplayContextHelper.isLockedByMe()) {
+		if (_fileEntryDisplayContextHelper.isCheckedOut() &&
+			!_fileEntryDisplayContextHelper.isLockedByMe()) {
 
 			return true;
 		}
@@ -781,8 +695,7 @@ public class DefaultDLViewFileVersionDisplayContext
 	}
 
 	private boolean _isFileEntryDeletable() throws PortalException {
-		if (_defaultDLFileEntryActionsDisplayContextHelper.
-				hasDeletePermission() &&
+		if (_fileEntryDisplayContextHelper.hasDeletePermission() &&
 			!_isFileEntryCheckedOutByOther()) {
 
 			return true;
@@ -792,8 +705,8 @@ public class DefaultDLViewFileVersionDisplayContext
 	}
 
 	private boolean _isFileEntrySaveAsDraft() {
-		if ((_defaultDLFileEntryActionsDisplayContextHelper.isCheckedOut() ||
-			 _defaultDLFileEntryActionsDisplayContextHelper.isPending()) &&
+		if ((_fileEntryDisplayContextHelper.isCheckedOut() ||
+			 _fileVersionDisplayContextHelper.isPending()) &&
 			!_isDLFileEntryDraftsEnabled()) {
 
 			return true;
@@ -803,7 +716,7 @@ public class DefaultDLViewFileVersionDisplayContext
 	}
 
 	private boolean _isFileEntryTrashable() throws PortalException {
-		if (_defaultDLFileEntryActionsDisplayContextHelper.isDLFileEntry() &&
+		if (_fileEntryDisplayContextHelper.isDLFileEntry() &&
 			_isTrashEnabled()) {
 
 			return true;
@@ -856,12 +769,13 @@ public class DefaultDLViewFileVersionDisplayContext
 
 	private long _companyId;
 	private String _currentURL;
-	private DefaultDLFileVersionDisplayContextHelper
-		_defaultDLFileEntryActionsDisplayContextHelper;
 	private DLActionsDisplayContext _dlActionsDisplayContext;
+	private DLPortletInstanceSettings _dlPortletInstanceSettings;
 	private FileEntry _fileEntry;
+	private FileEntryDisplayContextHelper _fileEntryDisplayContextHelper;
 	private long _fileEntryTypeId;
 	private FileVersion _fileVersion;
+	private FileVersionDisplayContextHelper _fileVersionDisplayContextHelper;
 	private long _folderId;
 	private Boolean _ieOnWin32;
 	private LiferayPortletRequest _liferayPortletRequest;
