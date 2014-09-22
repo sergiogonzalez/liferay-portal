@@ -30,7 +30,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Iván Zaera
  */
-public interface DLFileVersionDisplayContext extends DLDisplayContext {
+public interface DLViewFileVersionDisplayContext extends DLDisplayContext {
 
 	public List<DDMStructure> getDDMStructures() throws PortalException;
 
