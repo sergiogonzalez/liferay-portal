@@ -14,14 +14,19 @@
 
 package com.liferay.portlet.documentlibrary.context.helper;
 
+import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.documentlibrary.DLPortletInstanceSettings;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
+import com.liferay.portlet.documentlibrary.util.DLUtil;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -39,14 +44,45 @@ public class FileEntryDisplayContextHelper {
 			_setValuesForNullFileEntry();
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+		_themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		_permissionChecker = themeDisplay.getPermissionChecker();
+		_folderId = BeanParamUtil.getLong(_fileEntry, request, "folderId");
+		_permissionChecker = _themeDisplay.getPermissionChecker();
+
+		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+
+		try {
+			_dlPortletInstanceSettings = DLPortletInstanceSettings.getInstance(
+				_themeDisplay.getLayout(), portletDisplay.getId());
+		}
+		catch (PortalException pe) {
+			throw new SystemException(pe);
+		}
+
+		if (_fileEntry != null) {
+			DLFileEntry dlFileEntry = (DLFileEntry) _fileEntry.getModel();
+
+			_fileEntryTypeId = dlFileEntry.getFileEntryTypeId();
+		}
 	}
 
 	public FileEntry getFileEntry() {
 		return _fileEntry;
+	}
+
+	public String getPublishButtonLabel() {
+		String publishButtonLabel = "publish";
+
+		if (_hasWorkflowDefinitionLink()) {
+			publishButtonLabel = "submit-for-publication";
+		}
+
+		if (_dlPortletInstanceSettings.isEnableFileEntryDrafts()) {
+			publishButtonLabel = "save";
+		}
+
+		return publishButtonLabel;
 	}
 
 	public boolean hasDeletePermission() throws PortalException {
@@ -167,6 +203,19 @@ public class FileEntryDisplayContextHelper {
 		return _supportsLocking;
 	}
 
+	private boolean _hasWorkflowDefinitionLink() {
+		try {
+			return DLUtil.hasWorkflowDefinitionLink(
+				_themeDisplay.getCompanyId(), _themeDisplay.getScopeGroupId(),
+				_folderId, _fileEntryTypeId);
+		}
+		catch (Exception e) {
+			throw new SystemException(
+				"Unable to check if file entry has workflow definition link",
+				e);
+		}
+	}
+
 	private void _setValuesForNullFileEntry() {
 		_checkedOut = false;
 		_dlFileEntry = true;
@@ -181,7 +230,10 @@ public class FileEntryDisplayContextHelper {
 
 	private Boolean _checkedOut;
 	private Boolean _dlFileEntry;
+	private DLPortletInstanceSettings _dlPortletInstanceSettings;
 	private FileEntry _fileEntry;
+	private long _fileEntryTypeId;
+	private long _folderId;
 	private Boolean _hasDeletePermission;
 	private Boolean _hasLock;
 	private Boolean _hasOverrideCheckoutPermission;
@@ -190,5 +242,6 @@ public class FileEntryDisplayContextHelper {
 	private Boolean _hasViewPermission;
 	private PermissionChecker _permissionChecker;
 	private Boolean _supportsLocking;
+	private ThemeDisplay _themeDisplay;
 
 }
