@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 
 import java.util.UUID;
 
@@ -55,6 +56,11 @@ public class DefaultDLEditFileEntryDisplayContext
 	@Override
 	public UUID getUuid() {
 		return _UUID;
+	}
+
+	@Override
+	public boolean isDDMStructureVisible(DDMStructure ddmStructure) {
+		return true;
 	}
 
 	private static final UUID _UUID = UUID.fromString(

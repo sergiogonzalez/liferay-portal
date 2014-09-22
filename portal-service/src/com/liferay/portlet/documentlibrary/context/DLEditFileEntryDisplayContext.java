@@ -14,11 +14,17 @@
 
 package com.liferay.portlet.documentlibrary.context;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+
 /**
  * @author Iván Zaera
  */
 public interface DLEditFileEntryDisplayContext extends DLDisplayContext {
 
-	public long getMaximumUploadSize();
+	public long getMaximumUploadSize() throws PortalException;
+
+	public boolean isDDMStructureVisible(DDMStructure ddmStructure)
+		throws PortalException;
 
 }
