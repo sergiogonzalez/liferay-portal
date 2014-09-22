@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 
 import java.util.UUID;
 
@@ -66,8 +67,15 @@ public class BaseDLEditFileEntryDisplayContext
 	}
 
 	@Override
-	public long getMaximumUploadSize() {
+	public long getMaximumUploadSize() throws PortalException {
 		return parentDLDisplayContext.getMaximumUploadSize();
+	}
+
+	@Override
+	public boolean isDDMStructureVisible(DDMStructure ddmStructure)
+		throws PortalException {
+
+		return parentDLDisplayContext.isDDMStructureVisible(ddmStructure);
 	}
 
 	protected DLFileEntryType dlFileEntryType;
