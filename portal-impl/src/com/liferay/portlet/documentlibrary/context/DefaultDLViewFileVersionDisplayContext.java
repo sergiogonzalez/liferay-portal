@@ -76,10 +76,10 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Iván Zaera
  */
-public class DefaultDLFileVersionDisplayContext
-	implements DLFileVersionDisplayContext {
+public class DefaultDLViewFileVersionDisplayContext
+	implements DLViewFileVersionDisplayContext {
 
-	public DefaultDLFileVersionDisplayContext(
+	public DefaultDLViewFileVersionDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
 			FileVersion fileVersion)
 		throws PortalException {
