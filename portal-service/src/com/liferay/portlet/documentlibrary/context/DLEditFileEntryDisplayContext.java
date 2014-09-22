@@ -24,7 +24,33 @@ public interface DLEditFileEntryDisplayContext extends DLDisplayContext {
 
 	public long getMaximumUploadSize() throws PortalException;
 
+	public String getPublishButtonLabel() throws PortalException;
+
+	public String getSaveButtonLabel() throws PortalException;
+
+	public boolean isCancelCheckoutDocumentButtonDisabled()
+		throws PortalException;
+
+	public boolean isCancelCheckoutDocumentButtonVisible()
+		throws PortalException;
+
+	public boolean isCheckinButtonDisabled() throws PortalException;
+
+	public boolean isCheckinButtonVisible() throws PortalException;
+
+	public boolean isCheckoutDocumentButtonDisabled() throws PortalException;
+
+	public boolean isCheckoutDocumentButtonVisible() throws PortalException;
+
 	public boolean isDDMStructureVisible(DDMStructure ddmStructure)
 		throws PortalException;
+
+	public boolean isPublishButtonDisabled() throws PortalException;
+
+	public boolean isPublishButtonVisible() throws PortalException;
+
+	public boolean isSaveButtonDisabled() throws PortalException;
+
+	public boolean isSaveButtonVisible() throws PortalException;
 
 }
