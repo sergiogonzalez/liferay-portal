@@ -17,25 +17,27 @@ package com.liferay.portal.kernel.servlet.taglib.ui;
 /**
  * @author Iván Zaera
  */
-public abstract class MenuItem extends UIItem {
+public class URLToolbarItem extends ToolbarItem {
 
-	public String getIconCssClass() {
-		return _iconCssClass;
+	public String getTarget() {
+		return _target;
 	}
 
-	public String getMessage() {
-		return _message;
+	public String getURL() {
+		return _url;
 	}
 
-	public void setIconCssClass(String iconCssClass) {
-		_iconCssClass = iconCssClass;
+	public void setTarget(String target) {
+		_target = target;
 	}
 
-	public void setMessage(String message) {
-		_message = message;
+	public void setURL(String url) {
+		_url = url;
 	}
 
-	private String _iconCssClass;
-	private String _message;
+	private static final String _TARGET_DEFAULT = "_self";
+
+	private String _target = _TARGET_DEFAULT;
+	private String _url;
 
 }
