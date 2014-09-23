@@ -27,12 +27,16 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.DeleteMenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.JavascriptMenuItem;
+import com.liferay.portal.kernel.servlet.taglib.ui.JavascriptToolbarItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
+import com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
+import com.liferay.portal.kernel.servlet.taglib.ui.URLToolbarItem;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.theme.PortletDisplay;
@@ -127,7 +131,7 @@ public class DefaultDLViewFileVersionDisplayContext
 
 	@Override
 	public List<MenuItem> getMenuItems() throws PortalException {
-		List<MenuItem> menuItems = new ArrayList<MenuItem>();
+		List<MenuItem> menuItems = new ArrayList<>();
 
 		if (_isShowActions()) {
 			_addDownloadMenuItem(menuItems);
@@ -150,6 +154,33 @@ public class DefaultDLViewFileVersionDisplayContext
 		}
 
 		return menuItems;
+	}
+
+	@Override
+	public List<ToolbarItem> getToolbarItems() throws PortalException {
+		List<ToolbarItem> toolbarItems = new ArrayList<>();
+
+		_addDownloadToolbarItem(toolbarItems);
+
+		_addOpenInMsOfficeToolbarItem(toolbarItems);
+
+		_addEditToolbarItem(toolbarItems);
+
+		_addMoveToolbarItem(toolbarItems);
+
+		_addCheckoutToolbarItem(toolbarItems);
+
+		_addCancelCheckoutToolbarItem(toolbarItems);
+
+		_addCheckinToolbarItem(toolbarItems);
+
+		_addPermissionsToolbarItem(toolbarItems);
+
+		_addMoveToTheRecycleBinToolbarItem(toolbarItems);
+
+		_addDeleteToolbarItem(toolbarItems);
+
+		return toolbarItems;
 	}
 
 	@Override
@@ -274,6 +305,40 @@ public class DefaultDLViewFileVersionDisplayContext
 		jspRenderer.render(request, response);
 	}
 
+	protected String getSubmitFormJavascript(String cmd, String redirect) {
+		StringBundler sb = new StringBundler();
+
+		LiferayPortletResponse liferayPortletResponse =
+			_getLiferayPortletResponse();
+
+		String namespace = liferayPortletResponse.getNamespace();
+
+		sb.append("document.");
+		sb.append(namespace);
+		sb.append("fm.");
+		sb.append(namespace);
+		sb.append(Constants.CMD);
+		sb.append(".value = '");
+		sb.append(cmd);
+		sb.append("';");
+
+		if (redirect != null) {
+			sb.append("document.");
+			sb.append(namespace);
+			sb.append("fm.");
+			sb.append(namespace);
+			sb.append("redirect.value = '");
+			sb.append(redirect);
+			sb.append("';");
+		}
+
+		sb.append("submitForm(document.");
+		sb.append(namespace);
+		sb.append("fm);");
+
+		return sb.toString();
+	}
+
 	private void _addCancelCheckoutMenuItem(List<MenuItem> menuItems)
 		throws PortalException {
 
@@ -296,6 +361,27 @@ public class DefaultDLViewFileVersionDisplayContext
 		menuItems.add(urlMenuItem);
 	}
 
+	private void _addCancelCheckoutToolbarItem(List<ToolbarItem> toolbarItems)
+		throws PortalException {
+
+		if (!isCancelCheckoutDocumentButtonVisible()) {
+			return;
+		}
+
+		JavascriptToolbarItem javascriptToolbarItem =
+			new JavascriptToolbarItem();
+
+		javascriptToolbarItem.setKey(DLToolbarItemKeys.CANCEL_CHECKOUT);
+		javascriptToolbarItem.setIcon("icon-undo");
+		javascriptToolbarItem.setLabel(
+			UnicodeLanguageUtil.get(_request, "cancel-checkout[document]"));
+
+		javascriptToolbarItem.setOnClick(
+			getSubmitFormJavascript(Constants.CANCEL_CHECKOUT, null));
+
+		toolbarItems.add(javascriptToolbarItem);
+	}
+
 	private void _addCheckinMenuItem(List<MenuItem> menuItems)
 		throws PortalException {
 
@@ -315,6 +401,27 @@ public class DefaultDLViewFileVersionDisplayContext
 		menuItems.add(urlMenuItem);
 	}
 
+	private void _addCheckinToolbarItem(List<ToolbarItem> toolbarItems)
+		throws PortalException {
+
+		if (!isCheckinButtonVisible()) {
+			return;
+		}
+
+		JavascriptToolbarItem javascriptToolbarItem =
+			new JavascriptToolbarItem();
+
+		javascriptToolbarItem.setKey(DLToolbarItemKeys.CHECKIN);
+		javascriptToolbarItem.setIcon("icon-lock");
+		javascriptToolbarItem.setLabel(
+			UnicodeLanguageUtil.get(_request, "checkin"));
+
+		javascriptToolbarItem.setOnClick(
+			getSubmitFormJavascript(Constants.CHECKIN, null));
+
+		toolbarItems.add(javascriptToolbarItem);
+	}
+
 	private void _addCheckoutMenuItem(List<MenuItem> menuItems)
 		throws PortalException {
 
@@ -332,6 +439,27 @@ public class DefaultDLViewFileVersionDisplayContext
 				"/document_library/edit_file_entry", Constants.CHECKOUT));
 
 		menuItems.add(urlMenuItem);
+	}
+
+	private void _addCheckoutToolbarItem(List<ToolbarItem> toolbarItems)
+		throws PortalException {
+
+		if (!isCheckoutDocumentButtonVisible()) {
+			return;
+		}
+
+		JavascriptToolbarItem javascriptToolbarItem =
+			new JavascriptToolbarItem();
+
+		javascriptToolbarItem.setKey(DLToolbarItemKeys.CHECKOUT);
+		javascriptToolbarItem.setIcon("icon-unlock");
+		javascriptToolbarItem.setLabel(
+			UnicodeLanguageUtil.get(_request, "checkout[document]"));
+
+		javascriptToolbarItem.setOnClick(
+			getSubmitFormJavascript(Constants.CHECKOUT, null));
+
+		toolbarItems.add(javascriptToolbarItem);
 	}
 
 	private void _addDeleteMenuItem(List<MenuItem> menuItems)
@@ -361,6 +489,46 @@ public class DefaultDLViewFileVersionDisplayContext
 		}
 	}
 
+	private void _addDeleteToolbarItem(List<ToolbarItem> toolbarItems)
+		throws PortalException {
+
+		if (!isDeleteButtonVisible()) {
+			return;
+		}
+
+		JavascriptToolbarItem javascriptToolbarItem =
+			new JavascriptToolbarItem();
+
+		javascriptToolbarItem.setKey(DLToolbarItemKeys.DELETE);
+		javascriptToolbarItem.setIcon("icon-remove");
+		javascriptToolbarItem.setLabel(
+			UnicodeLanguageUtil.get(_request, "delete"));
+
+		LiferayPortletResponse liferayPortletResponse =
+			_getLiferayPortletResponse();
+
+		PortletURL portletURL = liferayPortletResponse.createRenderURL();
+
+		portletURL.setParameter("struts_action", "/document_library/view");
+		portletURL.setParameter(
+			"folderId", String.valueOf(_fileEntry.getFolderId()));
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("if (confirm('");
+		sb.append(
+			UnicodeLanguageUtil.get(
+				_request, "are-you-sure-you-want-to-delete-this"));
+		sb.append("')) {");
+		sb.append(
+			getSubmitFormJavascript(Constants.DELETE, portletURL.toString()));
+		sb.append("}");
+
+		javascriptToolbarItem.setOnClick(sb.toString());
+
+		toolbarItems.add(javascriptToolbarItem);
+	}
+
 	private void _addDownloadMenuItem(List<MenuItem> menuItems)
 		throws PortalException {
 
@@ -383,6 +551,20 @@ public class DefaultDLViewFileVersionDisplayContext
 		urlMenuItem.setTarget("_blank");
 	}
 
+	private void _addDownloadToolbarItem(List<ToolbarItem> toolbarItems)
+		throws PortalException {
+
+		if (!isDownloadButtonVisible()) {
+			return;
+		}
+
+		_addURLToolbarItem(
+			toolbarItems, DLToolbarItemKeys.DOWNLOAD, "icon-download",
+			UnicodeLanguageUtil.get(_request, "download"),
+			DLUtil.getDownloadURL(
+				_fileEntry, _fileVersion, _themeDisplay, StringPool.BLANK));
+	}
+
 	private void _addEditMenuItem(List<MenuItem> menuItems)
 		throws PortalException {
 
@@ -398,6 +580,21 @@ public class DefaultDLViewFileVersionDisplayContext
 		_addURLMenuItem(
 			menuItems, "icon-edit", DLMenuItemKeys.EDIT, "edit",
 			portletURL.toString());
+	}
+
+	private void _addEditToolbarItem(List<ToolbarItem> toolbarItems)
+		throws PortalException {
+
+		if (!isEditButtonVisible()) {
+			return;
+		}
+
+		PortletURL portletURL = _getRenderURL(
+			"/document_library/edit_file_entry");
+
+		_addURLToolbarItem(
+			toolbarItems, DLToolbarItemKeys.EDIT, "icon-edit",
+			UnicodeLanguageUtil.get(_request, "edit"), portletURL.toString());
 	}
 
 	private void _addMoveMenuItem(List<MenuItem> menuItems)
@@ -430,6 +627,45 @@ public class DefaultDLViewFileVersionDisplayContext
 			portletURL.toString());
 	}
 
+	private void _addMoveToolbarItem(List<ToolbarItem> toolbarItems)
+		throws PortalException {
+
+		if (!isMoveButtonVisible()) {
+			return;
+		}
+
+		PortletURL portletURL = _getRenderURL("/document_library/move_entry");
+
+		_addURLToolbarItem(
+			toolbarItems, DLToolbarItemKeys.MOVE, "icon-move",
+			UnicodeLanguageUtil.get(_request, "move"), portletURL.toString());
+	}
+
+	private void _addMoveToTheRecycleBinToolbarItem(
+			List<ToolbarItem> toolbarItems)
+		throws PortalException {
+
+		if (!isMoveToTheRecycleBinButtonVisible()) {
+			return;
+		}
+
+		LiferayPortletResponse liferayPortletResponse =
+			_getLiferayPortletResponse();
+
+		PortletURL portletURL = liferayPortletResponse.createRenderURL();
+
+		portletURL.setParameter("struts_action", "/document_library/view");
+		portletURL.setParameter(
+			"folderId", String.valueOf(_fileEntry.getFolderId()));
+
+		_addJavascriptToolbarItem(
+			toolbarItems, DLToolbarItemKeys.MOVE_TO_THE_RECYCLE_BIN,
+			"icon-trash",
+			UnicodeLanguageUtil.get(_request, "move-to-the-recycle-bin"),
+			getSubmitFormJavascript(
+				Constants.MOVE_TO_TRASH, portletURL.toString()));
+	}
+
 	private void _addOpenInMsOfficeMenuItem(List<MenuItem> menuItems)
 		throws PortalException {
 
@@ -442,7 +678,7 @@ public class DefaultDLViewFileVersionDisplayContext
 		javaScriptMenuItem.setIcon("icon-file-alt");
 		javaScriptMenuItem.setKey(DLMenuItemKeys.OPEN_IN_MS_OFFICE);
 
-		Map<String, String> context = new HashMap<String, String>();
+		Map<String, String> context = new HashMap<>();
 
 		LiferayPortletResponse liferayPortletResponse =
 			_getLiferayPortletResponse();
@@ -478,6 +714,36 @@ public class DefaultDLViewFileVersionDisplayContext
 		menuItems.add(javaScriptMenuItem);
 	}
 
+	private void _addOpenInMsOfficeToolbarItem(List<ToolbarItem> toolbarItems)
+		throws PortalException {
+
+		if (!isOpenInMsOfficeButtonVisible()) {
+			return;
+		}
+
+		String webDavURL = DLUtil.getWebDavURL(
+			_themeDisplay, _fileEntry.getFolder(), _fileEntry,
+			PropsValues.
+				DL_FILE_ENTRY_OPEN_IN_MS_OFFICE_MANUAL_CHECK_IN_REQUIRED);
+
+		LiferayPortletResponse liferayPortletResponse =
+			_getLiferayPortletResponse();
+
+		String namespace = liferayPortletResponse.getNamespace();
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(namespace);
+		sb.append("openDocument('");
+		sb.append(webDavURL);
+		sb.append("');");
+
+		_addJavascriptToolbarItem(
+			toolbarItems, DLToolbarItemKeys.OPEN_IN_MS_OFFICE, "icon-file-alt",
+			UnicodeLanguageUtil.get(_request, "open-in-ms-office"),
+			sb.toString());
+	}
+
 	private void _addPermissionsMenuItem(List<MenuItem> menuItems)
 		throws PortalException {
 
@@ -506,6 +772,59 @@ public class DefaultDLViewFileVersionDisplayContext
 		urlMenuItem.setUseDialog(true);
 	}
 
+	private void _addPermissionsToolbarItem(List<ToolbarItem> toolbarItems)
+		throws PortalException {
+
+		if (!isPermissionsButtonVisible()) {
+			return;
+		}
+
+		String permissionsURL = null;
+
+		try {
+			permissionsURL = PermissionsURLTag.doTag(
+				null, DLFileEntryConstants.getClassName(),
+				HtmlUtil.unescape(_fileEntry.getTitle()), null,
+				String.valueOf(_fileEntry.getFileEntryId()),
+				LiferayWindowState.POP_UP.toString(), null, _request
+			);
+		}
+		catch (Exception e) {
+			throw new SystemException("Unable to create permissions URL", e);
+		}
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append("Liferay.Util.openWindow({");
+		sb.append("title: '");
+		sb.append(UnicodeLanguageUtil.get(_request, "permissions"));
+		sb.append("', uri: '");
+		sb.append(permissionsURL);
+		sb.append("'});");
+
+		_addJavascriptToolbarItem(
+			toolbarItems, DLToolbarItemKeys.PERMISSIONS, "icon-lock",
+			UnicodeLanguageUtil.get(_request, "permissions"),
+			sb.toString());
+	}
+
+	private JavascriptToolbarItem _addJavascriptToolbarItem(
+		List<ToolbarItem> toolbarItems, String key, String icon, String label,
+		String onClick) {
+
+		JavascriptToolbarItem javascriptToolbarItem =
+			new JavascriptToolbarItem();
+
+		javascriptToolbarItem.setKey(key);
+		javascriptToolbarItem.setIcon(icon);
+		javascriptToolbarItem.setLabel(label);
+		javascriptToolbarItem.setOnClick(onClick);
+
+		toolbarItems.add(javascriptToolbarItem);
+
+		return javascriptToolbarItem;
+	}
+
 	private URLMenuItem _addURLMenuItem(
 		List<MenuItem> menuItems, String iconCssClass, String key,
 		String message, String url) {
@@ -520,6 +839,22 @@ public class DefaultDLViewFileVersionDisplayContext
 		menuItems.add(urlMenuItem);
 
 		return urlMenuItem;
+	}
+
+	private URLToolbarItem _addURLToolbarItem(
+		List<ToolbarItem> toolbarItems, String key, String icon, String label,
+		String url) {
+
+		URLToolbarItem urlToolbarItem = new URLToolbarItem();
+
+		urlToolbarItem.setKey(key);
+		urlToolbarItem.setIcon(icon);
+		urlToolbarItem.setLabel(label);
+		urlToolbarItem.setURL(url);
+
+		toolbarItems.add(urlToolbarItem);
+
+		return urlToolbarItem;
 	}
 
 	private String _getActionURL(String strutsAction, String cmd) {
