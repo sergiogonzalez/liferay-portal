@@ -16,6 +16,7 @@ package com.liferay.portlet.documentlibrary.context;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
+import com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 
@@ -30,7 +31,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Iván Zaera
  */
-public interface DLFileVersionDisplayContext extends DLDisplayContext {
+public interface DLViewFileVersionDisplayContext extends DLDisplayContext {
 
 	public List<DDMStructure> getDDMStructures() throws PortalException;
 
@@ -40,49 +41,9 @@ public interface DLFileVersionDisplayContext extends DLDisplayContext {
 
 	public String getPublishButtonLabel() throws PortalException;
 
-	public String getSaveButtonLabel() throws PortalException;
+	public List<ToolbarItem> getToolbarItems() throws PortalException;
 
 	public boolean isAssetMetadataVisible() throws PortalException;
-
-	public boolean isCancelCheckoutDocumentButtonDisabled()
-		throws PortalException;
-
-	public boolean isCancelCheckoutDocumentButtonVisible()
-		throws PortalException;
-
-	public boolean isCheckinButtonDisabled() throws PortalException;
-
-	public boolean isCheckinButtonVisible() throws PortalException;
-
-	public boolean isCheckoutDocumentButtonVisible() throws PortalException;
-
-	public boolean isCheckoutDocumentDisabled() throws PortalException;
-
-	public boolean isDeleteButtonVisible() throws PortalException;
-
-	public boolean isDownloadButtonVisible() throws PortalException;
-
-	public boolean isEditButtonVisible() throws PortalException;
-
-	public boolean isMoveButtonVisible() throws PortalException;
-
-	public boolean isMoveToTheRecycleBinButtonVisible() throws PortalException;
-
-	public boolean isOpenInMsOfficeButtonVisible() throws PortalException;
-
-	public boolean isPermissionsButtonVisible() throws PortalException;
-
-	public boolean isPublishButtonDisabled() throws PortalException;
-
-	public boolean isPublishButtonVisible() throws PortalException;
-
-	public boolean isSaveButtonDisabled() throws PortalException;
-
-	public boolean isSaveButtonVisible() throws PortalException;
-
-	public boolean isViewButtonVisible() throws PortalException;
-
-	public boolean isViewOriginalFileButtonVisible() throws PortalException;
 
 	public void renderPreview(
 			HttpServletRequest request, HttpServletResponse response)

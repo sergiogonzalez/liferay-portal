@@ -12,23 +12,15 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.context;
+package com.liferay.taglib.aui;
 
-import com.liferay.portal.kernel.repository.model.FileVersion;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import com.liferay.taglib.aui.base.BaseVideoTag;
 
 /**
- * @author Iván Zaera
+ * @author Eduardo Lundgren
+ * @author Bruno Basto
+ * @author Nathan Cavanaugh
+ * @author Julio Camarero
  */
-public interface DLFileVersionDisplayContextFactory {
-
-	public DLFileVersionDisplayContext
-		getDLFileVersionActionsDisplayContext(
-			DLFileVersionDisplayContext
-				parentDLFileVersionDisplayContext,
-			HttpServletRequest request, HttpServletResponse response,
-			FileVersion fileVersion);
-
+public class VideoTag extends BaseVideoTag {
 }

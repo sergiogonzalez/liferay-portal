@@ -12,37 +12,58 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.context;
+package com.liferay.portlet.documentlibrary.context.helper;
 
+import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.theme.PortletDisplay;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.documentlibrary.DLPortletInstanceSettings;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Iván Zaera
  */
-public class DefaultDLFileVersionDisplayContextHelper {
+public class FileEntryDisplayContextHelper {
 
-	public DefaultDLFileVersionDisplayContextHelper(
-		PermissionChecker permissionChecker, FileEntry fileEntry,
-		FileVersion fileVersion) {
+	public FileEntryDisplayContextHelper(
+		HttpServletRequest request, FileEntry fileEntry) {
 
-		if ((fileEntry != null) && (fileVersion == null)) {
-			throw new IllegalArgumentException(
-				"File version cannot be null if file entry is not null");
-		}
-
-		_permissionChecker = permissionChecker;
 		_fileEntry = fileEntry;
-		_fileVersion = fileVersion;
 
 		if (_fileEntry == null) {
 			_setValuesForNullFileEntry();
+		}
+
+		_themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		_folderId = BeanParamUtil.getLong(_fileEntry, request, "folderId");
+		_permissionChecker = _themeDisplay.getPermissionChecker();
+
+		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+
+		try {
+			_dlPortletInstanceSettings = DLPortletInstanceSettings.getInstance(
+				_themeDisplay.getLayout(), portletDisplay.getId());
+		}
+		catch (PortalException pe) {
+			throw new SystemException(pe);
+		}
+
+		if (_fileEntry != null) {
+			DLFileEntry dlFileEntry = (DLFileEntry) _fileEntry.getModel();
+
+			_fileEntryTypeId = dlFileEntry.getFileEntryTypeId();
 		}
 	}
 
@@ -50,8 +71,18 @@ public class DefaultDLFileVersionDisplayContextHelper {
 		return _fileEntry;
 	}
 
-	public FileVersion getFileVersion() {
-		return _fileVersion;
+	public String getPublishButtonLabel() {
+		String publishButtonLabel = "publish";
+
+		if (_hasWorkflowDefinitionLink()) {
+			publishButtonLabel = "submit-for-publication";
+		}
+
+		if (_dlPortletInstanceSettings.isEnableFileEntryDrafts()) {
+			publishButtonLabel = "save";
+		}
+
+		return publishButtonLabel;
 	}
 
 	public boolean hasDeletePermission() throws PortalException {
@@ -107,12 +138,16 @@ public class DefaultDLFileVersionDisplayContextHelper {
 		return _hasViewPermission;
 	}
 
-	public boolean isApproved() {
-		if (_approved == null) {
-			_approved = _fileVersion.isApproved();
+	public boolean isCancelCheckoutDocumentButtonVisible()
+		throws PortalException {
+
+		if (isCheckinButtonVisible() ||
+			(isCheckedOut() && hasOverrideCheckoutPermission())) {
+
+			return true;
 		}
 
-		return _approved;
+		return false;
 	}
 
 	public boolean isCheckedOut() {
@@ -121,6 +156,22 @@ public class DefaultDLFileVersionDisplayContextHelper {
 		}
 
 		return _checkedOut;
+	}
+
+	public boolean isCheckinButtonVisible() throws PortalException {
+		if (hasUpdatePermission() && isLockedByMe() && isSupportsLocking()) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isCheckoutDocumentButtonVisible() throws PortalException {
+		if (hasUpdatePermission() && !isCheckedOut() && isSupportsLocking()) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean isDLFileEntry() {
@@ -136,36 +187,12 @@ public class DefaultDLFileVersionDisplayContextHelper {
 		return _dlFileEntry;
 	}
 
-	public boolean isDraft() {
-		if (_draft == null) {
-			_draft = _fileVersion.isDraft();
-		}
-
-		return _draft;
-	}
-
 	public boolean isLockedByMe() {
 		if (hasLock()) {
 			return true;
 		}
 
 		return false;
-	}
-
-	public boolean isOfficeDoc() {
-		if (_officeDoc == null) {
-			_officeDoc = DLUtil.isOfficeExtension(_fileVersion.getExtension());
-		}
-
-		return _officeDoc;
-	}
-
-	public boolean isPending() {
-		if (_pending == null) {
-			_pending = _fileVersion.isPending();
-		}
-
-		return _pending;
 	}
 
 	public boolean isSupportsLocking() {
@@ -176,37 +203,45 @@ public class DefaultDLFileVersionDisplayContextHelper {
 		return _supportsLocking;
 	}
 
+	private boolean _hasWorkflowDefinitionLink() {
+		try {
+			return DLUtil.hasWorkflowDefinitionLink(
+				_themeDisplay.getCompanyId(), _themeDisplay.getScopeGroupId(),
+				_folderId, _fileEntryTypeId);
+		}
+		catch (Exception e) {
+			throw new SystemException(
+				"Unable to check if file entry has workflow definition link",
+				e);
+		}
+	}
+
 	private void _setValuesForNullFileEntry() {
-		_approved = false;
 		_checkedOut = false;
 		_dlFileEntry = true;
-		_draft = false;
 		_hasDeletePermission = false;
 		_hasLock = false;
 		_hasOverrideCheckoutPermission = false;
 		_hasPermissionsPermission = true;
 		_hasUpdatePermission = true;
 		_hasViewPermission = false;
-		_officeDoc = false;
-		_pending = false;
 		_supportsLocking = false;
 	}
 
-	private Boolean _approved;
 	private Boolean _checkedOut;
 	private Boolean _dlFileEntry;
-	private Boolean _draft;
+	private DLPortletInstanceSettings _dlPortletInstanceSettings;
 	private FileEntry _fileEntry;
-	private FileVersion _fileVersion;
+	private long _fileEntryTypeId;
+	private long _folderId;
 	private Boolean _hasDeletePermission;
 	private Boolean _hasLock;
 	private Boolean _hasOverrideCheckoutPermission;
 	private Boolean _hasPermissionsPermission;
 	private Boolean _hasUpdatePermission;
 	private Boolean _hasViewPermission;
-	private Boolean _officeDoc;
-	private Boolean _pending;
 	private PermissionChecker _permissionChecker;
 	private Boolean _supportsLocking;
+	private ThemeDisplay _themeDisplay;
 
 }

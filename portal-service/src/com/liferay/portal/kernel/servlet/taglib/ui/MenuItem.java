@@ -17,14 +17,10 @@ package com.liferay.portal.kernel.servlet.taglib.ui;
 /**
  * @author Iván Zaera
  */
-public abstract class MenuItem {
+public abstract class MenuItem extends UIItem {
 
 	public String getIconCssClass() {
 		return _iconCssClass;
-	}
-
-	public String getKey() {
-		return _key;
 	}
 
 	public String getMessage() {
@@ -35,16 +31,11 @@ public abstract class MenuItem {
 		_iconCssClass = iconCssClass;
 	}
 
-	public void setKey(String key) {
-		_key = key;
-	}
-
 	public void setMessage(String message) {
 		_message = message;
 	}
 
 	private String _iconCssClass;
-	private String _key;
 	private String _message;
 
 }

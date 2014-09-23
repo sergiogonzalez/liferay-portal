@@ -27,12 +27,16 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.DeleteMenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.JavascriptMenuItem;
+import com.liferay.portal.kernel.servlet.taglib.ui.JavascriptToolbarItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
+import com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
+import com.liferay.portal.kernel.servlet.taglib.ui.URLToolbarItem;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.theme.PortletDisplay;
@@ -43,6 +47,8 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletURLUtil;
 import com.liferay.portlet.documentlibrary.DLPortletInstanceSettings;
+import com.liferay.portlet.documentlibrary.context.helper.FileEntryDisplayContextHelper;
+import com.liferay.portlet.documentlibrary.context.helper.FileVersionDisplayContextHelper;
 import com.liferay.portlet.documentlibrary.context.util.JSPRenderer;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
@@ -76,10 +82,10 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Iván Zaera
  */
-public class DefaultDLFileVersionDisplayContext
-	implements DLFileVersionDisplayContext {
+public class DefaultDLViewFileVersionDisplayContext
+	implements DLViewFileVersionDisplayContext {
 
-	public DefaultDLFileVersionDisplayContext(
+	public DefaultDLViewFileVersionDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
 			FileVersion fileVersion)
 		throws PortalException {
@@ -96,9 +102,10 @@ public class DefaultDLFileVersionDisplayContext
 			_fileEntry = fileVersion.getFileEntry();
 		}
 
-		_defaultDLFileEntryActionsDisplayContextHelper =
-			new DefaultDLFileVersionDisplayContextHelper(
-				_themeDisplay.getPermissionChecker(), _fileEntry, fileVersion);
+		_fileEntryDisplayContextHelper = new FileEntryDisplayContextHelper(
+			request, _fileEntry);
+		_fileVersionDisplayContextHelper = new FileVersionDisplayContextHelper(
+			request, fileVersion);
 
 		long fileEntryTypeId = ParamUtil.getLong(
 			request, "fileEntryTypeId", -1);
@@ -131,6 +138,9 @@ public class DefaultDLFileVersionDisplayContext
 
 		_portletDisplay = _themeDisplay.getPortletDisplay();
 		_scopeGroupId = _themeDisplay.getScopeGroupId();
+
+		_dlPortletInstanceSettings = DLPortletInstanceSettings.getInstance(
+			_themeDisplay.getLayout(), _portletDisplay.getId());
 	}
 
 	@Override
@@ -157,7 +167,7 @@ public class DefaultDLFileVersionDisplayContext
 
 	@Override
 	public List<MenuItem> getMenuItems() throws PortalException {
-		List<MenuItem> menuItems = new ArrayList<MenuItem>();
+		List<MenuItem> menuItems = new ArrayList<>();
 
 		_addDownloadMenuItem(menuItems);
 
@@ -182,34 +192,34 @@ public class DefaultDLFileVersionDisplayContext
 
 	@Override
 	public String getPublishButtonLabel() {
-		String publishButtonLabel = "publish";
-
-		if (_hasWorkflowDefinitionLink()) {
-			publishButtonLabel = "submit-for-publication";
-		}
-
-		if (_isFileEntrySaveAsDraft()) {
-			publishButtonLabel = "save";
-		}
-
-		return publishButtonLabel;
+		return _fileEntryDisplayContextHelper.getPublishButtonLabel();
 	}
 
 	@Override
-	public String getSaveButtonLabel() {
-		String saveButtonLabel = "save";
+	public List<ToolbarItem> getToolbarItems() throws PortalException {
+		List<ToolbarItem> toolbarItems = new ArrayList<>();
 
-		FileVersion fileVersion =
-			_defaultDLFileEntryActionsDisplayContextHelper.getFileVersion();
+		_addDownloadToolbarItem(toolbarItems);
 
-		if ((fileVersion == null) ||
-			_defaultDLFileEntryActionsDisplayContextHelper.isApproved() ||
-			_defaultDLFileEntryActionsDisplayContextHelper.isDraft()) {
+		_addOpenInMsOfficeToolbarItem(toolbarItems);
 
-			saveButtonLabel = "save-as-draft";
-		}
+		_addEditToolbarItem(toolbarItems);
 
-		return saveButtonLabel;
+		_addMoveToolbarItem(toolbarItems);
+
+		_addCheckoutToolbarItem(toolbarItems);
+
+		_addCancelCheckoutToolbarItem(toolbarItems);
+
+		_addCheckinToolbarItem(toolbarItems);
+
+		_addPermissionsToolbarItem(toolbarItems);
+
+		_addMoveToTheRecycleBinMenuItem(toolbarItems);
+
+		_addDeleteToolbarItem(toolbarItems);
+
+		return toolbarItems;
 	}
 
 	@Override
@@ -237,178 +247,6 @@ public class DefaultDLFileVersionDisplayContext
 	}
 
 	@Override
-	public boolean isCancelCheckoutDocumentButtonDisabled() {
-		return false;
-	}
-
-	@Override
-	public boolean isCancelCheckoutDocumentButtonVisible()
-		throws PortalException {
-
-		if (isCheckinButtonVisible() ||
-			(_defaultDLFileEntryActionsDisplayContextHelper.isCheckedOut() &&
-			 _defaultDLFileEntryActionsDisplayContextHelper.
-				 hasOverrideCheckoutPermission())) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public boolean isCheckinButtonDisabled() {
-		return false;
-	}
-
-	@Override
-	public boolean isCheckinButtonVisible() throws PortalException {
-		if (_defaultDLFileEntryActionsDisplayContextHelper.
-				hasUpdatePermission() &&
-			_defaultDLFileEntryActionsDisplayContextHelper.isLockedByMe() &&
-			_defaultDLFileEntryActionsDisplayContextHelper.
-				isSupportsLocking()) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public boolean isCheckoutDocumentButtonVisible() throws PortalException {
-		if (_defaultDLFileEntryActionsDisplayContextHelper.
-				hasUpdatePermission() &&
-			!_defaultDLFileEntryActionsDisplayContextHelper.isCheckedOut() &&
-			_defaultDLFileEntryActionsDisplayContextHelper.
-				isSupportsLocking()) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public boolean isCheckoutDocumentDisabled() {
-		return false;
-	}
-
-	@Override
-	public boolean isDeleteButtonVisible() throws PortalException {
-		if (_isFileEntryDeletable() && !_isFileEntryTrashable()) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public boolean isDownloadButtonVisible() throws PortalException {
-		return _defaultDLFileEntryActionsDisplayContextHelper.
-			hasViewPermission();
-	}
-
-	@Override
-	public boolean isEditButtonVisible() throws PortalException {
-		if (_defaultDLFileEntryActionsDisplayContextHelper.
-				hasUpdatePermission() &&
-			!_isFileEntryCheckedOutByOther()) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public boolean isMoveButtonVisible() throws PortalException {
-		if (_defaultDLFileEntryActionsDisplayContextHelper.
-				hasUpdatePermission() &&
-			!_isFileEntryCheckedOutByOther()) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public boolean isMoveToTheRecycleBinButtonVisible() throws PortalException {
-		if (!isDeleteButtonVisible() && _isFileEntryDeletable()) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public boolean isOpenInMsOfficeButtonVisible() throws PortalException {
-		if (_defaultDLFileEntryActionsDisplayContextHelper.
-				hasViewPermission() &&
-			_defaultDLFileEntryActionsDisplayContextHelper.isOfficeDoc() &&
-			_isWebDAVEnabled() && _isIEOnWin32()) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public boolean isPermissionsButtonVisible() throws PortalException {
-		return
-			_defaultDLFileEntryActionsDisplayContextHelper.
-				hasPermissionsPermission();
-	}
-
-	@Override
-	public boolean isPublishButtonDisabled() {
-		if ((_defaultDLFileEntryActionsDisplayContextHelper.isCheckedOut() &&
-			 !_defaultDLFileEntryActionsDisplayContextHelper.isLockedByMe()) ||
-			(_defaultDLFileEntryActionsDisplayContextHelper.isPending() &&
-			 _isDLFileEntryDraftsEnabled())) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public boolean isPublishButtonVisible() {
-		return true;
-	}
-
-	@Override
-	public boolean isSaveButtonDisabled() {
-		if (_defaultDLFileEntryActionsDisplayContextHelper.isCheckedOut() &&
-			!_defaultDLFileEntryActionsDisplayContextHelper.isLockedByMe()) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public boolean isSaveButtonVisible() {
-		return _isDLFileEntryDraftsEnabled();
-	}
-
-	@Override
-	public boolean isViewButtonVisible() throws PortalException {
-		return _defaultDLFileEntryActionsDisplayContextHelper.
-			hasViewPermission();
-	}
-
-	@Override
-	public boolean isViewOriginalFileButtonVisible() throws PortalException {
-		return _defaultDLFileEntryActionsDisplayContextHelper.
-			hasViewPermission();
-	}
-
-	@Override
 	public void renderPreview(
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException {
@@ -422,10 +260,124 @@ public class DefaultDLFileVersionDisplayContext
 		jspRenderer.render(request, response);
 	}
 
+	protected String getSubmitFormJavascript(String cmd, String redirect) {
+		StringBundler sb = new StringBundler();
+
+		String namespace = _liferayPortletResponse.getNamespace();
+
+		sb.append("document.");
+		sb.append(namespace);
+		sb.append("fm.");
+		sb.append(namespace);
+		sb.append(Constants.CMD);
+		sb.append(".value = '");
+		sb.append(cmd);
+		sb.append("';");
+
+		if (redirect != null) {
+			sb.append("document.");
+			sb.append(namespace);
+			sb.append("fm.");
+			sb.append(namespace);
+			sb.append("redirect.value = '");
+			sb.append(redirect);
+			sb.append("';");
+		}
+
+		sb.append("submitForm(document.");
+		sb.append(namespace);
+		sb.append("fm);");
+
+		return sb.toString();
+	}
+
+	protected boolean isCancelCheckoutDocumentButtonVisible()
+		throws PortalException {
+
+		return _fileEntryDisplayContextHelper.
+			isCancelCheckoutDocumentButtonVisible();
+	}
+
+	protected boolean isCheckinButtonVisible() throws PortalException {
+		return _fileEntryDisplayContextHelper.isCheckinButtonVisible();
+	}
+
+	protected boolean isCheckoutDocumentButtonVisible() throws PortalException {
+		return _fileEntryDisplayContextHelper.isCheckoutDocumentButtonVisible();
+	}
+
+	protected boolean isDeleteButtonVisible() throws PortalException {
+		if (_isFileEntryDeletable() && !_isFileEntryTrashable()) {
+			return true;
+		}
+
+		return false;
+	}
+
+	protected boolean isDownloadButtonVisible() throws PortalException {
+		return _fileEntryDisplayContextHelper.hasViewPermission();
+	}
+
+	protected boolean isEditButtonVisible() throws PortalException {
+		if (_fileEntryDisplayContextHelper.hasUpdatePermission() &&
+			!_isFileEntryCheckedOutByOther()) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	protected boolean isMoveButtonVisible() throws PortalException {
+		if (_fileEntryDisplayContextHelper.hasUpdatePermission() &&
+			!_isFileEntryCheckedOutByOther()) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	protected boolean isMoveToTheRecycleBinButtonVisible()
+		throws PortalException {
+
+		if (!isDeleteButtonVisible() && _isFileEntryDeletable()) {
+			return true;
+		}
+
+		return false;
+	}
+
+	protected boolean isOpenInMsOfficeButtonVisible() throws PortalException {
+		if (_fileEntryDisplayContextHelper.hasViewPermission() &&
+			_fileVersionDisplayContextHelper.isOfficeDoc() &&
+			_isWebDAVEnabled() && _isIEOnWin32()) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	protected boolean isPermissionsButtonVisible() throws PortalException {
+		return _fileEntryDisplayContextHelper.hasPermissionsPermission();
+	}
+
+	protected boolean isViewButtonVisible() throws PortalException {
+		return _fileEntryDisplayContextHelper.hasViewPermission();
+	}
+
+	protected boolean isViewOriginalFileButtonVisible() throws PortalException {
+		return _fileEntryDisplayContextHelper.hasViewPermission();
+	}
+
 	private void _addCancelCheckoutMenuItem(List<MenuItem> menuItems)
 		throws PortalException {
 
-		if (!_isShowActions() || !isCancelCheckoutDocumentButtonVisible()) {
+		if (!_isShowActions() ||
+			!_fileEntryDisplayContextHelper.
+				isCancelCheckoutDocumentButtonVisible()) {
+
 			return;
 		}
 
@@ -449,11 +401,34 @@ public class DefaultDLFileVersionDisplayContext
 		menuItems.add(urlMenuItem);
 	}
 
+	private void _addCancelCheckoutToolbarItem(List<ToolbarItem> toolbarItems)
+		throws PortalException {
+
+		if (!isCancelCheckoutDocumentButtonVisible()) {
+			return;
+		}
+
+		JavascriptToolbarItem javascriptToolbarItem =
+			new JavascriptToolbarItem();
+
+		javascriptToolbarItem.setKey(DLToolbarItemKeys.CANCEL_CHECKOUT);
+		javascriptToolbarItem.setIcon("icon-undo");
+		javascriptToolbarItem.setLabel(
+			UnicodeLanguageUtil.get(_request, "cancel-checkout[document]"));
+
+		javascriptToolbarItem.setOnClick(
+			getSubmitFormJavascript(Constants.CANCEL_CHECKOUT, null));
+
+		toolbarItems.add(javascriptToolbarItem);
+	}
+
 	private void _addCheckinMenuItem(List<MenuItem> menuItems)
 		throws PortalException {
 
-		if (!_isShowActions() || !isCheckinButtonVisible()) {
-			return;
+		if (!_isShowActions() ||
+			!_fileEntryDisplayContextHelper.isCheckinButtonVisible()) {
+
+				return;
 		}
 
 		URLMenuItem urlMenuItem = new URLMenuItem();
@@ -476,10 +451,33 @@ public class DefaultDLFileVersionDisplayContext
 		menuItems.add(urlMenuItem);
 	}
 
+	private void _addCheckinToolbarItem(List<ToolbarItem> toolbarItems)
+		throws PortalException {
+
+		if (!isCheckinButtonVisible()) {
+			return;
+		}
+
+		JavascriptToolbarItem javascriptToolbarItem =
+			new JavascriptToolbarItem();
+
+		javascriptToolbarItem.setKey(DLToolbarItemKeys.CHECKIN);
+		javascriptToolbarItem.setIcon("icon-lock");
+		javascriptToolbarItem.setLabel(
+			UnicodeLanguageUtil.get(_request, "checkin"));
+
+		javascriptToolbarItem.setOnClick(
+			getSubmitFormJavascript(Constants.CHECKIN, null));
+
+		toolbarItems.add(javascriptToolbarItem);
+	}
+
 	private void _addCheckoutMenuItem(List<MenuItem> menuItems)
 		throws PortalException {
 
-		if (!_isShowActions() || !isCheckoutDocumentButtonVisible()) {
+		if (!_isShowActions() ||
+			!_fileEntryDisplayContextHelper.isCheckoutDocumentButtonVisible()) {
+
 			return;
 		}
 
@@ -501,6 +499,27 @@ public class DefaultDLFileVersionDisplayContext
 		urlMenuItem.setURL(portletURL.toString());
 
 		menuItems.add(urlMenuItem);
+	}
+
+	private void _addCheckoutToolbarItem(List<ToolbarItem> toolbarItems)
+		throws PortalException {
+
+		if (!isCheckoutDocumentButtonVisible()) {
+			return;
+		}
+
+		JavascriptToolbarItem javascriptToolbarItem =
+			new JavascriptToolbarItem();
+
+		javascriptToolbarItem.setKey(DLToolbarItemKeys.CHECKOUT);
+		javascriptToolbarItem.setIcon("icon-unlock");
+		javascriptToolbarItem.setLabel(
+			UnicodeLanguageUtil.get(_request, "checkout[document]"));
+
+		javascriptToolbarItem.setOnClick(
+			getSubmitFormJavascript(Constants.CHECKOUT, null));
+
+		toolbarItems.add(javascriptToolbarItem);
 	}
 
 	private void _addDeleteMenuItem(List<MenuItem> menuItems)
@@ -549,6 +568,43 @@ public class DefaultDLFileVersionDisplayContext
 		}
 	}
 
+	private void _addDeleteToolbarItem(List<ToolbarItem> toolbarItems)
+		throws PortalException {
+
+		if (!isDeleteButtonVisible()) {
+			return;
+		}
+
+		JavascriptToolbarItem javascriptToolbarItem =
+			new JavascriptToolbarItem();
+
+		javascriptToolbarItem.setKey(DLToolbarItemKeys.DELETE);
+		javascriptToolbarItem.setIcon("icon-remove");
+		javascriptToolbarItem.setLabel(
+			UnicodeLanguageUtil.get(_request, "delete"));
+
+		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
+
+		portletURL.setParameter("struts_action", "/document_library/view");
+		portletURL.setParameter(
+			"folderId", String.valueOf(_fileEntry.getFolderId()));
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("if (confirm('");
+		sb.append(
+			UnicodeLanguageUtil.get(
+				_request, "are-you-sure-you-want-to-delete-this"));
+		sb.append("')) {");
+		sb.append(
+			getSubmitFormJavascript(Constants.DELETE, portletURL.toString()));
+		sb.append("}");
+
+		javascriptToolbarItem.setOnClick(sb.toString());
+
+		toolbarItems.add(javascriptToolbarItem);
+	}
+
 	private void _addDownloadMenuItem(List<MenuItem> menuItems)
 		throws PortalException {
 
@@ -579,6 +635,25 @@ public class DefaultDLFileVersionDisplayContext
 		menuItems.add(urlMenuItem);
 	}
 
+	private void _addDownloadToolbarItem(List<ToolbarItem> toolbarItems)
+		throws PortalException {
+
+		if (!isDownloadButtonVisible()) {
+			return;
+		}
+
+		URLToolbarItem urlToolbarItem = new URLToolbarItem();
+
+		urlToolbarItem.setKey(DLToolbarItemKeys.DOWNLOAD);
+		urlToolbarItem.setIcon("icon-download");
+		urlToolbarItem.setLabel(UnicodeLanguageUtil.get(_request, "download"));
+		urlToolbarItem.setURL(
+			DLUtil.getDownloadURL(
+				_fileEntry, _fileVersion, _themeDisplay, StringPool.BLANK));
+
+		toolbarItems.add(urlToolbarItem);
+	}
+
 	private void _addEditMenuItem(List<MenuItem> menuItems)
 		throws PortalException {
 
@@ -604,6 +679,31 @@ public class DefaultDLFileVersionDisplayContext
 		urlMenuItem.setURL(portletURL.toString());
 
 		menuItems.add(urlMenuItem);
+	}
+
+	private void _addEditToolbarItem(List<ToolbarItem> toolbarItems)
+		throws PortalException {
+
+		if (!isEditButtonVisible()) {
+			return;
+		}
+
+		URLToolbarItem urlToolbarItem = new URLToolbarItem();
+
+		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
+
+		portletURL.setParameter(
+			"struts_action", "/document_library/edit_file_entry");
+		portletURL.setParameter("redirect", _getCurrentURL());
+		portletURL.setParameter(
+			"fileEntryId", String.valueOf(_fileEntry.getFileEntryId()));
+
+		urlToolbarItem.setKey(DLToolbarItemKeys.EDIT);
+		urlToolbarItem.setIcon("icon-edit");
+		urlToolbarItem.setLabel(UnicodeLanguageUtil.get(_request, "edit"));
+		urlToolbarItem.setURL(portletURL.toString());
+
+		toolbarItems.add(urlToolbarItem);
 	}
 
 	private void _addMoveMenuItem(List<MenuItem> menuItems)
@@ -637,6 +737,61 @@ public class DefaultDLFileVersionDisplayContext
 		urlMenuItem.setURL(portletURL.toString());
 
 		menuItems.add(urlMenuItem);
+	}
+
+	private void _addMoveToolbarItem(List<ToolbarItem> toolbarItems)
+		throws PortalException {
+
+		if (!isMoveButtonVisible()) {
+			return;
+		}
+
+		URLToolbarItem urlToolbarItem = new URLToolbarItem();
+
+		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
+
+		portletURL.setParameter(
+			"struts_action", "/document_library/move_entry");
+		portletURL.setParameter("redirect", _getCurrentURL());
+		portletURL.setParameter(
+			"fileEntryId", String.valueOf(_fileEntry.getFileEntryId()));
+
+		urlToolbarItem.setKey(DLToolbarItemKeys.MOVE);
+		urlToolbarItem.setIcon("icon-move");
+		urlToolbarItem.setLabel(UnicodeLanguageUtil.get(_request, "move"));
+		urlToolbarItem.setURL(portletURL.toString());
+
+		toolbarItems.add(urlToolbarItem);
+	}
+
+	private void _addMoveToTheRecycleBinMenuItem(List<ToolbarItem> toolbarItems)
+		throws PortalException {
+
+		if (!isMoveToTheRecycleBinButtonVisible()) {
+			return;
+		}
+
+		JavascriptToolbarItem javascriptToolbarItem =
+			new JavascriptToolbarItem();
+
+		javascriptToolbarItem.setKey(DLToolbarItemKeys.MOVE_TO_THE_RECYCLE_BIN);
+		javascriptToolbarItem.setIcon("icon-trash");
+		javascriptToolbarItem.setLabel(
+			UnicodeLanguageUtil.get(_request, "move-to-the-recycle-bin"));
+
+		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
+
+		portletURL.setParameter("struts_action", "/document_library/view");
+		portletURL.setParameter(
+			"folderId", String.valueOf(_fileEntry.getFolderId()));
+
+		String namespace = _liferayPortletResponse.getNamespace();
+
+		javascriptToolbarItem.setOnClick(
+			getSubmitFormJavascript(
+				Constants.MOVE_TO_TRASH, portletURL.toString()));
+
+		toolbarItems.add(javascriptToolbarItem);
 	}
 
 	private void _addOpenInMsOfficeMenuItem(List<MenuItem> menuItems)
@@ -684,6 +839,40 @@ public class DefaultDLFileVersionDisplayContext
 		menuItems.add(javaScriptMenuItem);
 	}
 
+	private void _addOpenInMsOfficeToolbarItem(List<ToolbarItem> toolbarItems)
+		throws PortalException {
+
+		if (!isOpenInMsOfficeButtonVisible()) {
+			return;
+		}
+
+		JavascriptToolbarItem javascriptToolbarItem =
+			new JavascriptToolbarItem();
+
+		javascriptToolbarItem.setKey(DLToolbarItemKeys.OPEN_IN_MS_OFFICE);
+		javascriptToolbarItem.setIcon("icon-file-alt");
+		javascriptToolbarItem.setLabel(
+			UnicodeLanguageUtil.get(_request, "open-in-ms-office"));
+
+		String webDavURL = DLUtil.getWebDavURL(
+			_themeDisplay, _fileEntry.getFolder(), _fileEntry,
+			PropsValues.
+				DL_FILE_ENTRY_OPEN_IN_MS_OFFICE_MANUAL_CHECK_IN_REQUIRED);
+
+		String namespace = _liferayPortletResponse.getNamespace();
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(namespace);
+		sb.append("openDocument('");
+		sb.append(webDavURL);
+		sb.append("');");
+
+		javascriptToolbarItem.setOnClick(sb.toString());
+
+		toolbarItems.add(javascriptToolbarItem);
+	}
+
 	private void _addPermissionsMenuItem(List<MenuItem> menuItems)
 		throws PortalException {
 
@@ -716,6 +905,49 @@ public class DefaultDLFileVersionDisplayContext
 		urlMenuItem.setUseDialog(true);
 
 		menuItems.add(urlMenuItem);
+	}
+
+	private void _addPermissionsToolbarItem(List<ToolbarItem> toolbarItems)
+		throws PortalException {
+
+		if (!isPermissionsButtonVisible()) {
+			return;
+		}
+
+		JavascriptToolbarItem javascriptToolbarItem =
+			new JavascriptToolbarItem();
+
+		javascriptToolbarItem.setKey(DLToolbarItemKeys.PERMISSIONS);
+		javascriptToolbarItem.setIcon("icon-lock");
+		javascriptToolbarItem.setLabel(
+			UnicodeLanguageUtil.get(_request, "permissions"));
+
+		String permissionsURL = null;
+
+		try {
+			permissionsURL = PermissionsURLTag.doTag(
+				null, DLFileEntryConstants.getClassName(),
+				HtmlUtil.unescape(_fileEntry.getTitle()), null,
+				String.valueOf(_fileEntry.getFileEntryId()),
+				LiferayWindowState.POP_UP.toString(), null, _request
+			);
+		}
+		catch (Exception e) {
+			throw new SystemException("Unable to create permissions URL", e);
+		}
+
+		StringBundler sb = new StringBundler(6);
+
+		sb.append("Liferay.Util.openWindow({");
+		sb.append("title: '");
+		sb.append(UnicodeLanguageUtil.get(_request, "permissions"));
+		sb.append("', uri: '");
+		sb.append(permissionsURL);
+		sb.append("'});");
+
+		javascriptToolbarItem.setOnClick(sb.toString());
+
+		toolbarItems.add(javascriptToolbarItem);
 	}
 
 	private String _getCurrentURL() {
@@ -754,25 +986,9 @@ public class DefaultDLFileVersionDisplayContext
 		return _dlActionsDisplayContext;
 	}
 
-	private boolean _hasWorkflowDefinitionLink() {
-		try {
-			return DLUtil.hasWorkflowDefinitionLink(
-				_companyId, _scopeGroupId, _folderId, _fileEntryTypeId);
-		}
-		catch (Exception e) {
-			throw new SystemException(
-				"Unable to check if file entry has workflow definition link",
-				e);
-		}
-	}
-
-	private boolean _isDLFileEntryDraftsEnabled() {
-		return PropsValues.DL_FILE_ENTRY_DRAFTS_ENABLED;
-	}
-
 	private boolean _isFileEntryCheckedOutByOther() {
-		if (_defaultDLFileEntryActionsDisplayContextHelper.isCheckedOut() &&
-			!_defaultDLFileEntryActionsDisplayContextHelper.isLockedByMe()) {
+		if (_fileEntryDisplayContextHelper.isCheckedOut() &&
+			!_fileEntryDisplayContextHelper.isLockedByMe()) {
 
 			return true;
 		}
@@ -781,8 +997,7 @@ public class DefaultDLFileVersionDisplayContext
 	}
 
 	private boolean _isFileEntryDeletable() throws PortalException {
-		if (_defaultDLFileEntryActionsDisplayContextHelper.
-				hasDeletePermission() &&
+		if (_fileEntryDisplayContextHelper.hasDeletePermission() &&
 			!_isFileEntryCheckedOutByOther()) {
 
 			return true;
@@ -791,19 +1006,8 @@ public class DefaultDLFileVersionDisplayContext
 		return false;
 	}
 
-	private boolean _isFileEntrySaveAsDraft() {
-		if ((_defaultDLFileEntryActionsDisplayContextHelper.isCheckedOut() ||
-			 _defaultDLFileEntryActionsDisplayContextHelper.isPending()) &&
-			!_isDLFileEntryDraftsEnabled()) {
-
-			return true;
-		}
-
-		return false;
-	}
-
 	private boolean _isFileEntryTrashable() throws PortalException {
-		if (_defaultDLFileEntryActionsDisplayContextHelper.isDLFileEntry() &&
+		if (_fileEntryDisplayContextHelper.isDLFileEntry() &&
 			_isTrashEnabled()) {
 
 			return true;
@@ -856,12 +1060,13 @@ public class DefaultDLFileVersionDisplayContext
 
 	private long _companyId;
 	private String _currentURL;
-	private DefaultDLFileVersionDisplayContextHelper
-		_defaultDLFileEntryActionsDisplayContextHelper;
 	private DLActionsDisplayContext _dlActionsDisplayContext;
+	private DLPortletInstanceSettings _dlPortletInstanceSettings;
 	private FileEntry _fileEntry;
+	private FileEntryDisplayContextHelper _fileEntryDisplayContextHelper;
 	private long _fileEntryTypeId;
 	private FileVersion _fileVersion;
+	private FileVersionDisplayContextHelper _fileVersionDisplayContextHelper;
 	private long _folderId;
 	private Boolean _ieOnWin32;
 	private LiferayPortletRequest _liferayPortletRequest;
