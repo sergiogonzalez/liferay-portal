@@ -15,27 +15,18 @@
 package com.liferay.portal.kernel.servlet.taglib.ui;
 
 /**
- * @author Iván Zaera
+ * @author Ivan Zaera
  */
-public abstract class MenuItem extends UIItem {
+public abstract class UIItem {
 
-	public String getIconCssClass() {
-		return _iconCssClass;
+	public String getKey() {
+		return _key;
 	}
 
-	public String getMessage() {
-		return _message;
+	public void setKey(String key) {
+		_key = key;
 	}
 
-	public void setIconCssClass(String iconCssClass) {
-		_iconCssClass = iconCssClass;
-	}
-
-	public void setMessage(String message) {
-		_message = message;
-	}
-
-	private String _iconCssClass;
-	private String _message;
+	private String _key;
 
 }
