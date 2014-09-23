@@ -21,11 +21,15 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
+import com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem;
+import com.liferay.portal.kernel.servlet.taglib.ui.UIItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
+import com.liferay.portal.kernel.servlet.taglib.ui.URLToolbarItem;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.documentlibrary.context.BaseDLViewFileVersionDisplayContext;
 import com.liferay.portlet.documentlibrary.context.DLMenuItemKeys;
+import com.liferay.portlet.documentlibrary.context.DLToolbarItemKeys;
 import com.liferay.portlet.documentlibrary.context.DLViewFileVersionDisplayContext;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
@@ -79,17 +83,29 @@ public class GoogleDocsDLViewFileVersionDisplayContext
 	public List<MenuItem> getMenuItems() throws PortalException {
 		List<MenuItem> menuItems = super.getMenuItems();
 
-		_removeMenuItem(menuItems, DLMenuItemKeys.DOWNLOAD);
-		_removeMenuItem(menuItems, DLMenuItemKeys.OPEN_IN_MS_OFFICE);
+		_removeUIItem(menuItems, DLMenuItemKeys.DOWNLOAD);
+		_removeUIItem(menuItems, DLMenuItemKeys.OPEN_IN_MS_OFFICE);
 
 		_insertEditInGoogleMenuItem(menuItems);
 
 		return menuItems;
 	}
 
-	private int _getIndex(List<MenuItem> menuItems, String key) {
-		for (int i = 0; i < menuItems.size(); i++) {
-			MenuItem menuItem = menuItems.get(i);
+	@Override
+	public List<ToolbarItem> getToolbarItems() throws PortalException {
+		List<ToolbarItem> toolbarItems = super.getToolbarItems();
+
+		_removeUIItem(toolbarItems, DLToolbarItemKeys.DOWNLOAD);
+		_removeUIItem(toolbarItems, DLToolbarItemKeys.OPEN_IN_MS_OFFICE);
+
+		_insertEditInGoogleToolbarItem(toolbarItems);
+
+		return toolbarItems;
+	}
+
+	private int _getIndex(List<? extends UIItem> uiItems, String key) {
+		for (int i = 0; i < uiItems.size(); i++) {
+			UIItem menuItem = uiItems.get(i);
 
 			if (key.equals(menuItem.getKey())) {
 				return i;
@@ -139,11 +155,51 @@ public class GoogleDocsDLViewFileVersionDisplayContext
 		menuItems.add(index, urlMenuItem);
 	}
 
-	private void _removeMenuItem(List<MenuItem> menuItems, String key) {
-		int index = _getIndex(menuItems, key);
+	private void _insertEditInGoogleToolbarItem(List<ToolbarItem> toolbarItems)
+		throws PortalException {
+
+		int index = _getIndex(toolbarItems, DLToolbarItemKeys.EDIT);
+
+		if (index == -1) {
+			index = 0;
+		}
+
+		URLToolbarItem urlToolbarItem = new URLToolbarItem();
+
+		urlToolbarItem.setIcon("icon-edit");
+		urlToolbarItem.setKey(GoogleDocsToolbarItemKeys.EDIT_IN_GOOGLE);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		ResourceBundle resourceBundle = ResourceUtil.getResourceBundle(
+			themeDisplay.getLocale());
+
+		String message = LanguageUtil.get(
+			resourceBundle, "edit-in-google-docs");
+
+		urlToolbarItem.setLabel(message);
+
+		urlToolbarItem.setTarget("_blank");
+
+		DLFileVersion dlFileVersion = (DLFileVersion)fileVersion.getModel();
+
+		GoogleDocsMetadataHelper googleDocsMetadataHelper =
+			new GoogleDocsMetadataHelper(dlFileVersion);
+
+		String editURL = googleDocsMetadataHelper.getFieldValue(
+			GoogleDocsConstants.DDM_FIELD_NAME_EDIT_URL);
+
+		urlToolbarItem.setURL(editURL);
+
+		toolbarItems.add(index, urlToolbarItem);
+	}
+
+	private void _removeUIItem(List<? extends UIItem> uiItems, String key) {
+		int index = _getIndex(uiItems, key);
 
 		if (index != -1) {
-			menuItems.remove(index);
+			uiItems.remove(index);
 		}
 	}
 
