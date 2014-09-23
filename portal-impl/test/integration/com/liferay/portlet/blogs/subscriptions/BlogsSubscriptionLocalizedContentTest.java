@@ -12,22 +12,20 @@
  * details.
  */
 
-package com.liferay.portlet.bookmarks.subscriptions;
+package com.liferay.portlet.blogs.subscriptions;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
-import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousMailExecutionTestListener;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.subscriptions.BaseSubscriptionLocalizedContentTestCase;
-import com.liferay.portal.util.test.ServiceContextTestUtil;
 import com.liferay.portal.util.test.TestPropsValues;
-import com.liferay.portlet.bookmarks.model.BookmarksEntry;
-import com.liferay.portlet.bookmarks.service.BookmarksFolderLocalServiceUtil;
-import com.liferay.portlet.bookmarks.util.BookmarksConstants;
-import com.liferay.portlet.bookmarks.util.test.BookmarksTestUtil;
+import com.liferay.portlet.blogs.model.BlogsEntry;
+import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
+import com.liferay.portlet.blogs.util.BlogsConstants;
+import com.liferay.portlet.blogs.util.test.BlogsTestUtil;
 
 import org.junit.runner.RunWith;
 
@@ -41,16 +39,12 @@ import org.junit.runner.RunWith;
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
-public class BookmarksSubscriptionLocalizedContentTest
+public class BlogsSubscriptionLocalizedContentTest
 	extends BaseSubscriptionLocalizedContentTestCase {
 
 	@Override
 	protected long addBaseModel(long containerModelId) throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(group.getGroupId());
-
-		BookmarksEntry entry = BookmarksTestUtil.addEntry(
-			containerModelId, true, serviceContext);
+		BlogsEntry entry = BlogsTestUtil.addEntry(group, true);
 
 		return entry.getEntryId();
 	}
@@ -59,18 +53,18 @@ public class BookmarksSubscriptionLocalizedContentTest
 	protected void addSubscriptionContainerModel(long containerModelId)
 		throws Exception {
 
-		BookmarksFolderLocalServiceUtil.subscribeFolder(
-			TestPropsValues.getUserId(), group.getGroupId(), containerModelId);
+		BlogsEntryLocalServiceUtil.subscribe(
+			TestPropsValues.getUserId(), group.getGroupId());
 	}
 
 	@Override
 	protected String getPortletId() {
-		return PortletKeys.BOOKMARKS;
+		return PortletKeys.BLOGS;
 	}
 
 	@Override
 	protected String getServiceName() {
-		return BookmarksConstants.SERVICE_NAME;
+		return BlogsConstants.SERVICE_NAME;
 	}
 
 	@Override
