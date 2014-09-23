@@ -247,96 +247,6 @@ public class DefaultDLViewFileVersionDisplayContext
 	}
 
 	@Override
-	public boolean isCancelCheckoutDocumentButtonVisible()
-		throws PortalException {
-
-		return _fileEntryDisplayContextHelper.
-			isCancelCheckoutDocumentButtonVisible();
-	}
-
-	@Override
-	public boolean isCheckinButtonVisible() throws PortalException {
-		return _fileEntryDisplayContextHelper.isCheckinButtonVisible();
-	}
-
-	@Override
-	public boolean isCheckoutDocumentButtonVisible() throws PortalException {
-		return _fileEntryDisplayContextHelper.isCheckoutDocumentButtonVisible();
-	}
-
-	@Override
-	public boolean isDeleteButtonVisible() throws PortalException {
-		if (_isFileEntryDeletable() && !_isFileEntryTrashable()) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public boolean isDownloadButtonVisible() throws PortalException {
-		return _fileEntryDisplayContextHelper.hasViewPermission();
-	}
-
-	@Override
-	public boolean isEditButtonVisible() throws PortalException {
-		if (_fileEntryDisplayContextHelper.hasUpdatePermission() &&
-			!_isFileEntryCheckedOutByOther()) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public boolean isMoveButtonVisible() throws PortalException {
-		if (_fileEntryDisplayContextHelper.hasUpdatePermission() &&
-			!_isFileEntryCheckedOutByOther()) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public boolean isMoveToTheRecycleBinButtonVisible() throws PortalException {
-		if (!isDeleteButtonVisible() && _isFileEntryDeletable()) {
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public boolean isOpenInMsOfficeButtonVisible() throws PortalException {
-		if (_fileEntryDisplayContextHelper.hasViewPermission() &&
-			_fileVersionDisplayContextHelper.isOfficeDoc() &&
-			_isWebDAVEnabled() && _isIEOnWin32()) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public boolean isPermissionsButtonVisible() throws PortalException {
-		return _fileEntryDisplayContextHelper.hasPermissionsPermission();
-	}
-
-	@Override
-	public boolean isViewButtonVisible() throws PortalException {
-		return _fileEntryDisplayContextHelper.hasViewPermission();
-	}
-
-	@Override
-	public boolean isViewOriginalFileButtonVisible() throws PortalException {
-		return _fileEntryDisplayContextHelper.hasViewPermission();
-	}
-
-	@Override
 	public void renderPreview(
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException {
@@ -379,6 +289,86 @@ public class DefaultDLViewFileVersionDisplayContext
 		sb.append("fm);");
 
 		return sb.toString();
+	}
+
+	protected boolean isCancelCheckoutDocumentButtonVisible()
+		throws PortalException {
+
+		return _fileEntryDisplayContextHelper.
+			isCancelCheckoutDocumentButtonVisible();
+	}
+
+	protected boolean isCheckinButtonVisible() throws PortalException {
+		return _fileEntryDisplayContextHelper.isCheckinButtonVisible();
+	}
+
+	protected boolean isCheckoutDocumentButtonVisible() throws PortalException {
+		return _fileEntryDisplayContextHelper.isCheckoutDocumentButtonVisible();
+	}
+
+	protected boolean isDeleteButtonVisible() throws PortalException {
+		if (_isFileEntryDeletable() && !_isFileEntryTrashable()) {
+			return true;
+		}
+
+		return false;
+	}
+
+	protected boolean isDownloadButtonVisible() throws PortalException {
+		return _fileEntryDisplayContextHelper.hasViewPermission();
+	}
+
+	protected boolean isEditButtonVisible() throws PortalException {
+		if (_fileEntryDisplayContextHelper.hasUpdatePermission() &&
+			!_isFileEntryCheckedOutByOther()) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	protected boolean isMoveButtonVisible() throws PortalException {
+		if (_fileEntryDisplayContextHelper.hasUpdatePermission() &&
+			!_isFileEntryCheckedOutByOther()) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	protected boolean isMoveToTheRecycleBinButtonVisible()
+		throws PortalException {
+
+		if (!isDeleteButtonVisible() && _isFileEntryDeletable()) {
+			return true;
+		}
+
+		return false;
+	}
+
+	protected boolean isOpenInMsOfficeButtonVisible() throws PortalException {
+		if (_fileEntryDisplayContextHelper.hasViewPermission() &&
+			_fileVersionDisplayContextHelper.isOfficeDoc() &&
+			_isWebDAVEnabled() && _isIEOnWin32()) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	protected boolean isPermissionsButtonVisible() throws PortalException {
+		return _fileEntryDisplayContextHelper.hasPermissionsPermission();
+	}
+
+	protected boolean isViewButtonVisible() throws PortalException {
+		return _fileEntryDisplayContextHelper.hasViewPermission();
+	}
+
+	protected boolean isViewOriginalFileButtonVisible() throws PortalException {
+		return _fileEntryDisplayContextHelper.hasViewPermission();
 	}
 
 	private void _addCancelCheckoutMenuItem(List<MenuItem> menuItems)
