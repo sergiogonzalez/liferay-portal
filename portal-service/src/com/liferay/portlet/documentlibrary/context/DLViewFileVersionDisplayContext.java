@@ -38,8 +38,6 @@ public interface DLViewFileVersionDisplayContext extends DLDisplayContext {
 
 	public List<MenuItem> getMenuItems() throws PortalException;
 
-	public String getPublishButtonLabel() throws PortalException;
-
 	public boolean isAssetMetadataVisible() throws PortalException;
 
 	public boolean isCancelCheckoutDocumentButtonVisible()

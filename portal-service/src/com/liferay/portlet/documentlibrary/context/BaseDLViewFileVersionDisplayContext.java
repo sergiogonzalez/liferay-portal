@@ -62,11 +62,6 @@ public class BaseDLViewFileVersionDisplayContext
 	}
 
 	@Override
-	public String getPublishButtonLabel() throws PortalException {
-		return parentDLDisplayContext.getPublishButtonLabel();
-	}
-
-	@Override
 	public boolean isAssetMetadataVisible() throws PortalException {
 		return parentDLDisplayContext.isAssetMetadataVisible();
 	}

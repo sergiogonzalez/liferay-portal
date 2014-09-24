@@ -187,11 +187,6 @@ public class DefaultDLViewFileVersionDisplayContext
 	}
 
 	@Override
-	public String getPublishButtonLabel() {
-		return _fileEntryDisplayContextHelper.getPublishButtonLabel();
-	}
-
-	@Override
 	public UUID getUuid() {
 		return _UUID;
 	}
