@@ -203,9 +203,7 @@ public class ImageToolImpl implements ImageTool {
 				return new FutureConverter<RenderedImage, Object>(future) {
 
 					@Override
-					protected RenderedImage convert(Object obj)
-						throws IOException {
-
+					protected RenderedImage convert(Object obj) {
 						RenderedImage renderedImage = null;
 
 						try {
