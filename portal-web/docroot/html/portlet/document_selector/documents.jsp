@@ -21,6 +21,12 @@ String[] tabs1Names = DocumentSelectorUtil.getTabs1Names(request);
 
 long groupId = ParamUtil.getLong(request, "groupId", scopeGroupId);
 
+Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+if (group.isStaged() && !group.isStagedPortlet(PortletKeys.DOCUMENT_LIBRARY)) {
+	groupId = group.getLiveGroupId();
+}
+
 Folder folder = (Folder)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDER);
 
 long folderId = BeanParamUtil.getLong(folder, request, "folderId", DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
