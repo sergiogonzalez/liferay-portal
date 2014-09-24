@@ -30,7 +30,6 @@ import com.liferay.portlet.documentlibrary.context.helper.FileEntryDisplayContex
 import com.liferay.portlet.documentlibrary.context.helper.FileVersionDisplayContextHelper;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
-import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 
 import java.util.UUID;
@@ -177,18 +176,6 @@ public class DefaultDLEditFileEntryDisplayContext
 	@Override
 	public boolean isSaveButtonVisible() {
 		return _isEnableFileEntryDrafts();
-	}
-
-	private boolean _hasWorkflowDefinitionLink() {
-		try {
-			return DLUtil.hasWorkflowDefinitionLink(
-				_companyId, _scopeGroupId, _folderId, _fileEntryTypeId);
-		}
-		catch (Exception e) {
-			throw new SystemException(
-				"Unable to check if file entry has workflow definition link",
-				e);
-		}
 	}
 
 	private void _init(HttpServletRequest request) {
