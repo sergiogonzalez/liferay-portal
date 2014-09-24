@@ -115,15 +115,8 @@ public class DefaultDLEditFileEntryDisplayContext
 	public boolean isCancelCheckoutDocumentButtonVisible()
 		throws PortalException {
 
-		if (isCheckinButtonVisible() ||
-			(_fileEntryDisplayContextHelper.isCheckedOut() &&
-			 _fileEntryDisplayContextHelper.
-					hasOverrideCheckoutPermission())) {
-
-			return true;
-		}
-
-		return false;
+		return _fileEntryDisplayContextHelper.
+			isCancelCheckoutDocumentButtonVisible();
 	}
 
 	@Override
