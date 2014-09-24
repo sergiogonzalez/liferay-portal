@@ -14,21 +14,13 @@
 
 package com.liferay.portlet.documentlibrary.context.helper;
 
-import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.theme.PortletDisplay;
-import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.documentlibrary.DLPortletInstanceSettings;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
-import com.liferay.portlet.documentlibrary.util.DLUtil;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Iván Zaera
@@ -36,53 +28,28 @@ import javax.servlet.http.HttpServletRequest;
 public class FileEntryDisplayContextHelper {
 
 	public FileEntryDisplayContextHelper(
-		HttpServletRequest request, FileEntry fileEntry) {
+		FileEntry fileEntry, PermissionChecker permissionChecker) {
 
 		_fileEntry = fileEntry;
+		_permissionChecker = permissionChecker;
 
 		if (_fileEntry == null) {
 			_setValuesForNullFileEntry();
 		}
+	}
 
-		_themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+	public DLFileEntryType getDLFileEntryType() throws PortalException {
+		if (isDLFileEntry()) {
+			DLFileEntry dlFileEntry = (DLFileEntry)_fileEntry.getModel();
 
-		_folderId = BeanParamUtil.getLong(_fileEntry, request, "folderId");
-		_permissionChecker = _themeDisplay.getPermissionChecker();
-
-		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
-
-		try {
-			_dlPortletInstanceSettings = DLPortletInstanceSettings.getInstance(
-				_themeDisplay.getLayout(), portletDisplay.getId());
-		}
-		catch (PortalException pe) {
-			throw new SystemException(pe);
+			return dlFileEntry.getDLFileEntryType();
 		}
 
-		if (_fileEntry != null) {
-			DLFileEntry dlFileEntry = (DLFileEntry) _fileEntry.getModel();
-
-			_fileEntryTypeId = dlFileEntry.getFileEntryTypeId();
-		}
+		return null;
 	}
 
 	public FileEntry getFileEntry() {
 		return _fileEntry;
-	}
-
-	public String getPublishButtonLabel() {
-		String publishButtonLabel = "publish";
-
-		if (_hasWorkflowDefinitionLink()) {
-			publishButtonLabel = "submit-for-publication";
-		}
-
-		if (_dlPortletInstanceSettings.isEnableFileEntryDrafts()) {
-			publishButtonLabel = "save";
-		}
-
-		return publishButtonLabel;
 	}
 
 	public boolean hasDeletePermission() throws PortalException {
@@ -158,6 +125,14 @@ public class FileEntryDisplayContextHelper {
 		return _checkedOut;
 	}
 
+	public boolean isCheckedOutByMe() {
+		return isCheckedOut() && isLockedByMe();
+	}
+
+	public boolean isCheckedOutByOther() {
+		return isCheckedOut() && !isLockedByMe();
+	}
+
 	public boolean isCheckinButtonVisible() throws PortalException {
 		if (hasUpdatePermission() && isLockedByMe() && isSupportsLocking()) {
 			return true;
@@ -187,6 +162,14 @@ public class FileEntryDisplayContextHelper {
 		return _dlFileEntry;
 	}
 
+	public boolean isFileEntryDeletable() throws PortalException {
+		if (hasDeletePermission() && !isCheckedOutByOther()) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public boolean isLockedByMe() {
 		if (hasLock()) {
 			return true;
@@ -203,17 +186,12 @@ public class FileEntryDisplayContextHelper {
 		return _supportsLocking;
 	}
 
-	private boolean _hasWorkflowDefinitionLink() {
-		try {
-			return DLUtil.hasWorkflowDefinitionLink(
-				_themeDisplay.getCompanyId(), _themeDisplay.getScopeGroupId(),
-				_folderId, _fileEntryTypeId);
+	public boolean isUpdatable() throws PortalException {
+		if (hasUpdatePermission() && !isCheckedOutByOther()) {
+			return true;
 		}
-		catch (Exception e) {
-			throw new SystemException(
-				"Unable to check if file entry has workflow definition link",
-				e);
-		}
+
+		return false;
 	}
 
 	private void _setValuesForNullFileEntry() {
@@ -230,10 +208,7 @@ public class FileEntryDisplayContextHelper {
 
 	private Boolean _checkedOut;
 	private Boolean _dlFileEntry;
-	private DLPortletInstanceSettings _dlPortletInstanceSettings;
 	private FileEntry _fileEntry;
-	private long _fileEntryTypeId;
-	private long _folderId;
 	private Boolean _hasDeletePermission;
 	private Boolean _hasLock;
 	private Boolean _hasOverrideCheckoutPermission;
@@ -242,6 +217,5 @@ public class FileEntryDisplayContextHelper {
 	private Boolean _hasViewPermission;
 	private PermissionChecker _permissionChecker;
 	private Boolean _supportsLocking;
-	private ThemeDisplay _themeDisplay;
 
 }

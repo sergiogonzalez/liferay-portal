@@ -15,18 +15,15 @@
 package com.liferay.portlet.documentlibrary.context.helper;
 
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Iván Zaera
  */
 public class FileVersionDisplayContextHelper {
 
-	public FileVersionDisplayContextHelper(
-		HttpServletRequest request, FileVersion fileVersion) {
-
+	public FileVersionDisplayContextHelper(FileVersion fileVersion) {
 		_fileVersion = fileVersion;
 
 		if (_fileVersion == null) {
@@ -44,6 +41,14 @@ public class FileVersionDisplayContextHelper {
 		}
 
 		return _approved;
+	}
+
+	public boolean isDLFileVersion() {
+		if (_fileVersion.getModel() instanceof DLFileEntry) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean isDraft() {
