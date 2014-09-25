@@ -17,7 +17,7 @@ package com.liferay.portal.kernel.servlet.taglib.ui;
 /**
  * @author Iván Zaera
  */
-public abstract class ToolbarItem extends UIItem {
+public abstract class ToolbarItem extends BaseUIItem implements UIActionItem {
 
 	public String getIcon() {
 		return _icon;

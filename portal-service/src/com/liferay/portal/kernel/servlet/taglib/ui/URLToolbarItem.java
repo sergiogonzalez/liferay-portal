@@ -17,7 +17,7 @@ package com.liferay.portal.kernel.servlet.taglib.ui;
 /**
  * @author Iván Zaera
  */
-public class URLToolbarItem extends ToolbarItem {
+public class URLToolbarItem extends ToolbarItem implements URLUIItem {
 
 	public String getTarget() {
 		return _target;

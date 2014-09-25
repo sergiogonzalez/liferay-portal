@@ -17,16 +17,10 @@ package com.liferay.portal.kernel.servlet.taglib.ui;
 /**
  * @author Ivan Zaera
  */
-public abstract class UIItem {
+public interface UIItem {
 
-	public String getKey() {
-		return _key;
-	}
+	public String getKey();
 
-	public void setKey(String key) {
-		_key = key;
-	}
-
-	private String _key;
+	public void setKey(String key);
 
 }
