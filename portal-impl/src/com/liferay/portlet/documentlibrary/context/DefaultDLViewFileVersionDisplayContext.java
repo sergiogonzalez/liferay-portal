@@ -28,10 +28,12 @@ import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.DeleteMenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.JavascriptMenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.JavascriptToolbarItem;
+import com.liferay.portal.kernel.servlet.taglib.ui.JavascriptUIItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLToolbarItem;
+import com.liferay.portal.kernel.servlet.taglib.ui.URLUIItem;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -348,17 +350,12 @@ public class DefaultDLViewFileVersionDisplayContext
 			return;
 		}
 
-		URLMenuItem urlMenuItem = new URLMenuItem();
-
-		urlMenuItem.setIcon("icon-remove");
-		urlMenuItem.setKey(DLMenuItemKeys.CANCEL_CHECKOUT);
-		urlMenuItem.setLabel("cancel-checkout[document]");
-		urlMenuItem.setURL(
+		_addURLUIItem(
+			new URLMenuItem(), menuItems, DLMenuItemKeys.CANCEL_CHECKOUT,
+			"icon-remove", "cancel-checkout[document]",
 			_getActionURL(
 				"/document_library/edit_file_entry",
 				Constants.CANCEL_CHECKOUT));
-
-		menuItems.add(urlMenuItem);
 	}
 
 	private void _addCancelCheckoutToolbarItem(List<ToolbarItem> toolbarItems)
@@ -368,18 +365,11 @@ public class DefaultDLViewFileVersionDisplayContext
 			return;
 		}
 
-		JavascriptToolbarItem javascriptToolbarItem =
-			new JavascriptToolbarItem();
-
-		javascriptToolbarItem.setKey(DLToolbarItemKeys.CANCEL_CHECKOUT);
-		javascriptToolbarItem.setIcon("icon-undo");
-		javascriptToolbarItem.setLabel(
-			UnicodeLanguageUtil.get(_request, "cancel-checkout[document]"));
-
-		javascriptToolbarItem.setOnClick(
+		_addJavascriptUIItem(
+			new JavascriptToolbarItem(), toolbarItems,
+			DLToolbarItemKeys.CANCEL_CHECKOUT, "icon-undo",
+			UnicodeLanguageUtil.get(_request, "cancel-checkout[document]"),
 			getSubmitFormJavascript(Constants.CANCEL_CHECKOUT, null));
-
-		toolbarItems.add(javascriptToolbarItem);
 	}
 
 	private void _addCheckinMenuItem(List<MenuItem> menuItems)
@@ -389,16 +379,11 @@ public class DefaultDLViewFileVersionDisplayContext
 			return;
 		}
 
-		URLMenuItem urlMenuItem = new URLMenuItem();
-
-		urlMenuItem.setIcon("icon-lock");
-		urlMenuItem.setKey(DLMenuItemKeys.CHECKIN);
-		urlMenuItem.setLabel("checkin");
-		urlMenuItem.setURL(
+		_addURLUIItem(
+			new URLMenuItem(), menuItems, DLMenuItemKeys.CHECKIN, "icon-lock",
+			"checkin",
 			_getActionURL(
 				"/document_library/edit_file_entry", Constants.CHECKIN));
-
-		menuItems.add(urlMenuItem);
 	}
 
 	private void _addCheckinToolbarItem(List<ToolbarItem> toolbarItems)
@@ -408,18 +393,11 @@ public class DefaultDLViewFileVersionDisplayContext
 			return;
 		}
 
-		JavascriptToolbarItem javascriptToolbarItem =
-			new JavascriptToolbarItem();
-
-		javascriptToolbarItem.setKey(DLToolbarItemKeys.CHECKIN);
-		javascriptToolbarItem.setIcon("icon-lock");
-		javascriptToolbarItem.setLabel(
-			UnicodeLanguageUtil.get(_request, "checkin"));
-
-		javascriptToolbarItem.setOnClick(
+		_addJavascriptUIItem(
+			new JavascriptToolbarItem(), toolbarItems,
+			DLToolbarItemKeys.CHECKIN, "icon-lock",
+			UnicodeLanguageUtil.get(_request, "checkin"),
 			getSubmitFormJavascript(Constants.CHECKIN, null));
-
-		toolbarItems.add(javascriptToolbarItem);
 	}
 
 	private void _addCheckoutMenuItem(List<MenuItem> menuItems)
@@ -429,16 +407,11 @@ public class DefaultDLViewFileVersionDisplayContext
 			return;
 		}
 
-		URLMenuItem urlMenuItem = new URLMenuItem();
-
-		urlMenuItem.setIcon("icon-unlock");
-		urlMenuItem.setKey(DLMenuItemKeys.CHECKOUT);
-		urlMenuItem.setLabel("checkout[document]");
-		urlMenuItem.setURL(
+		_addURLUIItem(
+			new URLMenuItem(), menuItems, DLMenuItemKeys.CHECKOUT,
+			"icon-unlock", "checkout[document]",
 			_getActionURL(
 				"/document_library/edit_file_entry", Constants.CHECKOUT));
-
-		menuItems.add(urlMenuItem);
 	}
 
 	private void _addCheckoutToolbarItem(List<ToolbarItem> toolbarItems)
@@ -448,18 +421,11 @@ public class DefaultDLViewFileVersionDisplayContext
 			return;
 		}
 
-		JavascriptToolbarItem javascriptToolbarItem =
-			new JavascriptToolbarItem();
-
-		javascriptToolbarItem.setKey(DLToolbarItemKeys.CHECKOUT);
-		javascriptToolbarItem.setIcon("icon-unlock");
-		javascriptToolbarItem.setLabel(
-			UnicodeLanguageUtil.get(_request, "checkout[document]"));
-
-		javascriptToolbarItem.setOnClick(
+		_addJavascriptUIItem(
+			new JavascriptToolbarItem(), toolbarItems,
+			DLToolbarItemKeys.CHECKOUT, "icon-unlock",
+			UnicodeLanguageUtil.get(_request, "checkout[document]"),
 			getSubmitFormJavascript(Constants.CHECKOUT, null));
-
-		toolbarItems.add(javascriptToolbarItem);
 	}
 
 	private void _addDeleteMenuItem(List<MenuItem> menuItems)
@@ -496,14 +462,6 @@ public class DefaultDLViewFileVersionDisplayContext
 			return;
 		}
 
-		JavascriptToolbarItem javascriptToolbarItem =
-			new JavascriptToolbarItem();
-
-		javascriptToolbarItem.setKey(DLToolbarItemKeys.DELETE);
-		javascriptToolbarItem.setIcon("icon-remove");
-		javascriptToolbarItem.setLabel(
-			UnicodeLanguageUtil.get(_request, "delete"));
-
 		LiferayPortletResponse liferayPortletResponse =
 			_getLiferayPortletResponse();
 
@@ -524,9 +482,10 @@ public class DefaultDLViewFileVersionDisplayContext
 			getSubmitFormJavascript(Constants.DELETE, portletURL.toString()));
 		sb.append("}");
 
-		javascriptToolbarItem.setOnClick(sb.toString());
-
-		toolbarItems.add(javascriptToolbarItem);
+		_addJavascriptUIItem(
+			new JavascriptToolbarItem(), toolbarItems, DLToolbarItemKeys.DELETE,
+			"icon-remove", UnicodeLanguageUtil.get(_request, "delete"),
+			sb.toString());
 	}
 
 	private void _addDownloadMenuItem(List<MenuItem> menuItems)
@@ -545,8 +504,9 @@ public class DefaultDLViewFileVersionDisplayContext
 			_fileEntry, _fileVersion, _themeDisplay, StringPool.BLANK, false,
 			true);
 
-		URLMenuItem urlMenuItem = _addURLMenuItem(
-			menuItems, "icon-download", DLMenuItemKeys.DOWNLOAD, message, url);
+		URLMenuItem urlMenuItem = _addURLUIItem(
+			new URLMenuItem(), menuItems, DLMenuItemKeys.DOWNLOAD,
+			"icon-download", message, url);
 
 		urlMenuItem.setTarget("_blank");
 	}
@@ -558,9 +518,9 @@ public class DefaultDLViewFileVersionDisplayContext
 			return;
 		}
 
-		_addURLToolbarItem(
-			toolbarItems, DLToolbarItemKeys.DOWNLOAD, "icon-download",
-			UnicodeLanguageUtil.get(_request, "download"),
+		_addURLUIItem(
+			new URLToolbarItem(), toolbarItems, DLToolbarItemKeys.DOWNLOAD,
+			"icon-download", UnicodeLanguageUtil.get(_request, "download"),
 			DLUtil.getDownloadURL(
 				_fileEntry, _fileVersion, _themeDisplay, StringPool.BLANK));
 	}
@@ -577,9 +537,9 @@ public class DefaultDLViewFileVersionDisplayContext
 
 		portletURL.setParameter("backURL", _getCurrentURL());
 
-		_addURLMenuItem(
-			menuItems, "icon-edit", DLMenuItemKeys.EDIT, "edit",
-			portletURL.toString());
+		_addURLUIItem(
+			new URLMenuItem(), menuItems, DLMenuItemKeys.EDIT, "icon-edit",
+			"edit", portletURL.toString());
 	}
 
 	private void _addEditToolbarItem(List<ToolbarItem> toolbarItems)
@@ -592,9 +552,10 @@ public class DefaultDLViewFileVersionDisplayContext
 		PortletURL portletURL = _getRenderURL(
 			"/document_library/edit_file_entry");
 
-		_addURLToolbarItem(
-			toolbarItems, DLToolbarItemKeys.EDIT, "icon-edit",
-			UnicodeLanguageUtil.get(_request, "edit"), portletURL.toString());
+		_addURLUIItem(
+			new URLToolbarItem(), toolbarItems, DLToolbarItemKeys.EDIT,
+			"icon-edit", UnicodeLanguageUtil.get(_request, "edit"),
+			portletURL.toString());
 	}
 
 	private void _addMoveMenuItem(List<MenuItem> menuItems)
@@ -622,9 +583,9 @@ public class DefaultDLViewFileVersionDisplayContext
 		portletURL.setParameter(
 			"fileEntryIds", String.valueOf(_fileEntry.getFileEntryId()));
 
-		_addURLMenuItem(
-			menuItems, "icon-move", DLMenuItemKeys.MOVE, "move",
-			portletURL.toString());
+		_addURLUIItem(
+			new URLMenuItem(), menuItems, "icon-move", DLMenuItemKeys.MOVE,
+			"move", portletURL.toString());
 	}
 
 	private void _addMoveToolbarItem(List<ToolbarItem> toolbarItems)
@@ -636,9 +597,10 @@ public class DefaultDLViewFileVersionDisplayContext
 
 		PortletURL portletURL = _getRenderURL("/document_library/move_entry");
 
-		_addURLToolbarItem(
-			toolbarItems, DLToolbarItemKeys.MOVE, "icon-move",
-			UnicodeLanguageUtil.get(_request, "move"), portletURL.toString());
+		_addURLUIItem(
+			new URLToolbarItem(), toolbarItems, DLToolbarItemKeys.MOVE,
+			"icon-move", UnicodeLanguageUtil.get(_request, "move"),
+			portletURL.toString());
 	}
 
 	private void _addMoveToTheRecycleBinToolbarItem(
@@ -658,9 +620,9 @@ public class DefaultDLViewFileVersionDisplayContext
 		portletURL.setParameter(
 			"folderId", String.valueOf(_fileEntry.getFolderId()));
 
-		_addJavascriptToolbarItem(
-			toolbarItems, DLToolbarItemKeys.MOVE_TO_THE_RECYCLE_BIN,
-			"icon-trash",
+		_addJavascriptUIItem(
+			new JavascriptToolbarItem(), toolbarItems,
+			DLToolbarItemKeys.MOVE_TO_THE_RECYCLE_BIN, "icon-trash",
 			UnicodeLanguageUtil.get(_request, "move-to-the-recycle-bin"),
 			getSubmitFormJavascript(
 				Constants.MOVE_TO_TRASH, portletURL.toString()));
@@ -673,15 +635,25 @@ public class DefaultDLViewFileVersionDisplayContext
 			return;
 		}
 
-		JavascriptMenuItem javaScriptMenuItem = new JavascriptMenuItem();
-
-		javaScriptMenuItem.setIcon("icon-file-alt");
-		javaScriptMenuItem.setKey(DLMenuItemKeys.OPEN_IN_MS_OFFICE);
-
-		Map<String, String> context = new HashMap<>();
-
 		LiferayPortletResponse liferayPortletResponse =
 			_getLiferayPortletResponse();
+
+		String webDavURL = DLUtil.getWebDavURL(
+			_themeDisplay, _fileEntry.getFolder(), _fileEntry,
+			PropsValues.
+				DL_FILE_ENTRY_OPEN_IN_MS_OFFICE_MANUAL_CHECK_IN_REQUIRED,
+			true);
+
+		String onClick =
+			liferayPortletResponse.getNamespace() + "openDocument('" +
+				webDavURL + "');";
+
+		JavascriptMenuItem javascriptMenuItem = _addJavascriptUIItem(
+			new JavascriptMenuItem(), menuItems,
+			DLMenuItemKeys.OPEN_IN_MS_OFFICE, "icon-file-alt",
+			"open-in-ms-office", onClick);
+
+		Map<String, String> context = new HashMap<>();
 
 		context.put(
 			"errorMessage", UnicodeLanguageUtil.get(
@@ -695,23 +667,7 @@ public class DefaultDLViewFileVersionDisplayContext
 				"open_in_ms_office_js.ftl",
 			context);
 
-		javaScriptMenuItem.setJavascript(javaScript);
-
-		javaScriptMenuItem.setLabel("open-in-ms-office");
-
-		String webDavURL = DLUtil.getWebDavURL(
-			_themeDisplay, _fileEntry.getFolder(), _fileEntry,
-			PropsValues.
-				DL_FILE_ENTRY_OPEN_IN_MS_OFFICE_MANUAL_CHECK_IN_REQUIRED,
-			true);
-
-		String onClick =
-			liferayPortletResponse.getNamespace() + "openDocument('" +
-				webDavURL + "');";
-
-		javaScriptMenuItem.setOnClick(onClick);
-
-		menuItems.add(javaScriptMenuItem);
+		javascriptMenuItem.setJavascript(javaScript);
 	}
 
 	private void _addOpenInMsOfficeToolbarItem(List<ToolbarItem> toolbarItems)
@@ -738,8 +694,9 @@ public class DefaultDLViewFileVersionDisplayContext
 		sb.append(webDavURL);
 		sb.append("');");
 
-		_addJavascriptToolbarItem(
-			toolbarItems, DLToolbarItemKeys.OPEN_IN_MS_OFFICE, "icon-file-alt",
+		_addJavascriptUIItem(
+			new JavascriptToolbarItem(), toolbarItems,
+			DLToolbarItemKeys.OPEN_IN_MS_OFFICE, "icon-file-alt",
 			UnicodeLanguageUtil.get(_request, "open-in-ms-office"),
 			sb.toString());
 	}
@@ -764,9 +721,9 @@ public class DefaultDLViewFileVersionDisplayContext
 			throw new SystemException("Unable to create permissions URL", e);
 		}
 
-		URLMenuItem urlMenuItem = _addURLMenuItem(
-			menuItems, "icon-lock", DLMenuItemKeys.PERMISSIONS, "permissions",
-			url);
+		URLMenuItem urlMenuItem = _addURLUIItem(
+			new URLMenuItem(), menuItems, "icon-lock",
+			DLMenuItemKeys.PERMISSIONS, "permissions", url);
 
 		urlMenuItem.setMethod("get");
 		urlMenuItem.setUseDialog(true);
@@ -802,59 +759,38 @@ public class DefaultDLViewFileVersionDisplayContext
 		sb.append(permissionsURL);
 		sb.append("'});");
 
-		_addJavascriptToolbarItem(
-			toolbarItems, DLToolbarItemKeys.PERMISSIONS, "icon-lock",
-			UnicodeLanguageUtil.get(_request, "permissions"),
-			sb.toString());
+		_addJavascriptUIItem(
+			new JavascriptToolbarItem(), toolbarItems,
+			DLToolbarItemKeys.PERMISSIONS, "icon-lock",
+			UnicodeLanguageUtil.get(_request, "permissions"), sb.toString());
 	}
 
-	private JavascriptToolbarItem _addJavascriptToolbarItem(
-		List<ToolbarItem> toolbarItems, String key, String icon, String label,
-		String onClick) {
+	private <T extends JavascriptUIItem> T _addJavascriptUIItem(
+		T javascriptUIItem, List<? super T> javascriptUIItems, String key,
+	String icon, String label, String onClick ) {
 
-		JavascriptToolbarItem javascriptToolbarItem =
-			new JavascriptToolbarItem();
+		javascriptUIItem.setKey(key);
+		javascriptUIItem.setIcon(icon);
+		javascriptUIItem.setLabel(label);
+		javascriptUIItem.setOnClick(onClick);
 
-		javascriptToolbarItem.setKey(key);
-		javascriptToolbarItem.setIcon(icon);
-		javascriptToolbarItem.setLabel(label);
-		javascriptToolbarItem.setOnClick(onClick);
+		javascriptUIItems.add(javascriptUIItem);
 
-		toolbarItems.add(javascriptToolbarItem);
-
-		return javascriptToolbarItem;
+		return javascriptUIItem;
 	}
 
-	private URLMenuItem _addURLMenuItem(
-		List<MenuItem> menuItems, String iconCssClass, String key,
-		String message, String url) {
+	private <T extends URLUIItem> T _addURLUIItem(
+		T urluiItem, List<? super T> urluiItems, String key, String icon,
+		String label, String url ) {
 
-		URLMenuItem urlMenuItem = new URLMenuItem();
+		urluiItem.setKey(key);
+		urluiItem.setIcon(icon);
+		urluiItem.setLabel(label);
+		urluiItem.setURL(url);
 
-		urlMenuItem.setIcon(iconCssClass);
-		urlMenuItem.setKey(key);
-		urlMenuItem.setLabel(message);
-		urlMenuItem.setURL(url);
+		urluiItems.add(urluiItem);
 
-		menuItems.add(urlMenuItem);
-
-		return urlMenuItem;
-	}
-
-	private URLToolbarItem _addURLToolbarItem(
-		List<ToolbarItem> toolbarItems, String key, String icon, String label,
-		String url) {
-
-		URLToolbarItem urlToolbarItem = new URLToolbarItem();
-
-		urlToolbarItem.setKey(key);
-		urlToolbarItem.setIcon(icon);
-		urlToolbarItem.setLabel(label);
-		urlToolbarItem.setURL(url);
-
-		toolbarItems.add(urlToolbarItem);
-
-		return urlToolbarItem;
+		return urluiItem;
 	}
 
 	private String _getActionURL(String strutsAction, String cmd) {
