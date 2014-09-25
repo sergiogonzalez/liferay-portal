@@ -285,9 +285,9 @@ public class DefaultDLViewFileVersionDisplayContext
 
 		URLMenuItem urlMenuItem = new URLMenuItem();
 
-		urlMenuItem.setIconCssClass("icon-remove");
+		urlMenuItem.setIcon("icon-remove");
 		urlMenuItem.setKey(DLMenuItemKeys.CANCEL_CHECKOUT);
-		urlMenuItem.setMessage("cancel-checkout[document]");
+		urlMenuItem.setLabel("cancel-checkout[document]");
 		urlMenuItem.setURL(
 			_getActionURL(
 				"/document_library/edit_file_entry",
@@ -305,9 +305,9 @@ public class DefaultDLViewFileVersionDisplayContext
 
 		URLMenuItem urlMenuItem = new URLMenuItem();
 
-		urlMenuItem.setIconCssClass("icon-lock");
+		urlMenuItem.setIcon("icon-lock");
 		urlMenuItem.setKey(DLMenuItemKeys.CHECKIN);
-		urlMenuItem.setMessage("checkin");
+		urlMenuItem.setLabel("checkin");
 		urlMenuItem.setURL(
 			_getActionURL(
 				"/document_library/edit_file_entry", Constants.CHECKIN));
@@ -324,9 +324,9 @@ public class DefaultDLViewFileVersionDisplayContext
 
 		URLMenuItem urlMenuItem = new URLMenuItem();
 
-		urlMenuItem.setIconCssClass("icon-unlock");
+		urlMenuItem.setIcon("icon-unlock");
 		urlMenuItem.setKey(DLMenuItemKeys.CHECKOUT);
-		urlMenuItem.setMessage("checkout[document]");
+		urlMenuItem.setLabel("checkout[document]");
 		urlMenuItem.setURL(
 			_getActionURL(
 				"/document_library/edit_file_entry", Constants.CHECKOUT));
@@ -439,7 +439,7 @@ public class DefaultDLViewFileVersionDisplayContext
 
 		JavascriptMenuItem javaScriptMenuItem = new JavascriptMenuItem();
 
-		javaScriptMenuItem.setIconCssClass("icon-file-alt");
+		javaScriptMenuItem.setIcon("icon-file-alt");
 		javaScriptMenuItem.setKey(DLMenuItemKeys.OPEN_IN_MS_OFFICE);
 
 		Map<String, String> context = new HashMap<String, String>();
@@ -461,7 +461,7 @@ public class DefaultDLViewFileVersionDisplayContext
 
 		javaScriptMenuItem.setJavascript(javaScript);
 
-		javaScriptMenuItem.setMessage("open-in-ms-office");
+		javaScriptMenuItem.setLabel("open-in-ms-office");
 
 		String webDavURL = DLUtil.getWebDavURL(
 			_themeDisplay, _fileEntry.getFolder(), _fileEntry,
@@ -512,9 +512,9 @@ public class DefaultDLViewFileVersionDisplayContext
 
 		URLMenuItem urlMenuItem = new URLMenuItem();
 
-		urlMenuItem.setIconCssClass(iconCssClass);
+		urlMenuItem.setIcon(iconCssClass);
 		urlMenuItem.setKey(key);
-		urlMenuItem.setMessage(message);
+		urlMenuItem.setLabel(message);
 		urlMenuItem.setURL(url);
 
 		menuItems.add(urlMenuItem);

@@ -110,7 +110,7 @@ public class GoogleDocsDLViewFileVersionDisplayContext
 
 		URLMenuItem urlMenuItem = new URLMenuItem();
 
-		urlMenuItem.setIconCssClass("icon-edit");
+		urlMenuItem.setIcon("icon-edit");
 		urlMenuItem.setKey(GoogleDocsMenuItemKeys.EDIT_IN_GOOGLE);
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
@@ -122,7 +122,7 @@ public class GoogleDocsDLViewFileVersionDisplayContext
 		String message = LanguageUtil.get(
 			resourceBundle, "edit-in-google-docs");
 
-		urlMenuItem.setMessage(message);
+		urlMenuItem.setLabel(message);
 
 		urlMenuItem.setTarget("_blank");
 
