@@ -351,7 +351,7 @@ public class DefaultDLViewFileVersionDisplayContext
 		}
 
 		_addURLUIItem(
-			new URLMenuItem(), menuItems, DLMenuItemKeys.CANCEL_CHECKOUT,
+			new URLMenuItem(), menuItems, DLUIItemKeys.CANCEL_CHECKOUT,
 			"icon-remove", "cancel-checkout[document]",
 			_getActionURL(
 				"/document_library/edit_file_entry",
@@ -367,7 +367,7 @@ public class DefaultDLViewFileVersionDisplayContext
 
 		_addJavascriptUIItem(
 			new JavascriptToolbarItem(), toolbarItems,
-			DLToolbarItemKeys.CANCEL_CHECKOUT, "icon-undo",
+			DLUIItemKeys.CANCEL_CHECKOUT, "icon-undo",
 			UnicodeLanguageUtil.get(_request, "cancel-checkout[document]"),
 			getSubmitFormJavascript(Constants.CANCEL_CHECKOUT, null));
 	}
@@ -380,7 +380,7 @@ public class DefaultDLViewFileVersionDisplayContext
 		}
 
 		_addURLUIItem(
-			new URLMenuItem(), menuItems, DLMenuItemKeys.CHECKIN, "icon-lock",
+			new URLMenuItem(), menuItems, DLUIItemKeys.CHECKIN, "icon-lock",
 			"checkin",
 			_getActionURL(
 				"/document_library/edit_file_entry", Constants.CHECKIN));
@@ -394,9 +394,8 @@ public class DefaultDLViewFileVersionDisplayContext
 		}
 
 		_addJavascriptUIItem(
-			new JavascriptToolbarItem(), toolbarItems,
-			DLToolbarItemKeys.CHECKIN, "icon-lock",
-			UnicodeLanguageUtil.get(_request, "checkin"),
+			new JavascriptToolbarItem(), toolbarItems, DLUIItemKeys.CHECKIN,
+			"icon-lock", UnicodeLanguageUtil.get(_request, "checkin"),
 			getSubmitFormJavascript(Constants.CHECKIN, null));
 	}
 
@@ -408,8 +407,8 @@ public class DefaultDLViewFileVersionDisplayContext
 		}
 
 		_addURLUIItem(
-			new URLMenuItem(), menuItems, DLMenuItemKeys.CHECKOUT,
-			"icon-unlock", "checkout[document]",
+			new URLMenuItem(), menuItems, DLUIItemKeys.CHECKOUT, "icon-unlock",
+			"checkout[document]",
 			_getActionURL(
 				"/document_library/edit_file_entry", Constants.CHECKOUT));
 	}
@@ -422,8 +421,8 @@ public class DefaultDLViewFileVersionDisplayContext
 		}
 
 		_addJavascriptUIItem(
-			new JavascriptToolbarItem(), toolbarItems,
-			DLToolbarItemKeys.CHECKOUT, "icon-unlock",
+			new JavascriptToolbarItem(), toolbarItems, DLUIItemKeys.CHECKOUT,
+			"icon-unlock",
 			UnicodeLanguageUtil.get(_request, "checkout[document]"),
 			getSubmitFormJavascript(Constants.CHECKOUT, null));
 	}
@@ -434,7 +433,7 @@ public class DefaultDLViewFileVersionDisplayContext
 		if (isDeleteButtonVisible()) {
 			DeleteMenuItem deleteMenuItem = new DeleteMenuItem();
 
-			deleteMenuItem.setKey(DLMenuItemKeys.DELETE);
+			deleteMenuItem.setKey(DLUIItemKeys.DELETE);
 			deleteMenuItem.setURL(
 				_getActionURL(
 					"/document_library/edit_file_entry", Constants.DELETE));
@@ -444,7 +443,7 @@ public class DefaultDLViewFileVersionDisplayContext
 		else if (isMoveToTheRecycleBinButtonVisible()) {
 			DeleteMenuItem deleteMenuItem = new DeleteMenuItem();
 
-			deleteMenuItem.setKey(DLMenuItemKeys.DELETE);
+			deleteMenuItem.setKey(DLUIItemKeys.DELETE);
 			deleteMenuItem.setTrash(true);
 			deleteMenuItem.setURL(
 				_getActionURL(
@@ -483,7 +482,7 @@ public class DefaultDLViewFileVersionDisplayContext
 		sb.append("}");
 
 		_addJavascriptUIItem(
-			new JavascriptToolbarItem(), toolbarItems, DLToolbarItemKeys.DELETE,
+			new JavascriptToolbarItem(), toolbarItems, DLUIItemKeys.DELETE,
 			"icon-remove", UnicodeLanguageUtil.get(_request, "delete"),
 			sb.toString());
 	}
@@ -495,18 +494,18 @@ public class DefaultDLViewFileVersionDisplayContext
 			return;
 		}
 
-		String message = TextFormatter.formatStorageSize(
+		String label = TextFormatter.formatStorageSize(
 			_fileEntry.getSize(), _themeDisplay.getLocale());
 
-		message = _themeDisplay.translate("download") + " (" + message + ")";
+		label = _themeDisplay.translate("download") + " (" + label + ")";
 
 		String url = DLUtil.getDownloadURL(
 			_fileEntry, _fileVersion, _themeDisplay, StringPool.BLANK, false,
 			true);
 
 		URLMenuItem urlMenuItem = _addURLUIItem(
-			new URLMenuItem(), menuItems, DLMenuItemKeys.DOWNLOAD,
-			"icon-download", message, url);
+			new URLMenuItem(), menuItems, DLUIItemKeys.DOWNLOAD,
+			"icon-download", label, url);
 
 		urlMenuItem.setTarget("_blank");
 	}
@@ -519,7 +518,7 @@ public class DefaultDLViewFileVersionDisplayContext
 		}
 
 		_addURLUIItem(
-			new URLToolbarItem(), toolbarItems, DLToolbarItemKeys.DOWNLOAD,
+			new URLToolbarItem(), toolbarItems, DLUIItemKeys.DOWNLOAD,
 			"icon-download", UnicodeLanguageUtil.get(_request, "download"),
 			DLUtil.getDownloadURL(
 				_fileEntry, _fileVersion, _themeDisplay, StringPool.BLANK));
@@ -538,7 +537,7 @@ public class DefaultDLViewFileVersionDisplayContext
 		portletURL.setParameter("backURL", _getCurrentURL());
 
 		_addURLUIItem(
-			new URLMenuItem(), menuItems, DLMenuItemKeys.EDIT, "icon-edit",
+			new URLMenuItem(), menuItems, DLUIItemKeys.EDIT, "icon-edit",
 			"edit", portletURL.toString());
 	}
 
@@ -553,9 +552,8 @@ public class DefaultDLViewFileVersionDisplayContext
 			"/document_library/edit_file_entry");
 
 		_addURLUIItem(
-			new URLToolbarItem(), toolbarItems, DLToolbarItemKeys.EDIT,
-			"icon-edit", UnicodeLanguageUtil.get(_request, "edit"),
-			portletURL.toString());
+			new URLToolbarItem(), toolbarItems, DLUIItemKeys.EDIT, "icon-edit",
+			UnicodeLanguageUtil.get(_request, "edit"), portletURL.toString());
 	}
 
 	private void _addMoveMenuItem(List<MenuItem> menuItems)
@@ -584,7 +582,7 @@ public class DefaultDLViewFileVersionDisplayContext
 			"fileEntryIds", String.valueOf(_fileEntry.getFileEntryId()));
 
 		_addURLUIItem(
-			new URLMenuItem(), menuItems, "icon-move", DLMenuItemKeys.MOVE,
+			new URLMenuItem(), menuItems, DLUIItemKeys.MOVE, "icon-move",
 			"move", portletURL.toString());
 	}
 
@@ -598,9 +596,8 @@ public class DefaultDLViewFileVersionDisplayContext
 		PortletURL portletURL = _getRenderURL("/document_library/move_entry");
 
 		_addURLUIItem(
-			new URLToolbarItem(), toolbarItems, DLToolbarItemKeys.MOVE,
-			"icon-move", UnicodeLanguageUtil.get(_request, "move"),
-			portletURL.toString());
+			new URLToolbarItem(), toolbarItems, DLUIItemKeys.MOVE, "icon-move",
+			UnicodeLanguageUtil.get(_request, "move"), portletURL.toString());
 	}
 
 	private void _addMoveToTheRecycleBinToolbarItem(
@@ -622,7 +619,7 @@ public class DefaultDLViewFileVersionDisplayContext
 
 		_addJavascriptUIItem(
 			new JavascriptToolbarItem(), toolbarItems,
-			DLToolbarItemKeys.MOVE_TO_THE_RECYCLE_BIN, "icon-trash",
+			DLUIItemKeys.MOVE_TO_THE_RECYCLE_BIN, "icon-trash",
 			UnicodeLanguageUtil.get(_request, "move-to-the-recycle-bin"),
 			getSubmitFormJavascript(
 				Constants.MOVE_TO_TRASH, portletURL.toString()));
@@ -649,9 +646,8 @@ public class DefaultDLViewFileVersionDisplayContext
 				webDavURL + "');";
 
 		JavascriptMenuItem javascriptMenuItem = _addJavascriptUIItem(
-			new JavascriptMenuItem(), menuItems,
-			DLMenuItemKeys.OPEN_IN_MS_OFFICE, "icon-file-alt",
-			"open-in-ms-office", onClick);
+			new JavascriptMenuItem(), menuItems, DLUIItemKeys.OPEN_IN_MS_OFFICE,
+			"icon-file-alt", "open-in-ms-office", onClick);
 
 		Map<String, String> context = new HashMap<>();
 
@@ -696,7 +692,7 @@ public class DefaultDLViewFileVersionDisplayContext
 
 		_addJavascriptUIItem(
 			new JavascriptToolbarItem(), toolbarItems,
-			DLToolbarItemKeys.OPEN_IN_MS_OFFICE, "icon-file-alt",
+			DLUIItemKeys.OPEN_IN_MS_OFFICE, "icon-file-alt",
 			UnicodeLanguageUtil.get(_request, "open-in-ms-office"),
 			sb.toString());
 	}
@@ -722,8 +718,8 @@ public class DefaultDLViewFileVersionDisplayContext
 		}
 
 		URLMenuItem urlMenuItem = _addURLUIItem(
-			new URLMenuItem(), menuItems, "icon-lock",
-			DLMenuItemKeys.PERMISSIONS, "permissions", url);
+			new URLMenuItem(), menuItems, DLUIItemKeys.PERMISSIONS, "icon-lock",
+			"permissions", url);
 
 		urlMenuItem.setMethod("get");
 		urlMenuItem.setUseDialog(true);
@@ -760,9 +756,9 @@ public class DefaultDLViewFileVersionDisplayContext
 		sb.append("'});");
 
 		_addJavascriptUIItem(
-			new JavascriptToolbarItem(), toolbarItems,
-			DLToolbarItemKeys.PERMISSIONS, "icon-lock",
-			UnicodeLanguageUtil.get(_request, "permissions"), sb.toString());
+			new JavascriptToolbarItem(), toolbarItems, DLUIItemKeys.PERMISSIONS,
+			"icon-lock", UnicodeLanguageUtil.get(_request, "permissions"),
+			sb.toString());
 	}
 
 	private <T extends JavascriptUIItem> T _addJavascriptUIItem(
