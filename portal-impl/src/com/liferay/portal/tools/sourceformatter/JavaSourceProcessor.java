@@ -777,18 +777,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				"private static Log _log"
 			});
 
-		/*
 		newContent = StringUtil.replace(
-			newContent,
-			new String[] {
-				StringPool.TAB + "static ", StringPool.TAB + "public static {",
-				" final static "
-			},
-			new String[] {
-				StringPool.TAB + "public static ", StringPool.TAB + "static {",
-				" static final "
-			});
-		*/
+			newContent, " final static ", " static final ");
 
 		newContent = fixCompatClassImports(absolutePath, newContent);
 
@@ -1029,10 +1019,16 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		pos = newContent.indexOf("\npublic ");
 
 		if (pos != -1) {
-			String javaClassContent = newContent.substring(pos);
+			String javaClassContent = newContent.substring(pos + 1);
+
+			String beforeJavaClass = newContent.substring(0, pos + 1);
+
+			int javaClassLineCount =
+				StringUtil.count(beforeJavaClass, "\n") + 1;
 
 			newContent = formatJavaTerms(
 				fileName, absolutePath, newContent, javaClassContent,
+				javaClassLineCount, _javaTermAccessLevelModifierExclusions,
 				_javaTermSortExclusions, _testAnnotationsExclusions);
 		}
 
@@ -1221,6 +1217,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			"fit.on.single.line.exludes");
 		_hibernateSQLQueryExclusions = getPropertyList(
 			"hibernate.sql.query.excludes");
+		_javaTermAccessLevelModifierExclusions = getPropertyList(
+			"javaterm.access.level.modifier.excludes");
 		_javaTermSortExclusions = getPropertyList("javaterm.sort.excludes");
 		_lineLengthExclusions = getPropertyList("line.length.excludes");
 		_proxyExclusions = getPropertyList("proxy.excludes");
@@ -1242,7 +1240,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		StringBundler sb = new StringBundler();
 
-		try (UnsyncBufferedReader unsyncBufferedReader = 
+		try (UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(new UnsyncStringReader(content))) {
 
 			String line = null;
@@ -1281,7 +1279,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					}
 				}
 
-				if (line.contains(StringPool.TAB + "for (") && 
+				if (line.contains(StringPool.TAB + "for (") &&
 					line.contains(":") && !line.contains(" :")) {
 
 					line = StringUtil.replace(line, ":" , " :");
@@ -1515,7 +1513,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 							line, StringPool.DOUBLE_SPACE, StringPool.SPACE);
 
 						trimmedLine = StringUtil.replaceLast(
-							trimmedLine, StringPool.DOUBLE_SPACE, 
+							trimmedLine, StringPool.DOUBLE_SPACE,
 							StringPool.SPACE);
 					}
 
@@ -1531,7 +1529,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 								!linePart.startsWith("throws")) {
 
 								line = StringUtil.replaceLast(
-									line, StringPool.SPACE + linePart, 
+									line, StringPool.SPACE + linePart,
 									linePart);
 							}
 						}
@@ -1716,7 +1714,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				Tuple combinedLines = null;
 				int lineLength = getLineLength(line);
 
-				if (!line.startsWith("import ") && 
+				if (!line.startsWith("import ") &&
 					!line.startsWith("package ") &&
 					!line.matches("\\s*\\*.*")) {
 
@@ -2516,6 +2514,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		"\n(.+)\n\n(\t+)}\n");
 	private Pattern _incorrectLineBreakPattern = Pattern.compile(
 		"\t(catch |else |finally |for |if |try |while ).*\\{\n\n\t+\\w");
+	private List<String> _javaTermAccessLevelModifierExclusions;
 	private List<String> _javaTermSortExclusions;
 	private List<String> _lineLengthExclusions;
 	private Pattern _logPattern = Pattern.compile(
