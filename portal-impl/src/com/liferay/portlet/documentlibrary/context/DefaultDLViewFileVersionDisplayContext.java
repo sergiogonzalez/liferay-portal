@@ -938,8 +938,7 @@ public class DefaultDLViewFileVersionDisplayContext
 
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
-		portletURL.setParameter(
-			"struts_action", "/document_library/edit_file_entry");
+		portletURL.setParameter("struts_action", strutsAction);
 		portletURL.setParameter("redirect", _getCurrentURL());
 		portletURL.setParameter(
 			"fileEntryId", String.valueOf(_fileEntry.getFileEntryId()));
