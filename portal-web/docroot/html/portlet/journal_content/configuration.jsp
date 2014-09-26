@@ -41,7 +41,7 @@ catch (NoSuchArticleException nsae) {
 
 <liferay-portlet:renderURL portletConfiguration="true" varImpl="configurationRenderURL" />
 
-<aui:form action="<%= configurationActionURL %>" method="post" name="fm1" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveConfiguration();" %>'>
+<aui:form action="<%= configurationActionURL %>" method="post" name="fm1">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="redirect" type="hidden" value='<%= configurationRenderURL + StringPool.AMPERSAND + renderResponse.getNamespace() + "cur=" + cur %>' />
 
@@ -109,7 +109,7 @@ catch (NoSuchArticleException nsae) {
 					<c:if test="<%= tableIteratorObj.isSmallImage() %>">
 						<br />
 
-						<img alt="" hspace="0" src="<%= Validator.isNotNull(tableIteratorObj.getSmallImageURL()) ? HtmlUtil.escapeHREF(tableIteratorObj.getSmallImageURL()) : themeDisplay.getPathImage() + "/journal/template?img_id=" + tableIteratorObj.getSmallImageId() + "&t=" + WebServerServletTokenUtil.getToken(tableIteratorObj.getSmallImageId()) %>" vspace="0" />
+						<img alt="" hspace="0" src="<%= HtmlUtil.escapeAttribute(tableIteratorObj.getTemplateImageURL(themeDisplay)) %>" vspace="0" />
 					</c:if>
 				</liferay-ui:table-iterator>
 

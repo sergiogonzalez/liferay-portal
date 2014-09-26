@@ -45,7 +45,7 @@ String contents = (String)request.getAttribute("liferay-ui:input-editor:contents
 String contentsLanguageId = (String)request.getAttribute("liferay-ui:input-editor:contentsLanguageId");
 String cssClasses = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:cssClasses"));
 String editorImpl = (String)request.getAttribute("liferay-ui:input-editor:editorImpl");
-String name = namespace + GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:name"));
+String name = namespace + GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:name")) + "Editor";
 String initMethod = (String)request.getAttribute("liferay-ui:input-editor:initMethod");
 boolean inlineEdit = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:inlineEdit"));
 
@@ -153,7 +153,15 @@ if (alloyEditorMode.equals("text")) {
 				<c:when test='<%= alloyEditorMode.equals("text") %>'>
 					var editorElement = CKEDITOR.instances['<%= name %>'].element.$;
 
-					return editorElement.childElementCount ? editorElement.children[0].innerText : '';
+					var text = '';
+
+					if (editorElement.childElementCount) {
+						var childElement = editorElement.children[0];
+
+						text = childElement.textContent || childElement.innerText;
+					}
+
+					return text;
 				</c:when>
 				<c:otherwise>
 					return window['<%= name %>'].getCkData();

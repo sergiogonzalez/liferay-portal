@@ -238,8 +238,8 @@ public class EditEntryAction extends PortletAction {
 					 e instanceof EntrySmallImageNameException ||
 					 e instanceof EntrySmallImageSizeException ||
 					 e instanceof EntryTitleException ||
-					 e instanceof LiferayFileItemException ||
 					 e instanceof FileSizeException ||
+					 e instanceof LiferayFileItemException ||
 					 e instanceof SanitizerException) {
 
 				SessionErrors.add(actionRequest, e.getClass());
@@ -516,6 +516,16 @@ public class EditEntryAction extends PortletAction {
 		else {
 
 			// Update entry
+
+			boolean sendEmailEntryUpdated = ParamUtil.getBoolean(
+				actionRequest, "sendEmailEntryUpdated");
+			String emailEntryUpdatedComment = ParamUtil.getString(
+				actionRequest, "emailEntryUpdatedComment");
+
+			serviceContext.setAttribute(
+				"sendEmailEntryUpdated", sendEmailEntryUpdated);
+			serviceContext.setAttribute(
+				"emailEntryUpdatedComment", emailEntryUpdatedComment);
 
 			entry = BlogsEntryLocalServiceUtil.getEntry(entryId);
 

@@ -64,6 +64,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONTENT_PLUS_LINK</td>
+	<td>xpath=(//div[contains(@class,'lfr-form-row')]//button[contains(@class,'add-row')])[${key_indexNumber}]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -102,32 +107,47 @@
 <!--RULE_PANEL-->
 <tr>
 	<td>RULE_PANEL_BELONGS_RADIO</td>
-	<td>//label[contains(.,'belongs')]/input</td>
+	<td>xpath=(//label[contains(.,'belongs')]/input)[${key_rowNumber}]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RULE_PANEL_DOES_NOT_BELONG_RADIO</td>
-	<td>//label[contains(.,'does not belong')]/input</td>
+	<td>xpath=(//label[contains(.,'does not belong')]/input)[${key_rowNumber}]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RULE_PANEL_ANY_RADIO</td>
-	<td>//label[contains(.,'Any')]/input</td>
+	<td>xpath=(//label[contains(.,'Any')]/input)[${key_rowNumber}]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RULE_PANEL_ALL_RADIO</td>
-	<td>//label[contains(.,'All')]/input</td>
+	<td>xpath=(//label[contains(.,'All')]/input)[${key_rowNumber}]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RULE_PANEL_USER_SEGMENT_SELECT_BUTTON</td>
-	<td>//button[@title='Select User Segments']</td>
+	<td>xpath=(//button[@title='Select User Segments'])[${key_rowNumber}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RULE_PANEL_SELECTED_USER_SEGMENT</td>
+	<td>//span[contains(.,'${key_userSegmentName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RULE_PANEL_SELECTED_DISPLAY_CONTENT_TITLE</td>
+	<td>//div[@class='asset-title' and contains(.,'${key_contentTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RULE_PANEL_SELECTED_DISPLAY_CONTENT_TYPE</td>
+	<td>//div[@class='asset-type' and contains(.,'Type: ${key_contentType}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RULE_PANEL_DISPLAY_CONTENT_DROPDOWN</td>
-	<td>//div/a[@title='Select Content']</td>
+	<td>xpath=(//div/a[@title='Select Content'])[${key_rowNumber}]</td>
 	<td></td>
 </tr>
 <tr>
@@ -144,6 +164,11 @@
 <tr>
 	<td>RULE_PANEL_USER_SEGMENT_SELECT_USER_SEGMENT_CHECKBOX</td>
 	<td>//li/div[contains(.,'${key_userSegmentName}')]//i[contains(@class,'icon-check')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RULE_PANEL_USER_SEGMENT_SELECT_USER_SEGMENT_SCOPE</td>
+	<td>//div[contains(.,'${key_userSegmentName}')]//span[contains(.,'User Segment (${key_siteScope})')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -191,6 +216,16 @@
 <tr>
 	<td>OTHERWISE_PANEL_SELECT_CONTENT_BUTTON</td>
 	<td>//div[contains(@class,'field-row')]//div[contains(.,'Otherwise')]//div/a[@title='Select Content']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OTHERWISE_PANEL_SELECTED_CONTENT_TYPE</td>
+	<td>//div[contains(@class,'field-row')]//div[contains(.,'Otherwise')]//div[@class='asset-type']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OTHERWISE_PANEL_SELECTED_CONTENT_TITLE</td>
+	<td>//div[contains(@class,'field-row')]//div[contains(.,'Otherwise')]//div[@class='asset-title' and contains(.,'${key_contentTitle}')]</td>
 	<td></td>
 </tr>
 <tr>
