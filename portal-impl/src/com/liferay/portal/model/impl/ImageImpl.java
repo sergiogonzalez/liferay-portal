@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
@@ -41,17 +42,21 @@ public class ImageImpl extends ImageBaseImpl {
 		long imageId = getImageId();
 
 		try {
-			DLFileEntry dlFileEntry =
-				DLFileEntryLocalServiceUtil.fetchFileEntryByAnyImageId(imageId);
-
 			InputStream is = null;
 
-			if ((dlFileEntry != null) &&
-				(dlFileEntry.getLargeImageId() == imageId)) {
+			if (PropsValues.
+					WEB_SERVER_SERVLET_CHECK_LEGACY_IMAGE_GALLERY_REQUEST_ENABLED) {
+				DLFileEntry dlFileEntry =
+						DLFileEntryLocalServiceUtil.fetchFileEntryByAnyImageId(imageId);
 
-				is = DLStoreUtil.getFileAsStream(
-					dlFileEntry.getCompanyId(),
-					dlFileEntry.getDataRepositoryId(), dlFileEntry.getName());
+
+				if ((dlFileEntry != null) &&
+					(dlFileEntry.getLargeImageId() == imageId)) {
+
+					is = DLStoreUtil.getFileAsStream(
+						dlFileEntry.getCompanyId(),
+						dlFileEntry.getDataRepositoryId(), dlFileEntry.getName());
+				}
 			}
 			else {
 				is = DLStoreUtil.getFileAsStream(
