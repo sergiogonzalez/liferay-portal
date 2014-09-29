@@ -35,9 +35,6 @@ long smallImageFileEntryId = BeanParamUtil.getLong(entry, request, "smallImageFi
 
 boolean preview = ParamUtil.getBoolean(request, "preview");
 boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
-
-String emailEntryUpdatedComment = ParamUtil.getString(request, "emailEntryUpdatedComment");
-boolean sendEmailEntryUpdated = ParamUtil.getBoolean(request, "sendEmailEntryUpdated");
 %>
 
 <c:if test="<%= showHeader %>">
@@ -154,7 +151,16 @@ boolean sendEmailEntryUpdated = ParamUtil.getBoolean(request, "sendEmailEntryUpd
 			<aui:input name="displayDate" />
 
 			<c:if test="<%= (entry != null) && blogsSettings.isEmailEntryUpdatedEnabled() %>">
+
+				<%
+				boolean sendEmailEntryUpdated = ParamUtil.getBoolean(request, "sendEmailEntryUpdated");
+				%>
+
 				<aui:input name="sendEmailEntryUpdated" type="checkbox" value="<%= sendEmailEntryUpdated %>" />
+
+				<%
+				String emailEntryUpdatedComment = ParamUtil.getString(request, "emailEntryUpdatedComment");
+				%>
 
 				<div id="<portlet:namespace />emailEntryUpdatedCommentWrapper">
 					<aui:input name="emailEntryUpdatedComment" type="textarea" value="<%= emailEntryUpdatedComment %>" />
