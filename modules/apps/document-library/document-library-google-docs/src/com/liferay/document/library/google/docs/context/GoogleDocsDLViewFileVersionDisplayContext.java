@@ -34,11 +34,15 @@ import com.liferay.portlet.documentlibrary.context.DLViewFileVersionDisplayConte
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+
 import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.UUID;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -54,6 +58,9 @@ public class GoogleDocsDLViewFileVersionDisplayContext
 		FileVersion fileVersion) {
 
 		super(_UUID, parentDLDisplayContext, request, response, fileVersion);
+
+		_googleDocsMetadataHelper = new GoogleDocsMetadataHelper(
+			(DLFileVersion)fileVersion.getModel());
 	}
 
 	@Override
@@ -88,7 +95,7 @@ public class GoogleDocsDLViewFileVersionDisplayContext
 		URLMenuItem urlMenuItem = _insertEditInGoogleURLUIItem(
 			new URLMenuItem(), menuItems);
 
-		urlMenuItem.setTarget("_blank");
+		urlMenuItem.setMethod("GET");
 
 		return menuItems;
 	}
@@ -102,6 +109,26 @@ public class GoogleDocsDLViewFileVersionDisplayContext
 		_insertEditInGoogleURLUIItem(new URLToolbarItem(), toolbarItems);
 
 		return toolbarItems;
+	}
+
+	@Override
+	public void renderPreview(
+			HttpServletRequest request, HttpServletResponse response)
+		throws IOException, ServletException {
+
+		PrintWriter printWriter = response.getWriter();
+
+		if (_googleDocsMetadataHelper.containsField(
+				GoogleDocsConstants.DDM_FIELD_NAME_EMBED_URL)) {
+
+			String embedURL = _googleDocsMetadataHelper.getFieldValue(
+				GoogleDocsConstants.DDM_FIELD_NAME_EMBED_URL);
+
+			printWriter.format(
+				"<iframe width='100%%' height='300' frameborder='0' src='%s'>" +
+					"</iframe>",
+				embedURL);
+		}
 	}
 
 	private int _getIndex(List<? extends UIItem> uiItems, String key) {
@@ -119,40 +146,39 @@ public class GoogleDocsDLViewFileVersionDisplayContext
 	private <T extends URLUIItem> T _insertEditInGoogleURLUIItem(
 		T urlUIItem, List<? super T> urlUIItems) {
 
-		int index = _getIndex(
-			(List<? extends UIItem>)urlUIItems, DLUIItemKeys.EDIT);
+		if (_googleDocsMetadataHelper.containsField(
+				GoogleDocsConstants.DDM_FIELD_NAME_EDIT_URL)) {
 
-		if (index == -1) {
-			index = 0;
+			int index = _getIndex(
+				(List<? extends UIItem>)urlUIItems, DLUIItemKeys.EDIT);
+
+			if (index == -1) {
+				index = 0;
+			}
+
+			urlUIItem.setIcon("icon-edit");
+			urlUIItem.setKey(GoogleDocsMenuItemKeys.EDIT_IN_GOOGLE);
+
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+			ResourceBundle resourceBundle = ResourceUtil.getResourceBundle(
+				themeDisplay.getLocale());
+
+			String message = LanguageUtil.get(
+				resourceBundle, "edit-in-google-docs");
+
+			urlUIItem.setLabel(message);
+
+			urlUIItem.setTarget("_blank");
+
+			String editURL = _googleDocsMetadataHelper.getFieldValue(
+				GoogleDocsConstants.DDM_FIELD_NAME_EDIT_URL);
+
+			urlUIItem.setURL(editURL);
+
+			urlUIItems.add(index, urlUIItem);
 		}
-
-		urlUIItem.setIcon("icon-edit");
-		urlUIItem.setKey(GoogleDocsMenuItemKeys.EDIT_IN_GOOGLE);
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		ResourceBundle resourceBundle = ResourceUtil.getResourceBundle(
-			themeDisplay.getLocale());
-
-		String message = LanguageUtil.get(
-			resourceBundle, "edit-in-google-docs");
-
-		urlUIItem.setLabel(message);
-
-		urlUIItem.setTarget("_blank");
-
-		DLFileVersion dlFileVersion = (DLFileVersion)fileVersion.getModel();
-
-		GoogleDocsMetadataHelper googleDocsMetadataHelper =
-			new GoogleDocsMetadataHelper(dlFileVersion);
-
-		String editURL = googleDocsMetadataHelper.getFieldValue(
-			GoogleDocsConstants.DDM_FIELD_NAME_EDIT_URL);
-
-		urlUIItem.setURL(editURL);
-
-		urlUIItems.add(index, urlUIItem);
 
 		return urlUIItem;
 	}
@@ -172,5 +198,7 @@ public class GoogleDocsDLViewFileVersionDisplayContext
 
 	private static final UUID _UUID = UUID.fromString(
 		"7B61EA79-83AE-4FFD-A77A-1D47E06EBBE9");
+
+	private GoogleDocsMetadataHelper _googleDocsMetadataHelper;
 
 }

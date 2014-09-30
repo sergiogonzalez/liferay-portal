@@ -12,25 +12,26 @@
  * details.
  */
 
-package com.liferay.document.library.google.docs.util;
+package com.liferay.portlet.documentlibrary.context;
+
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 
 /**
- * @author Iván Zaera
+ * @author Ivan Zaera
  */
-public class GoogleDocsConstants {
+public interface DLFilePicker {
 
-	public static final String DDM_FIELD_NAME_DESCRIPTION = "Description";
+	public DDMStructure getDDMStructure() throws PortalException;
 
-	public static final String DDM_FIELD_NAME_EDIT_URL = "Edit_URL";
+	public String getDescriptionFieldName() throws PortalException;
 
-	public static final String DDM_FIELD_NAME_EMBED_URL = "Embed_URL";
+	public String getIconFieldName() throws PortalException;
 
-	public static final String DDM_FIELD_NAME_ICON = "Icon";
+	public String getJavascript() throws PortalException;
 
-	public static final String DDM_FIELD_NAME_ID = "ID";
+	public String getOnClickCallback() throws PortalException;
 
-	public static final String DDM_FIELD_NAME_TITLE = "Title";
-
-	public static final String DDM_STRUCTURE_KEY_GOOGLE_DOCS = "GOOGLE_DOCS";
+	public String getTitleFieldName() throws PortalException;
 
 }
