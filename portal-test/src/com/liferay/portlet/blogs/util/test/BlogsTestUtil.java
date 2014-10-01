@@ -132,7 +132,8 @@ public class BlogsTestUtil {
 			boolean allowTrackbacks = true;
 			String[] trackbacks = new String[0];
 
-			ImageSelector imageSelector = null;
+			ImageSelector coverImageSelector = null;
+			ImageSelector smallImageSelector = null;
 
 			if (smallImage) {
 				Class<?> clazz = BlogsTestUtil.class;
@@ -157,8 +158,8 @@ public class BlogsTestUtil {
 						MimeTypesUtil.getContentType("image.jpg"));
 				}
 
-				imageSelector = new ImageSelector(
-					fileEntry.getFileEntryId(), StringPool.BLANK);
+				smallImageSelector = new ImageSelector(
+					fileEntry.getFileEntryId(), StringPool.BLANK, null);
 			}
 
 			serviceContext = (ServiceContext)serviceContext.clone();
@@ -170,7 +171,7 @@ public class BlogsTestUtil {
 				userId, title, subtitle, description, content, displayDateMonth,
 				displayDateDay, displayDateYear, displayDateHour,
 				displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
-				imageSelector, serviceContext);
+				coverImageSelector, smallImageSelector, serviceContext);
 
 			if (approved) {
 				return updateStatus(entry, serviceContext);
@@ -236,7 +237,7 @@ public class BlogsTestUtil {
 			entry = BlogsEntryLocalServiceUtil.updateEntry(
 				entry.getUserId(), entry.getEntryId(), title,
 				entry.getSubtitle(), entry.getDescription(), entry.getContent(),
-				1, 1, 2012, 12, 00, true, true, new String[0], null,
+				1, 1, 2012, 12, 00, true, true, new String[0], null, null,
 				serviceContext);
 
 			if (approved) {
