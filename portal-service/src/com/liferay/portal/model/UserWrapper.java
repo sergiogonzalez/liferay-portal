@@ -1060,6 +1060,12 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	}
 
 	@Override
+	public java.util.Collection<com.liferay.portal.model.RoleAssignment> getOrganizationRoleAssignments()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _user.getOrganizationRoleAssignments();
+	}
+
+	@Override
 	public java.util.List<com.liferay.portal.model.Organization> getOrganizations()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _user.getOrganizations();
@@ -1177,6 +1183,12 @@ public class UserWrapper implements User, ModelWrapper<User> {
 		return _user.getPublicLayoutsPageCount();
 	}
 
+	@Override
+	public java.util.Collection<com.liferay.portal.model.RoleAssignment> getRegularRoleAssignments()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _user.getRegularRoleAssignments();
+	}
+
 	/**
 	* Returns the reminder query answer of this user.
 	*
@@ -1245,6 +1257,12 @@ public class UserWrapper implements User, ModelWrapper<User> {
 		boolean includeAdministrative)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _user.getSiteGroups(includeAdministrative);
+	}
+
+	@Override
+	public java.util.Collection<com.liferay.portal.model.RoleAssignment> getSiteRoleAssignments()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _user.getSiteRoleAssignments();
 	}
 
 	/**

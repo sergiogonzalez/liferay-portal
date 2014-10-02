@@ -44,9 +44,13 @@ import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.PasswordPolicy;
 import com.liferay.portal.model.Phone;
 import com.liferay.portal.model.Role;
+import com.liferay.portal.model.RoleAssignment;
+import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.Team;
 import com.liferay.portal.model.UserConstants;
 import com.liferay.portal.model.UserGroup;
+import com.liferay.portal.model.UserGroupGroupRole;
+import com.liferay.portal.model.UserGroupRole;
 import com.liferay.portal.model.Website;
 import com.liferay.portal.security.auth.EmailAddressGenerator;
 import com.liferay.portal.security.auth.EmailAddressGeneratorFactory;
@@ -64,7 +68,9 @@ import com.liferay.portal.service.PasswordPolicyLocalServiceUtil;
 import com.liferay.portal.service.PhoneLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.TeamLocalServiceUtil;
+import com.liferay.portal.service.UserGroupGroupRoleLocalServiceUtil;
 import com.liferay.portal.service.UserGroupLocalServiceUtil;
+import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.WebsiteLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -74,10 +80,13 @@ import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -653,6 +662,12 @@ public class UserImpl extends UserBaseImpl {
 			getUserId(), includeAdministrative);
 	}
 
+	public Collection<RoleAssignment> getOrganizationRoleAssignments()
+		throws PortalException {
+
+		return null;
+	}
+
 	@Override
 	public List<Organization> getOrganizations() throws PortalException {
 		return getOrganizations(false);
@@ -710,6 +725,57 @@ public class UserImpl extends UserBaseImpl {
 	@Override
 	public int getPublicLayoutsPageCount() throws PortalException {
 		return LayoutLocalServiceUtil.getLayoutsCount(this, false);
+	}
+
+	public Collection<RoleAssignment> getRegularRoleAssignments()
+		throws PortalException {
+
+		Map<Role, RoleAssignment> roleAssignments =
+			new LinkedHashMap<Role, RoleAssignment>();
+
+		for (Role role : getRoles()) {
+			RoleAssignment roleAssignment = new RoleAssignment(this, role);
+
+			roleAssignment.setDirectAssignment(true);
+
+			roleAssignments.put(role, roleAssignment);
+		}
+
+		for (UserGroup userGroup : getUserGroups()) {
+			List<Role> roles = RoleLocalServiceUtil.getGroupRoles(
+				userGroup.getGroupId());
+
+			for (Role role : roles) {
+				RoleAssignment roleAssignment = roleAssignments.get(role);
+
+				if (roleAssignment == null) {
+					roleAssignment = new RoleAssignment(this, role);
+
+					roleAssignments.put(role, roleAssignment);
+				}
+
+				roleAssignment.addUserGroupAssignment(userGroup);
+			}
+		}
+
+		for (Organization organization : getOrganizations()) {
+			List<Role> roles = RoleLocalServiceUtil.getGroupRoles(
+				organization.getGroupId());
+
+			for (Role role : roles) {
+				RoleAssignment roleAssignment = roleAssignments.get(role);
+
+				if (roleAssignment == null) {
+					roleAssignment = new RoleAssignment(this, role);
+
+					roleAssignments.put(role, roleAssignment);
+				}
+
+				roleAssignment.addOrganizationAssignment(organization);
+			}
+		}
+
+		return roleAssignments.values();
 	}
 
 	@Override
@@ -785,6 +851,42 @@ public class UserImpl extends UserBaseImpl {
 
 		return GroupLocalServiceUtil.getUserSitesGroups(
 			getUserId(), includeAdministrative);
+	}
+
+	public Collection<RoleAssignment> getSiteRoleAssignments()
+		throws PortalException {
+
+		Map<Role, RoleAssignment> roleAssignments =
+			new HashMap<Role, RoleAssignment>();
+
+		for (UserGroupRole userGroupRole :
+				getDirectUserGroupRoles(RoleConstants.TYPE_SITE)) {
+
+			roleAssignments.put(
+				userGroupRole.getRole(), new RoleAssignment(userGroupRole));
+		}
+
+		for (UserGroup userGroup : getUserGroups()) {
+			List<UserGroupGroupRole> userGroupRoles =
+				UserGroupGroupRoleLocalServiceUtil.getUserGroupGroupRoles(
+					userGroup.getUserGroupId());
+
+			for (UserGroupGroupRole userGroupGroupRole : userGroupRoles) {
+				Role role = userGroupGroupRole.getRole();
+
+				RoleAssignment roleAssignment = roleAssignments.get(role);
+
+				if (roleAssignment == null) {
+					roleAssignment = new RoleAssignment(this, role);
+
+					roleAssignments.put(role, roleAssignment);
+				}
+
+				roleAssignment.addUserGroupAssignment(userGroup);
+			}
+		}
+
+		return roleAssignments.values();
 	}
 
 	@Override
@@ -1011,6 +1113,31 @@ public class UserImpl extends UserBaseImpl {
 		_timeZone = TimeZoneUtil.getTimeZone(timeZoneId);
 
 		super.setTimeZoneId(timeZoneId);
+	}
+
+	protected List<UserGroupRole> getDirectUserGroupRoles(int roleType)
+		throws PortalException {
+
+		Set<UserGroupRole> userGroupRoles =
+			new HashSet<UserGroupRole>(
+				UserGroupRoleLocalServiceUtil.getUserGroupRoles(getUserId()));
+
+		if (userGroupRoles.isEmpty()) {
+			return Collections.emptyList();
+		}
+
+		List<UserGroupRole> filteredUserGroupRoles =
+			new ArrayList<UserGroupRole>();
+
+		for (UserGroupRole userGroupRole : userGroupRoles) {
+			Role role = userGroupRole.getRole();
+
+			if (role.getType() == roleType) {
+				filteredUserGroupRoles.add(userGroupRole);
+			}
+		}
+
+		return filteredUserGroupRoles;
 	}
 
 	protected String getProfileFriendlyURL() {

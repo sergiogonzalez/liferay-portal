@@ -375,6 +375,15 @@ public interface User extends UserModel, PersistedModel {
 
 	public java.util.List<com.liferay.portal.model.Role> getRoles();
 
+	public java.util.Collection<com.liferay.portal.model.RoleAssignment> getRegularRoleAssignments()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public java.util.Collection<com.liferay.portal.model.RoleAssignment> getOrganizationRoleAssignments()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public java.util.Collection<com.liferay.portal.model.RoleAssignment> getSiteRoleAssignments()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 	public java.util.List<com.liferay.portal.model.Group> getSiteGroups()
 		throws com.liferay.portal.kernel.exception.PortalException;
 

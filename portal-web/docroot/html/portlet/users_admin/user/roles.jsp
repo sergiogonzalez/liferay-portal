@@ -49,22 +49,33 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 
 <h3><liferay-ui:message key="regular-roles" /></h3>
 
+<%
+List<RoleAssignment> regularRoleAssignments = new ArrayList(selUser.getRegularRoleAssignments());
+%>
+
+
 <liferay-ui:search-container
 	curParam="regularRolesCur"
 	headerNames="title,null"
 	id="rolesSearchContainer"
 	iteratorURL="<%= currentURLObj %>"
-	total="<%= roles.size() %>"
+	total="<%= regularRoleAssignments.size() %>"
 >
 	<liferay-ui:search-container-results
-		results="<%= roles.subList(searchContainer.getStart(), searchContainer.getResultEnd()) %>"
+		results="<%= regularRoleAssignments.subList(searchContainer.getStart(), searchContainer.getResultEnd()) %>"
 	/>
 
 	<liferay-ui:search-container-row
-		className="com.liferay.portal.model.Role"
-		keyProperty="roleId"
-		modelVar="role"
+		className="com.liferay.portal.model.RoleAssignment"
+		keyProperty="role.roleId"
+		modelVar="regularRoleAssignment"
 	>
+
+		<%
+		Role role = regularRoleAssignment.getRole();
+		Set delegateNames = regularRoleAssignment.getDelegateNames();
+		%>
+
 		<liferay-ui:search-container-column-text
 			name="title"
 		>
@@ -73,11 +84,17 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 				label="<%= true %>"
 				message="<%= HtmlUtil.escape(role.getTitle(locale)) %>"
 			/>
+
+			<c:if test="<%= !delegateNames.isEmpty() %>">
+				<liferay-ui:icon-help message='<%= LanguageUtil.format(request, "this-role-is-assigned-because-the-user-belongs-to-x", StringUtil.merge(delegateNames, StringPool.COMMA_AND_SPACE), false) %>' />
+			</c:if>
 		</liferay-ui:search-container-column-text>
 
 		<c:if test="<%= !portletName.equals(PortletKeys.MY_ACCOUNT) && !RoleMembershipPolicyUtil.isRoleRequired(selUser.getUserId(), role.getRoleId()) %>">
 			<liferay-ui:search-container-column-text>
-				<a class="modify-link" data-rowId="<%= role.getRoleId() %>" href="javascript:;"><%= removeRoleIcon %></a>
+				<c:if test="<%= delegateNames.isEmpty() %>">
+					<a class="modify-link" data-rowId="<%= role.getRoleId() %>" href="javascript:;"><%= removeRoleIcon %></a>
+				</c:if>
 			</liferay-ui:search-container-column-text>
 		</c:if>
 	</liferay-ui:search-container-row>
@@ -121,55 +138,10 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 	</aui:script>
 </c:if>
 
-<h3><liferay-ui:message key="inherited-regular-roles" /></h3>
-
-<c:if test="<%= roleGroups.isEmpty() %>">
-	<liferay-ui:message key="this-user-does-not-have-any-inherited-regular-roles" />
-</c:if>
-
-<liferay-ui:search-container
-	curParam="inheritedRegularRolesCur"
-	headerNames="title,group"
-	id="inheritedRolesSearchContainer"
-	iteratorURL="<%= currentURLObj %>"
-	total="<%= roleGroups.size() %>"
->
-	<liferay-ui:search-container-results
-		results="<%= roleGroups.subList(searchContainer.getStart(), searchContainer.getResultEnd()) %>"
-	/>
-
-	<liferay-ui:search-container-row
-		className="com.liferay.portal.model.Group"
-		keyProperty="groupId"
-		modelVar="group"
-		rowIdProperty="friendlyURL"
-	>
-
-		<%
-		List<Role> groupRoles = RoleLocalServiceUtil.getGroupRoles(group.getGroupId());
-		%>
-
-		<liferay-ui:search-container-column-text
-			name="title"
-			value="<%= HtmlUtil.escape(ListUtil.toString(groupRoles, Role.NAME_ACCESSOR)) %>"
-		>
-			<liferay-ui:icon
-				iconCssClass="<%= RolesAdminUtil.getIconCssClass(groupRoles.get(0)) %>"
-				label="<%= true %>"
-				message="<%= HtmlUtil.escape(ListUtil.toString(groupRoles, Role.NAME_ACCESSOR)) %>"
-			/>
-		</liferay-ui:search-container-column-text>
-
-		<liferay-ui:search-container-column-text
-			name="group"
-			value="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>"
-		/>
-	</liferay-ui:search-container-row>
-
-	<liferay-ui:search-iterator />
-</liferay-ui:search-container>
-
 <h3><liferay-ui:message key="organization-roles" /></h3>
+
+<%
+%>
 
 <c:if test="<%= organizations.isEmpty() && organizationRoles.isEmpty() %>">
 	<liferay-ui:message key="this-user-does-not-belong-to-an-organization-to-which-an-organization-role-can-be-assigned" />
@@ -317,6 +289,9 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 
 <h3><liferay-ui:message key="site-roles" /></h3>
 
+<%
+%>
+
 <c:choose>
 	<c:when test="<%= groups.isEmpty() %>">
 		<liferay-ui:message key="this-user-does-not-belong-to-a-site-to-which-a-site-role-can-be-assigned" />
@@ -461,54 +436,6 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 		</c:if>
 	</c:otherwise>
 </c:choose>
-
-<h3><liferay-ui:message key="inherited-site-roles" /></h3>
-
-<c:if test="<%= inheritedSiteRoles.isEmpty() %>">
-	<liferay-ui:message key="this-user-does-not-have-any-inherited-site-roles" />
-</c:if>
-
-<c:if test="<%= !inheritedSiteRoles.isEmpty() %>">
-	<liferay-ui:search-container
-		curParam="inheritedSiteRolesCur"
-		headerNames="title,site,user-group"
-		id="inheritedSiteRolesSearchContainer"
-		iteratorURL="<%= currentURLObj %>"
-		total="<%= inheritedSiteRoles.size() %>"
-	>
-		<liferay-ui:search-container-results
-			results="<%= inheritedSiteRoles.subList(searchContainer.getStart(), searchContainer.getResultEnd()) %>"
-		/>
-
-		<liferay-ui:search-container-row
-			className="com.liferay.portal.model.UserGroupGroupRole"
-			keyProperty="roleId"
-			modelVar="userGroupGroupRole"
-		>
-			<liferay-ui:search-container-column-text
-				name="title"
-			>
-				<liferay-ui:icon
-					iconCssClass="<%= RolesAdminUtil.getIconCssClass(userGroupGroupRole.getRole()) %>"
-					label="<%= true %>"
-					message="<%= HtmlUtil.escape(userGroupGroupRole.getRole().getTitle(locale)) %>"
-				/>
-			</liferay-ui:search-container-column-text>
-
-			<liferay-ui:search-container-column-text
-				name="site"
-				value="<%= HtmlUtil.escape(userGroupGroupRole.getGroup().getDescriptiveName(locale)) %>"
-			/>
-
-			<liferay-ui:search-container-column-text
-				name="user-group"
-				value="<%= HtmlUtil.escape(userGroupGroupRole.getUserGroup().getName()) %>"
-			/>
-		</liferay-ui:search-container-row>
-
-		<liferay-ui:search-iterator />
-	</liferay-ui:search-container>
-</c:if>
 
 <aui:script>
 	var <portlet:namespace />addGroupRolesGroupIds = [];
