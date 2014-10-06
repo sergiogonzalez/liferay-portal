@@ -17,6 +17,8 @@ package com.liferay.portal.kernel.util;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.liferay.portal.kernel.security.RandomUtil;
+import com.liferay.portal.util.test.RandomTestUtil;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -176,20 +178,65 @@ public class StringUtilTest {
 	@Test
 	public void testMerge() {
 		Assert.assertEquals(
-			"1,2,3", StringUtil.merge(new String[] {"1", " 2 ", "3"}));
-		Assert.assertEquals("1", StringUtil.merge(new String[] {"1"}));
+			"1,2,3", StringUtil.merge(new String[]{"1", " 2 ", "3"}));
+		Assert.assertEquals("1", StringUtil.merge(new String[]{"1"}));
 		Assert.assertEquals("", StringUtil.merge(new String[0]));
 		Assert.assertEquals(
 			"true,false,true",
-			StringUtil.merge(new boolean[] {true, false, true}));
-		Assert.assertEquals("true", StringUtil.merge(new boolean[] {true}));
+			StringUtil.merge(new boolean[]{true, false, true}));
+		Assert.assertEquals("true", StringUtil.merge(new boolean[]{true}));
 		Assert.assertEquals(
-			"1.1,2.2,3.3", StringUtil.merge(new double[] {1.1, 2.2, 3.3}));
-		Assert.assertEquals("1.1", StringUtil.merge(new double[] {1.1}));
-		Assert.assertEquals("1,2,3", StringUtil.merge(new int[] {1, 2, 3}));
-		Assert.assertEquals("1", StringUtil.merge(new int[] {1}));
-		Assert.assertEquals("1,2,3", StringUtil.merge(new long[] {1, 2, 3}));
-		Assert.assertEquals("1", StringUtil.merge(new long[] {1}));
+			"1.1,2.2,3.3", StringUtil.merge(new double[]{1.1, 2.2, 3.3}));
+		Assert.assertEquals("1.1", StringUtil.merge(new double[]{1.1}));
+		Assert.assertEquals("1,2,3", StringUtil.merge(new int[]{1, 2, 3}));
+		Assert.assertEquals("1", StringUtil.merge(new int[]{1}));
+		Assert.assertEquals("1,2,3", StringUtil.merge(new long[]{1, 2, 3}));
+		Assert.assertEquals("1", StringUtil.merge(new long[]{1}));
+	}
+
+	@Test
+	public void testRemoveSurroundingBothEnds() {
+		Assert.assertEquals(
+			"abcde",
+			StringUtil.removeSurrounding("---abcde---", CharPool.DASH));
+	}
+
+	@Test
+	public void testRemoveSurroundingEmpty() {
+		Assert.assertEquals(
+			StringPool.BLANK,
+			StringUtil.removeSurrounding(StringPool.BLANK, randomChar()));
+	}
+
+	@Test
+	public void testRemoveSurroundingIgnoreInnerOccurrences() {
+		Assert.assertEquals(
+			"ab-de",
+			StringUtil.removeSurrounding("---ab-de---", CharPool.DASH));
+	}
+
+	@Test
+	public void testRemoveSurroundingLeading() {
+		Assert.assertEquals(
+			"abcde", StringUtil.removeSurrounding("---abcde", CharPool.DASH));
+	}
+
+	@Test
+	public void testRemoveSurroundingNoOccurrence() {
+		String s = RandomTestUtil.randomString();
+
+		Assert.assertEquals(s, StringUtil.removeSurrounding(s, CharPool.DASH));
+	}
+
+	@Test(expected = NullPointerException.class)
+	public void testRemoveSurroundingNull() {
+		StringUtil.removeSurrounding(null, CharPool.DASH);
+	}
+
+	@Test
+	public void testRemoveSurroundingTrailing() {
+		Assert.assertEquals(
+			"abcde", StringUtil.removeSurrounding("abcde---", CharPool.DASH));
 	}
 
 	@Test
@@ -873,6 +920,12 @@ public class StringUtilTest {
 			StringUtil.wildcardMatches(
 				s, wildcard, CharPool.UNDERLINE, CharPool.PERCENT,
 				CharPool.BACK_SLASH, true));
+	}
+
+	protected static char randomChar() {
+		int i = RandomUtil.nextInt(Character.MAX_CODE_POINT);
+
+		return Character.toChars(i)[0];
 	}
 
 }

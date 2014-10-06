@@ -2185,6 +2185,26 @@ public class StringUtil {
 		return removeFromList(s, element, delimiter);
 	}
 
+	public static String removeSurrounding(String s, char c) {
+		int i = 0;
+
+		while ((i < s.length()) && (s.charAt(i) == c)) {
+			i++;
+		}
+
+		int j = s.length() - 1;
+
+		while ((j > 0) && (s.charAt(j) == c)) {
+			j--;
+		}
+
+		if ((i == 0) && (j == (s.length() - 1))) {
+			return s;
+		}
+
+		return s.substring(i, j + 1);
+	}
+
 	/**
 	 * Removes the <code>remove</code> string from string <code>s</code> that
 	 * represents a list of comma delimited strings.
