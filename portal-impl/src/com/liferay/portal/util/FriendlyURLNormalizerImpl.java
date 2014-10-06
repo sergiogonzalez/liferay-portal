@@ -120,6 +120,8 @@ public class FriendlyURLNormalizerImpl implements FriendlyURLNormalizer {
 
 		friendlyURL = matcher.replaceAll(StringPool.DASH);
 
+		friendlyURL = StringUtil.removeSurrounding(friendlyURL, CharPool.DASH);
+
 		return friendlyURL;
 	}
 
