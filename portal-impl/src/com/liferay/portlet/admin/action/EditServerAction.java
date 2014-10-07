@@ -196,8 +196,8 @@ public class EditServerAction extends PortletAction {
 		else if (cmd.equals("dlPreviews")) {
 			DLPreviewableProcessor.deleteFiles();
 
-			if (PropsValues.DL_FILE_ENTRY_IMAGES_REGENERATE_ON_RESET) {
-				regenerateImages();
+			if (PropsValues.DL_FILE_ENTRY_THUMBNAILS_REGENERATE_ON_RESET) {
+				regenerateThumbnails();
 			}
 		}
 		else if (cmd.equals("gc")) {
@@ -388,7 +388,7 @@ public class EditServerAction extends PortletAction {
 		progressTracker.finish(actionRequest);
 	}
 
-	protected void regenerateImages() throws PortalException {
+	protected void regenerateThumbnails() throws PortalException {
 		ActionableDynamicQuery actionableDynamicQuery =
 			DLFileEntryLocalServiceUtil.getActionableDynamicQuery();
 

@@ -675,8 +675,6 @@ public interface PropsKeys {
 
 	public static final String DL_FILE_ENTRY_IG_THUMBNAIL_GENERATION = "dl.file.entry.ig.thumbnail.generation";
 
-	public static final String DL_FILE_ENTRY_IMAGES_REGENERATE_ON_RESET = "dl.file.entry.images.regenerate.on.reset";
-
 	public static final String DL_FILE_ENTRY_LOCK_POLICY = "dl.file.entry.lock.policy";
 
 	public static final String DL_FILE_ENTRY_OPEN_IN_MS_OFFICE_MANUAL_CHECK_IN_REQUIRED = "dl.file.entry.open.in.ms.office.manual.check.in.required";
@@ -742,6 +740,8 @@ public interface PropsKeys {
 	public static final String DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH = "dl.file.entry.thumbnail.max.width";
 
 	public static final String DL_FILE_ENTRY_THUMBNAIL_VIDEO_FRAME_PERCENTAGE = "dl.file.entry.thumbnail.video.frame.percentage";
+
+	public static final String DL_FILE_ENTRY_THUMBNAILS_REGENERATE_ON_RESET = "dl.file.entry.thumbnails.regenerate.on.reset";
 
 	public static final String DL_FILE_ENTRY_TYPE_IG_IMAGE_AUTO_CREATE_ON_UPGRADE = "dl.file.entry.type.ig.image.auto.create.on.upgrade";
 
