@@ -30,7 +30,9 @@ import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
 import com.liferay.portal.kernel.cluster.ClusterLink;
 import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.shard.ShardUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.executor.PortalExecutorManagerUtil;
 import com.liferay.portal.kernel.image.GhostscriptUtil;
@@ -388,38 +390,43 @@ public class EditServerAction extends PortletAction {
 	}
 
 	protected void regenerateImages() throws Exception {
-		int count = DLFileEntryLocalServiceUtil.getDLFileEntriesCount();
+		ActionableDynamicQuery actionableDynamicQuery =
+			DLFileEntryLocalServiceUtil.getActionableDynamicQuery();
 
-		int pages = count / _REGENERATION_RANGE;
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod() {
 
-		for (int i = 0; i <= pages; i++) {
-			int start = (i * _REGENERATION_RANGE);
-			int end = start + _REGENERATION_RANGE;
+				@Override
+				public void performAction(Object object)
+					throws PortalException {
 
-			List<DLFileEntry> dlFileEntries =
-				DLFileEntryLocalServiceUtil.getDLFileEntries(start, end);
+					DLFileEntry dlFileEntry = (DLFileEntry)object;
 
-			for (DLFileEntry dlFileEntry : dlFileEntries) {
-				FileEntry fileEntry =
-					FileEntryUtil.fetchByPrimaryKey(
-						dlFileEntry.getFileEntryId());
+					FileEntry fileEntry =
+						FileEntryUtil.fetchByPrimaryKey(
+							dlFileEntry.getFileEntryId());
 
-				FileVersion latestFileVersion =
-					fileEntry.getLatestFileVersion();
+					FileVersion latestFileVersion =
+						fileEntry.getLatestFileVersion();
 
-				Set<String> imageMimeTypes =
-					ImageProcessorUtil.getImageMimeTypes();
+					Set<String> imageMimeTypes =
+						ImageProcessorUtil.getImageMimeTypes();
 
-				if (imageMimeTypes.contains(latestFileVersion.getMimeType())) {
-					try {
-						ImageProcessorUtil.generateImages(
-							null, latestFileVersion);
-					}
-					catch (DuplicateFileException dfe) {
+					if (imageMimeTypes.contains(
+							latestFileVersion.getMimeType())) {
+
+						try {
+							ImageProcessorUtil.generateImages(
+								null, latestFileVersion);
+						}
+						catch (DuplicateFileException dfe) {
+						}
 					}
 				}
-			}
-		}
+
+			});
+
+		actionableDynamicQuery.performActions();
 	}
 
 	protected void reindex(ActionRequest actionRequest) throws Exception {
@@ -1012,8 +1019,6 @@ public class EditServerAction extends PortletAction {
 	protected void verifyPluginTables() throws Exception {
 		ServiceComponentLocalServiceUtil.verifyDB();
 	}
-
-	private static final int _REGENERATION_RANGE = 100;
 
 	private static Log _log = LogFactoryUtil.getLog(EditServerAction.class);
 
