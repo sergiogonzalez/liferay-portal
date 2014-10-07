@@ -108,7 +108,6 @@ import com.liferay.portal.util.ShutdownUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.ActionResponseImpl;
 import com.liferay.portlet.admin.util.CleanUpPermissionsUtil;
-import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.lar.FileEntryUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
@@ -389,7 +388,7 @@ public class EditServerAction extends PortletAction {
 		progressTracker.finish(actionRequest);
 	}
 
-	protected void regenerateImages() throws Exception {
+	protected void regenerateImages() throws PortalException {
 		ActionableDynamicQuery actionableDynamicQuery =
 			DLFileEntryLocalServiceUtil.getActionableDynamicQuery();
 
@@ -419,7 +418,13 @@ public class EditServerAction extends PortletAction {
 							ImageProcessorUtil.generateImages(
 								null, latestFileVersion);
 						}
-						catch (DuplicateFileException dfe) {
+						catch (Exception e) {
+							if (_log.isWarnEnabled()) {
+								_log.warn(
+									"Unable to generate thumbnails for " +
+										latestFileVersion.getFileVersionId(),
+									e);
+							}
 						}
 					}
 				}
