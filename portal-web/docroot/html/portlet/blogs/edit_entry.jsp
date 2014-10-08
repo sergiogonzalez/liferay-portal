@@ -29,6 +29,14 @@ long entryId = BeanParamUtil.getLong(entry, request, "entryId");
 String title = BeanParamUtil.getString(entry, request, "title");
 String subtitle = BeanParamUtil.getString(entry, request, "subtitle");
 String content = BeanParamUtil.getString(entry, request, "content");
+String description = BeanParamUtil.getString(entry, request, "description");
+
+boolean customAbstract = ParamUtil.getBoolean(request, "customAbstract", (entry != null) && Validator.isNotNull(entry.getDescription()) ? true : false);
+
+if (!customAbstract) {
+	description = StringUtil.shorten(content, pageAbstractLength);
+}
+
 boolean allowPingbacks = PropsValues.BLOGS_PINGBACK_ENABLED && BeanParamUtil.getBoolean(entry, request, "allowPingbacks", true);
 boolean allowTrackbacks = PropsValues.BLOGS_TRACKBACK_ENABLED && BeanParamUtil.getBoolean(entry, request, "allowTrackbacks", true);
 long smallImageFileEntryId = BeanParamUtil.getLong(entry, request, "smallImageFileEntryId");
@@ -111,7 +119,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 			<aui:input name="subtitle" type="hidden" />
 
 			<div class="entry-content">
-				<liferay-ui:input-editor contents="<%= content %>" editorImpl="<%= EDITOR_HTML_IMPL_KEY %>" name="content" placeholder="content" />
+				<liferay-ui:input-editor contents="<%= content %>" editorImpl="<%= EDITOR_HTML_IMPL_KEY %>" name="content" onChangeMethod="OnChangeEditor" placeholder="content" />
 			</div>
 
 			<aui:input name="content" type="hidden" />
@@ -134,13 +142,25 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 				<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(imageMaxSize, locale) %>" key="please-enter-a-small-image-with-a-valid-file-size-no-larger-than-x" translateArguments="<%= false %>" />
 			</liferay-ui:error>
 
+			<h3><liferay-ui:message key="abstract" /></h3>
+
+			<p>
+				<liferay-ui:message arguments="<%= TextFormatter.formatStorageSize(PrefsPropsUtil.getLong(PropsKeys.BLOGS_IMAGE_SMALL_MAX_SIZE), locale) %>" key="an-abstract-is-a-brief-summary-of-a-blog-entry" />
+			</p>
+
+			<div id="<portlet:namespace />entryAbstractOptions">
+				<aui:input checked="<%= !customAbstract %>" label='<%= LanguageUtil.format(request, "use-first-x-characters-of-the-content-entry", pageAbstractLength, false) %>' name="customAbstract" type="radio" value="<%= false %>" />
+
+				<aui:input checked="<%= customAbstract %>" label="custom-abstract" name="customAbstract" type="radio" value="<%= true %>" />
+			</div>
+
 			<aui:fieldset cssClass="entry-abstract">
 				<div class="lfr-blogs-small-image-selector">
 					<liferay-ui:image-selector fileEntryId="<%= smallImageFileEntryId %>" paramName="smallImageFileEntryId" />
 				</div>
 
 				<div class="entry-description">
-					<liferay-ui:input-editor contents="<%= subtitle %>" editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name="description" placeholder="description" />
+					<liferay-ui:input-editor contents="<%= description %>" cssClass='<%= customAbstract ? StringPool.BLANK : "readonly" %>' editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name="description" onInitMethod="OnDescriptionEditorInit" placeholder="description" />
 				</div>
 
 				<aui:input name="description" type="hidden" />
@@ -317,11 +337,14 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 				'STATUS_DRAFT': '<%= WorkflowConstants.STATUS_DRAFT %>',
 				'UPDATE': '<%= Constants.UPDATE %>'
 			},
+			descriptionLength: '<%= pageAbstractLength %>',
 			editEntryURL: '<%= editEntryURL %>',
 
 			<c:if test="<%= entry != null %>">
 				entry: {
 					content: '<%= UnicodeFormatter.toString(content) %>',
+					customDescription: <%= customAbstract %>,
+					description: '<%= UnicodeFormatter.toString(description) %>',
 					pending: <%= entry.isPending() %>,
 					status: '<%= entry.getStatus() %>',
 					subtitle: '<%= UnicodeFormatter.toString(subtitle) %>',
@@ -341,6 +364,16 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 			Liferay.detach('destroyPortlet', clearSaveDraftHandle);
 		}
 	};
+
+	window['<portlet:namespace />OnChangeEditor'] = function(html) {
+		blogs.setDescription(html);
+	}
+
+	window['<portlet:namespace />OnDescriptionEditorInit'] = function() {
+		<c:if test="<%= !customAbstract %>">
+			A.one('#<portlet:namespace />descriptionEditor').attr('contenteditable', false);
+		</c:if>
+	}
 
 	Liferay.on('destroyPortlet', clearSaveDraftHandle);
 </aui:script>
