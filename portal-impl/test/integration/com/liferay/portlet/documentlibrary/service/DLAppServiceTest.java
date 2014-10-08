@@ -377,7 +377,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 					}
 				}
 				catch (Exception e) {
-					_log.error("Unable to add file " + _index, e);
+					_log.error("Unable to get file " + _index, e);
 				}
 			}
 
