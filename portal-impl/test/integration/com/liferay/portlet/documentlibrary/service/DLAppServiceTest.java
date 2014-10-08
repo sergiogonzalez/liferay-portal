@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.DoAsUserThread;
 import com.liferay.portal.service.ServiceContext;
@@ -333,9 +334,19 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 			@Override
 			protected void doRun() throws Exception {
 				try {
-					FileEntry fileEntry = DLAppTestUtil.addFileEntry(
-						group.getGroupId(), parentFolder.getFolderId(),
-						"Test-" + _index + ".txt");
+					String title = "Test-" + _index + ".txt";
+
+					ServiceContext serviceContext =
+						ServiceContextTestUtil.getServiceContext(
+							group.getGroupId());
+
+					serviceContext.setWorkflowAction(
+						WorkflowConstants.ACTION_PUBLISH);
+
+					FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
+						group.getGroupId(), parentFolder.getFolderId(), title,
+						ContentTypes.TEXT_PLAIN, title, StringPool.BLANK,
+						StringPool.BLANK, CONTENT.getBytes(), serviceContext);
 
 					_fileEntryIds[_index] = fileEntry.getFileEntryId();
 
