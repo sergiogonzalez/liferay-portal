@@ -36,8 +36,12 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.DoAsUserThread;
+import com.liferay.portal.service.ResourceLocalServiceUtil;
+import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.DeleteAfterTestRun;
@@ -57,6 +61,7 @@ import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.model.DLSyncConstants;
+import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
 import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
 
 import java.io.File;
@@ -217,6 +222,8 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		)
 		@Test
 		public void shouldSucceedWithConcurrentAccess() throws Exception {
+			addDLResources(group);
+
 			_users = new User[ServiceTestUtil.THREAD_COUNT];
 
 			for (int i = 0; i < ServiceTestUtil.THREAD_COUNT; i++) {
@@ -974,6 +981,21 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 				serviceContext);
 		}
 
+	}
+
+	protected static void addDLResources(Group group) throws Exception {
+		int count =
+			ResourcePermissionLocalServiceUtil.getResourcePermissionsCount(
+				group.getCompanyId(), DLPermission.RESOURCE_NAME,
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(group.getGroupId()));
+
+		if (count == 0) {
+			ResourceLocalServiceUtil.addResources(
+				group.getCompanyId(), group.getGroupId(), 0,
+				DLPermission.RESOURCE_NAME, group.getGroupId(), false, true,
+				true);
+		}
 	}
 
 	protected static FileEntry addFileEntry(long groupId, long folderId)
