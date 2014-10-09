@@ -75,8 +75,9 @@ public class WikiDLStoreConvertProcess implements DLStoreConvertProcess {
 				public void performAction(Object object) {
 					WikiPage wikiPage = (WikiPage)object;
 
-					for (FileEntry fileEntry :
-						wikiPage.getAttachmentsFileEntries()) {
+					for (
+						FileEntry fileEntry :
+							wikiPage.getAttachmentsFileEntries()) {
 
 						DLFileEntry dlFileEntry =
 							(DLFileEntry)fileEntry.getModel();
