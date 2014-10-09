@@ -21,17 +21,25 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.model.WikiPageResource;
-import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
-import com.liferay.portlet.wiki.service.WikiPageResourceLocalServiceUtil;
+import com.liferay.portlet.wiki.service.WikiPageLocalService;
+import com.liferay.portlet.wiki.service.WikiPageResourceLocalService;
+import com.liferay.portlet.wiki.service.configuration.configurator.WikiServiceConfigurator;
 import com.liferay.portlet.wiki.util.comparator.PageVersionComparator;
 
 import java.util.Date;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Brian Wing Shun Chan
+ * @author Iván Zaera
  */
-public class VerifyWiki extends VerifyProcess {
+@Component(
+	immediate = true, service = Verifier.class
+)
+public class Verifier extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
@@ -39,9 +47,28 @@ public class VerifyWiki extends VerifyProcess {
 		verifyNoAssetPages();
 	}
 
+	@Reference
+	protected void setWikiPageLocalService(
+		WikiPageLocalService wikiPageLocalService) {
+
+		_wikiPageLocalService = wikiPageLocalService;
+	}
+
+	@Reference
+	protected void setWikiPageResourceLocalService(
+		WikiPageResourceLocalService wikiPageResourceLocalService) {
+
+		_wikiPageResourceLocalService = wikiPageResourceLocalService;
+	}
+
+	@Reference
+	protected void setWikiServiceConfigurator(
+		WikiServiceConfigurator wikiServiceConfigurator) {
+	}
+
 	protected void verifyCreateDate() throws Exception {
 		ActionableDynamicQuery actionableDynamicQuery =
-			WikiPageResourceLocalServiceUtil.getActionableDynamicQuery();
+			_wikiPageResourceLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setPerformActionMethod(
 			new ActionableDynamicQuery.PerformActionMethod() {
@@ -63,7 +90,7 @@ public class VerifyWiki extends VerifyProcess {
 	}
 
 	protected void verifyCreateDate(WikiPageResource pageResource) {
-		List<WikiPage> pages = WikiPageLocalServiceUtil.getPages(
+		List<WikiPage> pages = _wikiPageLocalService.getPages(
 			pageResource.getNodeId(), pageResource.getTitle(),
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			new PageVersionComparator(true));
@@ -80,13 +107,13 @@ public class VerifyWiki extends VerifyProcess {
 			if (!createDate.equals(page.getCreateDate())) {
 				page.setCreateDate(createDate);
 
-				WikiPageLocalServiceUtil.updateWikiPage(page);
+				_wikiPageLocalService.updateWikiPage(page);
 			}
 		}
 	}
 
 	protected void verifyNoAssetPages() throws Exception {
-		List<WikiPage> pages = WikiPageLocalServiceUtil.getNoAssetPages();
+		List<WikiPage> pages = _wikiPageLocalService.getNoAssetPages();
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Processing " + pages.size() + " pages with no asset");
@@ -94,7 +121,7 @@ public class VerifyWiki extends VerifyProcess {
 
 		for (WikiPage page : pages) {
 			try {
-				WikiPageLocalServiceUtil.updateAsset(
+				_wikiPageLocalService.updateAsset(
 					page.getUserId(), page, null, null, null);
 			}
 			catch (Exception e) {
@@ -111,6 +138,9 @@ public class VerifyWiki extends VerifyProcess {
 		}
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(VerifyWiki.class);
+	private static final Log _log = LogFactoryUtil.getLog(Verifier.class);
+
+	private WikiPageLocalService _wikiPageLocalService;
+	private WikiPageResourceLocalService _wikiPageResourceLocalService;
 
 }
