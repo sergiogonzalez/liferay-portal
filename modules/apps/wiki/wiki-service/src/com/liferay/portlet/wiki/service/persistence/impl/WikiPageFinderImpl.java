@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
+import com.liferay.portal.service.ClassNameLocalServiceUtil;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portlet.wiki.NoSuchPageException;
 import com.liferay.portlet.wiki.model.WikiPage;
@@ -173,6 +174,14 @@ public class WikiPageFinderImpl
 			session = openSession();
 
 			String sql = CustomSQLUtil.get(FIND_BY_NO_ASSETS);
+
+			long classNameId = ClassNameLocalServiceUtil.getClassNameId(
+				WikiPage.class);
+
+			sql = StringUtil.replace(
+				sql,
+				"[$CLASS_NAME_ID_COM.LIFERAY.PORTLET.WIKI.MODEL.WIKIPAGE$]",
+				String.valueOf(classNameId));
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
