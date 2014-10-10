@@ -425,7 +425,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * Deletes the file ranks associated to a given file entry. This method is
 	 * only supported by the Liferay repository.
 	 *
-	 * @param  fileEntryId the primary key of the file entry
+	 * @param fileEntryId the primary key of the file entry
 	 */
 	@Override
 	public void deleteFileRanksByFileEntryId(long fileEntryId) {
@@ -436,7 +436,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * Deletes the file ranks associated to a given user. This method is only
 	 * supported by the Liferay repository.
 	 *
-	 * @param  userId the primary key of the user
+	 * @param userId the primary key of the user
 	 */
 	@Override
 	public void deleteFileRanksByUserId(long userId) {
@@ -735,7 +735,9 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link com.liferay.portal.kernel.repository.util.RepositoryTrashUtil.moveFileEntryFromTrash(long, long, long, long, ServiceContext)}
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.portal.kernel.repository.util.RepositoryTrashUtil.moveFileEntryFromTrash(
+	 *             long, long, long, long, ServiceContext)}
 	 */
 	@Deprecated
 	@Override
@@ -753,7 +755,9 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link com.liferay.portal.kernel.repository.util.RepositoryTrashUtil.moveFileEntryToTrash(long, long, long)}
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.portal.kernel.repository.util.RepositoryTrashUtil.moveFileEntryToTrash(
+	 *             long, long, long)}
 	 */
 	@Deprecated
 	@Override
@@ -820,7 +824,9 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link com.liferay.portal.kernel.repository.util.RepositoryTrashUtil.restoreFileEntryFromTrash(long, long, long)}
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.portal.kernel.repository.util.RepositoryTrashUtil.restoreFileEntryFromTrash(
+	 *             long, long, long)}
 	 */
 	@Deprecated
 	@Override
@@ -1226,10 +1232,9 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * Updates all file shortcuts to the existing file entry to the new file
 	 * entry. This method is only supported by the Liferay repository.
 	 *
-	 * @param  toRepositoryId the primary key of the repository
-	 * @param  oldToFileEntryId the primary key of the old file entry pointed to
-	 * @param  newToFileEntryId the primary key of the new file entry to point
-	 *         to
+	 * @param toRepositoryId the primary key of the repository
+	 * @param oldToFileEntryId the primary key of the old file entry pointed to
+	 * @param newToFileEntryId the primary key of the new file entry to point to
 	 */
 	@Override
 	public void updateFileShortcuts(
