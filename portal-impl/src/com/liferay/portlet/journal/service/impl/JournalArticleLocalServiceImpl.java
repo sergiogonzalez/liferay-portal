@@ -1366,6 +1366,17 @@ public class JournalArticleLocalServiceImpl
 			groupId, articleId, version);
 	}
 
+	@Override
+	public JournalArticle fetchLatestArticle(long resourcePrimKey) {
+		return fetchLatestArticle(
+			resourcePrimKey, WorkflowConstants.STATUS_ANY);
+	}
+
+	@Override
+	public JournalArticle fetchLatestArticle(long resourcePrimKey, int status) {
+		return fetchLatestArticle(resourcePrimKey, status, true);
+	}
+
 	/**
 	 * Returns the latest web content article matching the resource primary key
 	 * and workflow status, optionally preferring articles with approved

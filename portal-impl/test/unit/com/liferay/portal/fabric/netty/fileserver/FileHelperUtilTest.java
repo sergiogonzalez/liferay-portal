@@ -86,7 +86,7 @@ public class FileHelperUtilTest {
 	}
 
 	@Test
-	public void testDeleteRegularDirectoryWithRegularFile() throws IOException {
+	public void testDeleteRegularDirectoryWithRegularFile() {
 		Path regularDirectoryPath = Paths.get("RegularDirectory");
 
 		Path regularFilePath = regularDirectoryPath.resolve("RegularFile");
@@ -149,7 +149,7 @@ public class FileHelperUtilTest {
 	}
 
 	@Test
-	public void testDeleteRegularFile() throws IOException {
+	public void testDeleteRegularFile() {
 		Path regularFilePath = Paths.get("RegularFile");
 
 		createFile(regularFilePath);

@@ -589,20 +589,20 @@ public class ArrayUtil_IW {
 	}
 
 	public double[] toDoubleArray(
-		java.util.Collection<java.lang.Double> collection) {
+		java.util.Collection<java.lang.Number> collection) {
 		return ArrayUtil.toDoubleArray(collection);
 	}
 
 	public float[] toFloatArray(
-		java.util.Collection<java.lang.Float> collection) {
+		java.util.Collection<java.lang.Number> collection) {
 		return ArrayUtil.toFloatArray(collection);
 	}
 
-	public int[] toIntArray(java.util.Collection<java.lang.Integer> collection) {
+	public int[] toIntArray(java.util.Collection<java.lang.Number> collection) {
 		return ArrayUtil.toIntArray(collection);
 	}
 
-	public long[] toLongArray(java.util.Collection<java.lang.Long> collection) {
+	public long[] toLongArray(java.util.Collection<java.lang.Number> collection) {
 		return ArrayUtil.toLongArray(collection);
 	}
 

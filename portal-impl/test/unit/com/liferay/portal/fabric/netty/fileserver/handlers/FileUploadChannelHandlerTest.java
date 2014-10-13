@@ -77,7 +77,7 @@ public class FileUploadChannelHandlerTest {
 		new CodeCoverageAssertor();
 
 	@After
-	public void tearDown() throws IOException {
+	public void tearDown() {
 		FileServerTestUtil.cleanUp();
 	}
 

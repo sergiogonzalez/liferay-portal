@@ -76,6 +76,14 @@ public class VerifyProperties extends VerifyProcess {
 			verifyObsoletePortalProperty(key);
 		}
 
+		for (String[] keys : _MODULARIZED_PORTAL_KEYS) {
+			String oldKey = keys[0];
+			String newKey = keys[1];
+			String moduleName = keys[2];
+
+			verifyModularizedPortalProperty(oldKey, newKey, moduleName);
+		}
+
 		// Document library
 
 		StoreFactory.checkProperties();
@@ -83,6 +91,16 @@ public class VerifyProperties extends VerifyProcess {
 		// LDAP
 
 		verifyLDAPProperties();
+	}
+
+	protected boolean isPortalProperty(String key) {
+		String value = PropsUtil.get(key);
+
+		if (value != null) {
+			return true;
+		}
+
+		return false;
 	}
 
 	protected void verifyLDAPProperties() throws Exception {
@@ -118,9 +136,7 @@ public class VerifyProperties extends VerifyProcess {
 	protected void verifyMigratedPortalProperty(String oldKey, String newKey)
 		throws Exception {
 
-		String value = PropsUtil.get(oldKey);
-
-		if (value != null) {
+		if (isPortalProperty(oldKey)) {
 			_log.error(
 				"Portal property \"" + oldKey +
 					"\" was migrated to the system property \"" + newKey +
@@ -141,10 +157,19 @@ public class VerifyProperties extends VerifyProcess {
 		}
 	}
 
-	protected void verifyObsoletePortalProperty(String key) throws Exception {
-		String value = PropsUtil.get(key);
+	protected void verifyModularizedPortalProperty(
+			String oldKey, String newKey, String moduleName)
+		throws Exception {
 
-		if (value != null) {
+		if (isPortalProperty(oldKey)) {
+			_log.error(
+				"Portal property \"" + oldKey + "\" was modularized to " +
+					moduleName + " as \"" + newKey);
+		}
+	}
+
+	protected void verifyObsoletePortalProperty(String key) throws Exception {
+		if (isPortalProperty(key)) {
 			_log.error("Portal property \"" + key + "\" is obsolete");
 		}
 	}
@@ -160,9 +185,7 @@ public class VerifyProperties extends VerifyProcess {
 	protected void verifyRenamedPortalProperty(String oldKey, String newKey)
 		throws Exception {
 
-		String value = PropsUtil.get(oldKey);
-
-		if (value != null) {
+		if (isPortalProperty(oldKey)) {
 			_log.error(
 				"Portal property \"" + oldKey + "\" was renamed to \"" +
 					newKey + "\"");
@@ -258,6 +281,13 @@ public class VerifyProperties extends VerifyProcess {
 		}
 	};
 
+	private static final String[][] _MODULARIZED_PORTAL_KEYS = {
+		new String[] {
+			"polls.publish.to.live.by.default", "publish.to.live.by.default",
+			"com.liferay.polls.service"
+		}
+	};
+
 	private static final String[] _OBSOLETE_PORTAL_KEYS = new String[] {
 		"amazon.access.key.id", "amazon.associate.tag",
 		"amazon.secret.access.key",
@@ -294,6 +324,7 @@ public class VerifyProperties extends VerifyProcess {
 		"invitation.email.max.recipients", "invitation.email.message.body",
 		"invitation.email.message.subject", "javax.persistence.validation.mode",
 		"jbi.workflow.url", "json.deserializer.strict.mode",
+		"journal.article.form.translate",
 		"journal.template.language.parser[css]",
 		"journal.template.language.parser[ftl]",
 		"journal.template.language.parser[vm]",
