@@ -68,7 +68,6 @@ import com.liferay.portlet.asset.model.AssetLink;
 import com.liferay.portlet.asset.model.AssetLinkConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.expando.model.ExpandoBridge;
-import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.model.TrashVersion;
@@ -3268,34 +3267,20 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		// Social
 
-		if (!page.isMinorEdit() ||
-			PropsValues.WIKI_PAGE_MINOR_EDIT_ADD_SOCIAL_ACTIVITY) {
+		if ((!page.isMinorEdit() ||
+			 PropsValues.WIKI_PAGE_MINOR_EDIT_ADD_SOCIAL_ACTIVITY) &&
+			(serviceContext.getWorkflowAction() ==
+				WorkflowConstants.ACTION_PUBLISH)) {
 
-			if (oldPage.getVersion() == newVersion) {
-				SocialActivity lastSocialActivity =
-					socialActivityLocalService.fetchFirstActivity(
-						WikiPage.class.getName(), page.getResourcePrimKey(),
-						WikiActivityKeys.UPDATE_PAGE);
+			JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
 
-				if (lastSocialActivity != null) {
-					lastSocialActivity.setCreateDate(now.getTime() + 1);
-					lastSocialActivity.setUserId(serviceContext.getUserId());
+			extraDataJSONObject.put("title", page.getTitle());
+			extraDataJSONObject.put("version", page.getVersion());
 
-					socialActivityPersistence.update(lastSocialActivity);
-				}
-			}
-			else {
-				JSONObject extraDataJSONObject =
-					JSONFactoryUtil.createJSONObject();
-
-				extraDataJSONObject.put("title", page.getTitle());
-				extraDataJSONObject.put("version", page.getVersion());
-
-				socialActivityLocalService.addActivity(
-					userId, page.getGroupId(), WikiPage.class.getName(),
-					page.getResourcePrimKey(), WikiActivityKeys.UPDATE_PAGE,
-					extraDataJSONObject.toString(), 0);
-			}
+			socialActivityLocalService.addActivity(
+				userId, page.getGroupId(), WikiPage.class.getName(),
+				page.getResourcePrimKey(), WikiActivityKeys.UPDATE_PAGE,
+				extraDataJSONObject.toString(), 0);
 		}
 
 		// Workflow
