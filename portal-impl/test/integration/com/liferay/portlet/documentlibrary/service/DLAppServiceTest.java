@@ -241,7 +241,10 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 			successCount = runUserThreads(doAsUserThreads);
 
-			Assert.assertTrue(successCount == _users.length);
+			Assert.assertEquals(
+				"Only " + successCount + " out of " + _users.length +
+					" threads added successfully",
+				_users.length, successCount);
 
 			for (int i = 0; i < doAsUserThreads.length; i++) {
 				doAsUserThreads[i] = new GetFileEntryThread(
@@ -250,7 +253,10 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 
 			successCount = runUserThreads(doAsUserThreads);
 
-			Assert.assertTrue(successCount == _users.length);
+			Assert.assertEquals(
+				"Only " + successCount + " out of " + _users.length +
+					" threads retrieved successfully",
+				_users.length, successCount);
 		}
 
 		@Test
