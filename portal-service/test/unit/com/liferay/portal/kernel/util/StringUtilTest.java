@@ -176,20 +176,56 @@ public class StringUtilTest {
 	@Test
 	public void testMerge() {
 		Assert.assertEquals(
-			"1,2,3", StringUtil.merge(new String[] {"1", " 2 ", "3"}));
-		Assert.assertEquals("1", StringUtil.merge(new String[] {"1"}));
+			"1,2,3", StringUtil.merge(new String[]{"1", " 2 ", "3"}));
+		Assert.assertEquals("1", StringUtil.merge(new String[]{"1"}));
 		Assert.assertEquals("", StringUtil.merge(new String[0]));
 		Assert.assertEquals(
 			"true,false,true",
-			StringUtil.merge(new boolean[] {true, false, true}));
-		Assert.assertEquals("true", StringUtil.merge(new boolean[] {true}));
+			StringUtil.merge(new boolean[]{true, false, true}));
+		Assert.assertEquals("true", StringUtil.merge(new boolean[]{true}));
 		Assert.assertEquals(
-			"1.1,2.2,3.3", StringUtil.merge(new double[] {1.1, 2.2, 3.3}));
-		Assert.assertEquals("1.1", StringUtil.merge(new double[] {1.1}));
-		Assert.assertEquals("1,2,3", StringUtil.merge(new int[] {1, 2, 3}));
-		Assert.assertEquals("1", StringUtil.merge(new int[] {1}));
-		Assert.assertEquals("1,2,3", StringUtil.merge(new long[] {1, 2, 3}));
-		Assert.assertEquals("1", StringUtil.merge(new long[] {1}));
+			"1.1,2.2,3.3", StringUtil.merge(new double[]{1.1, 2.2, 3.3}));
+		Assert.assertEquals("1.1", StringUtil.merge(new double[]{1.1}));
+		Assert.assertEquals("1,2,3", StringUtil.merge(new int[]{1, 2, 3}));
+		Assert.assertEquals("1", StringUtil.merge(new int[]{1}));
+		Assert.assertEquals("1,2,3", StringUtil.merge(new long[]{1, 2, 3}));
+		Assert.assertEquals("1", StringUtil.merge(new long[]{1}));
+	}
+
+	@Test
+	public void testRemoveLeadingEmpty() throws Exception {
+		Assert.assertEquals(
+			StringPool.BLANK,
+			StringUtil.removeLeading(StringPool.BLANK, CharPool.SLASH));
+	}
+
+	@Test
+	public void testRemoveLeadingInner() throws Exception {
+		Assert.assertEquals(
+			"ab/de", StringUtil.removeLeading("ab/de", CharPool.SLASH));
+	}
+
+	@Test
+	public void testRemoveLeadingNoOccurrences() throws Exception {
+		Assert.assertEquals(
+			"abcde", StringUtil.removeLeading("abcde", CharPool.SLASH));
+	}
+
+	@Test(expected = NullPointerException.class)
+	public void testRemoveLeadingNull() throws Exception {
+		StringUtil.removeLeading(null, CharPool.SLASH);
+	}
+
+	@Test
+	public void testRemoveLeadingPrefix() throws Exception {
+		Assert.assertEquals(
+			"abcde", StringUtil.removeLeading("//abcde", CharPool.SLASH));
+	}
+
+	@Test
+	public void testRemoveLeadingSuffix() throws Exception {
+		Assert.assertEquals(
+			"abcde//", StringUtil.removeLeading("abcde//", CharPool.SLASH));
 	}
 
 	@Test
