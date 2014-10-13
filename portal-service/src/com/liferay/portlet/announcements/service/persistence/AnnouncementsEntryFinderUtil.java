@@ -53,8 +53,10 @@ public class AnnouncementsEntryFinderUtil {
 	}
 
 	public static java.util.List<com.liferay.portlet.announcements.model.AnnouncementsEntry> findByDisplayDate(
-		java.util.Date displayDateLT, java.util.Date displayDateGT) {
-		return getFinder().findByDisplayDate(displayDateLT, displayDateGT);
+		java.util.Date displayDateLT, java.util.Date displayDateGT,
+		long companyId) {
+		return getFinder()
+				   .findByDisplayDate(displayDateLT, displayDateGT, companyId);
 	}
 
 	public static java.util.List<com.liferay.portlet.announcements.model.AnnouncementsEntry> findByScope(

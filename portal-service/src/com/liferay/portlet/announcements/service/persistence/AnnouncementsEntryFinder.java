@@ -35,7 +35,8 @@ public interface AnnouncementsEntryFinder {
 		int expirationDateMinute, boolean alert, int flagValue);
 
 	public java.util.List<com.liferay.portlet.announcements.model.AnnouncementsEntry> findByDisplayDate(
-		java.util.Date displayDateLT, java.util.Date displayDateGT);
+		java.util.Date displayDateLT, java.util.Date displayDateGT,
+		long companyId);
 
 	public java.util.List<com.liferay.portlet.announcements.model.AnnouncementsEntry> findByScope(
 		long userId, long classNameId, long[] classPKs, int displayDateMonth,
