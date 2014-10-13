@@ -238,12 +238,28 @@ public class LocalRepositoryProxyBean
 
 	@Override
 	public Folder updateFolder(
+			long groupId, long folderId, long parentFolderId, String name,
+			String description, ServiceContext serviceContext)
+		throws PortalException {
+
+		return _localRepository.updateFolder(
+			groupId, folderId, parentFolderId, name, description,
+			serviceContext);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #updateFolder(long, long,
+	 *             long, String, String, ServiceContext)}
+	 */
+	@Override
+	public Folder updateFolder(
 			long folderId, long parentFolderId, String name, String description,
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		return _localRepository.updateFolder(
-			folderId, parentFolderId, name, description, serviceContext);
+		return updateFolder(
+			serviceContext.getScopeGroupId(), folderId, parentFolderId, name,
+			description, serviceContext);
 	}
 
 	private final LocalRepository _localRepository;

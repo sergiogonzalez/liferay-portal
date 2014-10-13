@@ -103,9 +103,18 @@ public interface LocalRepository extends DocumentRepository {
 			ServiceContext serviceContext)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #updateFolder(long, long,
+	 *             long, String, String, ServiceContext)}
+	 */
 	public Folder updateFolder(
 			long folderId, long parentFolderId, String name, String description,
 			ServiceContext serviceContext)
+		throws PortalException;
+
+	Folder updateFolder(
+			long groupId, long folderId, long parentFolderId, String name,
+			String description, ServiceContext serviceContext)
 		throws PortalException;
 
 }

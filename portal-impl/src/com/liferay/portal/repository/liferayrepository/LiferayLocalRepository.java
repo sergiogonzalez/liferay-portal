@@ -327,6 +327,32 @@ public class LiferayLocalRepository
 
 	@Override
 	public Folder updateFolder(
+			long groupId, long folderId, long parentFolderId, String name,
+			String description, ServiceContext serviceContext)
+		throws PortalException {
+
+		long defaultFileEntryTypeId = ParamUtil.getLong(
+			serviceContext, "defaultFileEntryTypeId");
+		SortedArrayList<Long> fileEntryTypeIds = getLongList(
+			serviceContext, "dlFileEntryTypesSearchContainerPrimaryKeys");
+		int restrictionType = ParamUtil.getInteger(
+			serviceContext, "restrictionType");
+
+		DLFolder dlFolder = dlFolderLocalService.updateFolder(
+			groupId, toFolderId(folderId), toFolderId(parentFolderId), name,
+			description, defaultFileEntryTypeId, fileEntryTypeIds,
+			restrictionType, serviceContext);
+
+		return new LiferayFolder(dlFolder);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #updateFolder(long, long,
+	 *             long, String, String, ServiceContext)}
+	 */
+	@Deprecated
+	@Override
+	public Folder updateFolder(
 			long folderId, long parentFolderId, String name, String description,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -335,13 +361,13 @@ public class LiferayLocalRepository
 			serviceContext, "defaultFileEntryTypeId");
 		SortedArrayList<Long> fileEntryTypeIds = getLongList(
 			serviceContext, "dlFileEntryTypesSearchContainerPrimaryKeys");
-		boolean overrideFileEntryTypes = ParamUtil.getBoolean(
-			serviceContext, "overrideFileEntryTypes");
+		int restrictionType = ParamUtil.getInteger(
+			serviceContext, "restrictionType");
 
 		DLFolder dlFolder = dlFolderLocalService.updateFolder(
-			toFolderId(folderId), toFolderId(parentFolderId), name, description,
-			defaultFileEntryTypeId, fileEntryTypeIds, overrideFileEntryTypes,
-			serviceContext);
+			serviceContext.getScopeGroupId(), toFolderId(folderId), name,
+			description, defaultFileEntryTypeId, fileEntryTypeIds,
+			restrictionType, serviceContext);
 
 		return new LiferayFolder(dlFolder);
 	}

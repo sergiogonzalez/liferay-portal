@@ -223,8 +223,9 @@ public class FolderStagedModelDataHandler
 					parentFolderId, folder.getName(), 2);
 
 				importedFolder = DLAppLocalServiceUtil.updateFolder(
-					existingFolder.getFolderId(), parentFolderId, name,
-					folder.getDescription(), serviceContext);
+					folder.getGroupId(), existingFolder.getFolderId(),
+					parentFolderId, name, folder.getDescription(),
+					serviceContext);
 			}
 		}
 		else {
@@ -420,7 +421,9 @@ public class FolderStagedModelDataHandler
 			DLFolder dlFolder = (DLFolder)importedFolder.getModel();
 
 			dlFolder.setDefaultFileEntryTypeId(defaultFileEntryTypeId);
-			dlFolder.setOverrideFileEntryTypes(true);
+			dlFolder.setRestrictionType(
+				DLFolderConstants.
+					RESTRICTION_TYPE_FILE_ENTRY_TYPES_AND_WORKFLOW);
 
 			DLFolderLocalServiceUtil.updateDLFolder(dlFolder);
 
