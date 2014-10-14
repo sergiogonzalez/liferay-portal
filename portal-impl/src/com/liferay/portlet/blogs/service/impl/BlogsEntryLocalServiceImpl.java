@@ -370,9 +370,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 						new HashMap<String, Serializable>());
 				}
 			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
 			finally {
 				ShardUtil.popCompanyService();
 			}

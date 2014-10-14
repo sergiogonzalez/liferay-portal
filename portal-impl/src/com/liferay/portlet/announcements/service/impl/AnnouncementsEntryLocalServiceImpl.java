@@ -180,9 +180,6 @@ public class AnnouncementsEntryLocalServiceImpl
 					notifyUsers(entry);
 				}
 			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
 			finally {
 				ShardUtil.popCompanyService();
 			}
