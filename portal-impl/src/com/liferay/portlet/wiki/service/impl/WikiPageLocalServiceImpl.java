@@ -2088,7 +2088,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 				extraDataJSONObject.put("title", page.getTitle());
 				extraDataJSONObject.put("version", page.getVersion());
 
-				if (page.getVersion() == WikiPageConstants.VERSION_DEFAULT) {
+				if (serviceContext.isCommandAdd()) {
 					socialActivityLocalService.addActivity(
 						userId, page.getGroupId(), WikiPage.class.getName(),
 						page.getResourcePrimKey(), WikiActivityKeys.ADD_PAGE,
