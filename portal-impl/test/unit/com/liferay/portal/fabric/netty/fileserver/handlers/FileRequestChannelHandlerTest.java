@@ -62,14 +62,14 @@ public class FileRequestChannelHandlerTest {
 		new CodeCoverageAssertor();
 
 	@After
-	public void tearDown() throws IOException {
+	public void tearDown() {
 		_embeddedChannel.finish();
 
 		FileServerTestUtil.cleanUp();
 	}
 
 	@Test
-	public void testFileNotFound() throws IOException {
+	public void testFileNotFound() {
 		Path path = FileServerTestUtil.createNotExistFile(
 			Paths.get("testNotExistFile"));
 

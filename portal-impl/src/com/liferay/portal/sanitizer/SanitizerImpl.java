@@ -77,7 +77,9 @@ public class SanitizerImpl implements Sanitizer {
 		}
 
 		if (_sanitizers.size() == 1) {
-			sanitize(
+			Sanitizer sanitizer = _sanitizers.get(0);
+
+			sanitizer.sanitize(
 				companyId, groupId, userId, className, classPK, contentType,
 				modes, inputStream, outputStream, options);
 
@@ -126,8 +128,9 @@ public class SanitizerImpl implements Sanitizer {
 		_sanitizers.remove(sanitizer);
 	}
 
-	private List<Sanitizer> _sanitizers = new CopyOnWriteArrayList<Sanitizer>();
-	private ServiceTracker<?, Sanitizer> _serviceTracker;
+	private final List<Sanitizer> _sanitizers =
+		new CopyOnWriteArrayList<Sanitizer>();
+	private final ServiceTracker<?, Sanitizer> _serviceTracker;
 
 	private class SanitizerServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer<Sanitizer, Sanitizer> {

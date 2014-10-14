@@ -757,6 +757,19 @@ public class JournalArticleLocalServiceWrapper
 			articleId, status);
 	}
 
+	@Override
+	public com.liferay.portlet.journal.model.JournalArticle fetchLatestArticle(
+		long resourcePrimKey) {
+		return _journalArticleLocalService.fetchLatestArticle(resourcePrimKey);
+	}
+
+	@Override
+	public com.liferay.portlet.journal.model.JournalArticle fetchLatestArticle(
+		long resourcePrimKey, int status) {
+		return _journalArticleLocalService.fetchLatestArticle(resourcePrimKey,
+			status);
+	}
+
 	/**
 	* Returns the latest web content article matching the resource primary key
 	* and workflow status, optionally preferring articles with approved

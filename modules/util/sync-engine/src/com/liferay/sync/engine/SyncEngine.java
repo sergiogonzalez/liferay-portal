@@ -14,8 +14,8 @@
 
 package com.liferay.sync.engine;
 
-import com.liferay.sync.engine.documentlibrary.event.DownloadFileEvent;
 import com.liferay.sync.engine.documentlibrary.event.GetSyncDLObjectUpdateEvent;
+import com.liferay.sync.engine.documentlibrary.util.FileEventUtil;
 import com.liferay.sync.engine.filesystem.SyncSiteWatchEventListener;
 import com.liferay.sync.engine.filesystem.SyncWatchEventProcessor;
 import com.liferay.sync.engine.filesystem.WatchEventListener;
@@ -285,44 +285,6 @@ public class SyncEngine {
 		}
 	}
 
-	protected static void retryFileTransfers(long syncAccountId) {
-		List<SyncFile> downloadingSyncFiles = SyncFileService.findSyncFiles(
-			syncAccountId, SyncFile.UI_EVENT_DOWNLOADING);
-
-		for (SyncFile downloadingSyncFile : downloadingSyncFiles) {
-			Map<String, Object> parameters = new HashMap<String, Object>();
-
-			parameters.put("patch", false);
-			parameters.put("syncFile", downloadingSyncFile);
-
-			DownloadFileEvent downloadFileEvent = new DownloadFileEvent(
-				syncAccountId, parameters);
-
-			downloadFileEvent.run();
-		}
-
-		List<SyncFile> uploadingSyncFiles = SyncFileService.findSyncFiles(
-			syncAccountId, SyncFile.UI_EVENT_UPLOADING);
-
-		for (SyncFile uploadingSyncFile : uploadingSyncFiles) {
-			if (uploadingSyncFile.getTypePK() > 0) {
-
-				// Reset the checksum and let the engine retry the upload
-
-				uploadingSyncFile.setChecksum("");
-
-				SyncFileService.update(uploadingSyncFile);
-			}
-			else {
-
-				// If the file does not exist on the portal yet, delete the
-				// database entry and let the engine recreate it.
-
-				SyncFileService.deleteSyncFile(uploadingSyncFile, false);
-			}
-		}
-	}
-
 	protected static void scheduleGetSyncDLObjectUpdateEvent(
 		final SyncAccount syncAccount,
 		final SyncWatchEventProcessor syncWatchEventProcessor,
@@ -383,19 +345,20 @@ public class SyncEngine {
 
 		fireDeleteEvents(filePath, watchEventListener);
 
-		retryFileTransfers(syncAccountId);
+		FileEventUtil.retryFileTransfers(syncAccountId);
 	}
 
-	private static Logger _logger = LoggerFactory.getLogger(SyncEngine.class);
+	private static final Logger _logger = LoggerFactory.getLogger(
+		SyncEngine.class);
 
-	private static ScheduledExecutorService _eventScheduledExecutorService =
-		Executors.newScheduledThreadPool(5);
-	private static ExecutorService _executorService =
+	private static final ScheduledExecutorService
+		_eventScheduledExecutorService = Executors.newScheduledThreadPool(5);
+	private static final ExecutorService _executorService =
 		Executors.newCachedThreadPool();
 	private static boolean _running;
-	private static Map<Long, Object[]> _syncAccountTasks =
+	private static final Map<Long, Object[]> _syncAccountTasks =
 		new HashMap<Long, Object[]>();
-	private static ScheduledExecutorService
+	private static final ScheduledExecutorService
 		_syncWatchEventProcessorExecutorService =
 			Executors.newScheduledThreadPool(5);
 

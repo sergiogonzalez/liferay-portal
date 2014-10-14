@@ -311,6 +311,11 @@ public class DDMTemplateLocalServiceUtil {
 		getService().deleteTemplates(groupId);
 	}
 
+	public static void deleteTemplates(long groupId, long classNameId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteTemplates(groupId, classNameId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}

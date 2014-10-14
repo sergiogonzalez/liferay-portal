@@ -445,6 +445,11 @@ public class DDMStructureLocalServiceUtil {
 		getService().deleteStructures(groupId);
 	}
 
+	public static void deleteStructures(long groupId, long classNameId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteStructures(groupId, classNameId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return getService().dynamicQuery();
 	}

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.portal.util.test.RandomTestUtil;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -176,20 +178,65 @@ public class StringUtilTest {
 	@Test
 	public void testMerge() {
 		Assert.assertEquals(
-			"1,2,3", StringUtil.merge(new String[] {"1", " 2 ", "3"}));
-		Assert.assertEquals("1", StringUtil.merge(new String[] {"1"}));
+			"1,2,3", StringUtil.merge(new String[]{"1", " 2 ", "3"}));
+		Assert.assertEquals("1", StringUtil.merge(new String[]{"1"}));
 		Assert.assertEquals("", StringUtil.merge(new String[0]));
 		Assert.assertEquals(
 			"true,false,true",
-			StringUtil.merge(new boolean[] {true, false, true}));
-		Assert.assertEquals("true", StringUtil.merge(new boolean[] {true}));
+			StringUtil.merge(new boolean[]{true, false, true}));
+		Assert.assertEquals("true", StringUtil.merge(new boolean[]{true}));
 		Assert.assertEquals(
-			"1.1,2.2,3.3", StringUtil.merge(new double[] {1.1, 2.2, 3.3}));
-		Assert.assertEquals("1.1", StringUtil.merge(new double[] {1.1}));
-		Assert.assertEquals("1,2,3", StringUtil.merge(new int[] {1, 2, 3}));
-		Assert.assertEquals("1", StringUtil.merge(new int[] {1}));
-		Assert.assertEquals("1,2,3", StringUtil.merge(new long[] {1, 2, 3}));
-		Assert.assertEquals("1", StringUtil.merge(new long[] {1}));
+			"1.1,2.2,3.3", StringUtil.merge(new double[]{1.1, 2.2, 3.3}));
+		Assert.assertEquals("1.1", StringUtil.merge(new double[]{1.1}));
+		Assert.assertEquals("1,2,3", StringUtil.merge(new int[]{1, 2, 3}));
+		Assert.assertEquals("1", StringUtil.merge(new int[]{1}));
+		Assert.assertEquals("1,2,3", StringUtil.merge(new long[]{1, 2, 3}));
+		Assert.assertEquals("1", StringUtil.merge(new long[]{1}));
+	}
+
+	@Test
+	public void testRemoveLeadingEmpty() throws Exception {
+		Assert.assertEquals(
+			StringPool.BLANK,
+			StringUtil.removeLeading(
+				StringPool.BLANK, RandomTestUtil.randomChar()));
+	}
+
+	@Test
+	public void testRemoveLeadingInner() throws Exception {
+		char c = RandomTestUtil.randomChar();
+
+		Assert.assertEquals(
+			"ab" + c + "de", StringUtil.removeLeading("ab" + c + "de", c));
+	}
+
+	@Test
+	public void testRemoveLeadingNoOccurrences() throws Exception {
+		Assert.assertEquals(
+			"abcde",
+			StringUtil.removeLeading("abcde", RandomTestUtil.randomChar()));
+	}
+
+	@Test(expected = NullPointerException.class)
+	public void testRemoveLeadingNull() throws Exception {
+		StringUtil.removeLeading(null, RandomTestUtil.randomChar());
+	}
+
+	@Test
+	public void testRemoveLeadingPrefix() throws Exception {
+		char c = RandomTestUtil.randomChar();
+
+		Assert.assertEquals(
+			"abcde",
+			StringUtil.removeLeading(String.valueOf(c) + c + "abcde", c));
+	}
+
+	@Test
+	public void testRemoveLeadingSuffix() throws Exception {
+		char c = RandomTestUtil.randomChar();
+
+		Assert.assertEquals(
+			"abcde" + c, StringUtil.removeLeading("abcde" + c, c));
 	}
 
 	@Test

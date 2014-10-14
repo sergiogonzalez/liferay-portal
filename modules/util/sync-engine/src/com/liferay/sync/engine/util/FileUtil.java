@@ -137,17 +137,21 @@ public class FileUtil {
 	public static String getSanitizedFileName(String title, String extension) {
 		String fileName = title.replace("/", "_");
 
-		if ((extension != null) && !extension.equals("") &&
-			!fileName.endsWith("." + extension)) {
+		if ((extension != null) && !extension.equals("")) {
+			int x = fileName.lastIndexOf(".");
 
-			fileName += "." + extension;
+			if ((x == -1) ||
+				!extension.equalsIgnoreCase(fileName.substring(x + 1))) {
+
+				fileName += "." + extension;
+			}
 		}
 
 		if (fileName.length() > 255) {
 			int x = fileName.length() - 1;
 
 			if ((extension != null) && !extension.equals("")) {
-				x = fileName.lastIndexOf("." + extension);
+				x = fileName.lastIndexOf(".");
 			}
 
 			int y = x - (fileName.length() - 255);

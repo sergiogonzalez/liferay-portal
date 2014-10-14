@@ -366,6 +366,9 @@ public interface DDMStructureLocalService extends BaseLocalService,
 	public void deleteStructures(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	public void deleteStructures(long groupId, long classNameId)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
 	/**

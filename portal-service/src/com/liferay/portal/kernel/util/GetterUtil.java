@@ -243,9 +243,8 @@ public class GetterUtil {
 			return defaultValue;
 		}
 
+		value = value.toLowerCase();
 		value = value.trim();
-
-		value = StringUtil.toLowerCase(value);
 
 		if (value.equals(BOOLEANS[0]) || value.equals(BOOLEANS[1]) ||
 			value.equals(BOOLEANS[2]) || value.equals(BOOLEANS[3]) ||
@@ -336,8 +335,8 @@ public class GetterUtil {
 		value = value.trim();
 
 		if (value.indexOf(CharPool.RETURN) != -1) {
-			value = StringUtil.replace(
-				value, StringPool.RETURN_NEW_LINE, StringPool.NEW_LINE);
+			value = value.replaceAll(
+				StringPool.RETURN_NEW_LINE, StringPool.NEW_LINE);
 		}
 
 		return value;

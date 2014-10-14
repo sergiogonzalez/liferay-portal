@@ -97,7 +97,7 @@ public class FileServerTestUtil {
 		return folder;
 	}
 
-	public static Path createNotExistFile(Path file) throws IOException {
+	public static Path createNotExistFile(Path file) {
 		FileHelperUtil.delete(true, file);
 
 		return file;

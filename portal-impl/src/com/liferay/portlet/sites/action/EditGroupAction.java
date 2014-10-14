@@ -29,10 +29,12 @@ import com.liferay.portal.RequiredGroupException;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.staging.StagingConstants;
 import com.liferay.portal.kernel.staging.StagingUtil;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -73,6 +75,8 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.TeamLocalServiceUtil;
+import com.liferay.portal.spring.transaction.TransactionAttributeBuilder;
+import com.liferay.portal.spring.transaction.TransactionalCallableUtil;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
@@ -85,6 +89,7 @@ import com.liferay.portlet.sites.util.SitesUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -97,6 +102,8 @@ import javax.portlet.RenderResponse;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import org.springframework.transaction.interceptor.TransactionAttribute;
 
 /**
  * @author Brian Wing Shun Chan
@@ -121,11 +128,19 @@ public class EditGroupAction extends PortletAction {
 		String closeRedirect = ParamUtil.getString(
 			actionRequest, "closeRedirect");
 
+		Group group = getLiveGroup(actionRequest);
+
 		try {
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-				Object[] returnValue = updateGroup(actionRequest);
+				String oldFriendlyURL = getGroupFriendlyURL(group);
+				String oldStagingFriendlyURL = getStagingGroupFriendlyURL(
+					group);
 
-				Group group = (Group)returnValue[0];
+				Callable<Group> groupCallable = new GroupCallable(
+					actionRequest);
+
+				group = TransactionalCallableUtil.call(
+					_transactionAttribute, groupCallable);
 
 				Layout layout = themeDisplay.getLayout();
 
@@ -159,9 +174,8 @@ public class EditGroupAction extends PortletAction {
 						PortletKeys.SITE_SETTINGS + "requestProcessed");
 				}
 				else {
-					String oldFriendlyURL = (String)returnValue[1];
-					String oldStagingFriendlyURL = (String)returnValue[2];
-					long newRefererPlid = (Long)returnValue[3];
+					long newRefererPlid = getRefererPlid(
+						group, themeDisplay.getScopeGroupId(), redirect);
 
 					redirect = HttpUtil.setParameter(
 						redirect, "doAsGroupId", group.getGroupId());
@@ -219,23 +233,15 @@ public class EditGroupAction extends PortletAction {
 				else {
 					SessionErrors.add(actionRequest, e.getClass(), e);
 				}
-
-				int stagingType = ParamUtil.getInteger(
-					actionRequest, "stagingType");
-
-				if (stagingType != StagingConstants.TYPE_NOT_STAGED) {
-					redirect = HttpUtil.setParameter(
-						redirect, actionResponse.getNamespace() + "stagingType",
-						stagingType);
-				}
-
-				sendRedirect(
-					portletConfig, actionRequest, actionResponse, redirect,
-					closeRedirect);
 			}
 			else {
 				throw e;
 			}
+		}
+		catch (Throwable t) {
+			_log.error(t);
+
+			setForward(actionRequest, "portlet.sites_admin.error");
 		}
 	}
 
@@ -289,6 +295,28 @@ public class EditGroupAction extends PortletAction {
 		}
 	}
 
+	protected String getGroupFriendlyURL(Group liveGroup)
+		throws PortalException {
+
+		if (liveGroup != null) {
+			return liveGroup.getFriendlyURL();
+		}
+
+		return null;
+	}
+
+	protected Group getLiveGroup(PortletRequest portletRequest)
+		throws PortalException {
+
+		long liveGroupId = ParamUtil.getLong(portletRequest, "liveGroupId");
+
+		if (liveGroupId > 0) {
+			return GroupLocalServiceUtil.getGroup(liveGroupId);
+		}
+
+		return null;
+	}
+
 	protected long getRefererGroupId(ThemeDisplay themeDisplay)
 		throws Exception {
 
@@ -304,6 +332,34 @@ public class EditGroupAction extends PortletAction {
 		}
 
 		return refererGroupId;
+	}
+
+	protected long getRefererPlid(
+			Group liveGroup, long scopeGroupId, String redirect)
+		throws PortalException {
+
+		long refererPlid = GetterUtil.getLong(
+			HttpUtil.getParameter(redirect, "refererPlid", false));
+
+		if ((refererPlid > 0) && liveGroup.hasStagingGroup() &&
+			(scopeGroupId != liveGroup.getGroupId())) {
+
+			Layout firstLayout = LayoutLocalServiceUtil.fetchFirstLayout(
+				liveGroup.getGroupId(), false,
+				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+			if (firstLayout == null) {
+				firstLayout = LayoutLocalServiceUtil.fetchFirstLayout(
+					liveGroup.getGroupId(), true,
+					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+			}
+
+			if (firstLayout != null) {
+				return firstLayout.getPlid();
+			}
+		}
+
+		return LayoutConstants.DEFAULT_PLID;
 	}
 
 	protected List<Role> getRoles(PortletRequest portletRequest)
@@ -325,6 +381,18 @@ public class EditGroupAction extends PortletAction {
 		}
 
 		return roles;
+	}
+
+	protected String getStagingGroupFriendlyURL(Group liveGroup)
+		throws PortalException {
+
+		if ((liveGroup != null) && liveGroup.hasStagingGroup()) {
+			Group stagingGroup = liveGroup.getStagingGroup();
+
+			return stagingGroup.getFriendlyURL();
+		}
+
+		return null;
 	}
 
 	protected List<Team> getTeams(PortletRequest portletRequest)
@@ -484,9 +552,7 @@ public class EditGroupAction extends PortletAction {
 		return closeRedirect;
 	}
 
-	protected Object[] updateGroup(ActionRequest actionRequest)
-		throws Exception {
-
+	protected Group updateGroup(ActionRequest actionRequest) throws Exception {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -523,8 +589,6 @@ public class EditGroupAction extends PortletAction {
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
 		Group liveGroup = null;
-		String oldFriendlyURL = null;
-		String oldStagingFriendlyURL = null;
 
 		if (liveGroupId <= 0) {
 
@@ -551,8 +615,6 @@ public class EditGroupAction extends PortletAction {
 			// Update group
 
 			liveGroup = GroupLocalServiceUtil.getGroup(liveGroupId);
-
-			oldFriendlyURL = liveGroup.getFriendlyURL();
 
 			name = ParamUtil.getString(
 				actionRequest, "name", liveGroup.getName());
@@ -725,8 +787,6 @@ public class EditGroupAction extends PortletAction {
 		if (liveGroup.hasStagingGroup()) {
 			Group stagingGroup = liveGroup.getStagingGroup();
 
-			oldStagingFriendlyURL = stagingGroup.getFriendlyURL();
-
 			friendlyURL = ParamUtil.getString(
 				actionRequest, "stagingFriendlyURL",
 				stagingGroup.getFriendlyURL());
@@ -753,6 +813,9 @@ public class EditGroupAction extends PortletAction {
 
 			LayoutSetServiceUtil.updateVirtualHost(
 				stagingGroup.getGroupId(), true, privateVirtualHost);
+
+			GroupServiceUtil.updateGroup(
+				stagingGroup.getGroupId(), typeSettingsProperties.toString());
 		}
 
 		liveGroup = GroupServiceUtil.updateGroup(
@@ -816,42 +879,36 @@ public class EditGroupAction extends PortletAction {
 
 		// Staging
 
-		String redirect = ParamUtil.getString(actionRequest, "redirect");
-
-		long refererPlid = GetterUtil.getLong(
-			HttpUtil.getParameter(redirect, "refererPlid", false));
-
 		if (!privateLayoutSet.isLayoutSetPrototypeLinkActive() &&
 			!publicLayoutSet.isLayoutSetPrototypeLinkActive()) {
-
-			if ((refererPlid > 0) && liveGroup.hasStagingGroup() &&
-				(themeDisplay.getScopeGroupId() != liveGroup.getGroupId())) {
-
-				Layout firstLayout = LayoutLocalServiceUtil.fetchFirstLayout(
-					liveGroup.getGroupId(), false,
-					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-
-				if (firstLayout == null) {
-					firstLayout = LayoutLocalServiceUtil.fetchFirstLayout(
-						liveGroup.getGroupId(), true,
-						LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-				}
-
-				if (firstLayout != null) {
-					refererPlid = firstLayout.getPlid();
-				}
-				else {
-					refererPlid = 0;
-				}
-			}
 
 			StagingUtil.updateStaging(actionRequest, liveGroup);
 		}
 
-		return new Object[] {
-			liveGroup, oldFriendlyURL, oldStagingFriendlyURL, refererPlid};
+		return liveGroup;
 	}
 
 	private static final int _LAYOUT_SET_VISIBILITY_PRIVATE = 1;
+
+	private static Log _log = LogFactoryUtil.getLog(EditGroupAction.class);
+
+	private TransactionAttribute _transactionAttribute =
+		TransactionAttributeBuilder.build(
+			Propagation.REQUIRED, new Class<?>[]{Exception.class});
+
+	private class GroupCallable implements Callable<Group> {
+
+		@Override
+		public Group call() throws Exception {
+			return updateGroup(_actionRequest);
+		}
+
+		private GroupCallable(ActionRequest actionRequest) {
+			_actionRequest = actionRequest;
+		}
+
+		private ActionRequest _actionRequest;
+
+	}
 
 }

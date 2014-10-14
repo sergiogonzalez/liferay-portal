@@ -649,6 +649,14 @@ public interface JournalArticleLocalService extends BaseLocalService,
 	public com.liferay.portlet.journal.model.JournalArticle fetchLatestArticle(
 		long groupId, java.lang.String articleId, int status);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portlet.journal.model.JournalArticle fetchLatestArticle(
+		long resourcePrimKey);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portlet.journal.model.JournalArticle fetchLatestArticle(
+		long resourcePrimKey, int status);
+
 	/**
 	* Returns the latest web content article matching the resource primary key
 	* and workflow status, optionally preferring articles with approved

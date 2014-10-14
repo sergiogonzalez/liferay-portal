@@ -474,6 +474,12 @@ public class DDMStructureLocalServiceWrapper implements DDMStructureLocalService
 	}
 
 	@Override
+	public void deleteStructures(long groupId, long classNameId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_ddmStructureLocalService.deleteStructures(groupId, classNameId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 		return _ddmStructureLocalService.dynamicQuery();
 	}
