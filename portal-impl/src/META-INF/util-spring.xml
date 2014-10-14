@@ -861,7 +861,6 @@
 	<bean class="com.liferay.portal.verify.model.UserGroupVerifiableModel" />
 	<bean class="com.liferay.portal.verify.model.UserVerifiableModel" />
 	<bean class="com.liferay.portal.verify.model.WebSiteVerifiableModel" />
-	<bean class="com.liferay.portal.verify.model.WikiPageResourceVerifiableModel" />
 	<bean id="com.liferay.portal.webserver.WebServerServletTokenUtil" class="com.liferay.portal.webserver.WebServerServletTokenUtil">
 		<property name="webServerServletToken">
 			<bean class="com.liferay.portal.webserver.WebServerServletTokenImpl">
@@ -1186,6 +1185,4 @@
 	<bean id="com.liferay.portlet.usersadmin.util.UsersAdminUtil" class="com.liferay.portlet.usersadmin.util.UsersAdminUtil">
 		<property name="usersAdmin" ref="com.liferay.portlet.usersadmin.util.UsersAdmin" />
 	</bean>
-	<bean id="com.liferay.portlet.wiki.service.permission.WikiNodePermission" class="com.liferay.portlet.wiki.service.permission.WikiNodePermission" />
-	<bean id="com.liferay.portlet.wiki.service.permission.WikiPagePermission" class="com.liferay.portlet.wiki.service.permission.WikiPagePermission" />
 </beans>
