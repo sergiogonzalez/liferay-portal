@@ -12,28 +12,29 @@
  * details.
  */
 
-package com.liferay.portal.verify.model;
+package com.liferay.portlet.wiki.verify.model;
 
-import com.liferay.portlet.wiki.model.WikiNode;
+import com.liferay.portal.verify.model.VerifiableResourcedModel;
+import com.liferay.portlet.wiki.model.WikiPage;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class WikiNodeVerifiableModel implements VerifiableResourcedModel {
+public class WikiPageVerifiableModel implements VerifiableResourcedModel {
 
 	@Override
 	public String getModelName() {
-		return WikiNode.class.getName();
+		return WikiPage.class.getName();
 	}
 
 	@Override
 	public String getPrimaryKeyColumnName() {
-		return "nodeId";
+		return "resourcePrimKey";
 	}
 
 	@Override
 	public String getTableName() {
-		return "WikiNode";
+		return "WikiPage";
 	}
 
 }

@@ -862,8 +862,6 @@
 	<bean class="com.liferay.portal.verify.model.UserVerifiableModel" />
 	<bean class="com.liferay.portal.verify.model.WebSiteVerifiableModel" />
 	<bean class="com.liferay.portal.verify.model.WikiPageResourceVerifiableModel" />
-	<bean class="com.liferay.portal.verify.model.WikiNodeVerifiableModel" />
-	<bean class="com.liferay.portal.verify.model.WikiPageVerifiableModel" />
 	<bean id="com.liferay.portal.webserver.WebServerServletTokenUtil" class="com.liferay.portal.webserver.WebServerServletTokenUtil">
 		<property name="webServerServletToken">
 			<bean class="com.liferay.portal.webserver.WebServerServletTokenImpl">
