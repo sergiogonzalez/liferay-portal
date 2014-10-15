@@ -15,7 +15,6 @@
 package com.liferay.wiki.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
-import com.liferay.wiki.exception.NoSuchPageException;
 
 /**
  * @author Brian Wing Shun Chan
@@ -44,7 +43,7 @@ public interface WikiPageFinder {
 
 	public com.liferay.wiki.model.WikiPage findByResourcePrimKey(
 		long resourcePrimKey)
-		throws NoSuchPageException;
+		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	public java.util.List<com.liferay.wiki.model.WikiPage> findByCreateDate(
 		long groupId, long nodeId, java.util.Date createDate, boolean before,

@@ -16,8 +16,10 @@ package com.liferay.wiki.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the remote service utility for WikiPage. This utility wraps
@@ -38,7 +40,7 @@ public class WikiPageServiceUtil {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.wiki.service.impl.WikiPageServiceImpl} and rerun ServiceBuilder to regenerate this class.
+	 * Never modify this class directly. Add custom service methods to {@link com.liferay.wiki.service.impl.WikiPageServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.wiki.model.WikiPage addPage(long nodeId,
 		java.lang.String title, java.lang.String content,
@@ -169,8 +171,8 @@ public class WikiPageServiceUtil {
 		getService().discardDraft(nodeId, title, version);
 	}
 
-	public static com.liferay.wiki.model.WikiPage fetchPage(
-		long nodeId, java.lang.String title, double version)
+	public static com.liferay.wiki.model.WikiPage fetchPage(long nodeId,
+		java.lang.String title, double version)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().fetchPage(nodeId, title, version);
 	}
@@ -190,8 +192,8 @@ public class WikiPageServiceUtil {
 		return getService().getChildren(groupId, nodeId, head, parentTitle);
 	}
 
-	public static com.liferay.wiki.model.WikiPage getDraftPage(
-		long nodeId, java.lang.String title)
+	public static com.liferay.wiki.model.WikiPage getDraftPage(long nodeId,
+		java.lang.String title)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getDraftPage(nodeId, title);
 	}
@@ -232,8 +234,8 @@ public class WikiPageServiceUtil {
 		return getService().getOrphans(groupId, nodeId);
 	}
 
-	public static com.liferay.wiki.model.WikiPage getPage(
-		long groupId, long nodeId, java.lang.String title)
+	public static com.liferay.wiki.model.WikiPage getPage(long groupId,
+		long nodeId, java.lang.String title)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPage(groupId, nodeId, title);
 	}
@@ -342,14 +344,14 @@ public class WikiPageServiceUtil {
 		return getService().movePageAttachmentToTrash(nodeId, title, fileName);
 	}
 
-	public static com.liferay.wiki.model.WikiPage movePageToTrash(
-		long nodeId, java.lang.String title)
+	public static com.liferay.wiki.model.WikiPage movePageToTrash(long nodeId,
+		java.lang.String title)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().movePageToTrash(nodeId, title);
 	}
 
-	public static com.liferay.wiki.model.WikiPage movePageToTrash(
-		long nodeId, java.lang.String title, double version)
+	public static com.liferay.wiki.model.WikiPage movePageToTrash(long nodeId,
+		java.lang.String title, double version)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().movePageToTrash(nodeId, title, version);
 	}
@@ -372,8 +374,8 @@ public class WikiPageServiceUtil {
 		getService().restorePageFromTrash(resourcePrimKey);
 	}
 
-	public static com.liferay.wiki.model.WikiPage revertPage(
-		long nodeId, java.lang.String title, double version,
+	public static com.liferay.wiki.model.WikiPage revertPage(long nodeId,
+		java.lang.String title, double version,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().revertPage(nodeId, title, version, serviceContext);
@@ -398,11 +400,10 @@ public class WikiPageServiceUtil {
 		getService().unsubscribePage(nodeId, title);
 	}
 
-	public static com.liferay.wiki.model.WikiPage updatePage(
-		long nodeId, java.lang.String title, double version,
-		java.lang.String content, java.lang.String summary, boolean minorEdit,
-		java.lang.String format, java.lang.String parentTitle,
-		java.lang.String redirectTitle,
+	public static com.liferay.wiki.model.WikiPage updatePage(long nodeId,
+		java.lang.String title, double version, java.lang.String content,
+		java.lang.String summary, boolean minorEdit, java.lang.String format,
+		java.lang.String parentTitle, java.lang.String redirectTitle,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -411,14 +412,7 @@ public class WikiPageServiceUtil {
 	}
 
 	public static WikiPageService getService() {
-		if (_service == null) {
-			_service = (WikiPageService)PortalBeanLocatorUtil.locate(WikiPageService.class.getName());
-
-			ReferenceRegistry.registerReference(WikiPageServiceUtil.class,
-				"_service");
-		}
-
-		return _service;
+		return _serviceTracker.getService();
 	}
 
 	/**
@@ -428,5 +422,14 @@ public class WikiPageServiceUtil {
 	public void setService(WikiPageService service) {
 	}
 
-	private static WikiPageService _service;
+	private static ServiceTracker<WikiPageService, WikiPageService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(WikiPageServiceUtil.class);
+
+		_serviceTracker = new ServiceTracker<WikiPageService, WikiPageService>(bundle.getBundleContext(),
+				WikiPageService.class, null);
+
+		_serviceTracker.open();
+	}
 }

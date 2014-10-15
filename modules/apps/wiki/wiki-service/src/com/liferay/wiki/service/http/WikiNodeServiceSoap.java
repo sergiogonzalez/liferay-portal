@@ -93,8 +93,8 @@ public class WikiNodeServiceSoap {
 		}
 	}
 
-	public static com.liferay.wiki.model.WikiNodeSoap getNode(
-		long nodeId) throws RemoteException {
+	public static com.liferay.wiki.model.WikiNodeSoap getNode(long nodeId)
+		throws RemoteException {
 		try {
 			com.liferay.wiki.model.WikiNode returnValue = WikiNodeServiceUtil.getNode(nodeId);
 
@@ -107,8 +107,8 @@ public class WikiNodeServiceSoap {
 		}
 	}
 
-	public static com.liferay.wiki.model.WikiNodeSoap getNode(
-		long groupId, java.lang.String name) throws RemoteException {
+	public static com.liferay.wiki.model.WikiNodeSoap getNode(long groupId,
+		java.lang.String name) throws RemoteException {
 		try {
 			com.liferay.wiki.model.WikiNode returnValue = WikiNodeServiceUtil.getNode(groupId,
 					name);
@@ -122,8 +122,8 @@ public class WikiNodeServiceSoap {
 		}
 	}
 
-	public static com.liferay.wiki.model.WikiNodeSoap[] getNodes(
-		long groupId) throws RemoteException {
+	public static com.liferay.wiki.model.WikiNodeSoap[] getNodes(long groupId)
+		throws RemoteException {
 		try {
 			java.util.List<com.liferay.wiki.model.WikiNode> returnValue = WikiNodeServiceUtil.getNodes(groupId);
 
@@ -136,8 +136,8 @@ public class WikiNodeServiceSoap {
 		}
 	}
 
-	public static com.liferay.wiki.model.WikiNodeSoap[] getNodes(
-		long groupId, int status) throws RemoteException {
+	public static com.liferay.wiki.model.WikiNodeSoap[] getNodes(long groupId,
+		int status) throws RemoteException {
 		try {
 			java.util.List<com.liferay.wiki.model.WikiNode> returnValue = WikiNodeServiceUtil.getNodes(groupId,
 					status);
@@ -151,8 +151,8 @@ public class WikiNodeServiceSoap {
 		}
 	}
 
-	public static com.liferay.wiki.model.WikiNodeSoap[] getNodes(
-		long groupId, int start, int end) throws RemoteException {
+	public static com.liferay.wiki.model.WikiNodeSoap[] getNodes(long groupId,
+		int start, int end) throws RemoteException {
 		try {
 			java.util.List<com.liferay.wiki.model.WikiNode> returnValue = WikiNodeServiceUtil.getNodes(groupId,
 					start, end);
@@ -166,8 +166,8 @@ public class WikiNodeServiceSoap {
 		}
 	}
 
-	public static com.liferay.wiki.model.WikiNodeSoap[] getNodes(
-		long groupId, int status, int start, int end) throws RemoteException {
+	public static com.liferay.wiki.model.WikiNodeSoap[] getNodes(long groupId,
+		int status, int start, int end) throws RemoteException {
 		try {
 			java.util.List<com.liferay.wiki.model.WikiNode> returnValue = WikiNodeServiceUtil.getNodes(groupId,
 					status, start, end);
@@ -256,8 +256,8 @@ public class WikiNodeServiceSoap {
 		}
 	}
 
-	public static com.liferay.wiki.model.WikiNodeSoap updateNode(
-		long nodeId, java.lang.String name, java.lang.String description,
+	public static com.liferay.wiki.model.WikiNodeSoap updateNode(long nodeId,
+		java.lang.String name, java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {

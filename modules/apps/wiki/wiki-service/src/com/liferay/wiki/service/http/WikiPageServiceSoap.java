@@ -66,8 +66,8 @@ import java.rmi.RemoteException;
  */
 @ProviderType
 public class WikiPageServiceSoap {
-	public static com.liferay.wiki.model.WikiPageSoap addPage(
-		long nodeId, java.lang.String title, java.lang.String content,
+	public static com.liferay.wiki.model.WikiPageSoap addPage(long nodeId,
+		java.lang.String title, java.lang.String content,
 		java.lang.String summary, boolean minorEdit,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws RemoteException {
@@ -84,8 +84,8 @@ public class WikiPageServiceSoap {
 		}
 	}
 
-	public static com.liferay.wiki.model.WikiPageSoap addPage(
-		long nodeId, java.lang.String title, java.lang.String content,
+	public static com.liferay.wiki.model.WikiPageSoap addPage(long nodeId,
+		java.lang.String title, java.lang.String content,
 		java.lang.String summary, boolean minorEdit, java.lang.String format,
 		java.lang.String parentTitle, java.lang.String redirectTitle,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -252,9 +252,8 @@ public class WikiPageServiceSoap {
 		}
 	}
 
-	public static com.liferay.wiki.model.WikiPageSoap fetchPage(
-		long nodeId, java.lang.String title, double version)
-		throws RemoteException {
+	public static com.liferay.wiki.model.WikiPageSoap fetchPage(long nodeId,
+		java.lang.String title, double version) throws RemoteException {
 		try {
 			com.liferay.wiki.model.WikiPage returnValue = WikiPageServiceUtil.fetchPage(nodeId,
 					title, version);
@@ -369,9 +368,8 @@ public class WikiPageServiceSoap {
 		}
 	}
 
-	public static com.liferay.wiki.model.WikiPageSoap getPage(
-		long groupId, long nodeId, java.lang.String title)
-		throws RemoteException {
+	public static com.liferay.wiki.model.WikiPageSoap getPage(long groupId,
+		long nodeId, java.lang.String title) throws RemoteException {
 		try {
 			com.liferay.wiki.model.WikiPage returnValue = WikiPageServiceUtil.getPage(groupId,
 					nodeId, title);
@@ -385,8 +383,8 @@ public class WikiPageServiceSoap {
 		}
 	}
 
-	public static com.liferay.wiki.model.WikiPageSoap getPage(
-		long nodeId, java.lang.String title) throws RemoteException {
+	public static com.liferay.wiki.model.WikiPageSoap getPage(long nodeId,
+		java.lang.String title) throws RemoteException {
 		try {
 			com.liferay.wiki.model.WikiPage returnValue = WikiPageServiceUtil.getPage(nodeId,
 					title);
@@ -400,8 +398,8 @@ public class WikiPageServiceSoap {
 		}
 	}
 
-	public static com.liferay.wiki.model.WikiPageSoap getPage(
-		long nodeId, java.lang.String title, java.lang.Boolean head)
+	public static com.liferay.wiki.model.WikiPageSoap getPage(long nodeId,
+		java.lang.String title, java.lang.Boolean head)
 		throws RemoteException {
 		try {
 			com.liferay.wiki.model.WikiPage returnValue = WikiPageServiceUtil.getPage(nodeId,
@@ -416,9 +414,8 @@ public class WikiPageServiceSoap {
 		}
 	}
 
-	public static com.liferay.wiki.model.WikiPageSoap getPage(
-		long nodeId, java.lang.String title, double version)
-		throws RemoteException {
+	public static com.liferay.wiki.model.WikiPageSoap getPage(long nodeId,
+		java.lang.String title, double version) throws RemoteException {
 		try {
 			com.liferay.wiki.model.WikiPage returnValue = WikiPageServiceUtil.getPage(nodeId,
 					title, version);
@@ -432,9 +429,8 @@ public class WikiPageServiceSoap {
 		}
 	}
 
-	public static com.liferay.wiki.model.WikiPageSoap[] getPages(
-		long groupId, long nodeId, boolean head, int status, int start,
-		int end,
+	public static com.liferay.wiki.model.WikiPageSoap[] getPages(long groupId,
+		long nodeId, boolean head, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPage> obc)
 		throws RemoteException {
 		try {
@@ -450,8 +446,8 @@ public class WikiPageServiceSoap {
 		}
 	}
 
-	public static com.liferay.wiki.model.WikiPageSoap[] getPages(
-		long groupId, long userId, long nodeId, int status, int start, int end)
+	public static com.liferay.wiki.model.WikiPageSoap[] getPages(long groupId,
+		long userId, long nodeId, int status, int start, int end)
 		throws RemoteException {
 		try {
 			java.util.List<com.liferay.wiki.model.WikiPage> returnValue = WikiPageServiceUtil.getPages(groupId,
@@ -693,8 +689,8 @@ public class WikiPageServiceSoap {
 		}
 	}
 
-	public static com.liferay.wiki.model.WikiPageSoap revertPage(
-		long nodeId, java.lang.String title, double version,
+	public static com.liferay.wiki.model.WikiPageSoap revertPage(long nodeId,
+		java.lang.String title, double version,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -734,11 +730,10 @@ public class WikiPageServiceSoap {
 		}
 	}
 
-	public static com.liferay.wiki.model.WikiPageSoap updatePage(
-		long nodeId, java.lang.String title, double version,
-		java.lang.String content, java.lang.String summary, boolean minorEdit,
-		java.lang.String format, java.lang.String parentTitle,
-		java.lang.String redirectTitle,
+	public static com.liferay.wiki.model.WikiPageSoap updatePage(long nodeId,
+		java.lang.String title, double version, java.lang.String content,
+		java.lang.String summary, boolean minorEdit, java.lang.String format,
+		java.lang.String parentTitle, java.lang.String redirectTitle,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {

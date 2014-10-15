@@ -45,7 +45,7 @@ public interface WikiPageService extends BaseService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link WikiPageServiceUtil} to access the wiki page remote service. Add custom service methods to {@link com.liferay.portlet.wiki.service.impl.WikiPageServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify or reference this interface directly. Always use {@link WikiPageServiceUtil} to access the wiki page remote service. Add custom service methods to {@link com.liferay.wiki.service.impl.WikiPageServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public com.liferay.wiki.model.WikiPage addPage(long nodeId,
 		java.lang.String title, java.lang.String content,
@@ -179,8 +179,8 @@ public interface WikiPageService extends BaseService {
 		long groupId, long nodeId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public com.liferay.wiki.model.WikiPage getPage(long groupId,
-		long nodeId, java.lang.String title)
+	public com.liferay.wiki.model.WikiPage getPage(long groupId, long nodeId,
+		java.lang.String title)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.wiki.model.WikiPage getPage(long nodeId,
@@ -264,12 +264,12 @@ public interface WikiPageService extends BaseService {
 		long nodeId, java.lang.String title, java.lang.String fileName)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public com.liferay.wiki.model.WikiPage movePageToTrash(
-		long nodeId, java.lang.String title)
+	public com.liferay.wiki.model.WikiPage movePageToTrash(long nodeId,
+		java.lang.String title)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public com.liferay.wiki.model.WikiPage movePageToTrash(
-		long nodeId, java.lang.String title, double version)
+	public com.liferay.wiki.model.WikiPage movePageToTrash(long nodeId,
+		java.lang.String title, double version)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void renamePage(long nodeId, java.lang.String title,

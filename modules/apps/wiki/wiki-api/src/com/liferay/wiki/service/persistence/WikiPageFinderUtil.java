@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
-import com.liferay.wiki.exception.NoSuchPageException;
 
 /**
  * @author Brian Wing Shun Chan
@@ -65,7 +64,7 @@ public class WikiPageFinderUtil {
 
 	public static com.liferay.wiki.model.WikiPage findByResourcePrimKey(
 		long resourcePrimKey)
-		throws NoSuchPageException {
+		throws com.liferay.wiki.exception.NoSuchPageException {
 		return getFinder().findByResourcePrimKey(resourcePrimKey);
 	}
 

@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.service.persistence.BasePersistence;
 
-import com.liferay.wiki.exception.NoSuchPageResourceException;
 import com.liferay.wiki.model.WikiPageResource;
 
 /**
@@ -88,12 +87,12 @@ public interface WikiPageResourcePersistence extends BasePersistence<WikiPageRes
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching wiki page resource
-	* @throws com.liferay.wiki.exception.NoSuchPageResourceException if a matching wiki page resource could not be found
+	* @throws com.liferay.wiki.NoSuchPageResourceException if a matching wiki page resource could not be found
 	*/
 	public com.liferay.wiki.model.WikiPageResource findByUuid_First(
 		java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPageResource> orderByComparator)
-		throws NoSuchPageResourceException;
+		throws com.liferay.wiki.exception.NoSuchPageResourceException;
 
 	/**
 	* Returns the first wiki page resource in the ordered set where uuid = &#63;.
@@ -112,12 +111,12 @@ public interface WikiPageResourcePersistence extends BasePersistence<WikiPageRes
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching wiki page resource
-	* @throws com.liferay.wiki.exception.NoSuchPageResourceException if a matching wiki page resource could not be found
+	* @throws com.liferay.wiki.NoSuchPageResourceException if a matching wiki page resource could not be found
 	*/
 	public com.liferay.wiki.model.WikiPageResource findByUuid_Last(
 		java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPageResource> orderByComparator)
-		throws NoSuchPageResourceException;
+		throws com.liferay.wiki.exception.NoSuchPageResourceException;
 
 	/**
 	* Returns the last wiki page resource in the ordered set where uuid = &#63;.
@@ -137,12 +136,12 @@ public interface WikiPageResourcePersistence extends BasePersistence<WikiPageRes
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next wiki page resource
-	* @throws com.liferay.wiki.exception.NoSuchPageResourceException if a wiki page resource with the primary key could not be found
+	* @throws com.liferay.wiki.NoSuchPageResourceException if a wiki page resource with the primary key could not be found
 	*/
 	public com.liferay.wiki.model.WikiPageResource[] findByUuid_PrevAndNext(
 		long resourcePrimKey, java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.wiki.model.WikiPageResource> orderByComparator)
-		throws NoSuchPageResourceException;
+		throws com.liferay.wiki.exception.NoSuchPageResourceException;
 
 	/**
 	* Removes all the wiki page resources where uuid = &#63; from the database.
@@ -160,16 +159,16 @@ public interface WikiPageResourcePersistence extends BasePersistence<WikiPageRes
 	public int countByUuid(java.lang.String uuid);
 
 	/**
-	* Returns the wiki page resource where nodeId = &#63; and title = &#63; or throws a {@link com.liferay.wiki.exception.NoSuchPageResourceException} if it could not be found.
+	* Returns the wiki page resource where nodeId = &#63; and title = &#63; or throws a {@link com.liferay.wiki.NoSuchPageResourceException} if it could not be found.
 	*
 	* @param nodeId the node ID
 	* @param title the title
 	* @return the matching wiki page resource
-	* @throws com.liferay.wiki.exception.NoSuchPageResourceException if a matching wiki page resource could not be found
+	* @throws com.liferay.wiki.NoSuchPageResourceException if a matching wiki page resource could not be found
 	*/
-	public com.liferay.wiki.model.WikiPageResource findByN_T(
-		long nodeId, java.lang.String title)
-		throws NoSuchPageResourceException;
+	public com.liferay.wiki.model.WikiPageResource findByN_T(long nodeId,
+		java.lang.String title)
+		throws com.liferay.wiki.exception.NoSuchPageResourceException;
 
 	/**
 	* Returns the wiki page resource where nodeId = &#63; and title = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -178,8 +177,8 @@ public interface WikiPageResourcePersistence extends BasePersistence<WikiPageRes
 	* @param title the title
 	* @return the matching wiki page resource, or <code>null</code> if a matching wiki page resource could not be found
 	*/
-	public com.liferay.wiki.model.WikiPageResource fetchByN_T(
-		long nodeId, java.lang.String title);
+	public com.liferay.wiki.model.WikiPageResource fetchByN_T(long nodeId,
+		java.lang.String title);
 
 	/**
 	* Returns the wiki page resource where nodeId = &#63; and title = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -189,8 +188,8 @@ public interface WikiPageResourcePersistence extends BasePersistence<WikiPageRes
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching wiki page resource, or <code>null</code> if a matching wiki page resource could not be found
 	*/
-	public com.liferay.wiki.model.WikiPageResource fetchByN_T(
-		long nodeId, java.lang.String title, boolean retrieveFromCache);
+	public com.liferay.wiki.model.WikiPageResource fetchByN_T(long nodeId,
+		java.lang.String title, boolean retrieveFromCache);
 
 	/**
 	* Removes the wiki page resource where nodeId = &#63; and title = &#63; from the database.
@@ -199,9 +198,9 @@ public interface WikiPageResourcePersistence extends BasePersistence<WikiPageRes
 	* @param title the title
 	* @return the wiki page resource that was removed
 	*/
-	public com.liferay.wiki.model.WikiPageResource removeByN_T(
-		long nodeId, java.lang.String title)
-		throws NoSuchPageResourceException;
+	public com.liferay.wiki.model.WikiPageResource removeByN_T(long nodeId,
+		java.lang.String title)
+		throws com.liferay.wiki.exception.NoSuchPageResourceException;
 
 	/**
 	* Returns the number of wiki page resources where nodeId = &#63; and title = &#63;.
@@ -234,33 +233,31 @@ public interface WikiPageResourcePersistence extends BasePersistence<WikiPageRes
 	* @param resourcePrimKey the primary key for the new wiki page resource
 	* @return the new wiki page resource
 	*/
-	public com.liferay.wiki.model.WikiPageResource create(
-		long resourcePrimKey);
+	public com.liferay.wiki.model.WikiPageResource create(long resourcePrimKey);
 
 	/**
 	* Removes the wiki page resource with the primary key from the database. Also notifies the appropriate model listeners.
 	*
 	* @param resourcePrimKey the primary key of the wiki page resource
 	* @return the wiki page resource that was removed
-	* @throws com.liferay.wiki.exception.NoSuchPageResourceException if a wiki page resource with the primary key could not be found
+	* @throws com.liferay.wiki.NoSuchPageResourceException if a wiki page resource with the primary key could not be found
 	*/
-	public com.liferay.wiki.model.WikiPageResource remove(
-		long resourcePrimKey)
-		throws NoSuchPageResourceException;
+	public com.liferay.wiki.model.WikiPageResource remove(long resourcePrimKey)
+		throws com.liferay.wiki.exception.NoSuchPageResourceException;
 
 	public com.liferay.wiki.model.WikiPageResource updateImpl(
 		com.liferay.wiki.model.WikiPageResource wikiPageResource);
 
 	/**
-	* Returns the wiki page resource with the primary key or throws a {@link com.liferay.wiki.exception.NoSuchPageResourceException} if it could not be found.
+	* Returns the wiki page resource with the primary key or throws a {@link com.liferay.wiki.NoSuchPageResourceException} if it could not be found.
 	*
 	* @param resourcePrimKey the primary key of the wiki page resource
 	* @return the wiki page resource
-	* @throws com.liferay.wiki.exception.NoSuchPageResourceException if a wiki page resource with the primary key could not be found
+	* @throws com.liferay.wiki.NoSuchPageResourceException if a wiki page resource with the primary key could not be found
 	*/
 	public com.liferay.wiki.model.WikiPageResource findByPrimaryKey(
 		long resourcePrimKey)
-		throws NoSuchPageResourceException;
+		throws com.liferay.wiki.exception.NoSuchPageResourceException;
 
 	/**
 	* Returns the wiki page resource with the primary key or returns <code>null</code> if it could not be found.

@@ -33,8 +33,8 @@ public class WikiNodeServiceWrapper implements WikiNodeService,
 	}
 
 	@Override
-	public com.liferay.wiki.model.WikiNode addNode(
-		java.lang.String name, java.lang.String description,
+	public com.liferay.wiki.model.WikiNode addNode(java.lang.String name,
+		java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiNodeService.addNode(name, description, serviceContext);

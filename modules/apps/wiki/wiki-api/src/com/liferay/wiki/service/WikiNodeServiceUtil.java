@@ -16,8 +16,10 @@ package com.liferay.wiki.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the remote service utility for WikiNode. This utility wraps
@@ -38,7 +40,7 @@ public class WikiNodeServiceUtil {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.wiki.service.impl.WikiNodeServiceImpl} and rerun ServiceBuilder to regenerate this class.
+	 * Never modify this class directly. Add custom service methods to {@link com.liferay.wiki.service.impl.WikiNodeServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.wiki.model.WikiNode addNode(
 		java.lang.String name, java.lang.String description,
@@ -61,8 +63,8 @@ public class WikiNodeServiceUtil {
 		return getService().getBeanIdentifier();
 	}
 
-	public static com.liferay.wiki.model.WikiNode getNode(
-		long groupId, java.lang.String name)
+	public static com.liferay.wiki.model.WikiNode getNode(long groupId,
+		java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getNode(groupId, name);
 	}
@@ -109,8 +111,8 @@ public class WikiNodeServiceUtil {
 		getService().importPages(nodeId, importer, inputStreams, options);
 	}
 
-	public static com.liferay.wiki.model.WikiNode moveNodeToTrash(
-		long nodeId) throws com.liferay.portal.kernel.exception.PortalException {
+	public static com.liferay.wiki.model.WikiNode moveNodeToTrash(long nodeId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().moveNodeToTrash(nodeId);
 	}
 
@@ -138,22 +140,15 @@ public class WikiNodeServiceUtil {
 		getService().unsubscribeNode(nodeId);
 	}
 
-	public static com.liferay.wiki.model.WikiNode updateNode(
-		long nodeId, java.lang.String name, java.lang.String description,
+	public static com.liferay.wiki.model.WikiNode updateNode(long nodeId,
+		java.lang.String name, java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().updateNode(nodeId, name, description, serviceContext);
 	}
 
 	public static WikiNodeService getService() {
-		if (_service == null) {
-			_service = (WikiNodeService)PortalBeanLocatorUtil.locate(WikiNodeService.class.getName());
-
-			ReferenceRegistry.registerReference(WikiNodeServiceUtil.class,
-				"_service");
-		}
-
-		return _service;
+		return _serviceTracker.getService();
 	}
 
 	/**
@@ -163,5 +158,14 @@ public class WikiNodeServiceUtil {
 	public void setService(WikiNodeService service) {
 	}
 
-	private static WikiNodeService _service;
+	private static ServiceTracker<WikiNodeService, WikiNodeService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(WikiNodeServiceUtil.class);
+
+		_serviceTracker = new ServiceTracker<WikiNodeService, WikiNodeService>(bundle.getBundleContext(),
+				WikiNodeService.class, null);
+
+		_serviceTracker.open();
+	}
 }

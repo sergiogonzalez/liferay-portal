@@ -16,8 +16,10 @@ package com.liferay.wiki.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the local service utility for WikiPageResource. This utility wraps
@@ -38,7 +40,7 @@ public class WikiPageResourceLocalServiceUtil {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.wiki.service.impl.WikiPageResourceLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
+	 * Never modify this class directly. Add custom service methods to {@link com.liferay.wiki.service.impl.WikiPageResourceLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.wiki.model.WikiPageResource addPageResource(
 		long nodeId, java.lang.String title) {
@@ -293,14 +295,7 @@ public class WikiPageResourceLocalServiceUtil {
 	}
 
 	public static WikiPageResourceLocalService getService() {
-		if (_service == null) {
-			_service = (WikiPageResourceLocalService)PortalBeanLocatorUtil.locate(WikiPageResourceLocalService.class.getName());
-
-			ReferenceRegistry.registerReference(WikiPageResourceLocalServiceUtil.class,
-				"_service");
-		}
-
-		return _service;
+		return _serviceTracker.getService();
 	}
 
 	/**
@@ -310,5 +305,14 @@ public class WikiPageResourceLocalServiceUtil {
 	public void setService(WikiPageResourceLocalService service) {
 	}
 
-	private static WikiPageResourceLocalService _service;
+	private static ServiceTracker<WikiPageResourceLocalService, WikiPageResourceLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(WikiPageResourceLocalServiceUtil.class);
+
+		_serviceTracker = new ServiceTracker<WikiPageResourceLocalService, WikiPageResourceLocalService>(bundle.getBundleContext(),
+				WikiPageResourceLocalService.class, null);
+
+		_serviceTracker.open();
+	}
 }

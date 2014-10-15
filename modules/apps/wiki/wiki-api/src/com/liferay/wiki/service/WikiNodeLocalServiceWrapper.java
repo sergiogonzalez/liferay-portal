@@ -453,16 +453,15 @@ public class WikiNodeLocalServiceWrapper implements WikiNodeLocalService,
 	}
 
 	@Override
-	public com.liferay.wiki.model.WikiNode moveNodeToTrash(
-		long userId, com.liferay.wiki.model.WikiNode node)
+	public com.liferay.wiki.model.WikiNode moveNodeToTrash(long userId,
+		com.liferay.wiki.model.WikiNode node)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiNodeLocalService.moveNodeToTrash(userId, node);
 	}
 
 	@Override
-	public com.liferay.wiki.model.WikiNode moveNodeToTrash(
-		long userId, long nodeId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public com.liferay.wiki.model.WikiNode moveNodeToTrash(long userId,
+		long nodeId) throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiNodeLocalService.moveNodeToTrash(userId, nodeId);
 	}
 

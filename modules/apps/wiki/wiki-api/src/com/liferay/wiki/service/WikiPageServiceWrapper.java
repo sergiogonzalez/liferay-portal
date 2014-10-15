@@ -243,8 +243,8 @@ public class WikiPageServiceWrapper implements WikiPageService,
 	}
 
 	@Override
-	public com.liferay.wiki.model.WikiPage getPage(long groupId,
-		long nodeId, java.lang.String title)
+	public com.liferay.wiki.model.WikiPage getPage(long groupId, long nodeId,
+		java.lang.String title)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiPageService.getPage(groupId, nodeId, title);
 	}
@@ -369,15 +369,15 @@ public class WikiPageServiceWrapper implements WikiPageService,
 	}
 
 	@Override
-	public com.liferay.wiki.model.WikiPage movePageToTrash(
-		long nodeId, java.lang.String title)
+	public com.liferay.wiki.model.WikiPage movePageToTrash(long nodeId,
+		java.lang.String title)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiPageService.movePageToTrash(nodeId, title);
 	}
 
 	@Override
-	public com.liferay.wiki.model.WikiPage movePageToTrash(
-		long nodeId, java.lang.String title, double version)
+	public com.liferay.wiki.model.WikiPage movePageToTrash(long nodeId,
+		java.lang.String title, double version)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _wikiPageService.movePageToTrash(nodeId, title, version);
 	}
