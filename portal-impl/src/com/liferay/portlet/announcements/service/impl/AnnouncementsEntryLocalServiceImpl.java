@@ -162,12 +162,10 @@ public class AnnouncementsEntryLocalServiceImpl
 				now.getTime() - _ANNOUNCEMENTS_ENTRY_CHECK_INTERVAL);
 		}
 
-		long[] companyIds = PortalInstances.getCompanyIds();
-
-		for (long companyId : companyIds) {
-			ShardUtil.pushCompanyService(companyId);
-
+		for (long companyId : PortalInstances.getCompanyIds()) {
 			try {
+				ShardUtil.pushCompanyService(companyId);
+
 				List<AnnouncementsEntry> entries =
 					announcementsEntryFinder.findByDisplayDate(
 						now, _previousCheckDate, companyId);

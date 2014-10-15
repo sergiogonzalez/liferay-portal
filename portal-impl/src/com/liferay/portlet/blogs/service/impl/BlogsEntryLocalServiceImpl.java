@@ -331,12 +331,10 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	public void checkEntries() throws PortalException {
 		Date now = new Date();
 
-		long[] companyIds = PortalInstances.getCompanyIds();
-
-		for (long companyId : companyIds) {
-			ShardUtil.pushCompanyService(companyId);
-
+		for (long companyId : PortalInstances.getCompanyIds()) {
 			try {
+				ShardUtil.pushCompanyService(companyId);
+
 				int count = blogsEntryPersistence.countByC_LtD_S(
 					companyId, now, WorkflowConstants.STATUS_SCHEDULED);
 
