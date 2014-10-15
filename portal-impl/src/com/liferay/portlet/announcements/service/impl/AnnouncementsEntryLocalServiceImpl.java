@@ -168,7 +168,7 @@ public class AnnouncementsEntryLocalServiceImpl
 
 				List<AnnouncementsEntry> entries =
 					announcementsEntryFinder.findByDisplayDate(
-						now, _previousCheckDate, companyId);
+						companyId, now, _previousCheckDate);
 
 				if (_log.isDebugEnabled()) {
 					_log.debug("Processing " + entries.size() + " entries");

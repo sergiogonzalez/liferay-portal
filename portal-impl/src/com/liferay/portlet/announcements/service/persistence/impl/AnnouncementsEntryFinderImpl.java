@@ -187,7 +187,7 @@ public class AnnouncementsEntryFinderImpl
 
 	@Override
 	public List<AnnouncementsEntry> findByDisplayDate(
-		Date displayDateLT, Date displayDateGT, long companyId) {
+		long companyId, Date displayDateLT, Date displayDateGT) {
 
 		Timestamp displayDateLT_TS = CalendarUtil.getTimestamp(displayDateLT);
 		Timestamp displayDateGT_TS = CalendarUtil.getTimestamp(displayDateGT);
@@ -205,9 +205,9 @@ public class AnnouncementsEntryFinderImpl
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
+			qPos.add(companyId);
 			qPos.add(displayDateGT_TS);
 			qPos.add(displayDateLT_TS);
-			qPos.add(companyId);
 
 			return q.list(true);
 		}
