@@ -15,6 +15,11 @@ Export-Package:\
 	com.liferay.portal.kernel.util,\
 	com.liferay.portal.messaging.async,\
 	com.liferay.portal.monitoring.statistics.service,\
+	com.liferay.portal.parsers.creole.ast,\
+	com.liferay.portal.parsers.creole.ast.extension,\
+	com.liferay.portal.parsers.creole.ast.link,\
+	com.liferay.portal.parsers.creole.parser,\
+	com.liferay.portal.parsers.creole.visitor.impl,\
 	com.liferay.portal.plugin,\
 	com.liferay.portal.resiliency.service,\
 	com.liferay.portal.search,\
@@ -29,6 +34,35 @@ Export-Package:\
 	com.liferay.portal.upgrade.v7_0_0,\
 	com.liferay.portal.verify,\
 	com.liferay.portal.xml,\
+	com.liferay.portlet,\
+	com.liferay.portlet.asset,\
+	com.liferay.portlet.asset.model,\
+	com.liferay.portlet.asset.service,\
+	com.liferay.portlet.asset.service.persistence,\
+	com.liferay.portlet.asset.util,\
+	com.liferay.portlet.documentlibrary,\
+	com.liferay.portlet.documentlibrary.action,\
+	com.liferay.portlet.documentlibrary.convert,\
+	com.liferay.portlet.documentlibrary.lar,\
+	com.liferay.portlet.documentlibrary.model,\
+	com.liferay.portlet.documentlibrary.service,\
+	com.liferay.portlet.documentlibrary.store,\
+	com.liferay.portlet.expando.model,\
+	com.liferay.portlet.expando.service,\
+	com.liferay.portlet.expando.service.persistence,\
+	com.liferay.portlet.expando.util,\
+	com.liferay.portlet.messageboards.model,\
+	com.liferay.portlet.messageboards.service,\
+	com.liferay.portlet.messageboards.service.persistence,\
+	com.liferay.portlet.social.model,\
+	com.liferay.portlet.social.service,\
+	com.liferay.portlet.social.service.persistence,\
+	com.liferay.portlet.trash,\
+	com.liferay.portlet.trash.model,\
+	com.liferay.portlet.trash.service,\
+	com.liferay.portlet.trash.service.persistence,\
+	com.liferay.portlet.trash.util,\
+	com.liferay.util.dao.orm,\
 	\
 	javax.sql,org.hibernate,\
 	\
