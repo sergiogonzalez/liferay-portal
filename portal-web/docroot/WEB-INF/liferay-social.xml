@@ -262,7 +262,7 @@
 		<counters-enabled>false</counters-enabled>
 	</activity>
 	<activity>
-		<model-name>com.liferay.portlet.wiki.model.WikiPage</model-name>
+		<model-name>com.liferay.wiki.model.WikiPage</model-name>
 		<activity-type>${com.liferay.portlet.social.model.SocialActivityConstants.TYPE_ADD_ATTACHMENT}</activity-type>
 		<language-key>ADD_ATTACHMENT</language-key>
 		<log-activity>true</log-activity>
@@ -278,7 +278,7 @@
 		</counter>
 	</activity>
 	<activity>
-		<model-name>com.liferay.portlet.wiki.model.WikiPage</model-name>
+		<model-name>com.liferay.wiki.model.WikiPage</model-name>
 		<activity-type>${com.liferay.portlet.social.model.SocialActivityConstants.TYPE_ADD_COMMENT}</activity-type>
 		<language-key>ADD_COMMENT</language-key>
 		<log-activity>true</log-activity>
@@ -298,8 +298,8 @@
 		</counter>
 	</activity>
 	<activity>
-		<model-name>com.liferay.portlet.wiki.model.WikiPage</model-name>
-		<activity-type>${com.liferay.portlet.wiki.social.WikiActivityKeys.ADD_PAGE}</activity-type>
+		<model-name>com.liferay.wiki.model.WikiPage</model-name>
+		<activity-type>${com.liferay.wiki.social.WikiActivityKeys.ADD_PAGE}</activity-type>
 		<language-key>ADD_PAGE</language-key>
 		<log-activity>true</log-activity>
 		<contribution-limit enabled="false" />
@@ -310,31 +310,31 @@
 		</counter>
 	</activity>
 	<activity>
-		<model-name>com.liferay.portlet.wiki.model.WikiPage</model-name>
+		<model-name>com.liferay.wiki.model.WikiPage</model-name>
 		<activity-type>${com.liferay.portlet.social.model.SocialActivityConstants.TYPE_MOVE_ATTACHMENT_TO_TRASH}</activity-type>
 		<log-activity>true</log-activity>
 		<counters-enabled>false</counters-enabled>
 	</activity>
 	<activity>
-		<model-name>com.liferay.portlet.wiki.model.WikiPage</model-name>
+		<model-name>com.liferay.wiki.model.WikiPage</model-name>
 		<activity-type>${com.liferay.portlet.social.model.SocialActivityConstants.TYPE_MOVE_TO_TRASH}</activity-type>
 		<log-activity>true</log-activity>
 		<counters-enabled>false</counters-enabled>
 	</activity>
 	<activity>
-		<model-name>com.liferay.portlet.wiki.model.WikiPage</model-name>
+		<model-name>com.liferay.wiki.model.WikiPage</model-name>
 		<activity-type>${com.liferay.portlet.social.model.SocialActivityConstants.TYPE_RESTORE_ATTACHMENT_FROM_TRASH}</activity-type>
 		<log-activity>true</log-activity>
 		<counters-enabled>false</counters-enabled>
 	</activity>
 	<activity>
-		<model-name>com.liferay.portlet.wiki.model.WikiPage</model-name>
+		<model-name>com.liferay.wiki.model.WikiPage</model-name>
 		<activity-type>${com.liferay.portlet.social.model.SocialActivityConstants.TYPE_RESTORE_FROM_TRASH}</activity-type>
 		<log-activity>true</log-activity>
 		<counters-enabled>false</counters-enabled>
 	</activity>
 	<activity>
-		<model-name>com.liferay.portlet.wiki.model.WikiPage</model-name>
+		<model-name>com.liferay.wiki.model.WikiPage</model-name>
 		<activity-type>${com.liferay.portlet.social.model.SocialActivityConstants.TYPE_SUBSCRIBE}</activity-type>
 		<language-key>SUBSCRIBE</language-key>
 		<contribution-value>2</contribution-value>
@@ -354,7 +354,7 @@
 		</counter>
 	</activity>
 	<activity>
-		<model-name>com.liferay.portlet.wiki.model.WikiPage</model-name>
+		<model-name>com.liferay.wiki.model.WikiPage</model-name>
 		<activity-type>${com.liferay.portlet.social.model.SocialActivityConstants.TYPE_UNSUBSCRIBE}</activity-type>
 		<language-key>UNSUBSCRIBE</language-key>
 		<counter>
@@ -371,8 +371,8 @@
 		</counter>
 	</activity>
 	<activity>
-		<model-name>com.liferay.portlet.wiki.model.WikiPage</model-name>
-		<activity-type>${com.liferay.portlet.wiki.social.WikiActivityKeys.UPDATE_PAGE}</activity-type>
+		<model-name>com.liferay.wiki.model.WikiPage</model-name>
+		<activity-type>${com.liferay.wiki.social.WikiActivityKeys.UPDATE_PAGE}</activity-type>
 		<language-key>UPDATE_PAGE</language-key>
 		<log-activity>true</log-activity>
 		<participation-value>1</participation-value>
@@ -383,7 +383,7 @@
 		</counter>
 	</activity>
 	<activity>
-		<model-name>com.liferay.portlet.wiki.model.WikiPage</model-name>
+		<model-name>com.liferay.wiki.model.WikiPage</model-name>
 		<activity-type>${com.liferay.portlet.social.model.SocialActivityConstants.TYPE_VIEW}</activity-type>
 		<language-key>VIEW</language-key>
 		<participation-value>1</participation-value>

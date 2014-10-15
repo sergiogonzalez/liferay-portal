@@ -1096,11 +1096,11 @@
 		<priority value="INFO" />
 	</category>
 
-	<category name="com.liferay.portlet.wiki.action.ExportPageAction">
+	<category name="com.liferay.wiki.action.ExportPageAction">
 		<priority value="ERROR" />
 	</category>
 
-	<category name="com.liferay.portlet.wiki.importers">
+	<category name="com.liferay.wiki.importers">
 		<priority value="WARN" />
 	</category>
 

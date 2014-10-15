@@ -1429,10 +1429,10 @@ public class Creole10Parser]]></replacevalue>
 				<delete dir="${portal-impl.classes.dir}/jamwiki-0.9.3" />
 
 				<echo file="${portal-impl.classes.dir}/jamwiki.properties">
-					database-type=com.liferay.portlet.wiki.engines.mediawiki.LiferayDataHandler
-					props-initialized=true
-					search-engine=com.liferay.portlet.wiki.engines.mediawiki.LiferaySearchEngine
-				</echo>
+                    database-type=com.liferay.wiki.engines.mediawiki.LiferayDataHandler
+                    props-initialized=true
+                    search-engine=com.liferay.wiki.engines.mediawiki.LiferaySearchEngine
+                </echo>
 			</then>
 		</if>
 

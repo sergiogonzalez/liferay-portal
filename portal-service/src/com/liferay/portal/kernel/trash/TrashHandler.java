@@ -76,11 +76,11 @@ import javax.portlet.PortletRequest;
  * </li>
  * <li>
  * WikiNode via {@link
- * com.liferay.portlet.wiki.trash.WikiNodeTrashHandler}
+ * com.liferay.wiki.trash.WikiNodeTrashHandler}
  * </li>
  * <li>
  * WikiPage via {@link
- * com.liferay.portlet.wiki.trash.WikiPageTrashHandler}
+ * com.liferay.wiki.trash.WikiPageTrashHandler}
  * </li>
  * </ul>
  *
@@ -641,7 +641,7 @@ public interface TrashHandler {
 	/**
 	 * Restores the model entity that is related to the model entity with the
 	 * class name and class PK. For example, {@link
-	 * com.liferay.portlet.wiki.trash.WikiPageTrashHandler#restoreRelatedTrashEntry(
+	 * com.liferay.wiki.trash.WikiPageTrashHandler#restoreRelatedTrashEntry(
 	 * String, long)} restores the attachment related to the wiki page with the
 	 * class name and class PK.
 	 *
