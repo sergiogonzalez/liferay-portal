@@ -358,25 +358,18 @@ public interface DLFolderModel extends BaseModel<DLFolder>, ContainerModel,
 	public void setHidden(boolean hidden);
 
 	/**
-	 * Returns the override file entry types of this document library folder.
+	 * Returns the restriction type of this document library folder.
 	 *
-	 * @return the override file entry types of this document library folder
+	 * @return the restriction type of this document library folder
 	 */
-	public boolean getOverrideFileEntryTypes();
+	public int getRestrictionType();
 
 	/**
-	 * Returns <code>true</code> if this document library folder is override file entry types.
+	 * Sets the restriction type of this document library folder.
 	 *
-	 * @return <code>true</code> if this document library folder is override file entry types; <code>false</code> otherwise
+	 * @param restrictionType the restriction type of this document library folder
 	 */
-	public boolean isOverrideFileEntryTypes();
-
-	/**
-	 * Sets whether this document library folder is override file entry types.
-	 *
-	 * @param overrideFileEntryTypes the override file entry types of this document library folder
-	 */
-	public void setOverrideFileEntryTypes(boolean overrideFileEntryTypes);
+	public void setRestrictionType(int restrictionType);
 
 	/**
 	 * Returns the status of this document library folder.
@@ -653,19 +646,20 @@ public interface DLFolderModel extends BaseModel<DLFolder>, ContainerModel,
 	public Object clone();
 
 	@Override
-	public int compareTo(DLFolder dlFolder);
+	public int compareTo(
+		com.liferay.portlet.documentlibrary.model.DLFolder dlFolder);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<DLFolder> toCacheModel();
+	public CacheModel<com.liferay.portlet.documentlibrary.model.DLFolder> toCacheModel();
 
 	@Override
-	public DLFolder toEscapedModel();
+	public com.liferay.portlet.documentlibrary.model.DLFolder toEscapedModel();
 
 	@Override
-	public DLFolder toUnescapedModel();
+	public com.liferay.portlet.documentlibrary.model.DLFolder toUnescapedModel();
 
 	@Override
 	public String toString();
