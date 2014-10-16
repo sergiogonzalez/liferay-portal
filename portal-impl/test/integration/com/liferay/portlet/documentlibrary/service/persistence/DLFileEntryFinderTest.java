@@ -28,10 +28,11 @@ import com.liferay.portal.model.Repository;
 import com.liferay.portal.model.User;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
-import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.spring.hibernate.LastSessionRecorderUtil;
+import com.liferay.portal.test.DeleteAfterTestRun;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
@@ -56,7 +57,6 @@ import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -102,11 +102,6 @@ public class DLFileEntryFinderTest {
 			_repository.getRepositoryId(), "-NewRepository", serviceContext);
 
 		_newRepositoryFolder = (Folder)objects[0];
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		GroupLocalServiceUtil.deleteGroup(_group);
 	}
 
 	@Test
@@ -1508,15 +1503,19 @@ public class DLFileEntryFinderTest {
 
 		DLAppServiceUtil.moveFolderToTrash(folderC.getFolderId());
 
-		User user = UserTestUtil.addUser(
-			RandomTestUtil.randomString(), _group.getGroupId());
+		User user = UserTestUtil.addUser();
+
+		long defaultUserId = PrincipalThreadLocal.getUserId();
+
+		PrincipalThreadLocal.setName(user.getUserId());
 
 		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
-			user.getUserId(), _group.getGroupId(), repositoryId,
-			folder.getFolderId(), "FE1.txt", ContentTypes.TEXT_PLAIN,
-			"FE1.txt".concat(titleSuffix), null,
+			_group.getGroupId(), repositoryId, folder.getFolderId(), "FE1.txt",
+			ContentTypes.TEXT_PLAIN, "FE1.txt".concat(titleSuffix), null,
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
 			WorkflowConstants.ACTION_PUBLISH);
+
+		PrincipalThreadLocal.setName(defaultUserId);
 
 		LiferayFileEntry liferayFileEntry = (LiferayFileEntry)fileEntry;
 
@@ -1565,7 +1564,10 @@ public class DLFileEntryFinderTest {
 
 	private DLFileVersion _defaultRepositoryDLFileVersion;
 	private Folder _defaultRepositoryFolder;
+
+	@DeleteAfterTestRun
 	private Group _group;
+
 	private Folder _newRepositoryFolder;
 	private Repository _repository;
 
