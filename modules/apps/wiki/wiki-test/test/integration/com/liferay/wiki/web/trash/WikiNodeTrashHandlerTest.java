@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.trash;
+package com.liferay.wiki.web.trash;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;

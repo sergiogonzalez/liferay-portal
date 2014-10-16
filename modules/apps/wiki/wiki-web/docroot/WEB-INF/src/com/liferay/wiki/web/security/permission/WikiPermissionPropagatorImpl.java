@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.security.permission;
+package com.liferay.wiki.web.security.permission;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;

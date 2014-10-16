@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.trash;
+package com.liferay.wiki.web.trash;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.model.BaseModel;
@@ -24,7 +24,7 @@ import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portlet.trash.BaseTrashHandlerTestCase;
-import com.liferay.wiki.asset.WikiPageAssetRenderer;
+import com.liferay.wiki.web.asset.WikiPageAssetRenderer;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 

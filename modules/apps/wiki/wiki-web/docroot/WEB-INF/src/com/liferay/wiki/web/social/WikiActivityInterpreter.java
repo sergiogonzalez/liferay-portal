@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.social;
+package com.liferay.wiki.web.social;
 
 import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -33,6 +33,7 @@ import com.liferay.wiki.model.WikiPageResource;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.service.WikiPageResourceLocalServiceUtil;
 import com.liferay.wiki.service.permission.WikiPagePermission;
+import com.liferay.wiki.social.WikiActivityKeys;
 
 /**
  * @author Samuel Kong

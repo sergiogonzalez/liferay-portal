@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.verify.VerifyException;
 import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageResource;
@@ -37,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Iván Zaera
  */
 @Component(
-	immediate = true, service = Verifier.class
+	service = Verifier.class
 )
 public class Verifier extends VerifyProcess {
 

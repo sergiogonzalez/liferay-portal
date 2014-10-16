@@ -34,19 +34,23 @@ import org.springframework.context.ApplicationContext;
 )
 public class WikiServiceConfigurator {
 
+	private Verifier _verifier;
+
 	@Activate
 	protected void activate() throws Exception {
 		_serviceConfigurator.initServices(getConfiguration(), getClassLoader());
-
-		Verifier verifier = new Verifier();
-
-		verifier.verify();
+		_verifier.verify();
 	}
 
 	@Deactivate
 	protected void deactivate() throws Exception {
 		_serviceConfigurator.destroyServices(
 			getConfiguration(), getClassLoader());
+	}
+
+	@Reference
+	protected void setVerifier(Verifier verifier) {
+		_verifier = verifier;
 	}
 
 	protected ClassLoader getClassLoader() {
