@@ -144,6 +144,8 @@ import java.util.Map;
 public class DLFileEntryLocalServiceImpl
 	extends DLFileEntryLocalServiceBaseImpl {
 
+	public static final int DELETE_INTERVAL = 100;
+
 	@Override
 	public DLFileEntry addFileEntry(
 			long userId, long groupId, long repositoryId, long folderId,
@@ -672,28 +674,48 @@ public class DLFileEntryLocalServiceImpl
 
 	@Override
 	public void deleteFileEntries(
-			long groupId, long folderId, boolean includeTrashedEntries)
+			final long groupId, final long folderId,
+			final boolean includeTrashedEntries)
 		throws PortalException {
 
-		int count = dlFileEntryPersistence.countByG_F(groupId, folderId);
+		ActionableDynamicQuery actionableDynamicQuery =
+			dlFileEntryLocalService.getActionableDynamicQuery();
 
-		int pages = count / _DELETE_INTERVAL;
+		actionableDynamicQuery.setAddCriteriaMethod(
+			new ActionableDynamicQuery.AddCriteriaMethod() {
 
-		for (int i = 0; i <= pages; i++) {
-			int start = (i * _DELETE_INTERVAL);
-			int end = start + _DELETE_INTERVAL;
+				@Override
+				public void addCriteria(DynamicQuery dynamicQuery) {
+					Property groupIdProperty = PropertyFactoryUtil.forName(
+						"groupId");
 
-			List<DLFileEntry> dlFileEntries = dlFileEntryPersistence.findByG_F(
-				groupId, folderId, start, end);
+					dynamicQuery.add(groupIdProperty.eq(groupId));
 
-			for (DLFileEntry dlFileEntry : dlFileEntries) {
-				if (includeTrashedEntries ||
-					!dlFileEntry.isInTrashExplicitly()) {
+					Property property = PropertyFactoryUtil.forName("folderId");
 
-					dlFileEntryLocalService.deleteFileEntry(dlFileEntry);
+					dynamicQuery.add(property.eq(folderId));
 				}
-			}
-		}
+
+			});
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod() {
+
+				@Override
+				public void performAction(Object object)
+					throws PortalException {
+
+					DLFileEntry dlFileEntry = (DLFileEntry)object;
+
+					if (includeTrashedEntries ||
+						!dlFileEntry.isInTrashExplicitly()) {
+
+						dlFileEntryLocalService.deleteFileEntry(dlFileEntry);
+					}
+				}
+
+			});
+
+		actionableDynamicQuery.performActions();
 	}
 
 	@Indexable(type = IndexableType.DELETE)
@@ -2633,8 +2655,6 @@ public class DLFileEntryLocalServiceImpl
 			}
 		}
 	}
-
-	private static final int _DELETE_INTERVAL = 100;
 
 	private static Log _log = LogFactoryUtil.getLog(
 		DLFileEntryLocalServiceImpl.class);
