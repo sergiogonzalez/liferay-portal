@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.verify.VerifyException;
 import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageResource;
@@ -48,21 +47,21 @@ public class Verifier extends VerifyProcess {
 		verifyNoAssetPages();
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setWikiPageLocalService(
 		WikiPageLocalService wikiPageLocalService) {
 
 		_wikiPageLocalService = wikiPageLocalService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setWikiPageResourceLocalService(
 		WikiPageResourceLocalService wikiPageResourceLocalService) {
 
 		_wikiPageResourceLocalService = wikiPageResourceLocalService;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setWikiServiceConfigurator(
 		WikiServiceConfigurator wikiServiceConfigurator) {
 	}

@@ -17,13 +17,15 @@ package com.liferay.wiki.service.configuration.configurator;
 import com.liferay.portal.service.configuration.ServiceComponentConfiguration;
 import com.liferay.portal.service.configuration.configurator.ServiceConfigurator;
 import com.liferay.portal.spring.extender.loader.ModuleResourceLoader;
-import com.liferay.wiki.verify.Verifier;
+import com.liferay.wiki.service.upgrade.WikiServiceUpgrade;
+
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
+
 import org.springframework.context.ApplicationContext;
 
 /**
@@ -34,23 +36,15 @@ import org.springframework.context.ApplicationContext;
 )
 public class WikiServiceConfigurator {
 
-	private Verifier _verifier;
-
 	@Activate
 	protected void activate() throws Exception {
 		_serviceConfigurator.initServices(getConfiguration(), getClassLoader());
-		_verifier.verify();
 	}
 
 	@Deactivate
 	protected void deactivate() throws Exception {
 		_serviceConfigurator.destroyServices(
 			getConfiguration(), getClassLoader());
-	}
-
-	@Reference
-	protected void setVerifier(Verifier verifier) {
-		_verifier = verifier;
 	}
 
 	protected ClassLoader getClassLoader() {
@@ -80,6 +74,11 @@ public class WikiServiceConfigurator {
 		ServiceConfigurator serviceConfigurator) {
 
 		_serviceConfigurator = serviceConfigurator;
+	}
+
+	@Reference(unbind = "-")
+	protected void setWikiServiceUpgrade(
+		WikiServiceUpgrade wikiServiceUpgrade) {
 	}
 
 	private ServiceConfigurator _serviceConfigurator;
