@@ -51,6 +51,7 @@
 			FROM
 				AnnouncementsEntry
 			WHERE
+				(companyId = ?) AND
 				(displayDate >= ?) AND
 				(displayDate <= ?)
 		]]>

@@ -17,6 +17,7 @@ package com.liferay.portlet.blogs.service.impl;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
+import com.liferay.portal.kernel.dao.shard.ShardUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -60,6 +61,7 @@ import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.Portal;
+import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PrefsPropsUtil;
@@ -329,36 +331,46 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	public void checkEntries() throws PortalException {
 		Date now = new Date();
 
-		int count = blogsEntryPersistence.countByLtD_S(
-			now, WorkflowConstants.STATUS_SCHEDULED);
+		for (long companyId : PortalInstances.getCompanyIds()) {
+			try {
+				ShardUtil.pushCompanyService(companyId);
 
-		if (count == 0) {
-			return;
-		}
+				int count = blogsEntryPersistence.countByC_LtD_S(
+					companyId, now, WorkflowConstants.STATUS_SCHEDULED);
 
-		List<BlogsEntry> entries = blogsEntryPersistence.findByLtD_S(
-			now, WorkflowConstants.STATUS_SCHEDULED);
+				if (count == 0) {
+					continue;
+				}
 
-		for (BlogsEntry entry : entries) {
-			ServiceContext serviceContext = new ServiceContext();
+				List<BlogsEntry> entries = blogsEntryPersistence.findByLtD_S(
+					now, WorkflowConstants.STATUS_SCHEDULED);
 
-			String[] trackbacks = StringUtil.split(entry.getTrackbacks());
+				for (BlogsEntry entry : entries) {
+					ServiceContext serviceContext = new ServiceContext();
 
-			serviceContext.setAttribute("trackbacks", trackbacks);
+					String[] trackbacks = StringUtil.split(
+						entry.getTrackbacks());
 
-			serviceContext.setCommand(Constants.UPDATE);
+					serviceContext.setAttribute("trackbacks", trackbacks);
 
-			String layoutFullURL = PortalUtil.getLayoutFullURL(
-				entry.getGroupId(), PortletKeys.BLOGS);
+					serviceContext.setCommand(Constants.UPDATE);
 
-			serviceContext.setLayoutFullURL(layoutFullURL);
+					String layoutFullURL = PortalUtil.getLayoutFullURL(
+						entry.getGroupId(), PortletKeys.BLOGS);
 
-			serviceContext.setScopeGroupId(entry.getGroupId());
+					serviceContext.setLayoutFullURL(layoutFullURL);
 
-			blogsEntryLocalService.updateStatus(
-				entry.getStatusByUserId(), entry.getEntryId(),
-				WorkflowConstants.STATUS_APPROVED, serviceContext,
-				new HashMap<String, Serializable>());
+					serviceContext.setScopeGroupId(entry.getGroupId());
+
+					blogsEntryLocalService.updateStatus(
+						entry.getStatusByUserId(), entry.getEntryId(),
+						WorkflowConstants.STATUS_APPROVED, serviceContext,
+						new HashMap<String, Serializable>());
+				}
+			}
+			finally {
+				ShardUtil.popCompanyService();
+			}
 		}
 	}
 

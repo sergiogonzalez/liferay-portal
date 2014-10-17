@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.announcements.service.impl;
 
+import com.liferay.portal.kernel.dao.shard.ShardUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -33,6 +34,7 @@ import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
+import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PrefsPropsUtil;
@@ -160,15 +162,25 @@ public class AnnouncementsEntryLocalServiceImpl
 				now.getTime() - _ANNOUNCEMENTS_ENTRY_CHECK_INTERVAL);
 		}
 
-		List<AnnouncementsEntry> entries =
-			announcementsEntryFinder.findByDisplayDate(now, _previousCheckDate);
+		for (long companyId : PortalInstances.getCompanyIds()) {
+			try {
+				ShardUtil.pushCompanyService(companyId);
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Processing " + entries.size() + " entries");
-		}
+				List<AnnouncementsEntry> entries =
+					announcementsEntryFinder.findByDisplayDate(
+						companyId, now, _previousCheckDate);
 
-		for (AnnouncementsEntry entry : entries) {
-			notifyUsers(entry);
+				if (_log.isDebugEnabled()) {
+					_log.debug("Processing " + entries.size() + " entries");
+				}
+
+				for (AnnouncementsEntry entry : entries) {
+					notifyUsers(entry);
+				}
+			}
+			finally {
+				ShardUtil.popCompanyService();
+			}
 		}
 
 		_previousCheckDate = now;
