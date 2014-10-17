@@ -696,7 +696,7 @@ public class DLFileEntryLocalServiceImpl
 
 	@Override
 	public void deleteFileEntries(
-			final long groupId, final long folderId,
+			long groupId, final long folderId,
 			final boolean includeTrashedEntries)
 		throws PortalException {
 
@@ -708,17 +708,14 @@ public class DLFileEntryLocalServiceImpl
 
 				@Override
 				public void addCriteria(DynamicQuery dynamicQuery) {
-					Property groupIdProperty = PropertyFactoryUtil.forName(
-						"groupId");
+					Property folderIdproperty = PropertyFactoryUtil.forName(
+						"folderId");
 
-					dynamicQuery.add(groupIdProperty.eq(groupId));
-
-					Property property = PropertyFactoryUtil.forName("folderId");
-
-					dynamicQuery.add(property.eq(folderId));
+					dynamicQuery.add(folderIdproperty.eq(folderId));
 				}
 
 			});
+		actionableDynamicQuery.setGroupId(groupId);
 		actionableDynamicQuery.setPerformActionMethod(
 			new ActionableDynamicQuery.PerformActionMethod() {
 
