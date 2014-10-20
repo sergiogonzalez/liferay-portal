@@ -1555,32 +1555,6 @@ public class PortalImpl implements Portal {
 	}
 
 	@Override
-	public String getClassNamePortletId(String className) {
-		String portletId = StringPool.BLANK;
-
-		if (className.startsWith("com.liferay.portlet.blogs")) {
-			portletId = PortletKeys.BLOGS;
-		}
-		else if (className.startsWith("com.liferay.portlet.documentlibrary")) {
-			portletId = PortletKeys.DOCUMENT_LIBRARY;
-		}
-		else if (className.startsWith("com.liferay.portlet.imagegallery")) {
-			portletId = PortletKeys.MEDIA_GALLERY_DISPLAY;
-		}
-		else if (className.startsWith("com.liferay.portlet.journal")) {
-			portletId = PortletKeys.JOURNAL;
-		}
-		else if (className.startsWith("com.liferay.portlet.messageboards")) {
-			portletId = PortletKeys.MESSAGE_BOARDS;
-		}
-		else if (className.startsWith("com.liferay.portlet.wiki")) {
-			portletId = PortletKeys.WIKI;
-		}
-
-		return portletId;
-	}
-
-	@Override
 	public Company getCompany(HttpServletRequest request)
 		throws PortalException {
 
