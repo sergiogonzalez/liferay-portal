@@ -25,7 +25,7 @@ JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject(HtmlUtil.unesc
 
 double version = extraDataJSONObject.getDouble("version");
 
-WikiPage wikiPage = (WikiPage)request.getAttribute(WebKeys.WIKI_PAGE);
+WikiPage wikiPage = (WikiPage)request.getAttribute(WikiWebKeys.WIKI_PAGE);
 
 WikiPage socialActivityWikiPage = WikiPageLocalServiceUtil.fetchPage(wikiPage.getNodeId(), wikiPage.getTitle(), version);
 %>

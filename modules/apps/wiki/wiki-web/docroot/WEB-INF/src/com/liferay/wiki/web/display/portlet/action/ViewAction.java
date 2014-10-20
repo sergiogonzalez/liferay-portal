@@ -36,6 +36,7 @@ import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import com.liferay.wiki.constants.WikiWebKeys;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -80,8 +81,8 @@ public class ViewAction extends PortletAction {
 					node.getNodeId(), WikiPageConstants.FRONT_PAGE);
 			}
 
-			renderRequest.setAttribute(WebKeys.WIKI_NODE, node);
-			renderRequest.setAttribute(WebKeys.WIKI_PAGE, page);
+			renderRequest.setAttribute(WikiWebKeys.WIKI_NODE, node);
+			renderRequest.setAttribute(WikiWebKeys.WIKI_PAGE, page);
 
 			return actionMapping.findForward("portlet.wiki_display.view");
 		}

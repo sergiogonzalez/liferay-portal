@@ -26,7 +26,7 @@
 	long nodeId = ParamUtil.getLong(request, "nodeId");
 
 	if (nodeId == 0) {
-		WikiNode node = (WikiNode)request.getAttribute(WebKeys.WIKI_NODE);
+		WikiNode node = (WikiNode)request.getAttribute(WikiWebKeys.WIKI_NODE);
 
 		if (node != null) {
 			nodeId = node.getNodeId();

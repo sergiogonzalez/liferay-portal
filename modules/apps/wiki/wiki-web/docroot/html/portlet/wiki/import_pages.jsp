@@ -24,7 +24,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 String uploadProgressId = PortalUtil.generateRandomKey(request, "portlet_wiki_import_pages_uploadProgressId");
 String importProgressId = PortalUtil.generateRandomKey(request, "portlet_wiki_import_pages_importProgressId");
 
-WikiNode node = (WikiNode)request.getAttribute(WebKeys.WIKI_NODE);
+WikiNode node = (WikiNode)request.getAttribute(WikiWebKeys.WIKI_NODE);
 
 long nodeId = BeanParamUtil.getLong(node, request, "nodeId");
 

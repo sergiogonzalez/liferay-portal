@@ -19,8 +19,8 @@
 <%
 boolean followRedirect = ParamUtil.getBoolean(request, "followRedirect", true);
 
-WikiNode node = (WikiNode)request.getAttribute(WebKeys.WIKI_NODE);
-WikiPage wikiPage = (WikiPage)request.getAttribute(WebKeys.WIKI_PAGE);
+WikiNode node = (WikiNode)request.getAttribute(WikiWebKeys.WIKI_NODE);
+WikiPage wikiPage = (WikiPage)request.getAttribute(WikiWebKeys.WIKI_PAGE);
 
 WikiPage originalPage = null;
 WikiPage redirectPage = wikiPage.getRedirectPage();

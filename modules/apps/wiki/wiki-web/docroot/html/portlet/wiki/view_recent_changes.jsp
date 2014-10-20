@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/wiki/init.jsp" %>
 
 <%
-WikiNode node = (WikiNode)request.getAttribute(WebKeys.WIKI_NODE);
+WikiNode node = (WikiNode)request.getAttribute(WikiWebKeys.WIKI_NODE);
 %>
 
 <liferay-util:include page="/html/portlet/wiki/top_links.jsp" />

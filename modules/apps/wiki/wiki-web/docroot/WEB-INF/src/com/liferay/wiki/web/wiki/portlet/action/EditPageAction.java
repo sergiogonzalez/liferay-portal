@@ -59,6 +59,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import com.liferay.wiki.constants.WikiWebKeys;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -241,7 +242,7 @@ public class EditPageAction extends PortletAction {
 
 		if (nodeId == 0) {
 			WikiNode node = (WikiNode)renderRequest.getAttribute(
-				WebKeys.WIKI_NODE);
+				WikiWebKeys.WIKI_NODE);
 
 			if (node != null) {
 				nodeId = node.getNodeId();
@@ -251,7 +252,7 @@ public class EditPageAction extends PortletAction {
 		WikiPage page = null;
 
 		if (Validator.isNull(title)) {
-			renderRequest.setAttribute(WebKeys.WIKI_PAGE, page);
+			renderRequest.setAttribute(WikiWebKeys.WIKI_PAGE, page);
 
 			return;
 		}
@@ -289,7 +290,7 @@ public class EditPageAction extends PortletAction {
 			page.setRedirectTitle(StringPool.BLANK);
 		}
 
-		renderRequest.setAttribute(WebKeys.WIKI_PAGE, page);
+		renderRequest.setAttribute(WikiWebKeys.WIKI_PAGE, page);
 	}
 
 	protected String getSaveAndContinueRedirect(

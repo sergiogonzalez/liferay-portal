@@ -19,7 +19,7 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-WikiNode node = (WikiNode)request.getAttribute(WebKeys.WIKI_NODE);
+WikiNode node = (WikiNode)request.getAttribute(WikiWebKeys.WIKI_NODE);
 
 List<FileEntry> attachmentsFileEntries = node.getDeletedAttachmentsFiles();
 

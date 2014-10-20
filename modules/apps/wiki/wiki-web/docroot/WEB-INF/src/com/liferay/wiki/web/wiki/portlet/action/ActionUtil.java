@@ -36,6 +36,7 @@ import com.liferay.wiki.service.WikiNodeServiceUtil;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.service.WikiPageServiceUtil;
 import com.liferay.wiki.util.WikiUtil;
+import com.liferay.wiki.constants.WikiWebKeys;
 
 import javax.portlet.PortletRequest;
 
@@ -162,7 +163,7 @@ public class ActionUtil {
 			node = ActionUtil.getFirstVisibleNode(portletRequest);
 		}
 
-		request.setAttribute(WebKeys.WIKI_NODE, node);
+		request.setAttribute(WikiWebKeys.WIKI_NODE, node);
 
 		return node;
 	}
@@ -186,7 +187,7 @@ public class ActionUtil {
 		}
 
 		if (node == null) {
-			node = (WikiNode)request.getAttribute(WebKeys.WIKI_NODE);
+			node = (WikiNode)request.getAttribute(WikiWebKeys.WIKI_NODE);
 
 			if (node != null) {
 				nodeId = node.getNodeId();
@@ -225,7 +226,7 @@ public class ActionUtil {
 			}
 		}
 
-		request.setAttribute(WebKeys.WIKI_PAGE, page);
+		request.setAttribute(WikiWebKeys.WIKI_PAGE, page);
 	}
 
 }

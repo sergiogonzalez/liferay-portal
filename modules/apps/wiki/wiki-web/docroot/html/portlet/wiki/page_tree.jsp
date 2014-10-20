@@ -17,9 +17,9 @@
 <%@ include file="/html/portlet/wiki/init.jsp" %>
 
 <%
-WikiPage parentPage = (WikiPage)request.getAttribute(WebKeys.WIKI_TREE_WALKER_PARENT);
-WikiPage wikiPage = (WikiPage)request.getAttribute(WebKeys.WIKI_TREE_WALKER_PAGE);
-int depth = (Integer)request.getAttribute(WebKeys.WIKI_TREE_WALKER_DEPTH);
+WikiPage parentPage = (WikiPage)request.getAttribute(WikiWebKeys.WIKI_TREE_WALKER_PARENT);
+WikiPage wikiPage = (WikiPage)request.getAttribute(WikiWebKeys.WIKI_TREE_WALKER_PAGE);
+int depth = (Integer)request.getAttribute(WikiWebKeys.WIKI_TREE_WALKER_DEPTH);
 
 String preface = StringPool.BLANK;
 
@@ -39,9 +39,9 @@ childPages = ListUtil.sort(childPages);
 <%
 for (WikiPage childPage : childPages) {
 	if (Validator.isNull(childPage.getRedirectTitle())) {
-		request.setAttribute(WebKeys.WIKI_TREE_WALKER_PARENT, childPage);
-		request.setAttribute(WebKeys.WIKI_TREE_WALKER_PAGE, wikiPage);
-		request.setAttribute(WebKeys.WIKI_TREE_WALKER_DEPTH, depth + 1);
+		request.setAttribute(WikiWebKeys.WIKI_TREE_WALKER_PARENT, childPage);
+		request.setAttribute(WikiWebKeys.WIKI_TREE_WALKER_PAGE, wikiPage);
+		request.setAttribute(WikiWebKeys.WIKI_TREE_WALKER_DEPTH, depth + 1);
 %>
 
 		<liferay-util:include page="/html/portlet/wiki/page_tree.jsp" />

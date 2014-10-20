@@ -38,6 +38,7 @@ import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
+import com.liferay.wiki.constants.WikiWebKeys;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -119,7 +120,7 @@ public class CompareVersionsAction extends PortletAction {
 		renderRequest.setAttribute(WebKeys.SOURCE_VERSION, sourceVersion);
 		renderRequest.setAttribute(WebKeys.TARGET_VERSION, targetVersion);
 		renderRequest.setAttribute(WebKeys.TITLE, title);
-		renderRequest.setAttribute(WebKeys.WIKI_NODE_ID, nodeId);
+		renderRequest.setAttribute(WikiWebKeys.WIKI_NODE_ID, nodeId);
 	}
 
 	protected String getHtmlDiffResult(

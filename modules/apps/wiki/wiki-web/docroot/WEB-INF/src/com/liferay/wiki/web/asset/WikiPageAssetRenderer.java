@@ -32,6 +32,7 @@ import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.service.permission.WikiPagePermission;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.util.WikiUtil;
+import com.liferay.wiki.constants.WikiWebKeys;
 
 import java.util.Date;
 import java.util.Locale;
@@ -287,7 +288,7 @@ public class WikiPageAssetRenderer
 		if (template.equals(TEMPLATE_ABSTRACT) ||
 			template.equals(TEMPLATE_FULL_CONTENT)) {
 
-			renderRequest.setAttribute(WebKeys.WIKI_PAGE, _page);
+			renderRequest.setAttribute(WikiWebKeys.WIKI_PAGE, _page);
 
 			return "/html/portlet/wiki/asset/" + template + ".jsp";
 		}

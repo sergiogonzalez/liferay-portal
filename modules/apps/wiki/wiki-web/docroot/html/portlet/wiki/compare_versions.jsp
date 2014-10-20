@@ -19,7 +19,7 @@
 <%
 String backURL = ParamUtil.getString(request, "backURL");
 
-long nodeId = (Long)request.getAttribute(WebKeys.WIKI_NODE_ID);
+long nodeId = (Long)request.getAttribute(WikiWebKeys.WIKI_NODE_ID);
 String title = (String)request.getAttribute(WebKeys.TITLE);
 
 String diffHtmlResults = (String)request.getAttribute(WebKeys.DIFF_HTML_RESULTS);

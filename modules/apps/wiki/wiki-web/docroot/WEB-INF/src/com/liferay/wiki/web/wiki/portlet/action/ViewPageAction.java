@@ -28,6 +28,7 @@ import javax.portlet.PortletConfig;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import com.liferay.wiki.constants.WikiWebKeys;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -85,7 +86,8 @@ public class ViewPageAction extends PortletAction {
 	protected void getNode(RenderRequest renderRequest) throws Exception {
 		ActionUtil.getNode(renderRequest);
 
-		WikiNode node = (WikiNode)renderRequest.getAttribute(WebKeys.WIKI_NODE);
+		WikiNode node = (WikiNode)renderRequest.getAttribute(
+			WikiWebKeys.WIKI_NODE);
 
 		if (node != null) {
 			return;
@@ -93,7 +95,7 @@ public class ViewPageAction extends PortletAction {
 
 		node = ActionUtil.getFirstVisibleNode(renderRequest);
 
-		renderRequest.setAttribute(WebKeys.WIKI_NODE, node);
+		renderRequest.setAttribute(WikiWebKeys.WIKI_NODE, node);
 	}
 
 	@Override
