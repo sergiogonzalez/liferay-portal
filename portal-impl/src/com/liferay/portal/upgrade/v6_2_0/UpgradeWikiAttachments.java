@@ -68,7 +68,7 @@ public class UpgradeWikiAttachments extends BaseUpgradeAttachments {
 
 	@Override
 	protected String getPortletId() {
-		return PortletKeys.WIKI;
+		return "36";
 	}
 
 	@Override
