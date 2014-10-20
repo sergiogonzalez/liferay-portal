@@ -34,7 +34,6 @@ import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
@@ -46,6 +45,7 @@ import com.liferay.wiki.importers.WikiImporter;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.base.WikiNodeLocalServiceBaseImpl;
+import com.liferay.wiki.constants.WikiPortletKeys;
 
 import java.io.InputStream;
 
@@ -249,7 +249,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		}
 
 		PortletFileRepositoryUtil.deletePortletRepository(
-			groupId, PortletKeys.WIKI);
+			groupId, WikiPortletKeys.WIKI);
 	}
 
 	@Override

@@ -51,7 +51,7 @@ boolean print = ParamUtil.getString(request, "viewMode").equals(Constants.PRINT)
 
 PortletURL viewPageURL = renderResponse.createRenderURL();
 
-if (portletName.equals(PortletKeys.WIKI_DISPLAY)) {
+if (portletName.equals(WikiPortletKeys.WIKI_DISPLAY)) {
 	viewPageURL.setParameter("struts_action", "/wiki/view_page");
 }
 else {
@@ -404,7 +404,7 @@ long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayT
 
 <%
 if ((wikiPage != null) && !wikiPage.getTitle().equals(WikiPageConstants.FRONT_PAGE)) {
-	if (!portletName.equals(PortletKeys.WIKI_DISPLAY)) {
+	if (!portletName.equals(WikiPortletKeys.WIKI_DISPLAY)) {
 		PortalUtil.setPageSubtitle(wikiPage.getTitle(), request);
 
 		String description = wikiPage.getContent();

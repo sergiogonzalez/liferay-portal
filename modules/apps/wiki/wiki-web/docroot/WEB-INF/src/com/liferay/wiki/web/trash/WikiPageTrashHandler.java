@@ -31,7 +31,6 @@ import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.trash.RestoreEntryException;
@@ -47,6 +46,7 @@ import com.liferay.wiki.service.WikiPageServiceUtil;
 import com.liferay.wiki.service.permission.WikiNodePermission;
 import com.liferay.wiki.service.permission.WikiPagePermission;
 import com.liferay.wiki.util.WikiPageAttachmentsUtil;
+import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.web.asset.WikiPageAssetRenderer;
 
 import java.util.ArrayList;
@@ -416,16 +416,16 @@ public class WikiPageTrashHandler extends BaseWikiTrashHandler {
 			boolean isContainerModel)
 		throws PortalException {
 
-		String portletId = PortletKeys.WIKI;
+		String portletId = WikiPortletKeys.WIKI;
 
 		WikiPage page = WikiPageLocalServiceUtil.getLatestPage(
 			classPK, WorkflowConstants.STATUS_ANY, false);
 
 		long plid = PortalUtil.getPlidFromPortletId(
-			page.getGroupId(), PortletKeys.WIKI);
+			page.getGroupId(), WikiPortletKeys.WIKI);
 
 		if (plid == LayoutConstants.DEFAULT_PLID) {
-			portletId = PortletKeys.WIKI_ADMIN;
+			portletId = WikiPortletKeys.WIKI_ADMIN;
 
 			plid = PortalUtil.getControlPanelPlid(portletRequest);
 		}
@@ -434,7 +434,7 @@ public class WikiPageTrashHandler extends BaseWikiTrashHandler {
 			portletRequest, portletId, plid, PortletRequest.RENDER_PHASE);
 
 		if (isContainerModel) {
-			if (portletId.equals(PortletKeys.WIKI)) {
+			if (portletId.equals(WikiPortletKeys.WIKI)) {
 				portletURL.setParameter(
 					"struts_action", "/wiki/view_all_pages");
 			}
@@ -444,7 +444,7 @@ public class WikiPageTrashHandler extends BaseWikiTrashHandler {
 			}
 		}
 		else {
-			if (portletId.equals(PortletKeys.WIKI)) {
+			if (portletId.equals(WikiPortletKeys.WIKI)) {
 				portletURL.setParameter("struts_action", "/wiki/view");
 			}
 			else {

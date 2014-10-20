@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.wiki.exception.NoSuchPageException;
 import com.liferay.wiki.model.WikiNode;
@@ -39,6 +38,7 @@ import com.liferay.wiki.model.WikiPageConstants;
 import com.liferay.wiki.service.base.WikiPageServiceBaseImpl;
 import com.liferay.wiki.service.permission.WikiNodePermission;
 import com.liferay.wiki.service.permission.WikiPagePermission;
+import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.util.WikiUtil;
 import com.liferay.wiki.util.comparator.PageCreateDateComparator;
 import com.liferay.util.RSSUtil;
@@ -781,7 +781,7 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 			if (diff) {
 				if ((latestPage != null) || (pages.size() == 1)) {
 					sb.append(StringPool.QUESTION);
-					sb.append(PortalUtil.getPortletNamespace(PortletKeys.WIKI));
+					sb.append(PortalUtil.getPortletNamespace(WikiPortletKeys.WIKI));
 					sb.append("version=");
 					sb.append(page.getVersion());
 

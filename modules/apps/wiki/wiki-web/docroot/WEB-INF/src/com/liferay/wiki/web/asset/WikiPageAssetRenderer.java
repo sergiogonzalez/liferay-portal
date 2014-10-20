@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
@@ -31,6 +30,7 @@ import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageConstants;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.service.permission.WikiPagePermission;
+import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.util.WikiUtil;
 
 import java.util.Date;
@@ -100,7 +100,7 @@ public class WikiPageAssetRenderer
 
 	@Override
 	public String getPortletId() {
-		return PortletKeys.WIKI;
+		return WikiPortletKeys.WIKI;
 	}
 
 	@Override
@@ -151,7 +151,7 @@ public class WikiPageAssetRenderer
 		throws Exception {
 
 		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
-			getControlPanelPlid(liferayPortletRequest), PortletKeys.WIKI,
+			getControlPanelPlid(liferayPortletRequest), WikiPortletKeys.WIKI,
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("struts_action", "/wiki/edit_page");
@@ -203,7 +203,7 @@ public class WikiPageAssetRenderer
 		throws Exception {
 
 		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
-			getControlPanelPlid(liferayPortletRequest), PortletKeys.WIKI,
+			getControlPanelPlid(liferayPortletRequest), WikiPortletKeys.WIKI,
 			PortletRequest.RENDER_PHASE);
 
 		WikiPage previousVersionPage =

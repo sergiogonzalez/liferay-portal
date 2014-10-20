@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.util.PortletKeys;
+import com.liferay.wiki.constants.WikiPortletKeys;
 
 /**
  * @author Jorge Ferrer
@@ -41,7 +41,7 @@ public class WikiPermission {
 
 		Boolean hasPermission = StagingPermissionUtil.hasPermission(
 			permissionChecker, groupId, RESOURCE_NAME, groupId,
-			PortletKeys.WIKI, actionId);
+			WikiPortletKeys.WIKI, actionId);
 
 		if (hasPermission != null) {
 			return hasPermission.booleanValue();

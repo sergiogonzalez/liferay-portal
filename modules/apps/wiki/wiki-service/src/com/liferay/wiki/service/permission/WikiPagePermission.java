@@ -23,12 +23,12 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.ResourcePermissionChecker;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.wiki.exception.NoSuchPageException;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
+import com.liferay.wiki.constants.WikiPortletKeys;
 
 /**
  * @author Brian Wing Shun Chan
@@ -130,7 +130,7 @@ public class WikiPagePermission
 
 		Boolean hasPermission = StagingPermissionUtil.hasPermission(
 			permissionChecker, page.getGroupId(), WikiPage.class.getName(),
-			page.getPageId(), PortletKeys.WIKI, actionId);
+			page.getPageId(), WikiPortletKeys.WIKI, actionId);
 
 		if (hasPermission != null) {
 			return hasPermission.booleanValue();

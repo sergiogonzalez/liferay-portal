@@ -21,10 +21,10 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
+import com.liferay.wiki.constants.WikiPortletKeys;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +49,7 @@ public class WikiNodeImpl extends WikiNodeBaseImpl {
 		serviceContext.setAddGuestPermissions(true);
 
 		Repository repository = PortletFileRepositoryUtil.addPortletRepository(
-			getGroupId(), PortletKeys.WIKI, serviceContext);
+			getGroupId(), WikiPortletKeys.WIKI, serviceContext);
 
 		Folder folder = PortletFileRepositoryUtil.addPortletFolder(
 			getUserId(), repository.getRepositoryId(),
@@ -76,7 +76,7 @@ public class WikiNodeImpl extends WikiNodeBaseImpl {
 
 		Repository repository =
 			PortletFileRepositoryUtil.fetchPortletRepository(
-				getGroupId(), PortletKeys.WIKI);
+				getGroupId(), WikiPortletKeys.WIKI);
 
 		if (repository == null) {
 			return DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;

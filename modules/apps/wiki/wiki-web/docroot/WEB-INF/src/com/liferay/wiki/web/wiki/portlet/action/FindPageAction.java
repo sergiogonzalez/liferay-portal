@@ -16,11 +16,11 @@ package com.liferay.wiki.web.wiki.portlet.action;
 
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.struts.FindAction;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPageResource;
 import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
 import com.liferay.wiki.service.WikiPageResourceLocalServiceUtil;
+import com.liferay.wiki.constants.WikiPortletKeys;
 
 import javax.portlet.PortletURL;
 
@@ -51,10 +51,10 @@ public class FindPageAction extends FindAction {
 	protected String getStrutsAction(
 		HttpServletRequest request, String portletId) {
 
-		if (portletId.equals(PortletKeys.WIKI_ADMIN)) {
+		if (portletId.equals(WikiPortletKeys.WIKI_ADMIN)) {
 			return "/wiki_admin/view";
 		}
-		else if (portletId.equals(PortletKeys.WIKI)) {
+		else if (portletId.equals(WikiPortletKeys.WIKI)) {
 			return "/wiki/view";
 		}
 		else {
@@ -68,7 +68,8 @@ public class FindPageAction extends FindAction {
 		// Order is important. See LPS-23770.
 
 		return new String[] {
-			PortletKeys.WIKI_ADMIN, PortletKeys.WIKI, PortletKeys.WIKI_DISPLAY
+			WikiPortletKeys.WIKI_ADMIN, WikiPortletKeys.WIKI,
+			WikiPortletKeys.WIKI_DISPLAY
 		};
 	}
 

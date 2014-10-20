@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.settings.TypedSettings;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
+import com.liferay.wiki.constants.WikiPortletKeys;
 
 import java.io.IOException;
 
@@ -177,13 +177,13 @@ public class WikiPortletInstanceSettings {
 			SettingsFactoryUtil.getSettingsFactory();
 
 		settingsFactory.registerSettingsMetadata(
-			PortletKeys.WIKI, _getFallbackKeys(), _MULTI_VALUED_KEYS,
+			WikiPortletKeys.WIKI, _getFallbackKeys(), _MULTI_VALUED_KEYS,
 			_resourceManager);
 		settingsFactory.registerSettingsMetadata(
-			PortletKeys.WIKI_ADMIN, _getFallbackKeys(), _MULTI_VALUED_KEYS,
+			WikiPortletKeys.WIKI_ADMIN, _getFallbackKeys(), _MULTI_VALUED_KEYS,
 			_resourceManager);
 		settingsFactory.registerSettingsMetadata(
-			PortletKeys.WIKI_DISPLAY, _getFallbackKeys(), _MULTI_VALUED_KEYS,
+			WikiPortletKeys.WIKI_DISPLAY, _getFallbackKeys(), _MULTI_VALUED_KEYS,
 			_resourceManager);
 	}
 

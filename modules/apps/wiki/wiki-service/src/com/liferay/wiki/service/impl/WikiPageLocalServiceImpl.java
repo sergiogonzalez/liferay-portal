@@ -60,7 +60,6 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.LayoutURLUtil;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.SubscriptionSender;
 import com.liferay.portlet.PortletURLFactoryUtil;
@@ -92,6 +91,7 @@ import com.liferay.wiki.service.base.WikiPageLocalServiceBaseImpl;
 import com.liferay.wiki.social.WikiActivityKeys;
 import com.liferay.wiki.util.WikiCacheThreadLocal;
 import com.liferay.wiki.util.WikiCacheUtil;
+import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.util.WikiUtil;
 import com.liferay.wiki.util.comparator.PageCreateDateComparator;
 import com.liferay.wiki.util.comparator.PageVersionComparator;
@@ -261,7 +261,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		FileEntry fileEntry = PortletFileRepositoryUtil.addPortletFileEntry(
 			page.getGroupId(), userId, WikiPage.class.getName(),
-			page.getResourcePrimKey(), PortletKeys.WIKI, folder.getFolderId(),
+			page.getResourcePrimKey(), WikiPortletKeys.WIKI, folder.getFolderId(),
 			file, fileName, mimeType, true);
 
 		if (userId == 0) {
@@ -294,7 +294,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		FileEntry fileEntry = PortletFileRepositoryUtil.addPortletFileEntry(
 			page.getGroupId(), userId, WikiPage.class.getName(),
-			page.getResourcePrimKey(), PortletKeys.WIKI, folder.getFolderId(),
+			page.getResourcePrimKey(), WikiPortletKeys.WIKI, folder.getFolderId(),
 			inputStream, fileName, mimeType, true);
 
 		if (userId == 0) {
@@ -2454,12 +2454,12 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		String strutsAction = null;
 
 		if (serviceContext.getPlid() != LayoutConstants.DEFAULT_PLID) {
-			portletId = PortletKeys.WIKI;
+			portletId = WikiPortletKeys.WIKI;
 			plid = serviceContext.getPlid();
 			strutsAction = "/wiki/compare_versions";
 		}
 		else {
-			portletId = PortletKeys.WIKI_ADMIN;
+			portletId = WikiPortletKeys.WIKI_ADMIN;
 			plid = PortalUtil.getControlPanelPlid(
 				serviceContext.getCompanyId());
 			strutsAction = "/wiki_admin/compare_versions";
@@ -2490,7 +2490,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		}
 
 		String layoutFullURL = LayoutURLUtil.getLayoutURL(
-			page.getGroupId(), PortletKeys.WIKI, serviceContext);
+			page.getGroupId(), WikiPortletKeys.WIKI, serviceContext);
 
 		if (Validator.isNotNull(layoutFullURL)) {
 			return layoutFullURL + Portal.FRIENDLY_URL_SEPARATOR + "wiki/" +
@@ -2502,7 +2502,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 				serviceContext.getCompanyId());
 
 			PortletURL portletURL = PortletURLFactoryUtil.create(
-				request, PortletKeys.WIKI_ADMIN, controlPanelPlid,
+				request, WikiPortletKeys.WIKI_ADMIN, controlPanelPlid,
 				PortletRequest.RENDER_PHASE);
 
 			portletURL.setParameter(
@@ -3101,7 +3101,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		subscriptionSender.setNotificationType(notificationType);
 
-		subscriptionSender.setPortletId(PortletKeys.WIKI);
+		subscriptionSender.setPortletId(WikiPortletKeys.WIKI);
 		subscriptionSender.setReplyToAddress(fromAddress);
 		subscriptionSender.setScopeGroupId(page.getGroupId());
 		subscriptionSender.setServiceContext(serviceContext);

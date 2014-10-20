@@ -17,9 +17,9 @@ package com.liferay.wiki.web.asset;
 import com.liferay.portal.kernel.trash.BaseTrashRenderer;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.wiki.model.WikiNode;
+import com.liferay.wiki.constants.WikiPortletKeys;
 
 import java.util.Locale;
 
@@ -59,7 +59,7 @@ public class WikiNodeTrashRenderer extends BaseTrashRenderer {
 
 	@Override
 	public String getPortletId() {
-		return PortletKeys.WIKI;
+		return WikiPortletKeys.WIKI;
 	}
 
 	@Override

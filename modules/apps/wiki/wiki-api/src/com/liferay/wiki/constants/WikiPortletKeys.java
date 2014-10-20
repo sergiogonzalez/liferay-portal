@@ -12,19 +12,17 @@
  * details.
  */
 
-package com.liferay.wiki.web.notifications;
-
-import com.liferay.portal.kernel.notifications.BaseModelUserNotificationHandler;
-import com.liferay.wiki.constants.WikiPortletKeys;
+package com.liferay.wiki.constants;
 
 /**
- * @author Roberto Díaz
+ * @author Iván Zaera
  */
-public class WikiUserNotificationHandler
-	extends BaseModelUserNotificationHandler {
+public class WikiPortletKeys {
 
-	public WikiUserNotificationHandler() {
-		setPortletId(WikiPortletKeys.WIKI);
-	}
+	public static final String WIKI = "36_WAR_wikiweb";
+
+	public static final String WIKI_ADMIN = "154_WAR_wikiweb";
+
+	public static final String WIKI_DISPLAY = "54_WAR_wikiweb";
 
 }

@@ -190,6 +190,7 @@ import com.liferay.wiki.model.impl.WikiPageModelImpl;
 import com.liferay.wiki.model.impl.WikiPageResourceModelImpl;
 import com.liferay.wiki.social.WikiActivityKeys;
 import com.liferay.util.SimpleCounter;
+import com.liferay.wiki.constants.WikiPortletKeys;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -1113,7 +1114,7 @@ public class DataFactory {
 				PortletConstants.DEFAULT_PREFERENCES));
 		portletPreferencesModels.add(
 			newPortletPreferencesModel(
-				plid, PortletKeys.WIKI, PortletConstants.DEFAULT_PREFERENCES));
+				plid, WikiPortletKeys.WIKI, PortletConstants.DEFAULT_PREFERENCES));
 
 		return portletPreferencesModels;
 	}

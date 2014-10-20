@@ -21,10 +21,10 @@ import com.liferay.portal.test.SynchronousMailExecutionTestListener;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.BaseUserNotificationTestCase;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
+import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.util.test.WikiTestUtil;
 
 import org.junit.runner.RunWith;
@@ -55,7 +55,7 @@ public class WikiUserNotificationTest extends BaseUserNotificationTestCase {
 
 	@Override
 	protected String getPortletId() {
-		return PortletKeys.WIKI;
+		return WikiPortletKeys.WIKI;
 	}
 
 	@Override

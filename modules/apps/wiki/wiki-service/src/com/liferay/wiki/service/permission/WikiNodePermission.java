@@ -21,9 +21,9 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.ResourcePermissionChecker;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
+import com.liferay.wiki.constants.WikiPortletKeys;
 
 /**
  * @author Brian Wing Shun Chan
@@ -86,7 +86,7 @@ public class WikiNodePermission
 
 		Boolean hasPermission = StagingPermissionUtil.hasPermission(
 			permissionChecker, node.getGroupId(), WikiNode.class.getName(),
-			node.getNodeId(), PortletKeys.WIKI, actionId);
+			node.getNodeId(), WikiPortletKeys.WIKI, actionId);
 
 		if (hasPermission != null) {
 			return hasPermission.booleanValue();

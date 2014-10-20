@@ -22,9 +22,9 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.wiki.service.WikiPageServiceUtil;
+import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.util.WikiUtil;
 import com.liferay.util.RSSUtil;
 
@@ -55,7 +55,7 @@ public class RSSAction extends com.liferay.portal.struts.RSSAction {
 			request, "displayStyle", RSSUtil.DISPLAY_STYLE_DEFAULT);
 
 		String layoutFullURL = PortalUtil.getLayoutFullURL(
-			themeDisplay.getScopeGroupId(), PortletKeys.WIKI);
+			themeDisplay.getScopeGroupId(), WikiPortletKeys.WIKI);
 
 		StringBundler sb = new StringBundler(4);
 

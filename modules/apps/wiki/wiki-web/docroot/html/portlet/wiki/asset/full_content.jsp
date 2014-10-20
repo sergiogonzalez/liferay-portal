@@ -19,14 +19,14 @@
 <%
 WikiPage wikiPage = (WikiPage)request.getAttribute(WebKeys.WIKI_PAGE);
 
-PortletURL viewPageURL = new PortletURLImpl(request, PortletKeys.WIKI, plid, PortletRequest.ACTION_PHASE);
+PortletURL viewPageURL = new PortletURLImpl(request, WikiPortletKeys.WIKI, plid, PortletRequest.ACTION_PHASE);
 
 viewPageURL.setParameter("struts_action", "/wiki/view");
 viewPageURL.setParameter("nodeId", String.valueOf(wikiPage.getNodeId()));
 viewPageURL.setPortletMode(PortletMode.VIEW);
 viewPageURL.setWindowState(WindowState.MAXIMIZED);
 
-PortletURL editPageURL = new PortletURLImpl(request, PortletKeys.WIKI, plid, PortletRequest.ACTION_PHASE);
+PortletURL editPageURL = new PortletURLImpl(request, WikiPortletKeys.WIKI, plid, PortletRequest.ACTION_PHASE);
 
 editPageURL.setParameter("struts_action", "/wiki/edit_page");
 editPageURL.setParameter("redirect", currentURL);

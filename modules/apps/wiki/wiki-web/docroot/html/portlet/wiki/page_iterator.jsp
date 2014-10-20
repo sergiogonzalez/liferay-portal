@@ -278,7 +278,7 @@ for (int i = 0; i < results.size(); i++) {
 	PortletURL rowURL = renderResponse.createRenderURL();
 
 	if (!curWikiPage.isNew() && !type.equals("draft_pages") && !type.equals("pending_pages")) {
-		if (portletName.equals(PortletKeys.WIKI_DISPLAY)) {
+		if (portletName.equals(WikiPortletKeys.WIKI_DISPLAY)) {
 			rowURL.setParameter("struts_action", "/wiki/view_page");
 		}
 		else {

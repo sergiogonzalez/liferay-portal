@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.util.Portal;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.wiki.exception.NoSuchNodeException;
 import com.liferay.wiki.exception.PageContentException;
 import com.liferay.wiki.model.WikiPage;
@@ -37,6 +36,7 @@ import java.util.Map;
 
 import javax.portlet.PortletURL;
 
+import com.liferay.wiki.constants.WikiPortletKeys;
 import net.htmlparser.jericho.Source;
 import net.htmlparser.jericho.StartTag;
 
@@ -48,7 +48,7 @@ public class HtmlEngine implements WikiEngine {
 
 	public HtmlEngine() {
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			PortletKeys.WIKI);
+			WikiPortletKeys.WIKI);
 
 		_friendlyURLMapping =
 			Portal.FRIENDLY_URL_SEPARATOR + portlet.getFriendlyURLMapping();

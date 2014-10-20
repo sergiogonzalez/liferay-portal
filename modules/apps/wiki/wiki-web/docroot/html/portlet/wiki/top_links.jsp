@@ -56,7 +56,7 @@ if (categoryId > 0) {
 	<liferay-ui:trash-undo portletURL="<%= undoTrashURL %>" />
 </c:if>
 
-<c:if test="<%= portletName.equals(PortletKeys.WIKI_ADMIN) %>">
+<c:if test="<%= portletName.equals(WikiPortletKeys.WIKI_ADMIN) %>">
 	<liferay-ui:header
 		backURL="<%= portletURL.toString() %>"
 		localizeTitle="<%= false %>"
@@ -65,7 +65,7 @@ if (categoryId > 0) {
 </c:if>
 
 <c:if test="<%= !print %>">
-	<c:if test="<%= (nodes.size() > 1) && portletName.equals(PortletKeys.WIKI) %>">
+	<c:if test="<%= (nodes.size() > 1) && portletName.equals(WikiPortletKeys.WIKI) %>">
 		<aui:nav cssClass="nav-tabs">
 
 			<%

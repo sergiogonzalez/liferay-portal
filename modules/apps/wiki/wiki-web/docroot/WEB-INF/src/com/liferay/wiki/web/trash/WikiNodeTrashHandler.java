@@ -25,7 +25,6 @@ import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.trash.RestoreEntryException;
 import com.liferay.portlet.trash.model.TrashEntry;
@@ -34,6 +33,7 @@ import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.service.permission.WikiNodePermission;
+import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.web.asset.WikiNodeTrashRenderer;
 
 import java.util.ArrayList;
@@ -213,15 +213,15 @@ public class WikiNodeTrashHandler extends BaseWikiTrashHandler {
 			boolean isContainerModel)
 		throws PortalException {
 
-		String portletId = PortletKeys.WIKI;
+		String portletId = WikiPortletKeys.WIKI;
 
 		WikiNode node = WikiNodeLocalServiceUtil.getNode(classPK);
 
 		long plid = PortalUtil.getPlidFromPortletId(
-			node.getGroupId(), PortletKeys.WIKI);
+			node.getGroupId(), WikiPortletKeys.WIKI);
 
 		if (plid == LayoutConstants.DEFAULT_PLID) {
-			portletId = PortletKeys.WIKI_ADMIN;
+			portletId = WikiPortletKeys.WIKI_ADMIN;
 
 			plid = PortalUtil.getControlPanelPlid(portletRequest);
 		}
@@ -230,7 +230,7 @@ public class WikiNodeTrashHandler extends BaseWikiTrashHandler {
 			portletRequest, portletId, plid, PortletRequest.RENDER_PHASE);
 
 		if (!isContainerModel) {
-			if (portletId.equals(PortletKeys.WIKI)) {
+			if (portletId.equals(WikiPortletKeys.WIKI)) {
 				portletURL.setParameter(
 					"struts_action", "/wiki/view_all_pages");
 			}
