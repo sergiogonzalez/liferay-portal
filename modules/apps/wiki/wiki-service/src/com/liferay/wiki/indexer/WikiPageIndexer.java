@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.util;
+package com.liferay.wiki.indexer;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.wiki.model.WikiNode;
@@ -44,6 +43,8 @@ import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
 import com.liferay.wiki.service.WikiNodeServiceUtil;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.service.permission.WikiPagePermission;
+import com.liferay.wiki.constants.WikiPortletKeys;
+import com.liferay.wiki.util.WikiUtil;
 
 import java.util.Locale;
 
@@ -61,7 +62,7 @@ public class WikiPageIndexer extends BaseIndexer {
 
 	public static final String[] CLASS_NAMES = {WikiPage.class.getName()};
 
-	public static final String PORTLET_ID = PortletKeys.WIKI;
+	public static final String PORTLET_ID = WikiPortletKeys.WIKI;
 
 	public WikiPageIndexer() {
 		setDefaultSelectedFieldNames(

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.context;
+package com.liferay.wiki.web.context;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ArrayUtil;

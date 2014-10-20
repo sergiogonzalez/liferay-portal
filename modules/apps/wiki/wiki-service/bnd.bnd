@@ -7,6 +7,8 @@ Export-Package:\
 	com.liferay.wiki.service.permission,\
 	com.liferay.wiki.social,\
     com.liferay.wiki.util,\
+    com.liferay.wiki.indexer,\
+	com.liferay.wiki.opensearch,\
     com.liferay.wiki
 Include-Resource: classes
 Liferay-Service: true

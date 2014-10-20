@@ -12,11 +12,12 @@
  * details.
  */
 
-package com.liferay.wiki.util;
+package com.liferay.wiki.opensearch;
 
 import com.liferay.portal.kernel.search.HitsOpenSearchImpl;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.wiki.indexer.WikiPageIndexer;
 import com.liferay.wiki.model.WikiPage;
 
 /**

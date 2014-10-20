@@ -20,11 +20,16 @@ Import-Package: \
 	com.liferay.portal.service.permission,\
 	com.liferay.portal.struts,\
 	com.liferay.portal.theme,\
+	com.liferay.portal.util,\
 	com.liferay.portal.webserver,\
+	\
+	com.liferay.portlet.portletdisplaytemplate.util,\
 	\
 	com.liferay.wiki.lar,\
 	com.liferay.wiki.service.permission,\
 	com.liferay.wiki.util,\
+	com.liferay.wiki.indexer,\
+	com.liferay.wiki.opensearch,\
 	\
 	org.apache.struts.action,\
 	org.apache.struts.action.*,\

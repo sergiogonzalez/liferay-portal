@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.util;
+package com.liferay.wiki.indexer;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -30,10 +30,10 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
 import com.liferay.wiki.service.permission.WikiNodePermission;
+import com.liferay.wiki.constants.WikiPortletKeys;
 
 import java.util.Locale;
 
@@ -48,7 +48,7 @@ public class WikiNodeIndexer extends BaseIndexer {
 
 	public static final String[] CLASS_NAMES = {WikiNode.class.getName()};
 
-	public static final String PORTLET_ID = PortletKeys.WIKI;
+	public static final String PORTLET_ID = WikiPortletKeys.WIKI;
 
 	public WikiNodeIndexer() {
 		setDefaultSelectedFieldNames(
