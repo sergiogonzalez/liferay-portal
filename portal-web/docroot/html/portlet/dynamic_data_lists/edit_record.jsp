@@ -43,22 +43,20 @@ if (recordVersion != null) {
 	fields = StorageEngineUtil.getFields(recordVersion.getDDMStorageId());
 }
 
-Locale[] availableLocales = new Locale[0];
+String defaultLanguageId = ParamUtil.getString(request, "defaultLanguageId");
+
+if (Validator.isNull(defaultLanguageId)) {
+	defaultLanguageId = themeDisplay.getLanguageId();
+}
+
+Locale[] availableLocales = new Locale[] {LocaleUtil.fromLanguageId(defaultLanguageId)};
 
 if (fields != null) {
 	Set<Locale> availableLocalesSet = fields.getAvailableLocales();
 
 	availableLocales = availableLocalesSet.toArray(new Locale[availableLocalesSet.size()]);
-}
 
-String defaultLanguageId = ParamUtil.getString(request, "defaultLanguageId");
-
-if (Validator.isNull(defaultLanguageId)) {
-	defaultLanguageId = themeDisplay.getLanguageId();
-
-	if (fields != null) {
-		defaultLanguageId = LocaleUtil.toLanguageId(fields.getDefaultLocale());
-	}
+	defaultLanguageId = LocaleUtil.toLanguageId(fields.getDefaultLocale());
 }
 
 String languageId = ParamUtil.getString(request, "languageId", defaultLanguageId);
@@ -84,7 +82,7 @@ if (translating) {
 	<portlet:param name="struts_action" value="/dynamic_data_lists/edit_record" />
 </portlet:actionURL>
 
-<aui:form action="<%= editRecordURL %>" cssClass="lfr-dynamic-form" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault();" %>'>
+<aui:form action="<%= editRecordURL %>" cssClass="lfr-dynamic-form" enctype="multipart/form-data" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="recordSetId" type="hidden" value="<%= recordSetId %>" />

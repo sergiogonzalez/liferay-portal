@@ -233,6 +233,7 @@ if (ddmFields != null) {
 	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 	<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
 	<portlet:param name="templateId" value="<%= (ddmTemplate != null) ? String.valueOf(ddmTemplate.getTemplateId()) : StringPool.BLANK %>" />
+	<portlet:param name="showCacheableInput" value="<%= Boolean.TRUE.toString() %>" />
 </liferay-portlet:renderURL>
 
 <portlet:renderURL var="updateDefaultLanguageURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">

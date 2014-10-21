@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -48,6 +49,7 @@ import com.liferay.portal.model.TreeModel;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.WorkflowDefinitionLink;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.DuplicateFolderNameException;
 import com.liferay.portlet.documentlibrary.FolderNameException;
@@ -115,7 +117,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		dlFolder.setDescription(description);
 		dlFolder.setLastPostDate(now);
 		dlFolder.setHidden(hidden);
-		dlFolder.setOverrideFileEntryTypes(false);
+		dlFolder.setRestrictionType(DLFolderConstants.RESTRICTION_TYPE_INHERIT);
 		dlFolder.setExpandoBridgeAttributes(serviceContext);
 
 		dlFolderPersistence.update(dlFolder);
@@ -871,9 +873,10 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public DLFolder updateFolder(
-			long folderId, long parentFolderId, String name, String description,
-			long defaultFileEntryTypeId, List<Long> fileEntryTypeIds,
-			boolean overrideFileEntryTypes, ServiceContext serviceContext)
+			long groupId, long folderId, long parentFolderId, String name,
+			String description, long defaultFileEntryTypeId,
+			List<Long> fileEntryTypeIds, int restrictionType,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		boolean hasLock = hasFolderLock(serviceContext.getUserId(), folderId);
@@ -895,45 +898,88 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 			DLFolder dlFolder = null;
 
+			long[] groupIds = new long[0];
+
 			if (folderId > DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 				dlFolder = dlFolderLocalService.updateFolderAndFileEntryTypes(
 					serviceContext.getUserId(), folderId, parentFolderId, name,
 					description, defaultFileEntryTypeId, fileEntryTypeIds,
-					overrideFileEntryTypes, serviceContext);
+					restrictionType, serviceContext);
 
 				dlFileEntryTypeLocalService.cascadeFileEntryTypes(
 					serviceContext.getUserId(), dlFolder);
+
+				groupIds = PortalUtil.getCurrentAndAncestorSiteGroupIds(
+					dlFolder.getGroupId());
 			}
+			else {
+				groupIds = PortalUtil.getCurrentAndAncestorSiteGroupIds(
+					groupId);
+			}
+
+			long[] originalDLFileEntryTypeIds = getDLFileEntryTypeIds(
+				groupIds, folderId);
 
 			// Workflow definitions
 
 			List<ObjectValuePair<Long, String>> workflowDefinitionOVPs =
 				new ArrayList<ObjectValuePair<Long, String>>();
 
-			if (fileEntryTypeIds.isEmpty()) {
-				fileEntryTypeIds.add(
-					DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL);
-			}
-			else {
+			if (restrictionType ==
+					DLFolderConstants.
+					RESTRICTION_TYPE_FILE_ENTRY_TYPES_AND_WORKFLOW) {
+
 				workflowDefinitionOVPs.add(
 					new ObjectValuePair<Long, String>(
 						DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL,
 						StringPool.BLANK));
-			}
 
-			for (long fileEntryTypeId : fileEntryTypeIds) {
-				String workflowDefinition = StringPool.BLANK;
-
-				if (overrideFileEntryTypes ||
-					(folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
-
-					workflowDefinition = ParamUtil.getString(
+				for (long fileEntryTypeId : fileEntryTypeIds) {
+					String workflowDefinition = ParamUtil.getString(
 						serviceContext, "workflowDefinition" + fileEntryTypeId);
+
+					workflowDefinitionOVPs.add(
+						new ObjectValuePair<Long, String>(
+							fileEntryTypeId, workflowDefinition));
 				}
+			}
+			else if (restrictionType ==
+						DLFolderConstants.RESTRICTION_TYPE_INHERIT) {
+
+				if (ArrayUtil.isEmpty(originalDLFileEntryTypeIds)) {
+					originalDLFileEntryTypeIds = ArrayUtil.append(
+						originalDLFileEntryTypeIds,
+						DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL);
+				}
+
+				for (long originalDLFileEntryTypeId :
+						originalDLFileEntryTypeIds) {
+
+					workflowDefinitionOVPs.add(
+						new ObjectValuePair<Long, String>(
+							originalDLFileEntryTypeId, StringPool.BLANK));
+				}
+			}
+			else if (restrictionType ==
+						DLFolderConstants.RESTRICTION_TYPE_WORKFLOW) {
+
+				String workflowDefinition = ParamUtil.getString(
+					serviceContext,
+					"workflowDefinition" +
+						DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL);
 
 				workflowDefinitionOVPs.add(
 					new ObjectValuePair<Long, String>(
-						fileEntryTypeId, workflowDefinition));
+						DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL,
+						workflowDefinition));
+
+				for (long originalDLFileEntryTypeId :
+						originalDLFileEntryTypeIds) {
+
+					workflowDefinitionOVPs.add(
+						new ObjectValuePair<Long, String>(
+							originalDLFileEntryTypeId, StringPool.BLANK));
+				}
 			}
 
 			workflowDefinitionLinkLocalService.updateWorkflowDefinitionLinks(
@@ -953,12 +999,38 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #updateFolder(long, long,
+	 *             String, String, long, List, int, ServiceContext)}
+	 */
+	@Deprecated
+	@Override
+	public DLFolder updateFolder(
+			long folderId, long parentFolderId, String name, String description,
+			long defaultFileEntryTypeId, List<Long> fileEntryTypeIds,
+			boolean overrideFileEntryTypes, ServiceContext serviceContext)
+		throws PortalException {
+
+		int restrictionType = DLFolderConstants.RESTRICTION_TYPE_INHERIT;
+
+		if (overrideFileEntryTypes) {
+			restrictionType =
+				DLFolderConstants.
+					RESTRICTION_TYPE_FILE_ENTRY_TYPES_AND_WORKFLOW;
+		}
+
+		return updateFolder(
+			serviceContext.getScopeGroupId(), folderId, name, description,
+			defaultFileEntryTypeId, fileEntryTypeIds, restrictionType,
+			serviceContext);
+	}
+
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public DLFolder updateFolder(
-			long folderId, String name, String description,
+			long groupId, long folderId, String name, String description,
 			long defaultFileEntryTypeId, List<Long> fileEntryTypeIds,
-			boolean overrideFileEntryTypes, ServiceContext serviceContext)
+			int restrictionType, ServiceContext serviceContext)
 		throws PortalException {
 
 		long parentFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
@@ -970,10 +1042,43 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		}
 
 		return updateFolder(
-			folderId, parentFolderId, name, description, defaultFileEntryTypeId,
-			fileEntryTypeIds, overrideFileEntryTypes, serviceContext);
+			groupId, folderId, parentFolderId, name, description,
+			defaultFileEntryTypeId, fileEntryTypeIds, restrictionType,
+			serviceContext);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced {@link #updateFolder(long, long,
+	 *             String, String, long, List, int, ServiceContext)}
+	 */
+	@Deprecated
+	@Override
+	public DLFolder updateFolder(
+			long folderId, String name, String description,
+			long defaultFileEntryTypeId, List<Long> fileEntryTypeIds,
+			boolean overrideFileEntryTypes, ServiceContext serviceContext)
+		throws PortalException {
+
+		int restrictionType = DLFolderConstants.RESTRICTION_TYPE_INHERIT;
+
+		if (overrideFileEntryTypes) {
+			restrictionType =
+				DLFolderConstants.
+					RESTRICTION_TYPE_FILE_ENTRY_TYPES_AND_WORKFLOW;
+		}
+
+		return updateFolder(
+			serviceContext.getScopeGroupId(), folderId, name, description,
+			defaultFileEntryTypeId, fileEntryTypeIds, restrictionType,
+			serviceContext);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #
+	 *             updateFolderAndFileEntryTypes(long, long, long, String,
+	 *             String, long, List, int, ServiceContext)}
+	 */
+	@Deprecated
 	@Override
 	public DLFolder updateFolderAndFileEntryTypes(
 			long userId, long folderId, long parentFolderId, String name,
@@ -982,7 +1087,33 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		if (overrideFileEntryTypes && fileEntryTypeIds.isEmpty()) {
+		int restrictionType = DLFolderConstants.RESTRICTION_TYPE_INHERIT;
+
+		if (overrideFileEntryTypes) {
+			restrictionType =
+				DLFolderConstants.
+					RESTRICTION_TYPE_FILE_ENTRY_TYPES_AND_WORKFLOW;
+		}
+
+		return updateFolderAndFileEntryTypes(
+			userId, folderId, parentFolderId, name, description,
+			defaultFileEntryTypeId, fileEntryTypeIds, restrictionType,
+			serviceContext);
+	}
+
+	@Override
+	public DLFolder updateFolderAndFileEntryTypes(
+			long userId, long folderId, long parentFolderId, String name,
+			String description, long defaultFileEntryTypeId,
+			List<Long> fileEntryTypeIds, int restrictionType,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		if ((restrictionType ==
+				DLFolderConstants.
+					RESTRICTION_TYPE_FILE_ENTRY_TYPES_AND_WORKFLOW) &&
+			fileEntryTypeIds.isEmpty()) {
+
 			throw new RequiredFileEntryTypeException();
 		}
 
@@ -1003,7 +1134,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 			// Folder
 
-			if (!overrideFileEntryTypes) {
+			if (restrictionType == DLFolderConstants.RESTRICTION_TYPE_INHERIT) {
 				fileEntryTypeIds = Collections.emptyList();
 			}
 
@@ -1020,7 +1151,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			dlFolder.setName(name);
 			dlFolder.setDescription(description);
 			dlFolder.setExpandoBridgeAttributes(serviceContext);
-			dlFolder.setOverrideFileEntryTypes(overrideFileEntryTypes);
+			dlFolder.setRestrictionType(restrictionType);
 			dlFolder.setDefaultFileEntryTypeId(defaultFileEntryTypeId);
 
 			dlFolderPersistence.update(dlFolder);
@@ -1159,6 +1290,23 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		DLFolder dlFolder = dlFolderPersistence.findByPrimaryKey(folderId);
 
 		addFolderResources(dlFolder, groupPermissions, guestPermissions);
+	}
+
+	protected long[] getDLFileEntryTypeIds(long[] groupIds, long folderId)
+		throws PortalException {
+
+		long[] dlFileEntryTypeIds = new long[0];
+
+		List<DLFileEntryType> dlFileEntryTypes =
+			dlFileEntryTypeLocalService.getFolderFileEntryTypes(
+				groupIds, folderId, true);
+
+		for (DLFileEntryType dlFileEntryType : dlFileEntryTypes) {
+			dlFileEntryTypeIds = ArrayUtil.append(
+				dlFileEntryTypeIds, dlFileEntryType.getFileEntryTypeId());
+		}
+
+		return dlFileEntryTypeIds;
 	}
 
 	protected long getParentFolderId(DLFolder dlFolder, long parentFolderId)

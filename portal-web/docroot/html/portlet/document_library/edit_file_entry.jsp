@@ -276,8 +276,8 @@ else {
 
 				<aui:button disabled="<%= folderId <= 0 %>" name="removeFolderButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
 
-				<aui:script use="aui-base">
-					A.one('#<portlet:namespace />selectFolderButton').on(
+				<aui:script>
+					AUI.$('#<portlet:namespace />selectFolderButton').on(
 						'click',
 						function(event) {
 							Liferay.Util.selectEntity(
@@ -338,7 +338,7 @@ else {
 				if (folder != null) {
 					DLFolder dlFolder = (DLFolder)folder.getModel();
 
-					inherited = !dlFolder.isOverrideFileEntryTypes();
+					inherited = dlFolder.getRestrictionType() == DLFolderConstants.RESTRICTION_TYPE_INHERIT;
 				}
 
 				List<DLFileEntryType> dlFileEntryTypes = DLFileEntryTypeLocalServiceUtil.getFolderFileEntryTypes(PortalUtil.getCurrentAndAncestorSiteGroupIds(scopeGroupId), folderId, inherited);

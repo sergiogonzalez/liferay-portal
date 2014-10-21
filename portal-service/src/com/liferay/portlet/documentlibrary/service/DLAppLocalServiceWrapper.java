@@ -511,8 +511,8 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link
-	com.liferay.portal.kernel.repository.util.RepositoryTrashUtil.moveFileEntryFromTrash(
-	long, long, long, long, ServiceContext)}
+	RepositoryTrashUtil#moveFileEntryFromTrash(long, long, long,
+	long, ServiceContext)}
 	*/
 	@Deprecated
 	@Override
@@ -526,8 +526,7 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link
-	com.liferay.portal.kernel.repository.util.RepositoryTrashUtil.moveFileEntryToTrash(
-	long, long, long)}
+	RepositoryTrashUtil#moveFileEntryToTrash(long, long, long)}
 	*/
 	@Deprecated
 	@Override
@@ -548,8 +547,8 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link
-	com.liferay.portal.kernel.repository.util.RepositoryTrashUtil.restoreFileEntryFromTrash(
-	long, long, long)}
+	RepositoryTrashUtil#restoreFileEntryFromTrash(long, long,
+	long)}
 	*/
 	@Deprecated
 	@Override
@@ -860,8 +859,24 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 	}
 
 	/**
+	* @deprecated As of 7.0.0, replaced by {@link #updateFolder(long, long,
+	long, String, String, ServiceContext)}
+	*/
+	@Deprecated
+	@Override
+	public com.liferay.portal.kernel.repository.model.Folder updateFolder(
+		long folderId, long parentFolderId, java.lang.String name,
+		java.lang.String description,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlAppLocalService.updateFolder(folderId, parentFolderId, name,
+			description, serviceContext);
+	}
+
+	/**
 	* Updates the folder.
 	*
+	* @param groupId the primary key of the folder's group
 	* @param folderId the primary key of the folder
 	* @param parentFolderId the primary key of the folder's new parent folder
 	* @param name the folder's new name
@@ -871,25 +886,25 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 	the file entry type to default all Liferay file entries to </li>
 	<li> dlFileEntryTypesSearchContainerPrimaryKeys - a
 	comma-delimited list of file entry type primary keys allowed in
-	the given folder and all descendants </li> <li>
-	overrideFileEntryTypes - boolean specifying whether to override
-	ancestral folder's restriction of file entry types allowed </li>
+	the given folder and all descendants </li> <li> restrictionType
+	- specifying restriction type of file entry types allowed </li>
 	<li> workflowDefinitionXYZ - the workflow definition name
 	specified per file entry type. The parameter name must be the
-	string <code>workflowDefinition</code> appended by the <code>
-	fileEntryTypeId</code> (optionally <code>0</code>). </li> </ul>
+	string <code>workflowDefinition</code> appended by the
+	<code>fileEntryTypeId</code> (optionally <code>0</code>).</li>
+	</ul>
 	* @return the folder
 	* @throws PortalException if the current or new parent folder could not be
 	found, or if the new parent folder's information was invalid
 	*/
 	@Override
 	public com.liferay.portal.kernel.repository.model.Folder updateFolder(
-		long folderId, long parentFolderId, java.lang.String name,
-		java.lang.String description,
+		long groupId, long folderId, long parentFolderId,
+		java.lang.String name, java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _dlAppLocalService.updateFolder(folderId, parentFolderId, name,
-			description, serviceContext);
+		return _dlAppLocalService.updateFolder(groupId, folderId,
+			parentFolderId, name, description, serviceContext);
 	}
 
 	/**

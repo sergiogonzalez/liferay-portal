@@ -66,6 +66,8 @@ String structureAvailableFields = ParamUtil.getString(request, "structureAvailab
 if (Validator.isNotNull(structureAvailableFields)) {
 	scopeAvailableFields = structureAvailableFields;
 }
+
+boolean showCacheableInput = ParamUtil.getBoolean(request, "showCacheableInput");
 %>
 
 <portlet:actionURL var="editTemplateURL">
@@ -196,7 +198,7 @@ if (Validator.isNotNull(structureAvailableFields)) {
 						</aui:select>
 					</c:when>
 					<c:otherwise>
-						<c:if test="<%= Validator.equals(ddmDisplay.getPortletId(), PortletKeys.JOURNAL) || Validator.equals(ddmDisplay.getPortletId(), PortletKeys.JOURNAL_CONTENT) %>">
+						<c:if test="<%= showCacheableInput %>">
 							<aui:input helpMessage="journal-template-cacheable-help" name="cacheable" value="<%= cacheable %>" />
 						</c:if>
 

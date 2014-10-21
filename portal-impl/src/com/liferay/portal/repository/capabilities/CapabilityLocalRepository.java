@@ -281,19 +281,35 @@ public class CapabilityLocalRepository
 
 	@Override
 	public Folder updateFolder(
-			long folderId, long parentFolderId, String name, String description,
-			ServiceContext serviceContext)
+			long groupId, long folderId, long parentFolderId, String name,
+			String description, ServiceContext serviceContext)
 		throws PortalException {
 
 		LocalRepository localRepository = getRepository();
 
 		Folder folder = localRepository.updateFolder(
-			folderId, parentFolderId, name, description, serviceContext);
+			groupId, folderId, parentFolderId, name, description,
+			serviceContext);
 
 		_repositoryEventTrigger.trigger(
 			RepositoryEventType.Update.class, Folder.class, folder);
 
 		return folder;
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #updateFolder(long, long,
+	 *             long, String, String, ServiceContext)}
+	 */
+	@Override
+	public Folder updateFolder(
+			long folderId, long parentFolderId, String name, String description,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return updateFolder(
+			serviceContext.getScopeGroupId(), folderId, parentFolderId, name,
+			description, serviceContext);
 	}
 
 	private final RepositoryEventTrigger _repositoryEventTrigger;
