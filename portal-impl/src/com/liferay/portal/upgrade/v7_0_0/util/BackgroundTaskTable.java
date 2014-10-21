@@ -17,7 +17,7 @@ package com.liferay.portal.upgrade.v7_0_0.util;
 import java.sql.Types;
 
 /**
- * @author	  Cristina González
+ * @author	  Brian Wing Shun Chan
  * @generated
  */
 public class BackgroundTaskTable {

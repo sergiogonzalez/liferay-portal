@@ -409,7 +409,7 @@ public class ResourceBlockLocalServiceImpl
 	 * the database or deletes the resource block if the reference count reaches
 	 * zero.
 	 *
-	 * @param  resourceBlockId the primary key of the resource block
+	 * @param resourceBlockId the primary key of the resource block
 	 */
 	@Override
 	@Transactional(
@@ -464,7 +464,7 @@ public class ResourceBlockLocalServiceImpl
 	 * the database or deletes the resource block if the reference count reaches
 	 * zero.
 	 *
-	 * @param  resourceBlock the resource block
+	 * @param resourceBlock the resource block
 	 */
 	@Override
 	@Transactional(
@@ -1043,16 +1043,13 @@ public class ResourceBlockLocalServiceImpl
 	}
 
 	private static final String _DELETE_RESOURCE_BLOCK =
-		ResourceBlockLocalServiceImpl.class.getName() +
-			".deleteResourceBlock";
+		ResourceBlockLocalServiceImpl.class.getName() + ".deleteResourceBlock";
 
 	private static final String _RELEASE_RESOURCE_BLOCK =
-		ResourceBlockLocalServiceImpl.class.getName() +
-			".releaseResourceBlock";
+		ResourceBlockLocalServiceImpl.class.getName() + ".releaseResourceBlock";
 
 	private static final String _RETAIN_RESOURCE_BLOCK =
-		ResourceBlockLocalServiceImpl.class.getName() +
-			".retainResourceBlock";
+		ResourceBlockLocalServiceImpl.class.getName() + ".retainResourceBlock";
 
 	private static Log _log = LogFactoryUtil.getLog(
 		ResourceBlockLocalServiceImpl.class);

@@ -94,10 +94,10 @@ public class ViewArticleContentAction extends Action {
 				String description = ParamUtil.getString(
 					uploadServletRequest, "description");
 				String type = ParamUtil.getString(uploadServletRequest, "type");
-				String structureId = ParamUtil.getString(
-					uploadServletRequest, "structureId");
-				String templateId = ParamUtil.getString(
-					uploadServletRequest, "templateId");
+				String ddmStructureKey = ParamUtil.getString(
+					uploadServletRequest, "ddmStructureKey");
+				String ddmTemplateKey = ParamUtil.getString(
+					uploadServletRequest, "ddmTemplateKey");
 
 				Date now = new Date();
 
@@ -139,19 +139,19 @@ public class ViewArticleContentAction extends Action {
 				article.setDescription(description);
 				article.setContent(xml);
 				article.setType(type);
-				article.setStructureId(structureId);
-				article.setTemplateId(templateId);
+				article.setDDMStructureKey(ddmStructureKey);
+				article.setDDMTemplateKey(ddmTemplateKey);
 				article.setDisplayDate(displayDate);
 
 				output = JournalArticleLocalServiceUtil.getArticleContent(
-					article, templateId, null, languageId, themeDisplay);
+					article, ddmTemplateKey, null, languageId, themeDisplay);
 			}
 			else if (cmd.equals(Constants.VIEW)) {
 				JournalArticle article = JournalArticleServiceUtil.getArticle(
 					groupId, articleId, version);
 
 				output = JournalArticleLocalServiceUtil.getArticleContent(
-					article, article.getTemplateId(), null, languageId,
+					article, article.getDDMTemplateKey(), null, languageId,
 					themeDisplay);
 			}
 			else {
