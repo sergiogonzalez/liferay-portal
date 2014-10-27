@@ -102,9 +102,11 @@ public class BlogsEntryAssetRenderer
 
 		String summary = _entry.getDescription();
 
+		int abstractLength = PropsValues.BLOGS_PAGE_ABSTRACT_LENGTH;
+
 		if (Validator.isNull(summary)) {
 			summary = StringUtil.shorten(
-				HtmlUtil.stripHtml(_entry.getContent()), 200);
+				HtmlUtil.stripHtml(_entry.getContent()), abstractLength);
 		}
 
 		return summary;
