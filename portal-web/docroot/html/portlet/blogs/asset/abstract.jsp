@@ -19,6 +19,8 @@
 <%
 int abstractLength = (Integer)request.getAttribute(WebKeys.ASSET_PUBLISHER_ABSTRACT_LENGTH);
 
+AssetRenderer assetRenderer = (AssetRenderer)request.getAttribute(WebKeys.ASSET_RENDERER);
+
 BlogsEntry entry = (BlogsEntry)request.getAttribute(WebKeys.BLOGS_ENTRY);
 %>
 
@@ -28,19 +30,4 @@ BlogsEntry entry = (BlogsEntry)request.getAttribute(WebKeys.BLOGS_ENTRY);
 	</div>
 </c:if>
 
-<%
-String summary = HtmlUtil.escape(entry.getDescription());
-
-summary = HtmlUtil.replaceNewLine(summary);
-
-if (Validator.isNull(summary)) {
-	summary = HtmlUtil.escape(entry.getSubtitle());
-	summary = HtmlUtil.replaceNewLine(summary);
-}
-
-if (Validator.isNull(summary)) {
-	summary = HtmlUtil.stripHtml(entry.getContent());
-}
-%>
-
-<%= StringUtil.shorten(summary, abstractLength) %>
+<%= StringUtil.shorten(assetRenderer.getSummary(), abstractLength) %>
