@@ -12,21 +12,20 @@
  * details.
  */
 
-package com.liferay.wiki.model;
+package com.liferay.wiki.configuration;
 
 /**
- * @author Alexander Chow
+ * @author Ivan Zaera
  */
-public class WikiPageConstants {
+public class WikiPropsKeys {
 
-	public static final String BASE_ATTACHMENTS_DIR = "wiki/";
+	public static final String FRONT_PAGE_NAME = "front.page.name";
 
-	public static final String MOVED = "Moved";
+	public static final String INITIAL_NODE_NAME = "initial.node.name";
 
-	public static final String NEW = "New";
+	public static final String PAGE_TITLES_REGEXP = "page.titles.regexp";
 
-	public static final String REVERTED = "Reverted";
-
-	public static final double VERSION_DEFAULT = 1.0;
+	public static final String PARSERS_CREOLE_SUPPORTED_PROTOCOLS =
+		"parsers.creole.supported.protocols";
 
 }

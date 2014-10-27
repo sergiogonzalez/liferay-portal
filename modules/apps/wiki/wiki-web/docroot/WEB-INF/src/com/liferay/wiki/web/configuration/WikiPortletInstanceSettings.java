@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki;
+package com.liferay.wiki.web.configuration;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.resource.manager.ClassLoaderResourceManager;
@@ -145,16 +145,12 @@ public class WikiPortletInstanceSettings {
 	private static FallbackKeys _getFallbackKeys() {
 		FallbackKeys fallbackKeys = new FallbackKeys();
 
-		fallbackKeys.add("displayStyle", PropsKeys.WIKI_DISPLAY_STYLE);
-		fallbackKeys.add(
-			"enableComments", PropsKeys.WIKI_PAGE_COMMENTS_ENABLED);
-		fallbackKeys.add(
-			"enableCommentRatings", PropsKeys.WIKI_COMMENT_RATINGS_ENABLED);
-		fallbackKeys.add(
-			"enablePageRatings", PropsKeys.WIKI_PAGE_RATINGS_ENABLED);
-		fallbackKeys.add(
-			"enableRelatedAssets", PropsKeys.WIKI_RELATED_ASSETS_ENABLED);
-		fallbackKeys.add("enableRss", PropsKeys.WIKI_RSS_ENABLED);
+		fallbackKeys.add("displayStyle", "display.style");
+		fallbackKeys.add("enableComments", "page.comments.enabled");
+		fallbackKeys.add("enableCommentRatings", "comment.ratings.enabled");
+		fallbackKeys.add("enablePageRatings", "page.ratings.enabled");
+		fallbackKeys.add("enableRelatedAssets", "related.assets.enabled");
+		fallbackKeys.add("enableRss", "rss.enabled");
 		fallbackKeys.add(
 			"rssDelta", PropsKeys.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA);
 		fallbackKeys.add(
@@ -183,8 +179,8 @@ public class WikiPortletInstanceSettings {
 			WikiPortletKeys.WIKI_ADMIN, _getFallbackKeys(), _MULTI_VALUED_KEYS,
 			_resourceManager);
 		settingsFactory.registerSettingsMetadata(
-			WikiPortletKeys.WIKI_DISPLAY, _getFallbackKeys(), _MULTI_VALUED_KEYS,
-			_resourceManager);
+			WikiPortletKeys.WIKI_DISPLAY, _getFallbackKeys(),
+			_MULTI_VALUED_KEYS, _resourceManager);
 	}
 
 	private final TypedSettings _typedSettings;

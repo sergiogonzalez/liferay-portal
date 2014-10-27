@@ -12,21 +12,24 @@
  * details.
  */
 
-package com.liferay.wiki.model;
+package com.liferay.wiki.configuration;
 
 /**
- * @author Alexander Chow
+ * @author Ivan Zaera
  */
-public class WikiPageConstants {
+public class WikiPropsValues {
 
-	public static final String BASE_ATTACHMENTS_DIR = "wiki/";
+	public static final String FRONT_PAGE_NAME = WikiConfigurationUtil.get(
+		WikiPropsKeys.FRONT_PAGE_NAME);
 
-	public static final String MOVED = "Moved";
+	public static final String INITIAL_NODE_NAME = WikiConfigurationUtil.get(
+		WikiPropsKeys.INITIAL_NODE_NAME);
 
-	public static final String NEW = "New";
+	public static final String PAGE_TITLES_REGEXP = WikiConfigurationUtil.get(
+		WikiPropsKeys.PAGE_TITLES_REGEXP);
 
-	public static final String REVERTED = "Reverted";
-
-	public static final double VERSION_DEFAULT = 1.0;
+	public static final String[] PARSERS_CREOLE_SUPPORTED_PROTOCOLS =
+		WikiConfigurationUtil.getArray(
+			WikiPropsKeys.PARSERS_CREOLE_SUPPORTED_PROTOCOLS);
 
 }
