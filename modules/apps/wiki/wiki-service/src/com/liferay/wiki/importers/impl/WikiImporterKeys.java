@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.importers;
+package com.liferay.wiki.importers.impl;
 
 /**
  * @author Jorge Ferrer

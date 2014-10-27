@@ -518,34 +518,14 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 	}
 
 	protected WikiImporter getWikiImporter(String importer) {
-		WikiImporter wikiImporter = _wikiImporters.get(importer);
+		WikiImporterTracker wikiImporterTracker = _getWikiImporterTracker();
+
+		WikiImporter wikiImporter = wikiImporterTracker.getWikiImporter(
+			importer);
 
 		if (wikiImporter == null) {
-			String importerClass = PropsUtil.get(
-				PropsKeys.WIKI_IMPORTERS_CLASS, new Filter(importer));
-
-			if (importerClass != null) {
-				ClassLoader classLoader = getClassLoader();
-
-				try {
-					Class<?> clazz = classLoader.loadClass(importerClass);
-
-					wikiImporter = (WikiImporter)clazz.newInstance();
-
-					_wikiImporters.put(importer, wikiImporter);
-				}
-				catch (Exception e) {
-					throw new SystemException(
-						"Unable to instantiate wiki importer class " +
-							importerClass, e);
-				}
-			}
-
-			if (importer == null) {
-				throw new SystemException(
-					"Unable to instantiate wiki importer class " +
-						importerClass);
-			}
+			throw new SystemException(
+				"Unable to instantiate wiki importer with name " + importer);
 		}
 
 		return wikiImporter;
@@ -597,8 +577,24 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		validate(0, groupId, name);
 	}
 
+	private static WikiImporterTracker _getWikiImporterTracker() {
+		return _wikiImporterServiceTracker.getService();
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		WikiNodeLocalServiceImpl.class);
+
+	private static final ServiceTracker<WikiImporterTracker, WikiImporterTracker>
+		_wikiImporterServiceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(WikiNodeLocalServiceImpl.class);
+
+		_wikiImporterServiceTracker = new ServiceTracker<>(
+			bundle.getBundleContext(), WikiImporterTracker.class, null);
+
+		_wikiImporterServiceTracker.open();
+	}
 
 	private final Map<String, WikiImporter> _wikiImporters =
 		new HashMap<String, WikiImporter>();

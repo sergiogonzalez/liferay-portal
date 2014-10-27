@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.importers.mediawiki;
+package com.liferay.wiki.importers.impl.mediawiki;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -47,10 +47,12 @@ import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetTagPropertyLocalServiceUtil;
 import com.liferay.portlet.asset.util.AssetUtil;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
+import com.liferay.wiki.configuration.WikiPropsValues;
+import com.liferay.wiki.configuration.WikiSettings;
 import com.liferay.wiki.exception.ImportFilesException;
 import com.liferay.wiki.exception.NoSuchPageException;
 import com.liferay.wiki.importers.WikiImporter;
-import com.liferay.wiki.importers.WikiImporterKeys;
+import com.liferay.wiki.importers.impl.WikiImporterKeys;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageConstants;
@@ -70,10 +72,18 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Alvaro del Castillo
  * @author Jorge Ferrer
  */
+@Component(
+	service = WikiImporter.class,
+	properties = {
+		"importer=MediaWiki", "page=/html/portlet/wiki/import/mediawiki.jsp"
+	}
+)
 public class MediaWikiImporter implements WikiImporter {
 
 	public static final String SHARED_IMAGES_CONTENT = "See attachments";
@@ -109,7 +119,7 @@ public class MediaWikiImporter implements WikiImporter {
 				imagesInputStream, options);
 			processImages(userId, node, imagesInputStream);
 
-			moveFrontPage(userId, node, options);
+			moveFrontPage(userId, node, options, null);
 		}
 		catch (DocumentException de) {
 			throw new ImportFilesException("Invalid XML file provided");
@@ -157,8 +167,8 @@ public class MediaWikiImporter implements WikiImporter {
 
 		try {
 			long authorUserId = getUserId(userId, node, author, usersMap);
-			String parentTitle = readParentTitle(content);
-			String redirectTitle = readRedirectTitle(content);
+			String parentTitle = readParentTitle(content, null);
+			String redirectTitle = readRedirectTitle(content, null);
 
 			ServiceContext serviceContext = new ServiceContext();
 
@@ -237,13 +247,14 @@ public class MediaWikiImporter implements WikiImporter {
 	}
 
 	protected void moveFrontPage(
-		long userId, WikiNode node, Map<String, String[]> options) {
+		long userId, WikiNode node, Map<String, String[]> options,
+		Pattern pattern) {
 
 		String frontPageTitle = MapUtil.getString(
 			options, WikiImporterKeys.OPTIONS_FRONT_PAGE);
 
 		if (Validator.isNotNull(frontPageTitle)) {
-			frontPageTitle = normalizeTitle(frontPageTitle);
+			frontPageTitle = normalizeTitle(frontPageTitle, pattern);
 
 			try {
 				if (WikiPageLocalServiceUtil.getPagesCount(
@@ -254,18 +265,20 @@ public class MediaWikiImporter implements WikiImporter {
 					serviceContext.setAddGroupPermissions(true);
 					serviceContext.setAddGuestPermissions(true);
 
+					WikiSettings wikiSettings = WikiSettings.getInstance(
+						node.getGroupId());
+
 					WikiPageLocalServiceUtil.renamePage(
 						userId, node.getNodeId(), frontPageTitle,
-						WikiPageConstants.FRONT_PAGE, false, serviceContext);
+						WikiPropsValues.FRONT_PAGE_NAME, false, serviceContext);
 				}
 			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {
 					StringBundler sb = new StringBundler(4);
 
-					sb.append("Could not move ");
-					sb.append(WikiPageConstants.FRONT_PAGE);
-					sb.append(" to the title provided: ");
+					sb.append(
+						"Could not move front page to the title provided: ");
 					sb.append(frontPageTitle);
 
 					_log.warn(sb.toString(), e);
@@ -288,8 +301,8 @@ public class MediaWikiImporter implements WikiImporter {
 		return normalize(description, 255);
 	}
 
-	protected String normalizeTitle(String title) {
-		Matcher matcher = _wikiPageTitlesRemovePattern.matcher(title);
+	protected String normalizeTitle(String title, Pattern pattern) {
+		Matcher matcher = pattern.matcher(title);
 
 		title = matcher.replaceAll(StringPool.BLANK);
 
@@ -407,7 +420,8 @@ public class MediaWikiImporter implements WikiImporter {
 	protected void processRegularPages(
 		long userId, WikiNode node, Element rootElement,
 		List<String> specialNamespaces, Map<String, String> usersMap,
-		InputStream imagesInputStream, Map<String, String[]> options) {
+		InputStream imagesInputStream,
+		Map<String, String[]> options) throws PortalException {
 
 		boolean importLatestVersion = MapUtil.getBoolean(
 			options, WikiImporterKeys.OPTIONS_IMPORT_LATEST_VERSION);
@@ -438,7 +452,12 @@ public class MediaWikiImporter implements WikiImporter {
 				continue;
 			}
 
-			title = normalizeTitle(title);
+			WikiSettings wikiSettings = WikiSettings.getInstance(
+				node.getGroupId());
+
+			title = normalizeTitle(
+				title,
+				Pattern.compile(wikiSettings.getPageTitlesRemoveRegexp()));
 
 			percentage = Math.min(
 				10 + (i * (maxPercentage - percentage)) / pageElements.size(),
@@ -598,7 +617,7 @@ public class MediaWikiImporter implements WikiImporter {
 		return assetTagNames.toArray(new String[assetTagNames.size()]);
 	}
 
-	protected String readParentTitle(String content) {
+	protected String readParentTitle(String content, Pattern pattern) {
 		Matcher matcher = _parentPattern.matcher(content);
 
 		String redirectTitle = StringPool.BLANK;
@@ -606,7 +625,7 @@ public class MediaWikiImporter implements WikiImporter {
 		if (matcher.find()) {
 			redirectTitle = matcher.group(1);
 
-			redirectTitle = normalizeTitle(redirectTitle);
+			redirectTitle = normalizeTitle(redirectTitle, pattern);
 
 			redirectTitle += " (disambiguation)";
 		}
@@ -614,7 +633,7 @@ public class MediaWikiImporter implements WikiImporter {
 		return redirectTitle;
 	}
 
-	protected String readRedirectTitle(String content) {
+	protected String readRedirectTitle(String content, Pattern pattern) {
 		Matcher matcher = _redirectPattern.matcher(content);
 
 		String redirectTitle = StringPool.BLANK;
@@ -622,7 +641,7 @@ public class MediaWikiImporter implements WikiImporter {
 		if (matcher.find()) {
 			redirectTitle = matcher.group(1);
 
-			redirectTitle = normalizeTitle(redirectTitle);
+			redirectTitle = normalizeTitle(redirectTitle, pattern);
 		}
 
 		return redirectTitle;
@@ -706,9 +725,7 @@ public class MediaWikiImporter implements WikiImporter {
 	private static Pattern _redirectPattern = Pattern.compile(
 		"#REDIRECT \\[\\[([^\\]]*)\\]\\]");
 	private static Set<String> _specialMediaWikiDirs = SetUtil.fromArray(
-		new String[] {"archive", "temp", "thumb"});
-	private static Pattern _wikiPageTitlesRemovePattern = Pattern.compile(
-		PropsValues.WIKI_PAGE_TITLES_REMOVE_REGEXP);
+		new String[]{"archive", "temp", "thumb"});
 
 	private MediaWikiToCreoleTranslator _translator =
 		new MediaWikiToCreoleTranslator();
