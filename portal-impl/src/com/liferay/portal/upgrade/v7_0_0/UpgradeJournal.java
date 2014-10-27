@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.template.TemplateConstants;
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -67,7 +66,7 @@ import java.util.Map;
  * @author Gergely Mathe
  * @author Eudaldo Alonso
  */
-public class UpgradeJournal extends UpgradeProcess {
+public class UpgradeJournal extends UpgradeDynamicDataMapping {
 
 	protected String addBasicWebContentStructureAndTemplate(long companyId)
 		throws Exception {
@@ -153,9 +152,9 @@ public class UpgradeJournal extends UpgradeProcess {
 			sb.append("insert into DDMStructure (uuid_, structureId, ");
 			sb.append("groupId, companyId, userId, userName, createDate, ");
 			sb.append("modifiedDate, parentStructureId, classNameId, ");
-			sb.append("structureKey, name, description, definition, ");
+			sb.append("structureKey, version, name, description, definition, ");
 			sb.append("storageType, type_) values (?, ?, ?, ?, ?, ?, ?, ?, ");
-			sb.append("?, ?, ?, ?, ?, ?, ?, ?)");
+			sb.append("?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
 			String sql = sb.toString();
 
@@ -172,13 +171,20 @@ public class UpgradeJournal extends UpgradeProcess {
 			ps.setLong(9, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID);
 			ps.setLong(10, PortalUtil.getClassNameId(JournalArticle.class));
 			ps.setString(11, ddmStructureKey);
-			ps.setString(12, localizedName);
-			ps.setString(13, localizedDescription);
-			ps.setString(14, xsd);
-			ps.setString(15, "xml");
-			ps.setInt(16, DDMStructureConstants.TYPE_DEFAULT);
+			ps.setString(12, DDMStructureConstants.VERSION_DEFAULT);
+			ps.setString(13, localizedName);
+			ps.setString(14, localizedDescription);
+			ps.setString(15, xsd);
+			ps.setString(16, "xml");
+			ps.setInt(17, DDMStructureConstants.TYPE_DEFAULT);
 
 			ps.executeUpdate();
+
+			addStructureVersion(
+				increment(), groupId, companyId, getDefaultUserId(companyId),
+				StringPool.BLANK, now, ddmStructureId, localizedName,
+				localizedDescription, xsd, "xml",
+				DDMStructureConstants.TYPE_DEFAULT);
 
 			Map<String, Long> bitwiseValues = getBitwiseValues(
 				DDMStructure.class.getName());
@@ -384,9 +390,15 @@ public class UpgradeJournal extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		updateBasicWebContentStructure();
-
 		try {
+			runSQL(
+				"alter_column_name JournalArticle structureId " +
+					"DDMStructureKey VARCHAR(75) null");
+
+			runSQL(
+				"alter_column_name JournalArticle templateId DDMTemplateKey " +
+					"VARCHAR(75) null");
+
 			runSQL("alter_column_type JournalArticle description TEXT null");
 		}
 		catch (SQLException sqle) {
@@ -396,6 +408,8 @@ public class UpgradeJournal extends UpgradeProcess {
 				JournalArticleTable.TABLE_SQL_CREATE,
 				JournalArticleTable.TABLE_SQL_ADD_INDEXES);
 		}
+
+		updateBasicWebContentStructure();
 	}
 
 	protected long getBitwiseValue(
@@ -688,8 +702,8 @@ public class UpgradeJournal extends UpgradeProcess {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
-				"update JournalArticle set structureId = ?, templateId = ?, " +
-					"content = ? where id_ = ?");
+				"update JournalArticle set ddmStructureKey = ?, " +
+					"ddmTemplateKey = ?, content = ? where id_ = ?");
 
 			ps.setString(1, ddmStructureKey);
 			ps.setString(2, ddmTemplateKey);
@@ -713,8 +727,8 @@ public class UpgradeJournal extends UpgradeProcess {
 
 			ps = con.prepareStatement(
 				"select id_, content from JournalArticle where companyId = " +
-					companyId + " and structureId is NULL or structureId " +
-						"LIKE ''");
+					companyId + " and ddmStructureKey is null or " +
+						"ddmStructureKey like ''");
 
 			String name = addBasicWebContentStructureAndTemplate(companyId);
 
@@ -732,7 +746,7 @@ public class UpgradeJournal extends UpgradeProcess {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(UpgradeJournal.class);
+	private static final Log _log = LogFactoryUtil.getLog(UpgradeJournal.class);
 
 	private Map<String, Map<String, Long>> _bitwiseValues =
 		new HashMap<String, Map<String, Long>>();

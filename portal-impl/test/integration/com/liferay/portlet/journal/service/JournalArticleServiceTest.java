@@ -152,7 +152,7 @@ public class JournalArticleServiceTest {
 			JournalArticle.class);
 
 		DDMStructure ddmStructure = DDMStructureServiceUtil.getStructure(
-			group.getGroupId(), classNameId, article.getStructureId());
+			group.getGroupId(), classNameId, article.getDDMStructureKey());
 
 		checkArticleMatchesStructure(article, ddmStructure);
 	}
@@ -536,7 +536,7 @@ public class JournalArticleServiceTest {
 		return JournalArticleLocalServiceUtil.searchCount(
 			TestPropsValues.getCompanyId(), _group.getGroupId(), folderIds,
 			JournalArticleConstants.CLASSNAME_ID_DEFAULT, null, null, null,
-			null, keyword, "general", "", "", null, null, status, null, true);
+			null, keyword, "", "", null, null, status, null, true);
 	}
 
 	protected List<JournalArticle> createArticlesWithKeyword(int count)
@@ -592,7 +592,7 @@ public class JournalArticleServiceTest {
 		return JournalArticleLocalServiceUtil.search(
 			TestPropsValues.getCompanyId(), _group.getGroupId(), folderIds,
 			JournalArticleConstants.CLASSNAME_ID_DEFAULT, null, null, null,
-			null, keyword, "general", "", "", null, null, status, null, false,
+			null, keyword, "", "", null, null, status, null, false,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 

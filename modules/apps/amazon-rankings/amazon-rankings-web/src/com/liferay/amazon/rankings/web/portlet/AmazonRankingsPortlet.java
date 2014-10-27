@@ -17,7 +17,7 @@ package com.liferay.amazon.rankings.web.portlet;
 import aQute.bnd.annotation.metatype.Configurable;
 
 import com.liferay.amazon.rankings.web.configuration.AmazonRankingsConfiguration;
-import com.liferay.amazon.rankings.web.upgrade.AmazonRankingsUpgrade;
+import com.liferay.amazon.rankings.web.upgrade.AmazonRankingsWebUpgrade;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 import java.io.IOException;
@@ -36,9 +36,9 @@ import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
-* @author Raymond Augé
-* @author Peter Fellwock
-*/
+ * @author Raymond Augé
+ * @author Peter Fellwock
+ */
 @Component(
 	configurationPid = "com.liferay.amazon.rankings.web",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
@@ -84,8 +84,8 @@ public class AmazonRankingsPortlet extends MVCPortlet {
 	}
 
 	@Reference(unbind = "-")
-	protected void setAmazonRankingsUpgrade(
-		AmazonRankingsUpgrade amazonRankingsUpgrade) {
+	protected void setAmazonRankingsWebUpgrade(
+		AmazonRankingsWebUpgrade amazonRankingsWebUpgrade) {
 	}
 
 	private volatile AmazonRankingsConfiguration _amazonRankingsConfiguration;

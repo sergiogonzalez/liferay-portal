@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PortalLifecycle;
 import com.liferay.portal.kernel.util.PropertiesUtil;
+import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
@@ -94,7 +95,7 @@ public class HotDeployEvent {
 	}
 
 	protected void initDependentServletContextNames() throws IOException {
-		if (!DependencyManagementThreadLocal.isEnabled()) {
+		if (!DependencyManagementThreadLocal.isEnabled() || isWAB()) {
 			return;
 		}
 
@@ -145,6 +146,25 @@ public class HotDeployEvent {
 				"Plugin " + servletContextName + " requires " +
 					StringUtil.merge(_dependentServletContextNames, ", "));
 		}
+	}
+
+	protected boolean isWAB() {
+
+		// Never enable plugin dependency management when the servlet context is
+		// from a Liferay WAB since dependency is handled by the OSGi runtime
+
+		Object osgiBundleContext = _servletContext.getAttribute(
+			"osgi-bundlecontext");
+		Object osgiRuntimeVendor = _servletContext.getAttribute(
+			"osgi-runtime-vendor");
+
+		if ((osgiBundleContext != null) && (osgiRuntimeVendor != null) &&
+			(osgiRuntimeVendor.equals(ReleaseInfo.getVendor()))) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(HotDeployEvent.class);

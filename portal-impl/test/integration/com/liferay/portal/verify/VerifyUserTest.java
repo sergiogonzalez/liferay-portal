@@ -25,7 +25,7 @@ import org.junit.runner.RunWith;
  */
 @ExecutionTestListeners(listeners = {MainServletExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
-public class VerifyUserTest extends BaseVerifyTestCase {
+public class VerifyUserTest extends BaseVerifyProcessTestCase {
 
 	@Override
 	protected VerifyProcess getVerifyProcess() {

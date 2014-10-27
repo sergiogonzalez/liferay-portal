@@ -41,7 +41,7 @@ public class JournalArticleCacheModel implements CacheModel<JournalArticle>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(69);
+		StringBundler sb = new StringBundler(67);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -81,12 +81,10 @@ public class JournalArticleCacheModel implements CacheModel<JournalArticle>,
 		sb.append(description);
 		sb.append(", content=");
 		sb.append(content);
-		sb.append(", type=");
-		sb.append(type);
-		sb.append(", structureId=");
-		sb.append(structureId);
-		sb.append(", templateId=");
-		sb.append(templateId);
+		sb.append(", DDMStructureKey=");
+		sb.append(DDMStructureKey);
+		sb.append(", DDMTemplateKey=");
+		sb.append(DDMTemplateKey);
 		sb.append(", layoutUuid=");
 		sb.append(layoutUuid);
 		sb.append(", displayDate=");
@@ -202,25 +200,18 @@ public class JournalArticleCacheModel implements CacheModel<JournalArticle>,
 			journalArticleImpl.setContent(content);
 		}
 
-		if (type == null) {
-			journalArticleImpl.setType(StringPool.BLANK);
+		if (DDMStructureKey == null) {
+			journalArticleImpl.setDDMStructureKey(StringPool.BLANK);
 		}
 		else {
-			journalArticleImpl.setType(type);
+			journalArticleImpl.setDDMStructureKey(DDMStructureKey);
 		}
 
-		if (structureId == null) {
-			journalArticleImpl.setStructureId(StringPool.BLANK);
+		if (DDMTemplateKey == null) {
+			journalArticleImpl.setDDMTemplateKey(StringPool.BLANK);
 		}
 		else {
-			journalArticleImpl.setStructureId(structureId);
-		}
-
-		if (templateId == null) {
-			journalArticleImpl.setTemplateId(StringPool.BLANK);
-		}
-		else {
-			journalArticleImpl.setTemplateId(templateId);
+			journalArticleImpl.setDDMTemplateKey(DDMTemplateKey);
 		}
 
 		if (layoutUuid == null) {
@@ -310,9 +301,8 @@ public class JournalArticleCacheModel implements CacheModel<JournalArticle>,
 		urlTitle = objectInput.readUTF();
 		description = objectInput.readUTF();
 		content = objectInput.readUTF();
-		type = objectInput.readUTF();
-		structureId = objectInput.readUTF();
-		templateId = objectInput.readUTF();
+		DDMStructureKey = objectInput.readUTF();
+		DDMTemplateKey = objectInput.readUTF();
 		layoutUuid = objectInput.readUTF();
 		displayDate = objectInput.readLong();
 		expirationDate = objectInput.readLong();
@@ -403,25 +393,18 @@ public class JournalArticleCacheModel implements CacheModel<JournalArticle>,
 			objectOutput.writeUTF(content);
 		}
 
-		if (type == null) {
+		if (DDMStructureKey == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
 		else {
-			objectOutput.writeUTF(type);
+			objectOutput.writeUTF(DDMStructureKey);
 		}
 
-		if (structureId == null) {
+		if (DDMTemplateKey == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
 		else {
-			objectOutput.writeUTF(structureId);
-		}
-
-		if (templateId == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(templateId);
+			objectOutput.writeUTF(DDMTemplateKey);
 		}
 
 		if (layoutUuid == null) {
@@ -480,9 +463,8 @@ public class JournalArticleCacheModel implements CacheModel<JournalArticle>,
 	public String urlTitle;
 	public String description;
 	public String content;
-	public String type;
-	public String structureId;
-	public String templateId;
+	public String DDMStructureKey;
+	public String DDMTemplateKey;
 	public String layoutUuid;
 	public long displayDate;
 	public long expirationDate;

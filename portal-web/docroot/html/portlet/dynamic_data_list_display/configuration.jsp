@@ -188,31 +188,24 @@ request.setAttribute("record_set_action.jsp-selRecordSet", selRecordSet);
 </aui:form>
 
 <aui:script>
-	Liferay.provide(
-		window,
-		'<portlet:namespace />selectRecordSet',
-		function(recordSetId, recordSetName) {
-			var A = AUI();
+	function <portlet:namespace />selectRecordSet(recordSetId, recordSetName) {
+		document.<portlet:namespace />fm.<portlet:namespace />recordSetId.value = recordSetId;
+		document.<portlet:namespace />fm.<portlet:namespace />displayDDMTemplateId.value = '';
+		document.<portlet:namespace />fm.<portlet:namespace />formDDMTemplateId.value = '';
 
-			document.<portlet:namespace />fm.<portlet:namespace />recordSetId.value = recordSetId;
-			document.<portlet:namespace />fm.<portlet:namespace />displayDDMTemplateId.value = '';
-			document.<portlet:namespace />fm.<portlet:namespace />formDDMTemplateId.value = '';
+		AUI.$('.displaying-record-set-id-holder').removeClass('hide');
+		AUI.$('.displaying-help-message-holder').addClass('hide');
 
-			A.one('.displaying-record-set-id-holder').show();
-			A.one('.displaying-help-message-holder').hide();
+		var displayRecordSetId = AUI.$('.displaying-record-set-id');
 
-			var displayRecordSetId = A.one('.displaying-record-set-id');
+		displayRecordSetId.html(recordSetName + ' (<liferay-ui:message key="modified" />)');
 
-			displayRecordSetId.html(recordSetName + ' (<liferay-ui:message key="modified" />)');
+		displayRecordSetId.addClass('modified');
 
-			displayRecordSetId.addClass('modified');
+		var dialog = Liferay.Util.getWindow();
 
-			var dialog = Liferay.Util.getWindow();
-
-			if (dialog) {
-				dialog.set('title', recordSetName + ' - <liferay-ui:message key="configuration" />');
-			}
-		},
-		['aui-base']
-	);
+		if (dialog) {
+			dialog.set('title', recordSetName + ' - <liferay-ui:message key="configuration" />');
+		}
+	}
 </aui:script>

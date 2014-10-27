@@ -37,7 +37,7 @@ import org.junit.runner.RunWith;
  */
 @ExecutionTestListeners(listeners = {MainServletExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
-public class VerifyJournalTest extends BaseVerifyTestCase {
+public class VerifyJournalTest extends BaseVerifyProcessTestCase {
 
 	@Before
 	public void setUp() throws Exception {

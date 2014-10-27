@@ -27,10 +27,6 @@ double version = ParamUtil.getDouble(request, "version");
 	<c:when test="<%= Validator.isNull(articleId) %>">
 
 		<%
-		if (Validator.isNull(type)) {
-			type = null;
-		}
-
 		PortletURL portletURL = renderResponse.createRenderURL();
 
 		portletURL.setParameter("struts_action", "/journal_articles/view");
@@ -66,10 +62,9 @@ double version = ParamUtil.getDouble(request, "version");
 		ArticleSearchTerms searchTerms = (ArticleSearchTerms)searchContainer.getSearchTerms();
 
 		searchTerms.setGroupId(groupId);
-		searchTerms.setType(type);
 
 		if (ddmStructure != null) {
-			searchTerms.setStructureId(ddmStructure.getStructureKey());
+			searchTerms.setDDMStructureKey(ddmStructure.getStructureKey());
 		}
 
 		searchTerms.setDisplayDateLT(new Date());

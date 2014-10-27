@@ -82,21 +82,6 @@ create index IX_28C78D5C on BlogsStatsUser (groupId, entryCount);
 create unique index IX_82254C25 on BlogsStatsUser (groupId, userId);
 create index IX_507BA031 on BlogsStatsUser (userId, lastPostDate);
 
-create index IX_276C8C13 on BookmarksEntry (companyId, status);
-create index IX_146382F2 on BookmarksEntry (groupId, folderId, status);
-create index IX_416AD7D5 on BookmarksEntry (groupId, status);
-create index IX_C78B61AC on BookmarksEntry (groupId, userId, folderId, status);
-create index IX_9D9CF70F on BookmarksEntry (groupId, userId, status);
-create index IX_E848278F on BookmarksEntry (resourceBlockId);
-create index IX_89BEDC4F on BookmarksEntry (uuid_, companyId);
-create unique index IX_EAA02A91 on BookmarksEntry (uuid_, groupId);
-
-create index IX_C27C9DBD on BookmarksFolder (companyId, status);
-create index IX_D16018A6 on BookmarksFolder (groupId, parentFolderId, status);
-create index IX_28A49BB9 on BookmarksFolder (resourceBlockId);
-create index IX_54F0ED65 on BookmarksFolder (uuid_, companyId);
-create unique index IX_DC2F8927 on BookmarksFolder (uuid_, groupId);
-
 create unique index IX_E7B95510 on BrowserTracker (userId);
 
 create index IX_D6FD9496 on CalEvent (companyId);
@@ -155,6 +140,8 @@ create unique index IX_85C7EBE2 on DDMStructure (uuid_, groupId);
 create index IX_D43E4208 on DDMStructureLink (classNameId);
 create unique index IX_C803899D on DDMStructureLink (classPK);
 create index IX_17692B58 on DDMStructureLink (structureId);
+
+create unique index IX_64C3C42 on DDMStructureVersion (structureId, version);
 
 create index IX_B6356F93 on DDMTemplate (classNameId, classPK, type_);
 create index IX_32F83D16 on DDMTemplate (classPK);
@@ -277,29 +264,29 @@ create index IX_3B69160F on Groups_UserGroups (userGroupId);
 
 create index IX_6A925A4D on Image (size_);
 
-create index IX_FF0E7A72 on JournalArticle (classNameId, templateId);
+create index IX_17806804 on JournalArticle (DDMStructureKey);
+create index IX_75CCA4D1 on JournalArticle (DDMTemplateKey);
+create index IX_C761B675 on JournalArticle (classNameId, DDMTemplateKey);
 create index IX_323DF109 on JournalArticle (companyId, status);
 create index IX_E82F322B on JournalArticle (companyId, version, status);
 create index IX_EA05E9E1 on JournalArticle (displayDate, status);
+create index IX_D8EB0D84 on JournalArticle (groupId, DDMStructureKey);
+create index IX_31B74F51 on JournalArticle (groupId, DDMTemplateKey);
 create index IX_4D5CD982 on JournalArticle (groupId, articleId, status);
 create unique index IX_85C52EEC on JournalArticle (groupId, articleId, version);
+create index IX_353BD560 on JournalArticle (groupId, classNameId, DDMStructureKey);
+create index IX_6E801BF5 on JournalArticle (groupId, classNameId, DDMTemplateKey);
 create index IX_9CE6E0FA on JournalArticle (groupId, classNameId, classPK);
 create index IX_A2534AC2 on JournalArticle (groupId, classNameId, layoutUuid);
-create index IX_91E78C35 on JournalArticle (groupId, classNameId, structureId);
-create index IX_F43B9FF2 on JournalArticle (groupId, classNameId, templateId);
 create index IX_F35391E8 on JournalArticle (groupId, folderId, status);
 create index IX_3C028C1E on JournalArticle (groupId, layoutUuid);
 create index IX_301D024B on JournalArticle (groupId, status);
-create index IX_2E207659 on JournalArticle (groupId, structureId);
-create index IX_8DEAE14E on JournalArticle (groupId, templateId);
 create index IX_D2D249E8 on JournalArticle (groupId, urlTitle, status);
 create index IX_43A0F80F on JournalArticle (groupId, userId, classNameId);
 create index IX_3F1EA19E on JournalArticle (layoutUuid);
 create index IX_451D63EC on JournalArticle (resourcePrimKey, indexable, status);
 create index IX_3E2765FC on JournalArticle (resourcePrimKey, status);
 create index IX_EF9B7028 on JournalArticle (smallImageId);
-create index IX_8E8710D9 on JournalArticle (structureId);
-create index IX_9106F6CE on JournalArticle (templateId);
 create index IX_71520099 on JournalArticle (uuid_, companyId);
 create unique index IX_3463D95B on JournalArticle (uuid_, groupId);
 

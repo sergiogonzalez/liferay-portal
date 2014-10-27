@@ -54,13 +54,11 @@ int mergeFailCount = SitesUtil.getMergeFailCount(layoutPrototype);
 
 		<liferay-ui:message arguments="page-template" key='<%= merge ? "click-reset-and-propagate-to-reset-the-failure-count-and-propagate-changes-from-the-x" : "click-reset-to-reset-the-failure-count-and-reenable-propagation" %>' />
 
-		<aui:button id='<%= randomNamespace + "resetButton" %>' value='<%= merge ? "reset-and-propagate" : "reset" %>' />
+		<aui:button id='<%= randomNamespace + "resetButton" %>' useNamespace="<%= false %>" value='<%= merge ? "reset-and-propagate" : "reset" %>' />
 	</span>
 
-	<aui:script use="aui-base">
-		var resetButton= A.one('#<%= randomNamespace %>resetButton');
-
-		resetButton.on(
+	<aui:script>
+		AUI.$('#<%= randomNamespace %>resetButton').on(
 			'click',
 			function(event) {
 				submitForm(document.hrefFm, '<%= portletURL.toString() %>');

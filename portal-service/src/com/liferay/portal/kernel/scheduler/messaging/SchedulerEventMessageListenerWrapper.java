@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.messaging.MessageListenerException;
 import com.liferay.portal.kernel.scheduler.JobState;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
+import com.liferay.portal.kernel.scheduler.SchedulerException;
+import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.TriggerState;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
@@ -36,18 +38,6 @@ import java.util.Date;
 public class SchedulerEventMessageListenerWrapper implements MessageListener {
 
 	public void afterPropertiesSet() {
-		if (_jobName.length() > SchedulerEngine.GROUP_NAME_MAX_LENGTH) {
-			_jobName = _jobName.substring(
-				0, SchedulerEngine.GROUP_NAME_MAX_LENGTH);
-		}
-
-		if (_groupName.length() > SchedulerEngine.JOB_NAME_MAX_LENGTH) {
-			_groupName = _groupName.substring(
-				0, SchedulerEngine.JOB_NAME_MAX_LENGTH);
-		}
-
-		_receiverKey = new ReceiverKey(_jobName, _groupName);
-
 		if (_messageListenerUUID == null) {
 			_messageListenerUUID = PortalUUIDUtil.generate();
 		}
@@ -63,10 +53,10 @@ public class SchedulerEventMessageListenerWrapper implements MessageListener {
 			message.getString(SchedulerEngine.DESTINATION_NAME));
 
 		if (destinationName.equals(DestinationNames.SCHEDULER_DISPATCH)) {
-			ReceiverKey receiverKey = (ReceiverKey)message.get(
-				SchedulerEngine.RECEIVER_KEY);
+			String messageListenerUUID = message.getString(
+				SchedulerEngine.MESSAGE_LISTENER_UUID);
 
-			if (!_receiverKey.equals(receiverKey)) {
+			if (!_messageListenerUUID.equals(messageListenerUUID)) {
 				return;
 			}
 		}
@@ -96,6 +86,25 @@ public class SchedulerEventMessageListenerWrapper implements MessageListener {
 					MessageBusUtil.unregisterMessageListener(
 						destinationName, this);
 				}
+
+				String jobName = message.getString(SchedulerEngine.JOB_NAME);
+				String groupName = message.getString(
+					SchedulerEngine.GROUP_NAME);
+				StorageType storageType = (StorageType)message.get(
+					SchedulerEngine.STORAGE_TYPE);
+
+				try {
+					SchedulerEngineHelperUtil.delete(
+						jobName, groupName, storageType);
+				}
+				catch (SchedulerException se) {
+					if (_log.isInfoEnabled()) {
+						_log.info(
+							"Unable to delete job " + jobName + " in group " +
+								groupName,
+							se);
+					}
+				}
 			}
 			else {
 				triggerState = TriggerState.NORMAL;
@@ -122,10 +131,16 @@ public class SchedulerEventMessageListenerWrapper implements MessageListener {
 		_jobName = className;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	public void setGroupName(String groupName) {
 		_groupName = groupName;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	public void setJobName(String jobName) {
 		_jobName = jobName;
 	}
@@ -149,10 +164,19 @@ public class SchedulerEventMessageListenerWrapper implements MessageListener {
 	private static final Log _log = LogFactoryUtil.getLog(
 		SchedulerEventMessageListenerWrapper.class);
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@SuppressWarnings("unused")
 	private String _groupName;
+
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@SuppressWarnings("unused")
 	private String _jobName;
+
 	private MessageListener _messageListener;
 	private String _messageListenerUUID;
-	private ReceiverKey _receiverKey;
 
 }

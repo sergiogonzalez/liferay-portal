@@ -4,6 +4,7 @@
 <project>
 	<path id="plugins.includes.path">
 		<dirset dir="apps/amazon-rankings" includes="*" />
+		<dirset dir="apps/bookmarks" includes="*" />
 		<dirset dir="apps/currency-converter" includes="*" />
 		<dirset dir="apps/dictionary" includes="*" />
 		<dirset dir="apps/hello-velocity" includes="*" />
@@ -14,7 +15,9 @@
 		<dirset dir="apps/network-utilities" includes="*" />
 		<dirset dir="apps/password-generator" includes="*" />
 		<dirset dir="apps/polls" includes="*" />
+		<dirset dir="apps/quick-note" includes="*" />
 		<dirset dir="apps/social" includes="*" />
+		<dirset dir="apps/unit-converter" includes="*" />
 		<dirset dir="apps/web-proxy" includes="*" />
 		<dirset dir="apps/xsl-content" includes="*" />
 		<dirset dir="core" includes="*" />

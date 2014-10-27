@@ -282,6 +282,64 @@ public class VerifyProperties extends VerifyProcess {
 	};
 
 	private static final String[][] _MODULARIZED_PORTAL_KEYS = {
+
+		// Bookmarks
+
+		new String[] {
+			"bookmarks.email.entry.added.body", "email.entry.added.body",
+			"com.liferay.bookmarks.service"
+		},
+		new String[] {
+			"bookmarks.email.entry.added.enabled", "email.entry.added.enabled",
+			"com.liferay.bookmarks.service"
+		},
+		new String[] {
+			"bookmarks.email.entry.added.subject", "email.entry.added.subject",
+			"com.liferay.bookmarks.service"
+		},
+		new String[] {
+			"bookmarks.email.entry.updated.body", "email.entry.updated.body",
+			"com.liferay.bookmarks.service"
+		},
+		new String[] {
+			"bookmarks.email.entry.updated.enabled",
+			"email.entry.updated.enabled", "com.liferay.bookmarks.service"
+		},
+		new String[] {
+			"bookmarks.email.entry.updated.subject",
+			"email.entry.updated.subject", "com.liferay.bookmarks.service"
+		},
+		new String[] {
+			"bookmarks.email.from.address", "email.from.address",
+			"com.liferay.bookmarks.service"
+		},
+		new String[] {
+			"bookmarks.email.from.name", "email.from.name",
+			"com.liferay.bookmarks.service"
+		},
+		new String[] {
+			"bookmarks.entry.columns", "entry.columns",
+			"com.liferay.bookmarks.service"
+		},
+		new String[] {
+			"bookmarks.folder.columns", "folder.columns",
+			"com.liferay.bookmarks.service"
+		},
+		new String[] {
+			"bookmarks.folders.search.visible", "folders.search.visible",
+			"com.liferay.bookmarks.service"
+		},
+		new String[] {
+			"bookmarks.related.assets.enabled", "related.assets.enabled",
+			"com.liferay.bookmarks.service"
+		},
+		new String[] {
+			"bookmarks.subfolders.visible", "subfolders.visible",
+			"com.liferay.bookmarks.service"
+		},
+
+		// Polls
+
 		new String[] {
 			"polls.publish.to.live.by.default", "publish.to.live.by.default",
 			"com.liferay.polls.service"
@@ -325,7 +383,7 @@ public class VerifyProperties extends VerifyProcess {
 		"invitation.email.max.recipients", "invitation.email.message.body",
 		"invitation.email.message.subject", "javax.persistence.validation.mode",
 		"jbi.workflow.url", "json.deserializer.strict.mode",
-		"journal.article.form.translate",
+		"journal.article.form.translate", "journal.article.types",
 		"journal.template.language.parser[css]",
 		"journal.template.language.parser[ftl]",
 		"journal.template.language.parser[vm]",

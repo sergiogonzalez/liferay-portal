@@ -17,7 +17,6 @@ package com.liferay.portlet.dynamicdatamapping.storage;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.dynamicdatamapping.StorageException;
 import com.liferay.portlet.dynamicdatamapping.io.DDMFormValuesJSONDeserializerUtil;
 import com.liferay.portlet.dynamicdatamapping.io.DDMFormValuesJSONSerializerUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMContent;
@@ -41,6 +40,50 @@ import java.util.Map;
 public class JSONStorageAdapter extends BaseStorageAdapter {
 
 	@Override
+	public long doCreate(
+			long companyId, long ddmStructureId, DDMFormValues ddmFormValues,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		long classNameId = PortalUtil.getClassNameId(
+			DDMContent.class.getName());
+
+		String serializedDDMFormValues =
+			DDMFormValuesJSONSerializerUtil.serialize(ddmFormValues);
+
+		DDMContent ddmContent = DDMContentLocalServiceUtil.addContent(
+			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
+			DDMStorageLink.class.getName(), null, serializedDDMFormValues,
+			serviceContext);
+
+		DDMStorageLinkLocalServiceUtil.addStorageLink(
+			classNameId, ddmContent.getPrimaryKey(), ddmStructureId,
+			serviceContext);
+
+		return ddmContent.getPrimaryKey();
+	}
+
+	@Override
+	public void doUpdate(
+			long classPK, DDMFormValues ddmFormValues,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		DDMContent ddmContent = DDMContentLocalServiceUtil.getContent(classPK);
+
+		ddmContent.setModifiedDate(serviceContext.getModifiedDate(null));
+
+		String serializedDDMFormValues =
+			DDMFormValuesJSONSerializerUtil.serialize(ddmFormValues);
+
+		ddmContent.setData(serializedDDMFormValues);
+
+		DDMContentLocalServiceUtil.updateContent(
+			ddmContent.getPrimaryKey(), ddmContent.getName(),
+			ddmContent.getDescription(), ddmContent.getData(), serviceContext);
+	}
+
+	@Override
 	public String getStorageType() {
 		return StorageType.JSON.toString();
 	}
@@ -57,7 +100,7 @@ public class JSONStorageAdapter extends BaseStorageAdapter {
 		DDMFormValues ddmFormValues =
 			FieldsToDDMFormValuesConverterUtil.convert(ddmStructure, fields);
 
-		return _doCreate(
+		return doCreate(
 			companyId, ddmStructureId, ddmFormValues, serviceContext);
 	}
 
@@ -73,6 +116,24 @@ public class JSONStorageAdapter extends BaseStorageAdapter {
 		throws Exception {
 
 		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	protected DDMFormValues doGetDDMFormValues(long classPK) throws Exception {
+		DDMContent ddmContent = DDMContentLocalServiceUtil.getContent(classPK);
+
+		DDMStorageLink ddmStorageLink =
+			DDMStorageLinkLocalServiceUtil.getClassStorageLink(
+				ddmContent.getPrimaryKey());
+
+		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.getStructure(
+			ddmStorageLink.getStructureId());
+
+		DDMFormValues ddmFormValues =
+			DDMFormValuesJSONDeserializerUtil.deserialize(
+				ddmStructure.getDDMForm(), ddmContent.getData());
+
+		return ddmFormValues;
 	}
 
 	@Override
@@ -137,78 +198,24 @@ public class JSONStorageAdapter extends BaseStorageAdapter {
 		DDMFormValues ddmFormValues =
 			FieldsToDDMFormValuesConverterUtil.convert(ddmStructure, fields);
 
-		_doUpdate(classPK, ddmFormValues, serviceContext);
+		doUpdate(classPK, ddmFormValues, serviceContext);
 	}
 
-	private long _doCreate(
-			long companyId, long ddmStructureId, DDMFormValues ddmFormValues,
-			ServiceContext serviceContext)
-		throws Exception {
+	private Fields _getFields(long classPK) throws Exception {
+		DDMStorageLink ddmStorageLink =
+			DDMStorageLinkLocalServiceUtil.getClassStorageLink(classPK);
 
-		long classNameId = PortalUtil.getClassNameId(
-			DDMContent.class.getName());
+		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.getStructure(
+			ddmStorageLink.getStructureId());
 
-		String serializedDDMFormValues =
-			DDMFormValuesJSONSerializerUtil.serialize(ddmFormValues);
+		DDMFormValues ddmFormValues = getDDMFormValues(classPK);
 
-		DDMContent ddmContent = DDMContentLocalServiceUtil.addContent(
-			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
-			DDMStorageLink.class.getName(), null, serializedDDMFormValues,
-			serviceContext);
-
-		DDMStorageLinkLocalServiceUtil.addStorageLink(
-			classNameId, ddmContent.getPrimaryKey(), ddmStructureId,
-			serviceContext);
-
-		return ddmContent.getPrimaryKey();
-	}
-
-	private void _doUpdate(
-			long classPK, DDMFormValues ddmFormValues,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		DDMContent ddmContent = DDMContentLocalServiceUtil.getContent(classPK);
-
-		ddmContent.setModifiedDate(serviceContext.getModifiedDate(null));
-
-		String serializedDDMFormValues =
-			DDMFormValuesJSONSerializerUtil.serialize(ddmFormValues);
-
-		ddmContent.setData(serializedDDMFormValues);
-
-		DDMContentLocalServiceUtil.updateContent(
-			ddmContent.getPrimaryKey(), ddmContent.getName(),
-			ddmContent.getDescription(), ddmContent.getData(), serviceContext);
-	}
-
-	private Fields _getFields(long classPK) throws StorageException {
-		try {
-			DDMContent ddmContent = DDMContentLocalServiceUtil.getContent(
-				classPK);
-
-			DDMStorageLink ddmStorageLink =
-				DDMStorageLinkLocalServiceUtil.getClassStorageLink(
-					ddmContent.getPrimaryKey());
-
-			DDMStructure ddmStructure =
-				DDMStructureLocalServiceUtil.getStructure(
-					ddmStorageLink.getStructureId());
-
-			DDMFormValues ddmFormValues =
-				DDMFormValuesJSONDeserializerUtil.deserialize(
-					ddmContent.getData());
-
-			return DDMFormValuesToFieldsConverterUtil.convert(
-				ddmStructure, ddmFormValues);
-		}
-		catch (Exception e) {
-			throw new StorageException(e);
-		}
+		return DDMFormValuesToFieldsConverterUtil.convert(
+			ddmStructure, ddmFormValues);
 	}
 
 	private Fields _getFields(long classPK, List<String> fieldNames)
-		throws StorageException {
+		throws Exception {
 
 		Fields fields = _getFields(classPK);
 

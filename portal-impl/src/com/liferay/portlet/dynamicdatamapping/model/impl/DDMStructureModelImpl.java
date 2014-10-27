@@ -89,13 +89,14 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 			{ "parentStructureId", Types.BIGINT },
 			{ "classNameId", Types.BIGINT },
 			{ "structureKey", Types.VARCHAR },
+			{ "version", Types.VARCHAR },
 			{ "name", Types.VARCHAR },
 			{ "description", Types.VARCHAR },
 			{ "definition", Types.CLOB },
 			{ "storageType", Types.VARCHAR },
 			{ "type_", Types.INTEGER }
 		};
-	public static final String TABLE_SQL_CREATE = "create table DDMStructure (uuid_ VARCHAR(75) null,structureId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentStructureId LONG,classNameId LONG,structureKey VARCHAR(75) null,name STRING null,description STRING null,definition TEXT null,storageType VARCHAR(75) null,type_ INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table DDMStructure (uuid_ VARCHAR(75) null,structureId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentStructureId LONG,classNameId LONG,structureKey VARCHAR(75) null,version VARCHAR(75) null,name STRING null,description STRING null,definition TEXT null,storageType VARCHAR(75) null,type_ INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table DDMStructure";
 	public static final String ORDER_BY_JPQL = " ORDER BY ddmStructure.structureId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY DDMStructure.structureId ASC";
@@ -145,6 +146,7 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 		model.setParentStructureId(soapModel.getParentStructureId());
 		model.setClassNameId(soapModel.getClassNameId());
 		model.setStructureKey(soapModel.getStructureKey());
+		model.setVersion(soapModel.getVersion());
 		model.setName(soapModel.getName());
 		model.setDescription(soapModel.getDescription());
 		model.setDefinition(soapModel.getDefinition());
@@ -250,6 +252,7 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 		attributes.put("parentStructureId", getParentStructureId());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("structureKey", getStructureKey());
+		attributes.put("version", getVersion());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
 		attributes.put("definition", getDefinition());
@@ -328,6 +331,12 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 
 		if (structureKey != null) {
 			setStructureKey(structureKey);
+		}
+
+		String version = (String)attributes.get("version");
+
+		if (version != null) {
+			setVersion(version);
 		}
 
 		String name = (String)attributes.get("name");
@@ -597,6 +606,22 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 
 	public String getOriginalStructureKey() {
 		return GetterUtil.getString(_originalStructureKey);
+	}
+
+	@JSON
+	@Override
+	public String getVersion() {
+		if (_version == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _version;
+		}
+	}
+
+	@Override
+	public void setVersion(String version) {
+		_version = version;
 	}
 
 	@JSON
@@ -1010,6 +1035,7 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 		ddmStructureImpl.setParentStructureId(getParentStructureId());
 		ddmStructureImpl.setClassNameId(getClassNameId());
 		ddmStructureImpl.setStructureKey(getStructureKey());
+		ddmStructureImpl.setVersion(getVersion());
 		ddmStructureImpl.setName(getName());
 		ddmStructureImpl.setDescription(getDescription());
 		ddmStructureImpl.setDefinition(getDefinition());
@@ -1166,6 +1192,14 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 			ddmStructureCacheModel.structureKey = null;
 		}
 
+		ddmStructureCacheModel.version = getVersion();
+
+		String version = ddmStructureCacheModel.version;
+
+		if ((version != null) && (version.length() == 0)) {
+			ddmStructureCacheModel.version = null;
+		}
+
 		ddmStructureCacheModel.name = getName();
 
 		String name = ddmStructureCacheModel.name;
@@ -1209,7 +1243,7 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1233,6 +1267,8 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 		sb.append(getClassNameId());
 		sb.append(", structureKey=");
 		sb.append(getStructureKey());
+		sb.append(", version=");
+		sb.append(getVersion());
 		sb.append(", name=");
 		sb.append(getName());
 		sb.append(", description=");
@@ -1250,7 +1286,7 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(52);
+		StringBundler sb = new StringBundler(55);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.dynamicdatamapping.model.DDMStructure");
@@ -1299,6 +1335,10 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 		sb.append(
 			"<column><column-name>structureKey</column-name><column-value><![CDATA[");
 		sb.append(getStructureKey());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>version</column-name><column-value><![CDATA[");
+		sb.append(getVersion());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>name</column-name><column-value><![CDATA[");
@@ -1351,6 +1391,7 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 	private boolean _setOriginalClassNameId;
 	private String _structureKey;
 	private String _originalStructureKey;
+	private String _version;
 	private String _name;
 	private String _nameCurrentLanguageId;
 	private String _originalName;

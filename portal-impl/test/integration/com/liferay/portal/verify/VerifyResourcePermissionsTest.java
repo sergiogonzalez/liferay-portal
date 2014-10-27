@@ -29,7 +29,7 @@ import org.junit.runner.RunWith;
  */
 @ExecutionTestListeners(listeners = {MainServletExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
-public class VerifyResourcePermissionsTest extends BaseVerifyTestCase {
+public class VerifyResourcePermissionsTest extends BaseVerifyProcessTestCase {
 
 	@Test
 	public void testVerifyMoreThanOneCompany() throws Exception {

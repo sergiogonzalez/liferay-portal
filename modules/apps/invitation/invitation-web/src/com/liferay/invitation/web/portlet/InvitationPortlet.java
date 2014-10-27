@@ -14,7 +14,7 @@
 
 package com.liferay.invitation.web.portlet;
 
-import com.liferay.invitation.web.upgrade.InvitationUpgrade;
+import com.liferay.invitation.web.upgrade.InvitationWebUpgrade;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 import javax.portlet.Portlet;
@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
  * @author Peter Fellwock
-*/
+ */
 @Component(
 	immediate = true,
 	property = {
@@ -51,7 +51,8 @@ import org.osgi.service.component.annotations.Reference;
 public class InvitationPortlet extends MVCPortlet {
 
 	@Reference(unbind = "-")
-	protected void setInvitationUpgrade(InvitationUpgrade invitationUpgrade) {
+	protected void setInvitationWebUpgrade(
+		InvitationWebUpgrade invitationWebUpgrade) {
 	}
 
 }

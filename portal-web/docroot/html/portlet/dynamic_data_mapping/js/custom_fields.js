@@ -194,6 +194,21 @@ AUI.add(
 						);
 					},
 
+					_syncElementsFocus: function() {
+						var instance = this;
+
+						var boundingBox = instance.toolbar.get('boundingBox');
+
+						var button = boundingBox.one('button');
+
+						if (button) {
+							button.focus();
+						}
+						else {
+							DLFileEntryCellEditor.superclass._syncElementsFocus.apply(instance, arguments);
+						}
+					},
+
 					_syncFileLabel: function(title, url) {
 						var instance = this;
 
@@ -929,7 +944,18 @@ AUI.add(
 										attributeName: attributeName,
 										editor: new A.DateCellEditor(
 											{
-												dateFormat: '%m/%d/%Y'
+												dateFormat: '%m/%d/%Y',
+												inputFormatter: function(val) {
+													var instance = this;
+
+													var value = STR_BLANK;
+
+													if (val && val.length) {
+														value = instance.formatDate(val[0]);
+													}
+
+													return value;
+												}
 											}
 										),
 										name: Liferay.Language.get('predefined-value')

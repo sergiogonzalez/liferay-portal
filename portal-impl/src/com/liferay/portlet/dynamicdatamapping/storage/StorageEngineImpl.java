@@ -33,6 +33,19 @@ public class StorageEngineImpl implements StorageEngine {
 
 	@Override
 	public long create(
+			long companyId, long ddmStructureId, DDMFormValues ddmFormValues,
+			ServiceContext serviceContext)
+		throws StorageException {
+
+		StorageAdapter storageAdapter = getStructureStorageAdapter(
+			ddmStructureId);
+
+		return storageAdapter.create(
+			companyId, ddmStructureId, ddmFormValues, serviceContext);
+	}
+
+	@Override
+	public long create(
 			long companyId, long ddmStructureId, Fields fields,
 			ServiceContext serviceContext)
 		throws StorageException {
@@ -59,6 +72,15 @@ public class StorageEngineImpl implements StorageEngine {
 			ddmStructureId);
 
 		storageAdapter.deleteByDDMStructure(ddmStructureId);
+	}
+
+	@Override
+	public DDMFormValues getDDMFormValues(long classPK)
+		throws StorageException {
+
+		StorageAdapter storageAdapter = getClassStorageAdapter(classPK);
+
+		return storageAdapter.getDDMFormValues(classPK);
 	}
 
 	@Override
@@ -173,6 +195,17 @@ public class StorageEngineImpl implements StorageEngine {
 			ddmStructureId);
 
 		return storageAdapter.queryCount(ddmStructureId, condition);
+	}
+
+	@Override
+	public void update(
+			long classPK, DDMFormValues ddmFormValues,
+			ServiceContext serviceContext)
+		throws StorageException {
+
+		StorageAdapter storageAdapter = getClassStorageAdapter(classPK);
+
+		storageAdapter.update(classPK, ddmFormValues, serviceContext);
 	}
 
 	@Override

@@ -309,34 +309,6 @@ public interface PropsKeys {
 
 	public static final String BLOGS_TRACKBACK_ENABLED = "blogs.trackback.enabled";
 
-	public static final String BOOKMARKS_EMAIL_ENTRY_ADDED_BODY = "bookmarks.email.entry.added.body";
-
-	public static final String BOOKMARKS_EMAIL_ENTRY_ADDED_ENABLED = "bookmarks.email.entry.added.enabled";
-
-	public static final String BOOKMARKS_EMAIL_ENTRY_ADDED_SUBJECT = "bookmarks.email.entry.added.subject";
-
-	public static final String BOOKMARKS_EMAIL_ENTRY_UPDATED_BODY = "bookmarks.email.entry.updated.body";
-
-	public static final String BOOKMARKS_EMAIL_ENTRY_UPDATED_ENABLED = "bookmarks.email.entry.updated.enabled";
-
-	public static final String BOOKMARKS_EMAIL_ENTRY_UPDATED_SUBJECT = "bookmarks.email.entry.updated.subject";
-
-	public static final String BOOKMARKS_EMAIL_FROM_ADDRESS = "bookmarks.email.from.address";
-
-	public static final String BOOKMARKS_EMAIL_FROM_NAME = "bookmarks.email.from.name";
-
-	public static final String BOOKMARKS_ENTRY_COLUMNS = "bookmarks.entry.columns";
-
-	public static final String BOOKMARKS_FOLDER_COLUMNS = "bookmarks.folder.columns";
-
-	public static final String BOOKMARKS_FOLDERS_SEARCH_VISIBLE = "bookmarks.folders.search.visible";
-
-	public static final String BOOKMARKS_PUBLISH_TO_LIVE_BY_DEFAULT = "bookmarks.publish.to.live.by.default";
-
-	public static final String BOOKMARKS_RELATED_ASSETS_ENABLED = "bookmarks.related.assets.enabled";
-
-	public static final String BOOKMARKS_SUBFOLDERS_VISIBLE = "bookmarks.subfolders.visible";
-
 	public static final String BREADCRUMB_DISPLAY_STYLE_DEFAULT = "breadcrumb.display.style.default";
 
 	public static final String BREADCRUMB_DISPLAY_STYLE_OPTIONS = "breadcrumb.display.style.options";
@@ -2114,6 +2086,10 @@ public interface PropsKeys {
 	public static final String PORTLET_EVENT_DISTRIBUTION = "portlet.event.distribution";
 
 	public static final String PORTLET_FILTERS_SYSTEM = "portlet.filters.system";
+
+	public static final String PORTLET_INTERRUPTED_REQUEST_WHITELIST = "portlet.interrupted.request.whitelist";
+
+	public static final String PORTLET_INTERRUPTED_REQUEST_WHITELIST_ACTIONS = "portlet.interrupted.request.whitelist.actions";
 
 	public static final String PORTLET_PUBLIC_RENDER_PARAMETER_DISTRIBUTION = "portlet.public.render.parameter.distribution";
 

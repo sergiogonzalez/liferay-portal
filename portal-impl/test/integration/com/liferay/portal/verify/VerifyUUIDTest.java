@@ -30,7 +30,7 @@ import org.junit.runner.RunWith;
  */
 @ExecutionTestListeners(listeners = {MainServletExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
-public class VerifyUUIDTest extends BaseVerifyTestCase {
+public class VerifyUUIDTest extends BaseVerifyProcessTestCase {
 
 	@Test
 	public void testVerifyModel() throws Exception {

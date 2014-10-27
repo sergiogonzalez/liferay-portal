@@ -161,20 +161,6 @@ if (feed != null) {
 	<liferay-ui:panel-container extended="<%= true %>" id="journalFeedSettingsPanelContainer" persistState="<%= true %>">
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="journalFeedConstraintsPanel" persistState="<%= true %>" title="web-content-contraints">
 			<aui:fieldset>
-				<aui:select label="web-content-type" name="type" showEmptyOption="<%= true %>">
-
-					<%
-					for (String curType : JournalArticleConstants.TYPES) {
-					%>
-
-						<aui:option label="<%= curType %>" />
-
-					<%
-					}
-					%>
-
-				</aui:select>
-
 				<div class="form-group">
 					<aui:input name="structureId" required="<%= true %>" type="hidden" value="<%= structureId %>" />
 
@@ -387,44 +373,32 @@ if (feed != null) {
 		submitForm(document.<portlet:namespace />fm);
 	}
 
-	function <portlet:namespace />selectRendererTemplate(rendererTemplateId) {
-		document.<portlet:namespace />fm.<portlet:namespace />rendererTemplateId.value = rendererTemplateId;
-	}
-
-	function <portlet:namespace />selectTemplate(structureId, templateId, dialog) {
-		if (confirm('<%= UnicodeLanguageUtil.get(request, "selecting-a-template-will-change-the-structure,-available-input-fields,-and-available-templates") %>')) {
-			document.<portlet:namespace />fm.<portlet:namespace />structureId.value = structureId;
-			document.<portlet:namespace />fm.<portlet:namespace />templateId.value = templateId;
-
-			if (dialog) {
-				dialog.hide();
-			}
-
-			submitForm(document.<portlet:namespace />fm);
-		}
-	}
-
-	Liferay.Util.disableToggleBoxes('<portlet:namespace />autoFeedId','<portlet:namespace />newFeedId', true);
+	Liferay.Util.disableToggleBoxes('<portlet:namespace />autoFeedId', '<portlet:namespace />newFeedId', true);
 </aui:script>
 
-<aui:script use="aui-base,aui-selector">
-	var feedItemContentSelector = A.one('select#<portlet:namespace />contentFieldSelector');
+<aui:script sandbox="<%= true %>">
+	var form = $(document.<portlet:namespace />fm);
 
-	var changeFeedItemContent = function() {
-		var selectedFeedItemOption = feedItemContentSelector.one(':selected');
+	var contentFieldSelector = form.fm('contentFieldSelector');
 
-		var data = selectedFeedItemOption.attr('data-contentField');
-		var value = selectedFeedItemOption.attr('value');
+	contentFieldSelector.on(
+		'change',
+		function() {
+			var rendererTemplateIdValue = '';
 
-		if (data === '<%= JournalFeedConstants.RENDERED_WEB_CONTENT %>') {
-			document.<portlet:namespace />fm.<portlet:namespace />rendererTemplateId.value = value;
-			document.<portlet:namespace />fm.<portlet:namespace />contentField.value = '<%= JournalFeedConstants.RENDERED_WEB_CONTENT %>';
+			var selectedFeedItemOption = contentFieldSelector.find(':selected');
+
+			var contentFieldValue = selectedFeedItemOption.val();
+
+			var renderedWebContent = '<%= JournalFeedConstants.RENDERED_WEB_CONTENT %>';
+
+			if (selectedFeedItemOption.data('contentfield') === renderedWebContent) {
+				contentFieldValue = renderedWebContent;
+				rendererTemplateIdValue = contentFieldValue;
+			}
+
+			form.fm('contentField').val(contentFieldValue);
+			form.fm('rendererTemplateId').val(rendererTemplateIdValue);
 		}
-		else {
-			document.<portlet:namespace />fm.<portlet:namespace />rendererTemplateId.value = '';
-			document.<portlet:namespace />fm.<portlet:namespace />contentField.value = value;
-		}
-	}
-
-	feedItemContentSelector.on('change', changeFeedItemContent);
+	);
 </aui:script>

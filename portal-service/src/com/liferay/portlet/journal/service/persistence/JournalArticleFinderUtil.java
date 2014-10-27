@@ -27,13 +27,13 @@ public class JournalArticleFinderUtil {
 	public static int countByKeywords(long companyId, long groupId,
 		java.util.List<java.lang.Long> folderIds, long classNameId,
 		java.lang.String keywords, java.lang.Double version,
-		java.lang.String type, java.lang.String ddmStructureKey,
-		java.lang.String ddmTemplateKey, java.util.Date displayDateGT,
-		java.util.Date displayDateLT, int status, java.util.Date reviewDate) {
+		java.lang.String ddmStructureKey, java.lang.String ddmTemplateKey,
+		java.util.Date displayDateGT, java.util.Date displayDateLT, int status,
+		java.util.Date reviewDate) {
 		return getFinder()
 				   .countByKeywords(companyId, groupId, folderIds, classNameId,
-			keywords, version, type, ddmStructureKey, ddmTemplateKey,
-			displayDateGT, displayDateLT, status, reviewDate);
+			keywords, version, ddmStructureKey, ddmTemplateKey, displayDateGT,
+			displayDateLT, status, reviewDate);
 	}
 
 	public static int countByG_F(long groupId,
@@ -58,66 +58,65 @@ public class JournalArticleFinderUtil {
 			queryDefinition);
 	}
 
-	public static int countByC_G_F_C_A_V_T_D_C_T_S_T_D_R(long companyId,
+	public static int countByC_G_F_C_A_V_T_D_C_S_T_D_R(long companyId,
 		long groupId, java.util.List<java.lang.Long> folderIds,
 		long classNameId, java.lang.String articleId, java.lang.Double version,
 		java.lang.String title, java.lang.String description,
-		java.lang.String content, java.lang.String type,
-		java.lang.String ddmStructureKey, java.lang.String ddmTemplateKey,
-		java.util.Date displayDateGT, java.util.Date displayDateLT,
-		java.util.Date reviewDate, boolean andOperator,
+		java.lang.String content, java.lang.String ddmStructureKey,
+		java.lang.String ddmTemplateKey, java.util.Date displayDateGT,
+		java.util.Date displayDateLT, java.util.Date reviewDate,
+		boolean andOperator,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.portlet.journal.model.JournalArticle> queryDefinition) {
 		return getFinder()
-				   .countByC_G_F_C_A_V_T_D_C_T_S_T_D_R(companyId, groupId,
+				   .countByC_G_F_C_A_V_T_D_C_S_T_D_R(companyId, groupId,
 			folderIds, classNameId, articleId, version, title, description,
-			content, type, ddmStructureKey, ddmTemplateKey, displayDateGT,
+			content, ddmStructureKey, ddmTemplateKey, displayDateGT,
 			displayDateLT, reviewDate, andOperator, queryDefinition);
 	}
 
-	public static int countByC_G_F_C_A_V_T_D_C_T_S_T_D_R(long companyId,
+	public static int countByC_G_F_C_A_V_T_D_C_S_T_D_R(long companyId,
 		long groupId, java.util.List<java.lang.Long> folderIds,
 		long classNameId, java.lang.String articleId, java.lang.Double version,
 		java.lang.String title, java.lang.String description,
-		java.lang.String content, java.lang.String type,
+		java.lang.String content, java.lang.String[] ddmStructureKeys,
+		java.lang.String[] ddmTemplateKeys, java.util.Date displayDateGT,
+		java.util.Date displayDateLT, java.util.Date reviewDate,
+		boolean andOperator,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.portlet.journal.model.JournalArticle> queryDefinition) {
+		return getFinder()
+				   .countByC_G_F_C_A_V_T_D_C_S_T_D_R(companyId, groupId,
+			folderIds, classNameId, articleId, version, title, description,
+			content, ddmStructureKeys, ddmTemplateKeys, displayDateGT,
+			displayDateLT, reviewDate, andOperator, queryDefinition);
+	}
+
+	public static int countByC_G_F_C_A_V_T_D_C_S_T_D_R(long companyId,
+		long groupId, java.util.List<java.lang.Long> folderIds,
+		long classNameId, java.lang.String[] articleIds,
+		java.lang.Double version, java.lang.String[] titles,
+		java.lang.String[] descriptions, java.lang.String[] contents,
 		java.lang.String[] ddmStructureKeys,
 		java.lang.String[] ddmTemplateKeys, java.util.Date displayDateGT,
 		java.util.Date displayDateLT, java.util.Date reviewDate,
 		boolean andOperator,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.portlet.journal.model.JournalArticle> queryDefinition) {
 		return getFinder()
-				   .countByC_G_F_C_A_V_T_D_C_T_S_T_D_R(companyId, groupId,
-			folderIds, classNameId, articleId, version, title, description,
-			content, type, ddmStructureKeys, ddmTemplateKeys, displayDateGT,
-			displayDateLT, reviewDate, andOperator, queryDefinition);
-	}
-
-	public static int countByC_G_F_C_A_V_T_D_C_T_S_T_D_R(long companyId,
-		long groupId, java.util.List<java.lang.Long> folderIds,
-		long classNameId, java.lang.String[] articleIds,
-		java.lang.Double version, java.lang.String[] titles,
-		java.lang.String[] descriptions, java.lang.String[] contents,
-		java.lang.String type, java.lang.String[] ddmStructureKeys,
-		java.lang.String[] ddmTemplateKeys, java.util.Date displayDateGT,
-		java.util.Date displayDateLT, java.util.Date reviewDate,
-		boolean andOperator,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.portlet.journal.model.JournalArticle> queryDefinition) {
-		return getFinder()
-				   .countByC_G_F_C_A_V_T_D_C_T_S_T_D_R(companyId, groupId,
+				   .countByC_G_F_C_A_V_T_D_C_S_T_D_R(companyId, groupId,
 			folderIds, classNameId, articleIds, version, titles, descriptions,
-			contents, type, ddmStructureKeys, ddmTemplateKeys, displayDateGT,
+			contents, ddmStructureKeys, ddmTemplateKeys, displayDateGT,
 			displayDateLT, reviewDate, andOperator, queryDefinition);
 	}
 
 	public static int filterCountByKeywords(long companyId, long groupId,
 		java.util.List<java.lang.Long> folderIds, long classNameId,
 		java.lang.String keywords, java.lang.Double version,
-		java.lang.String type, java.lang.String ddmStructureKey,
-		java.lang.String ddmTemplateKey, java.util.Date displayDateGT,
-		java.util.Date displayDateLT, int status, java.util.Date reviewDate) {
+		java.lang.String ddmStructureKey, java.lang.String ddmTemplateKey,
+		java.util.Date displayDateGT, java.util.Date displayDateLT, int status,
+		java.util.Date reviewDate) {
 		return getFinder()
 				   .filterCountByKeywords(companyId, groupId, folderIds,
-			classNameId, keywords, version, type, ddmStructureKey,
-			ddmTemplateKey, displayDateGT, displayDateLT, status, reviewDate);
+			classNameId, keywords, version, ddmStructureKey, ddmTemplateKey,
+			displayDateGT, displayDateLT, status, reviewDate);
 	}
 
 	public static int filterCountByG_F(long groupId,
@@ -142,72 +141,67 @@ public class JournalArticleFinderUtil {
 			classNameId, queryDefinition);
 	}
 
-	public static int filterCountByC_G_F_C_A_V_T_D_C_T_S_T_D_R(long companyId,
+	public static int filterCountByC_G_F_C_A_V_T_D_C_S_T_D_R(long companyId,
 		long groupId, java.util.List<java.lang.Long> folderIds,
 		long classNameId, java.lang.String articleId, java.lang.Double version,
 		java.lang.String title, java.lang.String description,
-		java.lang.String content, java.lang.String type,
-		java.lang.String ddmStructureKey, java.lang.String ddmTemplateKey,
-		java.util.Date displayDateGT, java.util.Date displayDateLT,
-		java.util.Date reviewDate, boolean andOperator,
+		java.lang.String content, java.lang.String ddmStructureKey,
+		java.lang.String ddmTemplateKey, java.util.Date displayDateGT,
+		java.util.Date displayDateLT, java.util.Date reviewDate,
+		boolean andOperator,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.portlet.journal.model.JournalArticle> queryDefinition) {
 		return getFinder()
-				   .filterCountByC_G_F_C_A_V_T_D_C_T_S_T_D_R(companyId,
-			groupId, folderIds, classNameId, articleId, version, title,
-			description, content, type, ddmStructureKey, ddmTemplateKey,
-			displayDateGT, displayDateLT, reviewDate, andOperator,
-			queryDefinition);
+				   .filterCountByC_G_F_C_A_V_T_D_C_S_T_D_R(companyId, groupId,
+			folderIds, classNameId, articleId, version, title, description,
+			content, ddmStructureKey, ddmTemplateKey, displayDateGT,
+			displayDateLT, reviewDate, andOperator, queryDefinition);
 	}
 
-	public static int filterCountByC_G_F_C_A_V_T_D_C_T_S_T_D_R(long companyId,
+	public static int filterCountByC_G_F_C_A_V_T_D_C_S_T_D_R(long companyId,
 		long groupId, java.util.List<java.lang.Long> folderIds,
 		long classNameId, java.lang.String articleId, java.lang.Double version,
 		java.lang.String title, java.lang.String description,
-		java.lang.String content, java.lang.String type,
+		java.lang.String content, java.lang.String[] ddmStructureKeys,
+		java.lang.String[] ddmTemplateKeys, java.util.Date displayDateGT,
+		java.util.Date displayDateLT, java.util.Date reviewDate,
+		boolean andOperator,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.portlet.journal.model.JournalArticle> queryDefinition) {
+		return getFinder()
+				   .filterCountByC_G_F_C_A_V_T_D_C_S_T_D_R(companyId, groupId,
+			folderIds, classNameId, articleId, version, title, description,
+			content, ddmStructureKeys, ddmTemplateKeys, displayDateGT,
+			displayDateLT, reviewDate, andOperator, queryDefinition);
+	}
+
+	public static int filterCountByC_G_F_C_A_V_T_D_C_S_T_D_R(long companyId,
+		long groupId, java.util.List<java.lang.Long> folderIds,
+		long classNameId, java.lang.String[] articleIds,
+		java.lang.Double version, java.lang.String[] titles,
+		java.lang.String[] descriptions, java.lang.String[] contents,
 		java.lang.String[] ddmStructureKeys,
 		java.lang.String[] ddmTemplateKeys, java.util.Date displayDateGT,
 		java.util.Date displayDateLT, java.util.Date reviewDate,
 		boolean andOperator,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.portlet.journal.model.JournalArticle> queryDefinition) {
 		return getFinder()
-				   .filterCountByC_G_F_C_A_V_T_D_C_T_S_T_D_R(companyId,
-			groupId, folderIds, classNameId, articleId, version, title,
-			description, content, type, ddmStructureKeys, ddmTemplateKeys,
-			displayDateGT, displayDateLT, reviewDate, andOperator,
-			queryDefinition);
-	}
-
-	public static int filterCountByC_G_F_C_A_V_T_D_C_T_S_T_D_R(long companyId,
-		long groupId, java.util.List<java.lang.Long> folderIds,
-		long classNameId, java.lang.String[] articleIds,
-		java.lang.Double version, java.lang.String[] titles,
-		java.lang.String[] descriptions, java.lang.String[] contents,
-		java.lang.String type, java.lang.String[] ddmStructureKeys,
-		java.lang.String[] ddmTemplateKeys, java.util.Date displayDateGT,
-		java.util.Date displayDateLT, java.util.Date reviewDate,
-		boolean andOperator,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.portlet.journal.model.JournalArticle> queryDefinition) {
-		return getFinder()
-				   .filterCountByC_G_F_C_A_V_T_D_C_T_S_T_D_R(companyId,
-			groupId, folderIds, classNameId, articleIds, version, titles,
-			descriptions, contents, type, ddmStructureKeys, ddmTemplateKeys,
-			displayDateGT, displayDateLT, reviewDate, andOperator,
-			queryDefinition);
+				   .filterCountByC_G_F_C_A_V_T_D_C_S_T_D_R(companyId, groupId,
+			folderIds, classNameId, articleIds, version, titles, descriptions,
+			contents, ddmStructureKeys, ddmTemplateKeys, displayDateGT,
+			displayDateLT, reviewDate, andOperator, queryDefinition);
 	}
 
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByKeywords(
 		long companyId, long groupId, java.util.List<java.lang.Long> folderIds,
 		long classNameId, java.lang.String keywords, java.lang.Double version,
-		java.lang.String type, java.lang.String ddmStructureKey,
-		java.lang.String ddmTemplateKey, java.util.Date displayDateGT,
-		java.util.Date displayDateLT, int status, java.util.Date reviewDate,
-		int start, int end,
+		java.lang.String ddmStructureKey, java.lang.String ddmTemplateKey,
+		java.util.Date displayDateGT, java.util.Date displayDateLT, int status,
+		java.util.Date reviewDate, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getFinder()
 				   .filterFindByKeywords(companyId, groupId, folderIds,
-			classNameId, keywords, version, type, ddmStructureKey,
-			ddmTemplateKey, displayDateGT, displayDateLT, status, reviewDate,
-			start, end, orderByComparator);
+			classNameId, keywords, version, ddmStructureKey, ddmTemplateKey,
+			displayDateGT, displayDateLT, status, reviewDate, start, end,
+			orderByComparator);
 	}
 
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByG_F(
@@ -233,53 +227,52 @@ public class JournalArticleFinderUtil {
 			classNameId, queryDefinition);
 	}
 
-	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByC_G_F_C_A_V_T_D_C_T_S_T_D_R(
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByC_G_F_C_A_V_T_D_C_S_T_D_R(
 		long companyId, long groupId, java.util.List<java.lang.Long> folderIds,
 		long classNameId, java.lang.String articleId, java.lang.Double version,
 		java.lang.String title, java.lang.String description,
-		java.lang.String content, java.lang.String type,
-		java.lang.String ddmStructureKey, java.lang.String ddmTemplateKey,
-		java.util.Date displayDateGT, java.util.Date displayDateLT,
-		java.util.Date reviewDate, boolean andOperator,
+		java.lang.String content, java.lang.String ddmStructureKey,
+		java.lang.String ddmTemplateKey, java.util.Date displayDateGT,
+		java.util.Date displayDateLT, java.util.Date reviewDate,
+		boolean andOperator,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.portlet.journal.model.JournalArticle> queryDefinition) {
 		return getFinder()
-				   .filterFindByC_G_F_C_A_V_T_D_C_T_S_T_D_R(companyId, groupId,
+				   .filterFindByC_G_F_C_A_V_T_D_C_S_T_D_R(companyId, groupId,
 			folderIds, classNameId, articleId, version, title, description,
-			content, type, ddmStructureKey, ddmTemplateKey, displayDateGT,
+			content, ddmStructureKey, ddmTemplateKey, displayDateGT,
 			displayDateLT, reviewDate, andOperator, queryDefinition);
 	}
 
-	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByC_G_F_C_A_V_T_D_C_T_S_T_D_R(
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByC_G_F_C_A_V_T_D_C_S_T_D_R(
 		long companyId, long groupId, java.util.List<java.lang.Long> folderIds,
 		long classNameId, java.lang.String articleId, java.lang.Double version,
 		java.lang.String title, java.lang.String description,
-		java.lang.String content, java.lang.String type,
+		java.lang.String content, java.lang.String[] ddmStructureKeys,
+		java.lang.String[] ddmTemplateKeys, java.util.Date displayDateGT,
+		java.util.Date displayDateLT, java.util.Date reviewDate,
+		boolean andOperator,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.portlet.journal.model.JournalArticle> queryDefinition) {
+		return getFinder()
+				   .filterFindByC_G_F_C_A_V_T_D_C_S_T_D_R(companyId, groupId,
+			folderIds, classNameId, articleId, version, title, description,
+			content, ddmStructureKeys, ddmTemplateKeys, displayDateGT,
+			displayDateLT, reviewDate, andOperator, queryDefinition);
+	}
+
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByC_G_F_C_A_V_T_D_C_S_T_D_R(
+		long companyId, long groupId, java.util.List<java.lang.Long> folderIds,
+		long classNameId, java.lang.String[] articleIds,
+		java.lang.Double version, java.lang.String[] titles,
+		java.lang.String[] descriptions, java.lang.String[] contents,
 		java.lang.String[] ddmStructureKeys,
 		java.lang.String[] ddmTemplateKeys, java.util.Date displayDateGT,
 		java.util.Date displayDateLT, java.util.Date reviewDate,
 		boolean andOperator,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.portlet.journal.model.JournalArticle> queryDefinition) {
 		return getFinder()
-				   .filterFindByC_G_F_C_A_V_T_D_C_T_S_T_D_R(companyId, groupId,
-			folderIds, classNameId, articleId, version, title, description,
-			content, type, ddmStructureKeys, ddmTemplateKeys, displayDateGT,
-			displayDateLT, reviewDate, andOperator, queryDefinition);
-	}
-
-	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByC_G_F_C_A_V_T_D_C_T_S_T_D_R(
-		long companyId, long groupId, java.util.List<java.lang.Long> folderIds,
-		long classNameId, java.lang.String[] articleIds,
-		java.lang.Double version, java.lang.String[] titles,
-		java.lang.String[] descriptions, java.lang.String[] contents,
-		java.lang.String type, java.lang.String[] ddmStructureKeys,
-		java.lang.String[] ddmTemplateKeys, java.util.Date displayDateGT,
-		java.util.Date displayDateLT, java.util.Date reviewDate,
-		boolean andOperator,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.portlet.journal.model.JournalArticle> queryDefinition) {
-		return getFinder()
-				   .filterFindByC_G_F_C_A_V_T_D_C_T_S_T_D_R(companyId, groupId,
+				   .filterFindByC_G_F_C_A_V_T_D_C_S_T_D_R(companyId, groupId,
 			folderIds, classNameId, articleIds, version, titles, descriptions,
-			contents, type, ddmStructureKeys, ddmTemplateKeys, displayDateGT,
+			contents, ddmStructureKeys, ddmTemplateKeys, displayDateGT,
 			displayDateLT, reviewDate, andOperator, queryDefinition);
 	}
 
@@ -294,16 +287,14 @@ public class JournalArticleFinderUtil {
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByKeywords(
 		long companyId, long groupId, java.util.List<java.lang.Long> folderIds,
 		long classNameId, java.lang.String keywords, java.lang.Double version,
-		java.lang.String type, java.lang.String ddmStructureKey,
-		java.lang.String ddmTemplateKey, java.util.Date displayDateGT,
-		java.util.Date displayDateLT, int status, java.util.Date reviewDate,
-		int start, int end,
+		java.lang.String ddmStructureKey, java.lang.String ddmTemplateKey,
+		java.util.Date displayDateGT, java.util.Date displayDateLT, int status,
+		java.util.Date reviewDate, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.journal.model.JournalArticle> orderByComparator) {
 		return getFinder()
 				   .findByKeywords(companyId, groupId, folderIds, classNameId,
-			keywords, version, type, ddmStructureKey, ddmTemplateKey,
-			displayDateGT, displayDateLT, status, reviewDate, start, end,
-			orderByComparator);
+			keywords, version, ddmStructureKey, ddmTemplateKey, displayDateGT,
+			displayDateLT, status, reviewDate, start, end, orderByComparator);
 	}
 
 	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByReviewDate(
@@ -342,53 +333,52 @@ public class JournalArticleFinderUtil {
 			queryDefinition);
 	}
 
-	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByC_G_F_C_A_V_T_D_C_T_S_T_D_R(
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByC_G_F_C_A_V_T_D_C_S_T_D_R(
 		long companyId, long groupId, java.util.List<java.lang.Long> folderIds,
 		long classNameId, java.lang.String articleId, java.lang.Double version,
 		java.lang.String title, java.lang.String description,
-		java.lang.String content, java.lang.String type,
-		java.lang.String ddmStructureKey, java.lang.String ddmTemplateKey,
-		java.util.Date displayDateGT, java.util.Date displayDateLT,
-		java.util.Date reviewDate, boolean andOperator,
+		java.lang.String content, java.lang.String ddmStructureKey,
+		java.lang.String ddmTemplateKey, java.util.Date displayDateGT,
+		java.util.Date displayDateLT, java.util.Date reviewDate,
+		boolean andOperator,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.portlet.journal.model.JournalArticle> queryDefinition) {
 		return getFinder()
-				   .findByC_G_F_C_A_V_T_D_C_T_S_T_D_R(companyId, groupId,
+				   .findByC_G_F_C_A_V_T_D_C_S_T_D_R(companyId, groupId,
 			folderIds, classNameId, articleId, version, title, description,
-			content, type, ddmStructureKey, ddmTemplateKey, displayDateGT,
+			content, ddmStructureKey, ddmTemplateKey, displayDateGT,
 			displayDateLT, reviewDate, andOperator, queryDefinition);
 	}
 
-	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByC_G_F_C_A_V_T_D_C_T_S_T_D_R(
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByC_G_F_C_A_V_T_D_C_S_T_D_R(
 		long companyId, long groupId, java.util.List<java.lang.Long> folderIds,
 		long classNameId, java.lang.String articleId, java.lang.Double version,
 		java.lang.String title, java.lang.String description,
-		java.lang.String content, java.lang.String type,
+		java.lang.String content, java.lang.String[] ddmStructureKeys,
+		java.lang.String[] ddmTemplateKeys, java.util.Date displayDateGT,
+		java.util.Date displayDateLT, java.util.Date reviewDate,
+		boolean andOperator,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.portlet.journal.model.JournalArticle> queryDefinition) {
+		return getFinder()
+				   .findByC_G_F_C_A_V_T_D_C_S_T_D_R(companyId, groupId,
+			folderIds, classNameId, articleId, version, title, description,
+			content, ddmStructureKeys, ddmTemplateKeys, displayDateGT,
+			displayDateLT, reviewDate, andOperator, queryDefinition);
+	}
+
+	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByC_G_F_C_A_V_T_D_C_S_T_D_R(
+		long companyId, long groupId, java.util.List<java.lang.Long> folderIds,
+		long classNameId, java.lang.String[] articleIds,
+		java.lang.Double version, java.lang.String[] titles,
+		java.lang.String[] descriptions, java.lang.String[] contents,
 		java.lang.String[] ddmStructureKeys,
 		java.lang.String[] ddmTemplateKeys, java.util.Date displayDateGT,
 		java.util.Date displayDateLT, java.util.Date reviewDate,
 		boolean andOperator,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.portlet.journal.model.JournalArticle> queryDefinition) {
 		return getFinder()
-				   .findByC_G_F_C_A_V_T_D_C_T_S_T_D_R(companyId, groupId,
-			folderIds, classNameId, articleId, version, title, description,
-			content, type, ddmStructureKeys, ddmTemplateKeys, displayDateGT,
-			displayDateLT, reviewDate, andOperator, queryDefinition);
-	}
-
-	public static java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByC_G_F_C_A_V_T_D_C_T_S_T_D_R(
-		long companyId, long groupId, java.util.List<java.lang.Long> folderIds,
-		long classNameId, java.lang.String[] articleIds,
-		java.lang.Double version, java.lang.String[] titles,
-		java.lang.String[] descriptions, java.lang.String[] contents,
-		java.lang.String type, java.lang.String[] ddmStructureKeys,
-		java.lang.String[] ddmTemplateKeys, java.util.Date displayDateGT,
-		java.util.Date displayDateLT, java.util.Date reviewDate,
-		boolean andOperator,
-		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.portlet.journal.model.JournalArticle> queryDefinition) {
-		return getFinder()
-				   .findByC_G_F_C_A_V_T_D_C_T_S_T_D_R(companyId, groupId,
+				   .findByC_G_F_C_A_V_T_D_C_S_T_D_R(companyId, groupId,
 			folderIds, classNameId, articleIds, version, titles, descriptions,
-			contents, type, ddmStructureKeys, ddmTemplateKeys, displayDateGT,
+			contents, ddmStructureKeys, ddmTemplateKeys, displayDateGT,
 			displayDateLT, reviewDate, andOperator, queryDefinition);
 	}
 

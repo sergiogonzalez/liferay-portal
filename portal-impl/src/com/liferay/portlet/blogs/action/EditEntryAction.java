@@ -46,6 +46,7 @@ import com.liferay.portlet.asset.AssetCategoryException;
 import com.liferay.portlet.asset.AssetTagException;
 import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
 import com.liferay.portlet.blogs.EntryContentException;
+import com.liferay.portlet.blogs.EntryDescriptionException;
 import com.liferay.portlet.blogs.EntryDisplayDateException;
 import com.liferay.portlet.blogs.EntrySmallImageNameException;
 import com.liferay.portlet.blogs.EntrySmallImageSizeException;
@@ -234,6 +235,7 @@ public class EditEntryAction extends PortletAction {
 				setForward(actionRequest, "portlet.blogs.error");
 			}
 			else if (e instanceof EntryContentException ||
+					 e instanceof EntryDescriptionException ||
 					 e instanceof EntryDisplayDateException ||
 					 e instanceof EntrySmallImageNameException ||
 					 e instanceof EntrySmallImageSizeException ||
@@ -458,7 +460,20 @@ public class EditEntryAction extends PortletAction {
 
 		String title = ParamUtil.getString(actionRequest, "title");
 		String subtitle = ParamUtil.getString(actionRequest, "subtitle");
-		String description = ParamUtil.getString(actionRequest, "description");
+
+		String description = StringPool.BLANK;
+
+		boolean customAbstract = ParamUtil.getBoolean(
+			actionRequest, "customAbstract");
+
+		if (customAbstract) {
+			description = ParamUtil.getString(actionRequest, "description");
+
+			if (Validator.isNull(description)) {
+				throw new EntryDescriptionException();
+			}
+		}
+
 		String content = ParamUtil.getString(actionRequest, "content");
 
 		int displayDateMonth = ParamUtil.getInteger(

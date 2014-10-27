@@ -49,7 +49,7 @@ import org.junit.runner.RunWith;
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Sync
-public class VerifyDocumentLibraryTest extends BaseVerifyTestCase {
+public class VerifyDocumentLibraryTest extends BaseVerifyProcessTestCase {
 
 	@Before
 	public void setUp() throws Exception {

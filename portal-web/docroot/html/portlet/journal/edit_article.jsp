@@ -301,7 +301,7 @@ request.setAttribute("edit_article.jsp-defaultLanguageId", defaultLanguageId);
 		<portlet:param name="groupId" value="<%= String.valueOf(article.getGroupId()) %>" />
 		<portlet:param name="articleId" value="<%= article.getArticleId() %>" />
 		<portlet:param name="version" value="<%= String.valueOf(article.getVersion()) %>" />
-		<portlet:param name="ddmTemplateKey" value="<%= (ddmTemplate != null) ? ddmTemplate.getTemplateKey() : article.getTemplateId() %>" />
+		<portlet:param name="ddmTemplateKey" value="<%= (ddmTemplate != null) ? ddmTemplate.getTemplateKey() : article.getDDMTemplateKey() %>" />
 	</c:if>
 </liferay-portlet:renderURL>
 
@@ -325,6 +325,7 @@ request.setAttribute("edit_article.jsp-defaultLanguageId", defaultLanguageId);
 					<liferay-security:permissionsURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"
 						modelResource="<%= JournalArticle.class.getName() %>"
 						modelResourceDescription="<%= HtmlUtil.escape(article.getTitle(locale)) %>"
+						resourceGroupId="<%= String.valueOf(article.getGroupId()) %>"
 						resourcePrimKey="<%= String.valueOf(article.getResourcePrimKey()) %>"
 						var="permissionsURL"
 					/>

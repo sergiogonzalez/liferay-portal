@@ -30,6 +30,11 @@ import java.util.Map;
 public interface StorageAdapter {
 
 	public long create(
+			long companyId, long ddmStructureId, DDMFormValues ddmFormValues,
+			ServiceContext serviceContext)
+		throws StorageException;
+
+	public long create(
 			long companyId, long ddmStructureId, Fields fields,
 			ServiceContext serviceContext)
 		throws StorageException;
@@ -38,6 +43,8 @@ public interface StorageAdapter {
 
 	public void deleteByDDMStructure(long ddmStructureId)
 		throws StorageException;
+
+	public DDMFormValues getDDMFormValues(long classPK) throws StorageException;
 
 	public Fields getFields(long classPK) throws StorageException;
 
@@ -78,6 +85,11 @@ public interface StorageAdapter {
 		throws StorageException;
 
 	public int queryCount(long ddmStructureId, Condition condition)
+		throws StorageException;
+
+	public void update(
+			long classPK, DDMFormValues ddmFormValues,
+			ServiceContext serviceContext)
 		throws StorageException;
 
 	public void update(

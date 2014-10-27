@@ -14,7 +14,7 @@
 
 package com.liferay.password.generator.web.portlet;
 
-import com.liferay.password.generator.web.upgrade.PasswordGeneratorUpgrade;
+import com.liferay.password.generator.web.upgrade.PasswordGeneratorWebUpgrade;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 import javax.portlet.Portlet;
@@ -23,9 +23,9 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
-* @author Raymond Augé
-* @author Peter Fellwock
-*/
+ * @author Raymond Augé
+ * @author Peter Fellwock
+ */
 @Component(
 	immediate = true,
 	property = {
@@ -49,8 +49,8 @@ import org.osgi.service.component.annotations.Reference;
 public class PasswordGeneratorPortlet extends MVCPortlet {
 
 	@Reference(unbind = "-")
-	protected void setPasswordGeneratorUpgrade(
-		PasswordGeneratorUpgrade passwordGeneratorUpgrade) {
+	protected void setPasswordGeneratorWebUpgrade(
+		PasswordGeneratorWebUpgrade passwordGeneratorWebUpgrade) {
 	}
 
 }

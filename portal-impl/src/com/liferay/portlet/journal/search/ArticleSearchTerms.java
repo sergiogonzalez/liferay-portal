@@ -32,12 +32,13 @@ public class ArticleSearchTerms extends ArticleDisplayTerms {
 
 		articleId = DAOParamUtil.getString(portletRequest, ARTICLE_ID);
 		content = DAOParamUtil.getString(portletRequest, CONTENT);
+		ddmStructureKey = DAOParamUtil.getString(
+			portletRequest, DDM_STRUCTURE_KEY);
+		ddmTemplateKey = DAOParamUtil.getString(
+			portletRequest, DDM_TEMPLATE_KEY);
 		description = DAOParamUtil.getString(portletRequest, DESCRIPTION);
 		status = ParamUtil.getInteger(portletRequest, STATUS);
-		structureId = DAOParamUtil.getString(portletRequest, STRUCTURE_ID);
-		templateId = DAOParamUtil.getString(portletRequest, TEMPLATE_ID);
 		title = DAOParamUtil.getString(portletRequest, TITLE);
-		type = DAOParamUtil.getString(portletRequest, TYPE);
 		version = ParamUtil.getDouble(portletRequest, VERSION);
 
 		groupId = setGroupId(portletRequest);
@@ -65,6 +66,10 @@ public class ArticleSearchTerms extends ArticleDisplayTerms {
 		this.articleId = articleId;
 	}
 
+	public void setDDMStructureKey(String ddmStructureKey) {
+		this.ddmStructureKey = ddmStructureKey;
+	}
+
 	public void setGroupId(long groupId) {
 		this.groupId = groupId;
 	}
@@ -72,14 +77,6 @@ public class ArticleSearchTerms extends ArticleDisplayTerms {
 	@Override
 	public void setStatus(int status) {
 		this.status = status;
-	}
-
-	public void setStructureId(String structureId) {
-		this.structureId = structureId;
-	}
-
-	public void setType(String type) {
-		this.type = type;
 	}
 
 	public void setVersion(double version) {
