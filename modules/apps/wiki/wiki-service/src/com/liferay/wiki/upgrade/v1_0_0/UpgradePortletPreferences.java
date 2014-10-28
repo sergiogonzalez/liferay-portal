@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.upgrade;
+package com.liferay.wiki.upgrade.v1_0_0;
 
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletPreferences;
 import com.liferay.portal.kernel.util.StringPool;
@@ -26,7 +26,7 @@ import javax.portlet.ReadOnlyException;
 /**
  * @author Ivan Zaera
  */
-public class UpgradeWiki extends BaseUpgradePortletPreferences {
+public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 
 	protected String getEmailSignatureSeparator(
 		PortletPreferences portletPreferences) {

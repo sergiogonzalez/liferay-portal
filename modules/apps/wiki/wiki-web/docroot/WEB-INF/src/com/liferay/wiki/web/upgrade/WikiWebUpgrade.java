@@ -15,16 +15,12 @@
 package com.liferay.wiki.web.upgrade;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.service.ReleaseLocalService;
-import com.liferay.portal.upgrade.util.UpgradePortletId;
-import com.liferay.portal.upgrade.util.UpgradePortletSettings;
-import com.liferay.portal.util.PortletKeys;
-import com.liferay.wiki.configuration.WikiSettings;
-import com.liferay.wiki.constants.WikiPortletKeys;
-import com.liferay.wiki.util.WikiConstants;
-import com.liferay.wiki.web.configuration.WikiPortletInstanceSettings;
+import com.liferay.wiki.web.upgrade.v1_0_0.UpgradePortletSettings;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -47,37 +43,12 @@ public class WikiWebUpgrade {
 
 	@Activate
 	protected void upgrade() throws PortalException {
-		UpgradePortletId upgradePortletId = new UpgradePortletId() {
+		List<UpgradeProcess> upgradeProcesses = new ArrayList<>();
 
-			@Override
-			protected String[][] getRenamePortletIdsArray() {
-				return new String[][] {
-					new String[] {"36", "36_WAR_pollsweb"},
-					new String[] {"154", "154_WAR_pollsweb"},
-					new String[] {"54", "54_WAR_pollsweb"}
-				};
-			}
-
-		};
-
-		UpgradePortletSettings upgradePortletSettings =
-			new UpgradePortletSettings() {
-
-				@Override
-				protected void upgradePortlets() throws Exception {
-					upgradeMainPortlet(
-						WikiPortletKeys.WIKI, WikiConstants.SERVICE_NAME,
-						PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
-						WikiPortletInstanceSettings.ALL_KEYS,
-						WikiSettings.ALL_KEYS);
-				}
-
-			};
+		upgradeProcesses.add(new UpgradePortletSettings());
 
 		_releaseLocalService.updateRelease(
-			"com.liferay.wiki.web",
-			Arrays.asList(upgradePortletId, upgradePortletSettings), 1, 0,
-			false);
+			"com.liferay.wiki.web", upgradeProcesses, 1, 0, false);
 	}
 
 	private ReleaseLocalService _releaseLocalService;

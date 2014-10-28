@@ -15,13 +15,14 @@
 package com.liferay.wiki.upgrade;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.service.ReleaseLocalService;
-import com.liferay.portal.upgrade.util.UpgradePortletSettings;
-import com.liferay.portal.util.PortletKeys;
-import com.liferay.wiki.configuration.WikiSettings;
-import com.liferay.wiki.constants.WikiPortletKeys;
+import com.liferay.wiki.upgrade.v1_0_0.UpgradePortletId;
+import com.liferay.wiki.upgrade.v1_0_0.UpgradePortletPreferences;
+import com.liferay.wiki.upgrade.v1_0_0.UpgradePortletSettings;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -44,24 +45,16 @@ public class WikiServiceUpgrade {
 
 	@Activate
 	protected void upgrade() throws PortalException {
-		UpgradeWiki upgradeWiki = new UpgradeWiki();
+		List<UpgradeProcess> upgradeProcesses = new ArrayList<>();
 
-		UpgradePortletSettings upgradePortletSettings =
-			new UpgradePortletSettings() {
+		upgradeProcesses.add(new UpgradePortletId());
 
-				@Override
-				protected void upgradePortlets() throws Exception {
-					upgradeDisplayPortlet(
-						WikiPortletKeys.WIKI_DISPLAY,
-						PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
-						WikiSettings.ALL_KEYS);
-				}
+		upgradeProcesses.add(new UpgradePortletPreferences());
 
-			};
+		upgradeProcesses.add(new UpgradePortletSettings());
 
 		_releaseLocalService.updateRelease(
-			"com.liferay.wiki.service",
-			Arrays.asList(upgradeWiki, upgradePortletSettings), 1, 0, false);
+			"com.liferay.wiki.service", upgradeProcesses, 1, 0, false);
 	}
 
 	private ReleaseLocalService _releaseLocalService;
