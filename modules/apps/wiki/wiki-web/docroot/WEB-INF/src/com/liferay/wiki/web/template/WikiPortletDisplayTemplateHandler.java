@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTempla
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateConstants;
 import com.liferay.wiki.constants.WikiPortletKeys;
@@ -97,7 +96,7 @@ public class WikiPortletDisplayTemplateHandler
 
 	@Override
 	protected String getTemplatesConfigPath() {
-		return PropsValues.WIKI_DISPLAY_TEMPLATES_CONFIG;
+		return "com/liferay/wiki/dependencies/portlet-display-templates.xml";
 	}
 
 }
