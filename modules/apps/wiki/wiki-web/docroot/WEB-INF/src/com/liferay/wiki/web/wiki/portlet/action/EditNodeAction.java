@@ -32,12 +32,12 @@ import com.liferay.wiki.exception.DuplicateNodeNameException;
 import com.liferay.wiki.exception.NoSuchNodeException;
 import com.liferay.wiki.exception.NodeNameException;
 import com.liferay.wiki.exception.RequiredNodeException;
-import com.liferay.wiki.WikiPortletInstanceSettings;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
 import com.liferay.wiki.service.WikiNodeServiceUtil;
 import com.liferay.wiki.util.WikiCacheThreadLocal;
 import com.liferay.wiki.util.WikiCacheUtil;
+import com.liferay.wiki.web.configuration.WikiPortletInstanceSettings;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;

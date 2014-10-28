@@ -166,7 +166,7 @@ long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayT
 		String formattedContent = null;
 
 		try {
-			formattedContent = WikiUtil.getFormattedContent(renderRequest, renderResponse, wikiPage, viewPageURL, editPageURL, title, preview);
+			formattedContent = WikiServiceUtil.getFormattedContent(renderRequest, renderResponse, wikiPage, viewPageURL, editPageURL, title, preview);
 		}
 		catch (Exception e) {
 			formattedContent = wikiPage.getContent();

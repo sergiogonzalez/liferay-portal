@@ -15,11 +15,16 @@
 package com.liferay.wiki.web.upgrade;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.service.ReleaseLocalService;
 import com.liferay.portal.upgrade.util.UpgradePortletId;
+import com.liferay.portal.upgrade.util.UpgradePortletSettings;
+import com.liferay.portal.util.PortletKeys;
+import com.liferay.wiki.configuration.WikiSettings;
+import com.liferay.wiki.constants.WikiPortletKeys;
+import com.liferay.wiki.util.WikiConstants;
+import com.liferay.wiki.web.configuration.WikiPortletInstanceSettings;
 
-import java.util.Collections;
+import java.util.Arrays;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -55,10 +60,24 @@ public class WikiWebUpgrade {
 
 		};
 
+		UpgradePortletSettings upgradePortletSettings =
+			new UpgradePortletSettings() {
+
+				@Override
+				protected void upgradePortlets() throws Exception {
+					upgradeMainPortlet(
+						WikiPortletKeys.WIKI, WikiConstants.SERVICE_NAME,
+						PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
+						WikiPortletInstanceSettings.ALL_KEYS,
+						WikiSettings.ALL_KEYS);
+				}
+
+			};
+
 		_releaseLocalService.updateRelease(
 			"com.liferay.wiki.web",
-			Collections.<UpgradeProcess>singletonList(upgradePortletId), 1, 0,
-			false);
+			Arrays.asList(upgradePortletId, upgradePortletSettings), 1, 0,
+				false);
 	}
 
 	private ReleaseLocalService _releaseLocalService;

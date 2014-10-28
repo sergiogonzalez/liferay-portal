@@ -17,7 +17,7 @@ package com.liferay.wiki.service.configuration.configurator;
 import com.liferay.portal.service.configuration.ServiceComponentConfiguration;
 import com.liferay.portal.service.configuration.configurator.ServiceConfigurator;
 import com.liferay.portal.spring.extender.loader.ModuleResourceLoader;
-import com.liferay.wiki.service.upgrade.WikiServiceUpgrade;
+import com.liferay.wiki.upgrade.WikiServiceUpgrade;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;

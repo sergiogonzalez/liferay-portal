@@ -26,6 +26,7 @@ import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.wiki.constants.WikiWebKeys;
 import com.liferay.wiki.exception.NoSuchNodeException;
 import com.liferay.wiki.exception.NoSuchPageException;
 import com.liferay.wiki.model.WikiNode;
@@ -35,8 +36,7 @@ import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
 import com.liferay.wiki.service.WikiNodeServiceUtil;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.service.WikiPageServiceUtil;
-import com.liferay.wiki.util.WikiUtil;
-import com.liferay.wiki.constants.WikiWebKeys;
+import com.liferay.wiki.web.util.WikiWebUtil;
 
 import javax.portlet.PortletRequest;
 
@@ -78,7 +78,7 @@ public class ActionUtil {
 				themeDisplay.getDefaultUserId(), serviceContext);
 		}
 		else {
-			node = WikiUtil.getFirstNode(portletRequest);
+			node = WikiWebUtil.getFirstNode(portletRequest);
 
 			if (node == null) {
 				throw new PrincipalException();

@@ -139,8 +139,8 @@ public class WikiTestUtil {
 
 			WikiPage page = WikiPageLocalServiceUtil.addPage(
 				userId, nodeId, title, WikiPageConstants.VERSION_DEFAULT,
-				content, "Summary", true, WikiPageConstants.DEFAULT_FORMAT,
-				false, parentTitle, null, serviceContext);
+				content, "Summary", true, "creole", false, parentTitle, null,
+				serviceContext);
 
 			if (approved) {
 				page = updateStatus(page, serviceContext);

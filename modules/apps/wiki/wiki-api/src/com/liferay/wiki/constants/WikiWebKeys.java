@@ -25,10 +25,12 @@ public class WikiWebKeys {
 
 	public static final String WIKI_PAGE = "WIKI_PAGE";
 
-	public static final String WIKI_TREE_WALKER_DEPTH = "WIKI_TREE_WALKER_DEPTH";
+	public static final String WIKI_TREE_WALKER_DEPTH =
+		"WIKI_TREE_WALKER_DEPTH";
 
 	public static final String WIKI_TREE_WALKER_PAGE = "WIKI_TREE_WALKER_PAGE";
 
-	public static final String WIKI_TREE_WALKER_PARENT = "WIKI_TREE_WALKER_PARENT";
+	public static final String WIKI_TREE_WALKER_PARENT =
+		"WIKI_TREE_WALKER_PARENT";
 
 }

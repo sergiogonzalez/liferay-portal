@@ -28,14 +28,12 @@ import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -43,7 +41,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsUtil;
@@ -53,14 +50,13 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
-import com.liferay.wiki.WikiPortletInstanceSettings;
 import com.liferay.wiki.engines.WikiEngine;
+import com.liferay.wiki.engines.impl.WikiEngineTracker;
 import com.liferay.wiki.exception.PageContentException;
 import com.liferay.wiki.exception.WikiFormatException;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageDisplay;
-import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.service.permission.WikiNodePermission;
 import com.liferay.wiki.util.comparator.PageCreateDateComparator;
@@ -82,18 +78,21 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Jorge Ferrer
  */
-public class WikiUtil {
+public class WikiServiceUtil {
 
 	public static String convert(
 			WikiPage page, PortletURL viewPageURL, PortletURL editPageURL,
@@ -426,43 +425,6 @@ public class WikiUtil {
 		return entries;
 	}
 
-	public static WikiNode getFirstNode(PortletRequest portletRequest)
-		throws PortalException {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-		long groupId = themeDisplay.getScopeGroupId();
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
-
-		List<WikiNode> nodes = WikiNodeLocalServiceUtil.getNodes(groupId);
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		WikiPortletInstanceSettings wikiPortletInstanceSettings =
-			WikiPortletInstanceSettings.getInstance(
-				themeDisplay.getLayout(), portletDisplay.getId());
-
-		String[] visibleNodeNames =
-			wikiPortletInstanceSettings.getVisibleNodes();
-
-		nodes = orderNodes(nodes, visibleNodeNames);
-
-		String[] hiddenNodes = wikiPortletInstanceSettings.getHiddenNodes();
-		Arrays.sort(hiddenNodes);
-
-		for (WikiNode node : nodes) {
-			if ((Arrays.binarySearch(hiddenNodes, node.getName()) < 0) &&
-				WikiNodePermission.contains(
-					permissionChecker, node, ActionKeys.VIEW)) {
-
-				return node;
-			}
-		}
-
-		return null;
-	}
-
 	public static String getFormattedContent(
 			RenderRequest renderRequest, RenderResponse renderResponse,
 			WikiPage wikiPage, PortletURL viewPageURL, PortletURL editPageURL,
@@ -520,16 +482,6 @@ public class WikiUtil {
 		return _instance._getLinks(page);
 	}
 
-	public static List<String> getNodeNames(List<WikiNode> nodes) {
-		List<String> nodeNames = new ArrayList<String>(nodes.size());
-
-		for (WikiNode node : nodes) {
-			nodeNames.add(node.getName());
-		}
-
-		return nodeNames;
-	}
-
 	public static List<WikiNode> getNodes(
 		List<WikiNode> nodes, String[] hiddenNodes,
 		PermissionChecker permissionChecker) {
@@ -578,34 +530,6 @@ public class WikiUtil {
 		return orderByComparator;
 	}
 
-	public static List<WikiNode> orderNodes(
-		List<WikiNode> nodes, String[] visibleNodeNames) {
-
-		if (ArrayUtil.isEmpty(visibleNodeNames)) {
-			return nodes;
-		}
-
-		nodes = ListUtil.copy(nodes);
-
-		List<WikiNode> orderedNodes = new ArrayList<WikiNode>(nodes.size());
-
-		for (String visibleNodeName : visibleNodeNames) {
-			for (WikiNode node : nodes) {
-				if (node.getName().equals(visibleNodeName)) {
-					orderedNodes.add(node);
-
-					nodes.remove(node);
-
-					break;
-				}
-			}
-		}
-
-		orderedNodes.addAll(nodes);
-
-		return orderedNodes;
-	}
-
 	public static String processContent(String content) {
 		content = StringUtil.replace(content, "</p>", "</p>\n");
 		content = StringUtil.replace(content, "</br>", "</br>\n");
@@ -622,6 +546,10 @@ public class WikiUtil {
 		throws WikiFormatException {
 
 		return _instance._validate(nodeId, content, format);
+	}
+
+	private static WikiEngineTracker _getWikiEngineTracker() {
+		return _wikiEngineServiceTracker.getService();
 	}
 
 	private String _convert(
@@ -702,65 +630,33 @@ public class WikiUtil {
 	}
 
 	private String _getEditPage(String format) {
-		return PropsUtil.get(
-			PropsKeys.WIKI_FORMATS_EDIT_PAGE, new Filter(format));
+		WikiEngineTracker wikiEngineTracker = _getWikiEngineTracker();
+
+		return wikiEngineTracker.getProperty(format, "edit.page");
 	}
 
 	private WikiEngine _getEngine(String format) throws WikiFormatException {
-		WikiEngine engine = _engines.get(format);
+		WikiEngineTracker wikiEngineTracker = _getWikiEngineTracker();
 
-		if (engine != null) {
-			return engine;
+		WikiEngine engine = wikiEngineTracker.getWikiEngine(format);
+
+		if (engine == null) {
+			throw new WikiFormatException("Unknown wiki format " + format);
 		}
 
-		synchronized (_engines) {
-			engine = _engines.get(format);
-
-			if (engine != null) {
-				return engine;
-			}
-
-			try {
-				String engineClass = PropsUtil.get(
-					PropsKeys.WIKI_FORMATS_ENGINE, new Filter(format));
-
-				if (engineClass == null) {
-					throw new WikiFormatException(format);
-				}
-
-				ClassLoader classLoader = _getClassLoader();
-
-				Class<?> clazz = classLoader.loadClass(engineClass);
-
-				engine = (WikiEngine)clazz.newInstance();
-
-				engine.setMainConfiguration(
-					_readConfigurationFile(
-						PropsKeys.WIKI_FORMATS_CONFIGURATION_MAIN, format));
-
-				engine.setInterWikiConfiguration(
-					_readConfigurationFile(
-						PropsKeys.WIKI_FORMATS_CONFIGURATION_INTERWIKI,
-						format));
-
-				_engines.put(format, engine);
-
-				return engine;
-			}
-			catch (Exception e) {
-				throw new WikiFormatException(e);
-			}
-		}
+		return engine;
 	}
 
 	private String _getHelpPage(String format) {
-		return PropsUtil.get(
-			PropsKeys.WIKI_FORMATS_HELP_PAGE, new Filter(format));
+		WikiEngineTracker wikiEngineTracker = _getWikiEngineTracker();
+
+		return wikiEngineTracker.getProperty(format, "help.page");
 	}
 
 	private String _getHelpURL(String format) {
-		return PropsUtil.get(
-			PropsKeys.WIKI_FORMATS_HELP_URL, new Filter(format));
+		WikiEngineTracker wikiEngineTracker = _getWikiEngineTracker();
+
+		return wikiEngineTracker.getProperty(format, "help.url");
 	}
 
 	private Map<String, Boolean> _getLinks(WikiPage page)
@@ -816,15 +712,27 @@ public class WikiUtil {
 		StringPool.PLUS, StringPool.QUESTION, StringPool.SLASH
 	};
 
-	private static final Log _log = LogFactoryUtil.getLog(WikiUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		WikiServiceUtil.class);
 
-	private static final WikiUtil _instance = new WikiUtil();
+	private static final WikiServiceUtil _instance = new WikiServiceUtil();
 
 	private static final Pattern _editPageURLPattern = Pattern.compile(
 		"\\[\\$BEGIN_PAGE_TITLE_EDIT\\$\\](.*?)" +
 			"\\[\\$END_PAGE_TITLE_EDIT\\$\\]");
 	private static final Pattern _viewPageURLPattern = Pattern.compile(
 		"\\[\\$BEGIN_PAGE_TITLE\\$\\](.*?)\\[\\$END_PAGE_TITLE\\$\\]");
+	private static final ServiceTracker<WikiEngineTracker, WikiEngineTracker>
+		_wikiEngineServiceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(WikiServiceUtil.class);
+
+		_wikiEngineServiceTracker = new ServiceTracker<>(
+			bundle.getBundleContext(), WikiEngineTracker.class, null);
+
+		_wikiEngineServiceTracker.open();
+	}
 
 	private final Map<String, WikiEngine> _engines =
 		new ConcurrentHashMap<String, WikiEngine>();

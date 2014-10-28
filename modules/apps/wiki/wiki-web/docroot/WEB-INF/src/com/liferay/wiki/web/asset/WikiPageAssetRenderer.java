@@ -14,6 +14,7 @@
 
 package com.liferay.wiki.web.asset;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.trash.TrashRenderer;
@@ -26,13 +27,13 @@ import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.BaseAssetRenderer;
 import com.liferay.portlet.trash.util.TrashUtil;
+import com.liferay.wiki.constants.WikiPortletKeys;
+import com.liferay.wiki.constants.WikiWebKeys;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageConstants;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.service.permission.WikiPagePermission;
-import com.liferay.wiki.constants.WikiPortletKeys;
-import com.liferay.wiki.util.WikiUtil;
-import com.liferay.wiki.constants.WikiWebKeys;
+import com.liferay.wiki.util.WikiServiceUtil;
 
 import java.util.Date;
 import java.util.Locale;
@@ -112,7 +113,7 @@ public class WikiPageAssetRenderer
 
 		try {
 			content = HtmlUtil.extractText(
-				WikiUtil.convert(_page, null, null, null));
+				WikiServiceUtil.convert(_page, null, null, null));
 		}
 		catch (Exception e) {
 		}

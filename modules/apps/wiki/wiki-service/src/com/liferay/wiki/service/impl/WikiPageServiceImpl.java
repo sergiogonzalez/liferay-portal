@@ -31,6 +31,8 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.util.RSSUtil;
+import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.exception.NoSuchPageException;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
@@ -38,10 +40,8 @@ import com.liferay.wiki.model.WikiPageConstants;
 import com.liferay.wiki.service.base.WikiPageServiceBaseImpl;
 import com.liferay.wiki.service.permission.WikiNodePermission;
 import com.liferay.wiki.service.permission.WikiPagePermission;
-import com.liferay.wiki.constants.WikiPortletKeys;
-import com.liferay.wiki.util.WikiUtil;
+import com.liferay.wiki.util.WikiServiceUtil;
 import com.liferay.wiki.util.comparator.PageCreateDateComparator;
-import com.liferay.util.RSSUtil;
 
 import com.sun.syndication.feed.synd.SyndContent;
 import com.sun.syndication.feed.synd.SyndContentImpl;
@@ -402,7 +402,7 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 		List<WikiPage> pages = wikiPagePersistence.filterFindByG_N_H_S(
 			groupId, nodeId, true, WorkflowConstants.STATUS_APPROVED);
 
-		return WikiUtil.filterOrphans(pages);
+		return WikiServiceUtil.filterOrphans(pages);
 	}
 
 	@Override
@@ -781,19 +781,20 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 			if (diff) {
 				if ((latestPage != null) || (pages.size() == 1)) {
 					sb.append(StringPool.QUESTION);
-					sb.append(PortalUtil.getPortletNamespace(WikiPortletKeys.WIKI));
+					sb.append(
+						PortalUtil.getPortletNamespace(WikiPortletKeys.WIKI));
 					sb.append("version=");
 					sb.append(page.getVersion());
 
 					String value = null;
 
 					if (latestPage == null) {
-						value = WikiUtil.convert(
+						value = WikiServiceUtil.convert(
 							page, null, null, attachmentURLPrefix);
 					}
 					else {
 						try {
-							value = WikiUtil.diffHtml(
+							value = WikiServiceUtil.diffHtml(
 								latestPage, page, null, null,
 								attachmentURLPrefix);
 						}
@@ -827,7 +828,7 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 					value = StringPool.BLANK;
 				}
 				else {
-					value = WikiUtil.convert(
+					value = WikiServiceUtil.convert(
 						page, null, null, attachmentURLPrefix);
 				}
 

@@ -23,10 +23,10 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.wiki.service.WikiPageServiceUtil;
-import com.liferay.wiki.constants.WikiPortletKeys;
-import com.liferay.wiki.util.WikiUtil;
 import com.liferay.util.RSSUtil;
+import com.liferay.wiki.constants.WikiPortletKeys;
+import com.liferay.wiki.service.WikiPageServiceUtil;
+import com.liferay.wiki.util.WikiServiceUtil;
 
 import java.util.Locale;
 
@@ -73,7 +73,7 @@ public class RSSAction extends com.liferay.portal.struts.RSSAction {
 		String rss = StringPool.BLANK;
 
 		if (nodeId > 0) {
-			String attachmentURLPrefix = WikiUtil.getAttachmentURLPrefix(
+			String attachmentURLPrefix = WikiServiceUtil.getAttachmentURLPrefix(
 				themeDisplay.getPathMain(), themeDisplay.getPlid(), nodeId,
 				title);
 

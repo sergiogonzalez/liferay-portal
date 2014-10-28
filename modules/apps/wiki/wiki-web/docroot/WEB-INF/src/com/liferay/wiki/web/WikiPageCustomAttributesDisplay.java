@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki;
+package com.liferay.wiki.web;
 
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.expando.model.BaseCustomAttributesDisplay;

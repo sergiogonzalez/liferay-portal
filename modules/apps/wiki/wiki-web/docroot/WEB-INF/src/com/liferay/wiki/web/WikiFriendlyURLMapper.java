@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.wiki;
+package com.liferay.wiki.web;
 
 import com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.wiki.util.WikiUtil;
+import com.liferay.wiki.util.WikiServiceUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -62,10 +62,10 @@ public class WikiFriendlyURLMapper extends DefaultFriendlyURLMapper {
 		String value = routeParameters.get(name);
 
 		if (escape) {
-			value = WikiUtil.escapeName(value);
+			value = WikiServiceUtil.escapeName(value);
 		}
 		else {
-			value = WikiUtil.unescapeName(value);
+			value = WikiServiceUtil.unescapeName(value);
 		}
 
 		routeParameters.put(name, value);

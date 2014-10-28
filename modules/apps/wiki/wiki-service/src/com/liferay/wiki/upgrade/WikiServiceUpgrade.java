@@ -12,19 +12,17 @@
  * details.
  */
 
-package com.liferay.wiki.service.upgrade;
+package com.liferay.wiki.upgrade;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.service.ReleaseLocalService;
 import com.liferay.portal.upgrade.util.UpgradePortletSettings;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.wiki.WikiPortletInstanceSettings;
-import com.liferay.wiki.WikiSettings;
-import com.liferay.wiki.util.WikiConstants;
+import com.liferay.wiki.configuration.WikiSettings;
+import com.liferay.wiki.constants.WikiPortletKeys;
 
 import java.util.Arrays;
 
-import com.liferay.wiki.constants.WikiPortletKeys;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -53,12 +51,6 @@ public class WikiServiceUpgrade {
 
 				@Override
 				protected void upgradePortlets() throws Exception {
-					upgradeMainPortlet(
-						WikiPortletKeys.WIKI, WikiConstants.SERVICE_NAME,
-						PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
-						WikiPortletInstanceSettings.ALL_KEYS,
-						WikiSettings.ALL_KEYS);
-
 					upgradeDisplayPortlet(
 						WikiPortletKeys.WIKI_DISPLAY,
 						PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
@@ -69,8 +61,7 @@ public class WikiServiceUpgrade {
 
 		_releaseLocalService.updateRelease(
 			"com.liferay.wiki.service",
-			Arrays.asList(upgradeWiki, upgradePortletSettings),
-			1, 0, false);
+			Arrays.asList(upgradeWiki, upgradePortletSettings), 1, 0, false);
 	}
 
 	private ReleaseLocalService _releaseLocalService;

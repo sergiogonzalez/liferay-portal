@@ -23,6 +23,7 @@ Import-Package: \
 	com.liferay.portal.util,\
 	com.liferay.portal.webserver,\
 	\
+	com.liferay.portlet.asset.util,\
 	com.liferay.portlet.portletdisplaytemplate.util,\
 	\
 	com.liferay.wiki.lar,\

@@ -73,6 +73,7 @@ import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.model.TrashVersion;
 import com.liferay.portlet.trash.util.TrashUtil;
+import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.exception.DuplicatePageException;
 import com.liferay.wiki.exception.NoSuchPageException;
 import com.liferay.wiki.exception.NodeChangeException;
@@ -91,8 +92,7 @@ import com.liferay.wiki.service.base.WikiPageLocalServiceBaseImpl;
 import com.liferay.wiki.social.WikiActivityKeys;
 import com.liferay.wiki.util.WikiCacheThreadLocal;
 import com.liferay.wiki.util.WikiCacheUtil;
-import com.liferay.wiki.constants.WikiPortletKeys;
-import com.liferay.wiki.util.WikiUtil;
+import com.liferay.wiki.util.WikiServiceUtil;
 import com.liferay.wiki.util.comparator.PageCreateDateComparator;
 import com.liferay.wiki.util.comparator.PageVersionComparator;
 
@@ -261,8 +261,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		FileEntry fileEntry = PortletFileRepositoryUtil.addPortletFileEntry(
 			page.getGroupId(), userId, WikiPage.class.getName(),
-			page.getResourcePrimKey(), WikiPortletKeys.WIKI, folder.getFolderId(),
-			file, fileName, mimeType, true);
+			page.getResourcePrimKey(), WikiPortletKeys.WIKI,
+			folder.getFolderId(), file, fileName, mimeType, true);
 
 		if (userId == 0) {
 			userId = page.getUserId();
@@ -294,8 +294,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		FileEntry fileEntry = PortletFileRepositoryUtil.addPortletFileEntry(
 			page.getGroupId(), userId, WikiPage.class.getName(),
-			page.getResourcePrimKey(), WikiPortletKeys.WIKI, folder.getFolderId(),
-			inputStream, fileName, mimeType, true);
+			page.getResourcePrimKey(), WikiPortletKeys.WIKI,
+			folder.getFolderId(), inputStream, fileName, mimeType, true);
 
 		if (userId == 0) {
 			userId = page.getUserId();
@@ -1090,7 +1090,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		List<WikiPage> pages = wikiPagePersistence.findByN_H_S(
 			nodeId, true, WorkflowConstants.STATUS_APPROVED);
 
-		return WikiUtil.filterOrphans(pages);
+		return WikiServiceUtil.filterOrphans(pages);
 	}
 
 	@Override
@@ -1235,7 +1235,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			String attachmentURLPrefix)
 		throws PortalException {
 
-		String formattedContent = WikiUtil.convert(
+		String formattedContent = WikiServiceUtil.convert(
 			page, viewPageURL, editPageURL, attachmentURLPrefix);
 
 		return new WikiPageDisplayImpl(
@@ -2495,7 +2495,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		if (Validator.isNotNull(layoutFullURL)) {
 			return layoutFullURL + Portal.FRIENDLY_URL_SEPARATOR + "wiki/" +
 				page.getNodeId() + StringPool.SLASH +
-					HttpUtil.encodeURL(WikiUtil.escapeName(page.getTitle()));
+					HttpUtil.encodeURL(
+						WikiServiceUtil.escapeName(page.getTitle()));
 		}
 		else {
 			long controlPanelPlid = PortalUtil.getControlPanelPlid(
@@ -3017,7 +3018,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		WikiPage previousVersionPage = getPreviousVersionPage(page);
 
-		String attachmentURLPrefix = WikiUtil.getAttachmentURLPrefix(
+		String attachmentURLPrefix = WikiServiceUtil.getAttachmentURLPrefix(
 			serviceContext.getPathMain(), serviceContext.getPlid(),
 			page.getNodeId(), page.getTitle());
 
@@ -3026,7 +3027,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		String pageDiffs = StringPool.BLANK;
 
 		try {
-			pageDiffs = WikiUtil.diffHtml(
+			pageDiffs = WikiServiceUtil.diffHtml(
 				previousVersionPage, page, null, null, attachmentURLPrefix);
 		}
 		catch (Exception e) {
@@ -3035,12 +3036,12 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		String pageContent = null;
 
 		if (Validator.equals(page.getFormat(), "creole")) {
-			pageContent = WikiUtil.convert(
+			pageContent = WikiServiceUtil.convert(
 				page, null, null, attachmentURLPrefix);
 		}
 		else {
 			pageContent = page.getContent();
-			pageContent = WikiUtil.processContent(pageContent);
+			pageContent = WikiServiceUtil.processContent(pageContent);
 		}
 
 		String pageTitle = page.getTitle();
@@ -3309,7 +3310,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	protected void validate(long nodeId, String content, String format)
 		throws PortalException {
 
-		if (!WikiUtil.validate(nodeId, content, format)) {
+		if (!WikiServiceUtil.validate(nodeId, content, format)) {
 			throw new PageContentException();
 		}
 	}

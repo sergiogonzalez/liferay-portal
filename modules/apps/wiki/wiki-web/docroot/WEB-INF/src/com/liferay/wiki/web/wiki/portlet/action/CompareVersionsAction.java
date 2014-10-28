@@ -21,11 +21,12 @@ import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.wiki.constants.WikiWebKeys;
 import com.liferay.wiki.exception.NoSuchPageException;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiPageServiceUtil;
-import com.liferay.wiki.util.WikiUtil;
+import com.liferay.wiki.util.WikiServiceUtil;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletContext;
@@ -38,7 +39,6 @@ import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
-import com.liferay.wiki.constants.WikiWebKeys;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -156,10 +156,10 @@ public class CompareVersionsAction extends PortletAction {
 		editPageURL.setParameter("nodeId", String.valueOf(nodeId));
 		editPageURL.setParameter("title", title);
 
-		String attachmentURLPrefix = WikiUtil.getAttachmentURLPrefix(
+		String attachmentURLPrefix = WikiServiceUtil.getAttachmentURLPrefix(
 			themeDisplay.getPathMain(), themeDisplay.getPlid(), nodeId, title);
 
-		return WikiUtil.diffHtml(
+		return WikiServiceUtil.diffHtml(
 			sourcePage, targetPage, viewPageURL, editPageURL,
 			attachmentURLPrefix);
 	}

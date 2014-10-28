@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.service.upgrade;
+package com.liferay.wiki.upgrade;
 
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletPreferences;
 import com.liferay.portal.kernel.util.StringPool;

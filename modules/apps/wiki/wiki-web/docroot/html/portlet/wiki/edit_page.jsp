@@ -269,7 +269,7 @@ if (Validator.isNull(redirect)) {
 				request.setAttribute("edit_page.jsp-wikiPage", wikiPage);
 				%>
 
-				<liferay-util:include page="<%= WikiUtil.getEditPage(format) %>" />
+				<liferay-util:include page="<%= WikiWebUtil.getEditPage(format) %>" />
 			</div>
 
 			<c:if test="<%= wikiPage != null %>">

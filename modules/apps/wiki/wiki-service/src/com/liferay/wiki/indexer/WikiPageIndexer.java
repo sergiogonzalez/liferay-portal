@@ -37,14 +37,14 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.messageboards.model.MBMessage;
+import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
 import com.liferay.wiki.service.WikiNodeServiceUtil;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.service.permission.WikiPagePermission;
-import com.liferay.wiki.constants.WikiPortletKeys;
-import com.liferay.wiki.util.WikiUtil;
+import com.liferay.wiki.util.WikiServiceUtil;
 
 import java.util.Locale;
 
@@ -191,7 +191,7 @@ public class WikiPageIndexer extends BaseIndexer {
 		document.addUID(PORTLET_ID, page.getNodeId(), page.getTitle());
 
 		String content = HtmlUtil.extractText(
-			WikiUtil.convert(page, null, null, null));
+			WikiServiceUtil.convert(page, null, null, null));
 
 		document.addText(Field.CONTENT, content);
 
