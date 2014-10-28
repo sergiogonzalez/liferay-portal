@@ -545,6 +545,114 @@ public class ClusterSchedulerEngineTest {
 	}
 
 	@Test
+	public void testSchedulerClusterInvokeAcceptorThreadLocalDisabled()
+		throws Exception {
+
+		_clusterSchedulerEngine = _getClusterSchedulerEngine(false, 2, 2);
+
+		Map<String, Serializable> context = _collectThreadLocalContext();
+
+		boolean clusterInvokeThreadLocalEnabled =
+			ClusterInvokeThreadLocal.isEnabled();
+
+		try {
+			ClusterInvokeThreadLocal.setEnabled(false);
+
+			Assert.assertFalse(_clusterInvokeAcceptor.accept(context));
+		}
+		finally {
+			ClusterInvokeThreadLocal.setEnabled(
+				clusterInvokeThreadLocalEnabled);
+		}
+	}
+
+	@Test
+	public void testSchedulerClusterInvokeAcceptorThreadLocalEnabled()
+		throws Exception {
+
+		_clusterSchedulerEngine = _getClusterSchedulerEngine(false, 2, 2);
+
+		Map<String, Serializable> context = _collectThreadLocalContext();
+
+		boolean clusterInvokeThreadLocalEnabled =
+			ClusterInvokeThreadLocal.isEnabled();
+
+		try {
+			ClusterInvokeThreadLocal.setEnabled(true);
+
+			String pluginReady = "plugin.ready";
+			String portalReady = "portal.ready";
+
+			// portal AND plugin ready
+
+			context.put(SchedulerEngine.STORAGE_TYPE, StorageType.PERSISTED);
+			context.put(pluginReady, Boolean.TRUE);
+			context.put(portalReady, Boolean.TRUE);
+
+			Assert.assertFalse(_clusterInvokeAcceptor.accept(context));
+
+			context.put(SchedulerEngine.STORAGE_TYPE, StorageType.MEMORY);
+			context.put(pluginReady, Boolean.TRUE);
+			context.put(portalReady, Boolean.TRUE);
+
+			Assert.assertTrue(_clusterInvokeAcceptor.accept(context));
+
+			context.put(
+				SchedulerEngine.STORAGE_TYPE, StorageType.MEMORY_CLUSTERED);
+			context.put(pluginReady, Boolean.TRUE);
+			context.put(portalReady, Boolean.TRUE);
+
+			Assert.assertTrue(_clusterInvokeAcceptor.accept(context));
+
+			// portal AND plugin not ready
+
+			context.put(SchedulerEngine.STORAGE_TYPE, StorageType.PERSISTED);
+			context.put(pluginReady, Boolean.FALSE);
+			context.put(portalReady, Boolean.FALSE);
+
+			Assert.assertFalse(_clusterInvokeAcceptor.accept(context));
+
+			context.put(SchedulerEngine.STORAGE_TYPE, StorageType.MEMORY);
+			context.put(pluginReady, Boolean.FALSE);
+			context.put(portalReady, Boolean.FALSE);
+
+			Assert.assertFalse(_clusterInvokeAcceptor.accept(context));
+
+			context.put(
+				SchedulerEngine.STORAGE_TYPE, StorageType.MEMORY_CLUSTERED);
+			context.put(pluginReady, Boolean.FALSE);
+			context.put(portalReady, Boolean.FALSE);
+
+			Assert.assertFalse(_clusterInvokeAcceptor.accept(context));
+
+			// portal or plugin ready
+
+			context.put(SchedulerEngine.STORAGE_TYPE, StorageType.PERSISTED);
+			context.put(pluginReady, Boolean.FALSE);
+			context.put(portalReady, Boolean.TRUE);
+
+			Assert.assertFalse(_clusterInvokeAcceptor.accept(context));
+
+			context.put(SchedulerEngine.STORAGE_TYPE, StorageType.MEMORY);
+			context.put(pluginReady, Boolean.TRUE);
+			context.put(portalReady, Boolean.FALSE);
+
+			Assert.assertFalse(_clusterInvokeAcceptor.accept(context));
+
+			context.put(
+				SchedulerEngine.STORAGE_TYPE, StorageType.MEMORY_CLUSTERED);
+			context.put(pluginReady, Boolean.TRUE);
+			context.put(portalReady, Boolean.FALSE);
+
+			Assert.assertFalse(_clusterInvokeAcceptor.accept(context));
+		}
+		finally {
+			ClusterInvokeThreadLocal.setEnabled(
+				clusterInvokeThreadLocalEnabled);
+		}
+	}
+
+	@Test
 	public void testSetClusterableThreadLocal1() throws Exception {
 
 		// Persisted storage type
