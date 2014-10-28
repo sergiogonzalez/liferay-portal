@@ -19,13 +19,7 @@
 <%
 int abstractLength = (Integer)request.getAttribute(WebKeys.ASSET_PUBLISHER_ABSTRACT_LENGTH);
 
-MBMessage message = (MBMessage)request.getAttribute(WebKeys.MESSAGE_BOARDS_MESSAGE);
-
-String summary = message.getBody();
-
-if (message.isFormatBBCode()) {
-	summary = MBUtil.getBBCodeHTML(summary, themeDisplay.getPathThemeImages());
-}
+AssetRenderer assetRenderer = (AssetRenderer)request.getAttribute(WebKeys.ASSET_RENDERER);
 %>
 
-<%= StringUtil.shorten(HtmlUtil.stripHtml(summary), abstractLength) %>
+<%= StringUtil.shorten(assetRenderer.getSummary(), abstractLength) %>
