@@ -22,11 +22,11 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.BaseAssetRenderer;
 import com.liferay.portlet.trash.util.TrashUtil;
+import com.liferay.wiki.configuration.WikiSettings;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.constants.WikiWebKeys;
 import com.liferay.wiki.model.WikiPage;
@@ -66,8 +66,9 @@ public class WikiPageAssetRenderer
 		}
 	}
 
-	public WikiPageAssetRenderer(WikiPage page) {
+	public WikiPageAssetRenderer(WikiPage page) throws PortalException {
 		_page = page;
+		_wikiSettings = WikiSettings.getInstance(page.getGroupId());
 	}
 
 	@Override
@@ -82,7 +83,7 @@ public class WikiPageAssetRenderer
 
 	@Override
 	public String getDiscussionPath() {
-		if (PropsValues.WIKI_PAGE_COMMENTS_ENABLED) {
+		if (_wikiSettings.isPageCommentsEnabled()) {
 			return "edit_page_discussion";
 		}
 		else {
@@ -304,5 +305,6 @@ public class WikiPageAssetRenderer
 	}
 
 	private final WikiPage _page;
+	private final WikiSettings _wikiSettings;
 
 }

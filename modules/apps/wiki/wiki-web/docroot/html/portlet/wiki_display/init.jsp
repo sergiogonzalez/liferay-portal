@@ -19,13 +19,12 @@
 <%@ page import="com.liferay.wiki.NoSuchNodeException" %><%@
 page import="com.liferay.wiki.model.WikiNode" %><%@
 page import="com.liferay.wiki.model.WikiPage" %><%@
-page import="com.liferay.wiki.model.WikiPageConstants" %><%@
 page import="com.liferay.wiki.service.WikiNodeServiceUtil" %><%@
 page import="com.liferay.wiki.service.WikiPageLocalServiceUtil" %>
 
 <%
 long nodeId = GetterUtil.getLong(portletPreferences.getValue("nodeId", StringPool.BLANK));
-String title = GetterUtil.getString(portletPreferences.getValue("title", WikiPageConstants.FRONT_PAGE));
+String title = GetterUtil.getString(portletPreferences.getValue("title", WikiPropsValues.FRONT_PAGE_NAME));
 %>
 
 <%@ include file="/html/portlet/wiki_display/init-ext.jsp" %>
