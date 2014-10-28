@@ -590,8 +590,9 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 	private static final Log _log = LogFactoryUtil.getLog(
 		WikiNodeLocalServiceImpl.class);
 
-	private static final ServiceTracker<WikiImporterTracker, WikiImporterTracker>
-		_wikiImporterServiceTracker;
+	private static final ServiceTracker<
+		WikiImporterTracker, WikiImporterTracker>
+			_wikiImporterServiceTracker;
 
 	static {
 		Bundle bundle = FrameworkUtil.getBundle(WikiNodeLocalServiceImpl.class);

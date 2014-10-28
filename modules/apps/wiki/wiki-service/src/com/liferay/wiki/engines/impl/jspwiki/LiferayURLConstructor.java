@@ -77,8 +77,9 @@ public class LiferayURLConstructor implements URLConstructor {
 		else if (context.equals(WikiContext.VIEW)) {
 			path =
 				"[$BEGIN_PAGE_TITLE$]" +
-					WikiServiceUtil.escapeName(JSPWikiEngine.decodeJSPWikiName(name)) +
-						"[$END_PAGE_TITLE$]";
+					WikiServiceUtil.escapeName(
+						JSPWikiEngine.decodeJSPWikiName(name)) +
+					"[$END_PAGE_TITLE$]";
 		}
 		else if (context.equals(WikiContext.ATTACH)) {
 			if (name.indexOf(CharPool.SLASH) == -1) {

@@ -77,7 +77,7 @@ public class WikiWebUpgrade {
 		_releaseLocalService.updateRelease(
 			"com.liferay.wiki.web",
 			Arrays.asList(upgradePortletId, upgradePortletSettings), 1, 0,
-				false);
+			false);
 	}
 
 	private ReleaseLocalService _releaseLocalService;

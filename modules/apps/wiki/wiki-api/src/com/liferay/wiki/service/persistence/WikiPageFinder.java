@@ -21,28 +21,33 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public interface WikiPageFinder {
-	public int countByCreateDate(long groupId, long nodeId,
-		java.util.Date createDate, boolean before);
 
-	public int countByCreateDate(long groupId, long nodeId,
-		java.sql.Timestamp createDate, boolean before);
+	public int countByCreateDate(
+		long groupId, long nodeId, java.util.Date createDate, boolean before);
 
-	public int filterCountByCreateDate(long groupId, long nodeId,
-		java.util.Date createDate, boolean before);
-
-	public int filterCountByCreateDate(long groupId, long nodeId,
-		java.sql.Timestamp createDate, boolean before);
-
-	public java.util.List<com.liferay.wiki.model.WikiPage> filterFindByCreateDate(
-		long groupId, long nodeId, java.util.Date createDate, boolean before,
-		int start, int end);
-
-	public java.util.List<com.liferay.wiki.model.WikiPage> filterFindByCreateDate(
+	public int countByCreateDate(
 		long groupId, long nodeId, java.sql.Timestamp createDate,
-		boolean before, int start, int end);
+		boolean before);
+
+	public int filterCountByCreateDate(
+		long groupId, long nodeId, java.util.Date createDate, boolean before);
+
+	public int filterCountByCreateDate(
+		long groupId, long nodeId, java.sql.Timestamp createDate,
+		boolean before);
+
+	public java.util.List<com.liferay.wiki.model.WikiPage>
+		filterFindByCreateDate(
+			long groupId, long nodeId, java.util.Date createDate,
+			boolean before, int start, int end);
+
+	public java.util.List<com.liferay.wiki.model.WikiPage>
+		filterFindByCreateDate(
+			long groupId, long nodeId, java.sql.Timestamp createDate,
+			boolean before, int start, int end);
 
 	public com.liferay.wiki.model.WikiPage findByResourcePrimKey(
-		long resourcePrimKey)
+			long resourcePrimKey)
 		throws com.liferay.wiki.exception.NoSuchPageException;
 
 	public java.util.List<com.liferay.wiki.model.WikiPage> findByCreateDate(
@@ -54,4 +59,5 @@ public interface WikiPageFinder {
 		boolean before, int start, int end);
 
 	public java.util.List<com.liferay.wiki.model.WikiPage> findByNoAssets();
+
 }
