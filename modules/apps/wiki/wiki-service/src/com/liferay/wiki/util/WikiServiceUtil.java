@@ -67,6 +67,7 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -548,6 +549,12 @@ public class WikiServiceUtil {
 		return _instance._validate(nodeId, content, format);
 	}
 
+	public static Collection<String> getFormats() {
+		WikiEngineTracker wikiEngineTracker = _getWikiEngineTracker();
+
+		return wikiEngineTracker.getFormats();
+	}
+
 	private static WikiEngineTracker _getWikiEngineTracker() {
 		return _wikiEngineServiceTracker.getService();
 	}
@@ -621,12 +628,6 @@ public class WikiServiceUtil {
 		}
 
 		return matcher.appendTail(sb).toString();
-	}
-
-	private ClassLoader _getClassLoader() {
-		Class<?> clazz = getClass();
-
-		return clazz.getClassLoader();
 	}
 
 	private String _getEditPage(String format) {
@@ -733,8 +734,5 @@ public class WikiServiceUtil {
 
 		_wikiEngineServiceTracker.open();
 	}
-
-	private final Map<String, WikiEngine> _engines =
-		new ConcurrentHashMap<String, WikiEngine>();
 
 }

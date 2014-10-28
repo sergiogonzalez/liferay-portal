@@ -27,7 +27,7 @@
 		</action>
 
 		<action path="/wiki/edit_page" type="com.liferay.wiki.web.wiki.portlet.action.EditPageAction">
-			<forward name="portlet.wiki.edit_page" path="/portlet/wiki/edit_page.jspe" />
+			<forward name="portlet.wiki.edit_page" path="/portlet/wiki/edit_page.jsp" />
 			<forward name="portlet.wiki.error" path="/portlet/wiki/error.jsp" />
 			<forward name="portlet.wiki.view_categorized_pages" path="/portlet/wiki/view_categorized_pages.jsp" />
 		</action>

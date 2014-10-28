@@ -5,6 +5,7 @@ Export-Package:\
 	com.liferay.wiki.configuration,\
 	com.liferay.wiki.indexer,\
 	com.liferay.wiki.lar,\
+	com.liferay.wiki.model.impl,\
 	com.liferay.wiki.opensearch,\
 	com.liferay.wiki.service.permission,\
 	com.liferay.wiki.util

@@ -25,7 +25,7 @@ import com.liferay.wiki.constants.WikiPortletKeys;
  */
 public class WikiPermission {
 
-	public static final String RESOURCE_NAME = "com.liferay.portlet.wiki";
+	public static final String RESOURCE_NAME = "com.liferay.wiki";
 
 	public static void check(
 			PermissionChecker permissionChecker, long groupId, String actionId)

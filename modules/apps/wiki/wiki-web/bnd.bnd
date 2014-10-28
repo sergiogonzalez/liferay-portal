@@ -27,6 +27,7 @@ Import-Package: \
 	com.liferay.portlet.portletdisplaytemplate.util,\
 	\
 	com.liferay.wiki.lar,\
+	com.liferay.wiki.model.impl,\
 	com.liferay.wiki.service.permission,\
 	com.liferay.wiki.util,\
 	com.liferay.wiki.indexer,\
