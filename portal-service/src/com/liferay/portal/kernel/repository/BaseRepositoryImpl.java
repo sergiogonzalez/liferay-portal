@@ -29,10 +29,14 @@ import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.model.RepositoryEntry;
+import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.service.BaseServiceImpl;
 import com.liferay.portal.service.CompanyLocalService;
 import com.liferay.portal.service.RepositoryEntryLocalService;
 import com.liferay.portal.service.ServiceContext;
@@ -60,8 +64,8 @@ public abstract class BaseRepositoryImpl
 
 	@Override
 	public FileEntry addFileEntry(
-			long folderId, String sourceFileName, String mimeType, String title,
-			String description, String changeLog, File file,
+			long userId, long folderId, String sourceFileName, String mimeType,
+			String title, String description, String changeLog, File file,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -73,7 +77,7 @@ public abstract class BaseRepositoryImpl
 			size = file.length();
 
 			return addFileEntry(
-				folderId, sourceFileName, mimeType, title, description,
+				userId, folderId, sourceFileName, mimeType, title, description,
 				changeLog, is, size, serviceContext);
 		}
 		catch (IOException ioe) {
@@ -88,6 +92,32 @@ public abstract class BaseRepositoryImpl
 				}
 			}
 		}
+	}
+
+	@Deprecated
+	@Override
+	public FileEntry addFileEntry(
+			long folderId, String sourceFileName, String mimeType, String title,
+			String description, String changeLog, File file,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return addFileEntry(
+			_getUserId(), folderId, sourceFileName, mimeType, title,
+			description, changeLog, file, serviceContext);
+	}
+
+	@Deprecated
+	@Override
+	public FileEntry addFileEntry(
+			long folderId, String sourceFileName, String mimeType, String title,
+			String description, String changeLog, InputStream is, long size,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return addFileEntry(
+			_getUserId(), sourceFileName, mimeType, title, description,
+			changeLog, is, size, serviceContext);
 	}
 
 	/**
@@ -500,6 +530,34 @@ public abstract class BaseRepositoryImpl
 	protected DLAppHelperLocalService dlAppHelperLocalService;
 	protected RepositoryEntryLocalService repositoryEntryLocalService;
 	protected UserLocalService userLocalService;
+
+	/**
+	 * See {@link com.liferay.portal.service.BaseServiceImpl#getUserId()}
+	 */
+	private long _getUserId() throws PrincipalException {
+		String name = PrincipalThreadLocal.getName();
+
+		if (name == null) {
+			throw new PrincipalException();
+		}
+
+		if (Validator.isNull(name)) {
+			throw new PrincipalException("Principal is null");
+		}
+		else {
+			for (int i = 0; i < BaseServiceImpl.ANONYMOUS_NAMES.length; i++) {
+				if (StringUtil.equalsIgnoreCase(
+						name, BaseServiceImpl.ANONYMOUS_NAMES[i])) {
+
+					throw new PrincipalException(
+						"Principal cannot be " +
+							BaseServiceImpl.ANONYMOUS_NAMES[i]);
+				}
+			}
+		}
+
+		return GetterUtil.getLong(name);
+	}
 
 	private long _companyId;
 	private long _groupId;

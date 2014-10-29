@@ -26,14 +26,20 @@ import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.SortedArrayList;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
+import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.service.BaseServiceImpl;
 import com.liferay.portal.service.RepositoryLocalService;
 import com.liferay.portal.service.RepositoryService;
 import com.liferay.portal.service.ResourceLocalService;
@@ -91,8 +97,8 @@ public class LiferayRepository
 
 	@Override
 	public FileEntry addFileEntry(
-			long folderId, String sourceFileName, String mimeType, String title,
-			String description, String changeLog, File file,
+			long userId, long folderId, String sourceFileName, String mimeType,
+			String title, String description, String changeLog, File file,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -121,9 +127,9 @@ public class LiferayRepository
 
 	@Override
 	public FileEntry addFileEntry(
-			long folderId, String sourceFileName, String mimeType, String title,
-			String description, String changeLog, InputStream is, long size,
-			ServiceContext serviceContext)
+			long userId, long folderId, String sourceFileName, String mimeType,
+			String title, String description, String changeLog, InputStream is,
+			long size, ServiceContext serviceContext)
 		throws PortalException {
 
 		long fileEntryTypeId = ParamUtil.getLong(
@@ -141,6 +147,32 @@ public class LiferayRepository
 		addFileEntryResources(dlFileEntry, serviceContext);
 
 		return new LiferayFileEntry(dlFileEntry);
+	}
+
+	@Deprecated
+	@Override
+	public FileEntry addFileEntry(
+			long folderId, String sourceFileName, String mimeType, String title,
+			String description, String changeLog, File file,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return addFileEntry(
+			_getUserId(), folderId, sourceFileName, mimeType, title,
+			description, changeLog, file, serviceContext);
+	}
+
+	@Deprecated
+	@Override
+	public FileEntry addFileEntry(
+			long folderId, String sourceFileName, String mimeType, String title,
+			String description, String changeLog, InputStream is, long size,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return addFileEntry(
+			_getUserId(), folderId, sourceFileName, mimeType, title,
+			description, changeLog, is, size, serviceContext);
 	}
 
 	@Override
@@ -837,6 +869,34 @@ public class LiferayRepository
 
 		return dlFolderService.verifyInheritableLock(
 			toFolderId(folderId), lockUuid);
+	}
+
+	/**
+	 * See {@link com.liferay.portal.service.BaseServiceImpl#getUserId()}
+	 */
+	private long _getUserId() throws PrincipalException {
+		String name = PrincipalThreadLocal.getName();
+
+		if (name == null) {
+			throw new PrincipalException();
+		}
+
+		if (Validator.isNull(name)) {
+			throw new PrincipalException("Principal is null");
+		}
+		else {
+			for (int i = 0; i < BaseServiceImpl.ANONYMOUS_NAMES.length; i++) {
+				if (StringUtil.equalsIgnoreCase(
+						name, BaseServiceImpl.ANONYMOUS_NAMES[i])) {
+
+					throw new PrincipalException(
+						"Principal cannot be " +
+							BaseServiceImpl.ANONYMOUS_NAMES[i]);
+				}
+			}
+		}
+
+		return GetterUtil.getLong(name);
 	}
 
 }
