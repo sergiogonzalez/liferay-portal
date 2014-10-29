@@ -189,12 +189,23 @@ public class BaseRepositoryProxyBean
 
 	@Override
 	public FileEntry copyFileEntry(
-			long groupId, long fileEntryId, long destFolderId,
+			long userId, long groupId, long fileEntryId, long destFolderId,
 			ServiceContext serviceContext)
 		throws PortalException {
 
 		return _baseRepository.copyFileEntry(
-			groupId, fileEntryId, destFolderId, serviceContext);
+			userId, groupId, fileEntryId, destFolderId, serviceContext);
+	}
+
+	@Deprecated
+	@Override
+	public FileEntry copyFileEntry(
+			long groupId, long fileEntryId, long destFolderId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return copyFileEntry(
+			_getUserId(), groupId, fileEntryId, destFolderId, serviceContext);
 	}
 
 	@Override

@@ -258,7 +258,7 @@ public class LiferayRepository
 
 	@Override
 	public FileEntry copyFileEntry(
-			long groupId, long fileEntryId, long destFolderId,
+			long userId, long groupId, long fileEntryId, long destFolderId,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -267,6 +267,17 @@ public class LiferayRepository
 			serviceContext);
 
 		return new LiferayFileEntry(dlFileEntry);
+	}
+
+	@Deprecated
+	@Override
+	public FileEntry copyFileEntry(
+			long groupId, long fileEntryId, long destFolderId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return copyFileEntry(
+			_getUserId(), groupId, fileEntryId, destFolderId, serviceContext);
 	}
 
 	@Override

@@ -115,12 +115,12 @@ public abstract class CMISRepositoryHandler
 
 	@Override
 	public FileEntry copyFileEntry(
-			long groupId, long fileEntryId, long destFolderId,
+			long userId, long groupId, long fileEntryId, long destFolderId,
 			ServiceContext serviceContext)
 		throws PortalException {
 
 		return _baseCmisRepository.copyFileEntry(
-			groupId, fileEntryId, destFolderId, serviceContext);
+			userId, groupId, fileEntryId, destFolderId, serviceContext);
 	}
 
 	@Override

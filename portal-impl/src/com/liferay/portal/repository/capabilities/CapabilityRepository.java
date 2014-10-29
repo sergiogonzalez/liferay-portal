@@ -246,19 +246,29 @@ public class CapabilityRepository
 
 	@Override
 	public FileEntry copyFileEntry(
-			long groupId, long fileEntryId, long destFolderId,
+			long userId, long groupId, long fileEntryId, long destFolderId,
 			ServiceContext serviceContext)
 		throws PortalException {
 
 		Repository repository = getRepository();
 
 		FileEntry fileEntry = repository.copyFileEntry(
-			groupId, fileEntryId, destFolderId, serviceContext);
+			userId, groupId, fileEntryId, destFolderId, serviceContext);
 
 		_repositoryEventTrigger.trigger(
 			RepositoryEventType.Add.class, FileEntry.class, fileEntry);
 
 		return fileEntry;
+	}
+
+	@Override
+	public FileEntry copyFileEntry(
+			long groupId, long fileEntryId, long destFolderId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return copyFileEntry(
+			_getUserId(), groupId, fileEntryId, destFolderId, serviceContext);
 	}
 
 	@Override
