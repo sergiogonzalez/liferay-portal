@@ -95,25 +95,24 @@ public class DLAppHelperLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		if (DLAppHelperThreadLocal.isEnabled()) {
-			updateAsset(
-				userId, fileEntry, fileVersion,
-				serviceContext.getAssetCategoryIds(),
-				serviceContext.getAssetTagNames(),
-				serviceContext.getAssetLinkEntryIds());
-
-			if (PropsValues.DL_FILE_ENTRY_COMMENTS_ENABLED) {
-				mbMessageLocalService.addDiscussionMessage(
-					fileEntry.getUserId(), fileEntry.getUserName(),
-					fileEntry.getGroupId(), DLFileEntryConstants.getClassName(),
-					fileEntry.getFileEntryId(),
-					WorkflowConstants.ACTION_PUBLISH);
-			}
+		if (!DLAppHelperThreadLocal.isEnabled()) {
+			return;
 		}
 
-		if (DLAppHelperThreadLocal.isEnabled()) {
-			registerDLProcessorCallback(fileEntry, null);
+		updateAsset(
+			userId, fileEntry, fileVersion,
+			serviceContext.getAssetCategoryIds(),
+			serviceContext.getAssetTagNames(),
+			serviceContext.getAssetLinkEntryIds());
+
+		if (PropsValues.DL_FILE_ENTRY_COMMENTS_ENABLED) {
+			mbMessageLocalService.addDiscussionMessage(
+				fileEntry.getUserId(), fileEntry.getUserName(),
+				fileEntry.getGroupId(), DLFileEntryConstants.getClassName(),
+				fileEntry.getFileEntryId(), WorkflowConstants.ACTION_PUBLISH);
 		}
+
+		registerDLProcessorCallback(fileEntry, null);
 	}
 
 	@Override
@@ -218,46 +217,44 @@ public class DLAppHelperLocalServiceImpl
 
 	@Override
 	public void deleteFileEntry(FileEntry fileEntry) throws PortalException {
-		if (DLAppHelperThreadLocal.isEnabled()) {
-
-			// Subscriptions
-
-			subscriptionLocalService.deleteSubscriptions(
-				fileEntry.getCompanyId(), DLFileEntryConstants.getClassName(),
-				fileEntry.getFileEntryId());
-
-			// File previews
-
-			DLProcessorRegistryUtil.cleanUp(fileEntry);
-
-			// File ranks
-
-			dlFileRankLocalService.deleteFileRanksByFileEntryId(
-				fileEntry.getFileEntryId());
-
-			// File shortcuts
-
-			dlFileShortcutLocalService.deleteFileShortcuts(
-				fileEntry.getFileEntryId());
-
-			// Asset
-
-			assetEntryLocalService.deleteEntry(
-				DLFileEntryConstants.getClassName(),
-				fileEntry.getFileEntryId());
-
-			// Message boards
-
-			mbMessageLocalService.deleteDiscussionMessages(
-				DLFileEntryConstants.getClassName(),
-				fileEntry.getFileEntryId());
-
-			// Ratings
-
-			ratingsStatsLocalService.deleteStats(
-				DLFileEntryConstants.getClassName(),
-				fileEntry.getFileEntryId());
+		if (!DLAppHelperThreadLocal.isEnabled()) {
+			return;
 		}
+
+		// Subscriptions
+
+		subscriptionLocalService.deleteSubscriptions(
+			fileEntry.getCompanyId(), DLFileEntryConstants.getClassName(),
+			fileEntry.getFileEntryId());
+
+		// File previews
+
+		DLProcessorRegistryUtil.cleanUp(fileEntry);
+
+		// File ranks
+
+		dlFileRankLocalService.deleteFileRanksByFileEntryId(
+			fileEntry.getFileEntryId());
+
+		// File shortcuts
+
+		dlFileShortcutLocalService.deleteFileShortcuts(
+			fileEntry.getFileEntryId());
+
+		// Asset
+
+		assetEntryLocalService.deleteEntry(
+			DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId());
+
+		// Message boards
+
+		mbMessageLocalService.deleteDiscussionMessages(
+			DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId());
+
+		// Ratings
+
+		ratingsStatsLocalService.deleteStats(
+			DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId());
 	}
 
 	@Override
