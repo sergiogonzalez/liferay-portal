@@ -95,25 +95,24 @@ public class DLAppHelperLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		if (DLAppHelperThreadLocal.isEnabled()) {
-			updateAsset(
-				userId, fileEntry, fileVersion,
-				serviceContext.getAssetCategoryIds(),
-				serviceContext.getAssetTagNames(),
-				serviceContext.getAssetLinkEntryIds());
-
-			if (PropsValues.DL_FILE_ENTRY_COMMENTS_ENABLED) {
-				mbMessageLocalService.addDiscussionMessage(
-					fileEntry.getUserId(), fileEntry.getUserName(),
-					fileEntry.getGroupId(), DLFileEntryConstants.getClassName(),
-					fileEntry.getFileEntryId(),
-					WorkflowConstants.ACTION_PUBLISH);
-			}
+		if (!DLAppHelperThreadLocal.isEnabled()) {
+			return;
 		}
 
-		if (DLAppHelperThreadLocal.isEnabled()) {
-			registerDLProcessorCallback(fileEntry, null);
+		updateAsset(
+			userId, fileEntry, fileVersion,
+			serviceContext.getAssetCategoryIds(),
+			serviceContext.getAssetTagNames(),
+			serviceContext.getAssetLinkEntryIds());
+
+		if (PropsValues.DL_FILE_ENTRY_COMMENTS_ENABLED) {
+			mbMessageLocalService.addDiscussionMessage(
+				fileEntry.getUserId(), fileEntry.getUserName(),
+				fileEntry.getGroupId(), DLFileEntryConstants.getClassName(),
+				fileEntry.getFileEntryId(), WorkflowConstants.ACTION_PUBLISH);
 		}
+
+		registerDLProcessorCallback(fileEntry, null);
 	}
 
 	@Override
