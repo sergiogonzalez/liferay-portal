@@ -21,6 +21,9 @@ import com.liferay.portal.kernel.portlet.PortletBag;
 import com.liferay.portal.kernel.portlet.PortletBagPool;
 import com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil;
 import com.liferay.portal.kernel.servlet.TrackedServletRequest;
+import com.liferay.portal.kernel.servlet.taglib.DynamicIncludeUtil;
+import com.liferay.portal.kernel.servlet.taglib.TagKeyFactory;
+import com.liferay.portal.kernel.servlet.taglib.TagKeyFactoryRegistry;
 import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -35,6 +38,7 @@ import com.liferay.portal.model.Theme;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.CustomJspRegistryUtil;
 import com.liferay.taglib.FileAvailabilityUtil;
+import com.liferay.taglib.servlet.JspWriterHttpServletResponse;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
 import javax.servlet.RequestDispatcher;
@@ -81,7 +85,7 @@ public class IncludeTag extends AttributesTagSupport {
 				return processEndTag();
 			}
 
-			doInclude(page);
+			doInclude(page, false);
 
 			return EVAL_PAGE;
 		}
@@ -121,7 +125,7 @@ public class IncludeTag extends AttributesTagSupport {
 				return processStartTag();
 			}
 
-			doInclude(page);
+			doInclude(page, true);
 
 			return EVAL_BODY_INCLUDE;
 		}
@@ -188,9 +192,12 @@ public class IncludeTag extends AttributesTagSupport {
 		}
 	}
 
-	protected void doInclude(String page) throws JspException {
+	protected void doInclude(
+			String page, boolean dynamicIncludeAscendingPriority)
+		throws JspException {
+
 		try {
-			include(page);
+			include(page, dynamicIncludeAscendingPriority);
 		}
 		catch (Exception e) {
 			String currentURL = (String)request.getAttribute(
@@ -299,7 +306,39 @@ public class IncludeTag extends AttributesTagSupport {
 		return null;
 	}
 
-	protected void include(String page) throws Exception {
+	protected void include(String page, boolean doStartTag) throws Exception {
+		JspWriterHttpServletResponse jspWriterHttpServletResponse = null;
+
+		String tagKey = null;
+
+		Class<?> clazz = getClass();
+
+		String tagClassName = clazz.getName();
+
+		String dynamicIncludePrefixKey = tagClassName + "#";
+
+		if (doStartTag) {
+			dynamicIncludePrefixKey += "doStartTag#";
+		}
+		else {
+			dynamicIncludePrefixKey += "doEndTag#";
+		}
+
+		TagKeyFactory tagKeyResolver = TagKeyFactoryRegistry.getTagKeyFactory(
+			tagClassName);
+
+		if (tagKeyResolver != null) {
+			jspWriterHttpServletResponse = new JspWriterHttpServletResponse(
+				pageContext);
+
+			tagKey = tagKeyResolver.getKey(
+				request, jspWriterHttpServletResponse, this);
+
+			DynamicIncludeUtil.include(
+				request, jspWriterHttpServletResponse,
+				dynamicIncludePrefixKey + "before#" + tagKey, doStartTag);
+		}
+
 		RequestDispatcher requestDispatcher =
 			DirectRequestDispatcherFactoryUtil.getRequestDispatcher(
 				servletContext, page);
@@ -312,6 +351,12 @@ public class IncludeTag extends AttributesTagSupport {
 		requestDispatcher.include(request, response);
 
 		request.removeAttribute(WebKeys.SERVLET_CONTEXT_INCLUDE_FILTER_STRICT);
+
+		if (tagKeyResolver != null) {
+			DynamicIncludeUtil.include(
+				request, jspWriterHttpServletResponse,
+				dynamicIncludePrefixKey + "after#" + tagKey, doStartTag);
+		}
 	}
 
 	protected boolean isCleanUpSetAttributes() {

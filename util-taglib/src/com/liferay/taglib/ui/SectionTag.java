@@ -74,7 +74,7 @@ public class SectionTag extends IncludeTag {
 			pageContext.setAttribute(
 				"sectionRedirectParams", sectionRedirectParams);
 
-			include(getStartPage());
+			include(getStartPage(), true);
 
 			if (!_tabsTag.isRefresh() || _sectionSelected.booleanValue()) {
 				return EVAL_BODY_INCLUDE;
