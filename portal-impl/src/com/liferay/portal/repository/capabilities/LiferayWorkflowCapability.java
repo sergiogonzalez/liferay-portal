@@ -17,7 +17,13 @@ package com.liferay.portal.repository.capabilities;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.capabilities.WorkflowCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portlet.documentlibrary.model.DLFileVersion;
+import com.liferay.portlet.documentlibrary.model.DLSyncConstants;
+import com.liferay.portlet.documentlibrary.util.DLAppHelperThreadLocal;
+import com.liferay.portlet.documentlibrary.util.DLUtil;
 
 /**
  * @author Adolfo Pérez
@@ -29,7 +35,24 @@ public class LiferayWorkflowCapability implements WorkflowCapability {
 			long userId, FileEntry fileEntry, ServiceContext serviceContext)
 		throws PortalException {
 
-		throw new UnsupportedOperationException("Not implemented");
+		boolean previousEnabled = WorkflowThreadLocal.isEnabled();
+
+		if (!DLAppHelperThreadLocal.isEnabled()) {
+			WorkflowThreadLocal.setEnabled(false);
+		}
+
+		try {
+			FileVersion fileVersion = fileEntry.getFileVersion();
+
+			DLUtil.startWorkflowInstance(
+				userId, (DLFileVersion)fileVersion.getModel(),
+				DLSyncConstants.EVENT_ADD, serviceContext);
+		}
+		finally {
+			if (!DLAppHelperThreadLocal.isEnabled()) {
+				WorkflowThreadLocal.setEnabled(previousEnabled);
+			}
+		}
 	}
 
 	@Override
