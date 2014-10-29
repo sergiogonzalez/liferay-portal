@@ -36,6 +36,7 @@ public class DDMStructureTable {
 		{"parentStructureId", Types.BIGINT},
 		{"classNameId", Types.BIGINT},
 		{"structureKey", Types.VARCHAR},
+		{"version", Types.VARCHAR},
 		{"name", Types.VARCHAR},
 		{"description", Types.VARCHAR},
 		{"definition", Types.CLOB},
@@ -43,7 +44,7 @@ public class DDMStructureTable {
 		{"type_", Types.INTEGER}
 	};
 
-	public static final String TABLE_SQL_CREATE = "create table DDMStructure (uuid_ VARCHAR(75) null,structureId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentStructureId LONG,classNameId LONG,structureKey VARCHAR(75) null,name STRING null,description STRING null,definition TEXT null,storageType VARCHAR(75) null,type_ INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table DDMStructure (uuid_ VARCHAR(75) null,structureId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentStructureId LONG,classNameId LONG,structureKey VARCHAR(75) null,version VARCHAR(75) null,name STRING null,description STRING null,definition TEXT null,storageType VARCHAR(75) null,type_ INTEGER)";
 
 	public static final String TABLE_SQL_DROP = "drop table DDMStructure";
 
