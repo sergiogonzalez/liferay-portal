@@ -262,6 +262,13 @@ public class CapabilityRepository
 		FileEntry fileEntry = repository.copyFileEntry(
 			userId, groupId, fileEntryId, destFolderId, serviceContext);
 
+		WorkflowCapability workflowCapability = getInternalCapability(
+			WorkflowCapability.class);
+
+		if (workflowCapability != null) {
+			workflowCapability.addFileEntry(userId, fileEntry, serviceContext);
+		}
+
 		_repositoryEventTrigger.trigger(
 			RepositoryEventType.Add.class, FileEntry.class, fileEntry);
 
