@@ -17,6 +17,7 @@ package com.liferay.portal.repository.capabilities;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.capabilities.SyncCapability;
+import com.liferay.portal.kernel.repository.capabilities.WorkflowCapability;
 import com.liferay.portal.kernel.repository.event.RepositoryEventTrigger;
 import com.liferay.portal.kernel.repository.event.RepositoryEventType;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -59,6 +60,13 @@ public class CapabilityLocalRepository
 			userId, folderId, sourceFileName, mimeType, title, description,
 			changeLog, file, serviceContext);
 
+		WorkflowCapability workflowCapability = getInternalCapability(
+			WorkflowCapability.class);
+
+		if (workflowCapability != null) {
+			workflowCapability.startWorkflow(userId, fileEntry, serviceContext);
+		}
+
 		_repositoryEventTrigger.trigger(
 			RepositoryEventType.Add.class, FileEntry.class, fileEntry);
 
@@ -77,6 +85,13 @@ public class CapabilityLocalRepository
 		FileEntry fileEntry = localRepository.addFileEntry(
 			userId, folderId, sourceFileName, mimeType, title, description,
 			changeLog, is, size, serviceContext);
+
+		WorkflowCapability workflowCapability = getInternalCapability(
+			WorkflowCapability.class);
+
+		if (workflowCapability != null) {
+			workflowCapability.startWorkflow(userId, fileEntry, serviceContext);
+		}
 
 		_repositoryEventTrigger.trigger(
 			RepositoryEventType.Add.class, FileEntry.class, fileEntry);
