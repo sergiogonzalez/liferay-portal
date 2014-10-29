@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
@@ -66,7 +65,6 @@ import com.liferay.portlet.documentlibrary.service.base.DLAppHelperLocalServiceB
 import com.liferay.portlet.documentlibrary.social.DLActivityKeys;
 import com.liferay.portlet.documentlibrary.util.DLAppHelperThreadLocal;
 import com.liferay.portlet.documentlibrary.util.DLProcessorRegistryUtil;
-import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.documentlibrary.util.comparator.FileVersionVersionComparator;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
@@ -97,44 +95,24 @@ public class DLAppHelperLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		if (DLAppHelperThreadLocal.isEnabled()) {
-			updateAsset(
-				userId, fileEntry, fileVersion,
-				serviceContext.getAssetCategoryIds(),
-				serviceContext.getAssetTagNames(),
-				serviceContext.getAssetLinkEntryIds());
-
-			if (PropsValues.DL_FILE_ENTRY_COMMENTS_ENABLED) {
-				mbMessageLocalService.addDiscussionMessage(
-					fileEntry.getUserId(), fileEntry.getUserName(),
-					fileEntry.getGroupId(), DLFileEntryConstants.getClassName(),
-					fileEntry.getFileEntryId(),
-					WorkflowConstants.ACTION_PUBLISH);
-			}
-		}
-
-		boolean previousEnabled = WorkflowThreadLocal.isEnabled();
-
 		if (!DLAppHelperThreadLocal.isEnabled()) {
-			WorkflowThreadLocal.setEnabled(false);
+			return;
 		}
 
-		try {
-			if (fileVersion instanceof LiferayFileVersion) {
-				DLUtil.startWorkflowInstance(
-					userId, (DLFileVersion)fileVersion.getModel(),
-					DLSyncConstants.EVENT_ADD, serviceContext);
-			}
-		}
-		finally {
-			if (!DLAppHelperThreadLocal.isEnabled()) {
-				WorkflowThreadLocal.setEnabled(previousEnabled);
-			}
+		updateAsset(
+			userId, fileEntry, fileVersion,
+			serviceContext.getAssetCategoryIds(),
+			serviceContext.getAssetTagNames(),
+			serviceContext.getAssetLinkEntryIds());
+
+		if (PropsValues.DL_FILE_ENTRY_COMMENTS_ENABLED) {
+			mbMessageLocalService.addDiscussionMessage(
+				fileEntry.getUserId(), fileEntry.getUserName(),
+				fileEntry.getGroupId(), DLFileEntryConstants.getClassName(),
+				fileEntry.getFileEntryId(), WorkflowConstants.ACTION_PUBLISH);
 		}
 
-		if (DLAppHelperThreadLocal.isEnabled()) {
-			registerDLProcessorCallback(fileEntry, null);
-		}
+		registerDLProcessorCallback(fileEntry, null);
 	}
 
 	@Override

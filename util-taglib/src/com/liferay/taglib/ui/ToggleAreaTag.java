@@ -39,7 +39,7 @@ public class ToggleAreaTag extends IncludeTag {
 				jspWriter.write("</div>");
 			}
 			else {
-				include(_endPage);
+				include(_endPage, false);
 			}
 
 			return EVAL_PAGE;
@@ -82,7 +82,7 @@ public class ToggleAreaTag extends IncludeTag {
 			request.setAttribute("liferay-ui:toggle-area:stateVar", _stateVar);
 			request.setAttribute("liferay-ui:toggle-area:align", _align);
 
-			include(getStartPage());
+			include(getStartPage(), true);
 
 			return EVAL_BODY_INCLUDE;
 		}
