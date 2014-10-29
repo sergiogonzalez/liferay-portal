@@ -132,6 +132,17 @@ public abstract class BaseRepositoryImpl
 		checkInFileEntry(fileEntryId, lockUuid, new ServiceContext());
 	}
 
+	@Deprecated
+	@Override
+	public FileEntry copyFileEntry(
+			long groupId, long fileEntryId, long destFolderId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return copyFileEntry(
+			_getUserId(), groupId, fileEntryId, destFolderId, serviceContext);
+	}
+
 	@Override
 	public void deleteFileEntry(long folderId, String title)
 		throws PortalException {
