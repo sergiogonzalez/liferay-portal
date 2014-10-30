@@ -18,7 +18,7 @@
 <%
 WikiPage wikiPage = (WikiPage)request.getAttribute("edit_page.jsp-wikiPage");
 
-String format = BeanParamUtil.getString(wikiPage, request, "format", WikiPageConstants.DEFAULT_FORMAT);
+String format = BeanParamUtil.getString(wikiPage, request, "format", wikiSettings.getDefaultFormat());
 
 String content = BeanParamUtil.getString(wikiPage, request, "content");
 
@@ -77,7 +77,7 @@ boolean showSyntaxHelp = ((toggleValue != null) && toggleValue.equals("block"));
 
 			<liferay-util:include page="<%= WikiServiceUtil.getHelpPage(format) %>" servletContext="<%= application %>" />
 
-			<aui:a href="<%= WikiWebUtil.getHelpURL(format) %>" target="_blank"><liferay-ui:message key="learn-more" /> &raquo;</aui:a>
+			<aui:a href="<%= WikiServiceUtil.getHelpURL(format) %>" target="_blank"><liferay-ui:message key="learn-more" /> &raquo;</aui:a>
 		</aui:col>
 	</aui:row>
 </div>
