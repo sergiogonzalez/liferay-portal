@@ -17,7 +17,6 @@ package com.liferay.wiki.engines.impl;
 import com.liferay.wiki.engines.WikiEngine;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.ConcurrentSkipListMap;
 
@@ -53,15 +52,15 @@ public class WikiEngineTracker {
 		_serviceReferences.put(format, serviceReference);
 	}
 
+	public Collection<String> getFormats() {
+		return _serviceReferences.keySet();
+	}
+
 	public String getProperty(String format, String key) {
 		ServiceReference<WikiEngine> serviceReference = _serviceReferences.get(
 			format);
 
 		return (String)serviceReference.getProperty(key);
-	}
-
-	public Collection<String> getFormats() {
-		return _serviceReferences.keySet();
 	}
 
 	public WikiEngine getWikiEngine(String format) {

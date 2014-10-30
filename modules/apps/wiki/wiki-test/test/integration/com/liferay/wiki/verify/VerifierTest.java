@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.verify.BaseVerifyProcessTestCase;
-import com.liferay.portal.verify.BaseVerifyTestCase;
 import com.liferay.portal.verify.VerifyProcess;
 
 import org.junit.runner.RunWith;

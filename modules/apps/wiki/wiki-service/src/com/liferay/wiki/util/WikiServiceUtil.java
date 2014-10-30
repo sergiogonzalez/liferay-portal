@@ -75,7 +75,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -426,6 +425,12 @@ public class WikiServiceUtil {
 		return entries;
 	}
 
+	public static Collection<String> getFormats() {
+		WikiEngineTracker wikiEngineTracker = _getWikiEngineTracker();
+
+		return wikiEngineTracker.getFormats();
+	}
+
 	public static String getFormattedContent(
 			RenderRequest renderRequest, RenderResponse renderResponse,
 			WikiPage wikiPage, PortletURL viewPageURL, PortletURL editPageURL,
@@ -547,12 +552,6 @@ public class WikiServiceUtil {
 		throws WikiFormatException {
 
 		return _instance._validate(nodeId, content, format);
-	}
-
-	public static Collection<String> getFormats() {
-		WikiEngineTracker wikiEngineTracker = _getWikiEngineTracker();
-
-		return wikiEngineTracker.getFormats();
 	}
 
 	private static WikiEngineTracker _getWikiEngineTracker() {

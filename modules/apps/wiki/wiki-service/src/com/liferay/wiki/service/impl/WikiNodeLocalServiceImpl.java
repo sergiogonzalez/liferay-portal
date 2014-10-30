@@ -591,8 +591,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		WikiNodeLocalServiceImpl.class);
 
 	private static final ServiceTracker<
-		WikiImporterTracker, WikiImporterTracker>
-			_wikiImporterServiceTracker;
+		WikiImporterTracker, WikiImporterTracker> _wikiImporterServiceTracker;
 
 	static {
 		Bundle bundle = FrameworkUtil.getBundle(WikiNodeLocalServiceImpl.class);

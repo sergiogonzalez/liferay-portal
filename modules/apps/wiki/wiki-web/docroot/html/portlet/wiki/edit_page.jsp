@@ -91,7 +91,7 @@ if ((templateNodeId > 0) && Validator.isNotNull(templateTitle)) {
 			parentTitle = templatePage.getParentTitle();
 
 			if (wikiPage.isNew()) {
-                selectedFormat = templatePage.getFormat();
+				selectedFormat = templatePage.getFormat();
 
 				wikiPage.setContent(templatePage.getContent());
 				wikiPage.setFormat(selectedFormat);
@@ -240,9 +240,10 @@ if (Validator.isNull(redirect)) {
 					<aui:input name="parent" type="resource" value="<%= parentTitle %>" />
 				</c:if>
 
-                <%
-                    Collection<String> formats = WikiServiceUtil.getFormats();
-                %>
+				<%
+					Collection<String> formats = WikiServiceUtil.getFormats();
+				%>
+
 				<c:choose>
 					<c:when test="<%= !formats.isEmpty() %>">
 						<aui:select changesContext="<%= true %>" name="format" onChange='<%= renderResponse.getNamespace() + "changeFormat(this);" %>'>
