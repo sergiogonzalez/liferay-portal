@@ -268,13 +268,13 @@ public class LayoutImporter {
 
 		if (serviceContext == null) {
 			serviceContext = new ServiceContext();
-
-			serviceContext.setCompanyId(companyId);
-			serviceContext.setSignedIn(false);
-			serviceContext.setUserId(userId);
-
-			ServiceContextThreadLocal.pushServiceContext(serviceContext);
 		}
+
+		serviceContext.setCompanyId(companyId);
+		serviceContext.setSignedIn(false);
+		serviceContext.setUserId(userId);
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 
 		ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(file);
 
