@@ -39,7 +39,7 @@ public class TabsTag extends IncludeTag {
 			request.setAttribute("liferay-ui:tabs:param", _param);
 			request.setAttribute("liferay-ui:tabs:value", _value);
 
-			include(getEndPage());
+			include(getEndPage(), false);
 
 			request.removeAttribute("liferay-ui:tabs:backLabel");
 			request.removeAttribute("liferay-ui:tabs:backURL");
@@ -204,7 +204,7 @@ public class TabsTag extends IncludeTag {
 
 			request.setAttribute("liferay-ui:tabs:value", _value);
 
-			include(getStartPage());
+			include(getStartPage(), true);
 
 			return EVAL_BODY_INCLUDE;
 		}

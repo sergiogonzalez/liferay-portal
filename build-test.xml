@@ -58,38 +58,86 @@
 			<if>
 				<isset property="app.server.bundles.size" />
 				<then>
-					<var name="bundles.size" value="1" />
+					<var name="app.server.bundle.index" value="1" />
 
 					<antelope:repeat count="${app.server.bundles.size}">
-						<delete dir="${app.server.parent.dir}-${bundles.size}" />
+						<set-app-server-properties
+							app.server.bundle.index="${app.server.bundle.index}"
+						/>
 
-						<copy todir="${app.server.parent.dir}-${bundles.size}/${app.server.type}-${app.server.version}">
+						<delete dir="${test.app.server.parent.dir}" />
+
+						<copy todir="${test.app.server.dir}">
 							<fileset dir="${app.server.dir}" />
 						</copy>
 
 						<if>
 	  					 	<available file="${liferay.home}/osgi" />
 							<then>
-								<copy todir="${app.server.parent.dir}-${bundles.size}/osgi">
+								<copy todir="${test.app.server.parent.dir}/osgi">
 									<fileset dir="${liferay.home}/osgi" />
 								</copy>
 							</then>
 						</if>
 
 						<chmod perm="a+x">
-							<fileset dir="${app.server.parent.dir}-${bundles.size}/${app.server.type}-${app.server.version}/bin">
+							<fileset dir="${test.app.server.bin.dir}">
 								<include name="*.sh" />
 							</fileset>
 						</chmod>
 
+						<replaceregexp
+							file="${test.app.server.dir}/conf/server.xml"
+							flags="g"
+							match="=&quot;8(\d\d\d)&quot;"
+							replace="=&quot;${test.app.server.leading.port.number}\1&quot;"
+						/>
+
+						<replace
+							file="${test.app.server.classes.portal.dir}/portal-ext.properties"
+							token="liferay.home=${liferay.home}"
+							value="liferay.home=${test.app.server.parent.dir}"
+						/>
+
 						<math
 							datatype="int"
-							operand1="${bundles.size}"
+							operand1="${app.server.bundle.index}"
 							operand2="1"
 							operation="+"
-							result="bundles.size"
+							result="app.server.bundle.index"
 						/>
 					</antelope:repeat>
+
+					<var name="app.server.bundle.index" unset="true" />
+				</then>
+			</if>
+
+			<if>
+				<isset property="databases.size" />
+				<then>
+					<var name="database.index" value="1" />
+
+					<antelope:repeat count="${databases.size}">
+						<set-app-server-properties
+							app.server.bundle.index="${database.index}"
+						/>
+
+						<replace
+							file="${test.app.server.classes.portal.dir}/portal-ext.properties"
+							token="lportal"
+							value="lportal${database.index}"
+						/>
+
+						<math
+							datatype="int"
+							operand1="${database.index}"
+							operand2="1"
+							operation="+"
+							result="database.index"
+						/>
+					</antelope:repeat>
+
+					<var name="database.index" unset="true" />
 				</then>
 			</if>
 		</sequential>
@@ -275,23 +323,10 @@
 							app.server.bundle.index="${app.server.bundle.index}"
 						/>
 
-						<replaceregexp
-							file="${test.app.server.dir}/conf/server.xml"
-							flags="g"
-							match="=&quot;8(\d\d\d)&quot;"
-							replace="=&quot;${test.app.server.leading.port.number}\1&quot;"
-						/>
-
 						<replace
 							file="${test.app.server.dir}/conf/server.xml"
 							token="&lt;Engine name=&quot;Catalina&quot; defaultHost=&quot;localhost&quot;&gt;"
 							value="&lt;Engine name=&quot;Catalina&quot; defaultHost=&quot;localhost&quot; jvmRoute=&quot;${test.app.server.leading.port.number}&quot;&gt;"
-						/>
-
-						<replace
-							file="${test.app.server.classes.portal.dir}/portal-ext.properties"
-							token="liferay.home=${liferay.home}"
-							value="liferay.home=${test.app.server.parent.dir}"
 						/>
 
 						<math
@@ -767,17 +802,31 @@
 			<then>
 				<if>
 					<and>
+						<isset property="databases.size" />
 						<equals arg1="${database.type}" arg2="mysql" />
-						<equals arg1="${database.sharding}" arg2="true" />
 					</and>
 					<then>
-						<echo file="create.sql">
-drop database if exists lportal;
-drop database if exists lportal1;
-drop database if exists lportal2;
-create database lportal character set utf8;
-create database lportal1 character set utf8;
-create database lportal2 character set utf8;</echo>
+						<var name="database.index" value="1" />
+
+						<echo file="create.sql">drop database if exists lportal;
+create database lportal character set utf8;</echo>
+
+						<antelope:repeat count="${databases.size}">
+							<echo append="true" file="create.sql">
+
+drop database if exists lportal${database.index};
+create database lportal${database.index} character set utf8;</echo>
+
+							<math
+								datatype="int"
+								operand1="${database.index}"
+								operand2="1"
+								operation="+"
+								result="database.index"
+							/>
+						</antelope:repeat>
+
+						<var name="database.index" unset="true" />
 					</then>
 					<else>
 						<if>
@@ -2324,6 +2373,15 @@ module.framework.properties.osgi.console=11312</echo>
 		</if>
 
 		<if>
+			<isset property="email.address.5" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					email.address.5=${email.address.5}
+				</echo>
+			</then>
+		</if>
+
+		<if>
 			<isset property="email.password.1" />
 			<then>
 				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
@@ -2355,6 +2413,15 @@ module.framework.properties.osgi.console=11312</echo>
 			<then>
 				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
 					email.password.4=${email.password.4}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="email.password.5" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					email.password.5=${email.password.5}
 				</echo>
 			</then>
 		</if>
@@ -2834,6 +2901,18 @@ app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.27</echo>
 				/>
 
 				<delete file="plugins.war.zip" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${test.build.unit}" arg2="true" />
+			<then>
+				<delete includeemptydirs="true" failonerror="false">
+					<fileset
+						dir="${liferay.home}/osgi/modules"
+						includes="*.jar"
+					/>
+				</delete>
 			</then>
 		</if>
 
@@ -3581,10 +3660,15 @@ if (ppstate.equals("normal")) {
 		</if>
 
 		<if>
-			<equals arg1="${cluster.enabled}" arg2="true" />
+			<isset property="app.server.bundles.size" />
 			<then>
 				<prepare-additional-bundles />
+			</then>
+		</if>
 
+		<if>
+			<equals arg1="${cluster.enabled}" arg2="true" />
+			<then>
 				<prepare-test-cluster-properties />
 			</then>
 		</if>
@@ -3750,7 +3834,7 @@ if (ppstate.equals("normal")) {
 		<start-app-server />
 
 		<if>
-			<equals arg1="${cluster.enabled}" arg2="true" />
+			<isset property="app.server.bundles.size" />
 			<then>
 				<var name="app.server.bundle.index" value="1" />
 
@@ -3848,7 +3932,7 @@ if (ppstate.equals("normal")) {
 		<stop-app-server />
 
 		<if>
-			<equals arg1="${cluster.enabled}" arg2="true" />
+			<isset property="app.server.bundles.size" />
 			<then>
 				<var name="app.server.bundle.index" value="1" />
 

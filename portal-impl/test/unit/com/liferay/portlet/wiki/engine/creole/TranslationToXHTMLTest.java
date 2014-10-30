@@ -22,6 +22,8 @@ import com.liferay.portal.parsers.creole.parser.Creole10Lexer;
 import com.liferay.portal.parsers.creole.parser.Creole10Parser;
 import com.liferay.portal.parsers.creole.visitor.impl.XhtmlTranslationVisitor;
 import com.liferay.portal.util.HtmlImpl;
+import com.liferay.portlet.wiki.engines.antlrwiki.translator.XhtmlTranslator;
+import com.liferay.portlet.wiki.model.WikiPage;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -33,6 +35,8 @@ import org.antlr.runtime.RecognitionException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import org.powermock.api.mockito.PowerMockito;
 
 /**
  * @author Miguel Pastor
@@ -236,6 +240,26 @@ public class TranslationToXHTMLTest {
 		Assert.assertEquals(
 			"<h1>Level 1</h1><h2>Level 2</h2><h3>Level 3</h3>",
 			translate("heading-10.creole"));
+	}
+
+	@Test
+	public void testParseCorrectlyMultipleHeadingBlocks2() {
+		WikiPage page = PowerMockito.mock(WikiPage.class);
+
+		PowerMockito.when(page.getTitle()).thenReturn("test");
+		PowerMockito.when(page.getContent()).thenReturn(
+			"=Level 1=\n==Level 2\n===Level 3");
+
+		XhtmlTranslator xhtmlTranslator = new XhtmlTranslator();
+
+		String translation = xhtmlTranslator.translate(
+			page, null, null, null, getWikiPageNode("heading-10.creole"));
+
+		Assert.assertEquals(
+			"<h1 id=\"section-test-Level+1\">Level 1</h1><h2 " +
+				"id=\"section-test-Level+2\">Level 2</h2><h3 " +
+				"id=\"section-test-Level+3\">Level 3</h3>",
+			translation);
 	}
 
 	@Test

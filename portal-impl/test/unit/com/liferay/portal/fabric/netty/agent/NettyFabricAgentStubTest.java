@@ -138,31 +138,12 @@ public class NettyFabricAgentStubTest {
 
 		ProcessConfig processConfig = builder.build();
 
-		final File testFile1 = new File("TestFile1");
-		final File testFile2 = new File("TestFile2");
-		final File testFile3 = new File("TestFile3");
+		File testFile1 = new File("TestFile1");
+		File testFile2 = new File("TestFile2");
+		File testFile3 = new File("TestFile3");
 
-		ProcessCallable<String> processCallable =
-			new ProcessCallable<String>() {
-
-				@Override
-				public String call() {
-					return "Test Result";
-				}
-
-				@OutputResource
-				private final File _testOutput1 = testFile1;
-
-				@SuppressWarnings("unused")
-				private final File _testOutput2 = testFile2;
-
-				@OutputResource
-				private final File _testOutput3 = testFile3;
-
-				@OutputResource
-				private final String _notAFile = "Not a File";
-
-			};
+		ProcessCallable<String> processCallable = new TestProcessCallable(
+			testFile1, testFile2, testFile3);
 
 		ChannelPipeline channelPipeline = _embeddedChannel.pipeline();
 
@@ -205,8 +186,16 @@ public class NettyFabricAgentStubTest {
 		Assert.assertEquals(id, nettyFabricWorkerConfig.getId());
 		Assert.assertSame(
 			processConfig, nettyFabricWorkerConfig.getProcessConfig());
-		Assert.assertSame(
-			processCallable, nettyFabricWorkerConfig.getProcessCallable());
+
+		ProcessCallable<String> nettyFabricWorkerProcessCallable =
+			nettyFabricWorkerConfig.getProcessCallable();
+
+		Assert.assertNotSame(processCallable, nettyFabricWorkerProcessCallable);
+		Assert.assertEquals(
+			processCallable.toString(),
+			nettyFabricWorkerProcessCallable.toString());
+		Assert.assertEquals(
+			processCallable.call(), nettyFabricWorkerProcessCallable.call());
 
 		Collection<? extends FabricWorker<?>> fabricWorkers =
 			nettyFabricAgentStub.getFabricWorkers();
@@ -232,25 +221,21 @@ public class NettyFabricAgentStubTest {
 
 		Path path1 = testFile1.toPath();
 
-		path1 = path1.toAbsolutePath();
+		File testOutput1 = ReflectionTestUtil.getFieldValue(
+			processCallable, "_testOutput1");
 
-		Path mappedPath1 = outputResourceMap.get(path1);
-
-		Assert.assertNotNull(mappedPath1);
 		Assert.assertEquals(
-			ReflectionTestUtil.getFieldValue(processCallable, "_testOutput1"),
-			mappedPath1.toFile());
+			path1.toAbsolutePath(),
+			outputResourceMap.get(testOutput1.toPath()));
 
 		Path path3 = testFile3.toPath();
 
-		path3 = path3.toAbsolutePath();
+		File testOutput3 = ReflectionTestUtil.getFieldValue(
+			processCallable, "_testOutput3");
 
-		Path mappedPath3 = outputResourceMap.get(path3);
-
-		Assert.assertNotNull(mappedPath3);
 		Assert.assertEquals(
-			ReflectionTestUtil.getFieldValue(processCallable, "_testOutput3"),
-			mappedPath3.toFile());
+			path3.toAbsolutePath(),
+			outputResourceMap.get(testOutput3.toPath()));
 
 		nettyFabricWorkerStub.setResult(processCallable.call());
 
@@ -417,5 +402,37 @@ public class NettyFabricAgentStubTest {
 
 	private final EmbeddedChannel _embeddedChannel =
 		NettyTestUtil.createEmptyEmbeddedChannel();
+
+	private static class TestProcessCallable
+		implements ProcessCallable<String> {
+
+		public TestProcessCallable(
+			File testOutput1, File testOutput2, File testOutput3) {
+
+			_testOutput1 = testOutput1;
+			_testOutput2 = testOutput2;
+			_testOutput3 = testOutput3;
+		}
+
+		@Override
+		public String call() {
+			return "Test Result";
+		}
+
+		@OutputResource
+		private static final String _NOT_AFILE = "Not a File";
+
+		private static final long serialVersionUID = 1L;
+
+		@OutputResource
+		private final File _testOutput1;
+
+		@SuppressWarnings("unused")
+		private final File _testOutput2;
+
+		@OutputResource
+		private final File _testOutput3;
+
+	}
 
 }
