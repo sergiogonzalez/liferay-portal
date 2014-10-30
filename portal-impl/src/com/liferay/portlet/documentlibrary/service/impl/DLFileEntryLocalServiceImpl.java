@@ -1484,7 +1484,7 @@ public class DLFileEntryLocalServiceImpl
 		String title = dlFileVersion.getTitle();
 		String description = dlFileVersion.getDescription();
 		String changeLog = LanguageUtil.format(
-			serviceContext.getLocale(), "reverted-to-x", version);
+			serviceContext.getLocale(), "reverted-to-x", version, false);
 		boolean majorVersion = true;
 		String extraSettings = dlFileVersion.getExtraSettings();
 		long fileEntryTypeId = dlFileVersion.getFileEntryTypeId();
