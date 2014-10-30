@@ -42,6 +42,7 @@ Export-Package:\
 	com.liferay.portlet.asset.util,\
 	com.liferay.portlet.documentlibrary,\
 	com.liferay.portlet.documentlibrary.action,\
+	com.liferay.portlet.documentlibrary.antivirus,\
 	com.liferay.portlet.documentlibrary.convert,\
 	com.liferay.portlet.documentlibrary.lar,\
 	com.liferay.portlet.documentlibrary.model,\
