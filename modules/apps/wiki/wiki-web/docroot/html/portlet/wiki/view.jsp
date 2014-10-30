@@ -149,7 +149,7 @@ if (wikiPage != null) {
 	</c:otherwise>
 </c:choose>
 
-<liferay-util:include page="/html/portlet/wiki/top_links.jsp" />
+<liferay-util:include page="/html/portlet/wiki/top_links.jsp" servletContext="<%= application %>" />
 
 <%
 long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayTemplateDDMTemplateId(wikiPortletInstanceSettings.getDisplayStyleGroupId(themeDisplay.getScopeGroupId()), wikiPortletInstanceSettings.getDisplayStyle());

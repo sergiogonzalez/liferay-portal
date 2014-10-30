@@ -121,11 +121,11 @@ if (Validator.isNull(redirect)) {
 }
 %>
 
-<liferay-util:include page="/html/portlet/wiki/top_links.jsp" />
+<liferay-util:include page="/html/portlet/wiki/top_links.jsp" servletContext="<%= application %>" />
 
 <c:choose>
 	<c:when test="<%= !newPage %>">
-		<liferay-util:include page="/html/portlet/wiki/page_tabs.jsp">
+		<liferay-util:include page="/html/portlet/wiki/page_tabs.jsp" servletContext="<%= application %>">
 			<liferay-util:param name="tabs1" value="content" />
 		</liferay-util:include>
 	</c:when>
@@ -273,7 +273,7 @@ if (Validator.isNull(redirect)) {
 				request.setAttribute("edit_page.jsp-wikiPage", wikiPage);
 				%>
 
-				<liferay-util:include page="<%= WikiServiceUtil.getEditPage(selectedFormat) %>" />
+				<liferay-util:include page="<%= WikiServiceUtil.getEditPage(selectedFormat) %>" servletContext="<%= application %>" />
 			</div>
 
 			<c:if test="<%= wikiPage != null %>">
