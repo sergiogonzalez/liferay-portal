@@ -17,7 +17,11 @@ package com.liferay.portlet.wiki.asset;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.trash.TrashRenderer;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -107,16 +111,18 @@ public class WikiPageAssetRenderer
 	public String getSummary(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		String content = _page.getContent();
+		if (Validator.isNull(_summary)) {
+			_summary = _page.getContent();
 
-		try {
-			content = HtmlUtil.extractText(
-				WikiUtil.convert(_page, null, null, null));
-		}
-		catch (Exception e) {
+			try {
+				_summary = HtmlUtil.extractText(
+					WikiUtil.convert(_page, null, null, null));
+			}
+			catch (Exception e) {
+			}
 		}
 
-		return content;
+		return _summary;
 	}
 
 	@Override
@@ -287,6 +293,19 @@ public class WikiPageAssetRenderer
 		if (template.equals(TEMPLATE_ABSTRACT) ||
 			template.equals(TEMPLATE_FULL_CONTENT)) {
 
+			boolean workflowAssetPreview = GetterUtil.getBoolean(
+				renderRequest.getAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW));
+
+			if (!workflowAssetPreview && _page.isApproved() &&
+				!_page.isHead()) {
+
+				_page = WikiPageLocalServiceUtil.getLatestPage(
+					_page.getResourcePrimKey(),
+					WorkflowConstants.STATUS_APPROVED, true);
+
+				_summary = StringPool.BLANK;
+			}
+
 			renderRequest.setAttribute(WebKeys.WIKI_PAGE, _page);
 
 			return "/html/portlet/wiki/asset/" + template + ".jsp";
@@ -301,6 +320,7 @@ public class WikiPageAssetRenderer
 		return themeDisplay.getPathThemeImages() + "/common/page.png";
 	}
 
-	private final WikiPage _page;
+	private WikiPage _page;
+	private String _summary;
 
 }
