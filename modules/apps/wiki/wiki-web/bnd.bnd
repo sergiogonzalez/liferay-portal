@@ -11,6 +11,7 @@ Import-Package: \
 	com.liferay.portal.kernel.notifications,\
 	com.liferay.portal.kernel.portlet,\
 	com.liferay.portal.kernel.search,\
+	com.liferay.portal.kernel.security.auth,\
 	com.liferay.portal.kernel.servlet.filters.invoker,\
 	com.liferay.portal.kernel.servlet.*,\
 	com.liferay.portal.kernel.trash,\
