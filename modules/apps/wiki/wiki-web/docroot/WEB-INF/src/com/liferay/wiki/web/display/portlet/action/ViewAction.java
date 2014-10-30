@@ -91,10 +91,12 @@ public class ViewAction extends PortletAction {
 			return actionMapping.findForward("portlet.wiki_display.view");
 		}
 		catch (NoSuchNodeException nsne) {
-			return actionMapping.findForward("/portal/portlet_not_setup");
+			return actionMapping.findForward(
+				"portlet.wiki_display.portlet_not_setup");
 		}
 		catch (NoSuchPageException nspe) {
-			return actionMapping.findForward("/portal/portlet_not_setup");
+			return actionMapping.findForward(
+				"portlet.wiki_display.portlet_not_setup");
 		}
 		catch (PrincipalException pe) {
 			SessionErrors.add(renderRequest, pe.getClass());

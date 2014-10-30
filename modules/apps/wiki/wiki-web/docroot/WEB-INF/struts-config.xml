@@ -369,6 +369,7 @@
 		<action path="/wiki_display/view" type="com.liferay.wiki.web.display.portlet.action.ViewAction">
 			<forward name="portlet.wiki_display.error" path="/portlet/wiki/error.jsp" />
 			<forward name="portlet.wiki_display.view" path="/portlet/wiki_display/view.jsp" />
+			<forward name="portlet.wiki_display.portlet_not_setup" path="/portlet/wiki_display/portlet_not_setup.jsp" />
 		</action>
 
 		<action path="/wiki_display/view_all_pages" type="com.liferay.wiki.web.wiki.portlet.action.ViewNodeAction">
