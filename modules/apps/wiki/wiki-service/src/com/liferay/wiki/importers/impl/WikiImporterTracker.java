@@ -16,6 +16,7 @@ package com.liferay.wiki.importers.impl;
 
 import com.liferay.wiki.importers.WikiImporter;
 
+import java.util.Collection;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.ConcurrentSkipListMap;
 
@@ -46,24 +47,24 @@ public class WikiImporterTracker {
 		updated = "modifiedService"
 	)
 	public void addingService(ServiceReference<WikiImporter> serviceReference) {
-		String format = (String)serviceReference.getProperty("format");
+		String format = (String)serviceReference.getProperty("importer");
 
 		_serviceReferences.put(format, serviceReference);
 	}
 
-	public String getProperty(String format, String key) {
+	public Collection<String> getImporters() {
+		return _serviceReferences.keySet();
+	}
+
+	public String getProperty(String importer, String key) {
 		ServiceReference<WikiImporter> serviceReference =
-			_serviceReferences.get(format);
+			_serviceReferences.get(importer);
 
 		return (String)serviceReference.getProperty(key);
 	}
 
-	public ServiceReference<WikiImporter> getServiceReference(String format) {
-		return _serviceReferences.get(format);
-	}
-
-	public WikiImporter getWikiImporter(String format) {
-		return _bundleContext.getService(_serviceReferences.get(format));
+	public WikiImporter getWikiImporter(String importer) {
+		return _bundleContext.getService(_serviceReferences.get(importer));
 	}
 
 	public void modifiedService(
@@ -77,9 +78,9 @@ public class WikiImporterTracker {
 	public void removedService(
 		ServiceReference<WikiImporter> serviceReference) {
 
-		String format = (String)serviceReference.getProperty("format");
+		String importer = (String)serviceReference.getProperty("importer");
 
-		_serviceReferences.remove(format);
+		_serviceReferences.remove(importer);
 	}
 
 	@Activate

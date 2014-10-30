@@ -41,22 +41,17 @@ import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.exception.DuplicateNodeNameException;
 import com.liferay.wiki.exception.NodeNameException;
 import com.liferay.wiki.importers.WikiImporter;
-import com.liferay.wiki.importers.impl.WikiImporterTracker;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.base.WikiNodeLocalServiceBaseImpl;
+import com.liferay.wiki.util.WikiServiceUtil;
 
 import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the local service for accessing, adding, deleting, importing,
@@ -362,7 +357,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 
 		WikiNode node = getNode(nodeId);
 
-		WikiImporter wikiImporter = getWikiImporter(importer);
+		WikiImporter wikiImporter = WikiServiceUtil.getWikiImporter(importer);
 
 		wikiImporter.importPages(userId, node, inputStreams, options);
 	}
@@ -523,20 +518,6 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		return nodes;
 	}
 
-	protected WikiImporter getWikiImporter(String importer) {
-		WikiImporterTracker wikiImporterTracker = _getWikiImporterTracker();
-
-		WikiImporter wikiImporter = wikiImporterTracker.getWikiImporter(
-			importer);
-
-		if (wikiImporter == null) {
-			throw new SystemException(
-				"Unable to instantiate wiki importer with name " + importer);
-		}
-
-		return wikiImporter;
-	}
-
 	protected void moveDependentsToTrash(long nodeId, long trashEntryId)
 		throws PortalException {
 
@@ -583,26 +564,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		validate(0, groupId, name);
 	}
 
-	private static WikiImporterTracker _getWikiImporterTracker() {
-		return _wikiImporterServiceTracker.getService();
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		WikiNodeLocalServiceImpl.class);
-
-	private static final ServiceTracker<
-		WikiImporterTracker, WikiImporterTracker> _wikiImporterServiceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(WikiNodeLocalServiceImpl.class);
-
-		_wikiImporterServiceTracker = new ServiceTracker<>(
-			bundle.getBundleContext(), WikiImporterTracker.class, null);
-
-		_wikiImporterServiceTracker.open();
-	}
-
-	private final Map<String, WikiImporter> _wikiImporters =
-		new HashMap<String, WikiImporter>();
 
 }
