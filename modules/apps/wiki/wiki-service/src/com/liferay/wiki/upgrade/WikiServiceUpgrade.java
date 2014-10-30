@@ -28,6 +28,8 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
+import org.springframework.context.ApplicationContext;
+
 /**
  * @author Iván Zaera
  */
@@ -35,6 +37,16 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true, service = WikiServiceUpgrade.class
 )
 public class WikiServiceUpgrade {
+
+	@Reference(
+		target =
+			"(org.springframework.context.service.name=" +
+				"com.liferay.wiki.service)",
+		unbind = "-"
+	)
+	protected void setApplicationContext(
+		ApplicationContext applicationContext) {
+	}
 
 	@Reference(unbind = "-")
 	protected void setReleaseLocalService(

@@ -17,6 +17,7 @@ package com.liferay.wiki.web.upgrade;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.service.ReleaseLocalService;
+import com.liferay.wiki.service.configuration.configurator.WikiServiceConfigurator;
 import com.liferay.wiki.web.upgrade.v1_0_0.UpgradePortletSettings;
 
 import java.util.ArrayList;
@@ -39,6 +40,11 @@ public class WikiWebUpgrade {
 		ReleaseLocalService releaseLocalService) {
 
 		_releaseLocalService = releaseLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setWikiServiceConfigurator(
+		WikiServiceConfigurator wikiServiceConfigurator) {
 	}
 
 	@Activate
