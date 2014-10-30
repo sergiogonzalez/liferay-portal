@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.web.wiki.portlet.path;
+package com.liferay.wiki.web.path;
 
 import com.liferay.portal.kernel.struts.path.AuthPublicPath;
 
