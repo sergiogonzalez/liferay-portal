@@ -225,6 +225,8 @@ public interface WebKeys {
 
 	public static final String THEME_DISPLAY = "LIFERAY_SHARED_THEME_DISPLAY";
 
+	public static final String TITLE = "TITLE";
+
 	public static final String UNIQUE_ELEMENT_IDS = "LIFERAY_SHARED_UNIQUE_ELEMENT_IDS";
 
 	public static final String UPLOAD_EXCEPTION = "UPLOAD_EXCEPTION";
