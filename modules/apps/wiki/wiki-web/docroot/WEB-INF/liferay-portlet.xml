@@ -27,7 +27,7 @@
 		<trash-handler>com.liferay.wiki.web.trash.WikiPageTrashHandler</trash-handler>
 		<workflow-handler>com.liferay.wiki.web.workflow.WikiPageWorkflowHandler</workflow-handler>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>false</use-default-template>
+		<use-default-template>true</use-default-template>
 		<scopeable>true</scopeable>
 		<private-request-attributes>false</private-request-attributes>
 		<private-session-attributes>false</private-session-attributes>
@@ -45,7 +45,7 @@
 		<portlet-data-handler-class>com.liferay.wiki.lar.WikiDisplayPortletDataHandler</portlet-data-handler-class>
 		<permission-propagator>com.liferay.wiki.web.security.permission.WikiPermissionPropagatorImpl</permission-propagator>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>false</use-default-template>
+		<use-default-template>true</use-default-template>
 		<instanceable>true</instanceable>
 		<scopeable>true</scopeable>
 		<private-request-attributes>false</private-request-attributes>
@@ -66,7 +66,7 @@
 		<permission-propagator>com.liferay.wiki.web.security.permission.WikiPermissionPropagatorImpl</permission-propagator>
 		<preferences-unique-per-layout>false</preferences-unique-per-layout>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>false</use-default-template>
+		<use-default-template>true</use-default-template>
 		<scopeable>true</scopeable>
 		<private-request-attributes>false</private-request-attributes>
 		<private-session-attributes>false</private-session-attributes>
