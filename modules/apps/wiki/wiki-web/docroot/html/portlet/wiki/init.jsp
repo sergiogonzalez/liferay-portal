@@ -16,23 +16,7 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.portal.NoSuchModelException" %><%@
-page import="com.liferay.portal.kernel.sanitizer.SanitizerException" %><%@
-page import="com.liferay.portal.kernel.sanitizer.SanitizerUtil" %><%@
-page import="com.liferay.portal.service.SubscriptionLocalServiceUtil" %><%@
-page import="com.liferay.portal.util.PortletKeys" %><%@
-page import="com.liferay.portlet.asset.model.AssetEntry" %><%@
-page import="com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil" %><%@
-page import="com.liferay.portlet.asset.service.AssetEntryServiceUtil" %><%@
-page import="com.liferay.portlet.asset.service.AssetTagLocalServiceUtil" %><%@
-page import="com.liferay.portlet.asset.util.AssetUtil" %><%@
-page import="com.liferay.portlet.documentlibrary.util.DLUtil" %><%@
-page import="com.liferay.portlet.social.model.SocialActivity" %><%@
-page import="com.liferay.portlet.social.model.SocialActivityConstants" %><%@
-page import="com.liferay.portlet.social.service.SocialActivityLocalServiceUtil" %><%@
-page import="com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil" %><%@
-page import="com.liferay.portlet.trash.util.TrashUtil" %><%@
-page import="com.liferay.wiki.configuration.WikiPropsValues" %><%@
+<%@ page import="com.liferay.wiki.configuration.WikiPropsValues" %><%@
 page import="com.liferay.wiki.configuration.WikiSettings" %><%@
 page import="com.liferay.wiki.constants.WikiPortletKeys" %><%@
 page import="com.liferay.wiki.constants.WikiWebKeys" %><%@
@@ -70,8 +54,7 @@ page import="com.liferay.wiki.util.WikiPageAttachmentsUtil" %><%@
 page import="com.liferay.wiki.util.WikiServiceUtil" %><%@
 page import="com.liferay.wiki.util.comparator.PageVersionComparator" %><%@
 page import="com.liferay.wiki.web.configuration.WikiPortletInstanceSettings" %><%@
-page import="com.liferay.wiki.web.context.WikiConfigurationDisplayContext" %><%@
-page import="com.liferay.wiki.web.util.WikiWebUtil" %>
+page import="com.liferay.wiki.web.context.WikiConfigurationDisplayContext" %>
 
 <%
 String portletId = portletDisplay.getId();
