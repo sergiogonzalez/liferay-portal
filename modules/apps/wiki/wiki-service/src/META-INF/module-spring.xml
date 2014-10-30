@@ -14,11 +14,6 @@
 	<bean id="com.liferay.portlet.wiki.service.permission.WikiNodePermission" class="com.liferay.wiki.service.permission.WikiNodePermission" />
 	<bean id="com.liferay.portlet.wiki.service.permission.WikiPagePermission" class="com.liferay.wiki.service.permission.WikiPagePermission" />
 	<bean id="com.liferay.wiki.service.WikiNodeLocalService" class="com.liferay.wiki.service.impl.WikiNodeLocalServiceImpl" />
-	<bean id="com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil" class="com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil">
-		<property name="BBCodeTranslator">
-			<bean class="com.liferay.wiki.parsers.bbcode.HtmlBBCodeTranslatorImpl" />
-		</property>
-	</bean>
 	<osgi:service interface="com.liferay.wiki.service.WikiNodeLocalService" ref="com.liferay.wiki.service.WikiNodeLocalService">
 		<osgi:service-properties>
 			<entry key="json.web.service.context.name" value="wiki" />
