@@ -14,28 +14,40 @@
 
 package com.liferay.portlet.documentlibrary.context;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
+
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * @author Iván Zaera
+ * @author Adolfo Pérez
  */
-public interface DLViewFileVersionDisplayContextFactory {
+public class DefaultIGViewFileVersionDisplayContext
+	extends BaseDLViewFileVersionDisplayContext {
 
-	public DLViewFileVersionDisplayContext
-		getDLFileVersionActionsDisplayContext(
-			DLViewFileVersionDisplayContext
-				parentDLViewFileVersionDisplayContext,
+	public DefaultIGViewFileVersionDisplayContext(
 			HttpServletRequest request, HttpServletResponse response,
-			FileVersion fileVersion);
+			FileVersion fileVersion)
+		throws PortalException {
 
-	public DLViewFileVersionDisplayContext
-		getMGFileVersionActionsDisplayContext(
-			DLViewFileVersionDisplayContext
-				parentDLViewFileVersionDisplayContext,
-			HttpServletRequest request, HttpServletResponse response,
-			FileVersion fileVersion);
+		super(request, response, fileVersion);
+	}
+
+	@Override
+	protected void buildMenuItems(List<MenuItem> menuItems)
+		throws PortalException {
+
+		addDownloadMenuItem(menuItems);
+
+		addEditMenuItem(menuItems);
+
+		addPermissionsMenuItem(menuItems);
+
+		addDeleteMenuItem(menuItems);
+	}
 
 }
