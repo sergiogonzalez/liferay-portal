@@ -17,50 +17,28 @@
 <%@ include file="/html/portlet/journal/init.jsp" %>
 
 <%
-AssetRenderer assetRenderer = (AssetRenderer)request.getAttribute(WebKeys.ASSET_RENDERER);
 int abstractLength = (Integer)request.getAttribute(WebKeys.ASSET_PUBLISHER_ABSTRACT_LENGTH);
+
+AssetRenderer assetRenderer = (AssetRenderer)request.getAttribute(WebKeys.ASSET_RENDERER);
+
 String viewURL = (String)request.getAttribute(WebKeys.ASSET_PUBLISHER_VIEW_URL);
 
 JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_ARTICLE);
-JournalArticleResource articleResource = JournalArticleResourceLocalServiceUtil.getArticleResource(article.getResourcePrimKey());
-
-String languageId = LanguageUtil.getLanguageId(request);
-
-boolean workflowAssetPreview = GetterUtil.getBoolean((Boolean)request.getAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW));
-
-JournalArticleDisplay articleDisplay = null;
-
-if (!workflowAssetPreview && article.isApproved()) {
-	articleDisplay = JournalContentUtil.getDisplay(articleResource.getGroupId(), articleResource.getArticleId(), null, null, languageId, 1, new PortletRequestModel(renderRequest, renderResponse), themeDisplay);
-}
-else {
-	articleDisplay = JournalArticleLocalServiceUtil.getArticleDisplay(article, null, null, languageId, 1, new PortletRequestModel(renderRequest, renderResponse), themeDisplay);
-}
 %>
 
-<c:if test="<%= articleDisplay.isSmallImage() %>">
+<c:if test="<%= article.isSmallImage() %>">
 	<div class="asset-small-image">
 		<c:choose>
 			<c:when test="<%= Validator.isNotNull(viewURL) %>">
 				<a href="<%= viewURL %>">
-					<img alt="<%= HtmlUtil.escapeAttribute(articleDisplay.getTitle()) %>" class="asset-small-image img-thumbnail" src="<%= HtmlUtil.escapeAttribute(articleDisplay.getArticleDisplayImageURL(themeDisplay)) %>" width="150" />
+					<img alt="<%= HtmlUtil.escapeAttribute(article.getTitle()) %>" class="asset-small-image img-thumbnail" src="<%= HtmlUtil.escapeAttribute(article.getArticleImageURL(themeDisplay)) %>" width="150" />
 				</a>
 			</c:when>
 			<c:otherwise>
-				<img alt="" class="asset-small-image img-thumbnail" src="<%= HtmlUtil.escapeAttribute(articleDisplay.getArticleDisplayImageURL(themeDisplay)) %>" width="150" />
+				<img alt="" class="asset-small-image img-thumbnail" src="<%= HtmlUtil.escapeAttribute(article.getArticleImageURL(themeDisplay)) %>" width="150" />
 			</c:otherwise>
 		</c:choose>
 	</div>
 </c:if>
 
-<%
-String summary = HtmlUtil.escape(articleDisplay.getDescription());
-
-summary = HtmlUtil.replaceNewLine(summary);
-
-if (Validator.isNull(summary)) {
-	summary = HtmlUtil.stripHtml(articleDisplay.getContent());
-}
-%>
-
-<%= StringUtil.shorten(summary, abstractLength) %>
+<%= StringUtil.shorten(assetRenderer.getSummary(), abstractLength) %>

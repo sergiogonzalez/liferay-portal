@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -100,14 +99,15 @@ public class BlogsEntryAssetRenderer
 	public String getSummary(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		String summary = _entry.getDescription();
+		if (Validator.isNull(_summary)) {
+			_summary = _entry.getDescription();
 
-		if (Validator.isNull(summary)) {
-			summary = StringUtil.shorten(
-				HtmlUtil.stripHtml(_entry.getContent()), 200);
+			if (Validator.isNull(_summary)) {
+				_summary = HtmlUtil.stripHtml(_entry.getContent());
+			}
 		}
 
-		return summary;
+		return _summary;
 	}
 
 	@Override
@@ -237,5 +237,6 @@ public class BlogsEntryAssetRenderer
 	}
 
 	private final BlogsEntry _entry;
+	private String _summary;
 
 }
