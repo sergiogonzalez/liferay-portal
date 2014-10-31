@@ -31,7 +31,7 @@ public class VerifierTest extends BaseVerifyProcessTestCase {
 
 	@Override
 	protected VerifyProcess getVerifyProcess() {
-		return new Verifier();
+		return new WikiServiceVerifyProcess();
 	}
 
 }

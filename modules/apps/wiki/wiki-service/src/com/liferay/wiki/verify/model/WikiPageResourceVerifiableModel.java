@@ -12,7 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.verify.model;
+package com.liferay.wiki.verify.model;
+
+import com.liferay.portal.verify.model.VerifiableUUIDModel;
 
 /**
  * @author Miguel Pastor

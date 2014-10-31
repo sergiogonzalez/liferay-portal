@@ -19,12 +19,17 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.verify.VerifyProcess;
+import com.liferay.portal.verify.VerifyResourcePermissions;
+import com.liferay.portal.verify.VerifyUUID;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageResource;
 import com.liferay.wiki.service.WikiPageLocalService;
 import com.liferay.wiki.service.WikiPageResourceLocalService;
 import com.liferay.wiki.service.configuration.configurator.WikiServiceConfigurator;
 import com.liferay.wiki.util.comparator.PageVersionComparator;
+import com.liferay.wiki.verify.model.WikiNodeVerifiableModel;
+import com.liferay.wiki.verify.model.WikiPageResourceVerifiableModel;
+import com.liferay.wiki.verify.model.WikiPageVerifiableModel;
 
 import java.util.Date;
 import java.util.List;
@@ -37,12 +42,14 @@ import org.osgi.service.component.annotations.Reference;
  * @author Iván Zaera
  */
 @Component(
-	service = Verifier.class
+	service = WikiServiceVerifyProcess.class
 )
-public class Verifier extends VerifyProcess {
+public class WikiServiceVerifyProcess extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
+		verifyResourcedModels();
+		verifyUUIDModels();
 		verifyCreateDate();
 		verifyNoAssetPages();
 	}
@@ -138,8 +145,21 @@ public class Verifier extends VerifyProcess {
 		}
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(Verifier.class);
+	protected void verifyResourcedModels() throws Exception {
+		_verifyResourcePermissions.verify(new WikiNodeVerifiableModel());
+		_verifyResourcePermissions.verify(new WikiPageVerifiableModel());
+	}
 
+	protected void verifyUUIDModels() throws Exception {
+		_verifyUUID.verify(new WikiPageResourceVerifiableModel());
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		WikiServiceVerifyProcess.class);
+
+	private final VerifyResourcePermissions _verifyResourcePermissions =
+		new VerifyResourcePermissions();
+	private final VerifyUUID _verifyUUID = new VerifyUUID();
 	private WikiPageLocalService _wikiPageLocalService;
 	private WikiPageResourceLocalService _wikiPageResourceLocalService;
 
