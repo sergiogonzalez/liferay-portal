@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -30,6 +31,7 @@ import com.liferay.portlet.asset.model.BaseAssetRenderer;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.permission.MBDiscussionPermission;
 import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
+import com.liferay.portlet.messageboards.util.MBUtil;
 
 import java.util.Date;
 import java.util.Locale;
@@ -94,7 +96,20 @@ public class MBMessageAssetRenderer
 	public String getSummary(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		return _message.getBody();
+		if (Validator.isNull(_summary)) {
+			_summary = _message.getBody();
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)portletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			if (_message.isFormatBBCode()) {
+				_summary = MBUtil.getBBCodeHTML(
+					_summary, themeDisplay.getPathThemeImages());
+			}
+		}
+
+		return _summary;
 	}
 
 	@Override
@@ -247,5 +262,6 @@ public class MBMessageAssetRenderer
 	}
 
 	private final MBMessage _message;
+	private String _summary;
 
 }

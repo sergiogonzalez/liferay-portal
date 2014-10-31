@@ -99,13 +99,15 @@ public class BlogsEntryAssetRenderer
 	public String getSummary(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		String summary = _entry.getDescription();
+		if (Validator.isNull(_summary)) {
+			_summary = _entry.getDescription();
 
-		if (Validator.isNull(summary)) {
-			summary = HtmlUtil.stripHtml(_entry.getContent());
+			if (Validator.isNull(_summary)) {
+				_summary = HtmlUtil.stripHtml(_entry.getContent());
+			}
 		}
 
-		return summary;
+		return _summary;
 	}
 
 	@Override
@@ -235,5 +237,6 @@ public class BlogsEntryAssetRenderer
 	}
 
 	private final BlogsEntry _entry;
+	private String _summary;
 
 }
