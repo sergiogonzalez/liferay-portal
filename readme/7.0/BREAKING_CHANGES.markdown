@@ -637,3 +637,95 @@ decided not to provide this method any more because it is not being used
 anywhere inside the portal.
 
 ---------------------------------------
+
+### Wiki Display Templates path is no longer configurable
+- **Date:** 2014-Oct-31
+- **JIRA Ticket:** LPS-50604
+
+#### What changed?
+
+The Wiki Display Templates path is no longer configurable. The key  
+wiki.display.templates.config of portal.properties has been removed.
+
+#### Who is affected?
+
+This will affect any plugin trying to override the default Wiki Display 
+Templates path.
+
+#### How should I update my code?
+
+If you are overriding the default Display Templates you should create an OSGi
+module and override Wiki's Portlet Display Template Handler.
+
+#### Why was this change made?
+
+This change was needed in order to modularize the portal.
+
+---------------------------------------
+
+### Wiki Formats (engines) are no longer contributable from hooks
+- **Date:** 2014-Oct-31
+- **JIRA Ticket:** LPS-50604
+
+#### What changed?
+
+The Wiki Formats are no longer deployable as hooks. The key wiki.formats of 
+portal.properties has been removed.
+
+#### Who is affected?
+
+This will affect any hook trying to provide a new Wiki Format.
+
+#### How should I update my code?
+
+If you are contributing a new Wiki Format to the portal using a hook, you should 
+convert it to an OSGi bundle and annotate your class with:
+
+	@Component(
+		service = WikiEngine.class,
+		property = {
+			"enabled=true", 
+			"format=<YOUR_FORMAT_NAME>",
+			"edit.page=<YOUR_EDIT_PAGE>",
+			"help.page=<YOUR_HELP_PAGE>",
+			"help.url=<YOUR_HELP_URL>"
+		}
+	)
+
+#### Why was this change made?
+
+This change was needed in order to modularize the portal.
+
+---------------------------------------
+
+### Wiki Importers are no longer contributable from hooks
+- **Date:** 2014-Oct-31
+- **JIRA Ticket:** LPS-50604
+
+#### What changed?
+
+The Wiki Importers are no longer deployable as hooks. The key wiki.importers of 
+portal.properties has been removed.
+
+#### Who is affected?
+
+This will affect any hook trying to provide a new Wiki Importer.
+
+#### How should I update my code?
+
+If you contributing a new Wiki Importer to the portal using a hook, you should 
+convert it to an OSGi bundle and annotate your class with:
+
+	@Component(
+		service = WikiImporter.class,
+		property = {
+			"importer=<YOUR_IMPORTER_NAME>", 
+			"page=<YOUR_IMPORTER_PAGE>"
+		}
+	)
+
+#### Why was this change made?
+
+This change was needed in order to modularize the portal.
+
+---------------------------------------
