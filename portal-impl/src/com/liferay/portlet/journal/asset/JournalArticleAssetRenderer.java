@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
@@ -41,7 +40,9 @@ import com.liferay.portlet.asset.model.DDMFieldReader;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleConstants;
 import com.liferay.portlet.journal.model.JournalArticleDisplay;
+import com.liferay.portlet.journal.model.JournalArticleResource;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
+import com.liferay.portlet.journal.service.JournalArticleResourceLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalContentSearchLocalServiceUtil;
 import com.liferay.portlet.journal.service.permission.JournalArticlePermission;
 
@@ -165,8 +166,7 @@ public class JournalArticleAssetRenderer
 					_article, null, null, LanguageUtil.getLanguageId(locale), 1,
 					portletRequestModel, themeDisplay);
 
-			summary = StringUtil.shorten(
-				HtmlUtil.stripHtml(articleDisplay.getContent()), 200);
+			summary = HtmlUtil.stripHtml(articleDisplay.getContent());
 		}
 		catch (Exception e) {
 		}
@@ -415,7 +415,41 @@ public class JournalArticleAssetRenderer
 		if (template.equals(TEMPLATE_ABSTRACT) ||
 			template.equals(TEMPLATE_FULL_CONTENT)) {
 
-			renderRequest.setAttribute(WebKeys.JOURNAL_ARTICLE, _article);
+			JournalArticle article = _article;
+
+			boolean workflowAssetPreview = GetterUtil.getBoolean(
+				renderRequest.getAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW));
+
+			if (!workflowAssetPreview && _article.isApproved()) {
+				JournalArticleResource articleResource =
+					JournalArticleResourceLocalServiceUtil.getArticleResource(
+						article.getResourcePrimKey());
+
+				if (!Validator.equals(
+						article.getArticleId(),
+						articleResource.getArticleId())) {
+
+					article = JournalArticleLocalServiceUtil.getDisplayArticle(
+						articleResource.getGroupId(),
+						articleResource.getArticleId());
+				}
+			}
+
+			renderRequest.setAttribute(WebKeys.JOURNAL_ARTICLE, article);
+
+			String languageId = LanguageUtil.getLanguageId(renderRequest);
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)renderRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+			JournalArticleDisplay articleDisplay =
+				JournalArticleLocalServiceUtil.getArticleDisplay(
+					article, null, null, languageId, 1,
+					new PortletRequestModel(renderRequest, renderResponse),
+					themeDisplay);
+
+			renderRequest.setAttribute(
+				WebKeys.JOURNAL_ARTICLE_DISPLAY, articleDisplay);
 
 			return "/html/portlet/journal/asset/" + template + ".jsp";
 		}
