@@ -184,6 +184,16 @@ public class CapabilityRepository
 
 		FileEntry fileEntry = repository.getFileEntry(fileEntryId);
 
+		WorkflowCapability workflowCapability = getInternalCapability(
+			WorkflowCapability.class);
+
+		if (workflowCapability != null) {
+			workflowCapability.checkInFileEntry(
+				com.liferay.portal.kernel.repository.util.RepositoryUserUtil.
+					getUserId(),
+				fileEntry, serviceContext);
+		}
+
 		_repositoryEventTrigger.trigger(
 			RepositoryEventType.Update.class, FileEntry.class, fileEntry);
 	}
@@ -199,6 +209,16 @@ public class CapabilityRepository
 
 		FileEntry fileEntry = repository.getFileEntry(fileEntryId);
 
+		WorkflowCapability workflowCapability = getInternalCapability(
+			WorkflowCapability.class);
+
+		if (workflowCapability != null) {
+			workflowCapability.checkInFileEntry(
+				com.liferay.portal.kernel.repository.util.RepositoryUserUtil.
+					getUserId(),
+				fileEntry, new ServiceContext());
+		}
+
 		_repositoryEventTrigger.trigger(
 			RepositoryEventType.Update.class, FileEntry.class, fileEntry);
 	}
@@ -213,6 +233,16 @@ public class CapabilityRepository
 		repository.checkInFileEntry(fileEntryId, lockUuid, serviceContext);
 
 		FileEntry fileEntry = repository.getFileEntry(fileEntryId);
+
+		WorkflowCapability workflowCapability = getInternalCapability(
+			WorkflowCapability.class);
+
+		if (workflowCapability != null) {
+			workflowCapability.checkInFileEntry(
+				com.liferay.portal.kernel.repository.util.RepositoryUserUtil.
+					getUserId(),
+				fileEntry, new ServiceContext());
+		}
 
 		_repositoryEventTrigger.trigger(
 			RepositoryEventType.Update.class, FileEntry.class, fileEntry);

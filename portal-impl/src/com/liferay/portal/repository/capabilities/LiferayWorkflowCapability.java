@@ -18,10 +18,13 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.capabilities.WorkflowCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLSyncConstants;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLAppHelperThreadLocal;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 
@@ -60,7 +63,21 @@ public class LiferayWorkflowCapability implements WorkflowCapability {
 			long userId, FileEntry fileEntry, ServiceContext serviceContext)
 		throws PortalException {
 
-		throw new UnsupportedOperationException("Not implemented");
+		boolean keepFileVersionLabel =
+			DLFileEntryLocalServiceUtil.isKeepFileVersionLabel(
+				fileEntry.getFileEntryId(), serviceContext);
+
+		if ((serviceContext.getWorkflowAction() ==
+				WorkflowConstants.ACTION_PUBLISH) && !keepFileVersionLabel) {
+
+			DLFileVersion latestDLFileVersion =
+				DLFileVersionLocalServiceUtil.getLatestFileVersion(
+					fileEntry.getFileEntryId(), false);
+
+			DLUtil.startWorkflowInstance(
+				userId, latestDLFileVersion, DLSyncConstants.EVENT_UPDATE,
+				serviceContext);
+		}
 	}
 
 	@Override

@@ -91,7 +91,6 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
-import com.liferay.portlet.documentlibrary.model.DLSyncConstants;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryImpl;
 import com.liferay.portlet.documentlibrary.service.base.DLFileEntryLocalServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
@@ -367,8 +366,6 @@ public class DLFileEntryLocalServiceImpl
 			// Latest file version
 
 			removeFileVersion(dlFileEntry, latestDLFileVersion);
-
-			latestDLFileVersion = lastDLFileVersion;
 		}
 		else {
 
@@ -398,16 +395,6 @@ public class DLFileEntryLocalServiceImpl
 				user.getCompanyId(), dlFileEntry.getDataRepositoryId(),
 				dlFileEntry.getName(),
 				DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION, version);
-		}
-
-		// Workflow
-
-		if ((serviceContext.getWorkflowAction() ==
-				WorkflowConstants.ACTION_PUBLISH) && !keepFileVersionLabel) {
-
-			DLUtil.startWorkflowInstance(
-				userId, latestDLFileVersion, DLSyncConstants.EVENT_UPDATE,
-				serviceContext);
 		}
 
 		unlockFileEntry(fileEntryId);
