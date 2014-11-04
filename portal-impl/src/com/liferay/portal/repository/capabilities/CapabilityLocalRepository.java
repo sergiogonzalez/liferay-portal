@@ -117,6 +117,30 @@ public class CapabilityLocalRepository
 	}
 
 	@Override
+	public FileEntry copyFileEntry(
+			long userId, long groupId, long fileEntryId, long destFolderId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		LocalRepository localRepository = getRepository();
+
+		FileEntry fileEntry = localRepository.copyFileEntry(
+			userId, groupId, fileEntryId, destFolderId, serviceContext);
+
+		WorkflowCapability workflowCapability = getInternalCapability(
+			WorkflowCapability.class);
+
+		if (workflowCapability != null) {
+			workflowCapability.addFileEntry(userId, fileEntry, serviceContext);
+		}
+
+		_repositoryEventTrigger.trigger(
+			RepositoryEventType.Add.class, FileEntry.class, fileEntry);
+
+		return fileEntry;
+	}
+
+	@Override
 	public void deleteAll() throws PortalException {
 		LocalRepository localRepository = getRepository();
 
