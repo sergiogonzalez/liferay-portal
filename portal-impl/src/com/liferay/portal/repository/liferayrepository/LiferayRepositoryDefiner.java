@@ -14,7 +14,9 @@
 
 package com.liferay.portal.repository.liferayrepository;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.DocumentRepository;
+import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
 import com.liferay.portal.kernel.repository.capabilities.BulkOperationCapability;
 import com.liferay.portal.kernel.repository.capabilities.SyncCapability;
@@ -26,6 +28,7 @@ import com.liferay.portal.kernel.repository.registry.RepositoryFactoryRegistry;
 import com.liferay.portal.repository.capabilities.LiferayBulkOperationCapability;
 import com.liferay.portal.repository.capabilities.LiferaySyncCapability;
 import com.liferay.portal.repository.capabilities.LiferayTrashCapability;
+import com.liferay.portal.repository.util.RepositoryFactoryWrapper;
 
 /**
  * @author Adolfo Pérez
@@ -79,7 +82,8 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 	}
 
 	public void setRepositoryFactory(RepositoryFactory repositoryFactory) {
-		_repositoryFactory = repositoryFactory;
+		_repositoryFactory = new LiferayRepositoryFactoryWrapper(
+			repositoryFactory);
 	}
 
 	private final LiferaySyncCapability _liferaySyncCapability =
@@ -87,5 +91,24 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 	private final LiferayTrashCapability _liferayTrashCapability =
 		new LiferayTrashCapability();
 	private RepositoryFactory _repositoryFactory;
+
+	private static final class LiferayRepositoryFactoryWrapper
+		extends RepositoryFactoryWrapper {
+
+		public LiferayRepositoryFactoryWrapper(
+			RepositoryFactory repositoryFactory) {
+
+			super(repositoryFactory);
+		}
+
+		@Override
+		public Repository createRepository(long repositoryId)
+			throws PortalException {
+
+			return new LiferayCheckInRepositoryWrapper(
+				super.createRepository(repositoryId));
+		}
+
+	}
 
 }
