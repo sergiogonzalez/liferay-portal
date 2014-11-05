@@ -288,44 +288,50 @@ if (alloyEditorMode.equals("text")) {
 							}
 
 							if (data.success) {
-								// Replace image here:
 								var image = A.one(alloyEditor.element.$).one('img');
 
 								image.attr('src', data.image.url);
-								image.attr('data-paramName', data.image.fileEntryId);
+								image.setAttribute(data.image.attribute, data.image.fileEntryId);
 							}
 						},
 						uploaderror: function(event) {
-							debugger;
+							event.target.cancelUpload();
 						}
 					},
 					uploadURL: '<%= themeDisplay.getPathMain() + "/portal/image_selector?p_auth=" + AuthTokenUtil.getToken(request) %>'
 				}
 			);
 
-		    editable.attachListener(
-		    	editable,
-		    	'drop',
-		    	function(event) {
-		            var editor,
-		                nativeEvent;
+			editable.attachListener(
+				editable,
+				'drop',
+				function(event) {
+					debugger;
 
-		            nativeEvent = event.data.$;
+					var editor, nativeEvent;
 
-                    var newfiles = nativeEvent.dataTransfer.files,
-                        parsedFiles = [];
+					nativeEvent = event.data.$;
 
-                    A.each(newfiles, function (value) {
-                        parsedFiles.push(new A.FileHTML5(value));
-                    });
+					var newfiles = nativeEvent.dataTransfer.files,
+						parsedFiles = [];
 
-		            uploader.uploadThese(parsedFiles);
-		    	},
-		    	this,
-		    	{
-		    		editor: alloyEditor
-		    	}
-		    );
+					A.each(newfiles, function (value) {
+						parsedFiles.push(new A.FileHTML5(value));
+					});
+
+					uploader.uploadThese(
+						parsedFiles,
+						null,
+						{
+							'imageToken' : imageToken
+						}
+					);
+				},
+				this,
+				{
+					editor: alloyEditor
+				}
+			);
 		}
 	);
 
