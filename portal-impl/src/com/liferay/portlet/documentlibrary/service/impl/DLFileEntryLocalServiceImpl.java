@@ -2366,9 +2366,7 @@ public class DLFileEntryLocalServiceImpl
 			dlFileVersionLocalService.getLatestFileVersion(
 				fileEntryId, !checkedOut);
 
-		boolean autoCheckIn = !checkedOut && dlFileVersion.isApproved();
-
-		if (checkedOut || autoCheckIn) {
+		if (!checkedOut && dlFileVersion.isApproved()) {
 			dlFileVersion = dlFileVersionLocalService.getLatestFileVersion(
 				fileEntryId, false);
 		}
