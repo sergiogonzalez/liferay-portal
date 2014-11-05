@@ -291,7 +291,7 @@ if (alloyEditorMode.equals("text")) {
 								var image = A.one(alloyEditor.element.$).one('img');
 
 								image.attr('src', data.image.url);
-								image.setAttribute(data.image.attribute, data.image.fileEntryId);
+								image.setAttribute(data.image.dataImageIdAttribute, data.image.fileEntryId);
 							}
 						},
 						uploaderror: function(event) {
@@ -306,8 +306,6 @@ if (alloyEditorMode.equals("text")) {
 				editable,
 				'drop',
 				function(event) {
-					debugger;
-
 					var editor, nativeEvent;
 
 					nativeEvent = event.data.$;
@@ -315,17 +313,11 @@ if (alloyEditorMode.equals("text")) {
 					var newfiles = nativeEvent.dataTransfer.files,
 						parsedFiles = [];
 
-					A.each(newfiles, function (value) {
+					A.each(newfiles, function(value) {
 						parsedFiles.push(new A.FileHTML5(value));
 					});
 
-					uploader.uploadThese(
-						parsedFiles,
-						null,
-						{
-							'imageToken' : imageToken
-						}
-					);
+					uploader.uploadThese(parsedFiles);
 				},
 				this,
 				{
