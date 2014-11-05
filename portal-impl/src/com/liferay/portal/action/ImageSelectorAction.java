@@ -43,6 +43,7 @@ import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Sergio González
+ * @author Roberto Díaz
  */
 public class ImageSelectorAction extends JSONAction {
 
@@ -51,12 +52,6 @@ public class ImageSelectorAction extends JSONAction {
 			ActionMapping actionMapping, ActionForm actionForm,
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
-
-		UploadServletRequest uploadPortletRequest =
-			PortalUtil.getUploadServletRequest(request);
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
 
 		UploadException uploadException = (UploadException)request.getAttribute(
 			WebKeys.UPLOAD_EXCEPTION);
@@ -74,10 +69,31 @@ public class ImageSelectorAction extends JSONAction {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
+		try {
+			jsonObject.put("image", getImageJSONObject(request));
+
+			jsonObject.put("success", Boolean.TRUE);
+		}
+		catch (Exception e) {
+			jsonObject.put("success", Boolean.FALSE);
+		}
+
+		return jsonObject.toString();
+	}
+
+	protected JSONObject getImageJSONObject(HttpServletRequest request)
+		throws Exception {
+
+		JSONObject imageJSONObject = JSONFactoryUtil.createJSONObject();
+
 		InputStream inputStream = null;
 
 		try {
-			JSONObject imageJSONObject = JSONFactoryUtil.createJSONObject();
+			UploadServletRequest uploadPortletRequest =
+				PortalUtil.getUploadServletRequest(request);
+
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
 			imageJSONObject.put(
 				"dataImageIdAttribute",
@@ -102,20 +118,17 @@ public class ImageSelectorAction extends JSONAction {
 			imageJSONObject.put(
 				"url",
 				PortletFileRepositoryUtil.getPortletFileEntryURL(
-					themeDisplay, fileEntry, StringPool.BLANK));
+					themeDisplay, fileEntry, StringPool.BLANK)
+			);
 
-			jsonObject.put("image", imageJSONObject);
-
-			jsonObject.put("success", Boolean.TRUE);
+			return imageJSONObject;
 		}
 		catch (Exception e) {
-			jsonObject.put("success", Boolean.FALSE);
+			throw e;
 		}
 		finally {
 			StreamUtil.cleanUp(inputStream);
 		}
-
-		return jsonObject.toString();
 	}
 
 	private static final String _TEMP_FOLDER_NAME =
