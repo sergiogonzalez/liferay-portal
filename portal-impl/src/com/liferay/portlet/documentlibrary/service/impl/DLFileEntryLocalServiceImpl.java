@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.image.ImageBag;
 import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.increment.BufferedIncrement;
@@ -2369,147 +2368,72 @@ public class DLFileEntryLocalServiceImpl
 
 		boolean autoCheckIn = !checkedOut && dlFileVersion.isApproved();
 
-		if (autoCheckIn) {
-			dlFileEntry = checkOutFileEntry(
-				userId, fileEntryId, serviceContext);
-		}
-		else if (!checkedOut) {
-			lockFileEntry(userId, fileEntryId);
-		}
-
-		if (!hasFileEntryLock(userId, fileEntryId)) {
-			lockFileEntry(userId, fileEntryId);
-		}
-
 		if (checkedOut || autoCheckIn) {
 			dlFileVersion = dlFileVersionLocalService.getLatestFileVersion(
 				fileEntryId, false);
 		}
 
-		try {
-			if (Validator.isNull(extension)) {
-				extension = dlFileEntry.getExtension();
-			}
+		if (Validator.isNull(extension)) {
+			extension = dlFileEntry.getExtension();
+		}
 
-			if (Validator.isNull(mimeType)) {
-				mimeType = dlFileEntry.getMimeType();
-			}
+		if (Validator.isNull(mimeType)) {
+			mimeType = dlFileEntry.getMimeType();
+		}
+
+		if (Validator.isNull(title)) {
+			title = sourceFileName;
 
 			if (Validator.isNull(title)) {
-				title = sourceFileName;
-
-				if (Validator.isNull(title)) {
-					title = dlFileEntry.getTitle();
-				}
-			}
-
-			String fileName = DLUtil.getSanitizedFileName(title, extension);
-
-			Date now = new Date();
-
-			validateFile(
-				dlFileEntry.getGroupId(), dlFileEntry.getFolderId(),
-				dlFileEntry.getFileEntryId(), sourceFileName, fileName,
-				extension, title, file, is);
-
-			// File version
-
-			String version = dlFileVersion.getVersion();
-
-			if (size == 0) {
-				size = dlFileVersion.getSize();
-			}
-
-			updateFileVersion(
-				user, dlFileVersion, sourceFileName, fileName, extension,
-				mimeType, title, description, changeLog, extraSettings,
-				fileEntryTypeId, fieldsMap, version, size,
-				dlFileVersion.getStatus(), serviceContext.getModifiedDate(now),
-				serviceContext);
-
-			// File
-
-			if ((file != null) || (is != null)) {
-				try {
-					DLStoreUtil.deleteFile(
-						user.getCompanyId(), dlFileEntry.getDataRepositoryId(),
-						dlFileEntry.getName(), version);
-				}
-				catch (NoSuchModelException nsme) {
-				}
-
-				if (file != null) {
-					DLStoreUtil.updateFile(
-						user.getCompanyId(), dlFileEntry.getDataRepositoryId(),
-						dlFileEntry.getName(), dlFileEntry.getExtension(),
-						false, version, sourceFileName, file);
-				}
-				else {
-					DLStoreUtil.updateFile(
-						user.getCompanyId(), dlFileEntry.getDataRepositoryId(),
-						dlFileEntry.getName(), dlFileEntry.getExtension(),
-						false, version, sourceFileName, is);
-				}
-			}
-
-			// Folder
-
-			if (!checkedOut &&
-				(dlFileEntry.getFolderId() !=
-					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
-
-				dlFolderLocalService.updateLastPostDate(
-					dlFileEntry.getFolderId(),
-					serviceContext.getModifiedDate(now));
-			}
-
-			if (autoCheckIn) {
-				if (ExportImportThreadLocal.isImportInProcess()) {
-					checkInFileEntry(
-						userId, fileEntryId, majorVersion, changeLog,
-						serviceContext);
-				}
-				else {
-					dlFileEntryService.checkInFileEntry(
-						fileEntryId, majorVersion, changeLog, serviceContext);
-				}
-			}
-			else if (!checkedOut &&
-					 (serviceContext.getWorkflowAction() ==
-						WorkflowConstants.ACTION_PUBLISH)) {
-
-				String syncEvent = DLSyncConstants.EVENT_UPDATE;
-
-				if (dlFileVersion.getVersion().equals(
-						DLFileEntryConstants.VERSION_DEFAULT)) {
-
-					syncEvent = DLSyncConstants.EVENT_ADD;
-				}
-
-				DLUtil.startWorkflowInstance(
-					userId, dlFileVersion, syncEvent, serviceContext);
+				title = dlFileEntry.getTitle();
 			}
 		}
-		catch (PortalException|SystemException pe) {
-			if (autoCheckIn) {
-				try {
-					if (ExportImportThreadLocal.isImportInProcess()) {
-						cancelCheckOut(userId, fileEntryId);
-					}
-					else {
-						dlFileEntryService.cancelCheckOut(fileEntryId);
-					}
-				}
-				catch (Exception e) {
-					_log.error(e, e);
-				}
+
+		String fileName = DLUtil.getSanitizedFileName(title, extension);
+
+		Date now = new Date();
+
+		validateFile(
+			dlFileEntry.getGroupId(), dlFileEntry.getFolderId(),
+			dlFileEntry.getFileEntryId(), sourceFileName, fileName, extension,
+			title, file, is);
+
+		// File version
+
+		String version = dlFileVersion.getVersion();
+
+		if (size == 0) {
+			size = dlFileVersion.getSize();
+		}
+
+		updateFileVersion(
+			user, dlFileVersion, sourceFileName, fileName, extension, mimeType,
+			title, description, changeLog, extraSettings, fileEntryTypeId,
+			fieldsMap, version, size, dlFileVersion.getStatus(),
+			serviceContext.getModifiedDate(now), serviceContext);
+
+		// File
+
+		if ((file != null) || (is != null)) {
+			try {
+				DLStoreUtil.deleteFile(
+					user.getCompanyId(), dlFileEntry.getDataRepositoryId(),
+					dlFileEntry.getName(), version);
+			}
+			catch (NoSuchModelException nsme) {
 			}
 
-			throw pe;
-		}
-		finally {
-			if (!autoCheckIn && !checkedOut) {
-				unlockFileEntry(fileEntryId);
+			if (file != null) {
+				DLStoreUtil.updateFile(
+					user.getCompanyId(), dlFileEntry.getDataRepositoryId(),
+					dlFileEntry.getName(), dlFileEntry.getExtension(), false,
+					version, sourceFileName, file);
+			}
+			else {
+				DLStoreUtil.updateFile(
+					user.getCompanyId(), dlFileEntry.getDataRepositoryId(),
+					dlFileEntry.getName(), dlFileEntry.getExtension(), false,
+					version, sourceFileName, is);
 			}
 		}
 
