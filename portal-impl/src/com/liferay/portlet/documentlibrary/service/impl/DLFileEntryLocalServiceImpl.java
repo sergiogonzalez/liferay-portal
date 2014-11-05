@@ -2427,17 +2427,6 @@ public class DLFileEntryLocalServiceImpl
 				dlFileVersion.getStatus(), serviceContext.getModifiedDate(now),
 				serviceContext);
 
-			// Folder
-
-			if (!checkedOut &&
-				(dlFileEntry.getFolderId() !=
-					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
-
-				dlFolderLocalService.updateLastPostDate(
-					dlFileEntry.getFolderId(),
-					serviceContext.getModifiedDate(now));
-			}
-
 			// File
 
 			if ((file != null) || (is != null)) {
@@ -2461,6 +2450,17 @@ public class DLFileEntryLocalServiceImpl
 						dlFileEntry.getName(), dlFileEntry.getExtension(),
 						false, version, sourceFileName, is);
 				}
+			}
+
+			// Folder
+
+			if (!checkedOut &&
+				(dlFileEntry.getFolderId() !=
+					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
+
+				dlFolderLocalService.updateLastPostDate(
+					dlFileEntry.getFolderId(),
+					serviceContext.getModifiedDate(now));
 			}
 
 			if (autoCheckIn) {
