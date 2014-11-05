@@ -1484,7 +1484,6 @@ public class DLFileEntryLocalServiceImpl
 		String description = dlFileVersion.getDescription();
 		String changeLog = LanguageUtil.format(
 			serviceContext.getLocale(), "reverted-to-x", version, false);
-		boolean majorVersion = true;
 		String extraSettings = dlFileVersion.getExtraSettings();
 		long fileEntryTypeId = dlFileVersion.getFileEntryTypeId();
 		Map<String, Fields> fieldsMap = null;
@@ -1495,8 +1494,8 @@ public class DLFileEntryLocalServiceImpl
 
 		DLFileEntry dlFileEntry = updateFileEntry(
 			userId, fileEntryId, sourceFileName, extension, mimeType, title,
-			description, changeLog, majorVersion, extraSettings,
-			fileEntryTypeId, fieldsMap, null, is, size, serviceContext);
+			description, changeLog, extraSettings, fileEntryTypeId, fieldsMap,
+			null, is, size, serviceContext);
 
 		DLFileVersion newDlFileVersion =
 			dlFileVersionLocalService.getFileVersion(
@@ -1651,8 +1650,8 @@ public class DLFileEntryLocalServiceImpl
 
 		return updateFileEntry(
 			userId, fileEntryId, sourceFileName, extension, mimeType, title,
-			description, changeLog, majorVersion, extraSettings,
-			fileEntryTypeId, fieldsMap, file, is, size, serviceContext);
+			description, changeLog, extraSettings, fileEntryTypeId, fieldsMap,
+			file, is, size, serviceContext);
 	}
 
 	@Override
@@ -2351,9 +2350,9 @@ public class DLFileEntryLocalServiceImpl
 	protected DLFileEntry updateFileEntry(
 			long userId, long fileEntryId, String sourceFileName,
 			String extension, String mimeType, String title, String description,
-			String changeLog, boolean majorVersion, String extraSettings,
-			long fileEntryTypeId, Map<String, Fields> fieldsMap, File file,
-			InputStream is, long size, ServiceContext serviceContext)
+			String changeLog, String extraSettings, long fileEntryTypeId,
+			Map<String, Fields> fieldsMap, File file, InputStream is, long size,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
