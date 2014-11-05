@@ -83,6 +83,15 @@ public class BlogsEntryServiceUtil {
 			coverImageImageSelector, smallImageImageSelector, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.repository.model.FileEntry addEntryAttachment(
+		long groupId, long entryId, java.lang.String fileName,
+		java.io.File file, java.lang.String mimeType)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addEntryAttachment(groupId, entryId, fileName, file,
+			mimeType);
+	}
+
 	public static void deleteEntry(long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteEntry(entryId);
