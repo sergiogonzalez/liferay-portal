@@ -47,8 +47,10 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.PortletURLImpl;
 import com.liferay.portlet.PortletURLUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
@@ -83,10 +85,12 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.portlet.PortletMode;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.WindowState;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -480,18 +484,9 @@ public class WikiUtil {
 		PortletURL curEditPageURL = PortletURLUtil.clone(
 			editPageURL, renderResponse);
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append(themeDisplay.getPathMain());
-		sb.append("/wiki/get_page_attachment?p_l_id=");
-		sb.append(themeDisplay.getPlid());
-		sb.append("&nodeId=");
-		sb.append(wikiPage.getNodeId());
-		sb.append("&title=");
-		sb.append(HttpUtil.encodeURL(wikiPage.getTitle()));
-		sb.append("&fileName=");
-
-		String attachmentURLPrefix = sb.toString();
+		String attachmentURLPrefix = getAttachmentURLPrefix(
+			themeDisplay.getPathMain(), themeDisplay.getPlid(),
+			wikiPage.getNodeId(), HttpUtil.encodeURL(wikiPage.getTitle()));
 
 		if (!preview && (version == 0)) {
 			WikiPageDisplay pageDisplay = WikiCacheUtil.getDisplay(
@@ -579,6 +574,29 @@ public class WikiUtil {
 		return orderByComparator;
 	}
 
+	public static String getSummary(
+			RenderRequest renderRequest, RenderResponse renderResponse,
+			WikiPage wikiPage)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String summary = wikiPage.getContent();
+
+		try {
+			summary = getFormattedContent(
+				renderRequest, renderResponse, wikiPage,
+				_getviewPageURL(wikiPage, themeDisplay),
+				_getEditPageURL(wikiPage, themeDisplay), wikiPage.getTitle(),
+				false);
+		}
+		catch (Exception e) {
+		}
+
+		return summary;
+	}
+
 	public static List<WikiNode> orderNodes(
 		List<WikiNode> nodes, String[] visibleNodeNames) {
 
@@ -623,6 +641,41 @@ public class WikiUtil {
 		throws WikiFormatException {
 
 		return _instance._validate(nodeId, content, format);
+	}
+
+	private static PortletURL _getEditPageURL(
+			WikiPage wikiPage, ThemeDisplay themeDisplay)
+		throws Exception {
+
+		PortletURL editPageURL = new PortletURLImpl(
+			themeDisplay.getRequest(), PortletKeys.WIKI, themeDisplay.getPlid(),
+			PortletRequest.ACTION_PHASE);
+
+		editPageURL.setParameter("struts_action", "/wiki/edit_page");
+		editPageURL.setParameter("redirect", themeDisplay.getURLCurrent());
+		editPageURL.setParameter(
+			"nodeId", String.valueOf(wikiPage.getNodeId()));
+		editPageURL.setPortletMode(PortletMode.VIEW);
+		editPageURL.setWindowState(WindowState.MAXIMIZED);
+
+		return editPageURL;
+	}
+
+	private static PortletURL _getviewPageURL(
+			WikiPage wikiPage, ThemeDisplay themeDisplay)
+		throws Exception {
+
+		PortletURL viewPageURL = new PortletURLImpl(
+			themeDisplay.getRequest(), PortletKeys.WIKI, themeDisplay.getPlid(),
+			PortletRequest.ACTION_PHASE);
+
+		viewPageURL.setParameter("struts_action", "/wiki/view");
+		viewPageURL.setParameter(
+			"nodeId", String.valueOf(wikiPage.getNodeId()));
+		viewPageURL.setPortletMode(PortletMode.VIEW);
+		viewPageURL.setWindowState(WindowState.MAXIMIZED);
+
+		return viewPageURL;
 	}
 
 	private String _convert(
