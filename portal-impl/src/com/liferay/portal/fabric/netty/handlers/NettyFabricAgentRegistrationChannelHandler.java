@@ -46,7 +46,7 @@ public class NettyFabricAgentRegistrationChannelHandler
 	public NettyFabricAgentRegistrationChannelHandler(
 		FabricAgentRegistry fabricAgentRegistry, Path repositoryParentPath,
 		EventExecutorGroup eventExecutorGroup, long getFileTimeout,
-		long rpcRelayTimeout) {
+		long rpcRelayTimeout, long startupTimeout) {
 
 		if (fabricAgentRegistry == null) {
 			throw new NullPointerException("Fabric agent registry is null");
@@ -65,6 +65,30 @@ public class NettyFabricAgentRegistrationChannelHandler
 		_eventExecutorGroup = eventExecutorGroup;
 		_getFileTimeout = getFileTimeout;
 		_rpcRelayTimeout = rpcRelayTimeout;
+		_startupTimeout = startupTimeout;
+	}
+
+	@Override
+	public void exceptionCaught(
+		ChannelHandlerContext channelHandlerContext, Throwable throwable) {
+
+		final Channel channel = channelHandlerContext.channel();
+
+		_log.error("Closing " + channel + " due to:", throwable);
+
+		ChannelFuture channelFuture = channel.close();
+
+		channelFuture.addListener(
+			new ChannelFutureListener() {
+
+				@Override
+				public void operationComplete(ChannelFuture channelFuture) {
+					if (_log.isInfoEnabled()) {
+						_log.info(channel + " is closed");
+					}
+				}
+
+			});
 	}
 
 	@Override
@@ -88,7 +112,7 @@ public class NettyFabricAgentRegistrationChannelHandler
 		NettyFabricAgentStub nettyFabricAgentStub =
 			new NettyFabricAgentStub(
 				channel, repository, nettyFabricAgentConfig.getRepositoryPath(),
-				_rpcRelayTimeout);
+				_rpcRelayTimeout, _startupTimeout);
 
 		if (!_fabricAgentRegistry.registerFabricAgent(
 				nettyFabricAgentStub,
@@ -178,5 +202,6 @@ public class NettyFabricAgentRegistrationChannelHandler
 	private final long _getFileTimeout;
 	private final Path _repositoryParentPath;
 	private final long _rpcRelayTimeout;
+	private final long _startupTimeout;
 
 }

@@ -1470,6 +1470,8 @@ public class PropsValues {
 
 	public static final int PORTAL_FABRIC_SERVER_WORKER_GROUP_THREAD_COUNT = GetterUtil.getInteger(PropsUtil.get(PropsKeys.PORTAL_FABRIC_SERVER_WORKER_GROUP_THREAD_COUNT));
 
+	public static final long PORTAL_FABRIC_SERVER_WORKER_STARTUP_TIMEOUT = GetterUtil.getLong(PropsUtil.get(PropsKeys.PORTAL_FABRIC_SERVER_WORKER_STARTUP_TIMEOUT));
+
 	public static final boolean PORTAL_IMPERSONATION_ENABLE = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.PORTAL_IMPERSONATION_ENABLE));
 
 	public static final String PORTAL_INSTANCE_HTTP_INET_SOCKET_ADDRESS = PropsUtil.get(PropsKeys.PORTAL_INSTANCE_HTTP_INET_SOCKET_ADDRESS);
@@ -1937,6 +1939,8 @@ public class PropsValues {
 	public static final String[] VELOCITY_ENGINE_RESTRICTED_VARIABLES = PropsUtil.getArray(PropsKeys.VELOCITY_ENGINE_RESTRICTED_VARIABLES);
 
 	public static final boolean VERIFY_DATABASE_TRANSACTIONS_DISABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.VERIFY_DATABASE_TRANSACTIONS_DISABLED));
+
+	public static final int VERIFY_PROCESS_CONCURRENCY_THRESHOLD = GetterUtil.getInteger(PropsUtil.get(PropsKeys.VERIFY_PROCESS_CONCURRENCY_THRESHOLD));
 
 	public static final String VIRTUAL_HOSTS_DEFAULT_SITE_NAME = PropsUtil.get(PropsKeys.VIRTUAL_HOSTS_DEFAULT_SITE_NAME);
 
