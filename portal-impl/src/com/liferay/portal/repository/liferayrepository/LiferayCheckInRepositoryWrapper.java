@@ -46,8 +46,6 @@ import com.liferay.portlet.documentlibrary.util.DLUtil;
 import java.io.File;
 import java.io.InputStream;
 
-import java.util.Date;
-
 /**
  * @author Adolfo Pérez
  */
@@ -176,9 +174,13 @@ public class LiferayCheckInRepositoryWrapper extends RepositoryWrapper {
 				(dlFileEntry.getFolderId() !=
 					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
 
+				dlFileEntry = DLFileEntryLocalServiceUtil.getDLFileEntry(
+					fileEntryId);
+
 				DLFolderLocalServiceUtil.updateLastPostDate(
 					dlFileEntry.getFolderId(),
-					serviceContext.getModifiedDate(new Date()));
+					serviceContext.getModifiedDate(
+						dlFileEntry.getModifiedDate()));
 			}
 
 			if (autoCheckIn) {
