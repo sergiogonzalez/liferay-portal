@@ -15,8 +15,10 @@
 package com.liferay.portal.service;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
+import com.liferay.portal.model.ListTypeConstants;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.OrganizationConstants;
 import com.liferay.portal.model.User;
@@ -24,7 +26,10 @@ import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
 import com.liferay.portal.test.listeners.ResetDatabaseExecutionTestListener;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.test.OrganizationTestUtil;
+import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portal.util.test.TestPropsValues;
+import com.liferay.portlet.asset.model.AssetEntry;
+import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 
 import java.util.List;
 
@@ -145,6 +150,38 @@ public class OrganizationLocalServiceTest {
 
 		Assert.assertEquals(
 			organizationA.getGroupId(), groupB.getParentGroupId());
+	}
+
+	@Test
+	public void testGetNoAssetOrganizations() throws Exception {
+		OrganizationLocalServiceUtil.addOrganization(
+			TestPropsValues.getUserId(),
+			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
+			RandomTestUtil.randomString(),
+			OrganizationConstants.TYPE_REGULAR_ORGANIZATION, 0, 0,
+			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT, StringPool.BLANK,
+			false, new ServiceContext());
+
+		Organization organization =
+			OrganizationLocalServiceUtil.addOrganization(
+				TestPropsValues.getUserId(),
+				OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID, "Test2",
+				OrganizationConstants.TYPE_REGULAR_ORGANIZATION, 0, 0,
+				ListTypeConstants.ORGANIZATION_STATUS_DEFAULT, StringPool.BLANK,
+				false, new ServiceContext());
+
+		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+			Organization.class.getName(), organization.getOrganizationId());
+
+		Assert.assertNotNull(assetEntry);
+
+		AssetEntryLocalServiceUtil.deleteAssetEntry(assetEntry);
+
+		List<Organization> organizations =
+			OrganizationLocalServiceUtil.getNoAssetOrganizations();
+
+		Assert.assertEquals(1, organizations.size());
+		Assert.assertEquals(organization, organizations.get(0));
 	}
 
 	@Test

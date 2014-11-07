@@ -443,6 +443,7 @@ public class LangBuilder {
 	private String _fixEnglishTranslation(String key, String value) {
 
 		// http://en.wikibooks.org/wiki/Basic_Book_Design/Capitalizing_Words_in_Titles
+		// http://titlecapitalization.com
 		// http://www.imdb.com
 
 		if (value.contains(" this ")) {

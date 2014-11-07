@@ -26,8 +26,6 @@ import java.util.concurrent.Executors;
  */
 public class SyncEngineUtil {
 
-	public static final int SYNC_ENGINE_NOT_CONFIGURED = 0;
-
 	public static final int SYNC_ENGINE_STATE_PROCESSED = 6;
 
 	public static final int SYNC_ENGINE_STATE_PROCESSING = 5;
@@ -43,6 +41,12 @@ public class SyncEngineUtil {
 	public static final int SYNC_ENGINE_UPDATE_AVAILABLE = 7;
 
 	public static void fireSyncEngineStateChanged(final int syncEngineState) {
+		fireSyncEngineStateChanged(0, syncEngineState);
+	}
+
+	public static void fireSyncEngineStateChanged(
+		final long syncAccountId, final int syncEngineState) {
+
 		for (final SyncEngineListener syncEngineListener :
 				_syncEngineListeners) {
 
@@ -52,7 +56,7 @@ public class SyncEngineUtil {
 					@Override
 					public void run() {
 						syncEngineListener.syncEngineStateChanged(
-							syncEngineState);
+							syncAccountId, syncEngineState);
 					}
 
 				}
