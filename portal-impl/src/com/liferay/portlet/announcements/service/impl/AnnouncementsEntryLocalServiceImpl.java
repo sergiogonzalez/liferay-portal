@@ -369,7 +369,7 @@ public class AnnouncementsEntryLocalServiceImpl
 		return entry;
 	}
 
-	protected void notifyUsers(final AnnouncementsEntry entry)
+	protected void notifyUsers(AnnouncementsEntry entry)
 		throws PortalException {
 
 		Company company = companyPersistence.findByPrimaryKey(
