@@ -15,6 +15,8 @@
 package com.liferay.portlet.documentlibrary.service;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.search.IndexerInterval;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringPool;
@@ -33,6 +35,8 @@ import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
+import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
 import com.liferay.portlet.documentlibrary.util.test.DLTestUtil;
 
 import java.io.ByteArrayInputStream;
@@ -47,6 +51,7 @@ import org.junit.runner.RunWith;
 
 /**
  * @author Michael C. Han
+ * @author Sergio González
  */
 @ExecutionTestListeners(
 	listeners = {
@@ -60,6 +65,33 @@ public class DLFileEntryLocalServiceTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+	}
+
+	@Test
+	public void testDeleteFileEntriesIteration() throws Exception {
+		Folder folder = DLAppTestUtil.addFolder(
+			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		for (int i = 0; i < 20; i++) {
+			FileEntry fileEntry = DLAppTestUtil.addFileEntry(
+				_group.getGroupId(), _group.getGroupId(), folder.getFolderId());
+
+			DLAppLocalServiceUtil.moveFileEntryToTrash(
+				TestPropsValues.getUserId(), fileEntry.getFileEntryId());
+		}
+
+		for (int i = 0; i < IndexerInterval.DEFAULT_INTERVAL; i++) {
+			DLAppTestUtil.addFileEntry(
+				_group.getGroupId(), _group.getGroupId(), folder.getFolderId());
+		}
+
+		DLFileEntryLocalServiceUtil.deleteFileEntries(
+			_group.getGroupId(), folder.getFolderId(), false);
+
+		int fileEntriesCount = DLFileEntryLocalServiceUtil.getFileEntriesCount(
+			_group.getGroupId(), folder.getFolderId());
+
+		Assert.assertEquals(20, fileEntriesCount);
 	}
 
 	@Test
