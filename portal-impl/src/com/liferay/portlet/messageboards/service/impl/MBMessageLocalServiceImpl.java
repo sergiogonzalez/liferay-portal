@@ -1938,8 +1938,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		subscriptionSender.setBody(body);
 		subscriptionSender.setCompanyId(message.getCompanyId());
-		subscriptionSender.setClassName(message.getModelClassName());
-		subscriptionSender.setClassPK(message.getMessageId());
+		subscriptionSender.setClassName(message.getClassName());
+		subscriptionSender.setClassPK(message.getClassPK());
 		subscriptionSender.setContextAttribute(
 			"[$COMMENTS_BODY$]", message.getBody(true), false);
 		subscriptionSender.setContextAttributes(
