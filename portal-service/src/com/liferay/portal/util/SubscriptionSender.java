@@ -439,13 +439,17 @@ public class SubscriptionSender implements Serializable {
 			PermissionCheckerFactoryUtil.create(user);
 
 		if (Validator.isNotNull(className)) {
-			Boolean hasPermission =
-				ResourcePermissionCheckerUtil.containsResourcePermission(
-					permissionChecker, className, classPK, ActionKeys.VIEW);
+			if (_hasViewPermission == null) {
+				_hasViewPermission =
+					ResourcePermissionCheckerUtil.containsResourcePermission(
+						permissionChecker, className, classPK, ActionKeys.VIEW);
 
-			if ((hasPermission == null) || !hasPermission) {
-				return false;
+				if (_hasViewPermission == null) {
+					_hasViewPermission = false;
+				}
 			}
+
+			return _hasViewPermission;
 		}
 
 		Boolean hasPermission =
@@ -893,6 +897,7 @@ public class SubscriptionSender implements Serializable {
 	private String _contextUserPrefix;
 	private String _entryTitle;
 	private String _entryURL;
+	private Boolean _hasViewPermission;
 	private boolean _initialized;
 	private Object[] _mailIdIds;
 	private String _mailIdPopPortletPrefix;
