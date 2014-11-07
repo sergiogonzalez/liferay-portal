@@ -49,13 +49,15 @@ public class SubscriptionPermissionUtil {
 	 */
 	public static void check(
 			PermissionChecker permissionChecker, String subscriptionClassName,
-			long subscriptionClassPK, String inferredClassName,
-			long inferredClassPK)
+			long subscriptionClassPK, String subscriptionActionId,
+			String inferredClassName, long inferredClassPK,
+			String inferredActionId)
 		throws PortalException {
 
 		getSubscriptionPermission().check(
 			permissionChecker, subscriptionClassName, subscriptionClassPK,
-			inferredClassName, inferredClassPK);
+			subscriptionActionId, inferredClassName, inferredClassPK,
+			inferredActionId);
 	}
 
 	/**
@@ -77,13 +79,15 @@ public class SubscriptionPermissionUtil {
 	 */
 	public static boolean contains(
 			PermissionChecker permissionChecker, String subscriptionClassName,
-			long subscriptionClassPK, String inferredClassName,
-			long inferredClassPK)
+			long subscriptionClassPK, String subscriptionActionId,
+			String inferredClassName, long inferredClassPK,
+			String inferredinferredActionId)
 		throws PortalException {
 
 		return getSubscriptionPermission().contains(
 			permissionChecker, subscriptionClassName, subscriptionClassPK,
-			inferredClassName, inferredClassPK);
+			subscriptionActionId, inferredClassName, inferredClassPK,
+			inferredinferredActionId);
 	}
 
 	public static SubscriptionPermission getSubscriptionPermission() {

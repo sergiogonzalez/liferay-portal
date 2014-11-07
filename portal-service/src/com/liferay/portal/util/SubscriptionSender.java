@@ -43,6 +43,7 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Subscription;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserNotificationDeliveryConstants;
+import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
@@ -271,6 +272,10 @@ public class SubscriptionSender implements Serializable {
 			company.getMx(), _mailIdPopPortletPrefix, _mailIdIds);
 	}
 
+	public void setActionId(String actionId) {
+		_actionId = actionId;
+	}
+
 	public void setBody(String body) {
 		this.body = body;
 	}
@@ -431,7 +436,8 @@ public class SubscriptionSender implements Serializable {
 
 		return SubscriptionPermissionUtil.contains(
 			permissionChecker, subscription.getClassName(),
-			subscription.getClassPK(), className, classPK);
+			subscription.getClassPK(), _actionId, className, classPK,
+			ActionKeys.VIEW);
 	}
 
 	protected boolean hasPermission(Subscription subscription, User user)
@@ -856,6 +862,7 @@ public class SubscriptionSender implements Serializable {
 
 	private static Log _log = LogFactoryUtil.getLog(SubscriptionSender.class);
 
+	private String _actionId = ActionKeys.SUBSCRIBE;
 	private List<InternetAddress> _bulkAddresses;
 	private transient ClassLoader _classLoader;
 	private String _className;

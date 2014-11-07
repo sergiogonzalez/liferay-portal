@@ -52,8 +52,9 @@ public interface SubscriptionPermission {
 	 */
 	public void check(
 			PermissionChecker permissionChecker, String subscriptionClassName,
-			long subscriptionClassPK, String inferredClassName,
-			long inferredClassPK)
+			long subscriptionClassPK, String subscriptionActionId,
+			String inferredClassName, long inferredClassPK,
+			String inferredActionId)
 		throws PortalException;
 
 	/**
@@ -103,8 +104,9 @@ public interface SubscriptionPermission {
 	 */
 	public boolean contains(
 			PermissionChecker permissionChecker, String subscriptionClassName,
-			long subscriptionClassPK, String inferredClassName,
-			long inferredClassPK)
+			long subscriptionClassPK, String subscriptionActionId,
+			String inferredClassName, long inferredClassPK,
+			String inferredActionId)
 		throws PortalException;
 
 }

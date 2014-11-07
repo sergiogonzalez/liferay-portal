@@ -16,18 +16,10 @@ package com.liferay.portal.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.workflow.WorkflowInstance;
-import com.liferay.portal.model.Layout;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionCheckerUtil;
-import com.liferay.portal.util.PortletKeys;
-import com.liferay.portlet.messageboards.model.MBDiscussion;
-import com.liferay.portlet.messageboards.model.MBThread;
-import com.liferay.portlet.messageboards.service.MBDiscussionLocalServiceUtil;
-import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
-import com.liferay.portlet.messageboards.service.permission.MBDiscussionPermission;
 
 /**
  * @author Mate Thurzo
@@ -45,19 +37,23 @@ public class SubscriptionPermissionImpl implements SubscriptionPermission {
 			PermissionChecker permissionChecker, String className, long classPK)
 		throws PortalException {
 
-		check(permissionChecker, className, classPK, null, 0);
+		check(
+			permissionChecker, className, classPK, ActionKeys.VIEW, null, 0,
+			ActionKeys.SUBSCRIBE);
 	}
 
 	@Override
 	public void check(
 			PermissionChecker permissionChecker, String subscriptionClassName,
-			long subscriptionClassPK, String inferredClassName,
-			long inferredClassPK)
+			long subscriptionClassPK, String subscriptionActionId,
+			String inferredClassName, long inferredClassPK,
+			String inferredActionId)
 		throws PortalException {
 
 		if (!contains(
 				permissionChecker, subscriptionClassName, subscriptionClassPK,
-				inferredClassName, inferredClassPK)) {
+				subscriptionActionId, inferredClassName, inferredClassPK,
+				inferredActionId)) {
 
 			throw new PrincipalException();
 		}
@@ -73,14 +69,17 @@ public class SubscriptionPermissionImpl implements SubscriptionPermission {
 			PermissionChecker permissionChecker, String className, long classPK)
 		throws PortalException {
 
-		return contains(permissionChecker, className, classPK, null, 0);
+		return contains(
+			permissionChecker, className, classPK, ActionKeys.VIEW, null, 0,
+			ActionKeys.SUBSCRIBE);
 	}
 
 	@Override
 	public boolean contains(
 			PermissionChecker permissionChecker, String subscriptionClassName,
-			long subscriptionClassPK, String inferredClassName,
-			long inferredClassPK)
+			long subscriptionClassPK, String subscriptionActionId,
+			String inferredClassName, long inferredClassPK,
+			String inferredActionId)
 		throws PortalException {
 
 		if (subscriptionClassName == null) {
@@ -88,57 +87,26 @@ public class SubscriptionPermissionImpl implements SubscriptionPermission {
 		}
 
 		if (Validator.isNotNull(inferredClassName)) {
-			Boolean hasPermission = hasPermission(
-				permissionChecker, inferredClassName, inferredClassPK,
-				ActionKeys.VIEW);
+			Boolean hasPermission =
+				PermissionCheckerUtil.containsResourcePermission(
+					permissionChecker, inferredClassName, inferredClassPK,
+					inferredActionId);
 
 			if ((hasPermission == null) || !hasPermission) {
 				return false;
 			}
 		}
 
-		Boolean hasPermission = hasPermission(
-			permissionChecker, subscriptionClassName, subscriptionClassPK,
-			ActionKeys.SUBSCRIBE);
+		Boolean hasPermission =
+			PermissionCheckerUtil.containsResourcePermission(
+				permissionChecker, subscriptionClassName, subscriptionClassPK,
+				subscriptionActionId);
 
 		if (hasPermission != null) {
 			return hasPermission;
 		}
 
 		return true;
-	}
-
-	protected Boolean hasPermission(
-			PermissionChecker permissionChecker, String className, long classPK,
-			String actionId)
-		throws PortalException {
-
-		MBDiscussion mbDiscussion =
-			MBDiscussionLocalServiceUtil.fetchDiscussion(className, classPK);
-
-		if (mbDiscussion != null) {
-			if (className.equals(Layout.class.getName())) {
-				return LayoutPermissionUtil.contains(
-					permissionChecker, classPK, ActionKeys.VIEW);
-			}
-
-			MBThread mbThread = MBThreadLocalServiceUtil.fetchThread(
-				mbDiscussion.getThreadId());
-
-			if (className.equals(WorkflowInstance.class.getName())) {
-				return permissionChecker.hasPermission(
-					mbThread.getGroupId(), PortletKeys.WORKFLOW_DEFINITIONS,
-					mbThread.getGroupId(), ActionKeys.VIEW);
-			}
-
-			return MBDiscussionPermission.contains(
-				permissionChecker, mbThread.getCompanyId(),
-				mbThread.getGroupId(), className, classPK, mbThread.getUserId(),
-				ActionKeys.VIEW);
-		}
-
-		return PermissionCheckerUtil.containsResourcePermission(
-			permissionChecker, className, classPK, actionId);
 	}
 
 }
