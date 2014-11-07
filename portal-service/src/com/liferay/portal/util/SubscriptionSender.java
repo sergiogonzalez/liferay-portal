@@ -43,15 +43,16 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Subscription;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserNotificationDeliveryConstants;
+import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.security.permission.ResourcePermissionCheckerUtil;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.SubscriptionLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.UserNotificationEventLocalServiceUtil;
-import com.liferay.portal.service.permission.SubscriptionPermissionUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -271,6 +272,10 @@ public class SubscriptionSender implements Serializable {
 			company.getMx(), _mailIdPopPortletPrefix, _mailIdIds);
 	}
 
+	public void setActionId(String actionId) {
+		_actionId = actionId;
+	}
+
 	public void setBody(String body) {
 		this.body = body;
 	}
@@ -426,12 +431,37 @@ public class SubscriptionSender implements Serializable {
 			User user)
 		throws Exception {
 
+		if (subscription.getClassName() == null) {
+			return false;
+		}
+
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(user);
 
-		return SubscriptionPermissionUtil.contains(
-			permissionChecker, subscription.getClassName(),
-			subscription.getClassPK(), className, classPK);
+		if (Validator.isNotNull(className)) {
+			if (_hasViewPermission == null) {
+				_hasViewPermission =
+					ResourcePermissionCheckerUtil.containsResourcePermission(
+						permissionChecker, className, classPK, ActionKeys.VIEW);
+
+				if (_hasViewPermission == null) {
+					_hasViewPermission = false;
+				}
+			}
+
+			return _hasViewPermission;
+		}
+
+		Boolean hasPermission =
+			ResourcePermissionCheckerUtil.containsResourcePermission(
+				permissionChecker, subscription.getClassName(),
+				subscription.getClassPK(), _actionId);
+
+		if (hasPermission != null) {
+			return hasPermission;
+		}
+
+		return true;
 	}
 
 	protected boolean hasPermission(Subscription subscription, User user)
@@ -542,7 +572,8 @@ public class SubscriptionSender implements Serializable {
 			if (_log.isInfoEnabled()) {
 				_log.info(
 					"User with email address " + emailAddress +
-						" does not exist for company " + companyId);
+						" does not exist for company " + companyId
+				);
 			}
 
 			sendEmail(to, locale);
@@ -856,6 +887,7 @@ public class SubscriptionSender implements Serializable {
 
 	private static Log _log = LogFactoryUtil.getLog(SubscriptionSender.class);
 
+	private String _actionId = ActionKeys.SUBSCRIBE;
 	private List<InternetAddress> _bulkAddresses;
 	private transient ClassLoader _classLoader;
 	private String _className;
@@ -865,6 +897,7 @@ public class SubscriptionSender implements Serializable {
 	private String _contextUserPrefix;
 	private String _entryTitle;
 	private String _entryURL;
+	private Boolean _hasViewPermission;
 	private boolean _initialized;
 	private Object[] _mailIdIds;
 	private String _mailIdPopPortletPrefix;

@@ -1128,6 +1128,7 @@
 		</property>
 	</bean>
 	<bean id="com.liferay.portlet.messageboards.service.permission.MBCategoryPermission" class="com.liferay.portlet.messageboards.service.permission.MBCategoryPermission" />
+	<bean id="com.liferay.portlet.messageboards.service.permission.MBDiscussionPermission" class="com.liferay.portlet.messageboards.service.permission.MBDiscussionPermission" />
 	<bean id="com.liferay.portlet.messageboards.service.permission.MBMessagePermission" class="com.liferay.portlet.messageboards.service.permission.MBMessagePermission" />
 	<bean id="com.liferay.portlet.messageboards.service.permission.MBThreadPermission" class="com.liferay.portlet.messageboards.service.permission.MBThreadPermission" />
 	<bean id="com.liferay.portlet.messageboards.service.permission.MBPermission" class="com.liferay.portlet.messageboards.service.permission.MBPermission" />
