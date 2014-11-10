@@ -40,11 +40,10 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.testng.Assert;
 
 /**
  * @author László Csontos
@@ -173,8 +172,7 @@ public class RoleLocalServiceTest {
 		Organization organization = (Organization)organizationAndTeam[0];
 		Team team = (Team)organizationAndTeam[1];
 
-		Layout layout = LayoutTestUtil.addLayout(
-			organization.getGroupId(), RandomTestUtil.randomString());
+		Layout layout = LayoutTestUtil.addLayout(organization.getGroupId());
 
 		Group group = GroupTestUtil.addGroup(
 			TestPropsValues.getUserId(), organization.getGroupId(), layout);

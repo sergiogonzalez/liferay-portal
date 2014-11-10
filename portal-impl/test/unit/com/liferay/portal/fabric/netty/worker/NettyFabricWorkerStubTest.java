@@ -41,11 +41,10 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
+import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.testng.Assert;
 
 /**
  * @author Shuyang Zhou
@@ -86,8 +85,7 @@ public class NettyFabricWorkerStubTest {
 			Assert.fail();
 		}
 		catch (NullPointerException npe) {
-			Assert.assertEquals(
-				"Output resource map is null", npe.getMessage());
+			Assert.assertEquals("Output path map is null", npe.getMessage());
 		}
 
 		Channel channel = NettyTestUtil.createEmptyEmbeddedChannel();

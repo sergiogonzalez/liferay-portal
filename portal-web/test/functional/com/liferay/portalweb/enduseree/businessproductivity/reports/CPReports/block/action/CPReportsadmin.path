@@ -29,13 +29,34 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[@class='alert alert-success']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ERROR_MESSAGE_1</td>
+	<td>xpath=(//div[@class='alert alert-error'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ERROR_MESSAGE_2</td>
+	<td>xpath=(//div[@class='alert alert-error'])[2]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>OPTIONS_WRENCH_ICON</td>
 	<td>//a[@title='Options']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>SUCCESS_MESSAGE</td>
-	<td>//div[@class='alert alert-success']</td>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--OPTIONS_MENULIST-->
+<tr>
+	<td>OPTIONS_MENULIST_CONFIGURATION</td>
+	<td>//a[contains(@id,'_menu_configuration')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -110,7 +131,7 @@
 <!--DEFINITIONS-->
 <tr>
 	<td>DEFINITIONS_ADD_REPORT_DEFINITION_BUTTON</td>
-	<td>//button[@class='btn' and contains(.,'Add Report Definition')]</td>
+	<td>//button[contains(.,'Add Report Definition')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -119,6 +140,11 @@
 	<td></td>
 </tr>
 <!--DEFINITIONS_DEFINITION_TABLE-->
+<tr>
+	<td>DEFINITIONS_DEFINITION_TABLE_DEFINITION_NAME</td>
+	<td>//tr[contains(.,'${key_reportsDefinitionName}')]/td[1]/a</td>
+	<td></td>
+</tr>
 <tr>
 	<td>DEFINITIONS_DEFINITION_TABLE_ACTIONS</td>
 	<td>//tr[contains(.,'${key_reportsDefinitionName}')]/td[4]/div/a[@title='Actions']</td>
@@ -153,6 +179,37 @@
 <tr>
 	<td>DEFINITIONS_DEFINITION_MENULIST_DELETE</td>
 	<td>//a[@role='menuitem' and contains(.,'Delete')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DEFINITIONS_PAGINATION-->
+<tr>
+	<td>DEFINITIONS_PAGINATION_PAGE_NUMBER_DROPDOWN_BUTTON</td>
+	<td>//a[contains(@class,'dropdown-toggle') and contains(.,'of')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DEFINITIONS_PAGINATION_ITEMS_PER_PAGE_DROPDOWN_BUTTON</td>
+	<td>//a[contains(@class,'dropdown-toggle') and contains(.,'Items per')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DEFINITIONS_PAGINATION_ITEMS_PER_PAGE_DROPDOWN_MENU_ITEM</td>
+	<td>//ul[contains(@class,'menu-list')]/li/a/span[.='${key_itemsPerPage}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DEFINITIONS_PAGINATION_PREVIOUS_BUTTON</td>
+	<td>//ul[contains(@class,'pagination-buttons')]/li/a[contains(.,'Previous')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DEFINITIONS_PAGINATION_NEXT_BUTTON</td>
+	<td>//ul[contains(@class,'pagination-buttons')]/li/a[contains(.,'Next')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -26,7 +26,6 @@ import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.test.GroupTestUtil;
 import com.liferay.portal.util.test.LayoutTestUtil;
-import com.liferay.portal.util.test.RandomTestUtil;
 import com.liferay.portal.util.test.ServiceContextTestUtil;
 
 import java.util.Collections;
@@ -34,13 +33,12 @@ import java.util.Collections;
 import javax.servlet.http.HttpServletRequest;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.springframework.mock.web.MockHttpServletRequest;
-
-import org.testng.Assert;
 
 /**
  * @author László Csontos
@@ -66,8 +64,7 @@ public class FriendlyURLServletTest {
 
 	@Test
 	public void testGetRedirectWithExistentSite() throws Exception {
-		Layout layout = LayoutTestUtil.addLayout(
-			_group.getGroupId(), RandomTestUtil.randomString());
+		Layout layout = LayoutTestUtil.addLayout(_group);
 
 		testGetRedirect(
 			getPath(_group, layout), Portal.PATH_MAIN,
