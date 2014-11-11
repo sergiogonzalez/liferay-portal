@@ -2975,7 +2975,7 @@ public class DataFactory {
 		wikiPageModel.setTitle("Test Page " + index);
 		wikiPageModel.setVersion(WikiPageConstants.VERSION_DEFAULT);
 		wikiPageModel.setContent("This is test page " + index + ".");
-		wikiPageModel.setFormat(WikiPageConstants.DEFAULT_FORMAT);
+		wikiPageModel.setFormat("creole");
 		wikiPageModel.setHead(true);
 
 		return wikiPageModel;
