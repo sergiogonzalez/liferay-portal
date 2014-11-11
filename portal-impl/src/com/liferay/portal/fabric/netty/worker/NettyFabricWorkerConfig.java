@@ -14,6 +14,7 @@
 
 package com.liferay.portal.fabric.netty.worker;
 
+import com.liferay.portal.kernel.io.PathHolder;
 import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.process.ProcessConfig;
 import com.liferay.portal.kernel.process.ProcessException;
@@ -22,7 +23,6 @@ import com.liferay.util.SerializableUtil;
 import java.io.Serializable;
 
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -35,7 +35,7 @@ public class NettyFabricWorkerConfig<T extends Serializable>
 
 	public NettyFabricWorkerConfig(
 		long id, ProcessConfig processConfig,
-		ProcessCallable<T> processCallable, Map<Path, Path> inputResourceMap) {
+		ProcessCallable<T> processCallable, Map<Path, Path> inputPathMap) {
 
 		if (processConfig == null) {
 			throw new NullPointerException("Process config is null");
@@ -45,8 +45,8 @@ public class NettyFabricWorkerConfig<T extends Serializable>
 			throw new NullPointerException("Process callable is null");
 		}
 
-		if (inputResourceMap == null) {
-			throw new NullPointerException("Input resource map is null");
+		if (inputPathMap == null) {
+			throw new NullPointerException("Input path map is null");
 		}
 
 		_id = id;
@@ -54,14 +54,12 @@ public class NettyFabricWorkerConfig<T extends Serializable>
 		_processCallable = new NettyFabricWorkerProcessCallable<T>(
 			processCallable);
 
-		_inputResourceStringMap = new HashMap<String, String>();
+		_inputPathHolderMap = new HashMap<PathHolder, PathHolder>();
 
-		for (Map.Entry<Path, Path> entry : inputResourceMap.entrySet()) {
-			Path keyPath = entry.getKey();
-			Path valuePath = entry.getValue();
-
-			_inputResourceStringMap.put(
-				keyPath.toString(), valuePath.toString());
+		for (Map.Entry<Path, Path> entry : inputPathMap.entrySet()) {
+			_inputPathHolderMap.put(
+				new PathHolder(entry.getKey()),
+				new PathHolder(entry.getValue()));
 		}
 	}
 
@@ -69,20 +67,20 @@ public class NettyFabricWorkerConfig<T extends Serializable>
 		return _id;
 	}
 
-	public Map<Path, Path> getInputResourceMap() {
-		Map<Path, Path> inputResourceMap = new HashMap<Path, Path>();
+	public Map<Path, Path> getInputPathMap() {
+		Map<Path, Path> inputPathMap = new HashMap<Path, Path>();
 
-		for (Map.Entry<String, String> entry :
-				_inputResourceStringMap.entrySet()) {
+		for (Map.Entry<PathHolder, PathHolder> entry :
+				_inputPathHolderMap.entrySet()) {
 
-			String keyPathString = entry.getKey();
-			String valuePathString = entry.getValue();
+			PathHolder keyPathHolder = entry.getKey();
+			PathHolder valuePathHolder = entry.getValue();
 
-			inputResourceMap.put(
-				Paths.get(keyPathString), Paths.get(valuePathString));
+			inputPathMap.put(
+				keyPathHolder.getPath(), valuePathHolder.getPath());
 		}
 
-		return inputResourceMap;
+		return inputPathMap;
 	}
 
 	public ProcessCallable<T> getProcessCallable() {
@@ -96,7 +94,7 @@ public class NettyFabricWorkerConfig<T extends Serializable>
 	private static final long serialVersionUID = 1L;
 
 	private final long _id;
-	private final Map<String, String> _inputResourceStringMap;
+	private final Map<PathHolder, PathHolder> _inputPathHolderMap;
 	private final ProcessCallable<T> _processCallable;
 	private final ProcessConfig _processConfig;
 

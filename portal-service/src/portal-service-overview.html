@@ -61,11 +61,11 @@ User test_user = UserLocalServiceUtil.getUserByEmailAddress(&quot;test@liferay.c
 			Example - Subscribe to a Wiki page:
 		</p>
 
-		<pre><code>import com.liferay.portlet.wiki.service.WikiPageServiceUtil;
-...
-long nodeId = ParamUtil.getLong(actionRequest, &quot;nodeId&quot;);
-String title = ParamUtil.getString(actionRequest, &quot;title&quot;);
-WikiPageServiceUtil.subscribePage(nodeId, title);</code></pre>
+		<pre><code>import com.liferay.wiki.service.WikiPageServiceUtil;
+            ...
+            long nodeId = ParamUtil.getLong(actionRequest, &quot;nodeId&quot;);
+            String title = ParamUtil.getString(actionRequest, &quot;title&quot;);
+            WikiPageServiceUtil.subscribePage(nodeId, title);</code></pre>
 
 		<h3>The Portal Kernel and Utilities</h3>
 

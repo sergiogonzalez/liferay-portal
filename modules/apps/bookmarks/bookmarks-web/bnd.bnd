@@ -4,12 +4,11 @@ Bundle-Version: 1.0.0
 Import-Package: \
 	${bnd.jsp.support.imports},\
 	\
-	com.liferay.portal.kernel.bean,\
 	com.liferay.portal.kernel.configuration,\
-	com.liferay.portal.kernel.xml,\
+	com.liferay.portal.kernel.bean,\
 	com.liferay.portal.kernel.exception,\
-	com.liferay.portal.kernel.notifications,\
 	com.liferay.portal.kernel.lar,\
+	com.liferay.portal.kernel.notifications,\
 	com.liferay.portal.kernel.portlet,\
 	com.liferay.portal.kernel.search,\
 	com.liferay.portal.kernel.servlet.filters.invoker,\
@@ -17,6 +16,7 @@ Import-Package: \
 	com.liferay.portal.kernel.trash,\
 	com.liferay.portal.kernel.util,\
 	com.liferay.portal.kernel.workflow,\
+	com.liferay.portal.kernel.xml,\
 	com.liferay.portal.lar,\
 	com.liferay.portal.model,\
 	com.liferay.portal.security.permission,\

@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+
+<project name="portal-tools" basedir="." default="compile">
+	<import file="../build-common-java.xml" />
+
+	<property name="deploy.dir" value="${liferay.home}/osgi/tools" />
+	<property name="jar.file" value="${ant.project.name}" />
+	<property name="manifest.bundle.name" value="Liferay Portal Tools" />
+	<property name="manifest.bundle.symbolic.name" value="portal-tools" />
+
+	<!--<target name="compile">
+		<mkdir dir="classes" />
+
+		<copy todir="classes" preservelastmodified="true">
+			<fileset dir="src" excludes="**/*.java" />
+		</copy>
+
+		<path id="web-lib.classpath">
+			<fileset dir="${project.dir}/lib/development" includes="junit.jar" />
+		</path>
+
+		<javac
+			classpathref="web.classpath"
+			compiler="${javac.compiler}"
+			debug="${javac.debug}"
+			deprecation="${javac.deprecation}"
+			destdir="classes"
+			encoding="${javac.encoding}"
+			includeAntRuntime="false"
+			nowarn="${javac.nowarn}"
+			srcdir="src"
+		/>
+	</target>-->
+</project>

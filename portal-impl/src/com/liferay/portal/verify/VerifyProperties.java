@@ -343,7 +343,30 @@ public class VerifyProperties extends VerifyProcess {
 		new String[] {
 			"polls.publish.to.live.by.default", "publish.to.live.by.default",
 			"com.liferay.polls.service"
+		},
+
+		// Wiki
+
+		new String[] {
+			"wiki.comment.ratings.enabled", "wiki.display.style",
+			"wiki.page.comments.enabled", "wiki.page.ratings.enabled",
+			"wiki.related.assets.enabled", "wiki.rss.enabled",
+			"com.liferay.wiki.web"
+		},
+		new String[] {
+
+			"wiki.front.page.name", "wiki.initial.node.name",
+			"wiki.page.titles.regexp", "wiki.page.titles.remove.regexp",
+			"wiki.page.minor.edit.add.social.activity",
+			"wiki.page.minor.edit.send.email", "wiki.formats.default",
+			"wiki.parsers.creole.supported.protocols", "wiki.email.from.name",
+			"wiki.email.from.address", "wiki.email.page.added.enabled",
+			"wiki.email.page.added.subject", "wiki.email.page.added.body",
+			"wiki.email.page.updated.enabled",
+			"wiki.email.page.updated.subject", "wiki.email.page.updated.body",
+			"wiki.rss.abstract.length", "com.liferay.wiki.service"
 		}
+
 	};
 
 	private static final String[] _OBSOLETE_PORTAL_KEYS = new String[] {
@@ -417,7 +440,8 @@ public class VerifyProperties extends VerifyProcess {
 		"velocity.engine.resource.manager.cache.enabled",
 		"webdav.storage.class", "webdav.storage.show.edit.url",
 		"webdav.storage.show.view.url", "webdav.storage.tokens",
-		"wiki.email.page.added.signature", "wiki.email.page.updated.signature",
+		"wiki.display.templates.config", "wiki.email.page.added.signature",
+		"wiki.email.page.updated.signature", "wiki.formats", "wiki.importers",
 		"xss.allow"
 	};
 
