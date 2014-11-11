@@ -1730,6 +1730,36 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	@Override
+	public DLFileEntry updateFileEntryType(
+			long userId, long fileEntryId, long fileEntryTypeId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		User user = userLocalService.getUser(userId);
+
+		DLFileEntry dlFileEntry = dlFileEntryLocalService.getFileEntry(
+			fileEntryId);
+
+		dlFileEntry.setFileEntryTypeId(fileEntryTypeId);
+
+		dlFileEntryLocalService.updateDLFileEntry(dlFileEntry);
+
+		DLFileVersion dlFileVersion =
+			dlFileVersionLocalService.getLatestFileVersion(
+				fileEntryId, !dlFileEntry.isCheckedOut());
+
+		dlFileVersion.setUserId(user.getUserId());
+		dlFileVersion.setUserName(user.getFullName());
+		dlFileVersion.setModifiedDate(
+			serviceContext.getModifiedDate(new Date()));
+		dlFileVersion.setFileEntryTypeId(fileEntryTypeId);
+
+		dlFileVersionLocalService.updateDLFileVersion(dlFileVersion);
+
+		return dlFileEntry;
+	}
+
+	@Override
 	public void updateSmallImage(long smallImageId, long largeImageId)
 		throws PortalException {
 
