@@ -22,10 +22,9 @@ import com.liferay.portal.kernel.workflow.permission.WorkflowPermissionUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.BaseModelPermissionChecker;
+import com.liferay.portal.security.permission.BaseModelPermissionCheckerUtil;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.security.permission.PermissionCheckerUtil;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
-import com.liferay.portal.security.permission.ResourcePermissionChecker;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.messageboards.model.MBDiscussion;
@@ -46,8 +45,7 @@ import java.util.List;
 		"model.class.name=com.liferay.portlet.messageboards.model.MBDiscussion"
 	}
 )
-public class MBDiscussionPermission
-	implements BaseModelPermissionChecker, ResourcePermissionChecker {
+public class MBDiscussionPermission implements BaseModelPermissionChecker {
 
 	public static void check(
 			PermissionChecker permissionChecker, long companyId, long groupId,
@@ -147,8 +145,9 @@ public class MBDiscussionPermission
 			return true;
 		}
 
-		hasPermission = PermissionCheckerUtil.containsResourcePermission(
-			permissionChecker, className, classPK, actionId);
+		hasPermission =
+			BaseModelPermissionCheckerUtil.containsBaseModelPermission(
+				permissionChecker, groupId, className, classPK, actionId);
 
 		if (hasPermission != null) {
 			return hasPermission.booleanValue();
@@ -171,20 +170,6 @@ public class MBDiscussionPermission
 			permissionChecker, mbDiscussion.getCompanyId(), groupId,
 			mbDiscussion.getClassName(), mbDiscussion.getClassPK(), primaryKey,
 			actionId);
-	}
-
-	@Override
-	public Boolean checkResource(
-			PermissionChecker permissionChecker, long classPK, String actionId)
-		throws PortalException {
-
-		MBDiscussion mbDiscussion =
-			MBDiscussionLocalServiceUtil.getMBDiscussion(classPK);
-
-		return contains(
-			permissionChecker, mbDiscussion.getCompanyId(),
-			mbDiscussion.getGroupId(), mbDiscussion.getClassName(),
-			mbDiscussion.getClassPK(), classPK, actionId);
 	}
 
 }
