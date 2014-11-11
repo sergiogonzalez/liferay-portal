@@ -601,9 +601,9 @@ public class DLFileEntryLocalServiceImpl
 	public void convertExtraSettings(final String[] keys)
 		throws PortalException {
 
-		int count = dlFileEntryFinder.countByExtraSettings();
+		int total = dlFileEntryFinder.countByExtraSettings();
 
-		IntervalAction intervalAction = new IntervalAction();
+		IntervalAction intervalAction = new IntervalAction(total);
 
 		intervalAction.setPerformActionMethod(
 			new IntervalAction.PerformIntervalActionMethod() {
@@ -622,7 +622,6 @@ public class DLFileEntryLocalServiceImpl
 
 			});
 
-		intervalAction.setTotal(count);
 		intervalAction.performActions();
 	}
 
@@ -957,10 +956,10 @@ public class DLFileEntryLocalServiceImpl
 			final boolean includeTrashedEntries)
 		throws PortalException {
 
-		final int count = dlFileEntryPersistence.countByR_F(
+		int total = dlFileEntryPersistence.countByR_F(
 			repositoryId, folderId);
 
-		final IntervalAction intervalAction = new IntervalAction();
+		final IntervalAction intervalAction = new IntervalAction(total);
 
 		intervalAction.setPerformActionMethod(
 			new IntervalAction.PerformIntervalActionMethod() {
@@ -988,7 +987,6 @@ public class DLFileEntryLocalServiceImpl
 
 			});
 
-		intervalAction.setTotal(count);
 		intervalAction.performActions();
 	}
 
