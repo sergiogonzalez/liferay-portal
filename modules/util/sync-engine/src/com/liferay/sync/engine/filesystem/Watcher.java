@@ -35,7 +35,12 @@ import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentNavigableMap;
+import java.util.concurrent.ConcurrentSkipListMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import name.pachler.nio.file.FileSystem;
 import name.pachler.nio.file.FileSystems;
@@ -86,10 +91,6 @@ public class Watcher implements Runnable {
 		finally {
 			_watchService = null;
 		}
-	}
-
-	public List<String> getCreatedFilePathNames() {
-		return _createdFilePathNames;
 	}
 
 	public List<String> getDownloadedFilePathNames() {
@@ -157,7 +158,7 @@ public class Watcher implements Runnable {
 							continue;
 						}
 
-						_createdFilePathNames.add(childFilePath.toString());
+						addCreatedFilePathName(childFilePath.toString());
 
 						if (_downloadedFilePathNames.remove(
 								childFilePath.toString())) {
@@ -180,14 +181,50 @@ public class Watcher implements Runnable {
 						fireWatchEventListener(childFilePath, watchEvent);
 					}
 					else if (kind == StandardWatchEventKind.ENTRY_MODIFY) {
-						if (_createdFilePathNames.remove(
-								childFilePath.toString()) ||
+						if ((removeCreatedFilePathName(
+								childFilePath.toString()) &&
+							 !FileUtil.isValidChecksum(childFilePath)) ||
 							Files.isDirectory(childFilePath)) {
 
 							continue;
 						}
 
 						fireWatchEventListener(childFilePath, watchEvent);
+					}
+				}
+
+				for (Path failedFilePath : _failedFilePaths) {
+					if (Files.notExists(failedFilePath)) {
+						_failedFilePaths.remove(failedFilePath);
+
+						continue;
+					}
+
+					if (!Files.isReadable(failedFilePath)) {
+						continue;
+					}
+
+					_failedFilePaths.remove(failedFilePath);
+
+					if (Files.isDirectory(failedFilePath)) {
+						registerFilePath(failedFilePath, true);
+					}
+					else {
+						SyncFile syncFile = SyncFileService.fetchSyncFile(
+							failedFilePath.toString());
+
+						if (syncFile == null) {
+							fireWatchEventListener(
+								SyncWatchEvent.EVENT_TYPE_CREATE,
+								failedFilePath);
+						}
+						else if (FileUtil.hasFileChanged(
+									syncFile, failedFilePath)) {
+
+							fireWatchEventListener(
+								SyncWatchEvent.EVENT_TYPE_MODIFY,
+								failedFilePath);
+						}
 					}
 				}
 
@@ -225,6 +262,23 @@ public class Watcher implements Runnable {
 		}
 	}
 
+	protected void addCreatedFilePathName(String filePathName) {
+		clearCreatedFilePathNames();
+
+		long now = System.currentTimeMillis();
+
+		while (_createdFilePathNames.putIfAbsent(now, filePathName) != null) {
+			now++;
+		}
+	}
+
+	protected void clearCreatedFilePathNames() {
+		Map<Long, String> map = _createdFilePathNames.headMap(
+			System.currentTimeMillis() - 5000);
+
+		map.clear();
+	}
+
 	protected void doRegister(Path filePath, boolean recursive)
 		throws IOException {
 
@@ -236,6 +290,20 @@ public class Watcher implements Runnable {
 			Files.walkFileTree(
 				filePath,
 				new SimpleFileVisitor<Path>() {
+
+					@Override
+					public FileVisitResult postVisitDirectory(
+							Path filePath, IOException ioe)
+						throws IOException {
+
+						if (ioe != null) {
+							_failedFilePaths.add(filePath);
+
+							return FileVisitResult.CONTINUE;
+						}
+
+						return super.postVisitDirectory(filePath, ioe);
+					}
 
 					@Override
 					public FileVisitResult preVisitDirectory(
@@ -275,6 +343,20 @@ public class Watcher implements Runnable {
 						}
 
 						return FileVisitResult.CONTINUE;
+					}
+
+					@Override
+					public FileVisitResult visitFileFailed(
+							Path filePath, IOException ioe)
+						throws IOException {
+
+						if (ioe != null) {
+							_failedFilePaths.add(filePath);
+
+							return FileVisitResult.CONTINUE;
+						}
+
+						return super.visitFileFailed(filePath, ioe);
 					}
 
 				}
@@ -384,11 +466,21 @@ public class Watcher implements Runnable {
 		}
 	}
 
+	protected boolean removeCreatedFilePathName(String filePathName) {
+		clearCreatedFilePathNames();
+
+		Collection<String> filePathNames = _createdFilePathNames.values();
+
+		return filePathNames.remove(filePathName);
+	}
+
 	private static Logger _logger = LoggerFactory.getLogger(Watcher.class);
 
-	private List<String> _createdFilePathNames = new ArrayList<String>();
+	private ConcurrentNavigableMap<Long, String> _createdFilePathNames =
+		new ConcurrentSkipListMap<Long, String>();
 	private Path _dataFilePath;
 	private List<String> _downloadedFilePathNames = new ArrayList<String>();
+	private List<Path> _failedFilePaths = new CopyOnWriteArrayList<Path>();
 	private BidirectionalMap<WatchKey, Path> _filePaths =
 		new BidirectionalMap<WatchKey, Path>();
 	private boolean _recursive;

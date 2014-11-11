@@ -106,15 +106,34 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 						<c:otherwise>
 							<c:choose>
 								<c:when test="<%= messagesCount == 1 %>">
-									<liferay-ui:message key="no-comments-yet" /> <a href="<%= taglibPostReplyURL %>"><liferay-ui:message key="be-the-first" /></a>
+									<c:choose>
+										<c:when test="<%= themeDisplay.isSignedIn() || !SSOUtil.isLoginRedirectRequired(themeDisplay.getCompanyId()) %>">
+											<liferay-ui:message key="no-comments-yet" /> <a href="<%= taglibPostReplyURL %>"><liferay-ui:message key="be-the-first" /></a>
+										</c:when>
+										<c:otherwise>
+											<liferay-ui:message key="no-comments-yet" /> <a href="<%= themeDisplay.getURLSignIn() %>"><liferay-ui:message key="please-sign-in-to-comment" /></a>
+										</c:otherwise>
+									</c:choose>
 								</c:when>
 								<c:otherwise>
-									<liferay-ui:icon
-										iconCssClass="icon-reply"
-										label="<%= true %>"
-										message="add-comment"
-										url="<%= taglibPostReplyURL %>"
-									/>
+									<c:choose>
+										<c:when test="<%= themeDisplay.isSignedIn() || !SSOUtil.isLoginRedirectRequired(themeDisplay.getCompanyId()) %>">
+											<liferay-ui:icon
+												iconCssClass="icon-reply"
+												label="<%= true %>"
+												message="add-comment"
+												url="<%= taglibPostReplyURL %>"
+											/>
+										</c:when>
+										<c:otherwise>
+											<liferay-ui:icon
+												iconCssClass="icon-reply"
+												label="<%= true %>"
+												message="please-sign-in-to-comment"
+												url="<%= themeDisplay.getURLSignIn() %>"
+											/>
+										</c:otherwise>
+									</c:choose>
 								</c:otherwise>
 							</c:choose>
 						</c:otherwise>
@@ -350,12 +369,24 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 														String taglibPostReplyURL = "javascript:" + randomNamespace + "showForm('" + randomNamespace + "postReplyForm" + i + "', '" + namespace + randomNamespace + "postReplyBody" + i + "'); " + randomNamespace + "hideForm('" + randomNamespace + "editForm" + i + "', '" + namespace + randomNamespace + "editReplyBody" + i + "', '" + HtmlUtil.escapeJS(message.getBody()) + "');";
 														%>
 
-														<liferay-ui:icon
-															iconCssClass="icon-reply"
-															label="<%= true %>"
-															message="post-reply"
-															url="<%= taglibPostReplyURL %>"
-														/>
+														<c:choose>
+															<c:when test="<%= themeDisplay.isSignedIn() || !SSOUtil.isLoginRedirectRequired(themeDisplay.getCompanyId()) %>">
+																<liferay-ui:icon
+																	iconCssClass="icon-reply"
+																	label="<%= true %>"
+																	message="post-reply"
+																	url="<%= taglibPostReplyURL %>"
+																/>
+															</c:when>
+															<c:otherwise>
+																<liferay-ui:icon
+																	iconCssClass="icon-reply"
+																	label="<%= true %>"
+																	message="please-sign-in-to-reply"
+																	url="<%= themeDisplay.getURLSignIn() %>"
+																/>
+															</c:otherwise>
+														</c:choose>
 													</li>
 												</c:if>
 

@@ -19,6 +19,11 @@ package com.liferay.portal.tools.sourceformatter.dependencies;
  */
 public class IncorrectClose {
 
-	public void method() {
+	protected class InnerClass() {
+
+		public void method() {
+		}
 	}
+
+	private final String _var;
 }

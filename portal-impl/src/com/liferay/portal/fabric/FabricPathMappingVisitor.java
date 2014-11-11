@@ -32,16 +32,16 @@ import java.util.Map;
 /**
  * @author Shuyang Zhou
  */
-public class FabricResourceMappingVisitor extends AnnotatedFieldMappingVisitor {
+public class FabricPathMappingVisitor extends AnnotatedFieldMappingVisitor {
 
-	public FabricResourceMappingVisitor(
+	public FabricPathMappingVisitor(
 		Class<? extends Annotation> annotationClass,
 		Path remoteRepositoryPath) {
 
 		this(annotationClass, remoteRepositoryPath, false);
 	}
 
-	public FabricResourceMappingVisitor(
+	public FabricPathMappingVisitor(
 		Class<? extends Annotation> annotationClass, Path remoteRepositoryPath,
 		boolean reverseMapping) {
 
@@ -54,8 +54,8 @@ public class FabricResourceMappingVisitor extends AnnotatedFieldMappingVisitor {
 		_reverseMapping = reverseMapping;
 	}
 
-	public Map<Path, Path> getResourceMap() {
-		return _resourceMap;
+	public Map<Path, Path> getPathMap() {
+		return _pathMap;
 	}
 
 	@Override
@@ -67,20 +67,18 @@ public class FabricResourceMappingVisitor extends AnnotatedFieldMappingVisitor {
 		Path mappedPath = RepositoryHelperUtil.getRepositoryFilePath(
 			_remoteRepositoryPath, path);
 
-		mappedPath = mappedPath.toAbsolutePath();
-
 		if (_reverseMapping) {
-			_resourceMap.put(mappedPath, path.toAbsolutePath());
+			_pathMap.put(mappedPath, path);
 		}
 		else {
-			_resourceMap.put(path.toAbsolutePath(), mappedPath);
+			_pathMap.put(path, mappedPath);
 		}
 
 		return mappedPath.toFile();
 	}
 
+	private final Map<Path, Path> _pathMap = new HashMap<Path, Path>();
 	private final Path _remoteRepositoryPath;
-	private final Map<Path, Path> _resourceMap = new HashMap<Path, Path>();
 	private final boolean _reverseMapping;
 
 }

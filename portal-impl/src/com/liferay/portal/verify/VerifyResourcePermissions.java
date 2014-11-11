@@ -14,8 +14,8 @@
 
 package com.liferay.portal.verify;
 
-import com.liferay.portal.NoSuchResourcePermissionException;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.concurrent.ThrowableAwareRunnable;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -39,6 +39,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -58,14 +59,21 @@ public class VerifyResourcePermissions extends VerifyProcess {
 			Role role = RoleLocalServiceUtil.getRole(
 				companyId, RoleConstants.OWNER);
 
+			List<VerifyResourcedModelRunnable> verifyResourcedModelRunnables =
+				new ArrayList<VerifyResourcedModelRunnable>(
+					verifiableResourcedModels.length);
+
 			for (VerifiableResourcedModel verifiableResourcedModel :
 					verifiableResourcedModels) {
 
-				verifyResourcedModel(
-					role, verifiableResourcedModel.getModelName(),
-					verifiableResourcedModel.getTableName(),
-					verifiableResourcedModel.getPrimaryKeyColumnName());
+				VerifyResourcedModelRunnable verifyResourcedModelRunnable =
+					new VerifyResourcedModelRunnable(
+						role, verifiableResourcedModel);
+
+				verifyResourcedModelRunnables.add(verifyResourcedModelRunnable);
 			}
+
+			doVerify(verifyResourcedModelRunnables);
 
 			verifyLayout(role);
 		}
@@ -111,15 +119,12 @@ public class VerifyResourcePermissions extends VerifyProcess {
 					"for company = " + companyId + " and model " + modelName);
 		}
 
-		ResourcePermission resourcePermission = null;
+		ResourcePermission resourcePermission =
+			ResourcePermissionLocalServiceUtil.fetchResourcePermission(
+				companyId, modelName, ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(primKey), role.getRoleId());
 
-		try {
-			resourcePermission =
-				ResourcePermissionLocalServiceUtil.getResourcePermission(
-					companyId, modelName, ResourceConstants.SCOPE_INDIVIDUAL,
-					String.valueOf(primKey), role.getRoleId());
-		}
-		catch (NoSuchResourcePermissionException nsrpe) {
+		if (resourcePermission == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"No resource found for {" + companyId + ", " + modelName +
@@ -133,14 +138,13 @@ public class VerifyResourcePermissions extends VerifyProcess {
 		}
 
 		if (resourcePermission == null) {
-			try {
-				resourcePermission =
-					ResourcePermissionLocalServiceUtil.getResourcePermission(
-						companyId, modelName,
-						ResourceConstants.SCOPE_INDIVIDUAL,
-						String.valueOf(primKey), role.getRoleId());
-			}
-			catch (NoSuchResourcePermissionException nsrpe) {
+			resourcePermission =
+				ResourcePermissionLocalServiceUtil.fetchResourcePermission(
+					companyId, modelName,
+					ResourceConstants.SCOPE_INDIVIDUAL,
+					String.valueOf(primKey), role.getRoleId());
+
+			if (resourcePermission == null) {
 				return;
 			}
 		}
@@ -167,8 +171,7 @@ public class VerifyResourcePermissions extends VerifyProcess {
 	}
 
 	protected void verifyResourcedModel(
-			Role role, String modelName, String tableName,
-			String primaryKeyColumnName)
+			Role role, VerifiableResourcedModel verifiableResourcedModel)
 		throws Exception {
 
 		Connection con = null;
@@ -181,8 +184,9 @@ public class VerifyResourcePermissions extends VerifyProcess {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
-				"select count(*) from " + tableName + " where companyId = " +
-					role.getCompanyId());
+				"select count(*) from " +
+					verifiableResourcedModel.getTableName() +
+						" where companyId = " + role.getCompanyId());
 
 			rs = ps.executeQuery();
 
@@ -198,18 +202,21 @@ public class VerifyResourcePermissions extends VerifyProcess {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
-				"select " + primaryKeyColumnName + ", userId from " +
-					tableName + " where companyId = " + role.getCompanyId());
+				"select " + verifiableResourcedModel.getPrimaryKeyColumnName() +
+					", userId from " + verifiableResourcedModel.getTableName() +
+						" where companyId = " + role.getCompanyId());
 
 			rs = ps.executeQuery();
 
 			for (int i = 0; rs.next(); i++) {
-				long primKey = rs.getLong(primaryKeyColumnName);
+				long primKey = rs.getLong(
+					verifiableResourcedModel.getPrimaryKeyColumnName());
 				long userId = rs.getLong("userId");
 
 				verifyResourcedModel(
-					role.getCompanyId(), modelName, primKey, role, userId, i,
-					total);
+					role.getCompanyId(),
+					verifiableResourcedModel.getModelName(), primKey, role,
+					userId, i, total);
 			}
 		}
 		finally {
@@ -219,5 +226,25 @@ public class VerifyResourcePermissions extends VerifyProcess {
 
 	private static Log _log = LogFactoryUtil.getLog(
 		VerifyResourcePermissions.class);
+
+	private class VerifyResourcedModelRunnable extends ThrowableAwareRunnable {
+
+		public VerifyResourcedModelRunnable(
+			Role role, VerifiableResourcedModel verifiableResourcedModel) {
+
+			_role = role;
+			_verifiableResourcedModel = verifiableResourcedModel;
+		}
+
+		@Override
+		protected void doRun() throws Exception {
+			verifyResourcedModel(_role, _verifiableResourcedModel);
+		}
+
+		private final VerifiableResourcedModel _verifiableResourcedModel;
+		private final Role _role;
+
+	}
+
 
 }

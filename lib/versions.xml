@@ -343,6 +343,8 @@
 				</licenses>
 				<comments>
 					This includes modifications to remove extraneous logging.
+					Removed antlr.* because it with the Groovy compiler. See
+					LPS-51450.
 				</comments>
 			</library>
 			<library>
