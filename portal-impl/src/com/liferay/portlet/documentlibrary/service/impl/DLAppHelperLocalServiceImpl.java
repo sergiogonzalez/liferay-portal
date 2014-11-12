@@ -62,6 +62,7 @@ import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.model.DLSyncConstants;
 import com.liferay.portlet.documentlibrary.service.base.DLAppHelperLocalServiceBaseImpl;
+import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
 import com.liferay.portlet.documentlibrary.social.DLActivityKeys;
 import com.liferay.portlet.documentlibrary.util.DLAppHelperThreadLocal;
 import com.liferay.portlet.documentlibrary.util.DLProcessorRegistryUtil;
@@ -1942,6 +1943,7 @@ public class DLAppHelperLocalServiceImpl
 
 		subscriptionSender.setPortletId(PortletKeys.DOCUMENT_LIBRARY);
 		subscriptionSender.setReplyToAddress(fromAddress);
+		subscriptionSender.setResourceName(DLPermission.RESOURCE_NAME);
 		subscriptionSender.setScopeGroupId(fileVersion.getGroupId());
 		subscriptionSender.setServiceContext(serviceContext);
 		subscriptionSender.setUserId(fileVersion.getUserId());
