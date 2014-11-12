@@ -463,16 +463,14 @@ public class SubscriptionSender implements Serializable {
 					ActionKeys.SUBSCRIBE);
 		}
 		else {
-			String actionId = ActionKeys.SUBSCRIBE;
-
 			if (className.equals(MBDiscussion.class.getName())) {
-				actionId = ActionKeys.VIEW;
+				return true;
 			}
 
 			hasPermission =
 				BaseModelPermissionCheckerUtil.containsBaseModelPermission(
 					permissionChecker, groupId, subscription.getClassName(),
-					subscription.getClassPK(), actionId);
+					subscription.getClassPK(), ActionKeys.SUBSCRIBE);
 		}
 
 		if ((hasPermission == null) || !hasPermission) {
