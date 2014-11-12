@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.ResourceAction;
 import com.liferay.portal.model.Subscription;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserNotificationDeliveryConstants;
@@ -50,11 +51,11 @@ import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.security.permission.ResourcePermissionCheckerUtil;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.ResourceActionLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.SubscriptionLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.UserNotificationEventLocalServiceUtil;
-import com.liferay.portlet.messageboards.model.MBDiscussion;
 
 import java.io.File;
 import java.io.IOException;
@@ -78,6 +79,7 @@ import javax.mail.internet.InternetAddress;
  * @author Mate Thurzo
  * @author Raymond Augé
  * @author Sergio González
+ * @author Roberto Díaz
  */
 public class SubscriptionSender implements Serializable {
 
@@ -463,14 +465,16 @@ public class SubscriptionSender implements Serializable {
 					ActionKeys.SUBSCRIBE);
 		}
 		else {
-			if (className.equals(MBDiscussion.class.getName())) {
-				return true;
-			}
+			ResourceAction resourceAction =
+				ResourceActionLocalServiceUtil.fetchResourceAction(
+					subscription.getClassName(), ActionKeys.SUBSCRIBE);
 
-			hasPermission =
-				BaseModelPermissionCheckerUtil.containsBaseModelPermission(
-					permissionChecker, groupId, subscription.getClassName(),
-					subscription.getClassPK(), ActionKeys.SUBSCRIBE);
+			if (resourceAction != null) {
+				hasPermission =
+					BaseModelPermissionCheckerUtil.containsBaseModelPermission(
+						permissionChecker, groupId, subscription.getClassName(),
+						subscription.getClassPK(), ActionKeys.SUBSCRIBE);
+			}
 		}
 
 		if ((hasPermission == null) || !hasPermission) {
