@@ -14,31 +14,16 @@
 
 package com.liferay.portal.security.permission;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
-import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.ResourcePermissionServiceUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.registry.collections.ServiceTrackerCollections;
-import com.liferay.registry.collections.ServiceTrackerMap;
 
 /**
  * @author Brian Wing Shun Chan
  */
 public class PermissionCheckerUtil {
-
-	public static Boolean containsResourcePermission(
-			PermissionChecker permissionChecker, String className, long classPK,
-			String actionId)
-		throws PortalException {
-
-		return ResourcePermissionCheckerUtil.containsResourcePermission(
-			permissionChecker, className, classPK, actionId);
-	}
 
 	public static void setThreadValues(User user) {
 		if (user == null) {
