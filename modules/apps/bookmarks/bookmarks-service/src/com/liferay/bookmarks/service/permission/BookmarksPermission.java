@@ -14,7 +14,6 @@
 
 package com.liferay.bookmarks.service.permission;
 
-import com.liferay.bookmarks.constants.BookmarksConstants;
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.staging.permission.StagingPermissionUtil;
@@ -29,7 +28,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
-		"model.class.name=com.liferay.bookmarks.model.BookmarksFolder"
+		"resource.name=com.liferay.bookmarks"
 	}
 )
 public class BookmarksPermission implements ResourcePermissionChecker {
