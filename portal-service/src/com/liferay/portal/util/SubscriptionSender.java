@@ -377,6 +377,10 @@ public class SubscriptionSender implements Serializable {
 		this.replyToAddress = replyToAddress;
 	}
 
+	public void setResourceName(String resourceName) {
+		_resourceName = resourceName;
+	}
+
 	/**
 	 * @see com.liferay.portal.kernel.search.BaseIndexer#getSiteGroupId(long)
 	 */
@@ -455,8 +459,8 @@ public class SubscriptionSender implements Serializable {
 		if (group != null) {
 			hasPermission =
 				ResourcePermissionCheckerUtil.containsResourcePermission(
-					permissionChecker, subscription.getClassName(),
-					subscription.getClassPK(), ActionKeys.SUBSCRIBE);
+					permissionChecker, _resourceName, subscription.getClassPK(),
+					ActionKeys.SUBSCRIBE);
 		}
 		else {
 			String actionId = ActionKeys.SUBSCRIBE;
@@ -917,6 +921,7 @@ public class SubscriptionSender implements Serializable {
 	private int _notificationType;
 	private List<ObjectValuePair<String, Long>> _persistestedSubscribersOVPs =
 		new ArrayList<ObjectValuePair<String, Long>>();
+	private String _resourceName;
 	private List<ObjectValuePair<String, String>> _runtimeSubscribersOVPs =
 		new ArrayList<ObjectValuePair<String, String>>();
 	private Set<String> _sentEmailAddresses = new HashSet<String>();
