@@ -2349,6 +2349,11 @@ public class DLFileEntryLocalServiceImpl
 		unlockFileEntry(dlFileEntry.getFileEntryId());
 	}
 
+	/**
+	 * See {@link
+	 * com.liferay.portal.repository.liferayrepository.LiferayWorkflowRepositoryWrapper#_getWorkflowDLFileVersion(
+	 * long, ServiceContext)}
+	 */
 	protected DLFileEntry updateFileEntry(
 			long userId, long fileEntryId, String sourceFileName,
 			String extension, String mimeType, String title, String description,
@@ -2473,21 +2478,6 @@ public class DLFileEntryLocalServiceImpl
 					dlFileEntryService.checkInFileEntry(
 						fileEntryId, majorVersion, changeLog, serviceContext);
 				}
-			}
-			else if (!checkedOut &&
-					 (serviceContext.getWorkflowAction() ==
-						WorkflowConstants.ACTION_PUBLISH)) {
-
-				String syncEvent = DLSyncConstants.EVENT_UPDATE;
-
-				if (dlFileVersion.getVersion().equals(
-						DLFileEntryConstants.VERSION_DEFAULT)) {
-
-					syncEvent = DLSyncConstants.EVENT_ADD;
-				}
-
-				DLUtil.startWorkflowInstance(
-					userId, dlFileVersion, syncEvent, serviceContext);
 			}
 		}
 		catch (PortalException pe) {
