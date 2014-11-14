@@ -263,8 +263,11 @@ public class WebServerServlet extends HttpServlet {
 					sendPortletFileEntry(request, response, pathArray);
 				}
 				else {
-					if (isLegacyImageGalleryImageId(request, response)) {
-						return;
+					if (PropsValues.DL_FILE_ENTRY_CHECK_LEGACY_IMAGE_GALLERY_ENTRIES_ENABLED) {
+
+						if (isLegacyImageGalleryImageId(request, response)) {
+							return;
+						}
 					}
 
 					Image image = getImage(request, true);
