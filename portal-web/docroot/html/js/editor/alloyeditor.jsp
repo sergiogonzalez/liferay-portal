@@ -136,7 +136,7 @@ if (alloyEditorMode.equals("text")) {
 
 <div class="alloy-editor alloy-editor-placeholder <%= cssClass %>" contenteditable="true" data-placeholder="<%= LanguageUtil.get(request, placeholder) %>" id="<%= name %>" name="<%= name %>"><%= contents %></div>
 
-<aui:script use="aui-base">
+<aui:script use="aui-base,uploader">
 	window['<%= name %>'] = {
 		destroy: function() {
 			CKEDITOR.instances['<%= name %>'].destroy();
@@ -271,6 +271,59 @@ if (alloyEditorMode.equals("text")) {
 			</c:if>
 
 			window['<%= name %>'].instanceReady = true;
+
+		    var editable = new CKEDITOR.editable(alloyEditor, alloyEditor.element.$);
+
+			var uploader = new A.Uploader(
+				{
+					fileFieldName: 'imageSelectorFileName',
+					on: {
+						uploadcomplete: function(event) {
+							var data = event.data;
+
+							try {
+								data = A.JSON.parse(data);
+							}
+							catch (err) {
+							}
+
+							if (data.success) {
+								var image = A.one(alloyEditor.element.$).one('img');
+
+								image.attr('src', data.image.url);
+								image.setAttribute(data.image.dataImageIdAttribute, data.image.fileEntryId);
+							}
+						},
+						uploaderror: function(event) {
+							event.target.cancelUpload();
+						}
+					},
+					uploadURL: '<%= themeDisplay.getPathMain() + "/portal/image_selector?p_auth=" + AuthTokenUtil.getToken(request) %>'
+				}
+			);
+
+			editable.attachListener(
+				editable,
+				'drop',
+				function(event) {
+					var editor, nativeEvent;
+
+					nativeEvent = event.data.$;
+
+					var newfiles = nativeEvent.dataTransfer.files,
+						parsedFiles = [];
+
+					A.each(newfiles, function(value) {
+						parsedFiles.push(new A.FileHTML5(value));
+					});
+
+					uploader.uploadThese(parsedFiles);
+				},
+				this,
+				{
+					editor: alloyEditor
+				}
+			);
 		}
 	);
 

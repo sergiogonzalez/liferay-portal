@@ -252,6 +252,12 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	}
 
 	@Override
+	public com.liferay.portal.kernel.repository.model.Folder addAttachmentsFolder()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _blogsEntry.addAttachmentsFolder();
+	}
+
+	@Override
 	public java.lang.Object clone() {
 		return new BlogsEntryWrapper((BlogsEntry)_blogsEntry.clone());
 	}
@@ -288,6 +294,11 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	@Override
 	public boolean getApproved() {
 		return _blogsEntry.getApproved();
+	}
+
+	@Override
+	public long getAttachmentsFolderId() {
+		return _blogsEntry.getAttachmentsFolderId();
 	}
 
 	/**
@@ -389,11 +400,6 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	@Override
 	public long getGroupId() {
 		return _blogsEntry.getGroupId();
-	}
-
-	@Override
-	public long getImagesFolderId() {
-		return _blogsEntry.getImagesFolderId();
 	}
 
 	/**

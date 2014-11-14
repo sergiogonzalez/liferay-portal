@@ -14,6 +14,7 @@
 
 package com.liferay.portal.action;
 
+import com.liferay.portal.kernel.editor.util.EditorConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -21,7 +22,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.upload.LiferayFileItemException;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadServletRequest;
-import com.liferay.portal.kernel.util.MimeTypesUtil;
+import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
@@ -42,6 +43,7 @@ import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Sergio González
+ * @author Roberto Díaz
  */
 public class ImageSelectorAction extends JSONAction {
 
@@ -50,12 +52,6 @@ public class ImageSelectorAction extends JSONAction {
 			ActionMapping actionMapping, ActionForm actionForm,
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
-
-		UploadServletRequest uploadPortletRequest =
-			PortalUtil.getUploadServletRequest(request);
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
 
 		UploadException uploadException = (UploadException)request.getAttribute(
 			WebKeys.UPLOAD_EXCEPTION);
@@ -74,31 +70,7 @@ public class ImageSelectorAction extends JSONAction {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		try {
-			JSONObject imageJSONObject = JSONFactoryUtil.createJSONObject();
-
-			String fileName = uploadPortletRequest.getFileName(
-				"imageSelectorFileName");
-
-			Class<?> clazz = getClass();
-
-			String tempFolderName = clazz.getName();
-
-			InputStream inputStream = uploadPortletRequest.getFileAsStream(
-				"imageSelectorFileName");
-
-			FileEntry fileEntry = TempFileEntryUtil.addTempFileEntry(
-				themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
-				tempFolderName, StringUtil.randomString() + fileName,
-				inputStream, MimeTypesUtil.getContentType(fileName));
-
-			imageJSONObject.put("fileEntryId", fileEntry.getFileEntryId());
-
-			imageJSONObject.put(
-				"url",
-				PortletFileRepositoryUtil.getPortletFileEntryURL(
-					themeDisplay, fileEntry, StringPool.BLANK));
-
-			jsonObject.put("image", imageJSONObject);
+			jsonObject.put("image", getImageJSONObject(request));
 
 			jsonObject.put("success", Boolean.TRUE);
 		}
@@ -108,5 +80,58 @@ public class ImageSelectorAction extends JSONAction {
 
 		return jsonObject.toString();
 	}
+
+	protected JSONObject getImageJSONObject(HttpServletRequest request)
+		throws Exception {
+
+		JSONObject imageJSONObject = JSONFactoryUtil.createJSONObject();
+
+		InputStream inputStream = null;
+
+		try {
+			UploadServletRequest uploadPortletRequest =
+				PortalUtil.getUploadServletRequest(request);
+
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+			imageJSONObject.put(
+				"dataImageIdAttribute",
+				EditorConstants.DATA_IMAGE_ID_ATTRIBUTE);
+
+			String fileName = uploadPortletRequest.getFileName(
+				"imageSelectorFileName");
+
+			inputStream = uploadPortletRequest.getFileAsStream(
+				"imageSelectorFileName");
+
+			String mimeType = uploadPortletRequest.getContentType(
+				"imageSelectorFileName");
+
+			FileEntry fileEntry = TempFileEntryUtil.addTempFileEntry(
+				themeDisplay.getScopeGroupId(), themeDisplay.getUserId(),
+				_TEMP_FOLDER_NAME, StringUtil.randomString() + fileName,
+				inputStream, mimeType);
+
+			imageJSONObject.put("fileEntryId", fileEntry.getFileEntryId());
+
+			imageJSONObject.put(
+				"url",
+				PortletFileRepositoryUtil.getPortletFileEntryURL(
+					themeDisplay, fileEntry, StringPool.BLANK)
+			);
+
+			return imageJSONObject;
+		}
+		catch (Exception e) {
+			throw e;
+		}
+		finally {
+			StreamUtil.cleanUp(inputStream);
+		}
+	}
+
+	private static final String _TEMP_FOLDER_NAME =
+		ImageSelectorAction.class.getName();
 
 }
