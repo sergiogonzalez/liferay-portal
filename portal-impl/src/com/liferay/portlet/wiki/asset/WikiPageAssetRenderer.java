@@ -17,7 +17,9 @@ package com.liferay.portlet.wiki.asset;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.trash.TrashRenderer;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -107,16 +109,16 @@ public class WikiPageAssetRenderer
 	public String getSummary(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		String content = _page.getContent();
+		String summary = _page.getContent();
 
 		try {
-			content = HtmlUtil.extractText(
+			summary = HtmlUtil.extractText(
 				WikiUtil.convert(_page, null, null, null));
 		}
 		catch (Exception e) {
 		}
 
-		return content;
+		return summary;
 	}
 
 	@Override
@@ -284,10 +286,21 @@ public class WikiPageAssetRenderer
 			String template)
 		throws Exception {
 
+		WikiPage page = _page;
+
 		if (template.equals(TEMPLATE_ABSTRACT) ||
 			template.equals(TEMPLATE_FULL_CONTENT)) {
 
-			renderRequest.setAttribute(WebKeys.WIKI_PAGE, _page);
+			boolean workflowAssetPreview = GetterUtil.getBoolean(
+				renderRequest.getAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW));
+
+			if (!workflowAssetPreview && page.isApproved() && !page.isHead()) {
+				page = WikiPageLocalServiceUtil.getLatestPage(
+					page.getResourcePrimKey(),
+					WorkflowConstants.STATUS_APPROVED, true);
+			}
+
+			renderRequest.setAttribute(WebKeys.WIKI_PAGE, page);
 
 			return "/html/portlet/wiki/asset/" + template + ".jsp";
 		}
