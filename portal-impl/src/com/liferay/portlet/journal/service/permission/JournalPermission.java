@@ -17,9 +17,12 @@ package com.liferay.portlet.journal.service.permission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.staging.permission.StagingPermissionUtil;
+import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.ResourcePermissionChecker;
+import com.liferay.portal.service.ResourceLocalServiceUtil;
+import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.util.PortletKeys;
 
 /**
@@ -53,6 +56,17 @@ public class JournalPermission implements ResourcePermissionChecker {
 
 		if (hasPermission != null) {
 			return hasPermission.booleanValue();
+		}
+
+		int count =
+			ResourcePermissionLocalServiceUtil.getResourcePermissionsCount(
+				permissionChecker.getCompanyId(), RESOURCE_NAME,
+				ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(classPK));
+
+		if (count == 0) {
+			ResourceLocalServiceUtil.addResources(
+				permissionChecker.getCompanyId(), classPK, 0, RESOURCE_NAME,
+				classPK, false, true, true);
 		}
 
 		return permissionChecker.hasPermission(
