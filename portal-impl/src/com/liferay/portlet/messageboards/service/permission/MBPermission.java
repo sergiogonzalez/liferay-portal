@@ -15,6 +15,8 @@
 package com.liferay.portlet.messageboards.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.portal.model.ResourceConstants;
@@ -59,15 +61,23 @@ public class MBPermission implements ResourcePermissionChecker {
 			return hasPermission.booleanValue();
 		}
 
-		int count =
-			ResourcePermissionLocalServiceUtil.getResourcePermissionsCount(
-				permissionChecker.getCompanyId(), RESOURCE_NAME,
-				ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(classPK));
+		try {
+			int count =
+				ResourcePermissionLocalServiceUtil.getResourcePermissionsCount(
+					permissionChecker.getCompanyId(), RESOURCE_NAME,
+					ResourceConstants.SCOPE_INDIVIDUAL,
+					String.valueOf(classPK));
 
-		if (count == 0) {
-			ResourceLocalServiceUtil.addResources(
-				permissionChecker.getCompanyId(), classPK, 0, RESOURCE_NAME,
-				classPK, false, true, true);
+			if (count == 0) {
+				ResourceLocalServiceUtil.addResources(
+					permissionChecker.getCompanyId(), classPK, 0, RESOURCE_NAME,
+					classPK, false, true, true);
+			}
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(e, e);
+			}
 		}
 
 		return permissionChecker.hasPermission(
@@ -81,5 +91,7 @@ public class MBPermission implements ResourcePermissionChecker {
 
 		return contains(permissionChecker, classPK, actionId);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(MBPermission.class);
 
 }
