@@ -131,6 +131,7 @@ import com.liferay.portlet.journal.model.JournalArticleResource;
 import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.model.impl.JournalArticleDisplayImpl;
 import com.liferay.portlet.journal.service.base.JournalArticleLocalServiceBaseImpl;
+import com.liferay.portlet.journal.service.permission.JournalPermission;
 import com.liferay.portlet.journal.social.JournalActivityKeys;
 import com.liferay.portlet.journal.util.JournalContentUtil;
 import com.liferay.portlet.journal.util.JournalUtil;
@@ -6937,6 +6938,7 @@ public class JournalArticleLocalServiceImpl
 
 		subscriptionSender.setPortletId(PortletKeys.JOURNAL);
 		subscriptionSender.setReplyToAddress(fromAddress);
+		subscriptionSender.setResourceName(JournalPermission.RESOURCE_NAME);
 		subscriptionSender.setScopeGroupId(article.getGroupId());
 		subscriptionSender.setServiceContext(serviceContext);
 		subscriptionSender.setUserId(article.getUserId());

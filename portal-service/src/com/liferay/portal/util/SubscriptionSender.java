@@ -40,18 +40,22 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.ResourceAction;
 import com.liferay.portal.model.Subscription;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserNotificationDeliveryConstants;
+import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.security.permission.BaseModelPermissionCheckerUtil;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.security.permission.ResourcePermissionCheckerUtil;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.ResourceActionLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.SubscriptionLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.UserNotificationEventLocalServiceUtil;
-import com.liferay.portal.service.permission.SubscriptionPermissionUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -75,6 +79,7 @@ import javax.mail.internet.InternetAddress;
  * @author Mate Thurzo
  * @author Raymond Augé
  * @author Sergio González
+ * @author Roberto Díaz
  */
 public class SubscriptionSender implements Serializable {
 
@@ -374,6 +379,10 @@ public class SubscriptionSender implements Serializable {
 		this.replyToAddress = replyToAddress;
 	}
 
+	public void setResourceName(String resourceName) {
+		_resourceName = resourceName;
+	}
+
 	/**
 	 * @see com.liferay.portal.kernel.search.BaseIndexer#getSiteGroupId(long)
 	 */
@@ -426,12 +435,53 @@ public class SubscriptionSender implements Serializable {
 			User user)
 		throws Exception {
 
+		if (subscription.getClassName() == null) {
+			return false;
+		}
+
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(user);
 
-		return SubscriptionPermissionUtil.contains(
-			permissionChecker, subscription.getClassName(),
-			subscription.getClassPK(), className, classPK);
+		Boolean hasPermission = null;
+
+		if (Validator.isNotNull(className)) {
+			hasPermission =
+				BaseModelPermissionCheckerUtil.containsBaseModelPermission(
+					permissionChecker, groupId, className, classPK,
+					ActionKeys.VIEW);
+
+			if ((hasPermission == null) || !hasPermission) {
+				return false;
+			}
+		}
+
+		Group group = GroupLocalServiceUtil.fetchGroup(
+			subscription.getClassPK());
+
+		if (group != null) {
+			hasPermission =
+				ResourcePermissionCheckerUtil.containsResourcePermission(
+					permissionChecker, _resourceName, subscription.getClassPK(),
+					ActionKeys.SUBSCRIBE);
+		}
+		else {
+			ResourceAction resourceAction =
+				ResourceActionLocalServiceUtil.fetchResourceAction(
+					subscription.getClassName(), ActionKeys.SUBSCRIBE);
+
+			if (resourceAction != null) {
+				hasPermission =
+					BaseModelPermissionCheckerUtil.containsBaseModelPermission(
+						permissionChecker, groupId, subscription.getClassName(),
+						subscription.getClassPK(), ActionKeys.SUBSCRIBE);
+			}
+		}
+
+		if ((hasPermission == null) || !hasPermission) {
+			return false;
+		}
+
+		return true;
 	}
 
 	protected boolean hasPermission(Subscription subscription, User user)
@@ -510,8 +560,8 @@ public class SubscriptionSender implements Serializable {
 		if (bulk) {
 			if (UserNotificationManagerUtil.isDeliver(
 					user.getUserId(), portletId, _notificationClassNameId,
-					_notificationType,
-					UserNotificationDeliveryConstants.TYPE_EMAIL)) {
+				_notificationType,
+				UserNotificationDeliveryConstants.TYPE_EMAIL)) {
 
 				InternetAddress bulkAddress = new InternetAddress(
 					user.getEmailAddress(), user.getFullName());
@@ -542,7 +592,8 @@ public class SubscriptionSender implements Serializable {
 			if (_log.isInfoEnabled()) {
 				_log.info(
 					"User with email address " + emailAddress +
-						" does not exist for company " + companyId);
+						" does not exist for company " + companyId
+				);
 			}
 
 			sendEmail(to, locale);
@@ -872,6 +923,7 @@ public class SubscriptionSender implements Serializable {
 	private int _notificationType;
 	private List<ObjectValuePair<String, Long>> _persistestedSubscribersOVPs =
 		new ArrayList<ObjectValuePair<String, Long>>();
+	private String _resourceName;
 	private List<ObjectValuePair<String, String>> _runtimeSubscribersOVPs =
 		new ArrayList<ObjectValuePair<String, String>>();
 	private Set<String> _sentEmailAddresses = new HashSet<String>();

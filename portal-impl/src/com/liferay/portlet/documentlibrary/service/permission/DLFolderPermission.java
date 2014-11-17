@@ -35,7 +35,7 @@ import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
  */
 @OSGiBeanProperties(
 	property = {
-		"model.class.name=com.liferay.portlet.documentlibrary.model.DLFolder"
+		"model.class.name=com.liferay.portlet.documentlibrary.model.Folder"
 	}
 )
 public class DLFolderPermission implements BaseModelPermissionChecker {
