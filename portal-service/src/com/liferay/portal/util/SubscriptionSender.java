@@ -16,6 +16,7 @@ package com.liferay.portal.util;
 
 import com.liferay.mail.model.FileAttachment;
 import com.liferay.mail.service.MailServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -423,6 +424,34 @@ public class SubscriptionSender implements Serializable {
 		this.userId = userId;
 	}
 
+	protected Boolean hasSubscribePermission(
+			PermissionChecker permissionChecker, Subscription subscription)
+		throws PortalException {
+
+		Group group = GroupLocalServiceUtil.fetchGroup(
+			subscription.getClassPK());
+
+		if (group != null) {
+			return ResourcePermissionCheckerUtil.containsResourcePermission(
+				permissionChecker, _resourceName, subscription.getClassPK(),
+				ActionKeys.SUBSCRIBE);
+		}
+		else {
+			ResourceAction resourceAction =
+				ResourceActionLocalServiceUtil.fetchResourceAction(
+					subscription.getClassName(), ActionKeys.SUBSCRIBE);
+
+			if (resourceAction != null) {
+				return
+					BaseModelPermissionCheckerUtil.containsBaseModelPermission(
+						permissionChecker, groupId, subscription.getClassName(),
+						subscription.getClassPK(), ActionKeys.SUBSCRIBE);
+			}
+
+			return Boolean.TRUE;
+		}
+	}
+
 	protected void deleteSubscription(Subscription subscription)
 		throws Exception {
 
@@ -455,27 +484,8 @@ public class SubscriptionSender implements Serializable {
 			}
 		}
 
-		Group group = GroupLocalServiceUtil.fetchGroup(
-			subscription.getClassPK());
-
-		if (group != null) {
-			hasPermission =
-				ResourcePermissionCheckerUtil.containsResourcePermission(
-					permissionChecker, _resourceName, subscription.getClassPK(),
-					ActionKeys.SUBSCRIBE);
-		}
-		else {
-			ResourceAction resourceAction =
-				ResourceActionLocalServiceUtil.fetchResourceAction(
-					subscription.getClassName(), ActionKeys.SUBSCRIBE);
-
-			if (resourceAction != null) {
-				hasPermission =
-					BaseModelPermissionCheckerUtil.containsBaseModelPermission(
-						permissionChecker, groupId, subscription.getClassName(),
-						subscription.getClassPK(), ActionKeys.SUBSCRIBE);
-			}
-		}
+		hasPermission = hasSubscribePermission(
+			permissionChecker, subscription);
 
 		if ((hasPermission == null) || !hasPermission) {
 			return false;
@@ -559,7 +569,7 @@ public class SubscriptionSender implements Serializable {
 
 		if (bulk) {
 			if (UserNotificationManagerUtil.isDeliver(
-					user.getUserId(), portletId, _notificationClassNameId,
+				user.getUserId(), portletId, _notificationClassNameId,
 				_notificationType,
 				UserNotificationDeliveryConstants.TYPE_EMAIL)) {
 
