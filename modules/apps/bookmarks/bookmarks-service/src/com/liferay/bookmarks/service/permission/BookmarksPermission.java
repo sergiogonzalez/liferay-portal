@@ -15,15 +15,16 @@
 package com.liferay.bookmarks.service.permission;
 
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;
-import com.liferay.bookmarks.model.BookmarksFolder;
-import com.liferay.bookmarks.service.BookmarksFolderLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.staging.permission.StagingPermissionUtil;
-import com.liferay.portal.model.Group;
+import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.ResourcePermissionChecker;
-import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.ResourceLocalServiceUtil;
+import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -31,9 +32,8 @@ import org.osgi.service.component.annotations.Component;
  * @author Jorge Ferrer
  */
 @Component(
-	immediate = true,
 	property = {
-		"model.class.name=com.liferay.bookmarks.model.BookmarksFolder"
+		"resource.name=com.liferay.bookmarks"
 	}
 )
 public class BookmarksPermission implements ResourcePermissionChecker {
@@ -53,26 +53,35 @@ public class BookmarksPermission implements ResourcePermissionChecker {
 			PermissionChecker permissionChecker, long classPK, String actionId)
 		throws PortalException {
 
-		Group group = GroupLocalServiceUtil.fetchGroup(classPK);
-
-		if (group == null) {
-			BookmarksFolder folder = BookmarksFolderLocalServiceUtil.getFolder(
-				classPK);
-
-			return BookmarksFolderPermission.contains(
-				permissionChecker, folder, actionId);
-		}
-
 		Boolean hasPermission = StagingPermissionUtil.hasPermission(
-			permissionChecker, group.getGroupId(), RESOURCE_NAME,
-			group.getGroupId(), BookmarksPortletKeys.BOOKMARKS, actionId);
+			permissionChecker, classPK, RESOURCE_NAME, classPK,
+			BookmarksPortletKeys.BOOKMARKS, actionId);
 
 		if (hasPermission != null) {
 			return hasPermission.booleanValue();
 		}
 
+		try {
+			int count =
+				ResourcePermissionLocalServiceUtil.getResourcePermissionsCount(
+					permissionChecker.getCompanyId(), RESOURCE_NAME,
+					ResourceConstants.SCOPE_INDIVIDUAL,
+					String.valueOf(classPK));
+
+			if (count == 0) {
+				ResourceLocalServiceUtil.addResources(
+					permissionChecker.getCompanyId(), classPK, 0, RESOURCE_NAME,
+					classPK, false, true, true);
+			}
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(e, e);
+			}
+		}
+
 		return permissionChecker.hasPermission(
-			classPK, RESOURCE_NAME, group.getGroupId(), actionId);
+			classPK, RESOURCE_NAME, classPK, actionId);
 	}
 
 	@Override
@@ -82,5 +91,8 @@ public class BookmarksPermission implements ResourcePermissionChecker {
 
 		return contains(permissionChecker, classPK, actionId);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BookmarksPermission.class);
 
 }

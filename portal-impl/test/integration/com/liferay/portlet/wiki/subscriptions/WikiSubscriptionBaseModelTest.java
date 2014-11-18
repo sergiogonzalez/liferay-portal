@@ -15,12 +15,16 @@
 package com.liferay.portlet.wiki.subscriptions;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.model.ResourceConstants;
+import com.liferay.portal.model.RoleConstants;
+import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousMailExecutionTestListener;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.subscriptions.BaseSubscriptionBaseModelTestCase;
-import com.liferay.portal.util.test.TestPropsValues;
+import com.liferay.portal.util.test.ResourcePermissionTestUtil;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
@@ -60,9 +64,9 @@ public class WikiSubscriptionBaseModelTest
 
 	@Override
 	protected long addContainerModel(long containerModelId) throws Exception {
-		WikiNode node = WikiTestUtil.addNode(group.getGroupId());
+		_node = WikiTestUtil.addNode(group.getGroupId());
 
-		return node.getNodeId();
+		return _node.getNodeId();
 	}
 
 	@Override
@@ -70,7 +74,16 @@ public class WikiSubscriptionBaseModelTest
 		WikiPage page = WikiPageLocalServiceUtil.getPage(baseModelId);
 
 		WikiPageLocalServiceUtil.subscribePage(
-			TestPropsValues.getUserId(), page.getNodeId(), page.getTitle());
+			user.getUserId(), page.getNodeId(), page.getTitle());
+	}
+
+	@Override
+	protected void deleteContainerModelViewPermission() throws Exception {
+		ResourcePermissionTestUtil.unsetResourcePermission(
+			_node.getCompanyId(), WikiNode.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(_node.getNodeId()), PortletKeys.WIKI,
+			RoleConstants.SITE_MEMBER, ActionKeys.VIEW);
 	}
 
 	@Override
@@ -79,5 +92,7 @@ public class WikiSubscriptionBaseModelTest
 
 		WikiTestUtil.updatePage(page);
 	}
+
+	private WikiNode _node;
 
 }
