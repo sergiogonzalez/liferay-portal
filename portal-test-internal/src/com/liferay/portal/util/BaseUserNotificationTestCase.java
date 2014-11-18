@@ -80,6 +80,11 @@ public abstract class BaseUserNotificationTestCase {
 		for (JSONObject userNotificationEventsJSONObject :
 				userNotificationEventsJSONObjects) {
 
+			Assert.assertTrue(
+				isValidUserNotificationEventObject(
+					(Long)baseModel.getPrimaryKeyObj(),
+					userNotificationEventsJSONObject));
+
 			Assert.assertEquals(
 				UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
 				userNotificationEventsJSONObject.getInt("notificationType"));
@@ -108,6 +113,11 @@ public abstract class BaseUserNotificationTestCase {
 
 		for (JSONObject userNotificationEventsJSONObject :
 				userNotificationEventsJSONObjects) {
+
+			Assert.assertTrue(
+				isValidUserNotificationEventObject(
+					(Long)baseModel.getPrimaryKeyObj(),
+					userNotificationEventsJSONObject));
 
 			Assert.assertEquals(
 				UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY,
@@ -176,13 +186,18 @@ public abstract class BaseUserNotificationTestCase {
 		for (JSONObject userNotificationEventsJSONObject :
 				userNotificationEventsJSONObjects) {
 
+			Assert.assertTrue(
+				isValidUserNotificationEventObject(
+					(Long)updatedBasemodel.getPrimaryKeyObj(),
+					userNotificationEventsJSONObject));
+
 			notificationType = userNotificationEventsJSONObject.getInt(
 				"notificationType");
-		}
 
-		Assert.assertEquals(
-			notificationType,
-			UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY);
+			Assert.assertEquals(
+				notificationType,
+				UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY);
+		}
 	}
 
 	@Test
@@ -215,13 +230,18 @@ public abstract class BaseUserNotificationTestCase {
 		for (JSONObject userNotificationEventsJSONObject :
 				userNotificationEventsJSONObjects) {
 
+			Assert.assertTrue(
+				isValidUserNotificationEventObject(
+					(Long)updatedBasemodel.getPrimaryKeyObj(),
+					userNotificationEventsJSONObject));
+
 			notificationType = userNotificationEventsJSONObject.getInt(
 				"notificationType");
-		}
 
-		Assert.assertEquals(
-			notificationType,
-			UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY);
+			Assert.assertEquals(
+				notificationType,
+				UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY);
+		}
 	}
 
 	@Test
@@ -349,12 +369,6 @@ public abstract class BaseUserNotificationTestCase {
 			JSONObject userNotificationEventJSONObject =
 				JSONFactoryUtil.createJSONObject(
 					userNotificationEvent.getPayload());
-
-			if (!isValidUserNotificationEventObject(
-					baseEntryId, userNotificationEventJSONObject)) {
-
-				continue;
-			}
 
 			userNotificationEventJSONObjects.add(
 				userNotificationEventJSONObject);
