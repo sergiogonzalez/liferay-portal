@@ -56,6 +56,7 @@ import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.util.GroupSubscriptionCheckSubscriptionSender;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.SubscriptionSender;
 import com.liferay.portlet.asset.model.AssetEntry;
@@ -754,7 +755,9 @@ public class BookmarksEntryLocalServiceImpl
 			bodyLocalizedValuesMap = bookmarksSettings.getEmailEntryAddedBody();
 		}
 
-		SubscriptionSender subscriptionSender = new SubscriptionSender();
+		SubscriptionSender subscriptionSender =
+			new GroupSubscriptionCheckSubscriptionSender(
+				BookmarksPermission.RESOURCE_NAME);
 
 		subscriptionSender.setClassName(entry.getModelClassName());
 		subscriptionSender.setClassPK(entry.getEntryId());
@@ -783,7 +786,6 @@ public class BookmarksEntryLocalServiceImpl
 
 		subscriptionSender.setPortletId(BookmarksPortletKeys.BOOKMARKS);
 		subscriptionSender.setReplyToAddress(fromAddress);
-		subscriptionSender.setResourceName(BookmarksPermission.RESOURCE_NAME);
 		subscriptionSender.setScopeGroupId(entry.getGroupId());
 		subscriptionSender.setServiceContext(serviceContext);
 		subscriptionSender.setUserId(entry.getUserId());

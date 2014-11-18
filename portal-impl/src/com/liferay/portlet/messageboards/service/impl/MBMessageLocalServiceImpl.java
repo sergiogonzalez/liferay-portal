@@ -57,6 +57,7 @@ import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.GroupSubscriptionCheckSubscriptionSender;
 import com.liferay.portal.util.LayoutURLUtil;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
@@ -2125,7 +2126,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		}
 
 		SubscriptionSender subscriptionSenderPrototype =
-			new MBSubscriptionSender();
+			new GroupSubscriptionCheckSubscriptionSender(
+				MBPermission.RESOURCE_NAME);
 
 		subscriptionSenderPrototype.setBulk(
 			PropsValues.MESSAGE_BOARDS_EMAIL_BULK);
@@ -2167,7 +2169,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		subscriptionSenderPrototype.setPortletId(PortletKeys.MESSAGE_BOARDS);
 		subscriptionSenderPrototype.setReplyToAddress(replyToAddress);
-		subscriptionSenderPrototype.setResourceName(MBPermission.RESOURCE_NAME);
 		subscriptionSenderPrototype.setScopeGroupId(message.getGroupId());
 		subscriptionSenderPrototype.setServiceContext(serviceContext);
 		subscriptionSenderPrototype.setUniqueMailId(false);

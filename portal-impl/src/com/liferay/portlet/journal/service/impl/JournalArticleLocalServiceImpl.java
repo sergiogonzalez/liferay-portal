@@ -90,6 +90,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextUtil;
 import com.liferay.portal.servlet.filters.cache.CacheUtil;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.GroupSubscriptionCheckSubscriptionSender;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PrefsPropsUtil;
@@ -6903,7 +6904,9 @@ public class JournalArticleLocalServiceImpl
 		catch (Exception e) {
 		}
 
-		SubscriptionSender subscriptionSender = new SubscriptionSender();
+		SubscriptionSender subscriptionSender =
+			new GroupSubscriptionCheckSubscriptionSender(
+				JournalPermission.RESOURCE_NAME);
 
 		subscriptionSender.setClassName(article.getModelClassName());
 		subscriptionSender.setClassPK(article.getId());
@@ -6938,7 +6941,6 @@ public class JournalArticleLocalServiceImpl
 
 		subscriptionSender.setPortletId(PortletKeys.JOURNAL);
 		subscriptionSender.setReplyToAddress(fromAddress);
-		subscriptionSender.setResourceName(JournalPermission.RESOURCE_NAME);
 		subscriptionSender.setScopeGroupId(article.getGroupId());
 		subscriptionSender.setServiceContext(serviceContext);
 		subscriptionSender.setUserId(article.getUserId());

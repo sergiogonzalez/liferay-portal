@@ -60,6 +60,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.GroupSubscriptionCheckSubscriptionSender;
 import com.liferay.portal.util.LayoutURLUtil;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
@@ -1693,7 +1694,9 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			bodyLocalizedValuesMap = blogsSettings.getEmailEntryAddedBody();
 		}
 
-		SubscriptionSender subscriptionSender = new SubscriptionSender();
+		SubscriptionSender subscriptionSender =
+			new GroupSubscriptionCheckSubscriptionSender(
+				BlogsPermission.RESOURCE_NAME);
 
 		subscriptionSender.setClassPK(entry.getEntryId());
 		subscriptionSender.setClassName(entry.getModelClassName());
@@ -1743,7 +1746,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		subscriptionSender.setPortletId(PortletKeys.BLOGS);
 		subscriptionSender.setReplyToAddress(fromAddress);
-		subscriptionSender.setResourceName(BlogsPermission.RESOURCE_NAME);
 		subscriptionSender.setScopeGroupId(entry.getGroupId());
 		subscriptionSender.setServiceContext(serviceContext);
 		subscriptionSender.setUserId(entry.getUserId());
