@@ -49,7 +49,6 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.BaseModelPermissionCheckerUtil;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
-import com.liferay.portal.security.permission.ResourcePermissionCheckerUtil;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ResourceActionLocalServiceUtil;
@@ -380,10 +379,6 @@ public class SubscriptionSender implements Serializable {
 		this.replyToAddress = replyToAddress;
 	}
 
-	public void setResourceName(String resourceName) {
-		_resourceName = resourceName;
-	}
-
 	/**
 	 * @see com.liferay.portal.kernel.search.BaseIndexer#getSiteGroupId(long)
 	 */
@@ -424,34 +419,6 @@ public class SubscriptionSender implements Serializable {
 		this.userId = userId;
 	}
 
-	protected Boolean hasSubscribePermission(
-			PermissionChecker permissionChecker, Subscription subscription)
-		throws PortalException {
-
-		Group group = GroupLocalServiceUtil.fetchGroup(
-			subscription.getClassPK());
-
-		if (group != null) {
-			return ResourcePermissionCheckerUtil.containsResourcePermission(
-				permissionChecker, _resourceName, subscription.getClassPK(),
-				ActionKeys.SUBSCRIBE);
-		}
-		else {
-			ResourceAction resourceAction =
-				ResourceActionLocalServiceUtil.fetchResourceAction(
-					subscription.getClassName(), ActionKeys.SUBSCRIBE);
-
-			if (resourceAction != null) {
-				return
-					BaseModelPermissionCheckerUtil.containsBaseModelPermission(
-						permissionChecker, groupId, subscription.getClassName(),
-						subscription.getClassPK(), ActionKeys.SUBSCRIBE);
-			}
-
-			return Boolean.TRUE;
-		}
-	}
-
 	protected void deleteSubscription(Subscription subscription)
 		throws Exception {
 
@@ -484,8 +451,7 @@ public class SubscriptionSender implements Serializable {
 			}
 		}
 
-		hasPermission = hasSubscribePermission(
-			permissionChecker, subscription);
+		hasPermission = hasSubscribePermission(permissionChecker, subscription);
 
 		if ((hasPermission == null) || !hasPermission) {
 			return false;
@@ -498,6 +464,23 @@ public class SubscriptionSender implements Serializable {
 		throws Exception {
 
 		return hasPermission(subscription, _className, _classPK, user);
+	}
+
+	protected Boolean hasSubscribePermission(
+			PermissionChecker permissionChecker, Subscription subscription)
+		throws PortalException {
+
+		ResourceAction resourceAction =
+			ResourceActionLocalServiceUtil.fetchResourceAction(
+				subscription.getClassName(), ActionKeys.SUBSCRIBE);
+
+		if (resourceAction != null) {
+			return BaseModelPermissionCheckerUtil.containsBaseModelPermission(
+				permissionChecker, groupId, subscription.getClassName(),
+				subscription.getClassPK(), ActionKeys.SUBSCRIBE);
+		}
+
+		return Boolean.TRUE;
 	}
 
 	protected void notifyPersistedSubscriber(Subscription subscription)
@@ -569,7 +552,7 @@ public class SubscriptionSender implements Serializable {
 
 		if (bulk) {
 			if (UserNotificationManagerUtil.isDeliver(
-				user.getUserId(), portletId, _notificationClassNameId,
+					user.getUserId(), portletId, _notificationClassNameId,
 				_notificationType,
 				UserNotificationDeliveryConstants.TYPE_EMAIL)) {
 
@@ -933,7 +916,6 @@ public class SubscriptionSender implements Serializable {
 	private int _notificationType;
 	private List<ObjectValuePair<String, Long>> _persistestedSubscribersOVPs =
 		new ArrayList<ObjectValuePair<String, Long>>();
-	private String _resourceName;
 	private List<ObjectValuePair<String, String>> _runtimeSubscribersOVPs =
 		new ArrayList<ObjectValuePair<String, String>>();
 	private Set<String> _sentEmailAddresses = new HashSet<String>();
