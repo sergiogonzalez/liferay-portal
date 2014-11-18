@@ -14,8 +14,12 @@
 
 package com.liferay.portlet.comments.notifications;
 
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.model.BaseModel;
+import com.liferay.portal.model.UserNotificationEvent;
+import com.liferay.portal.service.UserNotificationEventLocalServiceUtil;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousMailExecutionTestListener;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
@@ -24,10 +28,17 @@ import com.liferay.portal.util.BaseUserNotificationTestCase;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.util.test.BlogsTestUtil;
+import com.liferay.portlet.messageboards.model.MBDiscussion;
+import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBDiscussionLocalServiceUtil;
+import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.util.test.MBTestUtil;
 
+import org.junit.Assert;
 import org.junit.runner.RunWith;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Roberto Díaz
@@ -75,6 +86,49 @@ public class CommentsUserNotificationTest extends BaseUserNotificationTestCase {
 		return MBTestUtil.updateDiscussionMessage(
 			group.getGroupId(), (Long)baseModel.getPrimaryKeyObj(),
 			BlogsEntry.class.getName(), _entry.getEntryId());
+	}
+
+	@Override
+	protected List<JSONObject> getUserNotificationEventsJSONObjects(
+			long userId, long baseEntryId)
+		throws Exception {
+
+		List<UserNotificationEvent> userNotificationEvents =
+			UserNotificationEventLocalServiceUtil.getUserNotificationEvents(
+				userId);
+
+		List<JSONObject> userNotificationEventJSONObjects =
+			new ArrayList<JSONObject>(userNotificationEvents.size());
+
+		for (UserNotificationEvent userNotificationEvent :
+			userNotificationEvents) {
+
+			JSONObject userNotificationEventJSONObject =
+				JSONFactoryUtil.createJSONObject(
+					userNotificationEvent.getPayload());
+
+			long classPK = userNotificationEventJSONObject.getLong("classPK");
+
+			MBMessage message = MBMessageLocalServiceUtil.getMessage(
+				baseEntryId);
+
+			if (!message.isDiscussion()) {
+				continue;
+			}
+
+			MBDiscussion discussion =
+				MBDiscussionLocalServiceUtil.getThreadDiscussion(
+					message.getThreadId());
+
+			if (discussion.getDiscussionId() != classPK) {
+				continue;
+			}
+
+			userNotificationEventJSONObjects.add(
+				userNotificationEventJSONObject);
+		}
+
+		return userNotificationEventJSONObjects;
 	}
 
 	private BlogsEntry _entry;
