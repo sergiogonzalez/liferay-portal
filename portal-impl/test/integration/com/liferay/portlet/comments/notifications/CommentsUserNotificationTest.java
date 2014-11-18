@@ -14,12 +14,9 @@
 
 package com.liferay.portlet.comments.notifications;
 
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.model.BaseModel;
-import com.liferay.portal.model.UserNotificationEvent;
-import com.liferay.portal.service.UserNotificationEventLocalServiceUtil;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousMailExecutionTestListener;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
@@ -34,11 +31,7 @@ import com.liferay.portlet.messageboards.service.MBDiscussionLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.util.test.MBTestUtil;
 
-import org.junit.Assert;
 import org.junit.runner.RunWith;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Roberto Díaz
@@ -73,6 +66,30 @@ public class CommentsUserNotificationTest extends BaseUserNotificationTestCase {
 	}
 
 	@Override
+	protected boolean isValidUserNotificationEventObject(
+			long baseEntryId, JSONObject userNotificationEventJSONObject)
+		throws Exception {
+
+		long classPK = userNotificationEventJSONObject.getLong("classPK");
+
+		MBMessage message = MBMessageLocalServiceUtil.getMessage(baseEntryId);
+
+		if (!message.isDiscussion()) {
+			return false;
+		}
+
+		MBDiscussion discussion =
+			MBDiscussionLocalServiceUtil.getThreadDiscussion(
+				message.getThreadId());
+
+		if (discussion.getDiscussionId() != classPK) {
+			return false;
+		}
+
+		return true;
+	}
+
+	@Override
 	protected void subscribeToContainer() throws Exception {
 		MBDiscussionLocalServiceUtil.subscribeDiscussion(
 			user.getUserId(), group.getGroupId(), BlogsEntry.class.getName(),
@@ -86,49 +103,6 @@ public class CommentsUserNotificationTest extends BaseUserNotificationTestCase {
 		return MBTestUtil.updateDiscussionMessage(
 			group.getGroupId(), (Long)baseModel.getPrimaryKeyObj(),
 			BlogsEntry.class.getName(), _entry.getEntryId());
-	}
-
-	@Override
-	protected List<JSONObject> getUserNotificationEventsJSONObjects(
-			long userId, long baseEntryId)
-		throws Exception {
-
-		List<UserNotificationEvent> userNotificationEvents =
-			UserNotificationEventLocalServiceUtil.getUserNotificationEvents(
-				userId);
-
-		List<JSONObject> userNotificationEventJSONObjects =
-			new ArrayList<JSONObject>(userNotificationEvents.size());
-
-		for (UserNotificationEvent userNotificationEvent :
-			userNotificationEvents) {
-
-			JSONObject userNotificationEventJSONObject =
-				JSONFactoryUtil.createJSONObject(
-					userNotificationEvent.getPayload());
-
-			long classPK = userNotificationEventJSONObject.getLong("classPK");
-
-			MBMessage message = MBMessageLocalServiceUtil.getMessage(
-				baseEntryId);
-
-			if (!message.isDiscussion()) {
-				continue;
-			}
-
-			MBDiscussion discussion =
-				MBDiscussionLocalServiceUtil.getThreadDiscussion(
-					message.getThreadId());
-
-			if (discussion.getDiscussionId() != classPK) {
-				continue;
-			}
-
-			userNotificationEventJSONObjects.add(
-				userNotificationEventJSONObject);
-		}
-
-		return userNotificationEventJSONObjects;
 	}
 
 	private BlogsEntry _entry;

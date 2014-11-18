@@ -350,9 +350,9 @@ public abstract class BaseUserNotificationTestCase {
 				JSONFactoryUtil.createJSONObject(
 					userNotificationEvent.getPayload());
 
-			long classPK = userNotificationEventJSONObject.getLong("classPK");
+			if (!isValidUserNotificationEventObject(
+					baseEntryId, userNotificationEventJSONObject)) {
 
-			if (classPK != baseEntryId) {
 				continue;
 			}
 
@@ -361,6 +361,19 @@ public abstract class BaseUserNotificationTestCase {
 		}
 
 		return userNotificationEventJSONObjects;
+	}
+
+	protected boolean isValidUserNotificationEventObject(
+			long baseEntryId, JSONObject userNotificationEventJSONObject)
+		throws Exception {
+
+		long classPK = userNotificationEventJSONObject.getLong("classPK");
+
+		if (classPK != baseEntryId) {
+			return false;
+		}
+
+		return true;
 	}
 
 	protected abstract void subscribeToContainer() throws Exception;
