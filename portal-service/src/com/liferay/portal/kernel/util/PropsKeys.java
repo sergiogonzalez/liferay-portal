@@ -2207,6 +2207,8 @@ public interface PropsKeys {
 
 	public static final String RSS_CONNECTION_TIMEOUT = "rss.connection.timeout";
 
+	public static final String RSS_DISPLAY_TEMPLATES_CONFIG = "rss.display.templates.config";
+
 	public static final String RSS_FEED_DISPLAY_STYLE_DEFAULT = "rss.feed.display.style.default";
 
 	public static final String RSS_FEED_TYPE_DEFAULT = "rss.feed.type.default";
@@ -2780,6 +2782,8 @@ public interface PropsKeys {
 	public static final String WEB_SERVER_PROXY_LEGACY_MODE = "web.server.proxy.legacy.mode";
 
 	public static final String WEB_SERVER_SERVLET_ACCEPT_RANGES_MIME_TYPES = "web.server.servlet.accept.ranges.mime.types";
+
+	public static final String WEB_SERVER_SERVLET_CHECK_IMAGE_GALLERY = "web.server.servlet.check.image.gallery";
 
 	public static final String WEB_SERVER_SERVLET_DIRECTORY_INDEXING_ENABLED = "web.server.servlet.directory.indexing.enabled";
 

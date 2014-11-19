@@ -1592,6 +1592,8 @@ public class PropsValues {
 
 	public static final int RSS_CONNECTION_TIMEOUT = GetterUtil.getInteger(PropsUtil.get(PropsKeys.RSS_CONNECTION_TIMEOUT));
 
+	public static final String RSS_DISPLAY_TEMPLATES_CONFIG = PropsUtil.get(PropsKeys.RSS_DISPLAY_TEMPLATES_CONFIG);
+
 	public static String[] RSS_FEED_TYPES = PropsUtil.getArray(PropsKeys.RSS_FEED_TYPES);
 
 	public static boolean RSS_FEEDS_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.RSS_FEEDS_ENABLED));
@@ -1973,6 +1975,8 @@ public class PropsValues {
 	public static final boolean WEB_SERVER_PROXY_LEGACY_MODE = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.WEB_SERVER_PROXY_LEGACY_MODE));
 
 	public static final String[] WEB_SERVER_SERVLET_ACCEPT_RANGES_MIME_TYPES = PropsUtil.getArray(PropsKeys.WEB_SERVER_SERVLET_ACCEPT_RANGES_MIME_TYPES);
+
+	public static final boolean WEB_SERVER_SERVLET_CHECK_IMAGE_GALLERY = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.WEB_SERVER_SERVLET_CHECK_IMAGE_GALLERY));
 
 	public static final boolean WEB_SERVER_SERVLET_DIRECTORY_INDEXING_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.WEB_SERVER_SERVLET_DIRECTORY_INDEXING_ENABLED));
 
