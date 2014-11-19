@@ -914,7 +914,14 @@ public class EditFileEntryAction extends PortletAction {
 			setForward(actionRequest, "portlet.document_library.error");
 		}
 		else {
-			throw e;
+			Throwable cause = e.getCause();
+
+			if (cause instanceof DuplicateFileException) {
+				SessionErrors.add(actionRequest, DuplicateFileException.class);
+			}
+			else {
+				throw e;
+			}
 		}
 	}
 
@@ -969,13 +976,8 @@ public class EditFileEntryAction extends PortletAction {
 		InputStream inputStream = null;
 
 		try {
-			String contentType = null;
-			long size = 0;
-
-			if (uploadPortletRequest.getParameter("file") != null) {
-				contentType = uploadPortletRequest.getContentType("file");
-				size = uploadPortletRequest.getSize("file");
-			}
+			String contentType = uploadPortletRequest.getContentType("file");
+			long size = uploadPortletRequest.getSize("file");
 
 			if ((cmd.equals(Constants.ADD) ||
 				 cmd.equals(Constants.ADD_DYNAMIC)) &&

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.repository.capabilities.WorkflowCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.repository.util.LocalRepositoryWrapper;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalServiceUtil;
 
 import java.io.File;
 import java.io.InputStream;
@@ -50,6 +51,12 @@ public class LiferayWorkflowLocalRepositoryWrapper
 			userId, folderId, sourceFileName, mimeType, title, description,
 			changeLog, file, serviceContext);
 
+		DLAppHelperLocalServiceUtil.updateAsset(
+			userId, fileEntry, fileEntry.getFileVersion(),
+			serviceContext.getAssetCategoryIds(),
+			serviceContext.getAssetTagNames(),
+			serviceContext.getAssetLinkEntryIds());
+
 		_workflowCapability.addFileEntry(userId, fileEntry, serviceContext);
 
 		return fileEntry;
@@ -66,9 +73,42 @@ public class LiferayWorkflowLocalRepositoryWrapper
 			userId, folderId, sourceFileName, mimeType, title, description,
 			changeLog, is, size, serviceContext);
 
+		DLAppHelperLocalServiceUtil.updateAsset(
+			userId, fileEntry, fileEntry.getFileVersion(),
+			serviceContext.getAssetCategoryIds(),
+			serviceContext.getAssetTagNames(),
+			serviceContext.getAssetLinkEntryIds());
+
 		_workflowCapability.addFileEntry(userId, fileEntry, serviceContext);
 
 		return fileEntry;
+	}
+
+	@Override
+	public void checkInFileEntry(
+			long userId, long fileEntryId, boolean major, String changeLog,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		super.checkInFileEntry(
+			userId, fileEntryId, major, changeLog, serviceContext);
+
+		FileEntry fileEntry = super.getFileEntry(fileEntryId);
+
+		_workflowCapability.checkInFileEntry(userId, fileEntry, serviceContext);
+	}
+
+	@Override
+	public void checkInFileEntry(
+			long userId, long fileEntryId, String lockUuid,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		super.checkInFileEntry(userId, fileEntryId, lockUuid, serviceContext);
+
+		FileEntry fileEntry = super.getFileEntry(fileEntryId);
+
+		_workflowCapability.checkInFileEntry(userId, fileEntry, serviceContext);
 	}
 
 	@Override
@@ -80,9 +120,27 @@ public class LiferayWorkflowLocalRepositoryWrapper
 		FileEntry fileEntry = super.copyFileEntry(
 			userId, groupId, fileEntryId, destFolderId, serviceContext);
 
+		DLAppHelperLocalServiceUtil.updateAsset(
+			userId, fileEntry, fileEntry.getFileVersion(),
+			serviceContext.getAssetCategoryIds(),
+			serviceContext.getAssetTagNames(),
+			serviceContext.getAssetLinkEntryIds());
+
 		_workflowCapability.addFileEntry(userId, fileEntry, serviceContext);
 
 		return fileEntry;
+	}
+
+	@Override
+	public void revertFileEntry(
+		long userId, long fileEntryId, String version,
+		ServiceContext serviceContext) throws PortalException {
+
+		super.revertFileEntry(userId, fileEntryId, version, serviceContext);
+
+		FileEntry fileEntry = super.getFileEntry(fileEntryId);
+
+		_workflowCapability.revertFileEntry(userId, fileEntry, serviceContext);
 	}
 
 	@Override
