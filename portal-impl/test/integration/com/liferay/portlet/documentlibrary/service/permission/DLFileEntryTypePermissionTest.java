@@ -60,7 +60,7 @@ public class DLFileEntryTypePermissionTest extends BasePermissionTestCase {
 		List<DLFileEntryType> dlFileEntryTypes =
 			DLFileEntryTypeServiceUtil.getFolderFileEntryTypes(
 				PortalUtil.getCurrentAndAncestorSiteGroupIds(
-						group.getGroupId()),
+					group.getGroupId()),
 				_folder.getFolderId(), true);
 
 		Assert.assertEquals(5, dlFileEntryTypes.size());
