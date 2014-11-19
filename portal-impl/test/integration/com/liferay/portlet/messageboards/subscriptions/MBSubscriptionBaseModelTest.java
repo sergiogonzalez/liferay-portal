@@ -15,12 +15,16 @@
 package com.liferay.portlet.messageboards.subscriptions;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.model.ResourceConstants;
+import com.liferay.portal.model.RoleConstants;
+import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousMailExecutionTestListener;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.subscriptions.BaseSubscriptionBaseModelTestCase;
-import com.liferay.portal.util.test.TestPropsValues;
+import com.liferay.portal.util.test.ResourcePermissionTestUtil;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
@@ -51,16 +55,26 @@ public class MBSubscriptionBaseModelTest
 
 	@Override
 	protected long addContainerModel(long containerModelId) throws Exception {
-		MBCategory category = MBTestUtil.addCategory(
+		_category = MBTestUtil.addCategory(
 			group.getGroupId(), containerModelId);
 
-		return category.getCategoryId();
+		return _category.getCategoryId();
 	}
 
 	@Override
 	protected void addSubscriptionBaseModel(long baseModelId) throws Exception {
 		MBMessageLocalServiceUtil.subscribeMessage(
-			TestPropsValues.getUserId(), baseModelId);
+			user.getUserId(), baseModelId);
+	}
+
+	@Override
+	protected void deleteContainerModelViewPermission() throws Exception {
+		ResourcePermissionTestUtil.unsetResourcePermission(
+			_category.getCompanyId(), MBCategory.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(_category.getCategoryId()),
+			PortletKeys.MESSAGE_BOARDS, RoleConstants.SITE_MEMBER,
+			ActionKeys.VIEW);
 	}
 
 	@Override
@@ -69,5 +83,7 @@ public class MBSubscriptionBaseModelTest
 
 		MBTestUtil.updateMessage(message, true);
 	}
+
+	private MBCategory _category;
 
 }
