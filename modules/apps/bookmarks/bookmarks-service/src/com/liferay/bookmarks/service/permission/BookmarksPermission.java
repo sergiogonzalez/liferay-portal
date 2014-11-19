@@ -32,11 +32,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Jorge Ferrer
  */
-@Component(
-	property = {
-		"resource.name=com.liferay.bookmarks"
-	}
-)
+@Component(property = {"resource.name=com.liferay.bookmarks"})
 public class BookmarksPermission implements ResourcePermissionChecker {
 
 	public static final String RESOURCE_NAME = "com.liferay.bookmarks";
