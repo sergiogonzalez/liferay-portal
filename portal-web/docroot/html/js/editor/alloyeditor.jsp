@@ -72,7 +72,6 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 		%>
 
 		<script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNHost() + themeDisplay.getPathJavaScript() + "/editor/ckeditor/ckeditor.js", javaScriptLastModified)) %>" type="text/javascript"></script>
-
 		<script type="text/javascript">
 			YUI.applyConfig(
 				{
@@ -98,7 +97,6 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 		</script>
 
 		<script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNHost() + themeDisplay.getPathJavaScript() + "/editor/alloyeditor/alloy-editor-core.js", javaScriptLastModified)) %>" type="text/javascript"></script>
-
 		<script type="text/javascript">
 			Liferay.namespace('EDITORS')['<%= editorImpl %>'] = true;
 		</script>
@@ -113,7 +111,7 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 
 <div class="alloy-editor alloy-editor-placeholder <%= cssClass %>" contenteditable="false" data-placeholder="<%= LanguageUtil.get(request, placeholder) %>" id="<%= name %>" name="<%= name %>"><%= contents %></div>
 
-<aui:script use="aui-base,alloy-editor">
+<aui:script use="aui-base,alloy-editor,liferay-blogs-uploader">
 	document.getElementById('<%= name %>').setAttribute('contenteditable', true);
 
 	<%
@@ -210,6 +208,21 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 			window['<%= name %>'].editor = alloyEditor;
 
 			window['<%= name %>'].instanceReady = true;
+
+			var uploader = new Liferay.BlogsUploader(
+				{
+					editor: nativeEditor,
+
+					uploadUrl: '<%= themeDisplay.getPathMain() + "/portal/image_selector?p_auth=" + AuthTokenUtil.getToken(request) %>'
+				}
+			);
+
+			nativeEditor.on(
+				'imagedrop',
+				function(event) {
+					uploader.uploadImage(event.data.el, event.data.file);
+				}
+			);
 		}
 	);
 

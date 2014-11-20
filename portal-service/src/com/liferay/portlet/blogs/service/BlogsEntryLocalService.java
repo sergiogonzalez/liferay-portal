@@ -89,6 +89,11 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	public com.liferay.portal.kernel.repository.model.FileEntry addEntryAttachment(
+		long groupId, long userId, long entryId, java.lang.String fileName,
+		java.io.File file, java.lang.String mimeType)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 	public void addEntryResources(
 		com.liferay.portlet.blogs.model.BlogsEntry entry,
 		boolean addGroupPermissions, boolean addGuestPermissions)

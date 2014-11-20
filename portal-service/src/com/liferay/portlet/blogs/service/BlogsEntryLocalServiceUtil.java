@@ -94,6 +94,15 @@ public class BlogsEntryLocalServiceUtil {
 			coverImageImageSelector, smallImageImageSelector, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.repository.model.FileEntry addEntryAttachment(
+		long groupId, long userId, long entryId, java.lang.String fileName,
+		java.io.File file, java.lang.String mimeType)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addEntryAttachment(groupId, userId, entryId, fileName,
+			file, mimeType);
+	}
+
 	public static void addEntryResources(
 		com.liferay.portlet.blogs.model.BlogsEntry entry,
 		boolean addGroupPermissions, boolean addGuestPermissions)
