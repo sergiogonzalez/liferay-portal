@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Address;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Organization;
@@ -114,6 +115,39 @@ public class OrganizationImpl extends OrganizationBaseImpl {
 	public List<Address> getAddresses() {
 		return AddressLocalServiceUtil.getAddresses(
 			getCompanyId(), Organization.class.getName(), getOrganizationId());
+	}
+
+	@Override
+	public long[] getAncestorOrganizationIds() throws PortalException {
+		if (Validator.isNull(getTreePath())) {
+			List<Organization> ancestorOrganizations = getAncestors();
+
+			long[] ancestorOrganizationIds =
+				new long[ancestorOrganizations.size()];
+
+			for (int i = 0; i < ancestorOrganizations.size(); i++) {
+				Organization organization = ancestorOrganizations.get(i);
+
+				ancestorOrganizationIds[ancestorOrganizations.size() - i - 1] =
+					organization.getOrganizationId();
+			}
+
+			return ancestorOrganizationIds;
+		}
+
+		long[] primaryKeys = StringUtil.split(
+			getTreePath(), StringPool.SLASH, 0L);
+
+		if (primaryKeys.length <= 2) {
+			return new long[0];
+		}
+
+		long[] ancestorOrganizationIds = new long[primaryKeys.length - 2];
+
+		System.arraycopy(
+			primaryKeys, 1, ancestorOrganizationIds, 0, primaryKeys.length - 2);
+
+		return ancestorOrganizationIds;
 	}
 
 	@Override

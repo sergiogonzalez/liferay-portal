@@ -45,6 +45,7 @@ import java.io.InputStreamReader;
 
 import java.net.URL;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -61,6 +62,10 @@ import org.sikuli.script.Screen;
  * @author Brian Wing Shun Chan
  */
 public class LiferaySeleniumHelper {
+
+	public static void addToLiferayExceptions(Exception exception) {
+		_liferayExceptions.add(exception);
+	}
 
 	public static void antCommand(
 			LiferaySelenium liferaySelenium, String fileName, String target)
@@ -212,6 +217,13 @@ public class LiferaySeleniumHelper {
 			String level = eventElement.attributeValue("level");
 
 			if (level.equals("ERROR")) {
+				String fileContent = FileUtil.read(fileName);
+
+				fileContent = fileContent.replaceFirst(
+					"level=\"ERROR\"", "level=\"ERROR_FOUND\"");
+
+				FileUtil.write(fileName, fileContent);
+
 				Element messageElement = eventElement.element("message");
 
 				String messageText = messageElement.getText();
@@ -222,12 +234,22 @@ public class LiferaySeleniumHelper {
 
 				Element throwableElement = eventElement.element("throwable");
 
+				Exception exception;
+
 				if (throwableElement != null) {
-					throw new Exception(
+					exception = new Exception(
 						messageText + throwableElement.getText());
+
+					addToLiferayExceptions(exception);
+
+					throw exception;
 				}
 
-				throw new Exception(messageText);
+				exception = new Exception(messageText);
+
+				addToLiferayExceptions(exception);
+
+				throw exception;
 			}
 		}
 	}
@@ -236,6 +258,43 @@ public class LiferaySeleniumHelper {
 		LiferaySelenium liferaySelenium, String pattern) {
 
 		BaseTestCase.assertEquals(pattern, liferaySelenium.getLocation());
+	}
+
+	public static void assertNoLiferayExceptions() throws Exception {
+		if (!_liferayExceptions.isEmpty()) {
+			StringBundler sb = new StringBundler();
+
+			sb.append(_liferayExceptions.size());
+			sb.append(" Liferay Exception");
+
+			if (_liferayExceptions.size() > 1) {
+				sb.append("s were");
+			}
+			else {
+				sb.append(" was");
+			}
+
+			sb.append(" thrown");
+
+			System.out.println();
+			System.out.println("##");
+			System.out.println("## " + sb.toString());
+			System.out.println("##");
+
+			for (int i = 0; i < _liferayExceptions.size(); i++) {
+				Exception liferayException = _liferayExceptions.get(i);
+
+				System.out.println();
+				System.out.println("##");
+				System.out.println("## Liferay Exception #" + (i + 1));
+				System.out.println("##");
+				System.out.println();
+				System.out.println(liferayException.getMessage());
+				System.out.println();
+			}
+
+			throw new Exception(sb.toString());
+		}
 	}
 
 	public static void assertNotAlert(
@@ -1610,6 +1669,8 @@ public class LiferaySeleniumHelper {
 		}
 	}
 
+	private static List<Exception> _liferayExceptions =
+		new ArrayList<Exception>();
 	private static Screen _screen = new Screen();
 	private static int _screenshotCount = 0;
 	private static int _screenshotErrorCount = 0;

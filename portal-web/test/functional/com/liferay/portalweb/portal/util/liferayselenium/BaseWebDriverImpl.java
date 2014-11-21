@@ -164,6 +164,11 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
+	public void assertNoLiferayExceptions() throws Exception {
+		LiferaySeleniumHelper.assertNoLiferayExceptions();
+	}
+
+	@Override
 	public void assertNotAlert(String pattern) {
 		LiferaySeleniumHelper.assertNotAlert(this, pattern);
 	}

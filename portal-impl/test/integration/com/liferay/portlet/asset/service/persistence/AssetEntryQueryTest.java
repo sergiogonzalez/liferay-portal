@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.DeleteAfterTestRun;
@@ -73,63 +74,211 @@ public class AssetEntryQueryTest {
 				TestPropsValues.getUserId(), RandomTestUtil.randomString(),
 				serviceContext);
 
-		_vocabularyId = vocabulary.getVocabularyId();
+		_assetVocabularyId = vocabulary.getVocabularyId();
 
 		AssetCategory fashionCategory =
 			AssetCategoryLocalServiceUtil.addCategory(
-				TestPropsValues.getUserId(), "Fashion", _vocabularyId,
+				TestPropsValues.getUserId(), "Fashion", _assetVocabularyId,
 				serviceContext);
 
-		_fashionCategoryId = fashionCategory.getCategoryId();
+		_fashionAssetCategoryId = fashionCategory.getCategoryId();
 
 		AssetCategory foodCategory = AssetCategoryLocalServiceUtil.addCategory(
-			TestPropsValues.getUserId(), "Food", _vocabularyId, serviceContext);
+			TestPropsValues.getUserId(), "Food", _assetVocabularyId,
+			serviceContext);
 
-		_foodCategoryId = foodCategory.getCategoryId();
+		_foodAssetCategoryId = foodCategory.getCategoryId();
 
 		AssetCategory healthCategory =
 			AssetCategoryLocalServiceUtil.addCategory(
-				TestPropsValues.getUserId(), "Health", _vocabularyId,
+				TestPropsValues.getUserId(), "Health", _assetVocabularyId,
 				serviceContext);
 
-		_healthCategoryId = healthCategory.getCategoryId();
+		_healthAssetCategoryId = healthCategory.getCategoryId();
 
 		AssetCategory sportCategory = AssetCategoryLocalServiceUtil.addCategory(
-			TestPropsValues.getUserId(), "Sport", _vocabularyId,
+			TestPropsValues.getUserId(), "Sport", _assetVocabularyId,
 			serviceContext);
 
-		_sportCategoryId = sportCategory.getCategoryId();
+		_sportAssetCategoryId = sportCategory.getCategoryId();
 
 		AssetCategory travelCategory =
 			AssetCategoryLocalServiceUtil.addCategory(
-				TestPropsValues.getUserId(), "Travel", _vocabularyId,
+				TestPropsValues.getUserId(), "Travel", _assetVocabularyId,
 				serviceContext);
 
-		_travelCategoryId = travelCategory.getCategoryId();
+		_travelAssetCategoryId = travelCategory.getCategoryId();
 
 		_assetCategoryIds1 =
-			new long[] {_healthCategoryId, _sportCategoryId, _travelCategoryId};
+			new long[] {
+				_healthAssetCategoryId, _sportAssetCategoryId,
+				_travelAssetCategoryId
+			};
 		_assetCategoryIds2 = new long[] {
-			_fashionCategoryId, _foodCategoryId, _healthCategoryId,
-			_sportCategoryId
+			_fashionAssetCategoryId, _foodAssetCategoryId,
+			_healthAssetCategoryId, _sportAssetCategoryId
 		};
 	}
 
 	@Test
+	public void testAdvancedSearchAndOperator() throws Exception {
+		testAdvancedSearch(
+			"Test", "Cabina14", "Cabina14", true, "Cabina14 in Madrid",
+			"Cabina14 blah blah blah", 1);
+	}
+
+	@Test
+	public void testAdvancedSearchAndOperatorDescription1() throws Exception {
+		testAdvancedSearch(
+			"Julio", "Cabina14", "Cabina14", true, "Concert in Madrid",
+			"Cabina14 blah blah blah", 0);
+	}
+
+	@Test
+	public void testAdvancedSearchAndOperatorDescription2() throws Exception {
+		testAdvancedSearch(
+			"Test", null, "Cabina14", true, "Concert in Madrid",
+			"Cabina14 blah blah blah", 1);
+	}
+
+	@Test
+	public void testAdvancedSearchAndOperatorDescription3() throws Exception {
+		testAdvancedSearch(
+			null, null, "Cabina14", true, "Concert in Madrid",
+			"Cabina14 blah blah blah", 1);
+	}
+
+	@Test
+	public void testAdvancedSearchAndOperatorTitle1() throws Exception {
+		testAdvancedSearch(
+			"Julio", "Cabina14", "Cabina14", true, "Cabina14 in Madrid",
+			"Cabina14 blah blah blah", 0);
+	}
+
+	@Test
+	public void testAdvancedSearchAndOperatorTitle2() throws Exception {
+		testAdvancedSearch(
+			"Test", "Cabina14", null, true, "Cabina14 in Madrid",
+			"blah blah blah", 1);
+	}
+
+	@Test
+	public void testAdvancedSearchAndOperatorTitle3() throws Exception {
+		testAdvancedSearch(
+			null, "Cabina14", null, true, "Cabina14 in Madrid",
+			"blah blah blah", 1);
+	}
+
+	@Test
+	public void testAdvancedSearchAndOperatorUserName1() throws Exception {
+		testAdvancedSearch(
+			"Julio", "Cabina14", "Cabina14", true, "Cabina14 in Madrid",
+			"Cabina14 blah blah blah", 0);
+	}
+
+	@Test
+	public void testAdvancedSearchAndOperatorUserName2() throws Exception {
+		testAdvancedSearch(
+			"Test", null, "Cabina14", true, "Concert in Madrid",
+			"Cabina14 blah blah blah", 1);
+	}
+
+	@Test
+	public void testAdvancedSearchAndOperatorUserName3() throws Exception {
+		testAdvancedSearch(
+			"Test", null, null, true, "Concert in Madrid", "blah blah blah", 2);
+	}
+
+	@Test
+	public void testAdvancedSearchOrOperator1() throws Exception {
+		testAdvancedSearch(
+			"Julio", "Cabina14", "Cabina14", false, "Concert in Madrid",
+			"blah blah blah", 0);
+	}
+
+	@Test
+	public void testAdvancedSearchOrOperator2() throws Exception {
+		testAdvancedSearch(
+			"Julio", "Cabina14", "Cabina14", false, "Cabina14 in Madrid",
+			"blah blah blah", 1);
+	}
+
+	@Test
+	public void testAdvancedSearchOrOperator3() throws Exception {
+		testAdvancedSearch(
+			"Julio", "Cabina14", "Cabina14", false, "Concert in Madrid",
+			"Cabina14 blah blah blah", 1);
+	}
+
+	@Test
+	public void testAdvancedSearchOrOperator4() throws Exception {
+		testAdvancedSearch(
+			"Test", "Cabina14", "Cabina14", false, "Concert in Madrid",
+			"blah blah blah", 2);
+	}
+
+	@Test
+	public void testAdvancedSearchOrOperator5() throws Exception {
+		testAdvancedSearch(
+			null, "Cabina14", null, false, "Cabina14 in Madrid",
+			"blah blah blah", 1);
+	}
+
+	@Test
+	public void testAdvancedSearchOrOperator6() throws Exception {
+		testAdvancedSearch(
+			null, "Cabina14", null, false, "Concert in Madrid",
+			"blah blah blah", 0);
+	}
+
+	@Test
+	public void testAdvancedSearchOrOperator7() throws Exception {
+		testAdvancedSearch(
+			null, null, "Cabina14", false, "Concert in Madrid",
+			"Cabina14 blah blah blah", 1);
+	}
+
+	@Test
+	public void testAdvancedSearchOrOperator8() throws Exception {
+		testAdvancedSearch(
+			null, null, "Cabina14", false, "Concert in Madrid",
+			"blah blah blah", 0);
+	}
+
+	@Test
+	public void testAdvancedSearchOrOperator9() throws Exception {
+		testAdvancedSearch(
+			"Test", null, null, false, "Concert in Madrid", "blah blah blah",
+			2);
+	}
+
+	@Test
+	public void testAdvancedSearchOrOperator10() throws Exception {
+		testAdvancedSearch(
+			"Julio", null, null, false, "Concert in Madrid", "blah blah blah",
+			0);
+	}
+
+	@Test
 	public void testAllAssetCategories1() throws Exception {
-		testAssetCategories(new long[] {_healthCategoryId}, false, false, 2);
+		testAssetCategories(
+			new long[] {_healthAssetCategoryId}, false, false, 2);
 	}
 
 	@Test
 	public void testAllAssetCategories2() throws Exception {
 		testAssetCategories(
-			new long[] {_healthCategoryId, _sportCategoryId}, false, false, 2);
+			new long[] {_healthAssetCategoryId, _sportAssetCategoryId},
+			false, false, 2);
 	}
 
 	@Test
 	public void testAllAssetCategories3() throws Exception {
 		testAssetCategories(
-			new long[] {_healthCategoryId, _sportCategoryId, _foodCategoryId},
+			new long[] {
+				_healthAssetCategoryId, _sportAssetCategoryId,
+				_foodAssetCategoryId
+			},
 			false, false, 1);
 	}
 
@@ -137,8 +286,8 @@ public class AssetEntryQueryTest {
 	public void testAllAssetCategories4() throws Exception {
 		testAssetCategories(
 			new long[] {
-				_healthCategoryId, _sportCategoryId, _foodCategoryId,
-				_travelCategoryId
+				_healthAssetCategoryId, _sportAssetCategoryId,
+				_foodAssetCategoryId, _travelAssetCategoryId
 			},
 			false, false, 0);
 	}
@@ -170,26 +319,32 @@ public class AssetEntryQueryTest {
 
 	@Test
 	public void testAnyAssetCategories1() throws Exception {
-		testAssetCategories(new long[] {_healthCategoryId}, true, false, 2);
+		testAssetCategories(
+			new long[] {_healthAssetCategoryId}, true, false, 2);
 	}
 
 	@Test
 	public void testAnyAssetCategories2() throws Exception {
 		testAssetCategories(
-			new long[] {_healthCategoryId, _sportCategoryId}, true, false, 2);
+			new long[] {_healthAssetCategoryId, _sportAssetCategoryId},
+			true, false, 2);
 	}
 
 	@Test
 	public void testAnyAssetCategories3() throws Exception {
 		testAssetCategories(
-			new long[] {_healthCategoryId, _sportCategoryId, _foodCategoryId},
+			new long[] {
+				_healthAssetCategoryId, _sportAssetCategoryId,
+				_foodAssetCategoryId
+			},
 			true, false, 2);
 	}
 
 	@Test
 	public void testAnyAssetCategories4() throws Exception {
 		testAssetCategories(
-			new long[] {_fashionCategoryId, _foodCategoryId}, true, false, 1);
+			new long[] {_fashionAssetCategoryId, _foodAssetCategoryId},
+			true, false, 1);
 	}
 
 	@Test
@@ -215,26 +370,54 @@ public class AssetEntryQueryTest {
 	}
 
 	@Test
+	public void testKeywordsDescription() throws Exception {
+		testAssetKeywords(
+			"Cabina14", "Concert in Madrid", "Cabina14 Blah blah blah", 1);
+	}
+
+	@Test
+	public void testKeywordsNotFound() throws Exception {
+		testAssetKeywords("Cabina14", "Concert in Madrid", "Blah blah blah", 0);
+	}
+
+	@Test
+	public void testKeywordsTitle() throws Exception {
+		testAssetKeywords(
+			"Cabina14", "Cabina14 in Madrid", "Blah blah blah", 1);
+	}
+
+	@Test
+	public void testKeywordsUserName() throws Exception {
+		testAssetKeywords("Test", "Concert in Madrid", "Blah blah blah", 2);
+	}
+
+	@Test
 	public void testNotAllAssetCategories1() throws Exception {
-		testAssetCategories(new long[] {_healthCategoryId}, false, true, 0);
+		testAssetCategories(
+			new long[] {_healthAssetCategoryId}, false, true, 0);
 	}
 
 	@Test
 	public void testNotAllAssetCategories2() throws Exception {
 		testAssetCategories(
-			new long[] {_healthCategoryId, _sportCategoryId}, false, true, 0);
+			new long[] {_healthAssetCategoryId, _sportAssetCategoryId},
+			false, true, 0);
 	}
 
 	@Test
 	public void testNotAllAssetCategories3() throws Exception {
 		testAssetCategories(
-			new long[] {_fashionCategoryId, _foodCategoryId}, false, true, 1);
+			new long[] {_fashionAssetCategoryId, _foodAssetCategoryId},
+			false, true, 1);
 	}
 
 	@Test
 	public void testNotAllAssetCategories4() throws Exception {
 		testAssetCategories(
-			new long[] {_fashionCategoryId, _foodCategoryId, _travelCategoryId},
+			new long[] {
+				_fashionAssetCategoryId, _foodAssetCategoryId,
+				_travelAssetCategoryId
+			},
 			false, true, 2);
 	}
 
@@ -264,26 +447,31 @@ public class AssetEntryQueryTest {
 
 	@Test
 	public void testNotAnyAssetCategories1() throws Exception {
-		testAssetCategories(new long[] {_healthCategoryId}, true, true, 0);
+		testAssetCategories(new long[] {_healthAssetCategoryId}, true, true, 0);
 	}
 
 	@Test
 	public void testNotAnyAssetCategories2() throws Exception {
 		testAssetCategories(
-			new long[] {_healthCategoryId, _sportCategoryId}, true, true, 0);
+			new long[] {_healthAssetCategoryId, _sportAssetCategoryId},
+			true, true, 0);
 	}
 
 	@Test
 	public void testNotAnyAssetCategories3() throws Exception {
 		testAssetCategories(
-			new long[] {_fashionCategoryId, _foodCategoryId, _travelCategoryId},
+			new long[] {
+				_fashionAssetCategoryId, _foodAssetCategoryId,
+				_travelAssetCategoryId
+			},
 			true, true, 0);
 	}
 
 	@Test
 	public void testNotAnyAssetCategories4() throws Exception {
 		testAssetCategories(
-			new long[] {_fashionCategoryId, _foodCategoryId}, true, true, 1);
+			new long[] {_fashionAssetCategoryId, _foodAssetCategoryId},
+			true, true, 1);
 	}
 
 	@Test
@@ -387,6 +575,21 @@ public class AssetEntryQueryTest {
 		return assetEntryQuery;
 	}
 
+	protected AssetEntryQuery buildAssetEntryQueryWithAdvancedSearch(
+		long groupId, boolean andOperator, String title, String description,
+		String userName) {
+
+		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
+
+		assetEntryQuery.setAndOperator(andOperator);
+		assetEntryQuery.setDescription(description);
+		assetEntryQuery.setGroupIds(new long[] {groupId});
+		assetEntryQuery.setTitle(title);
+		assetEntryQuery.setUserName(userName);
+
+		return assetEntryQuery;
+	}
+
 	protected AssetEntryQuery buildAssetEntryQueryWithAssetCategoryIds(
 		AssetEntryQuery assetEntryQuery, long[] assetCategoryIds, boolean any,
 		boolean not) {
@@ -427,25 +630,81 @@ public class AssetEntryQueryTest {
 		return assetEntryQuery;
 	}
 
+	protected AssetEntryQuery buildAssetEntryQueryWithKeywords(
+		long groupId, String keywords) {
+
+		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
+
+		assetEntryQuery.setGroupIds(new long[] {groupId});
+		assetEntryQuery.setKeywords(keywords);
+
+		return assetEntryQuery;
+	}
+
+	protected void testAdvancedSearch(
+			String searchUserName, String searchTitle, String searchDescription,
+			boolean andOperator, String title, String description,
+			int expectedAssetEntriesCount)
+		throws Exception {
+
+		ThreadLocalCache<Object[]> threadLocalCache =
+			ThreadLocalCacheManager.getThreadLocalCache(
+				Lifecycle.REQUEST, AssetEntryServiceImpl.class.getName());
+
+		threadLocalCache.removeAll();
+
+		AssetEntryQuery assetEntryQuery =
+			buildAssetEntryQueryWithAdvancedSearch(
+				_group.getGroupId(), andOperator, searchTitle,
+				searchDescription, searchUserName);
+
+		int initialAssetEntriesCount = AssetEntryServiceUtil.getEntriesCount(
+			assetEntryQuery);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		BlogsEntry blogsEntry1 = BlogsEntryLocalServiceUtil.addEntry(
+			TestPropsValues.getUserId(), StringUtil.randomString(),
+			StringPool.BLANK, StringUtil.randomString(),
+			RandomTestUtil.randomString(), 1, 1, 1965, 0, 0, true, true, null,
+			null, null, serviceContext);
+
+		BlogsEntry blogsEntry2 = BlogsEntryLocalServiceUtil.addEntry(
+			TestPropsValues.getUserId(), title, StringPool.BLANK, description,
+			RandomTestUtil.randomString(), 1, 1, 1965, 0, 0, true, true, null,
+			null, null, serviceContext);
+
+		threadLocalCache.removeAll();
+
+		int assetEntriesCount = AssetEntryServiceUtil.getEntriesCount(
+			assetEntryQuery);
+
+		Assert.assertEquals(
+			initialAssetEntriesCount + expectedAssetEntriesCount,
+			assetEntriesCount);
+
+		BlogsEntryLocalServiceUtil.deleteEntry(blogsEntry1);
+		BlogsEntryLocalServiceUtil.deleteEntry(blogsEntry2);
+	}
+
 	protected void testAssetCategories(
 			long[] assetCategoryIds, boolean any, boolean not,
-			int expectedResults)
+			int expectedAssetEntriesCount)
 		throws Exception {
 
 		testAssetCategorization(
 			assetCategoryIds, null, "Skiing in the Alps", _assetCategoryIds1,
 			null, "Keep your body in a good shape!", _assetCategoryIds2, null,
-			any, not, expectedResults);
+			any, not, expectedAssetEntriesCount);
 	}
 
 	protected void testAssetCategorization(
 			long[] assetCategoryIds, String[] assetTagNames, String title1,
 			long[] assetCategoryIds1, String[] assetTagNames1, String title2,
 			long[] assetCategoryIds2, String[] assetTagNames2, boolean any,
-			boolean not, int expectedResults)
+			boolean not, int expectedAssetEntriesCount)
 		throws Exception {
-
-		// Clear the thread local cache which is populated in AssetPublisherUtil
 
 		ThreadLocalCache<Object[]> threadLocalCache =
 			ThreadLocalCacheManager.getThreadLocalCache(
@@ -456,7 +715,7 @@ public class AssetEntryQueryTest {
 		AssetEntryQuery assetEntryQuery = buildAssetEntryQuery(
 			_group.getGroupId(), assetCategoryIds, assetTagNames, any, not);
 
-		int initialEntries = AssetEntryServiceUtil.getEntriesCount(
+		int initialAssetEntriesCount = AssetEntryServiceUtil.getEntriesCount(
 			assetEntryQuery);
 
 		ServiceContext serviceContext =
@@ -472,8 +731,8 @@ public class AssetEntryQueryTest {
 
 		BlogsEntryLocalServiceUtil.addEntry(
 			TestPropsValues.getUserId(), title1, StringPool.BLANK,
-			StringPool.BLANK, "This is a blog entry for testing purposes", 1, 1,
-			1965, 0, 0, true, true, null, null, null, serviceContext);
+			StringPool.BLANK, RandomTestUtil.randomString(), 1, 1, 1965, 0, 0,
+			true, true, null, null, null, serviceContext);
 
 		if (assetCategoryIds2 != null) {
 			serviceContext.setAssetCategoryIds(assetCategoryIds2);
@@ -485,25 +744,66 @@ public class AssetEntryQueryTest {
 
 		BlogsEntryLocalServiceUtil.addEntry(
 			TestPropsValues.getUserId(), title2, StringPool.BLANK,
-			StringPool.BLANK, "This is a blog entry for testing purposes", 1, 1,
-			1965, 0, 0, true, true, null, null, null, serviceContext);
-
-		// Clear the thread local cache which is populated in AssetPublisherUtil
+			StringPool.BLANK, RandomTestUtil.randomString(), 1, 1, 1965, 0, 0,
+			true, true, null, null, null, serviceContext);
 
 		threadLocalCache.removeAll();
 
 		assetEntryQuery = buildAssetEntryQuery(
 			_group.getGroupId(), assetCategoryIds, assetTagNames, any, not);
 
-		int allTagsEntries = AssetEntryServiceUtil.getEntriesCount(
+		int assetEntriesCount = AssetEntryServiceUtil.getEntriesCount(
 			assetEntryQuery);
 
-		Assert.assertEquals(initialEntries + expectedResults, allTagsEntries);
+		Assert.assertEquals(
+			initialAssetEntriesCount + expectedAssetEntriesCount,
+			assetEntriesCount);
+	}
+
+	protected void testAssetKeywords(
+			String keywords, String title, String description,
+			int expectedAssetEntriesCount)
+		throws Exception {
+
+		ThreadLocalCache<Object[]> threadLocalCache =
+			ThreadLocalCacheManager.getThreadLocalCache(
+				Lifecycle.REQUEST, AssetEntryServiceImpl.class.getName());
+
+		threadLocalCache.removeAll();
+
+		AssetEntryQuery assetEntryQuery = buildAssetEntryQueryWithKeywords(
+			_group.getGroupId(), keywords);
+
+		int initialAssetEntriesCount = AssetEntryServiceUtil.getEntriesCount(
+			assetEntryQuery);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
+
+		BlogsEntryLocalServiceUtil.addEntry(
+			TestPropsValues.getUserId(), StringUtil.randomString(),
+			StringPool.BLANK, StringUtil.randomString(),
+			RandomTestUtil.randomString(), 1, 1, 1965, 0, 0, true, true, null,
+			null, null, serviceContext);
+
+		BlogsEntryLocalServiceUtil.addEntry(
+			TestPropsValues.getUserId(), title, StringPool.BLANK, description,
+			RandomTestUtil.randomString(), 1, 1, 1965, 0, 0, true, true, null,
+			null, null, serviceContext);
+
+		threadLocalCache.removeAll();
+
+		int assetEntriesCount = AssetEntryServiceUtil.getEntriesCount(
+			assetEntryQuery);
+
+		Assert.assertEquals(
+			initialAssetEntriesCount + expectedAssetEntriesCount,
+			assetEntriesCount);
 	}
 
 	protected void testAssetTags(
 			String[] assetTagNames, boolean any, boolean not,
-			int expectedResults)
+			int expectedAssetEntriesCount)
 		throws Exception {
 
 		testAssetCategorization(
@@ -511,14 +811,12 @@ public class AssetEntryQueryTest {
 			new String[] {"liferay", "architecture", "services"},
 			"Modularity with OSGI", null,
 			new String[] {"liferay", "architecture", "modularity", "osgi"}, any,
-			not, expectedResults);
+			not, expectedAssetEntriesCount);
 	}
 
 	protected void testOrderByRatings(
 			double[] scores, double[] orderedScores, String orderByType)
 		throws Exception {
-
-		// Clear the thread local cache which is populated in AssetPublisherUtil
 
 		ThreadLocalCache<Object[]> threadLocalCache =
 			ThreadLocalCacheManager.getThreadLocalCache(
@@ -532,8 +830,6 @@ public class AssetEntryQueryTest {
 			RatingsEntryServiceUtil.updateEntry(
 				BlogsEntry.class.getName(), entry.getEntryId(), scores[i]);
 		}
-
-		// Clear the thread local cache which is populated in AssetPublisherUtil
 
 		threadLocalCache.removeAll();
 
@@ -561,8 +857,6 @@ public class AssetEntryQueryTest {
 			int[] viewCounts, int[] orderedViewCounts, String orderByType)
 		throws Exception {
 
-		// Clear the thread local cache which is populated in AssetPublisherUtil
-
 		ThreadLocalCache<Object[]> threadLocalCache =
 			ThreadLocalCacheManager.getThreadLocalCache(
 				Lifecycle.REQUEST, AssetEntryServiceImpl.class.getName());
@@ -579,8 +873,6 @@ public class AssetEntryQueryTest {
 
 			AssetEntryLocalServiceUtil.updateAssetEntry(assetEntry);
 		}
-
-		// Clear the thread local cache which is populated in AssetPublisherUtil
 
 		threadLocalCache.removeAll();
 
@@ -603,15 +895,15 @@ public class AssetEntryQueryTest {
 
 	private long[] _assetCategoryIds1;
 	private long[] _assetCategoryIds2;
-	private long _fashionCategoryId;
-	private long _foodCategoryId;
+	private long _assetVocabularyId;
+	private long _fashionAssetCategoryId;
+	private long _foodAssetCategoryId;
 
 	@DeleteAfterTestRun
 	private Group _group;
 
-	private long _healthCategoryId;
-	private long _sportCategoryId;
-	private long _travelCategoryId;
-	private long _vocabularyId;
+	private long _healthAssetCategoryId;
+	private long _sportAssetCategoryId;
+	private long _travelAssetCategoryId;
 
 }

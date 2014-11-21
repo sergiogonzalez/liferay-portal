@@ -156,18 +156,16 @@ public class LiferayLocalRepository
 
 	@Override
 	public void checkInFileEntry(
-			long userId, long fileEntryId, boolean major, String changeLog,
-			ServiceContext serviceContext)
-		throws PortalException {
+		long userId, long fileEntryId, boolean major, String changeLog,
+		ServiceContext serviceContext) {
 
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void checkInFileEntry(
-			long userId, long fileEntryId, String lockUuid,
-			ServiceContext serviceContext)
-		throws PortalException {
+		long userId, long fileEntryId, String lockUuid,
+		ServiceContext serviceContext) {
 
 		throw new UnsupportedOperationException();
 	}
@@ -292,9 +290,8 @@ public class LiferayLocalRepository
 
 	@Override
 	public void revertFileEntry(
-			long userId, long fileEntryId, String version,
-			ServiceContext serviceContext)
-		throws PortalException {
+		long userId, long fileEntryId, String version,
+		ServiceContext serviceContext) {
 
 		throw new UnsupportedOperationException();
 	}

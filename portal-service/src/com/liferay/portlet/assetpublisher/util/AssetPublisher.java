@@ -80,6 +80,12 @@ public interface AssetPublisher {
 		throws Exception;
 
 	public List<AssetEntry> getAssetEntries(
+		long[] groupIds, long[] classNameIds, String keywords, String userName,
+		String title, String description, boolean advancedSearch,
+		boolean andOperator, int start, int end, String orderByCol1,
+		String orderByCol2, String orderByType1, String orderByType2);
+
+	public List<AssetEntry> getAssetEntries(
 			PortletPreferences portletPreferences, Layout layout,
 			long scopeGroupId, int max, boolean checkPermission)
 		throws PortalException;
@@ -129,6 +135,11 @@ public interface AssetPublisher {
 			String[] assetEntryXmls, boolean deleteMissingAssetEntries,
 			boolean checkPermission)
 		throws Exception;
+
+	public int getAssetEntriesCount(
+		long[] groupIds, long[] classNameIds, String keywords, String userName,
+		String title, String description, boolean advancedSearch,
+		boolean andOperator, int start, int end);
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link

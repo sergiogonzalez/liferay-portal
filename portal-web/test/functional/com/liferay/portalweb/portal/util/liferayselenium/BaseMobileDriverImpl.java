@@ -125,6 +125,11 @@ public abstract class BaseMobileDriverImpl
 	}
 
 	@Override
+	public void assertNoLiferayExceptions() throws Exception {
+		LiferaySeleniumHelper.assertNoLiferayExceptions();
+	}
+
+	@Override
 	public void assertNotAlert(String pattern) {
 		throw new UnsupportedOperationException();
 	}

@@ -29,7 +29,7 @@ import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.DeleteAfterTestRun;
-import com.liferay.portal.test.TransactionalMethodRule;
+import com.liferay.portal.test.TransactionalTestRule;
 import com.liferay.portal.test.listeners.MainServletExecutionTestListener;
 import com.liferay.portal.test.runners.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.PortalUtil;
@@ -64,8 +64,6 @@ public class AssetTagFinderTest {
 	@Before
 	public void setUp() throws Exception {
 		_scopeGroup = addScopeGroup();
-
-		_siteGroup = _scopeGroup.getParentGroup();
 	}
 
 	@Test
@@ -78,7 +76,7 @@ public class AssetTagFinderTest {
 				_scopeGroup.getGroupId(), classNameId, assetTagName);
 		int initialSiteGroupAssetTagsCount =
 			AssetTagFinderUtil.filterCountByG_C_N(
-				_siteGroup.getGroupId(), classNameId, assetTagName);
+				_scopeGroup.getParentGroupId(), classNameId, assetTagName);
 
 		addBlogsEntry(_scopeGroup.getGroupId(), assetTagName);
 
@@ -101,7 +99,7 @@ public class AssetTagFinderTest {
 				initialScopeGroupAssetTagsCount + 1, scopeGroupAssetTagsCount);
 
 			int siteGroupAssetTagsCount = AssetTagFinderUtil.filterCountByG_C_N(
-				_siteGroup.getGroupId(), classNameId, assetTagName);
+				_scopeGroup.getParentGroupId(), classNameId, assetTagName);
 
 			Assert.assertEquals(
 				initialSiteGroupAssetTagsCount, siteGroupAssetTagsCount);
@@ -120,7 +118,7 @@ public class AssetTagFinderTest {
 			AssetTagFinderUtil.filterCountByG_N(
 				_scopeGroup.getGroupId(), assetTagName);
 		int initialTagsCountSiteGroup = AssetTagFinderUtil.filterCountByG_N(
-			_siteGroup.getGroupId(), assetTagName);
+			_scopeGroup.getParentGroupId(), assetTagName);
 
 		addBlogsEntry(_scopeGroup.getGroupId(), assetTagName);
 
@@ -142,7 +140,7 @@ public class AssetTagFinderTest {
 				initialScopeGroupAssetTagsCount + 1, scopeGroupAssetTagsCount);
 
 			int siteGroupAssetTagsCount = AssetTagFinderUtil.filterCountByG_N(
-				_siteGroup.getGroupId(), assetTagName);
+				_scopeGroup.getParentGroupId(), assetTagName);
 
 			Assert.assertEquals(
 				initialTagsCountSiteGroup, siteGroupAssetTagsCount);
@@ -164,9 +162,10 @@ public class AssetTagFinderTest {
 			AssetTagFinderUtil.filterCountByG_N_P(
 				_scopeGroup.getGroupId(), assetTagName, assetTagProperties);
 		int initialTagsCountSiteGroup = AssetTagFinderUtil.filterCountByG_N_P(
-			_siteGroup.getGroupId(), assetTagName, assetTagProperties);
+			_scopeGroup.getParentGroupId(), assetTagName, assetTagProperties);
 
-		addAssetTag(_siteGroup.getGroupId(), assetTagName, assetTagProperties);
+		addAssetTag(
+			_scopeGroup.getParentGroupId(), assetTagName, assetTagProperties);
 
 		User user = UserTestUtil.addUser(null, 0);
 
@@ -187,7 +186,8 @@ public class AssetTagFinderTest {
 				initialScopeGroupAssetTagsCount, scopeGroupAssetTagsCount);
 
 			int siteGroupAssetTagsCount = AssetTagFinderUtil.filterCountByG_N_P(
-				_siteGroup.getGroupId(), assetTagName, assetTagProperties);
+				_scopeGroup.getParentGroupId(), assetTagName,
+				assetTagProperties);
 
 			Assert.assertEquals(
 				initialTagsCountSiteGroup + 1, siteGroupAssetTagsCount);
@@ -209,7 +209,7 @@ public class AssetTagFinderTest {
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 		List<AssetTag> initialSiteGroupAssetTags =
 			AssetTagFinderUtil.filterFindByG_C_N(
-				_siteGroup.getGroupId(), classNameId, assetTagName,
+				_scopeGroup.getParentGroupId(), classNameId, assetTagName,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 		addBlogsEntry(_scopeGroup.getGroupId(), assetTagName);
@@ -236,7 +236,7 @@ public class AssetTagFinderTest {
 
 			List<AssetTag> siteGroupAssetTags =
 				AssetTagFinderUtil.filterFindByG_C_N(
-					_siteGroup.getGroupId(), classNameId, assetTagName,
+					_scopeGroup.getParentGroupId(), classNameId, assetTagName,
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
 			Assert.assertEquals(
@@ -252,7 +252,7 @@ public class AssetTagFinderTest {
 	public void testFilterFindByG_N() throws Exception {
 		String assetTagName = RandomTestUtil.randomString();
 
-		addAssetTag(_siteGroup.getGroupId(), assetTagName, null);
+		addAssetTag(_scopeGroup.getParentGroupId(), assetTagName, null);
 
 		User user = UserTestUtil.addUser(null, 0);
 
@@ -275,7 +275,7 @@ public class AssetTagFinderTest {
 			}
 
 			AssetTag siteGroupAssetTag = AssetTagFinderUtil.filterFindByG_N(
-				_siteGroup.getGroupId(), assetTagName);
+				_scopeGroup.getParentGroupId(), assetTagName);
 
 			Assert.assertEquals(
 				StringUtil.toLowerCase(assetTagName),
@@ -300,10 +300,11 @@ public class AssetTagFinderTest {
 				assetTagProperties, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 		List<AssetTag> initialSiteGroupAssetTags =
 			AssetTagFinderUtil.filterFindByG_N_P(
-				new long[] {_siteGroup.getGroupId()}, assetTagName,
+				new long[] {_scopeGroup.getParentGroupId()}, assetTagName,
 				assetTagProperties, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
-		addAssetTag(_siteGroup.getGroupId(), assetTagName, assetTagProperties);
+		addAssetTag(
+			_scopeGroup.getParentGroupId(), assetTagName, assetTagProperties);
 
 		User user = UserTestUtil.addUser(null, 0);
 
@@ -327,7 +328,7 @@ public class AssetTagFinderTest {
 
 			List<AssetTag> siteGroupAssetTags =
 				AssetTagFinderUtil.filterFindByG_N_P(
-					new long[] {_siteGroup.getGroupId()}, assetTagName,
+					new long[] {_scopeGroup.getParentGroupId()}, assetTagName,
 					assetTagProperties, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 					null);
 
@@ -342,8 +343,8 @@ public class AssetTagFinderTest {
 	}
 
 	@Rule
-	public TransactionalMethodRule transactionalMethodRule =
-		new TransactionalMethodRule();
+	public TransactionalTestRule transactionalTestRule =
+		new TransactionalTestRule();
 
 	protected void addAssetTag(long groupId, String name, String[] properties)
 		throws Exception {
@@ -392,8 +393,5 @@ public class AssetTagFinderTest {
 
 	@DeleteAfterTestRun
 	private Group _scopeGroup;
-
-	@DeleteAfterTestRun
-	private Group _siteGroup;
 
 }
