@@ -413,24 +413,6 @@ public class EditEntryAction extends PortletAction {
 		return portletURL.toString();
 	}
 
-	protected String getTempAttachmentLink(
-			FileEntry tempAttachment, ThemeDisplay themeDisplay)
-		throws PortalException {
-
-		StringBundler sb = new StringBundler(8);
-
-		sb.append("<img ");
-		sb.append("src=\"");
-
-		sb.append(
-			PortletFileRepositoryUtil.getPortletFileEntryURL(
-				themeDisplay, tempAttachment, StringPool.BLANK));
-
-		sb.append("\" />");
-
-		return sb.toString();
-	}
-
 	protected List<FileEntry> getTempAttachments(String content)
 		throws PortalException {
 
@@ -558,7 +540,7 @@ public class EditEntryAction extends PortletAction {
 
 				content = StringUtil.replace(
 					content,
-					getTempAttachmentLink(tempAttachment, themeDisplay),
+					getAttachmentLink(tempAttachment, themeDisplay),
 					getAttachmentLink(attachment, themeDisplay));
 			}
 			catch (IOException ioe) {
@@ -664,7 +646,7 @@ public class EditEntryAction extends PortletAction {
 
 			if (entry != null && !tempAttachments.isEmpty()) {
 				content = updateContentAttachmentLinks(
-						entry.getGroupId(), entry, tempAttachments, actionRequest);
+					entry.getGroupId(), entry, tempAttachments, actionRequest);
 
 				entry = BlogsEntryServiceUtil.updateEntry(
 					entry.getEntryId(), title, subtitle, description, content,
