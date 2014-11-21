@@ -359,20 +359,13 @@ public class EditEntryAction extends PortletAction {
 	}
 
 	protected String getAttachmentLink(
-			FileEntry attachment, ThemeDisplay themeDisplay)
+			FileEntry fileEntryAttachment, ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		StringBundler sb = new StringBundler(3);
+		String attachmentURL = PortletFileRepositoryUtil.getPortletFileEntryURL(
+			themeDisplay, fileEntryAttachment, StringPool.BLANK);
 
-		sb.append("<img src=\"");
-
-		sb.append(
-			PortletFileRepositoryUtil.getPortletFileEntryURL(
-				themeDisplay, attachment, StringPool.BLANK));
-
-		sb.append("\" />");
-
-		return sb.toString();
+		return "<img src=\"" + attachmentURL + "\" />";
 	}
 
 	protected String getSaveAndContinueRedirect(
