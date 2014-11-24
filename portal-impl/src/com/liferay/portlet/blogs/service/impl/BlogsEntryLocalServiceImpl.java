@@ -17,6 +17,7 @@ package com.liferay.portlet.blogs.service.impl;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
+import com.liferay.portal.kernel.editor.util.EditorConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -93,12 +94,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -159,6 +163,64 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
 			coverImageImageSelector, smallImageImageSelector, serviceContext);
+	}
+
+	protected List<FileEntry> getTempFileEntryAttachments(String content)
+		throws PortalException {
+
+		List<FileEntry> fileEntryAttachments = new ArrayList<>();
+
+		Pattern pattern = Pattern.compile(
+			EditorConstants.DATA_IMAGE_ID_ATTRIBUTE + "=.(\\d+)");
+
+		Matcher matcher = pattern.matcher(content);
+
+		while (matcher.find()) {
+			long fileEntryId = GetterUtil.getLong(matcher.group(1));
+
+			FileEntry fileEntryAttachment =
+				PortletFileRepositoryUtil.getPortletFileEntry(fileEntryId);
+
+			fileEntryAttachments.add(fileEntryAttachment);
+		}
+
+		return fileEntryAttachments;
+	}
+
+	protected String getAttachmentLink(FileEntry fileEntryAttachment)
+		throws PortalException {
+
+		String attachmentURL = PortletFileRepositoryUtil.getPortletFileEntryURL(
+			null, fileEntryAttachment, StringPool.BLANK);
+
+		return "<img src=\"" + attachmentURL + "\" />";
+	}
+
+	protected String updateContentAttachmentLinks(
+			long userId, long entryId, String content,
+			List<FileEntry> tempFileEntryAttachments)
+		throws PortalException {
+
+		BlogsEntry entry = blogsEntryPersistence.findByPrimaryKey(entryId);
+
+		List<FileEntry> fileEntryAttachments = new ArrayList<>(
+			tempFileEntryAttachments.size());
+
+		for (FileEntry tempAttachment : tempFileEntryAttachments) {
+			FileEntry fileEntryAttachment =
+				addEntryAttachment(
+					entry.getGroupId(), userId, entry.getEntryId(),
+					tempAttachment.getTitle(), tempAttachment.getMimeType(),
+					tempAttachment.getContentStream());
+
+			fileEntryAttachments.add(fileEntryAttachment);
+
+			content = StringUtil.replace(
+				content, getAttachmentLink(tempAttachment),
+				getAttachmentLink(fileEntryAttachment));
+		}
+
+		return content;
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -238,7 +300,17 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		entry.setUrlTitle(
 			getUniqueUrlTitle(entryId, title, null, serviceContext));
 		entry.setDescription(description);
+
+		List<FileEntry> tempFileEntryAttachments =
+			getTempFileEntryAttachments(content);
+
+		if (!tempFileEntryAttachments.isEmpty()) {
+			content = updateContentAttachmentLinks(
+				userId, entry.getEntryId(), content, tempFileEntryAttachments);
+		}
+
 		entry.setContent(content);
+
 		entry.setDisplayDate(displayDate);
 		entry.setAllowPingbacks(allowPingbacks);
 		entry.setAllowTrackbacks(allowTrackbacks);
@@ -292,8 +364,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		return startWorkflowInstance(userId, entry, serviceContext);
 	}
 
-	@Override
-	public FileEntry addEntryAttachment(
+	protected FileEntry addEntryAttachment(
 			long groupId, long userId, long entryId, String fileName,
 			String mimeType, InputStream is)
 		throws PortalException {
@@ -1228,7 +1299,17 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		entry.setUrlTitle(
 			getUniqueUrlTitle(entryId, title, oldUrlTitle, serviceContext));
 		entry.setDescription(description);
+
+		List<FileEntry> tempFileEntryAttachments =
+			getTempFileEntryAttachments(content);
+
+		if (!tempFileEntryAttachments.isEmpty()) {
+			content = updateContentAttachmentLinks(
+				userId, entry.getEntryId(), content, tempFileEntryAttachments);
+		}
+
 		entry.setContent(content);
+
 		entry.setDisplayDate(displayDate);
 		entry.setAllowPingbacks(allowPingbacks);
 		entry.setAllowTrackbacks(allowTrackbacks);
