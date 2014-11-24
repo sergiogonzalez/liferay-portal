@@ -276,9 +276,8 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 		DDMStructure structure = ddmStructurePersistence.findByPrimaryKey(
 			structureId);
 
-		long classNameId = structure.getClassNameId();
-
-		DDMDisplay ddmDisplay = DDMUtil.getDDMDisplay(classNameId);
+		DDMDisplay ddmDisplay = DDMUtil.getDDMDisplay(
+			structure.getClassNameId());
 
 		DDMPermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
@@ -296,9 +295,8 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 		DDMStructure structure = ddmStructurePersistence.findByPrimaryKey(
 			structureId);
 
-		long classNameId = structure.getClassNameId();
-
-		DDMDisplay ddmDisplay = DDMUtil.getDDMDisplay(classNameId);
+		DDMDisplay ddmDisplay = DDMUtil.getDDMDisplay(
+			structure.getClassNameId());
 
 		DDMPermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
