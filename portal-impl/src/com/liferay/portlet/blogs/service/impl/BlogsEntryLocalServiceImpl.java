@@ -165,64 +165,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			coverImageImageSelector, smallImageImageSelector, serviceContext);
 	}
 
-	protected List<FileEntry> getTempFileEntryAttachments(String content)
-		throws PortalException {
-
-		List<FileEntry> fileEntryAttachments = new ArrayList<>();
-
-		Pattern pattern = Pattern.compile(
-			EditorConstants.DATA_IMAGE_ID_ATTRIBUTE + "=.(\\d+)");
-
-		Matcher matcher = pattern.matcher(content);
-
-		while (matcher.find()) {
-			long fileEntryId = GetterUtil.getLong(matcher.group(1));
-
-			FileEntry fileEntryAttachment =
-				PortletFileRepositoryUtil.getPortletFileEntry(fileEntryId);
-
-			fileEntryAttachments.add(fileEntryAttachment);
-		}
-
-		return fileEntryAttachments;
-	}
-
-	protected String getAttachmentLink(FileEntry fileEntryAttachment)
-		throws PortalException {
-
-		String attachmentURL = PortletFileRepositoryUtil.getPortletFileEntryURL(
-			null, fileEntryAttachment, StringPool.BLANK);
-
-		return "<img src=\"" + attachmentURL + "\" />";
-	}
-
-	protected String updateContentAttachmentLinks(
-			long userId, long entryId, String content,
-			List<FileEntry> tempFileEntryAttachments)
-		throws PortalException {
-
-		BlogsEntry entry = blogsEntryPersistence.findByPrimaryKey(entryId);
-
-		List<FileEntry> fileEntryAttachments = new ArrayList<>(
-			tempFileEntryAttachments.size());
-
-		for (FileEntry tempAttachment : tempFileEntryAttachments) {
-			FileEntry fileEntryAttachment =
-				addEntryAttachment(
-					entry.getGroupId(), userId, entry.getEntryId(),
-					tempAttachment.getTitle(), tempAttachment.getMimeType(),
-					tempAttachment.getContentStream());
-
-			fileEntryAttachments.add(fileEntryAttachment);
-
-			content = StringUtil.replace(
-				content, getAttachmentLink(tempAttachment),
-				getAttachmentLink(fileEntryAttachment));
-		}
-
-		return content;
-	}
-
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public BlogsEntry addEntry(
@@ -301,8 +243,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			getUniqueUrlTitle(entryId, title, null, serviceContext));
 		entry.setDescription(description);
 
-		List<FileEntry> tempFileEntryAttachments =
-			getTempFileEntryAttachments(content);
+		List<FileEntry> tempFileEntryAttachments = getTempFileEntryAttachments(
+			content);
 
 		if (!tempFileEntryAttachments.isEmpty()) {
 			content = updateContentAttachmentLinks(
@@ -362,21 +304,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		}
 
 		return startWorkflowInstance(userId, entry, serviceContext);
-	}
-
-	protected FileEntry addEntryAttachment(
-			long groupId, long userId, long entryId, String fileName,
-			String mimeType, InputStream is)
-		throws PortalException {
-
-		BlogsEntry entry = getEntry(entryId);
-
-		Folder folder = entry.addAttachmentsFolder();
-
-		return PortletFileRepositoryUtil.addPortletFileEntry(
-			groupId, userId, BlogsEntry.class.getName(), entry.getEntryId(),
-			PortletKeys.BLOGS, folder.getFolderId(), is, fileName, mimeType,
-			true);
 	}
 
 	@Override
@@ -1300,8 +1227,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			getUniqueUrlTitle(entryId, title, oldUrlTitle, serviceContext));
 		entry.setDescription(description);
 
-		List<FileEntry> tempFileEntryAttachments =
-			getTempFileEntryAttachments(content);
+		List<FileEntry> tempFileEntryAttachments = getTempFileEntryAttachments(
+			content);
 
 		if (!tempFileEntryAttachments.isEmpty()) {
 			content = updateContentAttachmentLinks(
@@ -1623,6 +1550,21 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		}
 	}
 
+	protected FileEntry addEntryAttachment(
+			long groupId, long userId, long entryId, String fileName,
+			String mimeType, InputStream is)
+		throws PortalException {
+
+		BlogsEntry entry = getEntry(entryId);
+
+		Folder folder = entry.addAttachmentsFolder();
+
+		return PortletFileRepositoryUtil.addPortletFileEntry(
+			groupId, userId, BlogsEntry.class.getName(), entry.getEntryId(),
+			PortletKeys.BLOGS, folder.getFolderId(), is, fileName, mimeType,
+			true);
+	}
+
 	protected long addSmallImageFileEntry(
 			long userId, long groupId, long entryId, String mimeType,
 			String title, InputStream is)
@@ -1649,6 +1591,15 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	protected void deleteDiscussion(BlogsEntry entry) throws PortalException {
 		commentManager.deleteDiscussion(
 			BlogsEntry.class.getName(), entry.getEntryId());
+	}
+
+	protected String getAttachmentLink(FileEntry fileEntryAttachment)
+		throws PortalException {
+
+		String attachmentURL = PortletFileRepositoryUtil.getPortletFileEntryURL(
+			null, fileEntryAttachment, StringPool.BLANK);
+
+		return "<img src=\"" + attachmentURL + "\" />";
 	}
 
 	protected String getEntryURL(
@@ -1680,6 +1631,28 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		portletURL.setParameter("entryId", String.valueOf(entry.getEntryId()));
 
 		return portletURL.toString();
+	}
+
+	protected List<FileEntry> getTempFileEntryAttachments(String content)
+		throws PortalException {
+
+		List<FileEntry> fileEntryAttachments = new ArrayList<>();
+
+		Pattern pattern = Pattern.compile(
+			EditorConstants.DATA_IMAGE_ID_ATTRIBUTE + "=.(\\d+)");
+
+		Matcher matcher = pattern.matcher(content);
+
+		while (matcher.find()) {
+			long fileEntryId = GetterUtil.getLong(matcher.group(1));
+
+			FileEntry fileEntryAttachment =
+				PortletFileRepositoryUtil.getPortletFileEntry(fileEntryId);
+
+			fileEntryAttachments.add(fileEntryAttachment);
+		}
+
+		return fileEntryAttachments;
 	}
 
 	protected String getUniqueUrlTitle(
@@ -2080,6 +2053,33 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			entry.getCompanyId(), entry.getGroupId(), userId,
 			BlogsEntry.class.getName(), entry.getEntryId(), entry,
 			serviceContext, workflowContext);
+	}
+
+	protected String updateContentAttachmentLinks(
+			long userId, long entryId, String content,
+			List<FileEntry> tempFileEntryAttachments)
+		throws PortalException {
+
+		BlogsEntry entry = blogsEntryPersistence.findByPrimaryKey(entryId);
+
+		List<FileEntry> fileEntryAttachments = new ArrayList<>(
+			tempFileEntryAttachments.size());
+
+		for (FileEntry tempAttachment : tempFileEntryAttachments) {
+			FileEntry fileEntryAttachment =
+				addEntryAttachment(
+					entry.getGroupId(), userId, entry.getEntryId(),
+					tempAttachment.getTitle(), tempAttachment.getMimeType(),
+					tempAttachment.getContentStream());
+
+			fileEntryAttachments.add(fileEntryAttachment);
+
+			content = StringUtil.replace(
+				content, getAttachmentLink(tempAttachment),
+				getAttachmentLink(fileEntryAttachment));
+		}
+
+		return content;
 	}
 
 	protected void validate(
