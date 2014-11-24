@@ -77,6 +77,11 @@ public interface BlogsEntryService extends BaseService {
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	public com.liferay.portal.kernel.repository.model.FileEntry addEntryAttachment(
+		long groupId, long entryId, java.lang.String fileName,
+		java.io.File file, java.lang.String mimeType)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 	public void deleteEntry(long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
