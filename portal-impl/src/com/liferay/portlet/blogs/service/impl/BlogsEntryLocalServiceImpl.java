@@ -248,7 +248,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		if (!tempFileEntryAttachments.isEmpty()) {
 			content = updateContentAttachmentLinks(
-				userId, entry.getEntryId(), content, tempFileEntryAttachments);
+				groupId, userId, entry.getEntryId(), content,
+				tempFileEntryAttachments);
 		}
 
 		entry.setContent(content);
@@ -1232,7 +1233,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		if (!tempFileEntryAttachments.isEmpty()) {
 			content = updateContentAttachmentLinks(
-				userId, entry.getEntryId(), content, tempFileEntryAttachments);
+				entry.getGroupId(), userId, entry.getEntryId(), content,
+				tempFileEntryAttachments);
 		}
 
 		entry.setContent(content);
@@ -2056,11 +2058,9 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	}
 
 	protected String updateContentAttachmentLinks(
-			long userId, long entryId, String content,
+			long groupId, long userId, long entryId, String content,
 			List<FileEntry> tempFileEntryAttachments)
 		throws PortalException {
-
-		BlogsEntry entry = blogsEntryPersistence.findByPrimaryKey(entryId);
 
 		List<FileEntry> fileEntryAttachments = new ArrayList<>(
 			tempFileEntryAttachments.size());
@@ -2068,8 +2068,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		for (FileEntry tempAttachment : tempFileEntryAttachments) {
 			FileEntry fileEntryAttachment =
 				addEntryAttachment(
-					entry.getGroupId(), userId, entry.getEntryId(),
-					tempAttachment.getTitle(), tempAttachment.getMimeType(),
+					groupId, userId, entryId, tempAttachment.getTitle(),
+					tempAttachment.getMimeType(),
 					tempAttachment.getContentStream());
 
 			fileEntryAttachments.add(fileEntryAttachment);
