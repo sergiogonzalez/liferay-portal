@@ -15,9 +15,11 @@
 package com.liferay.portlet.blogs.action;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
@@ -32,6 +34,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.TrashedModel;
+import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
@@ -45,6 +48,7 @@ import com.liferay.portlet.PortletURLImpl;
 import com.liferay.portlet.asset.AssetCategoryException;
 import com.liferay.portlet.asset.AssetTagException;
 import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
+import com.liferay.portlet.blogs.BlogsEntryAttachmentsHelper;
 import com.liferay.portlet.blogs.EntryContentException;
 import com.liferay.portlet.blogs.EntryDescriptionException;
 import com.liferay.portlet.blogs.EntryDisplayDateException;
@@ -61,6 +65,7 @@ import com.liferay.portlet.trash.util.TrashUtil;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -98,6 +103,7 @@ public class EditEntryAction extends PortletAction {
 		try {
 			BlogsEntry entry = null;
 			String oldUrlTitle = StringPool.BLANK;
+			Map<Long, FileEntry> fileEntryMap = null;
 
 			UploadException uploadException =
 				(UploadException)actionRequest.getAttribute(
@@ -120,6 +126,7 @@ public class EditEntryAction extends PortletAction {
 
 				entry = (BlogsEntry)returnValue[0];
 				oldUrlTitle = ((String)returnValue[1]);
+				fileEntryMap = ((Map<Long, FileEntry>)returnValue[2]);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
 				deleteEntries(actionRequest, false);
@@ -182,7 +189,23 @@ public class EditEntryAction extends PortletAction {
 			if (ajax) {
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-				jsonObject.put("content", entry.getContent());
+				JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+				for (long fileEntryId : fileEntryMap.keySet()) {
+					JSONObject jsonObjectTemp =
+						JSONFactoryUtil.createJSONObject();
+
+					FileEntry fileEntry = fileEntryMap.get(fileEntryId);
+
+					jsonObjectTemp.put(
+						String.valueOf(fileEntryId),
+						PortletFileRepositoryUtil.getPortletFileEntryURL(
+							null, fileEntry, StringPool.BLANK));
+
+					jsonArray.put(jsonObjectTemp);
+				}
+
+				jsonObject.put("jsonObjectTemp", jsonArray);
 				jsonObject.put("entryId", entry.getEntryId());
 				jsonObject.put("redirect", redirect);
 				jsonObject.put("updateRedirect", updateRedirect);
@@ -457,6 +480,9 @@ public class EditEntryAction extends PortletAction {
 	protected Object[] updateEntry(ActionRequest actionRequest)
 		throws Exception {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		long entryId = ParamUtil.getLong(actionRequest, "entryId");
 
 		String title = ParamUtil.getString(actionRequest, "title");
@@ -526,6 +552,8 @@ public class EditEntryAction extends PortletAction {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			BlogsEntry.class.getName(), actionRequest);
 
+		Map<Long, FileEntry> fileEntryAttachments = null;
+
 		if (entryId <= 0) {
 
 			// Add entry
@@ -536,6 +564,35 @@ public class EditEntryAction extends PortletAction {
 				displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
 				coverImageImageSelector, smallImageImageSelector,
 				serviceContext);
+
+			BlogsEntryAttachmentsHelper blogsEntryAttachmentsHelper =
+				new BlogsEntryAttachmentsHelper();
+
+			List<FileEntry> tempFileEntryAttachments =
+				blogsEntryAttachmentsHelper.getTempFileEntryAttachments(
+					content);
+
+			if (!tempFileEntryAttachments.isEmpty()) {
+				fileEntryAttachments =
+					blogsEntryAttachmentsHelper.
+						addDefinitiveFileEntryAttachments(
+							entry.getGroupId(), themeDisplay.getUserId(),
+							entry.getEntryId(), tempFileEntryAttachments);
+
+				content = blogsEntryAttachmentsHelper.updateContent(
+					content, fileEntryAttachments);
+
+				entry.setContent(content);
+
+				BlogsEntryLocalServiceUtil.updateBlogsEntry(entry);
+			}
+
+			// Attachments
+
+			for (FileEntry tempFileEntryAttachment : tempFileEntryAttachments) {
+				PortletFileRepositoryUtil.deletePortletFileEntry(
+					tempFileEntryAttachment.getFileEntryId());
+			}
 
 			AssetPublisherUtil.addAndStoreSelection(
 				actionRequest, BlogsEntry.class.getName(), entry.getEntryId(),
@@ -561,12 +618,37 @@ public class EditEntryAction extends PortletAction {
 
 			String tempOldUrlTitle = entry.getUrlTitle();
 
-			entry = BlogsEntryServiceUtil.updateEntry(
-				entryId, title, subtitle, description, content,
-				displayDateMonth, displayDateDay, displayDateYear,
-				displayDateHour, displayDateMinute, allowPingbacks,
-				allowTrackbacks, trackbacks, coverImageImageSelector,
-				smallImageImageSelector, serviceContext);
+			BlogsEntryAttachmentsHelper blogsEntryAttachmentsHelper =
+				new BlogsEntryAttachmentsHelper();
+
+			List<FileEntry> tempFileEntryAttachments =
+				blogsEntryAttachmentsHelper.getTempFileEntryAttachments(
+					content);
+
+			if (!tempFileEntryAttachments.isEmpty()) {
+				fileEntryAttachments =
+					blogsEntryAttachmentsHelper.
+						addDefinitiveFileEntryAttachments(
+							entry.getGroupId(), themeDisplay.getUserId(),
+							entry.getEntryId(), tempFileEntryAttachments);
+
+				content = blogsEntryAttachmentsHelper.updateContent(
+					content, fileEntryAttachments);
+
+				entry = BlogsEntryServiceUtil.updateEntry(
+					entryId, title, subtitle, description, content,
+					displayDateMonth, displayDateDay, displayDateYear,
+					displayDateHour, displayDateMinute, allowPingbacks,
+					allowTrackbacks, trackbacks, coverImageImageSelector,
+					smallImageImageSelector, serviceContext);
+			}
+
+			// Attachments
+
+			for (FileEntry tempFileEntryAttachment : tempFileEntryAttachments) {
+				PortletFileRepositoryUtil.deletePortletFileEntry(
+					tempFileEntryAttachment.getFileEntryId());
+			}
 
 			if (!tempOldUrlTitle.equals(entry.getUrlTitle())) {
 				oldUrlTitle = tempOldUrlTitle;
@@ -577,7 +659,7 @@ public class EditEntryAction extends PortletAction {
 				-1);
 		}
 
-		return new Object[] {entry, oldUrlTitle};
+		return new Object[] {entry, oldUrlTitle, fileEntryAttachments};
 	}
 
 }
