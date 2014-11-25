@@ -123,7 +123,7 @@ public class TemporaryFileEntriesCapabilityImpl
 		throws PortalException {
 
 		try {
-			Folder folder = getTempFolder(callerUuid, folderPath);
+			Folder folder = addTempFolder(temporaryFileEntriesScope);
 
 			return _localRepository.getRepositoryFileEntries(
 				folder.getFolderId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
