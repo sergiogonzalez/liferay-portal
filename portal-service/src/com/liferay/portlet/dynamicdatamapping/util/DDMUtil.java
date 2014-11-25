@@ -38,8 +38,8 @@ public class DDMUtil {
 		return _ddm;
 	}
 
-	public static DDMDisplay getDDMDisplay(ServiceContext serviceContext) {
-		return getDDM().getDDMDisplay(serviceContext);
+	public static DDMDisplay getDDMDisplay(long classNameId) {
+		return getDDM().getDDMDisplay(classNameId);
 	}
 
 	public static Serializable getDisplayFieldValue(

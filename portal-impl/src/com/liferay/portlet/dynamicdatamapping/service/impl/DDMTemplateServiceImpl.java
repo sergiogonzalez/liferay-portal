@@ -78,7 +78,7 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		DDMDisplay ddmDisplay = DDMUtil.getDDMDisplay(serviceContext);
+		DDMDisplay ddmDisplay = DDMUtil.getDDMDisplay(classNameId);
 
 		DDMPermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
@@ -133,7 +133,7 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 			File smallImageFile, ServiceContext serviceContext)
 		throws PortalException {
 
-		DDMDisplay ddmDisplay = DDMUtil.getDDMDisplay(serviceContext);
+		DDMDisplay ddmDisplay = DDMUtil.getDDMDisplay(classNameId);
 
 		DDMPermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
@@ -169,12 +169,12 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 			Map<Locale, String> descriptionMap, ServiceContext serviceContext)
 		throws PortalException {
 
-		DDMDisplay ddmDisplay = DDMUtil.getDDMDisplay(serviceContext);
-
 		DDMTemplate template = ddmTemplatePersistence.findByPrimaryKey(
 			templateId);
 
 		long classNameId = template.getClassNameId();
+
+		DDMDisplay ddmDisplay = DDMUtil.getDDMDisplay(classNameId);
 
 		DDMPermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
@@ -190,12 +190,12 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 			long templateId, ServiceContext serviceContext)
 		throws PortalException {
 
-		DDMDisplay ddmDisplay = DDMUtil.getDDMDisplay(serviceContext);
-
 		DDMTemplate template = ddmTemplatePersistence.findByPrimaryKey(
 			templateId);
 
 		long classNameId = template.getClassNameId();
+
+		DDMDisplay ddmDisplay = DDMUtil.getDDMDisplay(classNameId);
 
 		DDMPermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
@@ -231,7 +231,7 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		DDMDisplay ddmDisplay = DDMUtil.getDDMDisplay(serviceContext);
+		DDMDisplay ddmDisplay = DDMUtil.getDDMDisplay(classNameId);
 
 		DDMPermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
