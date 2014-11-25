@@ -236,7 +236,8 @@ public class LiferayLocalRepository
 
 	@Override
 	public Folder getFolder(long folderId) throws PortalException {
-		DLFolder dlFolder = dlFolderLocalService.getFolder(folderId);
+		DLFolder dlFolder = dlFolderLocalService.getFolder(
+			toFolderId(folderId));
 
 		return new LiferayFolder(dlFolder);
 	}
