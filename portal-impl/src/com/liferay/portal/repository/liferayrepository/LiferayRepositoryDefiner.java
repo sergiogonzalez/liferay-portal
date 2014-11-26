@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.repository.registry.BaseRepositoryDefiner;
 import com.liferay.portal.kernel.repository.registry.CapabilityRegistry;
 import com.liferay.portal.kernel.repository.registry.RepositoryEventRegistry;
 import com.liferay.portal.kernel.repository.registry.RepositoryFactoryRegistry;
+import com.liferay.portal.kernel.repository.util.ModelValidatorUtil;
 import com.liferay.portal.repository.capabilities.LiferayBulkOperationCapability;
 import com.liferay.portal.repository.capabilities.LiferaySyncCapability;
 import com.liferay.portal.repository.capabilities.LiferayTrashCapability;
@@ -112,7 +113,8 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 
 			return new LiferayWorkflowLocalRepositoryWrapper(
 				new LiferayFileSizeValidationLocalRepositoryWrapper(
-					_repositoryFactory.createLocalRepository(repositoryId)),
+					_repositoryFactory.createLocalRepository(repositoryId),
+					ModelValidatorUtil.getDefaultFileSizeModelValidator()),
 				_liferayWorkflowCapability);
 		}
 
@@ -122,7 +124,8 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 
 			return new LiferayWorkflowRepositoryWrapper(
 				new LiferayFileSizeValidationRepositoryWrapper(
-					_repositoryFactory.createRepository(repositoryId)),
+					_repositoryFactory.createRepository(repositoryId),
+					ModelValidatorUtil.getDefaultFileSizeModelValidator()),
 				_liferayWorkflowCapability);
 		}
 
