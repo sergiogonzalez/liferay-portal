@@ -259,7 +259,8 @@ public class LiferayLocalRepository
 
 		List<DLFileEntry> dlFileEntries =
 			dlFileEntryLocalService.getGroupFileEntries(
-				getGroupId(), 0, getGroupId(), rootFolderId, start, end,
+				getGroupId(), 0, getRepositoryId(), toFolderId(rootFolderId),
+				start, end,
 				DLFileEntryOrderByComparator.getOrderByComparator(obc));
 
 		return RepositoryModelUtil.toFileEntries(dlFileEntries);
