@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.capabilities.BulkOperationCapability;
 import com.liferay.portal.kernel.repository.capabilities.ConfigurationCapability;
 import com.liferay.portal.kernel.repository.capabilities.TemporaryFileEntriesCapability;
+import com.liferay.portal.kernel.repository.capabilities.TemporaryFileEntriesScope;
 import com.liferay.portal.kernel.repository.model.BaseRepositoryModelOperation;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -40,7 +41,6 @@ import java.io.InputStream;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * @author Iván Zaera
@@ -54,11 +54,11 @@ public class TemporaryFileEntriesCapabilityImpl
 
 	@Override
 	public FileEntry addTemporaryFileEntry(
-			UUID callerUuid, long userId, String folderPath, String fileName,
-			String mimeType, InputStream inputStream)
+			TemporaryFileEntriesScope temporaryFileEntriesScope,
+			String fileName, String mimeType, InputStream inputStream)
 		throws PortalException {
 
-		Folder folder = addTempFolder(userId, callerUuid, folderPath);
+		Folder folder = addTempFolder(temporaryFileEntriesScope);
 
 		File file = null;
 
@@ -71,8 +71,9 @@ public class TemporaryFileEntriesCapabilityImpl
 			serviceContext.setAddGuestPermissions(true);
 
 			return _localRepository.addFileEntry(
-				userId, folder.getFolderId(), fileName, mimeType, fileName,
-				StringPool.BLANK, StringPool.BLANK, file, serviceContext);
+				temporaryFileEntriesScope.getUserId(), folder.getFolderId(),
+				fileName, mimeType, fileName, StringPool.BLANK,
+				StringPool.BLANK, file, serviceContext);
 		}
 		catch (IOException ioe) {
 			throw new SystemException("Unable to write temporary file", ioe);
@@ -102,12 +103,13 @@ public class TemporaryFileEntriesCapabilityImpl
 
 	@Override
 	public void deleteTemporaryFileEntry(
-			UUID callerUuid, String folderPath, String fileName)
+			TemporaryFileEntriesScope temporaryFileEntriesScope,
+			String fileName)
 		throws PortalException {
 
 		try {
-			FileEntry fileEntry = getTemporaryFileEntries(
-				callerUuid, folderPath, fileName);
+			FileEntry fileEntry = getTemporaryFileEntry(
+				temporaryFileEntriesScope, fileName);
 
 			_localRepository.deleteFileEntry(fileEntry.getFileEntryId());
 		}
@@ -117,11 +119,11 @@ public class TemporaryFileEntriesCapabilityImpl
 
 	@Override
 	public List<FileEntry> getTemporaryFileEntries(
-			UUID callerUuid, String folderPath)
+			TemporaryFileEntriesScope temporaryFileEntriesScope)
 		throws PortalException {
 
 		try {
-			Folder folder = getTempFolder(callerUuid, folderPath);
+			Folder folder = addTempFolder(temporaryFileEntriesScope);
 
 			return _localRepository.getRepositoryFileEntries(
 				folder.getFolderId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS,
@@ -130,16 +132,6 @@ public class TemporaryFileEntriesCapabilityImpl
 		catch (NoSuchModelException nsme) {
 			return Collections.emptyList();
 		}
-	}
-
-	@Override
-	public FileEntry getTemporaryFileEntries(
-			UUID callerUuid, String folderPath, String fileName)
-		throws PortalException {
-
-		Folder folder = getTempFolder(callerUuid, folderPath);
-
-		return _localRepository.getFileEntry(folder.getFolderId(), fileName);
 	}
 
 	@Override
@@ -156,6 +148,17 @@ public class TemporaryFileEntriesCapabilityImpl
 		}
 
 		return GetterUtil.getLong(temporaryFileEntriesTimeout);
+	}
+
+	@Override
+	public FileEntry getTemporaryFileEntry(
+			TemporaryFileEntriesScope temporaryFileEntriesScope,
+			String fileName)
+		throws PortalException {
+
+		Folder folder = getTempFolder(temporaryFileEntriesScope);
+
+		return _localRepository.getFileEntry(folder.getFolderId(), fileName);
 	}
 
 	@Override
@@ -204,7 +207,7 @@ public class TemporaryFileEntriesCapabilityImpl
 	}
 
 	protected Folder addTempFolder(
-			long userId, UUID callerUuid, String folderPath)
+			TemporaryFileEntriesScope temporaryFileEntriesScope)
 		throws PortalException {
 
 		ServiceContext serviceContext = new ServiceContext();
@@ -213,15 +216,18 @@ public class TemporaryFileEntriesCapabilityImpl
 		serviceContext.setAddGuestPermissions(true);
 
 		Folder tempFolder = addFolder(
-			userId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			_FOLDER_NAME_TEMP, serviceContext);
+			temporaryFileEntriesScope.getUserId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, _FOLDER_NAME_TEMP,
+			serviceContext);
 
 		Folder folder = addFolder(
-			userId, tempFolder.getFolderId(), callerUuid.toString(),
+			temporaryFileEntriesScope.getUserId(), tempFolder.getFolderId(),
+			temporaryFileEntriesScope.getCallerUuid().toString(),
 			serviceContext);
 
 		return addFolders(
-			userId, folder.getFolderId(), folderPath, serviceContext);
+			temporaryFileEntriesScope.getUserId(), folder.getFolderId(),
+			temporaryFileEntriesScope.getFolderPath(), serviceContext);
 	}
 
 	protected Folder getDeepestFolder(long parentFolderId, String folderPath)
@@ -246,7 +252,8 @@ public class TemporaryFileEntriesCapabilityImpl
 		return _localRepository.getFolder(parentFolderId, folderName);
 	}
 
-	protected Folder getTempFolder(UUID callerUuid, String folderPath)
+	protected Folder getTempFolder(
+			TemporaryFileEntriesScope temporaryFileEntriesScope)
 		throws PortalException {
 
 		ServiceContext serviceContext = new ServiceContext();
@@ -257,10 +264,13 @@ public class TemporaryFileEntriesCapabilityImpl
 		Folder tempFolder = getFolder(
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, _FOLDER_NAME_TEMP);
 
-		Folder folder = getFolder(
-			tempFolder.getFolderId(), callerUuid.toString());
+		Folder callerFolder = getFolder(
+			tempFolder.getFolderId(),
+			temporaryFileEntriesScope.getCallerUuid().toString());
 
-		return getDeepestFolder(folder.getFolderId(), folderPath);
+		return getDeepestFolder(
+			callerFolder.getFolderId(),
+			temporaryFileEntriesScope.getFolderPath());
 	}
 
 	private static final String _FOLDER_NAME_TEMP = "temp";
