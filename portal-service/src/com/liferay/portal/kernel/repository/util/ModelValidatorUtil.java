@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.repository.util;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.ContentReference;
 import com.liferay.portal.kernel.repository.model.ModelValidator;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.documentlibrary.util.DLValidatorUtil;
 
 /**
@@ -31,10 +32,67 @@ public class ModelValidatorUtil {
 	}
 
 	public static final ModelValidator<ContentReference>
+		getDefaultDLModelValidator() {
+
+		return compose(
+			getDefaultFileNameModelValidator(),
+			getDefaultFileExtensionModelValidator(),
+			getDefaultFileSizeModelValidator());
+	}
+
+	public static final ModelValidator<ContentReference>
+		getDefaultFileExtensionModelValidator() {
+
+		return _defaultFileExtensionModelValidator;
+	}
+
+	public static final ModelValidator<ContentReference>
+		getDefaultFileNameModelValidator() {
+
+		return _defaultFileNameModelValidator;
+	}
+
+	public static final ModelValidator<ContentReference>
 		getDefaultFileSizeModelValidator() {
 
 		return _defaultFileSizeModelValidator;
 	}
+
+	private static final ModelValidator<ContentReference>
+		_defaultFileExtensionModelValidator =
+			new ModelValidator<ContentReference>() {
+
+				@Override
+				public void validate(ContentReference contentReference)
+					throws PortalException {
+
+					DLValidatorUtil.validateFileExtension(
+						contentReference.getSourceFileName());
+
+					DLValidatorUtil.validateSourceFileExtension(
+						contentReference.getExtension(),
+						contentReference.getSourceFileName());
+				}
+
+			};
+
+	private static final ModelValidator<ContentReference>
+		_defaultFileNameModelValidator =
+			new ModelValidator<ContentReference>() {
+
+				@Override
+				public void validate(ContentReference contentReference)
+					throws PortalException {
+
+					if (!Validator.isNull(
+							contentReference.getSourceFileName())) {
+
+						DLValidatorUtil.validateFileName(
+							contentReference.getSourceFileName());
+					}
+				}
+
+			};
 
 	private static final ModelValidator<ContentReference>
 		_defaultFileSizeModelValidator =
