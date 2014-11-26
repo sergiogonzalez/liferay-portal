@@ -17,9 +17,7 @@ package com.liferay.portal.kernel.repository.util;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.ContentReference;
 import com.liferay.portal.kernel.repository.model.ModelValidator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.util.PrefsPropsUtil;
-import com.liferay.portlet.documentlibrary.FileSizeException;
+import com.liferay.portlet.documentlibrary.util.DLValidatorUtil;
 
 /**
  * @author Adolfo Pérez
@@ -46,15 +44,9 @@ public class ModelValidatorUtil {
 				public void validate(ContentReference contentReference)
 					throws PortalException {
 
-					long maxSize = PrefsPropsUtil.getLong(
-						PropsKeys.DL_FILE_MAX_SIZE);
-
-					if ((maxSize > 0) &&
-						(contentReference.getSize() > maxSize)) {
-
-						throw new FileSizeException(
-							contentReference.getSourceFileName());
-					}
+					DLValidatorUtil.validateFileSize(
+						contentReference.getSourceFileName(),
+						contentReference.getSize());
 				}
 
 			};
