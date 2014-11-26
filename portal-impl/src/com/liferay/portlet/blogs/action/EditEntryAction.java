@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.blogs.action;
 
+import com.liferay.portal.kernel.editor.util.EditorConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -197,8 +198,13 @@ public class EditEntryAction extends PortletAction {
 
 					FileEntry fileEntry = fileEntryMap.get(fileEntryId);
 
-					jsonObjectTemp.put(
-						String.valueOf(fileEntryId),
+					jsonObjectTemp.put("dataImageIdAttribute",
+						EditorConstants.DATA_IMAGE_ID_ATTRIBUTE);
+
+					jsonObjectTemp.put("fileEntryId",
+						String.valueOf(fileEntryId));
+
+					jsonObjectTemp.put("fileEntryUrl",
 						PortletFileRepositoryUtil.getPortletFileEntryURL(
 							null, fileEntry, StringPool.BLANK));
 
