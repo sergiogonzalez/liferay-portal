@@ -40,6 +40,27 @@ import java.util.regex.Pattern;
  */
 public class BlogsEntryAttachmentsHelper {
 
+	public Map<Long, FileEntry> addDefinitiveFileEntryAttachments(
+			long groupId, long userId, long entryId,
+			List<FileEntry> tempFileEntryAttachments)
+		throws PortalException {
+
+		Map<Long, FileEntry> fileEntryAttachments = new HashMap<>();
+
+		for (FileEntry tempAttachment : tempFileEntryAttachments) {
+			FileEntry fileEntryAttachment =
+				addEntryAttachment(
+					groupId, userId, entryId, tempAttachment.getTitle(),
+					tempAttachment.getMimeType(),
+					tempAttachment.getContentStream());
+
+			fileEntryAttachments.put(
+				tempAttachment.getFileEntryId(), fileEntryAttachment);
+		}
+
+		return fileEntryAttachments;
+	}
+
 	public List<FileEntry> getTempFileEntryAttachments(String content)
 		throws PortalException {
 
@@ -84,27 +105,6 @@ public class BlogsEntryAttachmentsHelper {
 		}
 
 		return content;
-	}
-
-	public Map<Long, FileEntry> addDefinitiveFileEntryAttachments(
-			long groupId, long userId, long entryId,
-			List<FileEntry> tempFileEntryAttachments)
-		throws PortalException {
-
-		Map<Long, FileEntry> fileEntryAttachments = new HashMap<>();
-
-		for (FileEntry tempAttachment : tempFileEntryAttachments) {
-			FileEntry fileEntryAttachment =
-				addEntryAttachment(
-					groupId, userId, entryId, tempAttachment.getTitle(),
-					tempAttachment.getMimeType(),
-					tempAttachment.getContentStream());
-
-			fileEntryAttachments.put(
-				tempAttachment.getFileEntryId(), fileEntryAttachment);
-		}
-
-		return fileEntryAttachments;
 	}
 
 	protected FileEntry addEntryAttachment(
