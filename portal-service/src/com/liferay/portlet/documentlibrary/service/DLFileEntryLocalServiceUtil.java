@@ -810,6 +810,11 @@ public class DLFileEntryLocalServiceUtil {
 		getService().rebuildTree(companyId);
 	}
 
+	public static void regenerateThumbnails()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().regenerateThumbnails();
+	}
+
 	public static void revertFileEntry(long userId, long fileEntryId,
 		java.lang.String version,
 		com.liferay.portal.service.ServiceContext serviceContext)
