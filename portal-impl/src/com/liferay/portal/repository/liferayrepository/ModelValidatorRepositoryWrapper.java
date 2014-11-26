@@ -15,11 +15,11 @@
 package com.liferay.portal.repository.liferayrepository;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.repository.LocalRepository;
+import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.model.ContentReference;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.ModelValidator;
-import com.liferay.portal.repository.util.LocalRepositoryWrapper;
+import com.liferay.portal.repository.util.RepositoryWrapper;
 import com.liferay.portal.service.ServiceContext;
 
 import java.io.File;
@@ -28,14 +28,13 @@ import java.io.InputStream;
 /**
  * @author Adolfo Pérez
  */
-public class LiferayFileSizeValidationLocalRepositoryWrapper
-	extends LocalRepositoryWrapper {
+public class ModelValidatorRepositoryWrapper extends RepositoryWrapper {
 
-	public LiferayFileSizeValidationLocalRepositoryWrapper(
-		LocalRepository localRepository,
+	public ModelValidatorRepositoryWrapper(
+		Repository repository,
 		ModelValidator<ContentReference> modelValidator) {
 
-		super(localRepository);
+		super(repository);
 
 		_modelValidator = modelValidator;
 	}

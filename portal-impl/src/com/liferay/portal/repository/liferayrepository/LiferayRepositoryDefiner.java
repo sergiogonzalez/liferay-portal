@@ -112,7 +112,7 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 			throws PortalException {
 
 			return new LiferayWorkflowLocalRepositoryWrapper(
-				new LiferayFileSizeValidationLocalRepositoryWrapper(
+				new ModelValidatorLocalRepositoryWrapper(
 					_repositoryFactory.createLocalRepository(repositoryId),
 					ModelValidatorUtil.getDefaultFileSizeModelValidator()),
 				_liferayWorkflowCapability);
@@ -123,7 +123,7 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 			throws PortalException {
 
 			return new LiferayWorkflowRepositoryWrapper(
-				new LiferayFileSizeValidationRepositoryWrapper(
+				new ModelValidatorRepositoryWrapper(
 					_repositoryFactory.createRepository(repositoryId),
 					ModelValidatorUtil.getDefaultFileSizeModelValidator()),
 				_liferayWorkflowCapability);
