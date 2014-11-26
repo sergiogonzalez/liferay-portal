@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.ModelValidator;
 import com.liferay.portal.repository.util.RepositoryWrapper;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portlet.documentlibrary.util.DLAppUtil;
 
 import java.io.File;
 import java.io.InputStream;
@@ -47,7 +48,8 @@ public class ModelValidatorRepositoryWrapper extends RepositoryWrapper {
 		throws PortalException {
 
 		ContentReference contentReference = ContentReference.fromFile(
-			sourceFileName, mimeType, file);
+			sourceFileName, DLAppUtil.getExtension(title, sourceFileName),
+			mimeType, file);
 
 		_modelValidator.validate(contentReference);
 
@@ -64,7 +66,8 @@ public class ModelValidatorRepositoryWrapper extends RepositoryWrapper {
 		throws PortalException {
 
 		ContentReference contentReference = ContentReference.fromInputStream(
-			sourceFileName, mimeType, is, size);
+			sourceFileName, DLAppUtil.getExtension(title, sourceFileName),
+			mimeType, is, size);
 
 		_modelValidator.validate(contentReference);
 
@@ -81,7 +84,8 @@ public class ModelValidatorRepositoryWrapper extends RepositoryWrapper {
 		throws PortalException {
 
 		ContentReference contentReference = ContentReference.fromFile(
-			sourceFileName, mimeType, file);
+			sourceFileName, DLAppUtil.getExtension(title, sourceFileName),
+			mimeType, file);
 
 		_modelValidator.validate(contentReference);
 
@@ -99,7 +103,8 @@ public class ModelValidatorRepositoryWrapper extends RepositoryWrapper {
 		throws PortalException {
 
 		ContentReference contentReference = ContentReference.fromInputStream(
-			sourceFileName, mimeType, is, size);
+			sourceFileName, DLAppUtil.getExtension(title, sourceFileName),
+			mimeType, is, size);
 
 		_modelValidator.validate(contentReference);
 
