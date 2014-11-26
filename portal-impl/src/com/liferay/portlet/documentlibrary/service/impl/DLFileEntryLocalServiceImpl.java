@@ -34,6 +34,8 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexable;
@@ -84,6 +86,7 @@ import com.liferay.portlet.documentlibrary.InvalidFileVersionException;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryMetadataException;
 import com.liferay.portlet.documentlibrary.NoSuchFileVersionException;
+import com.liferay.portlet.documentlibrary.lar.FileEntryUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
@@ -98,6 +101,7 @@ import com.liferay.portlet.documentlibrary.util.DL;
 import com.liferay.portlet.documentlibrary.util.DLAppUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.documentlibrary.util.DLValidatorUtil;
+import com.liferay.portlet.documentlibrary.util.ImageProcessorUtil;
 import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelModifiedDateComparator;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
@@ -123,6 +127,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Provides the local service for accessing, adding, checking in/out, deleting,
@@ -1521,6 +1526,52 @@ public class DLFileEntryLocalServiceImpl
 	@Override
 	public void rebuildTree(long companyId) throws PortalException {
 		dlFolderLocalService.rebuildTree(companyId);
+	}
+
+	@Override
+	public void regenerateThumbnails() throws PortalException {
+		ActionableDynamicQuery actionableDynamicQuery =
+			getActionableDynamicQuery();
+
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod() {
+
+				@Override
+				public void performAction(Object object)
+					throws PortalException {
+
+					DLFileEntry dlFileEntry = (DLFileEntry)object;
+
+					FileEntry fileEntry = FileEntryUtil.fetchByPrimaryKey(
+						dlFileEntry.getFileEntryId());
+
+					FileVersion latestFileVersion =
+						fileEntry.getLatestFileVersion();
+
+					Set<String> imageMimeTypes =
+						ImageProcessorUtil.getImageMimeTypes();
+
+					if (imageMimeTypes.contains(
+							latestFileVersion.getMimeType())) {
+
+						try {
+							ImageProcessorUtil.generateImages(
+								null, latestFileVersion);
+						}
+						catch (Exception e) {
+							if (_log.isWarnEnabled()) {
+								_log.warn(
+									"Unable to generate thumbnails for " +
+										latestFileVersion.getFileVersionId(),
+									e);
+							}
+						}
+					}
+				}
+
+			});
+
+		actionableDynamicQuery.performActions();
 	}
 
 	@Override
