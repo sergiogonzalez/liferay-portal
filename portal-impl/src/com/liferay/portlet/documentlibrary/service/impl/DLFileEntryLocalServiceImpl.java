@@ -2670,13 +2670,6 @@ public class DLFileEntryLocalServiceImpl
 			String title)
 		throws PortalException {
 
-		if (Validator.isNotNull(sourceFileName)) {
-			DLValidatorUtil.validateFileName(sourceFileName);
-			DLValidatorUtil.validateFileExtension(sourceFileName);
-			DLValidatorUtil.validateSourceFileExtension(
-				extension, sourceFileName);
-		}
-
 		DLValidatorUtil.validateFileName(title);
 
 		validateFileExtension(extension);
