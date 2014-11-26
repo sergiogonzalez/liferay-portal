@@ -47,6 +47,10 @@ public class ContentReference {
 			sourceFileName, extension, mimeType, null, is, size);
 	}
 
+	public String getExtension() {
+		return _extension;
+	}
+
 	public String getMimeType() {
 		return _mimeType;
 	}

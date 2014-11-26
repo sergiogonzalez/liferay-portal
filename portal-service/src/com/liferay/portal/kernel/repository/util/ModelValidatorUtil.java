@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.repository.util;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.ContentReference;
 import com.liferay.portal.kernel.repository.model.ModelValidator;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.documentlibrary.util.DLValidatorUtil;
 
 /**
@@ -31,13 +32,70 @@ public class ModelValidatorUtil {
 	}
 
 	public static final ModelValidator<ContentReference>
+		getDefaultDLModelValidator() {
+
+		return compose(
+			getDefaultFileNameModelValidator(),
+			getDefaultFileExtensionModelValidator(),
+			getDefaultFileSizeModelValidator());
+	}
+
+	public static final ModelValidator<ContentReference>
+		getDefaultFileExtensionModelValidator() {
+
+		return _DEFAULT_FILE_EXTENSION_MODEL_VALIDATOR;
+	}
+
+	public static final ModelValidator<ContentReference>
+		getDefaultFileNameModelValidator() {
+
+		return _DEFAULT_FILE_NAME_MODEL_VALIDATOR;
+	}
+
+	public static final ModelValidator<ContentReference>
 		getDefaultFileSizeModelValidator() {
 
-		return _defaultFileSizeModelValidator;
+		return _DEFAULT_FILE_SIZE_MODEL_VALIDATOR;
 	}
 
 	private static final ModelValidator<ContentReference>
-		_defaultFileSizeModelValidator =
+		_DEFAULT_FILE_EXTENSION_MODEL_VALIDATOR =
+			new ModelValidator<ContentReference>() {
+
+				@Override
+				public void validate(ContentReference contentReference)
+					throws PortalException {
+
+					DLValidatorUtil.validateFileExtension(
+						contentReference.getSourceFileName());
+
+					DLValidatorUtil.validateSourceFileExtension(
+						contentReference.getExtension(),
+						contentReference.getSourceFileName());
+				}
+
+			};
+
+	private static final ModelValidator<ContentReference>
+		_DEFAULT_FILE_NAME_MODEL_VALIDATOR =
+			new ModelValidator<ContentReference>() {
+
+				@Override
+				public void validate(ContentReference contentReference)
+					throws PortalException {
+
+					if (!Validator.isNull(
+							contentReference.getSourceFileName())) {
+
+						DLValidatorUtil.validateFileName(
+							contentReference.getSourceFileName());
+					}
+				}
+
+			};
+
+	private static final ModelValidator<ContentReference>
+		_DEFAULT_FILE_SIZE_MODEL_VALIDATOR =
 			new ModelValidator<ContentReference>() {
 
 				@Override
