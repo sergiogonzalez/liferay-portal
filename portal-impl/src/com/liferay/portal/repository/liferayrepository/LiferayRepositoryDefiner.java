@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.repository.capabilities.BulkOperationCapability
 import com.liferay.portal.kernel.repository.capabilities.SyncCapability;
 import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.capabilities.WorkflowCapability;
+import com.liferay.portal.kernel.repository.model.ContentReference;
+import com.liferay.portal.kernel.repository.model.ModelValidator;
 import com.liferay.portal.kernel.repository.registry.BaseRepositoryDefiner;
 import com.liferay.portal.kernel.repository.registry.CapabilityRegistry;
 import com.liferay.portal.kernel.repository.registry.RepositoryEventRegistry;
@@ -111,22 +113,35 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 		public LocalRepository createLocalRepository(long repositoryId)
 			throws PortalException {
 
-			return new LiferayWorkflowLocalRepositoryWrapper(
+			LocalRepository localRepository =
+				_repositoryFactory.createLocalRepository(repositoryId);
+
+			ModelValidator<ContentReference> modelValidator =
+				ModelValidatorUtil.getDefaultFileSizeModelValidator();
+
+			LocalRepository localRepositoryWrapper =
 				new ModelValidatorLocalRepositoryWrapper(
-					_repositoryFactory.createLocalRepository(repositoryId),
-					ModelValidatorUtil.getDefaultFileSizeModelValidator()),
-				_liferayWorkflowCapability);
+					localRepository, modelValidator);
+
+			return new LiferayWorkflowLocalRepositoryWrapper(
+				localRepositoryWrapper, _liferayWorkflowCapability);
 		}
 
 		@Override
 		public Repository createRepository(long repositoryId)
 			throws PortalException {
 
+			Repository repository = _repositoryFactory.createRepository(
+				repositoryId);
+
+			ModelValidator<ContentReference> modelValidator =
+				ModelValidatorUtil.getDefaultFileSizeModelValidator();
+
+			Repository repositoryWrapper = new ModelValidatorRepositoryWrapper(
+				repository, modelValidator);
+
 			return new LiferayWorkflowRepositoryWrapper(
-				new ModelValidatorRepositoryWrapper(
-					_repositoryFactory.createRepository(repositoryId),
-					ModelValidatorUtil.getDefaultFileSizeModelValidator()),
-				_liferayWorkflowCapability);
+				repositoryWrapper, _liferayWorkflowCapability);
 		}
 
 		private final RepositoryFactory _repositoryFactory;
