@@ -2516,7 +2516,24 @@ public class PortalImpl implements Portal {
 	public String[] getGroupPermissions(
 		HttpServletRequest request, String className) {
 
-		return request.getParameterValues("groupPermissions_" + className);
+		String[] groupPermissions = request.getParameterValues(
+			"groupPermissions_" + className);
+
+		String inputPermissionsShowOptions = request.getParameter(
+			"inputPermissionsShowOptions");
+
+		if ((groupPermissions == null) &&
+			(inputPermissionsShowOptions == null)) {
+
+			List<String> defaultGroupPermissions =
+				ResourceActionsUtil.getModelResourceGroupDefaultActions(
+					className);
+
+			groupPermissions = defaultGroupPermissions.toArray(
+				new String[defaultGroupPermissions.size()]);
+		}
+
+		return groupPermissions;
 	}
 
 	@Override
@@ -2528,8 +2545,24 @@ public class PortalImpl implements Portal {
 	public String[] getGroupPermissions(
 		PortletRequest portletRequest, String className) {
 
-		return portletRequest.getParameterValues(
+		String[] groupPermissions = portletRequest.getParameterValues(
 			"groupPermissions_" + className);
+
+		String inputPermissionsShowOptions = portletRequest.getParameter(
+			"inputPermissionsShowOptions");
+
+		if ((groupPermissions == null) &&
+			(inputPermissionsShowOptions == null)) {
+
+			List<String> defaultGroupPermissions =
+				ResourceActionsUtil.getModelResourceGroupDefaultActions(
+					className);
+
+			groupPermissions = defaultGroupPermissions.toArray(
+				new String[defaultGroupPermissions.size()]);
+		}
+
+		return groupPermissions;
 	}
 
 	@Override
@@ -2541,7 +2574,24 @@ public class PortalImpl implements Portal {
 	public String[] getGuestPermissions(
 		HttpServletRequest request, String className) {
 
-		return request.getParameterValues("guestPermissions_" + className);
+		String[] guestPermissions = request.getParameterValues(
+			"guestPermissions_" + className);
+
+		String inputPermissionsShowOptions = request.getParameter(
+			"inputPermissionsShowOptions");
+
+		if ((guestPermissions == null) &&
+			(inputPermissionsShowOptions == null)) {
+
+			List<String> defaultGuestPermissions =
+				ResourceActionsUtil.getModelResourceGuestDefaultActions(
+					className);
+
+			guestPermissions = defaultGuestPermissions.toArray(
+				new String[defaultGuestPermissions.size()]);
+		}
+
+		return guestPermissions;
 	}
 
 	@Override
@@ -2553,8 +2603,24 @@ public class PortalImpl implements Portal {
 	public String[] getGuestPermissions(
 		PortletRequest portletRequest, String className) {
 
-		return portletRequest.getParameterValues(
+		String[] guestPermissions = portletRequest.getParameterValues(
 			"guestPermissions_" + className);
+
+		String inputPermissionsShowOptions = portletRequest.getParameter(
+			"inputPermissionsShowOptions");
+
+		if ((guestPermissions == null) &&
+			(inputPermissionsShowOptions == null)) {
+
+			List<String> defaultGuestPermissions =
+				ResourceActionsUtil.getModelResourceGuestDefaultActions(
+					className);
+
+			guestPermissions = defaultGuestPermissions.toArray(
+				new String[defaultGuestPermissions.size()]);
+		}
+
+		return guestPermissions;
 	}
 
 	@Override
