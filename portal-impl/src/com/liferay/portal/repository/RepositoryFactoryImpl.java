@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
 import com.liferay.portal.kernel.repository.UndeployedExternalRepositoryException;
-import com.liferay.portal.repository.capabilities.CapabilityLocalRepository;
-import com.liferay.portal.repository.capabilities.CapabilityRepository;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
 import com.liferay.portal.repository.registry.RepositoryClassDefinition;
 import com.liferay.portal.repository.registry.RepositoryClassDefinitionCatalog;
@@ -41,11 +39,8 @@ public class RepositoryFactoryImpl implements RepositoryFactory {
 		RepositoryClassDefinition repositoryClassDefinition =
 			getRepositoryClassDefinition(className);
 
-		CapabilityLocalRepository capabilityLocalRepository =
-			repositoryClassDefinition.createCapabilityLocalRepository(
-				repositoryId);
-
-		return capabilityLocalRepository;
+		return repositoryClassDefinition.createCapabilityLocalRepository(
+			repositoryId);
 	}
 
 	@Override
@@ -57,10 +52,8 @@ public class RepositoryFactoryImpl implements RepositoryFactory {
 		RepositoryClassDefinition repositoryClassDefinition =
 			getRepositoryClassDefinition(className);
 
-		CapabilityRepository capabilityRepository =
-			repositoryClassDefinition.createCapabilityRepository(repositoryId);
-
-		return capabilityRepository;
+		return repositoryClassDefinition.createCapabilityRepository(
+			repositoryId);
 	}
 
 	protected RepositoryClassDefinition getRepositoryClassDefinition(
