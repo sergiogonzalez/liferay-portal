@@ -47,14 +47,14 @@ import java.util.Map;
  */
 public class RepositoryClassDefinition
 	implements RepositoryEventRegistry, RepositoryEventTrigger,
-		RepositoryFactoryRegistry {
+		RepositoryFactory, RepositoryFactoryRegistry {
 
 	public RepositoryClassDefinition(RepositoryDefiner repositoryDefiner) {
 		_repositoryDefiner = repositoryDefiner;
 	}
 
-	public CapabilityLocalRepository createCapabilityLocalRepository(
-			long repositoryId)
+	@Override
+	public LocalRepository createLocalRepository(long repositoryId)
 		throws PortalException {
 
 		LocalRepository localRepository =
@@ -71,7 +71,8 @@ public class RepositoryClassDefinition
 		return capabilityLocalRepository;
 	}
 
-	public CapabilityRepository createCapabilityRepository(long repositoryId)
+	@Override
+	public Repository createRepository(long repositoryId)
 		throws PortalException {
 
 		Repository repository = _repositoryFactory.createRepository(

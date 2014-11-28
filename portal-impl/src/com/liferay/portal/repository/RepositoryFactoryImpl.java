@@ -36,11 +36,9 @@ public class RepositoryFactoryImpl implements RepositoryFactory {
 
 		String className = getRepositoryClassName(repositoryId);
 
-		RepositoryClassDefinition repositoryClassDefinition =
-			getRepositoryClassDefinition(className);
+		RepositoryFactory repositoryFactory = getRepositoryFactory(className);
 
-		return repositoryClassDefinition.createCapabilityLocalRepository(
-			repositoryId);
+		return repositoryFactory.createLocalRepository(repositoryId);
 	}
 
 	@Override
@@ -49,26 +47,9 @@ public class RepositoryFactoryImpl implements RepositoryFactory {
 
 		String className = getRepositoryClassName(repositoryId);
 
-		RepositoryClassDefinition repositoryClassDefinition =
-			getRepositoryClassDefinition(className);
+		RepositoryFactory repositoryFactory = getRepositoryFactory(className);
 
-		return repositoryClassDefinition.createCapabilityRepository(
-			repositoryId);
-	}
-
-	protected RepositoryClassDefinition getRepositoryClassDefinition(
-			String className)
-		throws PortalException {
-
-		RepositoryClassDefinition repositoryDefinition =
-			_repositoryClassDefinitionCatalog.getRepositoryClassDefinition(
-				className);
-
-		if (repositoryDefinition == null) {
-			throw new UndeployedExternalRepositoryException(className);
-		}
-
-		return repositoryDefinition;
+		return repositoryFactory.createRepository(repositoryId);
 	}
 
 	protected String getRepositoryClassName(long repositoryId) {
@@ -80,6 +61,20 @@ public class RepositoryFactoryImpl implements RepositoryFactory {
 		}
 
 		return LiferayRepository.class.getName();
+	}
+
+	protected RepositoryFactory getRepositoryFactory(String className)
+		throws PortalException {
+
+		RepositoryClassDefinition repositoryDefinition =
+			_repositoryClassDefinitionCatalog.getRepositoryClassDefinition(
+				className);
+
+		if (repositoryDefinition == null) {
+			throw new UndeployedExternalRepositoryException(className);
+		}
+
+		return repositoryDefinition;
 	}
 
 	@BeanReference(type = RepositoryClassDefinitionCatalog.class)
