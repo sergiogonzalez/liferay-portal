@@ -90,6 +90,10 @@
 		}
 	}
 
+	.lfr-blogs-cover-image-selector {
+		margin: 20px 0 60px;
+	}
+
 	.entry-title {
 		display: block;
 		font-weight: bold;
@@ -151,6 +155,12 @@
 
 		.next {
 			float: right;
+		}
+	}
+
+	@-moz-document url-prefix() {
+		fieldset.input-container {
+			display: table-column;
 		}
 	}
 
