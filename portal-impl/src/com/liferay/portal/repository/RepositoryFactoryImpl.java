@@ -15,23 +15,14 @@
 package com.liferay.portal.repository;
 
 import com.liferay.portal.kernel.bean.BeanReference;
-import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
 import com.liferay.portal.kernel.repository.UndeployedExternalRepositoryException;
-import com.liferay.portal.kernel.repository.capabilities.ConfigurationCapability;
-import com.liferay.portal.kernel.repository.capabilities.RepositoryEventTriggerCapability;
-import com.liferay.portal.kernel.repository.cmis.CMISRepositoryHandler;
-import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.repository.capabilities.BaseCapabilityRepository;
 import com.liferay.portal.repository.capabilities.CapabilityLocalRepository;
 import com.liferay.portal.repository.capabilities.CapabilityRepository;
-import com.liferay.portal.repository.capabilities.ConfigurationCapabilityImpl;
-import com.liferay.portal.repository.capabilities.LiferayRepositoryEventTriggerCapability;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
-import com.liferay.portal.repository.proxy.BaseRepositoryProxyBean;
 import com.liferay.portal.repository.registry.RepositoryClassDefinition;
 import com.liferay.portal.repository.registry.RepositoryClassDefinitionCatalog;
 import com.liferay.portal.service.RepositoryLocalService;
@@ -54,9 +45,6 @@ public class RepositoryFactoryImpl implements RepositoryFactory {
 			repositoryClassDefinition.createCapabilityLocalRepository(
 				repositoryId);
 
-		setupCommonCapabilities(
-			capabilityLocalRepository, repositoryClassDefinition);
-
 		return capabilityLocalRepository;
 	}
 
@@ -72,33 +60,7 @@ public class RepositoryFactoryImpl implements RepositoryFactory {
 		CapabilityRepository capabilityRepository =
 			repositoryClassDefinition.createCapabilityRepository(repositoryId);
 
-		setupCommonCapabilities(
-			capabilityRepository, repositoryClassDefinition);
-
-		setupCapabilityRepositoryCapabilities(capabilityRepository);
-
 		return capabilityRepository;
-	}
-
-	protected CMISRepositoryHandler getCMISRepositoryHandler(
-		Repository repository) {
-
-		if (repository instanceof BaseRepositoryProxyBean) {
-			BaseRepositoryProxyBean baseRepositoryProxyBean =
-				(BaseRepositoryProxyBean)repository;
-
-			ClassLoaderBeanHandler classLoaderBeanHandler =
-				(ClassLoaderBeanHandler)ProxyUtil.getInvocationHandler(
-					baseRepositoryProxyBean.getProxyBean());
-
-			Object bean = classLoaderBeanHandler.getBean();
-
-			if (bean instanceof CMISRepositoryHandler) {
-				return (CMISRepositoryHandler)bean;
-			}
-		}
-
-		return null;
 	}
 
 	protected RepositoryClassDefinition getRepositoryClassDefinition(
@@ -125,42 +87,6 @@ public class RepositoryFactoryImpl implements RepositoryFactory {
 		}
 
 		return LiferayRepository.class.getName();
-	}
-
-	protected void setupCapabilityRepositoryCapabilities(
-		CapabilityRepository capabilityRepository) {
-
-		Repository repository = capabilityRepository.getRepository();
-
-		CMISRepositoryHandler cmisRepositoryHandler = getCMISRepositoryHandler(
-			repository);
-
-		if (cmisRepositoryHandler != null) {
-			capabilityRepository.addExportedCapability(
-				CMISRepositoryHandler.class, cmisRepositoryHandler);
-		}
-	}
-
-	protected void setupCommonCapabilities(
-		BaseCapabilityRepository<?> baseCapabilityRepository,
-		RepositoryClassDefinition repositoryClassDefinition) {
-
-		if (!baseCapabilityRepository.isCapabilityProvided(
-				ConfigurationCapability.class)) {
-
-			baseCapabilityRepository.addExportedCapability(
-				ConfigurationCapability.class,
-				new ConfigurationCapabilityImpl(baseCapabilityRepository));
-		}
-
-		if (!baseCapabilityRepository.isCapabilityProvided(
-				RepositoryEventTriggerCapability.class)) {
-
-			baseCapabilityRepository.addExportedCapability(
-				RepositoryEventTriggerCapability.class,
-				new LiferayRepositoryEventTriggerCapability(
-					repositoryClassDefinition.getRepositoryEventTrigger()));
-		}
 	}
 
 	@BeanReference(type = RepositoryClassDefinitionCatalog.class)
