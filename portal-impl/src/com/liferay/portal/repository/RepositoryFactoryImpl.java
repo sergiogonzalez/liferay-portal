@@ -37,12 +37,6 @@ import com.liferay.portal.repository.registry.RepositoryClassDefinition;
 import com.liferay.portal.repository.registry.RepositoryClassDefinitionCatalog;
 import com.liferay.portal.service.ClassNameLocalService;
 import com.liferay.portal.service.RepositoryLocalService;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalService;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryService;
-import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalService;
-import com.liferay.portlet.documentlibrary.service.DLFileVersionService;
-import com.liferay.portlet.documentlibrary.service.DLFolderLocalService;
-import com.liferay.portlet.documentlibrary.service.DLFolderService;
 
 /**
  * @author Adolfo Pérez
@@ -109,39 +103,6 @@ public class RepositoryFactoryImpl implements RepositoryFactory {
 		return null;
 	}
 
-	protected DLFileEntryLocalService getDlFileEntryLocalService() {
-		return _dlFileEntryLocalService;
-	}
-
-	protected DLFileEntryService getDlFileEntryService() {
-		return _dlFileEntryService;
-	}
-
-	protected DLFileVersionLocalService getDlFileVersionLocalService() {
-		return _dlFileVersionLocalService;
-	}
-
-	protected DLFileVersionService getDlFileVersionService() {
-		return _dlFileVersionService;
-	}
-
-	protected DLFolderLocalService getDlFolderLocalService() {
-		return _dlFolderLocalService;
-	}
-
-	protected DLFolderService getDlFolderService() {
-		return _dlFolderService;
-	}
-
-	protected com.liferay.portal.model.Repository getRepository(
-		long repositoryId) {
-
-		RepositoryLocalService repositoryLocalService =
-			getRepositoryLocalService();
-
-		return repositoryLocalService.fetchRepository(repositoryId);
-	}
-
 	protected RepositoryClassDefinition getRepositoryClassDefinition(
 			long classNameId)
 		throws PortalException {
@@ -169,10 +130,6 @@ public class RepositoryFactoryImpl implements RepositoryFactory {
 
 		return _classNameLocalService.getClassNameId(
 			LiferayRepository.class.getName());
-	}
-
-	protected RepositoryLocalService getRepositoryLocalService() {
-		return _repositoryLocalService;
 	}
 
 	protected void setupCapabilityRepositoryCapabilities(
@@ -213,24 +170,6 @@ public class RepositoryFactoryImpl implements RepositoryFactory {
 
 	@BeanReference(type = ClassNameLocalService.class)
 	private ClassNameLocalService _classNameLocalService;
-
-	@BeanReference(type = DLFileEntryLocalService.class)
-	private DLFileEntryLocalService _dlFileEntryLocalService;
-
-	@BeanReference(type = DLFileEntryService.class)
-	private DLFileEntryService _dlFileEntryService;
-
-	@BeanReference(type = DLFileVersionLocalService.class)
-	private DLFileVersionLocalService _dlFileVersionLocalService;
-
-	@BeanReference(type = DLFileVersionService.class)
-	private DLFileVersionService _dlFileVersionService;
-
-	@BeanReference(type = DLFolderLocalService.class)
-	private DLFolderLocalService _dlFolderLocalService;
-
-	@BeanReference(type = DLFolderService.class)
-	private DLFolderService _dlFolderService;
 
 	@BeanReference(type = RepositoryClassDefinitionCatalog.class)
 	private RepositoryClassDefinitionCatalog _repositoryClassDefinitionCatalog;
