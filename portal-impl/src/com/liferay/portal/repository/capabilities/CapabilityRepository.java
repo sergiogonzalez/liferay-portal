@@ -317,7 +317,7 @@ public class CapabilityRepository
 			SyncCapability.class);
 
 		if (syncCapability != null) {
-			syncCapability.destroyLocalRepository(this);
+			syncCapability.destroyDocumentRepository(this);
 		}
 
 		repository.deleteAll();

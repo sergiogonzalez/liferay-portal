@@ -74,7 +74,7 @@ public class LiferaySyncCapability implements SyncCapability {
 	}
 
 	@Override
-	public void destroyLocalRepository(DocumentRepository documentRepository)
+	public void destroyDocumentRepository(DocumentRepository documentRepository)
 		throws PortalException {
 
 		if (!documentRepository.isCapabilityProvided(

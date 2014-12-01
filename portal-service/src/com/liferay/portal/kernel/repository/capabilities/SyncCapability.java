@@ -32,7 +32,7 @@ public interface SyncCapability extends Capability {
 
 	public void deleteFolder(Folder folder) throws PortalException;
 
-	public void destroyLocalRepository(DocumentRepository documentRepository)
+	public void destroyDocumentRepository(DocumentRepository documentRepository)
 		throws PortalException;
 
 	public void moveFileEntry(FileEntry fileEntry) throws PortalException;
