@@ -53,22 +53,6 @@ import java.util.concurrent.Callable;
  */
 public class LiferaySyncCapability implements SyncCapability {
 
-	public void addFileEntry(FileEntry fileEntry) {
-		registerDLSyncEventCallback(DLSyncConstants.EVENT_ADD, fileEntry);
-	}
-
-	public void addFolder(Folder folder) {
-		registerDLSyncEventCallback(DLSyncConstants.EVENT_ADD, folder);
-	}
-
-	public void deleteFileEntry(FileEntry fileEntry) {
-		registerDLSyncEventCallback(DLSyncConstants.EVENT_DELETE, fileEntry);
-	}
-
-	public void deleteFolder(Folder folder) {
-		registerDLSyncEventCallback(DLSyncConstants.EVENT_DELETE, folder);
-	}
-
 	@Override
 	public void destroyDocumentRepository(DocumentRepository documentRepository)
 		throws PortalException {
@@ -83,14 +67,6 @@ public class LiferaySyncCapability implements SyncCapability {
 			documentRepository.getCapability(BulkOperationCapability.class);
 
 		bulkOperationCapability.execute(new DeleteRepositoryModelOperation());
-	}
-
-	public void moveFileEntry(FileEntry fileEntry) {
-		registerDLSyncEventCallback(DLSyncConstants.EVENT_MOVE, fileEntry);
-	}
-
-	public void moveFolder(Folder folder) {
-		registerDLSyncEventCallback(DLSyncConstants.EVENT_MOVE, folder);
 	}
 
 	public void registerRepositoryEventListeners(
@@ -138,30 +114,6 @@ public class LiferaySyncCapability implements SyncCapability {
 		repositoryEventRegistry.registerRepositoryEventListener(
 			WorkflowRepositoryEventType.Update.class, FileEntry.class,
 			WORKFLOW_UPDATE_FILE_ENTRY_EVENT_LISTENER);
-	}
-
-	public void restoreFileEntry(FileEntry fileEntry) {
-		registerDLSyncEventCallback(DLSyncConstants.EVENT_RESTORE, fileEntry);
-	}
-
-	public void restoreFolder(Folder folder) {
-		registerDLSyncEventCallback(DLSyncConstants.EVENT_RESTORE, folder);
-	}
-
-	public void trashFileEntry(FileEntry fileEntry) {
-		registerDLSyncEventCallback(DLSyncConstants.EVENT_TRASH, fileEntry);
-	}
-
-	public void trashFolder(Folder folder) {
-		registerDLSyncEventCallback(DLSyncConstants.EVENT_TRASH, folder);
-	}
-
-	public void updateFileEntry(FileEntry fileEntry) {
-		registerDLSyncEventCallback(DLSyncConstants.EVENT_UPDATE, fileEntry);
-	}
-
-	public void updateFolder(Folder folder) {
-		registerDLSyncEventCallback(DLSyncConstants.EVENT_UPDATE, folder);
 	}
 
 	protected static boolean isStagingGroup(long groupId) {
@@ -239,7 +191,8 @@ public class LiferaySyncCapability implements SyncCapability {
 
 		@Override
 		public void execute(FileEntry fileEntry) {
-			deleteFileEntry(fileEntry);
+			registerDLSyncEventCallback(
+				DLSyncConstants.EVENT_DELETE, fileEntry);
 		}
 
 		@Override
@@ -248,7 +201,7 @@ public class LiferaySyncCapability implements SyncCapability {
 
 		@Override
 		public void execute(Folder folder) {
-			deleteFolder(folder);
+			registerDLSyncEventCallback(DLSyncConstants.EVENT_DELETE, folder);
 		}
 
 	}
