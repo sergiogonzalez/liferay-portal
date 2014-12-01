@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
-import com.liferay.portal.kernel.repository.LocalRepository;
+import com.liferay.portal.kernel.repository.DocumentRepository;
 import com.liferay.portal.kernel.repository.capabilities.BulkOperationCapability;
 import com.liferay.portal.kernel.repository.capabilities.SyncCapability;
 import com.liferay.portal.kernel.repository.event.RepositoryEventListener;
@@ -74,17 +74,17 @@ public class LiferaySyncCapability implements SyncCapability {
 	}
 
 	@Override
-	public void destroyLocalRepository(LocalRepository localRepository)
+	public void destroyLocalRepository(DocumentRepository documentRepository)
 		throws PortalException {
 
-		if (!localRepository.isCapabilityProvided(
+		if (!documentRepository.isCapabilityProvided(
 				BulkOperationCapability.class)) {
 
 			return;
 		}
 
 		BulkOperationCapability bulkOperationCapability =
-			localRepository.getCapability(BulkOperationCapability.class);
+			documentRepository.getCapability(BulkOperationCapability.class);
 
 		bulkOperationCapability.execute(new DeleteRepositoryModelOperation());
 	}
