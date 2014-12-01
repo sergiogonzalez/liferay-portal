@@ -96,49 +96,45 @@ public class LiferaySyncCapability implements SyncCapability {
 	public void registerRepositoryEventListeners(
 		RepositoryEventRegistry repositoryEventRegistry) {
 
-		registerRepositoryEventListener(
-			repositoryEventRegistry, RepositoryEventType.Add.class,
-			Folder.class, "addFolder");
-		registerRepositoryEventListener(
-			repositoryEventRegistry, RepositoryEventType.Update.class,
-			FileEntry.class, "updateFileEntry");
-		registerRepositoryEventListener(
-			repositoryEventRegistry, RepositoryEventType.Update.class,
-			Folder.class, "updateFolder");
-		registerRepositoryEventListener(
-			repositoryEventRegistry, RepositoryEventType.Delete.class,
-			FileEntry.class, "deleteFileEntry");
-		registerRepositoryEventListener(
-			repositoryEventRegistry, RepositoryEventType.Delete.class,
-			Folder.class, "deleteFolder");
-		registerRepositoryEventListener(
-			repositoryEventRegistry, RepositoryEventType.Move.class,
-			FileEntry.class, "moveFileEntry");
-		registerRepositoryEventListener(
-			repositoryEventRegistry, RepositoryEventType.Move.class,
-			Folder.class, "moveFolder");
-		registerRepositoryEventListener(
-			repositoryEventRegistry,
+		repositoryEventRegistry.registerRepositoryEventListener(
+			RepositoryEventType.Add.class, Folder.class,
+			ADD_FOLDER_EVENT_LISTENER);
+		repositoryEventRegistry.registerRepositoryEventListener(
+			RepositoryEventType.Update.class, FileEntry.class,
+			UPDATE_FILE_ENTRY_EVENT_LISTENER);
+		repositoryEventRegistry.registerRepositoryEventListener(
+			RepositoryEventType.Update.class, Folder.class,
+			UPDATE_FOLDER_EVENT_LISTENER);
+		repositoryEventRegistry.registerRepositoryEventListener(
+			RepositoryEventType.Delete.class, FileEntry.class,
+			DELETE_FILE_ENTRY_EVENT_LISTENER);
+		repositoryEventRegistry.registerRepositoryEventListener(
+			RepositoryEventType.Delete.class, Folder.class,
+			DELETE_FOLDER_EVENT_LISTENER);
+		repositoryEventRegistry.registerRepositoryEventListener(
+			RepositoryEventType.Move.class, FileEntry.class,
+			MOVE_FILE_ENTRY_EVENT_LISTENER);
+		repositoryEventRegistry.registerRepositoryEventListener(
+			RepositoryEventType.Move.class, Folder.class,
+			MOVE_FOLDER_EVENT_LISTENER);
+		repositoryEventRegistry.registerRepositoryEventListener(
 			TrashRepositoryEventType.EntryTrashed.class, FileEntry.class,
-			"trashFileEntry");
-		registerRepositoryEventListener(
-			repositoryEventRegistry,
+			TRASH_FILE_ENTRY_EVENT_LISTENER);
+		repositoryEventRegistry.registerRepositoryEventListener(
 			TrashRepositoryEventType.EntryRestored.class, FileEntry.class,
-			"restoreFileEntry");
-		registerRepositoryEventListener(
-			repositoryEventRegistry,
+			RESTORE_FILE_ENTRY_EVENT_LISTENER);
+		repositoryEventRegistry.registerRepositoryEventListener(
 			TrashRepositoryEventType.EntryRestored.class, Folder.class,
-			"restoreFolder");
-		registerRepositoryEventListener(
-			repositoryEventRegistry,
+			RESTORE_FOLDER_EVENT_LISTENER);
+		repositoryEventRegistry.registerRepositoryEventListener(
 			TrashRepositoryEventType.EntryTrashed.class, Folder.class,
-			"trashFolder");
-		registerRepositoryEventListener(
-			repositoryEventRegistry, WorkflowRepositoryEventType.Add.class,
-			FileEntry.class, "addFileEntry");
-		registerRepositoryEventListener(
-			repositoryEventRegistry, WorkflowRepositoryEventType.Update.class,
-			FileEntry.class, "updateFileEntry");
+			TRASH_FOLDER_EVENT_LISTENER);
+		repositoryEventRegistry.registerRepositoryEventListener(
+			WorkflowRepositoryEventType.Add.class, FileEntry.class,
+			WORKFLOW_ADD_FILE_ENTRY_EVENT_LISTENER);
+		repositoryEventRegistry.registerRepositoryEventListener(
+			WorkflowRepositoryEventType.Update.class, FileEntry.class,
+			WORKFLOW_UPDATE_FILE_ENTRY_EVENT_LISTENER);
 	}
 
 	public void restoreFileEntry(FileEntry fileEntry) {
@@ -235,21 +231,6 @@ public class LiferaySyncCapability implements SyncCapability {
 		);
 	}
 
-	protected <S extends RepositoryEventType, T>
-		void registerRepositoryEventListener(
-			RepositoryEventRegistry repositoryEventRegistry,
-			Class<S> repositoryEventTypeClass, Class<T> modelClass,
-			String methodName) {
-
-		RepositoryEventListener<S, T> repositoryEventListener =
-			new MethodKeyRepositoryEventListener<S, T>(
-				new MethodKey(
-					LiferaySyncCapability.class, methodName, modelClass));
-
-		repositoryEventRegistry.registerRepositoryEventListener(
-			repositoryEventTypeClass, modelClass, repositoryEventListener);
-	}
-
 	private class DeleteRepositoryModelOperation
 		implements RepositoryModelOperation {
 
@@ -266,36 +247,6 @@ public class LiferaySyncCapability implements SyncCapability {
 		public void execute(Folder folder) {
 			deleteFolder(folder);
 		}
-
-	}
-
-	private class MethodKeyRepositoryEventListener
-			<S extends RepositoryEventType, T>
-		implements RepositoryEventListener<S, T> {
-
-		public MethodKeyRepositoryEventListener(MethodKey methodKey) {
-			_methodKey = methodKey;
-		}
-
-		@Override
-		public void execute(T model) {
-			try {
-				Method method = _methodKey.getMethod();
-
-				method.invoke(LiferaySyncCapability.this, model);
-			}
-			catch (IllegalAccessException iae) {
-				throw new SystemException(iae);
-			}
-			catch (InvocationTargetException ite) {
-				throw new SystemException(ite);
-			}
-			catch (NoSuchMethodException nsme) {
-				throw new SystemException(nsme);
-			}
-		}
-
-		private final MethodKey _methodKey;
 
 	}
 
