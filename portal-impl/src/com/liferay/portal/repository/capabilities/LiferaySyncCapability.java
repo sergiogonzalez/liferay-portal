@@ -53,22 +53,18 @@ import java.util.concurrent.Callable;
  */
 public class LiferaySyncCapability implements SyncCapability {
 
-	@Override
 	public void addFileEntry(FileEntry fileEntry) {
 		registerDLSyncEventCallback(DLSyncConstants.EVENT_ADD, fileEntry);
 	}
 
-	@Override
 	public void addFolder(Folder folder) {
 		registerDLSyncEventCallback(DLSyncConstants.EVENT_ADD, folder);
 	}
 
-	@Override
 	public void deleteFileEntry(FileEntry fileEntry) {
 		registerDLSyncEventCallback(DLSyncConstants.EVENT_DELETE, fileEntry);
 	}
 
-	@Override
 	public void deleteFolder(Folder folder) {
 		registerDLSyncEventCallback(DLSyncConstants.EVENT_DELETE, folder);
 	}
@@ -89,12 +85,10 @@ public class LiferaySyncCapability implements SyncCapability {
 		bulkOperationCapability.execute(new DeleteRepositoryModelOperation());
 	}
 
-	@Override
 	public void moveFileEntry(FileEntry fileEntry) {
 		registerDLSyncEventCallback(DLSyncConstants.EVENT_MOVE, fileEntry);
 	}
 
-	@Override
 	public void moveFolder(Folder folder) {
 		registerDLSyncEventCallback(DLSyncConstants.EVENT_MOVE, folder);
 	}
@@ -147,32 +141,26 @@ public class LiferaySyncCapability implements SyncCapability {
 			FileEntry.class, "updateFileEntry");
 	}
 
-	@Override
 	public void restoreFileEntry(FileEntry fileEntry) {
 		registerDLSyncEventCallback(DLSyncConstants.EVENT_RESTORE, fileEntry);
 	}
 
-	@Override
 	public void restoreFolder(Folder folder) {
 		registerDLSyncEventCallback(DLSyncConstants.EVENT_RESTORE, folder);
 	}
 
-	@Override
 	public void trashFileEntry(FileEntry fileEntry) {
 		registerDLSyncEventCallback(DLSyncConstants.EVENT_TRASH, fileEntry);
 	}
 
-	@Override
 	public void trashFolder(Folder folder) {
 		registerDLSyncEventCallback(DLSyncConstants.EVENT_TRASH, folder);
 	}
 
-	@Override
 	public void updateFileEntry(FileEntry fileEntry) {
 		registerDLSyncEventCallback(DLSyncConstants.EVENT_UPDATE, fileEntry);
 	}
 
-	@Override
 	public void updateFolder(Folder folder) {
 		registerDLSyncEventCallback(DLSyncConstants.EVENT_UPDATE, folder);
 	}
