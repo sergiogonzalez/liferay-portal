@@ -104,6 +104,7 @@ import com.liferay.portal.util.ShutdownUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.ActionResponseImpl;
 import com.liferay.portlet.admin.util.CleanUpPermissionsUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLPreviewableProcessor;
 import com.liferay.util.log4j.Log4JUtil;
 
@@ -187,6 +188,10 @@ public class EditServerAction extends PortletAction {
 		}
 		else if (cmd.equals("dlPreviews")) {
 			DLPreviewableProcessor.deleteFiles();
+
+			if (PropsValues.DL_FILE_ENTRY_THUMBNAILS_REGENERATE_ON_RESET) {
+				DLFileEntryLocalServiceUtil.regenerateThumbnails();
+			}
 		}
 		else if (cmd.equals("gc")) {
 			gc();

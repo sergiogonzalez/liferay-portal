@@ -741,6 +741,8 @@ public interface PropsKeys {
 
 	public static final String DL_FILE_ENTRY_THUMBNAIL_VIDEO_FRAME_PERCENTAGE = "dl.file.entry.thumbnail.video.frame.percentage";
 
+	public static final String DL_FILE_ENTRY_THUMBNAILS_REGENERATE_ON_RESET = "dl.file.entry.thumbnails.regenerate.on.reset";
+
 	public static final String DL_FILE_ENTRY_TYPE_IG_IMAGE_AUTO_CREATE_ON_UPGRADE = "dl.file.entry.type.ig.image.auto.create.on.upgrade";
 
 	public static final String DL_FILE_ENTRY_VERSION_POLICY = "dl.file.entry.version.policy";
