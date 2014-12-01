@@ -61,8 +61,7 @@ public class RepositoryClassDefinition
 			_repositoryFactory.createLocalRepository(repositoryId);
 
 		CapabilityLocalRepository capabilityLocalRepository =
-			new CapabilityLocalRepository(
-				localRepository, getRepositoryEventTrigger());
+			new CapabilityLocalRepository(localRepository, this);
 
 		_repositoryDefiner.registerCapabilities(capabilityLocalRepository);
 
@@ -79,7 +78,7 @@ public class RepositoryClassDefinition
 			repositoryId);
 
 		CapabilityRepository capabilityRepository = new CapabilityRepository(
-			repository, getRepositoryEventTrigger());
+			repository, this);
 
 		_repositoryDefiner.registerCapabilities(capabilityRepository);
 
@@ -88,10 +87,6 @@ public class RepositoryClassDefinition
 		setupCapabilityRepositoryCapabilities(capabilityRepository);
 
 		return capabilityRepository;
-	}
-
-	public RepositoryEventTrigger getRepositoryEventTrigger() {
-		return this;
 	}
 
 	@Override
@@ -199,8 +194,7 @@ public class RepositoryClassDefinition
 
 			baseCapabilityRepository.addExportedCapability(
 				RepositoryEventTriggerCapability.class,
-				new LiferayRepositoryEventTriggerCapability(
-					getRepositoryEventTrigger()));
+				new LiferayRepositoryEventTriggerCapability(this));
 		}
 	}
 
