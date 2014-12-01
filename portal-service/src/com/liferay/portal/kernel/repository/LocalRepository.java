@@ -33,8 +33,6 @@ public interface LocalRepository extends DocumentRepository {
 			ServiceContext serviceContext)
 		throws PortalException;
 
-	public void deleteAll() throws PortalException;
-
 	public List<FileEntry> getRepositoryFileEntries(
 			long rootFolderId, int start, int end,
 			OrderByComparator<FileEntry> obc)
