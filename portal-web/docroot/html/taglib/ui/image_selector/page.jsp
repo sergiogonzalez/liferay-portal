@@ -54,10 +54,26 @@ if (fileEntryId != 0) {
 		<a class="browse-image" href="javascript:;" id="<%= randomNamespace + "browseImage" %>"><liferay-ui:message key="browse" /></a>
 	</div>
 
-	<div class="change-image-controls <%= (fileEntryId != 0) ? StringPool.BLANK : "hide" %>">
-		<aui:button cssClass="browse-image btn btn-default" icon="icon-picture" value="change" />
+	<i class="glyphicon glyphicon-ok"></i>
 
-		<aui:button cssClass="btn btn-default" icon="icon-remove" id='<%= randomNamespace + "removeImage" %>' useNamespace="<%= false %>" value="delete" />
+	<div class="drop-here-info">
+		<liferay-ui:message key="drop-files-here" />
+	</div>
+
+	<div class="progress-wrapper">
+		<p id="file-name"></p>
+
+		<div class="progressbar"></div>
+
+		<p class="size" id="progress-data"></p>
+
+		<aui:button cssClass="btn-primary" id='<%= randomNamespace + "cancelUpload" %>' useNamespace="<%= false %>" value="cancel"/>
+	</div>
+
+	<div class="change-image-controls <%= (fileEntryId != 0) ? StringPool.BLANK : "hide" %>">
+		<aui:button cssClass="browse-image btn-primary" value="change-picture" />
+
+		<aui:button icon="icon-trash" id='<%= randomNamespace + "removeImage" %>' useNamespace="<%= false %>" />
 	</div>
 </div>
 
@@ -98,4 +114,14 @@ if (!draggableImage.equals("none")) {
 			}
 		);
 	</c:if>
+
+	var destroyInstance = function(event) {
+		if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {
+			imageSelector.destroy();
+
+			Liferay.detach('destroyPortlet', destroyInstance);
+		}
+	};
+
+	Liferay.on('destroyPortlet', destroyInstance);
 </aui:script>

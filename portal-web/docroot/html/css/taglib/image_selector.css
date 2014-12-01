@@ -10,8 +10,87 @@
 		outline: 2px dashed rgba(176, 180, 187, 0.5);
 	}
 
+	.drop-here-info {
+		color: #32A8E6;
+		font-size: 30px;
+		@include opacity(0);
+	}
+
+	.glyphicon-ok {
+		background: #FFF;
+		border-radius: 30px;
+		left: 50%;
+		margin: 0 auto;
+		@include opacity(0);
+		padding: 20px;
+		position: absolute;
+		top: 50%;
+		@include transform(translate(-10px, 0));
+		@include transform(translate(0, -50%));
+	}
+
+	.progress-wrapper {
+		display: none;
+		left: 50%;
+		margin-left: -15%;
+		position: absolute;
+		top: 50%;
+		@include transform(translate(0, -50%));
+		width: 30%;
+
+		button {
+			margin-top: 20px;
+		}
+
+		p {
+			color: #2B4259;
+			font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+			font-size: 18px;
+			margin: 0;
+			text-align: left;
+
+			&.size {
+				font-size: 14px;
+			}
+		}
+
+		.progressbar {
+			background: #B0B4BB;
+			border-radius: 0;
+			height: 6px;
+			margin: 5px auto;
+			@include opacity(0.7);
+			width: 100%;
+		}
+	}
+
 	&.drop-active {
-		outline-color: #118ADE;
+		outline-color: #32A8E6;
+		outline-width: 4px;
+
+		.change-image-controls {
+			display: none;
+		}
+
+		.browse-image-controls {
+			@include opacity(0);
+		}
+
+		.drop-here-info {
+			@include opacity(1);
+		}
+
+		.glyphicon-ok {
+			@include opacity(0);
+		}
+
+		.image-wrapper {
+			@include opacity(0.15);
+		}
+
+		.progress-wrapper {
+			display: none;
+		}
 	}
 
 	&.draggable-image {
@@ -24,8 +103,14 @@
 		}
 
 		&.both .current-image {
-			max-height: inherit;
-			max-width: inherit;
+			max-height: 100%;
+			max-width: 100%;
+		}
+
+		&.drop-enabled {
+			.image-wrapper {
+				height : 100px;
+			}
 		}
 
 		.image-wrapper {
@@ -36,13 +121,43 @@
 		}
 	}
 
+	&.progress-active {
+		.image-wrapper {
+			@include opacity(0.15);
+		}
+
+		.browse-image-controls {
+			@include opacity(0);
+		}
+
+		.change-image-controls {
+			display: none;
+		}
+
+		.drop-here-info {
+			@include opacity(0);
+		}
+
+		.glyphicon-ok {
+			@include opacity(0);
+		}
+
+		.progress-wrapper {
+			display: block;
+		}
+	}
+
+	&.check-active .glyphicon-ok{
+		@include opacity(1);
+	}
+
 	.browse-image-controls, .current-image {
 		margin: auto;
 		max-height: 100%;
 		max-width: 100%;
 	}
 
-	.browse-image-controls {
+	.browse-image-controls, .drop-here-info {
 		left: 0;
 		padding: 10px;
 		position: absolute;
@@ -52,6 +167,20 @@
 		@include transform(translate(0, -50%));
 
 		width: 100%;
+	}
+
+	.browse-image-controls {
+		z-index: 2;
+	}
+
+	.drop-here-info {
+		z-index: 1;
+	}
+
+	.change-image-controls {
+		bottom: 10px;
+		position: absolute;
+		right: 10px;
 	}
 
 	.current-image {
