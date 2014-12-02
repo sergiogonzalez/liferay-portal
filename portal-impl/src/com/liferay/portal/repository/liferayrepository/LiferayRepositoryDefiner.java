@@ -50,7 +50,9 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 	}
 
 	@Override
-	public void registerCapabilities(CapabilityRegistry capabilityRegistry) {
+	public void registerCapabilities(
+		CapabilityRegistry<DocumentRepository> capabilityRegistry) {
+
 		capabilityRegistry.addExportedCapability(
 			TrashCapability.class, _liferayTrashCapability);
 

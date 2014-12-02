@@ -42,7 +42,9 @@ public class TemporaryFileEntryRepositoryDefiner extends BaseRepositoryDefiner {
 	}
 
 	@Override
-	public void registerCapabilities(CapabilityRegistry capabilityRegistry) {
+	public void registerCapabilities(
+		CapabilityRegistry<DocumentRepository> capabilityRegistry) {
+
 		DocumentRepository documentRepository =
 			capabilityRegistry.getDocumentRepository();
 
