@@ -309,12 +309,12 @@ public class LiferayFileEntry extends LiferayModel implements FileEntry {
 
 	@Override
 	public Class<?> getModelClass() {
-		return LiferayFileEntry.class;
+		return FileEntry.class;
 	}
 
 	@Override
 	public String getModelClassName() {
-		return LiferayFileEntry.class.getName();
+		return FileEntry.class.getName();
 	}
 
 	@Override

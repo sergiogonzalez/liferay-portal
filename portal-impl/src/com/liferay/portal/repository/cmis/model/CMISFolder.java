@@ -189,12 +189,12 @@ public class CMISFolder extends CMISModel implements Folder {
 
 	@Override
 	public Class<?> getModelClass() {
-		return CMISFolder.class;
+		return Folder.class;
 	}
 
 	@Override
 	public String getModelClassName() {
-		return CMISFolder.class.getName();
+		return Folder.class.getName();
 	}
 
 	@Override

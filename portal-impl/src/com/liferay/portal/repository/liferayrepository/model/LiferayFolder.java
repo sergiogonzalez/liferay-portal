@@ -165,12 +165,12 @@ public class LiferayFolder extends LiferayModel implements Folder {
 
 	@Override
 	public Class<?> getModelClass() {
-		return LiferayFolder.class;
+		return Folder.class;
 	}
 
 	@Override
 	public String getModelClassName() {
-		return LiferayFolder.class.getName();
+		return Folder.class.getName();
 	}
 
 	@Override
