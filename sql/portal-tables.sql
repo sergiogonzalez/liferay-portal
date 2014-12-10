@@ -523,6 +523,7 @@ create table DDMTemplate (
 	classNameId LONG,
 	classPK LONG,
 	templateKey VARCHAR(75) null,
+	version VARCHAR(75) null,
 	name STRING null,
 	description STRING null,
 	type_ VARCHAR(75) null,
@@ -533,6 +534,21 @@ create table DDMTemplate (
 	smallImage BOOLEAN,
 	smallImageId LONG,
 	smallImageURL VARCHAR(75) null
+);
+
+create table DDMTemplateVersion (
+	templateVersionId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	templateId LONG,
+	version VARCHAR(75) null,
+	name STRING null,
+	description STRING null,
+	language VARCHAR(75) null,
+	script TEXT null
 );
 
 create table DLContent (
@@ -687,7 +703,7 @@ create table DLFolder (
 	mountPoint BOOLEAN,
 	parentFolderId LONG,
 	treePath STRING null,
-	name VARCHAR(100) null,
+	name VARCHAR(255) null,
 	description STRING null,
 	lastPostDate DATE null,
 	defaultFileEntryTypeId LONG,
