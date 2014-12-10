@@ -1065,11 +1065,20 @@ public abstract class BaseIndexer implements Indexer {
 			BooleanQuery contextQuery, SearchContext searchContext)
 		throws Exception {
 
+		long[] folderIds = searchContext.getFolderIds();
+
 		MultiValueFacet multiValueFacet = new MultiValueFacet(searchContext);
 
 		multiValueFacet.setFieldName(Field.TREE_PATH);
 		multiValueFacet.setStatic(true);
-		multiValueFacet.setValues(searchContext.getFolderIds());
+
+		if (ArrayUtil.isNotEmpty(folderIds)) {
+			for (long folderId : folderIds) {
+				if (folderId > 0) {
+					multiValueFacet.setValues(new long[]{folderId});
+				}
+			}
+		}
 
 		searchContext.addFacet(multiValueFacet);
 	}
