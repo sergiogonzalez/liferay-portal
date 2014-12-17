@@ -41,8 +41,11 @@ import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerMap;
 
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.portlet.PortletMode;
 import javax.portlet.PortletPreferences;
@@ -178,6 +181,16 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 
 		return themeDisplay.getPathThemeImages() +
 			"/file_system/large/default.png";
+	}
+
+	@Override
+	public Map<String, Integer> getThumbnailSize() throws Exception {
+		Map<String, Integer> thumbnailSizeMap = new HashMap<>();
+
+		thumbnailSizeMap.put("height", 128);
+		thumbnailSizeMap.put("width", 128);
+
+		return Collections.unmodifiableMap(thumbnailSizeMap);
 	}
 
 	@Override

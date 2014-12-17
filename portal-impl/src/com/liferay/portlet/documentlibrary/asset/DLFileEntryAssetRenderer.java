@@ -15,6 +15,8 @@
 package com.liferay.portlet.documentlibrary.asset;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.image.ImageBag;
+import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -23,6 +25,7 @@ import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -30,6 +33,7 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
@@ -42,8 +46,11 @@ import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.documentlibrary.util.DocumentConversionUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
 
+import java.awt.image.RenderedImage;
+
 import java.util.Date;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
@@ -180,6 +187,20 @@ public class DLFileEntryAssetRenderer
 
 		return themeDisplay.getPathThemeImages() +
 			"/file_system/large/document.png";
+	}
+
+	@Override
+	public Map<String, Integer> getThumbnailSize() throws Exception {
+		ImageBag imageBag = ImageToolUtil.read(_fileEntry.getContentStream());
+
+		RenderedImage renderedImage = imageBag.getRenderedImage();
+
+		return ImageToolUtil.getImageSize(
+			renderedImage.getHeight(), renderedImage.getWidth(),
+			PrefsPropsUtil.getInteger(
+				PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_HEIGHT),
+			PrefsPropsUtil.getInteger(
+				PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH));
 	}
 
 	@Override

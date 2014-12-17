@@ -174,8 +174,10 @@
 			/>
 		</#if>
 
+		<#assign thumbnailSize = assetRenderer.getThumbnailSize() />
+
 		<div class="asset-entry-abstract-image">
-			<img src="${assetRenderer.getThumbnailPath(renderRequest)}" />
+			<img height="${thumbnailSize["height"]}px" src="${assetRenderer.getThumbnailPath(renderRequest)}" width="${thumbnailSize["width"]}px"/>
 		</div>
 
 		<#assign assetURL = assetPublisherHelper.getAssetViewURL(renderRequest, renderResponse, asset) />

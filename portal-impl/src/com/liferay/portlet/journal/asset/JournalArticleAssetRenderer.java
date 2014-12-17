@@ -25,10 +25,12 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.Image;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.ImageLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -46,9 +48,12 @@ import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalContentSearchLocalServiceUtil;
 import com.liferay.portlet.journal.service.permission.JournalArticlePermission;
 
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
@@ -184,6 +189,19 @@ public class JournalArticleAssetRenderer
 
 		return themeDisplay.getPathThemeImages() +
 			"/file_system/large/article.png";
+	}
+
+	@Override
+	public Map<String, Integer> getThumbnailSize() throws Exception {
+		Image image = ImageLocalServiceUtil.getImage(
+			_article.getSmallImageId());
+
+		Map<String, Integer> thumbnailSizeMap = new HashMap<>();
+
+		thumbnailSizeMap.put("height", image.getHeight());
+		thumbnailSizeMap.put("width", image.getWidth());
+
+		return Collections.unmodifiableMap(thumbnailSizeMap);
 	}
 
 	@Override

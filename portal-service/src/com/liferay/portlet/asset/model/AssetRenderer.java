@@ -22,6 +22,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 
 import java.util.Date;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
@@ -93,6 +94,8 @@ public interface AssetRenderer {
 
 	public String getThumbnailPath(PortletRequest portletRequest)
 		throws Exception;
+
+	public Map<String, Integer> getThumbnailSize() throws Exception;
 
 	public String getTitle(Locale locale);
 
