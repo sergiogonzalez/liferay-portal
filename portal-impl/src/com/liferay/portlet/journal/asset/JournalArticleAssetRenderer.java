@@ -187,12 +187,16 @@ public class JournalArticleAssetRenderer
 			return thumbnailSrc;
 		}
 
-		return themeDisplay.getPathThemeImages() +
-			"/file_system/large/article.png";
+		return themeDisplay.getPathThemeImages() + DEFAULT_PATH_PREFIX +
+			"article.png";
 	}
 
 	@Override
-	public Map<String, Integer> getThumbnailSize() throws Exception {
+	public Map<String, Integer> getThumbnailSize(String path) throws Exception {
+		if (path.contains(DEFAULT_PATH_PREFIX)) {
+			return super.getThumbnailSize(path);
+		}
+
 		Image image = ImageLocalServiceUtil.getImage(
 			_article.getSmallImageId());
 

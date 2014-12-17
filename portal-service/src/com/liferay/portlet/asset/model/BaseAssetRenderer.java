@@ -184,7 +184,7 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 	}
 
 	@Override
-	public Map<String, Integer> getThumbnailSize() throws Exception {
+	public Map<String, Integer> getThumbnailSize(String path) throws Exception {
 		Map<String, Integer> thumbnailSizeMap = new HashMap<>();
 
 		thumbnailSizeMap.put("height", 128);
@@ -450,6 +450,8 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 
 		return PortalUtil.addPreservedParameters(themeDisplay, sb.toString());
 	}
+
+	protected static final String DEFAULT_PATH_PREFIX = "/file_system/large/";
 
 	private static final String[] _AVAILABLE_LANGUAGE_IDS = new String[0];
 

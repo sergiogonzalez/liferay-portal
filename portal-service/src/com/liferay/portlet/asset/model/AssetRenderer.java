@@ -95,7 +95,7 @@ public interface AssetRenderer {
 	public String getThumbnailPath(PortletRequest portletRequest)
 		throws Exception;
 
-	public Map<String, Integer> getThumbnailSize() throws Exception;
+	public Map<String, Integer> getThumbnailSize(String path) throws Exception;
 
 	public String getTitle(Locale locale);
 
