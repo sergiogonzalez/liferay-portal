@@ -60,8 +60,8 @@ if (Validator.isNotNull(onInitMethod)) {
 	onInitMethod = namespace + onInitMethod;
 }
 
-String placeholder = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:placeholder"));
-boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:skipEditorLoading"));
+String placeholder = GetterUtil.getString((String) request.getAttribute("liferay-ui:input-editor:placeholder"));
+boolean skipEditorLoading = GetterUtil.getBoolean((String) request.getAttribute("liferay-ui:input-editor:skipEditorLoading"));
 %>
 
 <c:if test="<%= !skipEditorLoading %>">
