@@ -72,6 +72,12 @@
 				position: absolute;
 				right: 5px;
 				top: 50%;
+
+				@include respond-to(phone) {
+					.icon-remove {
+						font-size: 22px;
+					}
+				}
 			}
 		}
 	}
@@ -194,6 +200,10 @@
 
 		.edit-toolbar {
 			margin: 0;
+		}
+
+		.nav-item-icon {
+			width: 15px;
 		}
 	}
 
