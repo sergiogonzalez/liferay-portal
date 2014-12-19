@@ -52,9 +52,12 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.Queue;
 import java.util.concurrent.Future;
 
@@ -455,6 +458,39 @@ public class ImageToolImpl implements ImageTool {
 	}
 
 	@Override
+	public Map<String, Integer> getImageSize(
+		int imageHeight, int imageWidth, int maxHeight, int maxWidth) {
+
+		Map<String, Integer> map = new HashMap<>();
+
+		if (maxHeight == 0) {
+			maxHeight = imageHeight;
+		}
+
+		if (maxWidth == 0) {
+			maxWidth = imageWidth;
+		}
+
+		if ((imageHeight <= maxHeight) && (imageWidth <= maxWidth)) {
+			map.put("height", imageHeight);
+			map.put("width", imageWidth);
+		}
+		else {
+			double factor = Math.min(
+				(double)maxHeight / imageHeight, (double)maxWidth / imageWidth);
+
+			int scaledHeight = Math.max(
+				1, (int)Math.round(factor * imageHeight));
+			int scaledWidth = Math.max(1, (int)Math.round(factor * imageWidth));
+
+			map.put("height", scaledHeight);
+			map.put("width", scaledWidth);
+		}
+
+		return Collections.unmodifiableMap(map);
+	}
+
+	@Override
 	public boolean isNullOrDefaultSpacer(byte[] bytes) {
 		if (ArrayUtil.isEmpty(bytes) ||
 			Arrays.equals(bytes, getDefaultSpacer().getTextObj())) {
@@ -567,28 +603,13 @@ public class ImageToolImpl implements ImageTool {
 	public RenderedImage scale(
 		RenderedImage renderedImage, int maxHeight, int maxWidth) {
 
-		int imageHeight = renderedImage.getHeight();
-		int imageWidth = renderedImage.getWidth();
+		Map<String, Integer> imageSizeMap = getImageSize(
+			renderedImage.getHeight(), renderedImage.getWidth(), maxHeight,
+			maxWidth);
 
-		if (maxHeight == 0) {
-			maxHeight = imageHeight;
-		}
-
-		if (maxWidth == 0) {
-			maxWidth = imageWidth;
-		}
-
-		if ((imageHeight <= maxHeight) && (imageWidth <= maxWidth)) {
-			return renderedImage;
-		}
-
-		double factor = Math.min(
-			(double)maxHeight / imageHeight, (double)maxWidth / imageWidth);
-
-		int scaledHeight = Math.max(1, (int)Math.round(factor * imageHeight));
-		int scaledWidth = Math.max(1, (int)Math.round(factor * imageWidth));
-
-		return doScale(renderedImage, scaledHeight, scaledWidth);
+		return doScale(
+			renderedImage, imageSizeMap.get("height"),
+			imageSizeMap.get("width"));
 	}
 
 	@Override

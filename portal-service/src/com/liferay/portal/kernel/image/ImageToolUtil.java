@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import java.util.Map;
 import java.util.concurrent.Future;
 
 /**
@@ -165,6 +166,13 @@ public class ImageToolUtil {
 		throws IOException {
 
 		return getImageTool().getImage(is, cleanUpStream);
+	}
+
+	public static Map<String, Integer> getImageSize(
+		int imageHeight, int imageWidth, int maxHeight, int maxWidth) {
+
+		return getImageTool().getImageSize(
+			imageHeight, imageWidth, maxHeight, maxWidth);
 	}
 
 	public static ImageTool getImageTool() {

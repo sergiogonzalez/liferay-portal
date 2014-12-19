@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import java.util.Map;
 import java.util.concurrent.Future;
 
 /**
@@ -83,6 +84,9 @@ public interface ImageTool {
 
 	public Image getImage(InputStream is, boolean cleanUpStream)
 		throws IOException;
+
+	public Map<String, Integer> getImageSize(
+		int imageHeight, int imageWidth, int maxHeight, int maxWidth);
 
 	public boolean isNullOrDefaultSpacer(byte[] bytes);
 
