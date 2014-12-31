@@ -197,6 +197,7 @@ import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.calendar.model.CalEvent;
 import com.liferay.portlet.documentlibrary.ImageSizeException;
+import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.expando.ValueDataException;
@@ -6832,6 +6833,12 @@ public class PortalImpl implements Portal {
 					PropsValues.LAYOUT_FRIENDLY_URL_PAGE_NOT_FOUND)) {
 
 			redirect = PropsValues.LAYOUT_FRIENDLY_URL_PAGE_NOT_FOUND;
+		}
+		else if ((e instanceof NoSuchFileEntryException) &&
+				 Validator.isNotNull(
+					PropsValues.DL_FILE_ENTRY_NOT_FOUND)) {
+
+			redirect = PropsValues.DL_FILE_ENTRY_NOT_FOUND;
 		}
 		else if (PropsValues.LAYOUT_SHOW_HTTP_STATUS) {
 			redirect = PATH_MAIN + "/portal/status";
