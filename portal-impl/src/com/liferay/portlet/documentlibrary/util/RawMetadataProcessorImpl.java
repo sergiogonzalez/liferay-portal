@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.metadata.RawMetadataProcessorUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
@@ -66,6 +67,10 @@ public class RawMetadataProcessorImpl
 
 	@Override
 	public void cleanUp(FileVersion fileVersion) {
+	}
+
+	@Override
+	public void cleanUp(Folder folder) {
 	}
 
 	@Override

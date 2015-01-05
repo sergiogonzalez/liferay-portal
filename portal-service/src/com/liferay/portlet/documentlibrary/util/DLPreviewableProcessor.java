@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
@@ -40,6 +41,11 @@ import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.DuplicateDirectoryException;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFolder;
+import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 
 import java.awt.image.RenderedImage;
@@ -106,6 +112,45 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 	@Override
 	public void cleanUp(FileVersion fileVersion) {
 		deleteFiles(fileVersion, getThumbnailType());
+	}
+
+	@Override
+	public void cleanUp(Folder folder) {
+		List<DLFolder> dlFolders = DLFolderLocalServiceUtil.getFolders(
+			folder.getGroupId(), folder.getFolderId());
+
+		for (DLFolder dlFolder : dlFolders) {
+			List<DLFolder> subDLFolders = DLFolderLocalServiceUtil.getFolders(
+				dlFolder.getGroupId(), dlFolder.getFolderId());
+
+			for (DLFolder subDLFolder : subDLFolders) {
+				try {
+					Folder subFolder = DLAppLocalServiceUtil.getFolder(
+						subDLFolder.getFolderId());
+
+					cleanUp(subFolder);
+				}
+				catch (PortalException e) {
+					_log.error(e, e);
+				}
+			}
+		}
+
+		List<DLFileEntry> dlFileEntries =
+			DLFileEntryLocalServiceUtil.getFileEntries(
+				folder.getGroupId(), folder.getFolderId());
+
+		for (DLFileEntry dlFileEntry : dlFileEntries) {
+			try {
+				FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
+					dlFileEntry.getFileEntryId());
+
+				deleteFiles(fileEntry, null);
+			}
+			catch (PortalException e) {
+				_log.error(e, e);
+			}
+		}
 	}
 
 	@Override
@@ -347,7 +392,8 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 			String thumbnailFilePath = getThumbnailFilePath(
 				groupId, fileEntryId, fileVersionId, thumbnailType, index);
 
-			DLStoreUtil.deleteFile(companyId, REPOSITORY_ID, thumbnailFilePath);
+			DLStoreUtil.deleteDirectory(
+				companyId, REPOSITORY_ID, thumbnailFilePath);
 		}
 		catch (Exception e) {
 		}

@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
@@ -32,6 +33,9 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 
 import java.awt.image.ColorModel;
@@ -68,6 +72,26 @@ public class ImageProcessorImpl
 		String type = getThumbnailType(fileVersion);
 
 		deleteFiles(fileVersion, type);
+	}
+
+	@Override
+	public void cleanUp(Folder folder) {
+		List<DLFileEntry> dlFileEntries =
+			DLFileEntryLocalServiceUtil.getFileEntries(
+				folder.getGroupId(), folder.getFolderId());
+
+		for (DLFileEntry dlFileEntry : dlFileEntries) {
+			try {
+				FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
+					dlFileEntry.getFileEntryId());
+
+				deleteFiles(fileEntry, null);
+
+			}
+			catch (PortalException e) {
+				_log.error(e, e);
+			}
+		}
 	}
 
 	@Override
