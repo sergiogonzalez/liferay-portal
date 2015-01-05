@@ -27,6 +27,6 @@ public interface CapabilityRegistry<T> {
 	public <S extends Capability, T extends S> void addSupportedCapability(
 		Class<S> capabilityClass, T capability);
 
-	public T getDocumentRepository();
+	public T getTarget();
 
 }

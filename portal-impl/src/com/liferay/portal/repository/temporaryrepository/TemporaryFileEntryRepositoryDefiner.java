@@ -45,8 +45,7 @@ public class TemporaryFileEntryRepositoryDefiner extends BaseRepositoryDefiner {
 	public void registerCapabilities(
 		CapabilityRegistry<DocumentRepository> capabilityRegistry) {
 
-		DocumentRepository documentRepository =
-			capabilityRegistry.getDocumentRepository();
+		DocumentRepository documentRepository = capabilityRegistry.getTarget();
 
 		capabilityRegistry.addExportedCapability(
 			BulkOperationCapability.class,

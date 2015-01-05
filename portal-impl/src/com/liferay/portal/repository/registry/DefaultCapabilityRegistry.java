@@ -53,7 +53,7 @@ public class DefaultCapabilityRegistry
 	}
 
 	@Override
-	public DocumentRepository getDocumentRepository() {
+	public DocumentRepository getTarget() {
 		return _documentRepository;
 	}
 

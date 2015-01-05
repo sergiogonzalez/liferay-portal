@@ -56,8 +56,7 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 		capabilityRegistry.addExportedCapability(
 			TrashCapability.class, _liferayTrashCapability);
 
-		DocumentRepository documentRepository =
-			capabilityRegistry.getDocumentRepository();
+		DocumentRepository documentRepository = capabilityRegistry.getTarget();
 
 		BulkOperationCapability bulkOperationCapability =
 			new LiferayBulkOperationCapability(
