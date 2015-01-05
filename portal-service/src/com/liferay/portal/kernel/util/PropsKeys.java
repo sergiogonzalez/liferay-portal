@@ -679,6 +679,8 @@ public interface PropsKeys {
 
 	public static final String DL_FILE_ENTRY_LOCK_POLICY = "dl.file.entry.lock.policy";
 
+	public static final String DL_FILE_ENTRY_NOT_FOUND = "dl.file.entry.not.found";
+
 	public static final String DL_FILE_ENTRY_OPEN_IN_MS_OFFICE_MANUAL_CHECK_IN_REQUIRED = "dl.file.entry.open.in.ms.office.manual.check.in.required";
 
 	public static final String DL_FILE_ENTRY_PREVIEW_AUDIO = "dl.file.entry.preview.audio.";
@@ -746,8 +748,6 @@ public interface PropsKeys {
 	public static final String DL_FILE_ENTRY_THUMBNAIL_VIDEO_FRAME_PERCENTAGE = "dl.file.entry.thumbnail.video.frame.percentage";
 
 	public static final String DL_FILE_ENTRY_TYPE_IG_IMAGE_AUTO_CREATE_ON_UPGRADE = "dl.file.entry.type.ig.image.auto.create.on.upgrade";
-
-	public static final String DL_FILE_ENTRY_NOT_FOUND = "dl.file.entry.not.found";
 
 	public static final String DL_FILE_ENTRY_VERSION_POLICY = "dl.file.entry.version.policy";
 
