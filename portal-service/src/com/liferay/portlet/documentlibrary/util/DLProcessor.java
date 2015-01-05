@@ -17,6 +17,7 @@ package com.liferay.portlet.documentlibrary.util;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.xml.Element;
 
 /**
@@ -39,6 +40,8 @@ public interface DLProcessor {
 	public void cleanUp(FileEntry fileEntry);
 
 	public void cleanUp(FileVersion fileVersion);
+
+	public void cleanUp(Folder folder);
 
 	public void copy(
 		FileVersion sourceFileVersion, FileVersion destinationFileVersion);
