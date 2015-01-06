@@ -544,6 +544,8 @@ public class PropsValues {
 
 	public static final int DL_FILE_ENTRY_LOCK_POLICY = GetterUtil.getInteger(PropsUtil.get(PropsKeys.DL_FILE_ENTRY_LOCK_POLICY));
 
+	public static final String DL_FILE_ENTRY_NOT_FOUND = GetterUtil.getString(PropsUtil.get(PropsKeys.DL_FILE_ENTRY_NOT_FOUND));
+
 	public static boolean DL_FILE_ENTRY_OPEN_IN_MS_OFFICE_MANUAL_CHECK_IN_REQUIRED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.DL_FILE_ENTRY_OPEN_IN_MS_OFFICE_MANUAL_CHECK_IN_REQUIRED));
 
 	public static final String[] DL_FILE_ENTRY_PREVIEW_AUDIO_CONTAINERS = PropsUtil.getArray(PropsKeys.DL_FILE_ENTRY_PREVIEW_AUDIO_CONTAINERS);
@@ -595,8 +597,6 @@ public class PropsValues {
 	public static final int DL_FILE_ENTRY_THUMBNAIL_VIDEO_FRAME_PERCENTAGE = GetterUtil.getInteger(PropsUtil.get(PropsKeys.DL_FILE_ENTRY_THUMBNAIL_VIDEO_FRAME_PERCENTAGE));
 
 	public static boolean DL_FILE_ENTRY_TYPE_IG_IMAGE_AUTO_CREATE_ON_UPGRADE = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.DL_FILE_ENTRY_TYPE_IG_IMAGE_AUTO_CREATE_ON_UPGRADE));
-
-	public static final String DL_FILE_ENTRY_NOT_FOUND = GetterUtil.getString(PropsUtil.get(PropsKeys.DL_FILE_ENTRY_NOT_FOUND));
 
 	public static final int DL_FILE_ENTRY_VERSION_POLICY = GetterUtil.getInteger(PropsUtil.get(PropsKeys.DL_FILE_ENTRY_VERSION_POLICY));
 
