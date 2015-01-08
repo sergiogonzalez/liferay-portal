@@ -17,6 +17,7 @@ package com.liferay.portlet.documentlibrary.util;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.xml.Element;
 
@@ -31,6 +32,10 @@ public class DLProcessorRegistryUtil {
 
 	public static void cleanUp(FileVersion fileVersion) {
 		getDLProcessorRegistry().cleanUp(fileVersion);
+	}
+
+	public static void cleanUp(Folder folder) {
+		getDLProcessorRegistry().cleanUp(folder);
 	}
 
 	public static void exportGeneratedFiles(
