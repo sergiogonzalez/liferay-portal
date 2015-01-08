@@ -16,7 +16,6 @@ package com.liferay.portal.repository.capabilities;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.repository.DocumentRepository;
 import com.liferay.portal.kernel.repository.capabilities.Capability;
 import com.liferay.portal.kernel.repository.capabilities.ConfigurationCapability;
 import com.liferay.portal.kernel.util.StringPool;
@@ -29,15 +28,15 @@ import com.liferay.portal.service.RepositoryLocalServiceUtil;
  */
 public class ConfigurationCapabilityImpl implements ConfigurationCapability {
 
-	public ConfigurationCapabilityImpl(DocumentRepository repository) {
-		_repository = repository;
+	public ConfigurationCapabilityImpl(long repositoryId) {
+		_repositoryId = repositoryId;
 	}
 
 	@Override
 	public String getProperty(Class<? extends Capability> owner, String key) {
 		try {
 			Repository repository = RepositoryLocalServiceUtil.getRepository(
-				_repository.getRepositoryId());
+				_repositoryId);
 
 			UnicodeProperties typeSettingsProperties =
 				repository.getTypeSettingsProperties();
@@ -57,7 +56,7 @@ public class ConfigurationCapabilityImpl implements ConfigurationCapability {
 
 		try {
 			Repository repository = RepositoryLocalServiceUtil.getRepository(
-				_repository.getRepositoryId());
+				_repositoryId);
 
 			UnicodeProperties typeSettingsProperties =
 				repository.getTypeSettingsProperties();
@@ -83,6 +82,6 @@ public class ConfigurationCapabilityImpl implements ConfigurationCapability {
 		return clazz.getName() + StringPool.POUND + key;
 	}
 
-	private final DocumentRepository _repository;
+	private final long _repositoryId;
 
 }

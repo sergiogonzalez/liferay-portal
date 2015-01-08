@@ -16,7 +16,6 @@ package com.liferay.portal.repository.registry;
 
 import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.repository.DocumentRepository;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
@@ -73,7 +72,7 @@ public class RepositoryClassDefinition
 			new DefaultRepositoryEventRegistry(_rootRepositoryEventTrigger);
 
 		setUpCommonCapabilities(
-			localRepository, defaultCapabilityRegistry,
+			repositoryId, defaultCapabilityRegistry,
 			defaultRepositoryEventRegistry);
 
 		defaultCapabilityRegistry.registerCapabilityRepositoryEvents(
@@ -106,7 +105,7 @@ public class RepositoryClassDefinition
 			new DefaultRepositoryEventRegistry(_rootRepositoryEventTrigger);
 
 		setUpCommonCapabilities(
-			repository, defaultCapabilityRegistry,
+			repositoryId, defaultCapabilityRegistry,
 			defaultRepositoryEventRegistry);
 
 		setUpCapabilityRepositoryCapabilities(
@@ -177,8 +176,7 @@ public class RepositoryClassDefinition
 	}
 
 	protected void setUpCommonCapabilities(
-		DocumentRepository documentRepository,
-		DefaultCapabilityRegistry capabilityRegistry,
+		long repositoryId, DefaultCapabilityRegistry capabilityRegistry,
 		RepositoryEventTrigger repositoryEventTrigger) {
 
 		if (!capabilityRegistry.isCapabilityProvided(
@@ -186,7 +184,7 @@ public class RepositoryClassDefinition
 
 			capabilityRegistry.addExportedCapability(
 				ConfigurationCapability.class,
-				new ConfigurationCapabilityImpl(documentRepository));
+				new ConfigurationCapabilityImpl(repositoryId));
 		}
 
 		if (!capabilityRegistry.isCapabilityProvided(
