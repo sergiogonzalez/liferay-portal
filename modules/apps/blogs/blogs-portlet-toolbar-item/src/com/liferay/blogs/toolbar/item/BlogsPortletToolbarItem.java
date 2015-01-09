@@ -12,10 +12,11 @@
  * details.
  */
 
-package com.liferay.portlet.blogs.toolbar.item;
+package com.liferay.blogs.toolbar.item;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.toolbar.item.AddContentPortletToolbarItem;
+import com.liferay.portal.kernel.portlet.toolbar.item.PortletToolbarMenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.MenuItem;
 import com.liferay.portal.kernel.servlet.taglib.ui.URLMenuItem;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -35,8 +36,8 @@ import org.osgi.service.component.annotations.Component;
  * @author Sergio González
  */
 @Component(property = {"javax.portlet.name=33", "struts.action="})
-public class BlogsAddContentPortletToolbarItem
-	implements AddContentPortletToolbarItem {
+public class BlogsPortletToolbarItem
+	implements PortletToolbarMenuItem {
 
 	@Override
 	public MenuItem getMenuItem(PortletRequest portletRequest) {
