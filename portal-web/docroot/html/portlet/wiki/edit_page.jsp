@@ -469,13 +469,13 @@ if (Validator.isNull(redirect)) {
 
 	var formatSelect = form.fm('format');
 
-	var currentFormat = formatSelect.val();
+	var currentFormat = Liferay.Language.get('wiki.formats.' + formatSelect.val());
 	var currentIndex = formatSelect.prop('selectedIndex');
 
 	formatSelect.on(
 		'change',
 		function(event) {
-			var newFormat = formatSelect.val();
+			var newFormat = Liferay.Language.get('wiki.formats.' + formatSelect.val());
 
 			var confirmMessage = '<%= UnicodeLanguageUtil.get(request, "you-may-lose-formatting-when-switching-from-x-to-x") %>';
 
