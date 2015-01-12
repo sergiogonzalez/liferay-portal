@@ -20,21 +20,23 @@ import com.liferay.registry.collections.ServiceTrackerMap;
 /**
  * @author Carlos Sierra Andrés
  */
-public class TagKeyFactoryRegistry {
+public class TagDynamicIdFactoryRegistry {
 
-	public static TagKeyFactory getTagKeyFactory(String tagClassName) {
-		return _instance._tagKeyFactories.getService(tagClassName);
+	public static TagDynamicIdFactory getTagDynamicIdFactory(
+		String tagClassName) {
+
+		return _instance._tagDynamicIdFactories.getService(tagClassName);
 	}
 
-	private TagKeyFactoryRegistry() {
-		_tagKeyFactories.open();
+	private TagDynamicIdFactoryRegistry() {
+		_tagDynamicIdFactories.open();
 	}
 
-	private static final TagKeyFactoryRegistry _instance =
-		new TagKeyFactoryRegistry();
+	private static final TagDynamicIdFactoryRegistry _instance =
+		new TagDynamicIdFactoryRegistry();
 
-	private final ServiceTrackerMap<String, TagKeyFactory>
-		_tagKeyFactories = ServiceTrackerCollections.singleValueMap(
-			TagKeyFactory.class, "tagClassName");
+	private final ServiceTrackerMap<String, TagDynamicIdFactory>
+		_tagDynamicIdFactories = ServiceTrackerCollections.singleValueMap(
+			TagDynamicIdFactory.class, "tagClassName");
 
 }

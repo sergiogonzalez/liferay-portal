@@ -840,6 +840,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>defaultDisplayStyle</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>displayStyle</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -3307,7 +3312,7 @@
 			<name>height</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>integer</type>
+			<type>int</type>
 		</attribute>
 		<attribute>
 			<description>Sets the location of the PNG image file to use.</description>
@@ -3320,7 +3325,7 @@
 			<name>width</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>integer</type>
+			<type>int</type>
 		</attribute>
 	</tag>
 	<tag>

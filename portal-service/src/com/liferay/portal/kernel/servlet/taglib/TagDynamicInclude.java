@@ -12,30 +12,30 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.context;
+package com.liferay.portal.kernel.servlet.taglib;
 
-import com.liferay.portal.kernel.repository.model.FileVersion;
+import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * @author Iván Zaera
+ * @author Carlos Sierra Andrés
  */
-public interface DLViewFileVersionDisplayContextFactory {
+public interface TagDynamicInclude {
 
-	public DLViewFileVersionDisplayContext
-		getDLFileVersionActionsDisplayContext(
-			DLViewFileVersionDisplayContext
-				parentDLViewFileVersionDisplayContext,
+	public void include(
 			HttpServletRequest request, HttpServletResponse response,
-			FileVersion fileVersion);
+			String tagClassName, String tagDynamicId, String tagPoint)
+		throws IOException;
 
-	public DLViewFileVersionDisplayContext
-		getIGFileVersionActionsDisplayContext(
-			DLViewFileVersionDisplayContext
-				parentDLViewFileVersionDisplayContext,
-			HttpServletRequest request, HttpServletResponse response,
-			FileVersion fileVersion);
+	public void register(TagDynamicIncludeRegistry tagDynamicIncludeRegistry);
+
+	public interface TagDynamicIncludeRegistry {
+
+		public void register(
+			String tagClassName, String tagDynamicId, String tagPoint);
+
+	}
 
 }
