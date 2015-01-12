@@ -21,9 +21,9 @@ import com.liferay.portal.kernel.portlet.PortletBag;
 import com.liferay.portal.kernel.portlet.PortletBagPool;
 import com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil;
 import com.liferay.portal.kernel.servlet.TrackedServletRequest;
-import com.liferay.portal.kernel.servlet.taglib.DynamicIncludeUtil;
-import com.liferay.portal.kernel.servlet.taglib.TagKeyFactory;
-import com.liferay.portal.kernel.servlet.taglib.TagKeyFactoryRegistry;
+import com.liferay.portal.kernel.servlet.taglib.TagDynamicIdFactory;
+import com.liferay.portal.kernel.servlet.taglib.TagDynamicIdFactoryRegistry;
+import com.liferay.portal.kernel.servlet.taglib.TagDynamicIncludeUtil;
 import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -315,34 +315,34 @@ public class IncludeTag extends AttributesTagSupport {
 	protected void include(String page, boolean doStartTag) throws Exception {
 		JspWriterHttpServletResponse jspWriterHttpServletResponse = null;
 
-		String tagKey = null;
-
 		Class<?> clazz = getClass();
 
 		String tagClassName = clazz.getName();
 
-		String dynamicIncludePrefixKey = tagClassName + "#";
+		String tagDynamicId = null;
+
+		String tagPointPrefix = null;
 
 		if (doStartTag) {
-			dynamicIncludePrefixKey += "doStartTag#";
+			tagPointPrefix = "doStartTag#";
 		}
 		else {
-			dynamicIncludePrefixKey += "doEndTag#";
+			tagPointPrefix = "doEndTag#";
 		}
 
-		TagKeyFactory tagKeyResolver = TagKeyFactoryRegistry.getTagKeyFactory(
-			tagClassName);
+		TagDynamicIdFactory tagDynamicIdFactory =
+			TagDynamicIdFactoryRegistry.getTagDynamicIdFactory(tagClassName);
 
-		if (tagKeyResolver != null) {
+		if (tagDynamicIdFactory != null) {
 			jspWriterHttpServletResponse = new JspWriterHttpServletResponse(
 				pageContext);
 
-			tagKey = tagKeyResolver.getKey(
+			tagDynamicId = tagDynamicIdFactory.getTagDynamicId(
 				request, jspWriterHttpServletResponse, this);
 
-			DynamicIncludeUtil.include(
-				request, jspWriterHttpServletResponse,
-				dynamicIncludePrefixKey + "before#" + tagKey, doStartTag);
+			TagDynamicIncludeUtil.include(
+				request, jspWriterHttpServletResponse, tagClassName,
+				tagDynamicId, tagPointPrefix + "before", doStartTag);
 		}
 
 		RequestDispatcher requestDispatcher =
@@ -358,10 +358,10 @@ public class IncludeTag extends AttributesTagSupport {
 
 		request.removeAttribute(WebKeys.SERVLET_CONTEXT_INCLUDE_FILTER_STRICT);
 
-		if (tagKeyResolver != null) {
-			DynamicIncludeUtil.include(
-				request, jspWriterHttpServletResponse,
-				dynamicIncludePrefixKey + "after#" + tagKey, doStartTag);
+		if (tagDynamicIdFactory != null) {
+			TagDynamicIncludeUtil.include(
+				request, jspWriterHttpServletResponse, tagClassName,
+				tagDynamicId, tagPointPrefix + "after", doStartTag);
 		}
 	}
 

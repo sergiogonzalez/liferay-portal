@@ -12,28 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.security.xml;
+package com.liferay.portal.kernel.servlet.taglib;
 
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.stream.XMLInputFactory;
-
-import org.xml.sax.XMLReader;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
- * @author Tomas Polesovsky
+ * @author Carlos Sierra Andrés
  */
-public interface SecureXMLBuilder {
+public interface TagDynamicIdFactory {
 
-	public DocumentBuilderFactory newDocumentBuilderFactory();
-
-	public XMLInputFactory newXMLInputFactory();
-
-	public XMLReader newXMLReader();
-
-	public DocumentBuilderFactory unsafeDocumentBuilderFactory();
-
-	public XMLInputFactory unsafeXMLInputFactory();
-
-	public XMLReader unsafeXMLReader();
+	public String getTagDynamicId(
+		HttpServletRequest request, HttpServletResponse response, Object tag);
 
 }
