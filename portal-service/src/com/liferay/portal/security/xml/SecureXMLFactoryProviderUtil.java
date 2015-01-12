@@ -24,44 +24,35 @@ import org.xml.sax.XMLReader;
 /**
  * @author Tomas Polesovsky
  */
-public class SecureXMLBuilderUtil {
+public class SecureXMLFactoryProviderUtil {
 
-	public static SecureXMLBuilder getSecureXMLBuilder() {
-		PortalRuntimePermission.checkGetBeanProperty(SecureXMLBuilder.class);
+	public static SecureXMLFactoryProvider getSecureXMLFactoryProvider() {
+		PortalRuntimePermission.checkGetBeanProperty(
+			SecureXMLFactoryProvider.class);
 
-		return _secureXMLBuilder;
+		return _secureXMLFactoryProvider;
 	}
 
 	public static DocumentBuilderFactory newDocumentBuilderFactory() {
-		return getSecureXMLBuilder().newDocumentBuilderFactory();
+		return getSecureXMLFactoryProvider().newDocumentBuilderFactory();
 	}
 
 	public static XMLInputFactory newXMLInputFactory() {
-		return getSecureXMLBuilder().newXMLInputFactory();
+		return getSecureXMLFactoryProvider().newXMLInputFactory();
 	}
 
 	public static XMLReader newXMLReader() {
-		return getSecureXMLBuilder().newXMLReader();
+		return getSecureXMLFactoryProvider().newXMLReader();
 	}
 
-	public static DocumentBuilderFactory unsafeDocumentBuilderFactory() {
-		return getSecureXMLBuilder().unsafeDocumentBuilderFactory();
-	}
+	public void setSecureXMLFactoryProvider(
+		SecureXMLFactoryProvider secureXMLFactoryProvider) {
 
-	public static XMLInputFactory unsafeXMLInputFactory() {
-		return getSecureXMLBuilder().unsafeXMLInputFactory();
-	}
-
-	public static XMLReader unsafeXMLReader() {
-		return getSecureXMLBuilder().unsafeXMLReader();
-	}
-
-	public void setSecureXMLBuilder(SecureXMLBuilder secureXMLBuilder) {
 		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
-		_secureXMLBuilder = secureXMLBuilder;
+		_secureXMLFactoryProvider = secureXMLFactoryProvider;
 	}
 
-	private static SecureXMLBuilder _secureXMLBuilder;
+	private static SecureXMLFactoryProvider _secureXMLFactoryProvider;
 
 }

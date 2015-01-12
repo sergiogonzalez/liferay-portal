@@ -12,17 +12,22 @@
  * details.
  */
 
-package com.liferay.portal.kernel.servlet.taglib;
+package com.liferay.portal.security.xml;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.stream.XMLInputFactory;
+
+import org.xml.sax.XMLReader;
 
 /**
- * @author Carlos Sierra Andrés
+ * @author Tomas Polesovsky
  */
-public interface TagKeyFactory {
+public interface SecureXMLFactoryProvider {
 
-	public String getKey(
-		HttpServletRequest request, HttpServletResponse response, Object tag);
+	public DocumentBuilderFactory newDocumentBuilderFactory();
+
+	public XMLInputFactory newXMLInputFactory();
+
+	public XMLReader newXMLReader();
 
 }

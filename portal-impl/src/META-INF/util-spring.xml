@@ -687,9 +687,9 @@
 		<property name="resourceActions" ref="com.liferay.portal.security.permission.ResourceActions" />
 	</bean>
 	<bean id="com.liferay.portal.security.pwd.PasswordPolicyToolkit" class="com.liferay.portal.security.pwd.PasswordPolicyToolkit" />
-	<bean id="com.liferay.portal.security.xml.SecureXMLBuilderUtil" class="com.liferay.portal.security.xml.SecureXMLBuilderUtil">
-		<property name="secureXMLBuilder">
-			<bean class="com.liferay.portal.security.xml.SecureXMLBuilderImpl" />
+	<bean id="com.liferay.portal.security.xml.SecureXMLFactoryProviderUtil" class="com.liferay.portal.security.xml.SecureXMLFactoryProviderUtil">
+		<property name="secureXMLFactoryProvider">
+			<bean class="com.liferay.portal.security.xml.SecureXMLFactoryProviderImpl" />
 		</property>
 	</bean>
 	<bean id="com.liferay.portal.service.impl.LayoutLocalServiceHelper" class="com.liferay.portal.service.impl.LayoutLocalServiceHelper" />

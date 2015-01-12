@@ -29,7 +29,7 @@ import org.xml.sax.XMLReader;
 /**
  * @author Tomas Polesovsky
  */
-public class SecureXMLBuilderImpl implements SecureXMLBuilder {
+public class SecureXMLFactoryProviderImpl implements SecureXMLFactoryProvider {
 
 	@Override
 	public DocumentBuilderFactory newDocumentBuilderFactory() {
@@ -63,9 +63,9 @@ public class SecureXMLBuilderImpl implements SecureXMLBuilder {
 		}
 
 		try {
+			documentBuilderFactory.setExpandEntityReferences(false);
 			documentBuilderFactory.setFeature(
 				_FEATURES_EXTERNAL_GENERAL_ENTITIES, false);
-
 			documentBuilderFactory.setFeature(
 				_FEATURES_EXTERNAL_PARAMETER_ENTITIES, false);
 		}
@@ -98,7 +98,7 @@ public class SecureXMLBuilderImpl implements SecureXMLBuilder {
 
 	@Override
 	public XMLReader newXMLReader() {
-		XMLReader xmlReader = new SAXParser();
+		XMLReader xmlReader = new StripDoctypeXMLReader(new SAXParser());
 
 		if (!PropsValues.XML_SECURITY_ENABLED) {
 			return xmlReader;
@@ -128,58 +128,6 @@ public class SecureXMLBuilderImpl implements SecureXMLBuilder {
 		return xmlReader;
 	}
 
-	@Override
-	public DocumentBuilderFactory unsafeDocumentBuilderFactory() {
-		DocumentBuilderFactory documentBuilderFactory =
-			newDocumentBuilderFactory();
-
-		if (!PropsValues.XML_SECURITY_ENABLED) {
-			return documentBuilderFactory;
-		}
-
-		try {
-			documentBuilderFactory.setFeature(
-				_FEATURES_DISALLOW_DOCTYPE_DECL, false);
-		}
-		catch (Exception e) {
-			_log.error(
-				"Unable to initialize unsafe document builder factory", e);
-		}
-
-		return documentBuilderFactory;
-	}
-
-	@Override
-	public XMLInputFactory unsafeXMLInputFactory() {
-		XMLInputFactory xmlInputFactory = newXMLInputFactory();
-
-		if (!PropsValues.XML_SECURITY_ENABLED) {
-			return xmlInputFactory;
-		}
-
-		xmlInputFactory.setProperty(XMLInputFactory.SUPPORT_DTD, Boolean.TRUE);
-
-		return xmlInputFactory;
-	}
-
-	@Override
-	public XMLReader unsafeXMLReader() {
-		XMLReader xmlReader = newXMLReader();
-
-		if (!PropsValues.XML_SECURITY_ENABLED) {
-			return xmlReader;
-		}
-
-		try {
-			xmlReader.setFeature(_FEATURES_DISALLOW_DOCTYPE_DECL, false);
-		}
-		catch (Exception e) {
-			_log.error("Unable to initialize unsafe SAX parser", e);
-		}
-
-		return xmlReader;
-	}
-
 	private static final String _FEATURES_DISALLOW_DOCTYPE_DECL =
 		"http://apache.org/xml/features/disallow-doctype-decl";
 
@@ -190,6 +138,6 @@ public class SecureXMLBuilderImpl implements SecureXMLBuilder {
 		"http://xml.org/sax/features/external-parameter-entities";
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		SecureXMLBuilderImpl.class);
+		SecureXMLFactoryProviderImpl.class);
 
 }
