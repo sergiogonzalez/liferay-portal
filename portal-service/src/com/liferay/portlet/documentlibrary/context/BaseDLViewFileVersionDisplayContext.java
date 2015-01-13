@@ -73,11 +73,6 @@ public class BaseDLViewFileVersionDisplayContext
 	}
 
 	@Override
-	public boolean isOpenInMsOfficeButtonVisible() throws PortalException {
-		return parentDLDisplayContext.isOpenInMsOfficeButtonVisible();
-	}
-
-	@Override
 	public boolean isPermissionsButtonVisible() throws PortalException {
 		return parentDLDisplayContext.isPermissionsButtonVisible();
 	}
