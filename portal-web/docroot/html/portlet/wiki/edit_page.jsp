@@ -467,15 +467,30 @@ if (Validator.isNull(redirect)) {
 <aui:script sandbox="<%= true %>">
 	var form = $(document.<portlet:namespace />fm);
 
+	var getFormatLabel = function(children) {
+		var label;
+
+		for (i = 0; i < children.size(); i++) {
+			if (children[i].selected) {
+				label = children[i].label;
+			}
+		}
+
+		return label;
+	}
+
 	var formatSelect = form.fm('format');
 
-	var currentFormat = formatSelect.val();
+	var children = formatSelect.children();
+
+	var currentFormat = getFormatLabel(children);
+
 	var currentIndex = formatSelect.prop('selectedIndex');
 
 	formatSelect.on(
 		'change',
 		function(event) {
-			var newFormat = formatSelect.val();
+			var newFormat = getFormatLabel(children);
 
 			var confirmMessage = '<%= UnicodeLanguageUtil.get(request, "you-may-lose-formatting-when-switching-from-x-to-x") %>';
 
