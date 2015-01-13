@@ -179,11 +179,6 @@ public abstract class BaseDefaultDLViewFileVersionDisplayContext
 	}
 
 	@Override
-	public boolean isCheckoutDocumentButtonVisible() throws PortalException {
-		return _fileEntryDisplayContextHelper.isCheckoutDocumentButtonVisible();
-	}
-
-	@Override
 	public boolean isDeleteButtonVisible() throws PortalException {
 		if (_fileEntryDisplayContextHelper.isFileEntryDeletable() &&
 			!_isFileEntryTrashable()) {
@@ -305,7 +300,9 @@ public abstract class BaseDefaultDLViewFileVersionDisplayContext
 	protected void addCheckoutMenuItem(List<MenuItem> menuItems)
 		throws PortalException {
 
-		if (!isCheckoutDocumentButtonVisible()) {
+		if (!_fileEntryDisplayContextHelper.
+				isCheckoutDocumentActionAvailable()) {
+
 			return;
 		}
 
@@ -548,7 +545,9 @@ public abstract class BaseDefaultDLViewFileVersionDisplayContext
 	private void _addCheckoutToolbarItem(List<ToolbarItem> toolbarItems)
 		throws PortalException {
 
-		if (!isCheckoutDocumentButtonVisible()) {
+		if (!_fileEntryDisplayContextHelper.
+				isCheckoutDocumentActionAvailable()) {
+
 			return;
 		}
 
