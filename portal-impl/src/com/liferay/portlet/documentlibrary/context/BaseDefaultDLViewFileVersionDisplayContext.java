@@ -179,11 +179,6 @@ public abstract class BaseDefaultDLViewFileVersionDisplayContext
 	}
 
 	@Override
-	public boolean isCheckinButtonVisible() throws PortalException {
-		return _fileEntryDisplayContextHelper.isCheckinButtonVisible();
-	}
-
-	@Override
 	public boolean isCheckoutDocumentButtonVisible() throws PortalException {
 		return _fileEntryDisplayContextHelper.isCheckoutDocumentButtonVisible();
 	}
@@ -296,7 +291,7 @@ public abstract class BaseDefaultDLViewFileVersionDisplayContext
 	protected void addCheckinMenuItem(List<MenuItem> menuItems)
 		throws PortalException {
 
-		if (!isCheckinButtonVisible()) {
+		if (!_fileEntryDisplayContextHelper.isCheckinActionAvailable()) {
 			return;
 		}
 
@@ -540,7 +535,7 @@ public abstract class BaseDefaultDLViewFileVersionDisplayContext
 	private void _addCheckinToolbarItem(List<ToolbarItem> toolbarItems)
 		throws PortalException {
 
-		if (!isCheckinButtonVisible()) {
+		if (!_fileEntryDisplayContextHelper.isCheckinActionAvailable()) {
 			return;
 		}
 
