@@ -189,13 +189,8 @@ public abstract class BaseDefaultDLViewFileVersionDisplayContext
 	}
 
 	@Override
-	public boolean isDownloadButtonVisible() throws PortalException {
-		return _fileEntryDisplayContextHelper.hasViewPermission();
-	}
-
-	@Override
 	public boolean isDownloadLinkVisible() throws PortalException {
-		return isDownloadButtonVisible();
+		return _fileEntryDisplayContextHelper.isDownloadActionAvailable();
 	}
 
 	@Override
@@ -342,7 +337,7 @@ public abstract class BaseDefaultDLViewFileVersionDisplayContext
 	protected void addDownloadMenuItem(List<MenuItem> menuItems)
 		throws PortalException {
 
-		if (!isDownloadButtonVisible()) {
+		if (!_fileEntryDisplayContextHelper.isDownloadActionAvailable()) {
 			return;
 		}
 
@@ -593,7 +588,7 @@ public abstract class BaseDefaultDLViewFileVersionDisplayContext
 	private void _addDownloadToolbarItem(List<ToolbarItem> toolbarItems)
 		throws PortalException {
 
-		if (!isDownloadButtonVisible()) {
+		if (!_fileEntryDisplayContextHelper.isDownloadActionAvailable()) {
 			return;
 		}
 
