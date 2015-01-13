@@ -73,11 +73,6 @@ public class BaseDLViewFileVersionDisplayContext
 	}
 
 	@Override
-	public boolean isMoveButtonVisible() throws PortalException {
-		return parentDLDisplayContext.isMoveButtonVisible();
-	}
-
-	@Override
 	public boolean isMoveToTheRecycleBinButtonVisible() throws PortalException {
 		return parentDLDisplayContext.isMoveToTheRecycleBinButtonVisible();
 	}
