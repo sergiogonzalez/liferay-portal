@@ -184,17 +184,6 @@ public abstract class BaseDefaultDLViewFileVersionDisplayContext
 	}
 
 	@Override
-	public boolean isMoveToTheRecycleBinButtonVisible() throws PortalException {
-		if (!isDeleteActionAvailable() &&
-			_fileEntryDisplayContextHelper.isFileEntryDeletable()) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	@Override
 	public boolean isOpenInMsOfficeButtonVisible() throws PortalException {
 		if (_fileEntryDisplayContextHelper.hasViewPermission() &&
 			_fileVersionDisplayContextHelper.isMsOffice() &&
@@ -300,7 +289,7 @@ public abstract class BaseDefaultDLViewFileVersionDisplayContext
 
 			menuItems.add(deleteMenuItem);
 		}
-		else if (isMoveToTheRecycleBinButtonVisible()) {
+		else if (isMoveToTheRecycleBinActionAvailable()) {
 			DeleteMenuItem deleteMenuItem = new DeleteMenuItem();
 
 			deleteMenuItem.setKey(DLUIItemKeys.DELETE);
@@ -497,6 +486,18 @@ public abstract class BaseDefaultDLViewFileVersionDisplayContext
 		return false;
 	}
 
+	protected boolean isMoveToTheRecycleBinActionAvailable()
+		throws PortalException {
+
+		if (!isDeleteActionAvailable() &&
+			_fileEntryDisplayContextHelper.isFileEntryDeletable()) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private void _addCancelCheckoutToolbarItem(List<ToolbarItem> toolbarItems)
 		throws PortalException {
 
@@ -637,7 +638,7 @@ public abstract class BaseDefaultDLViewFileVersionDisplayContext
 			List<ToolbarItem> toolbarItems)
 		throws PortalException {
 
-		if (!isMoveToTheRecycleBinButtonVisible()) {
+		if (!isMoveToTheRecycleBinActionAvailable()) {
 			return;
 		}
 
