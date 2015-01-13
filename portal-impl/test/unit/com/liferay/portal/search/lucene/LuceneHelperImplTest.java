@@ -145,7 +145,7 @@ public class LuceneHelperImplTest {
 
 		luceneHelperUtil.setLuceneHelper(_luceneHelperImpl);
 
-		_clusterNode = new ClusterNode(_CLUSER_NODE_ID, _localhostInetAddress);
+		_clusterNode = new ClusterNode(_CLUSER_NODE_ID);
 
 		_clusterNode.setPortalProtocol(Http.HTTP);
 
@@ -161,7 +161,7 @@ public class LuceneHelperImplTest {
 	@AdviseWith(
 		adviceClasses = {
 			DisableIndexOnStartUpAdvice.class, EnableClusterLinkAdvice.class,
-			EnableLuceneReplicateWriteAdvice.class,
+			EnableLuceneReplicateWriteAdvice.class
 		}
 	)
 	@Test
@@ -817,8 +817,7 @@ public class LuceneHelperImplTest {
 				clusterNodeResponse.setUuid(clusterRequest.getUuid());
 
 				ClusterNode clusterNode = new ClusterNode(
-					String.valueOf(System.currentTimeMillis()),
-					_localhostInetAddress);
+					String.valueOf(System.currentTimeMillis()));
 
 				try {
 					clusterNode.setPortalInetSocketAddress(
@@ -974,10 +973,10 @@ public class LuceneHelperImplTest {
 			return null;
 		}
 
-		private List<Address> _addresses = new ArrayList<Address>();
+		private List<Address> _addresses = new ArrayList<>();
 		private boolean _autoResponse = true;
 		private final List<ClusterEventListener> _clusterEventListeners =
-			new ArrayList<ClusterEventListener>();
+			new ArrayList<>();
 		private final MethodKey _createTokenMethodKey = new MethodKey(
 			TransientTokenUtil.class, "createToken", long.class);
 		private final MethodKey _getLastGenerationMethodKey = new MethodKey(

@@ -46,46 +46,48 @@
 %>
 
 <aui:fieldset>
+	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+
 	<aui:input name="currentParent" type="resource" value="<%= parentText %>" />
 
 	<%
-		boolean newParentAvailable = true;
+	boolean newParentAvailable = true;
 
-		if (childPages.isEmpty()) {
-			newParentAvailable = false;
+	if (childPages.isEmpty()) {
+		newParentAvailable = false;
 	%>
 
-	<aui:select disabled="<%= true %>" label="new-parent" name="newParentTitle">
-		<aui:option label="not-available" value="" />
-	</aui:select>
+		<aui:select disabled="<%= true %>" label="new-parent" name="newParentTitle">
+			<aui:option label="not-available" value="" />
+		</aui:select>
 
 	<%
 	}
 	else {
 	%>
 
-	<aui:select label="new-parent" name="newParentTitle">
-		<aui:option label="none" selected="<%= Validator.isNull(wikiPage.getParentTitle()) %>" value="" />
+		<aui:select label="new-parent" name="newParentTitle">
+			<aui:option label="none" selected="<%= Validator.isNull(wikiPage.getParentTitle()) %>" value="" />
 
-		<%
+			<%
 			for (WikiPage childPage : childPages) {
 				if (Validator.isNull(childPage.getRedirectTitle())) {
 					request.setAttribute(WebKeys.WIKI_TREE_WALKER_PARENT, childPage);
 					request.setAttribute(WebKeys.WIKI_TREE_WALKER_PAGE, wikiPage);
 					request.setAttribute(WebKeys.WIKI_TREE_WALKER_DEPTH, 1);
-		%>
+			%>
 
-		<liferay-util:include page="/html/portlet/wiki/page_tree.jsp" />
+					<liferay-util:include page="/html/portlet/wiki/page_tree.jsp" />
 
-		<%
+			<%
 				}
 			}
-		%>
+			%>
 
-	</aui:select>
+		</aui:select>
 
 	<%
-		}
+	}
 	%>
 
 	<c:if test="<%= pending %>">

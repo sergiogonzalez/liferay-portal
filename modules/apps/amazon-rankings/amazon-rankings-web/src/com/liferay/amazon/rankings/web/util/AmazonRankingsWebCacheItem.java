@@ -72,12 +72,14 @@ public class AmazonRankingsWebCacheItem implements WebCacheItem {
 	}
 
 	protected AmazonRankings doConvert(String key) throws Exception {
-		Map<String, String> parameters = new HashMap<String, String>();
+		Map<String, String> parameters = new HashMap<>();
 
 		parameters.put(
-			"AssociateTag", _amazonRankingsConfiguration.amazonAssociateTag());
+			"AssociateTag",
+			_amazonRankingsConfiguration.getAmazonAssociateTag());
 		parameters.put(
-			"AWSAccessKeyId", _amazonRankingsConfiguration.amazonAccessKeyId());
+			"AWSAccessKeyId",
+			_amazonRankingsConfiguration.getAmazonAccessKeyId());
 		parameters.put("IdType", "ASIN");
 		parameters.put("ItemId", _isbn);
 		parameters.put("Operation", "ItemLookup");
@@ -182,7 +184,7 @@ public class AmazonRankingsWebCacheItem implements WebCacheItem {
 	}
 
 	protected String[] getAuthors(Element itemAttributesElement) {
-		List<String> authors = new ArrayList<String>();
+		List<String> authors = new ArrayList<>();
 
 		for (Element authorElement : itemAttributesElement.elements("Author")) {
 			authors.add(authorElement.getText());

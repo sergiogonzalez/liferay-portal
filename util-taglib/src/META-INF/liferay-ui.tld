@@ -840,6 +840,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>defaultDisplayStyle</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>displayStyle</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1963,6 +1968,12 @@
 		<body-content>JSP</body-content>
 		<attribute>
 			<name>allowBrowseDocuments</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Sets whether the editor instance has to be created automatically</description>
+			<name>autoCreate</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -3307,7 +3318,7 @@
 			<name>height</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>integer</type>
+			<type>int</type>
 		</attribute>
 		<attribute>
 			<description>Sets the location of the PNG image file to use.</description>
@@ -3320,7 +3331,7 @@
 			<name>width</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>integer</type>
+			<type>int</type>
 		</attribute>
 	</tag>
 	<tag>
@@ -4830,6 +4841,11 @@
 		</attribute>
 		<attribute>
 			<name>imageCssClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>showImageOverlay</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

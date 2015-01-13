@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.language.LanguageResources;
+import com.liferay.portal.security.xml.SecureXMLFactoryProviderUtil;
 import com.liferay.util.ContentUtil;
 
 import java.util.HashMap;
@@ -71,7 +72,7 @@ public class LocalizationImpl implements Localization {
 	public Object deserialize(JSONObject jsonObject) {
 		Locale[] locales = LanguageUtil.getAvailableLocales();
 
-		Map<Locale, String> map = new HashMap<Locale, String>();
+		Map<Locale, String> map = new HashMap<>();
 
 		for (Locale locale : locales) {
 			String languageId = LocaleUtil.toLanguageId(locale);
@@ -237,7 +238,8 @@ public class LocalizationImpl implements Localization {
 				ClassLoaderUtil.setContextClassLoader(portalClassLoader);
 			}
 
-			XMLInputFactory xmlInputFactory = XMLInputFactory.newInstance();
+			XMLInputFactory xmlInputFactory =
+				SecureXMLFactoryProviderUtil.newXMLInputFactory();
 
 			xmlStreamReader = xmlInputFactory.createXMLStreamReader(
 				new UnsyncStringReader(xml));
@@ -345,7 +347,7 @@ public class LocalizationImpl implements Localization {
 
 		Locale[] locales = LanguageUtil.getAvailableLocales();
 
-		Map<Locale, String> map = new HashMap<Locale, String>();
+		Map<Locale, String> map = new HashMap<>();
 
 		for (Locale locale : locales) {
 			String localizedParameter = getLocalizedName(
@@ -371,7 +373,7 @@ public class LocalizationImpl implements Localization {
 
 		Locale[] locales = LanguageUtil.getAvailableLocales();
 
-		Map<Locale, String> map = new HashMap<Locale, String>();
+		Map<Locale, String> map = new HashMap<>();
 
 		for (Locale locale : locales) {
 			String localizedPreference = getLocalizedName(
@@ -414,7 +416,7 @@ public class LocalizationImpl implements Localization {
 
 		Locale[] locales = LanguageUtil.getAvailableLocales();
 
-		Map<Locale, String> map = new HashMap<Locale, String>();
+		Map<Locale, String> map = new HashMap<>();
 
 		for (Locale locale : locales) {
 			String localizedParameter = getLocalizedName(
@@ -441,7 +443,7 @@ public class LocalizationImpl implements Localization {
 
 		Locale[] locales = LanguageUtil.getAvailableLocales();
 
-		Map<Locale, String> map = new HashMap<Locale, String>();
+		Map<Locale, String> map = new HashMap<>();
 
 		for (Locale locale : locales) {
 			String languageId = LocaleUtil.toLanguageId(locale);
@@ -465,7 +467,7 @@ public class LocalizationImpl implements Localization {
 			return null;
 		}
 
-		Map<Locale, String> map = new HashMap<Locale, String>();
+		Map<Locale, String> map = new HashMap<>();
 
 		Locale defaultLocale = LocaleUtil.getDefault();
 
@@ -503,7 +505,7 @@ public class LocalizationImpl implements Localization {
 	public Map<Locale, String> getLocalizationMap(
 		String[] languageIds, String[] values) {
 
-		Map<Locale, String> map = new HashMap<Locale, String>();
+		Map<Locale, String> map = new HashMap<>();
 
 		for (int i = 0; i < values.length; i++) {
 			Locale locale = LocaleUtil.fromLanguageId(languageIds[i]);
@@ -762,7 +764,8 @@ public class LocalizationImpl implements Localization {
 				ClassLoaderUtil.setContextClassLoader(portalClassLoader);
 			}
 
-			XMLInputFactory xmlInputFactory = XMLInputFactory.newInstance();
+			XMLInputFactory xmlInputFactory =
+				SecureXMLFactoryProviderUtil.newXMLInputFactory();
 
 			xmlStreamReader = xmlInputFactory.createXMLStreamReader(
 				new UnsyncStringReader(xml));
@@ -970,7 +973,8 @@ public class LocalizationImpl implements Localization {
 				ClassLoaderUtil.setContextClassLoader(portalClassLoader);
 			}
 
-			XMLInputFactory xmlInputFactory = XMLInputFactory.newInstance();
+			XMLInputFactory xmlInputFactory =
+				SecureXMLFactoryProviderUtil.newXMLInputFactory();
 
 			xmlStreamReader = xmlInputFactory.createXMLStreamReader(
 				new UnsyncStringReader(xml));
@@ -1202,7 +1206,8 @@ public class LocalizationImpl implements Localization {
 				ClassLoaderUtil.setContextClassLoader(portalClassLoader);
 			}
 
-			XMLInputFactory xmlInputFactory = XMLInputFactory.newInstance();
+			XMLInputFactory xmlInputFactory =
+				SecureXMLFactoryProviderUtil.newXMLInputFactory();
 
 			xmlStreamReader = xmlInputFactory.createXMLStreamReader(
 				new UnsyncStringReader(xml));
@@ -1256,7 +1261,7 @@ public class LocalizationImpl implements Localization {
 				Map<Tuple, String> map = _cache.get(xml);
 
 				if (map == null) {
-					map = new HashMap<Tuple, String>();
+					map = new HashMap<>();
 				}
 
 				Tuple subkey = new Tuple(useDefault, requestedLanguageId);

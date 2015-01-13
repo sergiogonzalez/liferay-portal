@@ -46,8 +46,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.net.InetAddress;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -726,7 +724,7 @@ public class ClusterMasterExecutorImplTest {
 
 		@Override
 		public FutureClusterResponses execute(ClusterRequest clusterRequest) {
-			List<Address> addresses = new ArrayList<Address>();
+			List<Address> addresses = new ArrayList<>();
 
 			Collection<Address> clusterNodeAddresses =
 				clusterRequest.getTargetClusterNodeAddresses();
@@ -752,9 +750,7 @@ public class ClusterMasterExecutorImplTest {
 
 				try {
 					clusterNodeResponse.setClusterNode(
-						new ClusterNode(
-							String.valueOf(mockAddress.getName()),
-							InetAddress.getLocalHost()));
+						new ClusterNode(mockAddress.getName()));
 
 					MethodHandler methodHandler =
 						clusterRequest.getMethodHandler();
@@ -831,9 +827,9 @@ public class ClusterMasterExecutorImplTest {
 			_clusterEventListeners.remove(clusterEventListener);
 		}
 
-		private final List<Address> _addresses = new ArrayList<Address>();
+		private final List<Address> _addresses = new ArrayList<>();
 		private final List<ClusterEventListener> _clusterEventListeners =
-			new ArrayList<ClusterEventListener>();
+			new ArrayList<>();
 		private final boolean _enabled;
 
 	}

@@ -216,7 +216,7 @@ public class SyncAccountService {
 		}
 
 		try {
-			_activeSyncAccountIds = new HashSet<Long>(
+			_activeSyncAccountIds = new HashSet<>(
 				_syncAccountPersistence.findByActive(true));
 
 			return _activeSyncAccountIds;
@@ -364,7 +364,7 @@ public class SyncAccountService {
 		syncAccount = setFilePathName(syncAccountId, filePath.toString());
 
 		syncAccount.setActive(true);
-		syncAccount.setUiEvent(SyncAccount.UI_EVENT_DEFAULT);
+		syncAccount.setUiEvent(SyncAccount.UI_EVENT_NONE);
 
 		SyncAccountService.update(syncAccount);
 	}

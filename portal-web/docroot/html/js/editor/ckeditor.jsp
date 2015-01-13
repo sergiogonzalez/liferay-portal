@@ -46,6 +46,7 @@ if (!ckEditorConfigFileName.equals("ckconfig.jsp")) {
 boolean hideImageResizing = ParamUtil.getBoolean(request, "hideImageResizing");
 
 boolean allowBrowseDocuments = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:allowBrowseDocuments"));
+boolean autoCreate = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:autoCreate"));
 Map<String, String> configParamsMap = (Map<String, String>)request.getAttribute("liferay-ui:input-editor:configParams");
 Map<String, String> fileBrowserParamsMap = (Map<String, String>)request.getAttribute("liferay-ui:input-editor:fileBrowserParams");
 
@@ -128,16 +129,89 @@ if (!inlineEdit) {
 
 		<script type="text/javascript">
 			Liferay.namespace('EDITORS')['<%= editorImpl %>'] = true;
+
+			CKEDITOR.scriptLoader.loadScripts = function(scripts, success, failure) {
+				AUI().use(
+					'aui-base',
+					function(A) {
+						scripts = A.Array.filter(
+							scripts,
+							function(item) {
+								return !A.one('script[src=' + item + ']');
+							}
+						);
+
+						if (scripts.length) {
+							CKEDITOR.scriptLoader.load(scripts, success, failure);
+						}
+						else {
+							success();
+						}
+					}
+				);
+			};
 		</script>
 	</liferay-util:html-top>
 </c:if>
 
-<aui:script>
+<%
+String textareaName = name;
+
+String modules = "aui-node-base";
+
+if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
+	textareaName = name + "_original";
+
+	modules += ",inline-editor-ckeditor";
+}
+%>
+
+<liferay-util:buffer var="editor">
+	<textarea id="<%= textareaName %>" name="<%= textareaName %>" style="display: none;"></textarea>
+</liferay-util:buffer>
+
+<div class="<%= cssClass %>" id="<%= name %>Container">
+	<c:if test="<%= autoCreate %>">
+		<%= editor %>
+	</c:if>
+</div>
+
+<script type="text/javascript">
+	CKEDITOR.disableAutoInline = true;
+
+	CKEDITOR.env.isCompatible = true;
+</script>
+
+<aui:script use="<%= modules %>">
 	window['<%= name %>'] = {
+		create: function() {
+			var editorNode = A.Node.create('<%= HtmlUtil.escapeJS(editor) %>');
+
+			var editorContainer = A.one('#<%= name %>Container');
+
+			editorContainer.appendChild(editorNode);
+
+			createEditor();
+		},
+
 		destroy: function() {
-			CKEDITOR.instances['<%= name %>'].destroy();
+			window['<%= name %>'].dispose();
 
 			window['<%= name %>'] = null;
+		},
+
+		dispose: function() {
+			var editor = CKEDITOR.instances['<%= name %>'];
+
+			if (editor) {
+				editor.destroy();
+			}
+
+			var editorEl = document.getElementById('<%= name %>');
+
+			if (editorEl) {
+				editorEl.parentNode.removeChild(editorEl);
+			}
 		},
 
 		focus: function() {
@@ -213,31 +287,7 @@ if (!inlineEdit) {
 			window['<%= name %>']._setStyles();
 		}
 	};
-</aui:script>
 
-<%
-String textareaName = name;
-
-String modules = "aui-node-base";
-
-if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
-	textareaName = name + "_original";
-
-	modules += ",inline-editor-ckeditor";
-}
-%>
-
-<div class="<%= cssClass %>">
-	<textarea id="<%= textareaName %>" name="<%= textareaName %>" style="display: none;"></textarea>
-</div>
-
-<script type="text/javascript">
-	CKEDITOR.disableAutoInline = true;
-
-	CKEDITOR.env.isCompatible = true;
-</script>
-
-<aui:script use="<%= modules %>">
 	var addAUIClass = function(iframe) {
 		if (iframe) {
 			var iframeWin = iframe.getDOM().contentWindow;
@@ -295,8 +345,6 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 					else if (ckEditor) {
 						inlineEditor.destroy();
 						ckEditor.destroy();
-
-						ckEditor = null;
 
 						var editorNode = A.one('#<%= name %>');
 
@@ -608,25 +656,10 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 	String toogleControlsStatus = GetterUtil.getString(SessionClicks.get(request, "liferay_toggle_controls", "visible"));
 	%>
 
-	<c:if test='<%= (inlineEdit && toogleControlsStatus.equals("visible")) || !inlineEdit %>'>;
+	<c:if test='<%= autoCreate && (
+		(inlineEdit && toogleControlsStatus.equals("visible")) || !inlineEdit ) %>'>;
 		createEditor();
 	</c:if>
-
-	CKEDITOR.scriptLoader.loadScripts = function(scripts, success, failure) {
-		scripts = A.Array.filter(
-			scripts,
-			function(item) {
-				return !A.one('script[src=' + item + ']');
-			}
-		);
-
-		if (scripts.length) {
-			CKEDITOR.scriptLoader.load(scripts, success, failure);
-		}
-		else {
-			success();
-		}
-	};
 
 	<c:if test="<%= !(inlineEdit && Validator.isNotNull(inlineEditSaveURL)) %>">
 		A.getWin().on(
@@ -643,16 +676,9 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 								currentDialog.hide();
 							}
 
-							ckeditorInstance.destroy();
+							window['<%= name %>'].dispose();
 
-							ckeditorInstance = null;
-
-							var editorNode = A.one('#<%= name %>');
-
-							editorNode.removeAttribute('contenteditable');
-							editorNode.removeClass('lfr-editable');
-
-							createEditor();
+							window['<%= name %>'].create();
 						}
 					}
 				},

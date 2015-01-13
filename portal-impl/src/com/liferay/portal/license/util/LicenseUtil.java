@@ -103,6 +103,15 @@ public class LicenseUtil {
 	public static Map<String, String> getClusterServerInfo(String clusterNodeId)
 		throws Exception {
 
+		ClusterNode localClusterNode =
+			ClusterExecutorUtil.getLocalClusterNode();
+
+		String localClusterNodeId = localClusterNode.getClusterNodeId();
+
+		if (clusterNodeId.equals(localClusterNodeId)) {
+			return getServerInfo();
+		}
+
 		List<ClusterNode> clusterNodes = ClusterExecutorUtil.getClusterNodes();
 
 		ClusterNode clusterNode = null;
@@ -122,10 +131,6 @@ public class LicenseUtil {
 		}
 
 		try {
-			if (clusterNode.equals(ClusterExecutorUtil.getLocalClusterNode())) {
-				return getServerInfo();
-			}
-
 			ClusterRequest clusterRequest = ClusterRequest.createUnicastRequest(
 				_getServerInfoMethodHandler, clusterNodeId);
 
@@ -157,10 +162,10 @@ public class LicenseUtil {
 
 	public static Set<String> getIpAddresses() {
 		if (_ipAddresses != null) {
-			return new HashSet<String>(_ipAddresses);
+			return new HashSet<>(_ipAddresses);
 		}
 
-		_ipAddresses = new HashSet<String>();
+		_ipAddresses = new HashSet<>();
 
 		try {
 			List<NetworkInterface> networkInterfaces = Collections.list(
@@ -188,15 +193,15 @@ public class LicenseUtil {
 			_log.error(e, e);
 		}
 
-		return new HashSet<String>(_ipAddresses);
+		return new HashSet<>(_ipAddresses);
 	}
 
 	public static Set<String> getMacAddresses() {
 		if (_macAddresses != null) {
-			return new HashSet<String>(_macAddresses);
+			return new HashSet<>(_macAddresses);
 		}
 
-		_macAddresses = new HashSet<String>();
+		_macAddresses = new HashSet<>();
 
 		try {
 			List<NetworkInterface> networkInterfaces = Collections.list(
@@ -232,7 +237,7 @@ public class LicenseUtil {
 			_log.error(e, e);
 		}
 
-		return new HashSet<String>(_macAddresses);
+		return new HashSet<>(_macAddresses);
 	}
 
 	public static byte[] getServerIdBytes() throws Exception {
@@ -253,7 +258,7 @@ public class LicenseUtil {
 	}
 
 	public static Map<String, String> getServerInfo() {
-		Map<String, String> serverInfo = new HashMap<String, String>();
+		Map<String, String> serverInfo = new HashMap<>();
 
 		serverInfo.put("hostName", PortalUtil.getComputerName());
 		serverInfo.put("ipAddresses", StringUtil.merge(getIpAddresses()));
@@ -297,7 +302,8 @@ public class LicenseUtil {
 				catch (Exception e) {
 					_log.error(e, e);
 
-					InetAddress inetAddress = clusterNode.getBindInetAddress();
+					InetAddress inetAddress =
+						clusterNode.getPortalInetAddress();
 
 					String message =
 						"Error contacting " + inetAddress.getHostName();
@@ -318,7 +324,7 @@ public class LicenseUtil {
 	public static Map<String, Object> registerOrder(
 		String orderUuid, String productEntryName, int maxServers) {
 
-		Map<String, Object> attributes = new HashMap<String, Object>();
+		Map<String, Object> attributes = new HashMap<>();
 
 		if (Validator.isNull(orderUuid)) {
 			return attributes;
@@ -553,7 +559,7 @@ public class LicenseUtil {
 			return null;
 		}
 
-		Map<String, String> sortedMap = new TreeMap<String, String>(
+		Map<String, String> sortedMap = new TreeMap<>(
 			String.CASE_INSENSITIVE_ORDER);
 
 		Iterator<String> itr = productsJSONObject.keys();

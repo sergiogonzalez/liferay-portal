@@ -50,6 +50,10 @@ if (permissionChecker.isContentReviewer(user.getCompanyId(), scopeGroupId)) {
 	status = WorkflowConstants.STATUS_ANY;
 }
 
+Map<String, Object> contextObjects = new HashMap<String, Object>();
+
+contextObjects.put("dlPortletInstanceSettings", dlPortletInstanceSettings);
+
 DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(request, dlPortletInstanceSettings);
 
 String[] mediaGalleryMimeTypes = dlPortletInstanceSettings.getMimeTypes();
@@ -57,7 +61,7 @@ String[] mediaGalleryMimeTypes = dlPortletInstanceSettings.getMimeTypes();
 List fileEntries = DLAppServiceUtil.getGroupFileEntries(scopeGroupId, 0, folderId, mediaGalleryMimeTypes, status, 0, SearchContainer.MAX_DELTA, null);
 %>
 
-<liferay-ui:ddm-template-renderer displayStyle="<%= displayStyle %>" displayStyleGroupId="<%= displayStyleGroupId %>" entries="<%= fileEntries %>">
+<liferay-ui:ddm-template-renderer contextObjects="<%= contextObjects %>" displayStyle="<%= displayStyle %>" displayStyleGroupId="<%= displayStyleGroupId %>" entries="<%= fileEntries %>">
 
 	<%
 	String topLink = ParamUtil.getString(request, "topLink", "home");

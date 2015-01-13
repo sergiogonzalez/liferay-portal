@@ -29,4 +29,12 @@ public interface DynamicInclude {
 			String key)
 		throws IOException;
 
+	public void register(DynamicIncludeRegistry dynamicIncludeRegistry);
+
+	public interface DynamicIncludeRegistry {
+
+		public void register(String key);
+
+	}
+
 }

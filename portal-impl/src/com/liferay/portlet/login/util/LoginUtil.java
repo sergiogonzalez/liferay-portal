@@ -98,7 +98,7 @@ public class LoginUtil {
 			throw new AuthException();
 		}
 		else {
-			Map<String, String[]> headerMap = new HashMap<String, String[]>();
+			Map<String, String[]> headerMap = new HashMap<>();
 
 			Enumeration<String> enu1 = request.getHeaderNames();
 
@@ -107,7 +107,7 @@ public class LoginUtil {
 
 				Enumeration<String> enu2 = request.getHeaders(name);
 
-				List<String> headers = new ArrayList<String>();
+				List<String> headers = new ArrayList<>();
 
 				while (enu2.hasMoreElements()) {
 					String value = enu2.nextElement();
@@ -120,7 +120,7 @@ public class LoginUtil {
 			}
 
 			Map<String, String[]> parameterMap = request.getParameterMap();
-			Map<String, Object> resultsMap = new HashMap<String, Object>();
+			Map<String, Object> resultsMap = new HashMap<>();
 
 			if (Validator.isNull(authType)) {
 				authType = company.getAuthType();
@@ -149,6 +149,12 @@ public class LoginUtil {
 			}
 
 			if (authResult != Authenticator.SUCCESS) {
+				User user = UserLocalServiceUtil.fetchUser(userId);
+
+				if (user != null) {
+					UserLocalServiceUtil.checkLockout(user);
+				}
+
 				throw new AuthException();
 			}
 		}
@@ -163,8 +169,7 @@ public class LoginUtil {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Map<String, String> definitionTerms =
-			new LinkedHashMap<String, String>();
+		Map<String, String> definitionTerms = new LinkedHashMap<>();
 
 		definitionTerms.put(
 			"[$FROM_ADDRESS$]", HtmlUtil.escape(emailFromAddress));
@@ -443,7 +448,7 @@ public class LoginUtil {
 		String[] protectedAttributeNames =
 			PropsValues.SESSION_PHISHING_PROTECTED_ATTRIBUTES;
 
-		Map<String, Object> protectedAttributes = new HashMap<String, Object>();
+		Map<String, Object> protectedAttributes = new HashMap<>();
 
 		for (String protectedAttributeName : protectedAttributeNames) {
 			Object protectedAttributeValue = session.getAttribute(
@@ -527,8 +532,7 @@ public class LoginUtil {
 		Map<String, UserTracker> sessionUsers = LiveUsers.getSessionUsers(
 			companyId);
 
-		List<UserTracker> userTrackers = new ArrayList<UserTracker>(
-			sessionUsers.values());
+		List<UserTracker> userTrackers = new ArrayList<>(sessionUsers.values());
 
 		for (UserTracker userTracker : userTrackers) {
 			if (userId != userTracker.getUserId()) {

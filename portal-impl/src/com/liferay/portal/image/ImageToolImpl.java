@@ -60,11 +60,15 @@ import java.util.concurrent.Future;
 
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
+import javax.imageio.spi.IIORegistry;
+import javax.imageio.spi.ImageReaderSpi;
 import javax.imageio.stream.ImageInputStream;
 
 import net.jmge.gif.Gif89Encoder;
 
 import org.im4java.core.IMOperation;
+
+import org.monte.media.jpeg.CMYKJPEGImageReaderSpi;
 
 /**
  * @author Brian Wing Shun Chan
@@ -470,7 +474,7 @@ public class ImageToolImpl implements ImageTool {
 	public ImageBag read(byte[] bytes) throws IOException {
 		String formatName = null;
 		ImageInputStream imageInputStream = null;
-		Queue<ImageReader> imageReaders = new LinkedList<ImageReader>();
+		Queue<ImageReader> imageReaders = new LinkedList<>();
 		RenderedImage renderedImage = null;
 
 		try {
@@ -522,7 +526,9 @@ public class ImageToolImpl implements ImageTool {
 		else if (formatName.contains(TYPE_GIF)) {
 			type = TYPE_GIF;
 		}
-		else if (formatName.contains("jpeg") || type.equals("jpeg")) {
+		else if (formatName.contains("jpeg") ||
+				 StringUtil.equalsIgnoreCase(type, "jpeg")) {
+
 			type = TYPE_JPEG;
 		}
 		else if (formatName.contains(TYPE_PNG)) {
@@ -664,6 +670,39 @@ public class ImageToolImpl implements ImageTool {
 		return _imageMagick;
 	}
 
+	protected void orderImageReaderSpis() {
+		IIORegistry defaultIIORegistry = IIORegistry.getDefaultInstance();
+
+		ImageReaderSpi firstImageReaderSpi = null;
+		ImageReaderSpi secondImageReaderSpi = null;
+
+		Iterator<ImageReaderSpi> imageReaderSpis =
+			defaultIIORegistry.getServiceProviders(ImageReaderSpi.class, true);
+
+		while (imageReaderSpis.hasNext()) {
+			ImageReaderSpi imageReaderSpi = imageReaderSpis.next();
+
+			if (imageReaderSpi instanceof CMYKJPEGImageReaderSpi) {
+				secondImageReaderSpi = imageReaderSpi;
+			}
+			else {
+				String[] formatNames = imageReaderSpi.getFormatNames();
+
+				if (ArrayUtil.contains(formatNames, TYPE_JPEG, true) ||
+					ArrayUtil.contains(formatNames, "jpeg", true)) {
+
+					firstImageReaderSpi = imageReaderSpi;
+				}
+			}
+		}
+
+		if ((firstImageReaderSpi != null) && (secondImageReaderSpi != null)) {
+			defaultIIORegistry.setOrdering(
+				ImageReaderSpi.class, firstImageReaderSpi,
+				secondImageReaderSpi);
+		}
+	}
+
 	protected byte[] toMultiByte(int intValue) {
 		int numBits = 32;
 		int mask = 0x80000000;
@@ -691,6 +730,8 @@ public class ImageToolImpl implements ImageTool {
 
 	private ImageToolImpl() {
 		ImageIO.setUseCache(PropsValues.IMAGE_IO_USE_DISK_CACHE);
+
+		orderImageReaderSpis();
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(ImageToolImpl.class);

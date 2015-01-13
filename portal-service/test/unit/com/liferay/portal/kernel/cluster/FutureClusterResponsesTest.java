@@ -14,9 +14,6 @@
 
 package com.liferay.portal.kernel.cluster;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -31,8 +28,8 @@ import org.junit.Test;
 public class FutureClusterResponsesTest {
 
 	@Test
-	public void testMultipleResponseFailure() throws UnknownHostException {
-		List<Address> addresses = new ArrayList<Address>();
+	public void testMultipleResponseFailure() {
+		List<Address> addresses = new ArrayList<>();
 
 		addresses.add(new MockAddress("1.2.3.4"));
 		addresses.add(new MockAddress("1.2.3.5"));
@@ -43,15 +40,13 @@ public class FutureClusterResponsesTest {
 
 		ClusterNodeResponse clusterNodeResponse1 = new ClusterNodeResponse();
 
-		clusterNodeResponse1.setClusterNode(
-			new ClusterNode("1.2.3.4", InetAddress.getLocalHost()));
+		clusterNodeResponse1.setClusterNode(new ClusterNode("1.2.3.4"));
 
 		clusterNodeResponses.addClusterNodeResponse(clusterNodeResponse1);
 
 		ClusterNodeResponse clusterNodeResponse2 = new ClusterNodeResponse();
 
-		clusterNodeResponse2.setClusterNode(
-			new ClusterNode("1.2.3.5", InetAddress.getLocalHost()));
+		clusterNodeResponse2.setClusterNode(new ClusterNode("1.2.3.5"));
 
 		clusterNodeResponses.addClusterNodeResponse(clusterNodeResponse2);
 
@@ -68,8 +63,8 @@ public class FutureClusterResponsesTest {
 	}
 
 	@Test
-	public void testMultipleResponseSuccess() throws UnknownHostException {
-		List<Address> addresses = new ArrayList<Address>();
+	public void testMultipleResponseSuccess() {
+		List<Address> addresses = new ArrayList<>();
 
 		addresses.add(new MockAddress("1.2.3.4"));
 		addresses.add(new MockAddress("1.2.3.5"));
@@ -80,22 +75,19 @@ public class FutureClusterResponsesTest {
 
 		ClusterNodeResponse clusterNodeResponse1 = new ClusterNodeResponse();
 
-		clusterNodeResponse1.setClusterNode(
-			new ClusterNode("1.2.3.4", InetAddress.getLocalHost()));
+		clusterNodeResponse1.setClusterNode(new ClusterNode("1.2.3.4"));
 
 		clusterNodeResponses.addClusterNodeResponse(clusterNodeResponse1);
 
 		ClusterNodeResponse clusterNodeResponse2 = new ClusterNodeResponse();
 
-		clusterNodeResponse2.setClusterNode(
-			new ClusterNode("1.2.3.5", InetAddress.getLocalHost()));
+		clusterNodeResponse2.setClusterNode(new ClusterNode("1.2.3.5"));
 
 		clusterNodeResponses.addClusterNodeResponse(clusterNodeResponse2);
 
 		ClusterNodeResponse clusterNodeResponse3 = new ClusterNodeResponse();
 
-		clusterNodeResponse3.setClusterNode(
-			new ClusterNode("1.2.3.6", InetAddress.getLocalHost()));
+		clusterNodeResponse3.setClusterNode(new ClusterNode("1.2.3.6"));
 
 		clusterNodeResponses.addClusterNodeResponse(clusterNodeResponse3);
 
@@ -112,7 +104,7 @@ public class FutureClusterResponsesTest {
 
 	@Test
 	public void testSingleResponseFailure() {
-		List<Address> addresses = new ArrayList<Address>();
+		List<Address> addresses = new ArrayList<>();
 
 		addresses.add(new MockAddress("1.2.3.4"));
 
@@ -132,8 +124,8 @@ public class FutureClusterResponsesTest {
 	}
 
 	@Test
-	public void testSingleResponseSuccess() throws UnknownHostException {
-		List<Address> addresses = new ArrayList<Address>();
+	public void testSingleResponseSuccess() {
+		List<Address> addresses = new ArrayList<>();
 
 		addresses.add(new MockAddress("1.2.3.4"));
 
@@ -142,8 +134,7 @@ public class FutureClusterResponsesTest {
 
 		ClusterNodeResponse clusterNodeResponse = new ClusterNodeResponse();
 
-		clusterNodeResponse.setClusterNode(
-			new ClusterNode("test", InetAddress.getLocalHost()));
+		clusterNodeResponse.setClusterNode(new ClusterNode("test"));
 
 		futureClusterResponses.addClusterNodeResponse(clusterNodeResponse);
 

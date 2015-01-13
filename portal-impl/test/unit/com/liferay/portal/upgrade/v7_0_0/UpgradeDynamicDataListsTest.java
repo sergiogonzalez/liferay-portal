@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.security.xml.SecureXMLFactoryProviderImpl;
+import com.liferay.portal.security.xml.SecureXMLFactoryProviderUtil;
 import com.liferay.portal.util.LocalizationImpl;
 import com.liferay.portal.xml.SAXReaderImpl;
 
@@ -55,11 +57,12 @@ public class UpgradeDynamicDataListsTest extends PowerMockito {
 		setUpLanguageUtil();
 		setUpLocalizationUtil();
 		setUpSAXReaderUtil();
+		setUpSecureXMLFactoryProviderUtil();
 	}
 
 	@Test
 	public void testToXMLWihoutLocalizedData() throws Exception {
-		Map<String, String> expandoValuesMap = new HashMap<String, String>();
+		Map<String, String> expandoValuesMap = new HashMap<>();
 
 		expandoValuesMap.put(
 			"Text", createLocalizationXML(new String[] {"Joe Bloggs"}));
@@ -95,7 +98,7 @@ public class UpgradeDynamicDataListsTest extends PowerMockito {
 
 	@Test
 	public void testToXMLWithRepeatableAndLocalizedData() throws Exception {
-		Map<String, String> expandoValuesMap = new HashMap<String, String>();
+		Map<String, String> expandoValuesMap = new HashMap<>();
 
 		expandoValuesMap.put(
 			"Text",
@@ -143,7 +146,7 @@ public class UpgradeDynamicDataListsTest extends PowerMockito {
 		List<String> data = localizedDataMap.get(languageId);
 
 		if (data == null) {
-			data = new ArrayList<String>();
+			data = new ArrayList<>();
 
 			localizedDataMap.put(languageId, data);
 		}
@@ -197,8 +200,7 @@ public class UpgradeDynamicDataListsTest extends PowerMockito {
 	protected Map<String, List<String>> getLocalizedDataMap(
 		Element dynamicElementElement) {
 
-		Map<String, List<String>> localizedDataMap =
-			new HashMap<String, List<String>>();
+		Map<String, List<String>> localizedDataMap = new HashMap<>();
 
 		for (Element dynamicContentElement : dynamicElementElement.elements()) {
 			String languageId = dynamicContentElement.attributeValue(
@@ -235,13 +237,20 @@ public class UpgradeDynamicDataListsTest extends PowerMockito {
 		saxReaderUtil.setSAXReader(new SAXReaderImpl());
 	}
 
+	protected void setUpSecureXMLFactoryProviderUtil() {
+		SecureXMLFactoryProviderUtil secureXMLFactoryProviderUtil =
+			new SecureXMLFactoryProviderUtil();
+
+		secureXMLFactoryProviderUtil.setSecureXMLFactoryProvider(
+			new SecureXMLFactoryProviderImpl());
+	}
+
 	protected Map<String, Map<String, List<String>>> toDataMap(
 		Document document) {
 
 		Element rootElement = document.getRootElement();
 
-		Map<String, Map<String, List<String>>> dataMap =
-			new HashMap<String, Map<String, List<String>>>();
+		Map<String, Map<String, List<String>>> dataMap = new HashMap<>();
 
 		for (Element dynamicElementElement :
 				rootElement.elements("dynamic-element")) {

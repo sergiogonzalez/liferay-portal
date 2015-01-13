@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.security.xml.SecureXMLFactoryProviderUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -49,6 +50,8 @@ import org.apache.log4j.xml.DOMConfigurator;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
+
+import org.xml.sax.XMLReader;
 
 /**
  * @author Brian Wing Shun Chan
@@ -113,7 +116,7 @@ public class Log4JUtil {
 		domConfigurator.doConfigure(
 			urlReader, LogManager.getLoggerRepository());
 
-		Set<String> currentLoggerNames = new HashSet<String>();
+		Set<String> currentLoggerNames = new HashSet<>();
 
 		Enumeration<Logger> enu = LogManager.getCurrentLoggers();
 
@@ -124,7 +127,15 @@ public class Log4JUtil {
 		}
 
 		try {
-			SAXReader saxReader = new SAXReader();
+			XMLReader xmlReader = null;
+
+			if (SecureXMLFactoryProviderUtil.getSecureXMLFactoryProvider()
+					!= null) {
+
+				xmlReader = SecureXMLFactoryProviderUtil.newXMLReader();
+			}
+
+			SAXReader saxReader = new SAXReader(xmlReader);
 
 			Reader reader = new StringReader(urlContent);
 
@@ -150,7 +161,7 @@ public class Log4JUtil {
 	}
 
 	public static Map<String, String> getCustomLogSettings() {
-		return new HashMap<String, String>(_customLogSettings);
+		return new HashMap<>(_customLogSettings);
 	}
 
 	public static String getOriginalLevel(String className) {
@@ -250,7 +261,7 @@ public class Log4JUtil {
 	}
 
 	private static String _getURLContent(URL url) {
-		Map<String, String> variables = new HashMap<String, String>();
+		Map<String, String> variables = new HashMap<>();
 
 		variables.put("@liferay.home@", _getLiferayHome());
 
@@ -315,7 +326,7 @@ public class Log4JUtil {
 	}
 
 	private static final Map<String, String> _customLogSettings =
-		new ConcurrentHashMap<String, String>();
+		new ConcurrentHashMap<>();
 	private static String _liferayHome;
 
 }

@@ -34,8 +34,16 @@ String[] miscellaneousSections = PropsValues.ORGANIZATIONS_FORM_ADD_MISCELLANEOU
 
 if (organization != null) {
 	mainSections = PropsUtil.getArray(PropsKeys.ORGANIZATIONS_FORM_UPDATE_MAIN, new Filter(organization.getType()));
+
+	Group group = organization.getGroup();
+
+	if (group.isSite()) {
+		mainSections = ArrayUtil.remove(mainSections, "organization-site");
+	}
+
 	identificationSections = PropsUtil.getArray(PropsKeys.ORGANIZATIONS_FORM_UPDATE_IDENTIFICATION, new Filter(organization.getType()));
 	miscellaneousSections = PropsUtil.getArray(PropsKeys.ORGANIZATIONS_FORM_UPDATE_MISCELLANEOUS, new Filter(organization.getType()));
+
 }
 
 String[][] categorySections = {mainSections, identificationSections, miscellaneousSections};

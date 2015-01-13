@@ -227,6 +227,11 @@ public class ArrayUtil_IW {
 		return ArrayUtil.contains(array, value);
 	}
 
+	public boolean contains(java.lang.String[] array, java.lang.String value,
+		boolean ignoreCase) {
+		return ArrayUtil.contains(array, value, ignoreCase);
+	}
+
 	public boolean containsAll(boolean[] array1, boolean[] array2) {
 		return ArrayUtil.containsAll(array1, array2);
 	}

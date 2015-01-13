@@ -259,7 +259,7 @@ public class FileUtil {
 		String fileName = String.valueOf(filePath.getFileName());
 
 		if (_syncFileIgnoreNames.contains(fileName) ||
-			(!Files.isDirectory(filePath) && fileName.startsWith("~$")) ||
+			isOfficeTempFile(fileName, filePath) ||
 			(PropsValues.SYNC_FILE_IGNORE_HIDDEN && isHidden(filePath)) ||
 			Files.isSymbolicLink(filePath) || fileName.endsWith(".lnk")) {
 
@@ -388,11 +388,23 @@ public class FileUtil {
 		}
 	}
 
+	protected static boolean isOfficeTempFile(String fileName, Path filePath) {
+		if ((!Files.isDirectory(filePath) && fileName.startsWith("~$")) ||
+			(!Files.isDirectory(filePath) && fileName.startsWith("~") &&
+			 fileName.endsWith(".tmp"))) {
+
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
 	private static final Charset _CHARSET = Charset.forName("UTF-8");
 
 	private static Logger _logger = LoggerFactory.getLogger(FileUtil.class);
 
-	private static Set<String> _syncFileIgnoreNames = new HashSet<String>(
+	private static Set<String> _syncFileIgnoreNames = new HashSet<>(
 		Arrays.asList(PropsValues.SYNC_FILE_IGNORE_NAMES));
 
 }

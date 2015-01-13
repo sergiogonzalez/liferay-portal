@@ -198,7 +198,7 @@ public class ClusterExecutorImpl
 			return Collections.emptyList();
 		}
 
-		return new ArrayList<ClusterNode>(_liveInstances.values());
+		return new ArrayList<>(_liveInstances.values());
 	}
 
 	@Override
@@ -405,10 +405,7 @@ public class ClusterExecutorImpl
 	}
 
 	protected void initLocalClusterNode() {
-		InetAddress inetAddress = getBindInetAddress(_controlJChannel);
-
-		ClusterNode clusterNode = new ClusterNode(
-			PortalUUIDUtil.generate(), inetAddress);
+		ClusterNode clusterNode = new ClusterNode(PortalUUIDUtil.generate());
 
 		if (Validator.isNull(PropsValues.PORTAL_INSTANCE_PROTOCOL)) {
 			_localClusterNode = clusterNode;
@@ -481,7 +478,7 @@ public class ClusterExecutorImpl
 	}
 
 	protected void memberRemoved(List<Address> departAddresses) {
-		List<ClusterNode> departClusterNodes = new ArrayList<ClusterNode>();
+		List<ClusterNode> departClusterNodes = new ArrayList<>();
 
 		for (Address departAddress : departAddresses) {
 			ClusterNode departClusterNode = _liveInstances.remove(
@@ -514,7 +511,7 @@ public class ClusterExecutorImpl
 			addresses = getAddresses(_controlJChannel);
 		}
 		else {
-			addresses = new ArrayList<Address>();
+			addresses = new ArrayList<>();
 
 			Collection<Address> clusterNodeAddresses =
 				clusterRequest.getTargetClusterNodeAddresses();
@@ -592,17 +589,16 @@ public class ClusterExecutorImpl
 		ClusterExecutorImpl.class);
 
 	private final CopyOnWriteArrayList<ClusterEventListener>
-		_clusterEventListeners =
-			new CopyOnWriteArrayList<ClusterEventListener>();
+		_clusterEventListeners = new CopyOnWriteArrayList<>();
 	private final Map<String, Address> _clusterNodeAddresses =
-		new ConcurrentHashMap<String, Address>();
+		new ConcurrentHashMap<>();
 	private JChannel _controlJChannel;
 	private ExecutorService _executorService;
 	private Map<String, FutureClusterResponses> _futureClusterResponses =
-		new ConcurrentReferenceValueHashMap<String, FutureClusterResponses>(
+		new ConcurrentReferenceValueHashMap<>(
 			FinalizeManager.WEAK_REFERENCE_FACTORY);
 	private final Map<Address, ClusterNode> _liveInstances =
-		new ConcurrentHashMap<Address, ClusterNode>();
+		new ConcurrentHashMap<>();
 	private Address _localAddress;
 	private ClusterNode _localClusterNode;
 	private boolean _shortcutLocalMethod;

@@ -123,18 +123,18 @@ public class ArrayUtilTest {
 
 	@Test
 	public void testContainsByteArray() throws Exception {
-		byte[] array1 = {2, 3};
+		byte[] array = {2, 3};
 
-		Assert.assertFalse(ArrayUtil.contains(array1, (byte)1));
-		Assert.assertTrue(ArrayUtil.contains(array1, (byte)2));
+		Assert.assertFalse(ArrayUtil.contains(array, (byte)1));
+		Assert.assertTrue(ArrayUtil.contains(array, (byte)2));
 	}
 
 	@Test
 	public void testContainsCharArray() throws Exception {
-		char[] array1 = {'b', 'c'};
+		char[] array = {'a', 'b'};
 
-		Assert.assertFalse(ArrayUtil.contains(array1, 'a'));
-		Assert.assertTrue(ArrayUtil.contains(array1, 'b'));
+		Assert.assertFalse(ArrayUtil.contains(array, 'C'));
+		Assert.assertTrue(ArrayUtil.contains(array, 'a'));
 	}
 
 	@Test
@@ -175,6 +175,17 @@ public class ArrayUtilTest {
 
 		Assert.assertFalse(ArrayUtil.contains(array, (short)1));
 		Assert.assertTrue(ArrayUtil.contains(array, (short)2));
+	}
+
+	@Test
+	public void testContainsStringArray() throws Exception {
+		String[] array = {"a", "b"};
+
+		Assert.assertFalse(ArrayUtil.contains(array, "c", true));
+		Assert.assertFalse(ArrayUtil.contains(array, "C", false));
+		Assert.assertTrue(ArrayUtil.contains(array, "a", true));
+		Assert.assertTrue(ArrayUtil.contains(array, "a", false));
+		Assert.assertTrue(ArrayUtil.contains(array, "A", true));
 	}
 
 	@Test
@@ -769,7 +780,7 @@ public class ArrayUtilTest {
 
 	@Test
 	public void testToDoubleArray() throws Exception {
-		List<Double> list = new ArrayList<Double>();
+		List<Double> list = new ArrayList<>();
 
 		list.add(1.0);
 		list.add(2.0);
@@ -787,7 +798,7 @@ public class ArrayUtilTest {
 
 	@Test
 	public void testToFloatArray() throws Exception {
-		List<Float> list = new ArrayList<Float>();
+		List<Float> list = new ArrayList<>();
 
 		list.add(1.0F);
 		list.add(2.0F);
@@ -805,7 +816,7 @@ public class ArrayUtilTest {
 
 	@Test
 	public void testToIntArray() throws Exception {
-		List<Integer> list = new ArrayList<Integer>();
+		List<Integer> list = new ArrayList<>();
 
 		list.add(1);
 		list.add(2);
@@ -823,7 +834,7 @@ public class ArrayUtilTest {
 
 	@Test
 	public void testToLongArray() throws Exception {
-		List<Long> list = new ArrayList<Long>();
+		List<Long> list = new ArrayList<>();
 
 		list.add(1L);
 		list.add(2L);

@@ -27,6 +27,7 @@ if (Validator.isNull(doAsUserId)) {
 
 String alloyEditorMode = ParamUtil.getString(request, "alloyEditorMode");
 
+boolean autoCreate = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:autoCreate"));
 String contents = (String)request.getAttribute("liferay-ui:input-editor:contents");
 String contentsLanguageId = (String)request.getAttribute("liferay-ui:input-editor:contentsLanguageId");
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:cssClass"));
@@ -63,6 +64,10 @@ if (Validator.isNotNull(onInitMethod)) {
 String placeholder = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:placeholder"));
 boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:skipEditorLoading"));
 %>
+
+<liferay-util:buffer var="editor">
+	<div class="alloy-editor alloy-editor-placeholder <%= cssClass %>" contenteditable="false" data-placeholder="<%= LanguageUtil.get(request, placeholder) %>" id="<%= name %>" name="<%= name %>"><%= contents %></div>
+</liferay-util:buffer>
 
 <c:if test="<%= !skipEditorLoading %>">
 	<liferay-util:html-top outputKey="js_editor_alloyeditor_skip_editor_loading">
@@ -112,10 +117,13 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 	CKEDITOR.env.isCompatible = true;
 </script>
 
-<div class="alloy-editor alloy-editor-placeholder <%= cssClass %>" contenteditable="false" data-placeholder="<%= LanguageUtil.get(request, placeholder) %>" id="<%= name %>" name="<%= name %>"><%= contents %></div>
+<div id="<%= name %>Container">
+	<c:if test="<%= autoCreate %>">
+		<%= editor %>
+	</c:if>
+</div>
 
 <aui:script use="aui-base,alloy-editor,liferay-editor-image-uploader">
-	document.getElementById('<%= name %>').setAttribute('contenteditable', true);
 
 	<%
 	Locale contentsLocale = LocaleUtil.fromLanguageId(contentsLanguageId);
@@ -126,168 +134,196 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 	String languageId = LocaleUtil.toLanguageId(locale);
 	%>
 
-	var alloyEditor = new A.AlloyEditor(
-		{
-			<c:if test='<%= alloyEditorMode.equals("text") %>'>
-				allowedContent: 'p',
-			</c:if>
+	var createInstance = function() {
+		document.getElementById('<%= name %>').setAttribute('contenteditable', true);
 
-			contentsLangDirection: '<%= HtmlUtil.escapeJS(contentsLanguageDir) %>',
+		var alloyEditor = new A.AlloyEditor(
+			{
+				<c:if test='<%= alloyEditorMode.equals("text") %>'>
+					allowedContent: 'p',
+				</c:if>
 
-			contentsLanguage: '<%= contentsLanguageId.replace("iw_", "he_") %>',
+				contentsLangDirection: '<%= HtmlUtil.escapeJS(contentsLanguageDir) %>',
 
-			<c:if test='<%= alloyEditorMode.equals("text") %>'>
-				disallowedContent: 'br',
-			</c:if>
+				contentsLanguage: '<%= contentsLanguageId.replace("iw_", "he_") %>',
 
-			language: '<%= languageId.replace("iw_", "he_") %>',
+				<c:if test='<%= alloyEditorMode.equals("text") %>'>
+					disallowedContent: 'br',
+				</c:if>
 
-			srcNode: '#<%= name %>',
+				language: '<%= languageId.replace("iw_", "he_") %>',
 
-			toolbars:
-				<c:choose>
-					<c:when test='<%= alloyEditorMode.equals("text") %>'>
-						{},
-					</c:when>
-					<c:otherwise>
+				srcNode: '#<%= name %>',
+
+				toolbars:
+					<c:choose>
+						<c:when test='<%= alloyEditorMode.equals("text") %>'>
+							{},
+						</c:when>
+						<c:otherwise>
+							{
+								add: ['imageselector'],
+								image: ['left', 'right'],
+								styles: ['strong', 'em', 'u', 'h1', 'h2', 'a', 'twitter']
+							},
+						</c:otherwise>
+					</c:choose>
+
+				<liferay-portlet:renderURL portletName="<%= PortletKeys.DOCUMENT_SELECTOR %>" varImpl="documentSelectorURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+					<portlet:param name="struts_action" value="/document_selector/view" />
+					<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
+					<portlet:param name="eventName" value='<%= name + "selectDocument" %>' />
+					<portlet:param name="showGroupsSelector" value="true" />
+				</liferay-portlet:renderURL>
+
+				<%
+				if (fileBrowserParamsMap != null) {
+					for (Map.Entry<String, String> entry : fileBrowserParamsMap.entrySet()) {
+						documentSelectorURL.setParameter(entry.getKey(), entry.getValue());
+					}
+				}
+				%>
+
+				filebrowserBrowseUrl: '<%= documentSelectorURL %>',
+				filebrowserFlashBrowseUrl: '<%= documentSelectorURL %>&Type=flash',
+				filebrowserImageBrowseLinkUrl: '<%= documentSelectorURL %>&Type=image',
+				filebrowserImageBrowseUrl: '<%= documentSelectorURL %>&Type=image'
+			}
+		);
+
+		var nativeEditor = alloyEditor.get('nativeEditor');
+
+		<c:if test="<%= Validator.isNotNull(onBlurMethod) %>">
+			nativeEditor.on(
+				'blur',
+				function(event) {
+					window['<%= HtmlUtil.escapeJS(onBlurMethod) %>'](event.editor);
+				}
+			);
+		</c:if>
+
+		<c:if test="<%= Validator.isNotNull(onChangeMethod) %>">
+			nativeEditor.on(
+				'change',
+				function(event) {
+					window['<%= HtmlUtil.escapeJS(onChangeMethod) %>'](window['<%= name %>'].getHTML());
+				}
+			);
+		</c:if>
+
+		<c:if test="<%= Validator.isNotNull(onFocusMethod) %>">
+			nativeEditor.on(
+				'focus',
+				function(event) {
+					window['<%= HtmlUtil.escapeJS(onFocusMethod) %>'](event.editor);
+				}
+			);
+		</c:if>
+
+		nativeEditor.on(
+			'instanceReady',
+			function(event) {
+				<c:if test="<%= Validator.isNotNull(onInitMethod) %>">
+					window['<%= HtmlUtil.escapeJS(onInitMethod) %>']();
+				</c:if>
+
+				window['<%= name %>'].editor = alloyEditor;
+
+				window['<%= name %>'].instanceReady = true;
+
+				<%
+				String uploadURL = StringPool.BLANK;
+
+				if (data != null) {
+					uploadURL = GetterUtil.getString(data.get("uploadURL"), StringPool.BLANK);
+				}
+				%>
+
+				<c:if test="<%= Validator.isNotNull(uploadURL) %>">
+					var uploader = new Liferay.BlogsUploader(
 						{
-							add: ['imageselector'],
-							image: ['left', 'right'],
-							styles: ['strong', 'em', 'u', 'h1', 'h2', 'a', 'twitter']
-						},
-					</c:otherwise>
-				</c:choose>
+							editor: nativeEditor,
+							uploadUrl: '<%= uploadURL %>'
+						}
+					);
 
-			<liferay-portlet:renderURL portletName="<%= PortletKeys.DOCUMENT_SELECTOR %>" varImpl="documentSelectorURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-				<portlet:param name="struts_action" value="/document_selector/view" />
-				<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
-				<portlet:param name="eventName" value='<%= name + "selectDocument" %>' />
-				<portlet:param name="showGroupsSelector" value="true" />
-			</liferay-portlet:renderURL>
+					nativeEditor.on(
+						'imagedrop',
+						function(event) {
+							uploader.uploadImage(event.data.el.$, event.data.file);
+						}
+					);
+				</c:if>
+			}
+		);
 
-			<%
-			if (fileBrowserParamsMap != null) {
-				for (Map.Entry<String, String> entry : fileBrowserParamsMap.entrySet()) {
-					documentSelectorURL.setParameter(entry.getKey(), entry.getValue());
+		<c:if test='<%= alloyEditorMode.equals("text") %>'>
+			nativeEditor.on(
+				'key',
+				function(event) {
+					if (event.data.keyCode === 13) {
+						event.cancel();
+					}
 				}
-			}
-			%>
+			);
+		</c:if>
 
-			filebrowserBrowseUrl: '<%= documentSelectorURL %>',
-			filebrowserFlashBrowseUrl: '<%= documentSelectorURL %>&Type=flash',
-			filebrowserImageBrowseLinkUrl: '<%= documentSelectorURL %>&Type=image',
-			filebrowserImageBrowseUrl: '<%= documentSelectorURL %>&Type=image'
-		}
-	);
-
-	var nativeEditor = alloyEditor.get('nativeEditor');
-
-	<c:if test="<%= Validator.isNotNull(onBlurMethod) %>">
-		nativeEditor.on(
-			'blur',
-			function(event) {
-				window['<%= HtmlUtil.escapeJS(onBlurMethod) %>'](event.editor);
-			}
-		);
-	</c:if>
-
-	<c:if test="<%= Validator.isNotNull(onChangeMethod) %>">
-		nativeEditor.on(
-			'change',
-			function(event) {
-				window['<%= HtmlUtil.escapeJS(onChangeMethod) %>'](window['<%= name %>'].getHTML());
-			}
-		);
-	</c:if>
-
-	<c:if test="<%= Validator.isNotNull(onFocusMethod) %>">
-		nativeEditor.on(
-			'focus',
-			function(event) {
-				window['<%= HtmlUtil.escapeJS(onFocusMethod) %>'](event.editor);
-			}
-		);
-	</c:if>
-
-	nativeEditor.on(
-		'instanceReady',
-		function(event) {
-			<c:if test="<%= Validator.isNotNull(onInitMethod) %>">
-				window['<%= HtmlUtil.escapeJS(onInitMethod) %>']();
-			</c:if>
-
-			window['<%= name %>'].editor = alloyEditor;
-
-			window['<%= name %>'].instanceReady = true;
-
-			<%
-			String uploadURL = StringPool.BLANK;
-
-			if (data != null) {
-				uploadURL = GetterUtil.getString(data.get("uploadURL"), StringPool.BLANK);
-			}
-			%>
-
-			<c:if test="<%= Validator.isNotNull(uploadURL) %>">
-				var uploader = new Liferay.BlogsUploader(
-					{
-						editor: nativeEditor,
-						uploadUrl: '<%= uploadURL %>'
-					}
-				);
-
-				nativeEditor.on(
-					'imagedrop',
-					function(event) {
-						uploader.uploadImage(event.data.el.$, event.data.file);
-					}
-				);
-			</c:if>
-		}
-	);
-
-	<c:if test='<%= alloyEditorMode.equals("text") %>'>
-		nativeEditor.on(
-			'key',
-			function(event) {
-				if (event.data.keyCode === 13) {
-					event.cancel();
+		var contentFilter = new CKEDITOR.filter(
+			{
+				$1: {
+					attributes: ['alt', 'aria-*', 'height', 'href', 'src', 'width'],
+					classes: false,
+					elements: CKEDITOR.dtd,
+					styles: false
 				}
 			}
 		);
-	</c:if>
 
-	var contentFilter = new CKEDITOR.filter(
-		{
-			$1: {
-				attributes: ['alt', 'aria-*', 'height', 'href', 'src', 'width'],
-				classes: false,
-				elements: CKEDITOR.dtd,
-				styles: false
+		nativeEditor.on(
+			'paste',
+			function(event) {
+				var fragment = CKEDITOR.htmlParser.fragment.fromHtml(event.data.dataValue);
+
+				var writer = new CKEDITOR.htmlParser.basicWriter();
+
+				contentFilter.applyTo(fragment);
+
+				fragment.writeHtml(writer);
+
+				event.data.dataValue = writer.getHtml();
 			}
-		}
-	);
-
-	nativeEditor.on(
-		'paste',
-		function(event) {
-			var fragment = CKEDITOR.htmlParser.fragment.fromHtml(event.data.dataValue);
-
-			var writer = new CKEDITOR.htmlParser.basicWriter();
-
-			contentFilter.applyTo(fragment);
-
-			fragment.writeHtml(writer);
-
-			event.data.dataValue = writer.getHtml();
-		}
-	);
+		);
+	};
 
 	window['<%= name %>'] = {
+		create: function() {
+			var editorNode = A.Node.create('<%= HtmlUtil.escapeJS(editor) %>');
+
+			var editorContainer = A.one('#<%= name %>Container');
+
+			editorContainer.appendChild(editorNode);
+
+			window['<%= name %>'].initEditor();
+		},
+
 		destroy: function() {
-			window['<%= name %>'].editor.destroy();
+			window['<%= name %>'].dispose();
 
 			window['<%= name %>'] = null;
+		},
+
+		dispose: function() {
+			var editor = window['<%= name %>'].editor;
+
+			if (editor) {
+				editor.destroy();
+			}
+
+			var editorNode = document.getElementById('<%= name %>');
+
+			if (editorNode) {
+				editorNode.parentNode.removeChild(editorNode);
+			}
 		},
 
 		focus: function() {
@@ -343,12 +379,20 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 			return window['<%= name %>'].getCkData();
 		},
 
+		initEditor: function() {
+			createInstance();
+		},
+
 		instanceReady: false,
 
 		setHTML: function(value) {
 			CKEDITOR.instances['<%= name %>'].setData(value);
 		}
 	};
+
+	<c:if test="<%= autoCreate %>">
+		window['<%= name %>'].initEditor();
+	</c:if>
 
 	var destroyInstance = function(event) {
 		if (event.portletId === '<%= portletId %>') {
