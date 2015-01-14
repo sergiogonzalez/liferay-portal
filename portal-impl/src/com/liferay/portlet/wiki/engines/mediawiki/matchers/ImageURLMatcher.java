@@ -48,7 +48,7 @@ public class ImageURLMatcher extends CallbackMatcher {
 		@Override
 		public String foundMatch(MatchResult matchResult) {
 			String title = StringUtil.replace(
-				matchResult.group(1), "%5F", StringPool.UNDERLINE);
+				matchResult.group(1), "%255F", StringPool.UNDERLINE);
 
 			String url = _attachmentURLPrefix + HttpUtil.encodeURL(title);
 
