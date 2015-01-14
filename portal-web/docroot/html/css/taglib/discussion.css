@@ -10,10 +10,24 @@
 		}
 	}
 
+	.alloy-editor-placeholder {
+		min-height: 90px;
+
+		p {
+			margin-bottom : 0;
+		}
+	}
+
+	.add-comment {
+		.row {
+			margin-top: 30px;
+		}
+	}
+
 	.lfr-discussion {
 		border-bottom: 1px solid transparent;
-		margin: 0 0 5px;
-		padding: 5px 0 5px 0;
+		margin: 0;
+		padding: 24px 0 24px 0;
 		position: relative;
 		width: auto;
 
@@ -25,13 +39,23 @@
 			visibility: hidden;
 		}
 
+		&.depth-1 {
+			margin-left: 10%;
+		}
+
+		&.depth-2 {
+			margin-left: 20%;
+		}
+
 		&.last {
 			border-bottom-width: 0;
 		}
 	}
 
 	.lfr-discussion-details {
-		width: 15%;
+		padding-left: 0;
+		padding-right: 0;
+		width: 10%;
 
 		.column-content {
 			padding: 0;
@@ -51,14 +75,17 @@
 				vertical-align: top;
 			}
 
-			.user-profile-image img {
+			.user-profile-image .avatar {
+				background-size: 50px;
+				height: 50px;
 				width: 50px;
 			}
 		}
 	}
 
 	.lfr-discussion-body {
-		width: 85%;
+		padding-left: 0;
+		width: 90%;
 
 		.lfr-discussion-controls .taglib-ratings .rating-label-element {
 			padding-left: 0;
@@ -69,16 +96,14 @@
 		padding: 5px 0 0 0.5em;
 	}
 
-	.lfr-discussion-posted-on {
-		clear: both;
-		float: right;
-		padding-top: 0.5em;
-	}
-
 	.lfr-discussion-message {
 		padding-bottom: 1em;
 
 		@include word-break(break-all);
+
+		.lfr-discussion-message-author {
+			margin-bottom: 12px;
+		}
 	}
 
 	.taglib-ratings {
@@ -88,7 +113,7 @@
 
 	.lfr-discussion-actions {
 		float: right;
-		margin: 0;
+		margin: -10px 10px 0;
 
 		li {
 			&, a {
@@ -145,6 +170,8 @@
 					top: 5px;
 
 					.avatar {
+						background-size: 40px;
+						height: 40px;
 						width: 40px;
 					}
 				}
@@ -201,7 +228,7 @@
 	}
 
 	.lfr-discussion {
-		border-bottom-color: #DDD;
+		border-bottom-color: #B0B4BB;
 	}
 
 	.lfr-discussion-details {
@@ -218,15 +245,6 @@
 					text-decoration: underline;
 				}
 			}
-		}
-	}
-
-	.lfr-discussion-posted-on {
-		color: #999;
-		font-size: 0.9em;
-
-		.lfr-discussion-parent-link {
-			cursor: pointer;
 		}
 	}
 

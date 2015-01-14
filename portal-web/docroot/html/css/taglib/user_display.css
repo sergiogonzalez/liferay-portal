@@ -31,8 +31,19 @@
 	}
 
 	.avatar {
-		height: auto;
+		background: no-repeat center;
+		background-size: 65px;
+		display: block;
+		height: 65px;
+		margin: 0 auto;
 		width: 65px;
+
+		.avatar-overlay {
+			background: rgba(22, 67, 244, 0.45);
+			display: block;
+			height: 100%;
+			width: 100%;
+		}
 	}
 
 	.user-details {
