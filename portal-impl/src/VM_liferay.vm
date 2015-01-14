@@ -84,7 +84,7 @@ $languageUtil.get($locale, $lang_key)#end
 #macro (language_format $lang_key $arguments)
 $languageUtil.format($locale, $lang_key, $arguments.toArray())#end
 
-#macro (portletToolbarMenu $portletToolbarMenuItems)
+#macro (portletToolbarMenuItem $portletToolbarMenuItems)
 	#set ($portlet_toolbar_menu_tag = $theme.getPortletToolbarMenuTag())
 
 	$portlet_toolbar_menu_tag.setPortletToolbarMenuItems($portletToolbarMenuItems)
