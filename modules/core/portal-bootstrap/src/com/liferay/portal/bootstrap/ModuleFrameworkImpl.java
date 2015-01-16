@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.ServiceLoader;
 import com.liferay.portal.kernel.util.ServiceLoaderCondition;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -75,7 +76,6 @@ import java.security.ProtectionDomain;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Dictionary;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -816,9 +816,31 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 			fileName = jarFileURL.getFile();
 		}
+		else if (Validator.equals(url.getProtocol(), "wsjar")) {
+
+			// WebSphere uses a custom wsjar protocol to represent JAR files
+
+			fileName = url.getFile();
+
+			String protocol = "file:/";
+
+			int index = fileName.indexOf(protocol);
+
+			if (index > 0) {
+				fileName = fileName.substring(protocol.length());
+			}
+
+			index = fileName.indexOf('!');
+
+			if (index > 0) {
+				fileName = fileName.substring(0, index);
+			}
+
+			fileName = _decodePath(fileName);
+		}
 		else if (Validator.equals(url.getProtocol(), "zip")) {
 
-			// Weblogic use a custom zip protocol to represent JAR files
+			// Weblogic uses a custom zip protocol to represent JAR files
 
 			fileName = url.getFile();
 
@@ -915,11 +937,8 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 				}
 			);
 
-			Enumeration<URL> enu = classLoader.getResources(
-				"META-INF/MANIFEST.MF");
-
-			while (enu.hasMoreElements()) {
-				URL url = enu.nextElement();
+			for (URL url : SetUtil.fromEnumeration(
+					classLoader.getResources("META-INF/MANIFEST.MF"))) {
 
 				_processURL(
 					sb, url,

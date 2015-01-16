@@ -1210,7 +1210,6 @@ public class ServicePreAction extends Action {
 						publishToLiveURL.setParameter("tabs1", "public-pages");
 					}
 
-					publishToLiveURL.setParameter("pagesRedirect", currentURL);
 					publishToLiveURL.setParameter(
 						"groupId", String.valueOf(scopeGroupId));
 					publishToLiveURL.setParameter(
@@ -1231,7 +1230,10 @@ public class ServicePreAction extends Action {
 					request, myAccountPortlet.getPortletId(), controlPanelPlid,
 					PortletRequest.RENDER_PHASE);
 
-				if (scopeGroupId > 0) {
+				if (user != null) {
+					myAccountURL.setDoAsGroupId(user.getGroupId());
+				}
+				else if (scopeGroupId > 0) {
 					myAccountURL.setDoAsGroupId(scopeGroupId);
 				}
 

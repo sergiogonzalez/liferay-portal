@@ -18,11 +18,6 @@ import com.liferay.poshi.runner.util.PropsValues;
 
 import io.appium.java_client.MobileDriver;
 
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.internal.WrapsDriver;
-
 /**
  * @author Kenji Heigel
  */
@@ -279,7 +274,7 @@ public abstract class BaseMobileDriverImpl
 
 	@Override
 	public String getDependenciesDirName() {
-		return _dependenciesDirName;
+		return _DEPENDENCIES_DIR_NAME;
 	}
 
 	@Override
@@ -314,7 +309,7 @@ public abstract class BaseMobileDriverImpl
 
 	@Override
 	public String getOutputDirName() {
-		return _outputDirName;
+		return _OUTPUT_DIR_NAME;
 	}
 
 	@Override
@@ -329,7 +324,7 @@ public abstract class BaseMobileDriverImpl
 
 	@Override
 	public String getSikuliImagesDirName() {
-		return _sikuliImagesDirName;
+		return _SIKULI_IMAGES_DIR_NAME;
 	}
 
 	@Override
@@ -651,40 +646,6 @@ public abstract class BaseMobileDriverImpl
 	}
 
 	@Override
-	public void tap(String locator) {
-		WebElement webElement = getWebElement("//body");
-
-		WrapsDriver wrapsDriver = (WrapsDriver)webElement;
-
-		WebDriver wrappedWebDriver = wrapsDriver.getWrappedDriver();
-
-		JavascriptExecutor javascriptExecutor =
-			(JavascriptExecutor)wrappedWebDriver;
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("YUI().use('node-event-simulate', function(Y) {");
-		sb.append("var node = Y.one('");
-
-		String cssLocator = locator;
-
-		cssLocator = cssLocator.replaceAll("\\/\\/", " ");
-		cssLocator = cssLocator.replaceAll(
-			"contains\\(@([^,]*),([^)]*)\\)", "$1*=$2");
-		cssLocator = cssLocator.replaceAll("'", "\"");
-		cssLocator = cssLocator.replaceAll("\\/", " > ");
-		cssLocator = cssLocator.replaceAll("^ ", "");
-		cssLocator = cssLocator.replaceAll(" and ", "][");
-
-		sb.append(cssLocator);
-
-		sb.append("');");
-		sb.append("node.simulateGesture('tap');});");
-
-		javascriptExecutor.executeScript(sb.toString());
-	}
-
-	@Override
 	public void typeAceEditor(String locator, String value) {
 		throw new UnsupportedOperationException();
 	}
@@ -807,12 +768,15 @@ public abstract class BaseMobileDriverImpl
 		throw new UnsupportedOperationException();
 	}
 
-	private String _dependenciesDirName =
+	private static final String _DEPENDENCIES_DIR_NAME =
 		"portal-web//test//functional//com//liferay//portalweb//dependencies//";
-	private String _outputDirName = PropsValues.OUTPUT_DIR_NAME;
+
+	private static final String _OUTPUT_DIR_NAME = PropsValues.OUTPUT_DIR_NAME;
+
+	private static final String _SIKULI_IMAGES_DIR_NAME =
+		_DEPENDENCIES_DIR_NAME + "sikuli//linux//";
+
 	private String _primaryTestSuiteName;
 	private final String _projectDirName;
-	private String _sikuliImagesDirName =
-		_dependenciesDirName + "sikuli//linux//";
 
 }

@@ -43,17 +43,15 @@ public class DefaultDLEditFileEntryDisplayContext
 	implements DLEditFileEntryDisplayContext {
 
 	public DefaultDLEditFileEntryDisplayContext(
-			HttpServletRequest request, HttpServletResponse response,
-			DLFileEntryType dlFileEntryType)
-		throws PortalException {
+		HttpServletRequest request, HttpServletResponse response,
+		DLFileEntryType dlFileEntryType) {
 
 		_init(request, dlFileEntryType, null);
 	}
 
 	public DefaultDLEditFileEntryDisplayContext(
-			HttpServletRequest request, HttpServletResponse response,
-			FileEntry fileEntry)
-		throws PortalException {
+		HttpServletRequest request, HttpServletResponse response,
+		FileEntry fileEntry) {
 
 		_init(request, null, fileEntry);
 	}
@@ -119,7 +117,7 @@ public class DefaultDLEditFileEntryDisplayContext
 		throws PortalException {
 
 		return _fileEntryDisplayContextHelper.
-			isCancelCheckoutDocumentButtonVisible();
+			isCancelCheckoutDocumentActionAvailable();
 	}
 
 	@Override
@@ -129,7 +127,7 @@ public class DefaultDLEditFileEntryDisplayContext
 
 	@Override
 	public boolean isCheckinButtonVisible() throws PortalException {
-		return _fileEntryDisplayContextHelper.isCheckinButtonVisible();
+		return _fileEntryDisplayContextHelper.isCheckinActionAvailable();
 	}
 
 	@Override
@@ -139,7 +137,8 @@ public class DefaultDLEditFileEntryDisplayContext
 
 	@Override
 	public boolean isCheckoutDocumentButtonVisible() throws PortalException {
-		return _fileEntryDisplayContextHelper.isCheckoutDocumentButtonVisible();
+		return
+			_fileEntryDisplayContextHelper.isCheckoutDocumentActionAvailable();
 	}
 
 	@Override
@@ -178,6 +177,11 @@ public class DefaultDLEditFileEntryDisplayContext
 		return _dlPortletInstanceSettings.isEnableFileEntryDrafts();
 	}
 
+	@Override
+	public boolean isVersionInfoVisible() throws PortalException {
+		return true;
+	}
+
 	private boolean _hasFolderWorkflowDefinitionLink() {
 		try {
 			if (_dlFileEntryType == null) {
@@ -201,35 +205,42 @@ public class DefaultDLEditFileEntryDisplayContext
 	}
 
 	private void _init(
-			HttpServletRequest request, DLFileEntryType dlFileEntryType,
-			FileEntry fileEntry)
-		throws PortalException {
+		HttpServletRequest request, DLFileEntryType dlFileEntryType,
+		FileEntry fileEntry) {
 
-		_request = request;
-		_dlFileEntryType = dlFileEntryType;
-		_fileEntry = fileEntry;
+		try {
+			_request = request;
+			_dlFileEntryType = dlFileEntryType;
+			_fileEntry = fileEntry;
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		_dlPortletInstanceSettings = DLPortletInstanceSettings.getInstance(
-			themeDisplay.getLayout(), portletDisplay.getId());
-		_fileEntryDisplayContextHelper = new FileEntryDisplayContextHelper(
-			themeDisplay.getPermissionChecker(), _fileEntry);
+			_dlPortletInstanceSettings = DLPortletInstanceSettings.getInstance(
+				themeDisplay.getLayout(), portletDisplay.getId());
+			_fileEntryDisplayContextHelper = new FileEntryDisplayContextHelper(
+				themeDisplay.getPermissionChecker(), _fileEntry);
 
-		if ((_dlFileEntryType == null) && (_fileEntry != null)) {
-			_dlFileEntryType =
-				_fileEntryDisplayContextHelper.getDLFileEntryType();
+			if ((_dlFileEntryType == null) && (_fileEntry != null)) {
+				_dlFileEntryType =
+					_fileEntryDisplayContextHelper.getDLFileEntryType();
+			}
+
+			if (fileEntry != null) {
+				_fileVersion = fileEntry.getFileVersion();
+			}
+
+			_fileVersionDisplayContextHelper =
+				new FileVersionDisplayContextHelper(_fileVersion);
 		}
-
-		if (fileEntry != null) {
-			_fileVersion = fileEntry.getFileVersion();
+		catch (PortalException pe) {
+			throw new SystemException(
+				"Unable to build DefaultDLEditFileEntryDisplayContext for " +
+					fileEntry,
+				pe);
 		}
-
-		_fileVersionDisplayContextHelper = new FileVersionDisplayContextHelper(
-			_fileVersion);
 	}
 
 	private static final UUID _UUID = UUID.fromString(
