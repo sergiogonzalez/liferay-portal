@@ -1,5 +1,5 @@
 <%@ page
-	import="com.liferay.portlet.ratings.transformer.RatingsDataTransformerHelperUtil" %>
+	import="com.liferay.portlet.ratings.transformer.PortletRatingsDefinitionUtil" %>
 <%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
@@ -46,7 +46,7 @@ groupTypeSettings = new UnicodeProperties();
 <aui:fieldset>
 
 	<%
-	String[] portletIds = RatingsDataTransformerHelperUtil.getPortletIds();
+	String[] portletIds = PortletRatingsDefinitionUtil.getPortletIds();
 
 	for (String portletId : portletIds) {
 
@@ -56,7 +56,7 @@ groupTypeSettings = new UnicodeProperties();
 		<p><%= PortalUtil.getPortletTitle(portlet, application, locale) %></p>
 
 		<%
-		String[] classNames = RatingsDataTransformerHelperUtil.getClassNames(portletId);
+		String[] classNames = PortletRatingsDefinitionUtil.getClassNames(portletId);
 
 		for (String className : classNames) {
 		%>
@@ -64,7 +64,7 @@ groupTypeSettings = new UnicodeProperties();
 			<%
 			String propertyName = className + StringPool.UNDERLINE + "RatingsType";
 
-			String companyRatingsType = PrefsParamUtil.getString(companyPortletPreferences, request, propertyName, RatingsDataTransformerHelperUtil.getDefaultType(portletId, className));
+			String companyRatingsType = PrefsParamUtil.getString(companyPortletPreferences, request, propertyName, PortletRatingsDefinitionUtil.getDefaultType(portletId, className).toString());
 
 			String ratingsType = PropertiesParamUtil.getString(groupTypeSettings, request, propertyName, companyRatingsType);
 			%>

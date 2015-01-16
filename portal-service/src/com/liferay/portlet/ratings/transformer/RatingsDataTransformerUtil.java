@@ -42,11 +42,10 @@ public class RatingsDataTransformerUtil {
 			return;
 		}
 
-		for (String portletId :
-				RatingsDataTransformerHelperUtil.getPortletIds()) {
+		for (String portletId : PortletRatingsDefinitionUtil.getPortletIds()) {
 
-			String[] classNames =
-				RatingsDataTransformerHelperUtil.getClassNames(portletId);
+			String[] classNames = PortletRatingsDefinitionUtil.getClassNames(
+				portletId);
 
 			for (final String className : classNames) {
 				String propertyName = _getPropertyName(className);
@@ -69,11 +68,10 @@ public class RatingsDataTransformerUtil {
 			return;
 		}
 
-		for (String portletId :
-				RatingsDataTransformerHelperUtil.getPortletIds()) {
+		for (String portletId : PortletRatingsDefinitionUtil.getPortletIds()) {
 
-			String[] classNames =
-				RatingsDataTransformerHelperUtil.getClassNames(portletId);
+			String[] classNames = PortletRatingsDefinitionUtil.getClassNames(
+				portletId);
 
 			for (final String className : classNames) {
 				String propertyName = _getPropertyName(className);

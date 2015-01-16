@@ -29,7 +29,7 @@ import com.liferay.portal.model.Portlet;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.ratings.model.RatingsEntry;
 import com.liferay.portlet.ratings.model.RatingsStats;
-import com.liferay.portlet.ratings.transformer.RatingsDataTransformerHelperUtil;
+import com.liferay.portlet.ratings.transformer.PortletRatingsDefinitionUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.portlet.PortletPreferences;
@@ -134,8 +134,8 @@ public class RatingsTag extends IncludeTag {
 
 		String companyRatingsType = PrefsParamUtil.getString(
 			companyPortletPreferences, request, propertyName,
-			RatingsDataTransformerHelperUtil.getDefaultType(
-				portletId, _className));
+			PortletRatingsDefinitionUtil.getDefaultType(
+				portletId, _className).toString());
 
 		_type = PropertiesParamUtil.getString(
 			groupTypeSettings, request, propertyName, companyRatingsType);

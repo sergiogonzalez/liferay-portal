@@ -1,5 +1,5 @@
 <%@ page
-	import="com.liferay.portlet.ratings.transformer.RatingsDataTransformerHelperUtil" %>
+	import="com.liferay.portlet.ratings.transformer.PortletRatingsDefinitionUtil" %>
 <%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
@@ -35,7 +35,7 @@ PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(com
 <aui:fieldset>
 
 	<%
-	String[] portletIds = RatingsDataTransformerHelperUtil.getPortletIds();
+	String[] portletIds = PortletRatingsDefinitionUtil.getPortletIds();
 
 	for (String portletId : portletIds) {
 
@@ -45,7 +45,7 @@ PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(com
 		<p><%= PortalUtil.getPortletTitle(portlet, application, locale) %></p>
 
 		<%
-		String[] classNames = RatingsDataTransformerHelperUtil.getClassNames(portletId);
+		String[] classNames = PortletRatingsDefinitionUtil.getClassNames(portletId);
 
 		for (String className : classNames) {
 		%>
@@ -57,7 +57,7 @@ PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(com
 			<%
 				String propertyName = className + StringPool.UNDERLINE + "RatingsType";
 
-				String ratingsType = PrefsParamUtil.getString(companyPortletPreferences, request, propertyName, RatingsDataTransformerHelperUtil.getDefaultType(portletId, className));
+				String ratingsType = PrefsParamUtil.getString(companyPortletPreferences, request, propertyName, PortletRatingsDefinitionUtil.getDefaultType(portletId, className).toString());
 			%>
 
 			<div class="row-fields">
