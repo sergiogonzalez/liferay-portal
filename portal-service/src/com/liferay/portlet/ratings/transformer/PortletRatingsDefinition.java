@@ -17,16 +17,31 @@ package com.liferay.portlet.ratings.transformer;
 /**
  * @author Roberto Díaz
  */
-public interface RatingsDataTransformerHelper {
-
-	public static final String LIKE = "like";
-
-	public static final String STARS = "stars";
-
-	public static final String THUMBS = "thumbs";
+public interface PortletRatingsDefinition {
 
 	public String[] getClassNames();
 
-	public String getDefaultType(String className);
+	public RatingsType getDefaultType(String className);
+
+	public static enum RatingsType {
+
+		LIKE("like"), STARS("stars"), THUMBS("thumbs");
+
+		public String getValue() {
+			return _value;
+		}
+
+		@Override
+		public String toString() {
+			return _value;
+		}
+
+		private RatingsType(String value) {
+			_value = value;
+		}
+
+		private final String _value;
+
+	}
 
 }
