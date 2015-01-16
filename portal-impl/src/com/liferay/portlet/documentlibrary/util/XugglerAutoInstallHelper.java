@@ -20,18 +20,13 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.process.ClassPathUtil;
 import com.liferay.portal.kernel.process.ProcessException;
-import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.OSDetector;
-import com.liferay.portal.kernel.util.ProgressStatusConstants;
-import com.liferay.portal.kernel.util.ProgressTracker;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xuggler.Xuggler;
-import com.liferay.portal.util.FileImpl;
-import com.liferay.portal.util.HttpImpl;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.xuggler.XugglerImpl;
 
@@ -79,38 +74,32 @@ public class XugglerAutoInstallHelper {
 			return;
 		}
 
-		FileUtil fileUtil = new FileUtil();
+		ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
 
-		fileUtil.setFile(new FileImpl());
-
-		HttpUtil httpUtil = new HttpUtil();
-
-		httpUtil.setHttp(new HttpImpl());
-
-		Xuggler xuggler = new XugglerImpl();
+		PortalClassLoaderUtil.setClassLoader(
+			ClassLoader.getSystemClassLoader());
 
 		try {
-			ProgressTracker progressTracker = new ProgressTracker(
-				"XugglerInstaller");
+			Xuggler xuggler = new XugglerImpl();
 
-			progressTracker.addProgress(
-				ProgressStatusConstants.DOWNLOADING, 15, "downloading-xuggler");
-			progressTracker.addProgress(
-				ProgressStatusConstants.COPYING, 70, "copying-xuggler-files");
+			try {
+				xuggler.installNativeLibraries(xugglerJarFile, null);
+			}
+			catch (Exception e) {
+				throw new ProcessException(e);
+			}
 
-			xuggler.installNativeLibraries(xugglerJarFile, progressTracker);
-		}
-		catch (Exception e) {
-			throw new ProcessException(e);
-		}
-
-		if (xuggler.isNativeLibraryInstalled()) {
-			if (_log.isInfoEnabled()) {
-				_log.info("Xuggler installed successfully");
+			if (xuggler.isNativeLibraryInstalled()) {
+				if (_log.isInfoEnabled()) {
+					_log.info("Xuggler installed successfully");
+				}
+			}
+			else {
+				_log.error("Xuggler auto install failed");
 			}
 		}
-		else {
-			_log.error("Xuggler auto install failed");
+		finally {
+			PortalClassLoaderUtil.setClassLoader(classLoader);
 		}
 	}
 

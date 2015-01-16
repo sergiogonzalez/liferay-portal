@@ -3447,8 +3447,7 @@ cluster.link.autodetect.address=
 
 cluster.link.bind.addr["cluster-link-control"]=127.0.0.1
 
-cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1
-		</echo>
+cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 	</target>
 
 	<target name="print-scm-revision">
@@ -4318,25 +4317,15 @@ if (ppstate.equals("normal")) {
 
 		<sleep seconds="120" />
 
-		<exec executable="/bin/bash" os="${os.unix}">
-			<arg value="-c" />
-			<arg value="adb push ${basedir.unix}/portal-web/test/functional/com/liferay/portalweb/dependencies/mobile/swipe_down.sh /data/local" />
-		</exec>
+		<execute>
+			adb push ${basedir.unix}/portal-web/test/functional/com/liferay/portalweb/dependencies/mobile/swipe_down.sh /data/local
+			adb push ${basedir.unix}/portal-web/test/functional/com/liferay/portalweb/dependencies/mobile/swipe_up.sh /data/local
+			adb push ${basedir.unix}/portal-web/test/functional/com/liferay/portalweb/dependencies/mobile/tap.sh /data/local
 
-		<exec executable="/bin/bash" os="${os.unix}">
-			<arg value="-c" />
-			<arg value="adb push ${basedir.unix}/portal-web/test/functional/com/liferay/portalweb/dependencies/mobile/swipe_up.sh /data/local" />
-		</exec>
-
-		<exec executable="/bin/bash" os="${os.unix}">
-			<arg value="-c" />
-			<arg value="adb -s emulator-5554 shell chmod 0777 /data/local/swipe_down.sh" />
-		</exec>
-
-		<exec executable="/bin/bash" os="${os.unix}">
-			<arg value="-c" />
-			<arg value="adb -s emulator-5554 shell chmod 0777 /data/local/swipe_up.sh" />
-		</exec>
+			adb -s emulator-5554 shell chmod 0777 /data/local/swipe_down.sh
+			adb -s emulator-5554 shell chmod 0777 /data/local/swipe_up.sh
+			adb -s emulator-5554 shell chmod 0777 /data/local/tap.sh
+		</execute>
 	</target>
 
 	<target name="start-appium">

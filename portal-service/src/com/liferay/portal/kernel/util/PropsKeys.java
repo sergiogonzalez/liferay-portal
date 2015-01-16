@@ -289,6 +289,8 @@ public interface PropsKeys {
 
 	public static final String BLOGS_PUBLISH_TO_LIVE_BY_DEFAULT = "blogs.publish.to.live.by.default";
 
+	public static final String BLOGS_RATINGS_DEFAULT_TYPE = "blogs.ratings.default.type";
+
 	public static final String BLOGS_RATINGS_ENABLED = "blogs.ratings.enabled";
 
 	public static final String BLOGS_RELATED_ASSETS_ENABLED = "blogs.related.assets.enabled";
@@ -816,6 +818,8 @@ public interface PropsKeys {
 	public static final String DL_STORE_S3_ACCESS_KEY = "dl.store.s3.access.key";
 
 	public static final String DL_STORE_S3_BUCKET_NAME = "dl.store.s3.bucket.name";
+
+	public static final String DL_STORE_S3_JETS3T = "dl.store.s3.jets3t";
 
 	public static final String DL_STORE_S3_SECRET_KEY = "dl.store.s3.secret.key";
 
@@ -2159,6 +2163,8 @@ public interface PropsKeys {
 
 	public static final String PREFERENCE_VALIDATE_ON_STARTUP = "preference.validate.on.startup";
 
+	public static final String RATINGS_DATA_TRANSFORMER = "ratings.data.transformer";
+
 	public static final String RATINGS_DEFAULT_NUMBER_OF_STARS = "ratings.default.number.of.stars";
 
 	public static final String RATINGS_UPGRADE_STARS_NORMALIZATION_FACTOR = "ratings.upgrade.stars.normalization.factor";
@@ -2336,6 +2342,10 @@ public interface PropsKeys {
 	public static final String SETUP_DATABASE_TYPES = "setup.database.types";
 
 	public static final String SETUP_DATABASE_URL = "setup.database.url";
+
+	public static final String SETUP_LIFERAY_POOL_PROVIDER_JAR_NAME = "setup.liferay.pool.provider.jar.name";
+
+	public static final String SETUP_LIFERAY_POOL_PROVIDER_JAR_URL = "setup.liferay.pool.provider.jar.url";
 
 	public static final String SETUP_WIZARD_ENABLED = "setup.wizard.enabled";
 
