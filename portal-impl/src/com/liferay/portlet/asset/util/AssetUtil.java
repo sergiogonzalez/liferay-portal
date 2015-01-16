@@ -468,7 +468,8 @@ public class AssetUtil {
 					PortletRequest.RENDER_PHASE, false);
 
 			redirectURL.setParameter(
-				"struts_action", "/asset_publisher/add_asset_redirect");
+				"mvcPath",
+				"/html/portlet/asset_publisher/add_asset_redirect.jsp");
 			redirectURL.setParameter("redirect", themeDisplay.getURLCurrent());
 			redirectURL.setWindowState(LiferayWindowState.POP_UP);
 
@@ -839,9 +840,9 @@ public class AssetUtil {
 
 		if (sortField.startsWith(
 				DDMIndexerImpl.DDM_FIELD_NAMESPACE +
-					StringPool.FORWARD_SLASH)) {
+					StringPool.DOUBLE_UNDERLINE)) {
 
-			String[] sortFields = sortField.split(StringPool.FORWARD_SLASH);
+			String[] sortFields = sortField.split(StringPool.DOUBLE_UNDERLINE);
 
 			long ddmStructureId = GetterUtil.getLong(sortFields[1]);
 			String fieldName = sortFields[2];

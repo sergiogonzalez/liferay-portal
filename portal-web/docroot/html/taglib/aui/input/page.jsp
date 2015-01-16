@@ -75,6 +75,7 @@ boolean choiceField = checkboxField || radioField;
 	</c:when>
 	<c:when test="<%= (model != null) && Validator.isNull(type) %>">
 		<liferay-ui:input-field
+			autoComplete='<%= GetterUtil.getBoolean(dynamicAttributes.get("autocomplete"), true) %>'
 			autoFocus="<%= autoFocus %>"
 			bean="<%= bean %>"
 			cssClass="<%= fieldCssClass %>"
@@ -210,6 +211,16 @@ boolean choiceField = checkboxField || radioField;
 					placeholder="<%= placeholder %>"
 					type='<%= type.equals("text") ? "input" : type %>'
 					xml="<%= valueString %>"
+				/>
+			</c:when>
+			<c:when test='<%= type.equals("editor") %>'>
+				<liferay-ui:input-editor
+					contents="<%= valueString %>"
+					contentsLanguageId="<%= languageId %>"
+					cssClass="<%= cssClass %>"
+					editorImpl="ckeditor"
+					name="<%= fieldParam %>"
+					toolbarSet="simple"
 				/>
 			</c:when>
 			<c:when test='<%= type.equals("textarea") %>'>
