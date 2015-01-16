@@ -47,7 +47,9 @@ public abstract class BaseWebDriverImpl
 		String dependenciesDirName =
 			"portal-web//test//functional//com//liferay//portalweb//" +
 				"dependencies//";
+
 		String outputDirName = PropsValues.OUTPUT_DIR_NAME;
+
 		String sikuliImagesDirName = dependenciesDirName + "sikuli//linux//";
 
 		if (OSDetector.isWindows()) {
@@ -779,11 +781,6 @@ public abstract class BaseWebDriverImpl
 
 	@Override
 	public void stopLogger() {
-	}
-
-	@Override
-	public void tap(String locator) {
-		throw new UnsupportedOperationException();
 	}
 
 	@Override

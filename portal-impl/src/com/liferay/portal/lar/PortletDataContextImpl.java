@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.lar.ExportImportClassedModelUtil;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.ManifestSummary;
 import com.liferay.portal.kernel.lar.PortletDataContext;
-import com.liferay.portal.kernel.lar.PortletDataContextListener;
 import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
@@ -567,10 +566,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 			return;
 		}
 
-		if (_portletDataContextListener != null) {
-			_portletDataContextListener.onAddZipEntry(path);
-		}
-
 		try {
 			ZipWriter zipWriter = getZipWriter();
 
@@ -585,10 +580,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 	public void addZipEntry(String path, InputStream is) {
 		if (isPathProcessed(path)) {
 			return;
-		}
-
-		if (_portletDataContextListener != null) {
-			_portletDataContextListener.onAddZipEntry(path);
 		}
 
 		try {
@@ -610,10 +601,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 	public void addZipEntry(String path, String s) {
 		if (isPathProcessed(path)) {
 			return;
-		}
-
-		if (_portletDataContextListener != null) {
-			_portletDataContextListener.onAddZipEntry(path);
 		}
 
 		try {
@@ -1335,10 +1322,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 			return null;
 		}
 
-		if (_portletDataContextListener != null) {
-			_portletDataContextListener.onGetZipEntry(path);
-		}
-
 		return getZipReader().getEntryAsByteArray(path);
 	}
 
@@ -1346,10 +1329,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 	public InputStream getZipEntryAsInputStream(String path) {
 		if (!Validator.isFilePath(path, false)) {
 			return null;
-		}
-
-		if (_portletDataContextListener != null) {
-			_portletDataContextListener.onGetZipEntry(path);
 		}
 
 		return getZipReader().getEntryAsInputStream(path);
@@ -1378,10 +1357,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 	public String getZipEntryAsString(String path) {
 		if (!Validator.isFilePath(path, false)) {
 			return null;
-		}
-
-		if (_portletDataContextListener != null) {
-			_portletDataContextListener.onGetZipEntry(path);
 		}
 
 		return getZipReader().getEntryAsString(path);
@@ -1855,11 +1830,14 @@ public class PortletDataContextImpl implements PortletDataContext {
 		_plid = plid;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public void setPortetDataContextListener(
-		PortletDataContextListener portletDataContextListener) {
-
-		_portletDataContextListener = portletDataContextListener;
+		com.liferay.portal.kernel.lar.PortletDataContextListener
+			portletDataContextListener) {
 	}
 
 	@Override
@@ -2481,7 +2459,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 	private final Map<String, List<KeyValuePair>> _permissionsMap =
 		new HashMap<>();
 	private long _plid;
-	private PortletDataContextListener _portletDataContextListener;
 	private String _portletId;
 	private final Set<String> _primaryKeys = new HashSet<>();
 	private boolean _privateLayout;

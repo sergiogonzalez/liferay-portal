@@ -24,9 +24,9 @@ String uploadExceptionRedirect = ParamUtil.getString(request, "uploadExceptionRe
 
 String referringPortletResource = ParamUtil.getString(request, "referringPortletResource");
 
-String referringPortletResourceRootPortletId = PortletConstants.getRootPortletId(referringPortletResource);
-
 String uploadProgressId = "dlFileEntryUploadProgress";
+
+boolean showSelectFolder = ParamUtil.getBoolean(request, "showSelectFolder");
 
 FileEntry fileEntry = (FileEntry)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_ENTRY);
 
@@ -115,10 +115,10 @@ if ((checkedOut || pending) && !dlPortletInstanceSettings.isEnableFileEntryDraft
 DLEditFileEntryDisplayContext dlEditFileEntryDisplayContext = null;
 
 if (fileEntry == null) {
-	dlEditFileEntryDisplayContext = DLEditFileEntryDisplayContextUtil.getDLEditFileEntryDisplayContext(request, response, dlFileEntryType);
+	dlEditFileEntryDisplayContext = DLDisplayContextFactoryProviderUtil.getDLEditFileEntryDisplayContext(request, response, dlFileEntryType);
 }
 else {
-	dlEditFileEntryDisplayContext = DLEditFileEntryDisplayContextUtil.getDLEditFileEntryDisplayContext(request, response, fileEntry);
+	dlEditFileEntryDisplayContext = DLDisplayContextFactoryProviderUtil.getDLEditFileEntryDisplayContext(request, response, fileEntry);
 }
 %>
 
@@ -267,7 +267,7 @@ else {
 		<div class="form-group">
 			<aui:input label="folder" name="folderName" type="resource" value="<%= folderName %>" />
 
-			<c:if test="<%= referringPortletResourceRootPortletId.equals(PortletKeys.ASSET_PUBLISHER) && (fileEntryId == 0) %>">
+			<c:if test="<%= showSelectFolder %>">
 				<aui:button name="selectFolderButton" value="select" />
 
 				<%
