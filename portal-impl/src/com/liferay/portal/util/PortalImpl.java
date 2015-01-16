@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletBag;
 import com.liferay.portal.kernel.portlet.PortletBagPool;
+import com.liferay.portal.kernel.security.auth.AlwaysAllowDoAsUser;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
@@ -67,6 +68,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ContextPathUtil;
 import com.liferay.portal.kernel.util.CookieKeys;
@@ -217,6 +219,11 @@ import com.liferay.portlet.sites.util.SitesUtil;
 import com.liferay.portlet.social.model.SocialRelationConstants;
 import com.liferay.portlet.social.util.FacebookUtil;
 import com.liferay.portlet.wiki.model.WikiPage;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceReference;
+import com.liferay.registry.ServiceTracker;
+import com.liferay.registry.ServiceTrackerCustomizer;
 import com.liferay.util.Encryptor;
 import com.liferay.util.JS;
 
@@ -301,6 +308,20 @@ import org.apache.struts.Globals;
 public class PortalImpl implements Portal {
 
 	public PortalImpl() {
+
+		// Always allow do as user service tracker
+
+		try {
+			Registry registry = RegistryUtil.getRegistry();
+
+			_alwaysAllowDoAsUserServiceTracker = registry.trackServices(
+				AlwaysAllowDoAsUser.class,
+				new AlwaysAllowDoAsUserServiceTrackerCustomizer());
+
+			_alwaysAllowDoAsUserServiceTracker.open();
+		}
+		catch (NullPointerException npe) {
+		}
 
 		// Computer name
 
@@ -5622,10 +5643,8 @@ public class PortalImpl implements Portal {
 			strutsAction.equals("/document_library_display/edit_file_entry") ||
 			strutsAction.equals("/image_gallery_display/edit_file_entry") ||
 			strutsAction.equals("/image_gallery_display/edit_image") ||
-			strutsAction.equals("/wiki/edit_page_attachment") ||
-			strutsAction.equals("/wiki_admin/edit_page_attachment") ||
-			strutsAction.equals("/wiki_display/edit_page_attachment") ||
-			actionName.equals("addFile")) {
+			actionName.equals("addFile") ||
+			isAlwaysAllowDoAsUser(path, strutsAction, actionName)) {
 
 			try {
 				alwaysAllowDoAsUser = isAlwaysAllowDoAsUser(request);
@@ -8140,6 +8159,34 @@ public class PortalImpl implements Portal {
 		return true;
 	}
 
+	protected boolean isAlwaysAllowDoAsUser(
+		String path, String strutsAction, String actionName) {
+
+		for (AlwaysAllowDoAsUser alwaysAllowDoAsUser : _alwaysAllowDoAsUsers) {
+			Collection<String> paths = alwaysAllowDoAsUser.getPaths();
+
+			if (paths.contains(path)) {
+				return true;
+			}
+
+			Collection<String> strutsActions =
+				alwaysAllowDoAsUser.getStrutsActions();
+
+			if (strutsActions.contains(strutsAction)) {
+				return true;
+			}
+
+			Collection<String> actionNames =
+				alwaysAllowDoAsUser.getActionNames();
+
+			if (actionNames.contains(actionName)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	/**
 	 * @deprecated As of 6.2.0, with no direct replacement
 	 */
@@ -8312,6 +8359,9 @@ public class PortalImpl implements Portal {
 		themeDisplay.setLocale(locale);
 	}
 
+	private static Log _logWebServerServlet = LogFactoryUtil.getLog(
+		WebServerServlet.class);
+
 	private static final String _J_SECURITY_CHECK = "j_security_check";
 
 	private static final String _LOCALHOST = "localhost";
@@ -8327,9 +8377,6 @@ public class PortalImpl implements Portal {
 
 	private static Log _log = LogFactoryUtil.getLog(PortalImpl.class);
 
-	private static Log _logWebServerServlet = LogFactoryUtil.getLog(
-		WebServerServlet.class);
-
 	private static Map<Long, String> _cdnHostHttpMap =
 		new ConcurrentHashMap<>();
 	private static Map<Long, String> _cdnHostHttpsMap =
@@ -8342,6 +8389,10 @@ public class PortalImpl implements Portal {
 	private String[] _allSystemOrganizationRoles;
 	private String[] _allSystemRoles;
 	private String[] _allSystemSiteRoles;
+	private final List<AlwaysAllowDoAsUser> _alwaysAllowDoAsUsers =
+		new ArrayList<>();
+	private ServiceTracker<AlwaysAllowDoAsUser, AlwaysAllowDoAsUser>
+		_alwaysAllowDoAsUserServiceTracker;
 	private Pattern _bannedResourceIdPattern = Pattern.compile(
 		PropsValues.PORTLET_RESOURCE_ID_BANNED_PATHS_REGEXP,
 		Pattern.CASE_INSENSITIVE);
@@ -8405,5 +8456,67 @@ public class PortalImpl implements Portal {
 	private String[] _sortedSystemRoles;
 	private String[] _sortedSystemSiteRoles;
 	private final boolean _validPortalDomainCheckDisabled;
+
+	private class AlwaysAllowDoAsUserServiceTrackerCustomizer
+		implements ServiceTrackerCustomizer
+			<AlwaysAllowDoAsUser, AlwaysAllowDoAsUser> {
+
+		@Override
+		public AlwaysAllowDoAsUser addingService(
+			ServiceReference<AlwaysAllowDoAsUser> serviceReference) {
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			AlwaysAllowDoAsUser alwaysAllowDoAsUser = registry.getService(
+				serviceReference);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Add alway sallow do as user " +
+						ClassUtil.getClassName(alwaysAllowDoAsUser));
+			}
+
+			_alwaysAllowDoAsUsers.add(alwaysAllowDoAsUser);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"There are " + _alwaysAllowDoAsUsers.size() +
+						" alway sallow do as user instances");
+			}
+
+			return alwaysAllowDoAsUser;
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference<AlwaysAllowDoAsUser> serviceReference,
+			AlwaysAllowDoAsUser alwaysAllowDoAsUser) {
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference<AlwaysAllowDoAsUser> serviceReference,
+			AlwaysAllowDoAsUser alwaysAllowDoAsUser) {
+
+			Registry registry = RegistryUtil.getRegistry();
+
+			registry.ungetService(serviceReference);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Delete alway sallow do as user " +
+						ClassUtil.getClassName(alwaysAllowDoAsUser));
+			}
+
+			_alwaysAllowDoAsUsers.remove(alwaysAllowDoAsUser);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"There are " + _alwaysAllowDoAsUsers.size() +
+						" alway sallow do as user instances");
+			}
+		}
+
+	}
 
 }

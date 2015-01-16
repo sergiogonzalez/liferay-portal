@@ -1192,6 +1192,13 @@ Please set the property "jdk.6.home" in build.properties.
 		<ant dir=".." target="deploy-properties" inheritAll="false" />
 	</target>
 
+	<target name="download-nodejs">
+		<ant-execute
+			ant.dir="${project.dir}/tools/sdk"
+			ant.target="download-nodejs"
+		/>
+	</target>
+
 	<target name="format-js">
 		<taskdef classname="com.philmander.jshint.JsHintAntTask" classpath="${project.dir}/tools/ant-jshint-2.0.5.jar" name="jshint" />
 

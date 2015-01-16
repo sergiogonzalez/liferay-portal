@@ -80,6 +80,10 @@ public interface ResultRow {
 		ServletContext servletContext, HttpServletRequest request,
 		HttpServletResponse response);
 
+	public void addJSP(
+		String path, String cssClass, ServletContext servletContext,
+		HttpServletRequest request, HttpServletResponse response);
+
 	public void addJSP(String align, String valign, String path);
 
 	public void addJSP(
