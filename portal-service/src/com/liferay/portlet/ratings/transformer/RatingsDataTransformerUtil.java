@@ -36,14 +36,13 @@ public class RatingsDataTransformerUtil {
 	public static void transformCompanyRatingsData(
 			final long companyId, PortletPreferences oldPortletPreferences,
 			UnicodeProperties properties)
-		throws Exception {
+		throws PortalException {
 
 		if (_ratingsDataTransformer == null) {
 			return;
 		}
 
 		for (String portletId : PortletRatingsDefinitionUtil.getPortletIds()) {
-
 			String[] classNames = PortletRatingsDefinitionUtil.getClassNames(
 				portletId);
 
@@ -62,14 +61,13 @@ public class RatingsDataTransformerUtil {
 	public static void transformGroupRatingsData(
 			final long groupId, UnicodeProperties oldProperties,
 			UnicodeProperties properties)
-		throws Exception {
+		throws PortalException {
 
 		if (_ratingsDataTransformer == null) {
 			return;
 		}
 
 		for (String portletId : PortletRatingsDefinitionUtil.getPortletIds()) {
-
 			String[] classNames = PortletRatingsDefinitionUtil.getClassNames(
 				portletId);
 
