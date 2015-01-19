@@ -24,7 +24,7 @@ PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(com
 
 <h3><liferay-ui:message key="ratings" /></h3>
 
-<div class="alert alert-info" id="<portlet:namespace />change-type-msg">
+<div class="alert alert-info">
 	<p><liferay-ui:message key="changing-rating-type-could-produce-inaccurate-info-due-different-data-treatment-beetwen-types-or-irreversible-data-migration" /></p>
 </div>
 
