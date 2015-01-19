@@ -24,10 +24,10 @@ Group liveGroup = (Group)request.getAttribute("site.liveGroup");
 UnicodeProperties groupTypeSettings = null;
 
 if (liveGroup != null) {
-groupTypeSettings = liveGroup.getTypeSettingsProperties();
+	groupTypeSettings = liveGroup.getTypeSettingsProperties();
 }
 else {
-groupTypeSettings = new UnicodeProperties();
+	groupTypeSettings = new UnicodeProperties();
 }
 %>
 
