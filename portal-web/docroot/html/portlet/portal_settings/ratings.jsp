@@ -1,5 +1,3 @@
-<%@ page
-	import="com.liferay.portlet.ratings.transformer.PortletRatingsDefinitionUtil" %>
 <%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
