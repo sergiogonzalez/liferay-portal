@@ -244,12 +244,6 @@ ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, portlet
 						<c:when test="<%= curFolder != null %>">
 
 							<%
-							String folderImage = "folder_empty_article";
-
-							if (JournalFolderServiceUtil.getFoldersAndArticlesCount(scopeGroupId, curFolder.getFolderId()) > 0) {
-								folderImage = "folder_full_article";
-							}
-
 							PortletURL rowURL = liferayPortletResponse.createRenderURL();
 
 							rowURL.setParameter("struts_action", "/journal/view");
@@ -269,7 +263,7 @@ ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, portlet
 								rowCheckerId="<%= String.valueOf(curFolder.getFolderId()) %>"
 								rowCheckerName="<%= JournalFolder.class.getSimpleName() %>"
 								showCheckbox="<%= JournalFolderPermission.contains(permissionChecker, curFolder, ActionKeys.DELETE) || JournalFolderPermission.contains(permissionChecker, curFolder, ActionKeys.UPDATE) %>"
-								thumbnailSrc='<%= themeDisplay.getPathThemeImages() + "/file_system/large/" + folderImage + ".png" %>'
+								thumbnailSrc='<%= themeDisplay.getPathThemeImages() + "/file_system/large/folder_full_article.png" %>'
 								title="<%= (summary != null) ? summary.getTitle() : HtmlUtil.escape(curFolder.getName()) %>"
 								url="<%= rowURL.toString() %>"
 							/>

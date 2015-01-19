@@ -182,12 +182,6 @@ DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(re
 				<c:when test="<%= folder != null %>">
 
 					<%
-					String folderImage = "folder_empty_document";
-
-					if (DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(folder.getRepositoryId(), folder.getFolderId(), WorkflowConstants.STATUS_APPROVED, true) > 0) {
-						folderImage = "folder_full_document";
-					}
-
 					request.setAttribute("view.jsp-folder", folder);
 					request.setAttribute("view.jsp-folderId", String.valueOf(folder.getFolderId()));
 					request.setAttribute("view.jsp-repositoryId", String.valueOf(folder.getRepositoryId()));
@@ -205,7 +199,7 @@ DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(re
 						cssClass='<%= MathUtil.isEven(index) ? "search" : "search alt" %>'
 						description="<%= (summary != null) ? summary.getContent() : folder.getDescription() %>"
 						queryTerms="<%= hits.getQueryTerms() %>"
-						thumbnailSrc='<%= themeDisplay.getPathThemeImages() + "/file_system/large/" + folderImage + ".png" %>'
+						thumbnailSrc='<%= themeDisplay.getPathThemeImages() + "/file_system/large/folder_full_document.png" %>'
 						title="<%= (summary != null) ? summary.getTitle() : folder.getName() %>"
 						url="<%= rowURL %>"
 					/>

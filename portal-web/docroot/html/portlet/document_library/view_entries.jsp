@@ -317,12 +317,6 @@ dlSearchContainer.setResults(results);
 					<c:when test="<%= curFolder != null %>">
 
 						<%
-						String folderImage = "folder_empty_document";
-
-						if (DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(curFolder.getRepositoryId(), curFolder.getFolderId(), status, true) > 0) {
-							folderImage = "folder_full_document";
-						}
-
 						PortletURL tempRowURL = liferayPortletResponse.createRenderURL();
 
 						tempRowURL.setParameter("struts_action", "/document_library/view");
@@ -332,8 +326,6 @@ dlSearchContainer.setResults(results);
 						request.setAttribute("view_entries.jsp-folder", curFolder);
 						request.setAttribute("view_entries.jsp-folderId", String.valueOf(curFolder.getFolderId()));
 						request.setAttribute("view_entries.jsp-repositoryId", String.valueOf(curFolder.getRepositoryId()));
-
-						request.setAttribute("view_entries.jsp-folderImage", folderImage);
 
 						request.setAttribute("view_entries.jsp-tempRowURL", tempRowURL);
 						%>

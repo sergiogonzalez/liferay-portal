@@ -328,12 +328,6 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 				<c:when test="<%= curFolder != null %>">
 
 					<%
-					String folderImage = "folder_empty_article";
-
-					if (JournalFolderServiceUtil.getFoldersAndArticlesCount(scopeGroupId, curFolder.getFolderId()) > 0) {
-						folderImage = "folder_full_article";
-					}
-
 					PortletURL tempRowURL = liferayPortletResponse.createRenderURL();
 
 					tempRowURL.setParameter("struts_action", "/journal/view");
@@ -342,8 +336,6 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 					tempRowURL.setParameter("folderId", String.valueOf(curFolder.getFolderId()));
 
 					request.setAttribute("view_entries.jsp-folder", curFolder);
-
-					request.setAttribute("view_entries.jsp-folderImage", folderImage);
 
 					request.setAttribute("view_entries.jsp-tempRowURL", tempRowURL);
 					%>

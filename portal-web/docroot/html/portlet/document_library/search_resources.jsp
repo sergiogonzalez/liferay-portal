@@ -221,12 +221,6 @@ SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, por
 								status = WorkflowConstants.STATUS_ANY;
 							}
 
-							String folderImage = "folder_empty_document";
-
-							if (DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(curFolder.getRepositoryId(), curFolder.getFolderId(), status, true) > 0) {
-								folderImage = "folder_full_document";
-							}
-
 							PortletURL tempRowURL = liferayPortletResponse.createRenderURL();
 
 							tempRowURL.setParameter("struts_action", "/document_library/view");
@@ -247,7 +241,7 @@ SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, por
 								rowCheckerId="<%= String.valueOf(curFolder.getFolderId()) %>"
 								rowCheckerName="<%= Folder.class.getSimpleName() %>"
 								showCheckbox="<%= DLFolderPermission.contains(permissionChecker, curFolder, ActionKeys.DELETE) || DLFolderPermission.contains(permissionChecker, curFolder, ActionKeys.UPDATE) %>"
-								thumbnailSrc='<%= themeDisplay.getPathThemeImages() + "/file_system/large/" + folderImage + ".png" %>'
+								thumbnailSrc='<%= themeDisplay.getPathThemeImages() + "/file_system/large/folder_full_document.png" %>'
 								title="<%= (summary != null) ? summary.getTitle() : curFolder.getName() %>"
 								url="<%= tempRowURL.toString() %>"
 							/>
