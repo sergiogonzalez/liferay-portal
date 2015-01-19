@@ -29,6 +29,7 @@ import com.liferay.portal.model.Portlet;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.ratings.model.RatingsEntry;
 import com.liferay.portlet.ratings.model.RatingsStats;
+import com.liferay.portlet.ratings.transformer.PortletRatingsDefinition;
 import com.liferay.portlet.ratings.transformer.PortletRatingsDefinitionUtil;
 import com.liferay.taglib.util.IncludeTag;
 
@@ -98,50 +99,63 @@ public class RatingsTag extends IncludeTag {
 		return _PAGE;
 	}
 
-	protected String getSelectedType(HttpServletRequest request) {
-		if (Validator.isNotNull(_type)) {
-			return _type;
-		}
+	protected String getType(HttpServletRequest request) {
+		if (_type == null) {
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+			long companyId = themeDisplay.getCompanyId();
 
-		long companyId = themeDisplay.getCompanyId();
+			PortletPreferences companyPortletPreferences =
+				PrefsPropsUtil.getPreferences(companyId);
 
-		PortletPreferences companyPortletPreferences =
-			PrefsPropsUtil.getPreferences(companyId);
+			Group group = themeDisplay.getSiteGroup();
 
-		Group group = themeDisplay.getSiteGroup();
+			UnicodeProperties groupTypeSettings = null;
 
-		UnicodeProperties groupTypeSettings = null;
+			if (group != null) {
+				groupTypeSettings = group.getTypeSettingsProperties();
+			}
+			else {
+				groupTypeSettings = new UnicodeProperties();
+			}
 
-		if (group != null) {
-			groupTypeSettings = group.getTypeSettingsProperties();
-		}
-		else {
-			groupTypeSettings = new UnicodeProperties();
-		}
+			String portletId = null;
 
-		String portletId = null;
+			Portlet portlet = (Portlet)request.getAttribute(
+				WebKeys.RENDER_PORTLET);
 
-		Portlet portlet = (Portlet)request.getAttribute(WebKeys.RENDER_PORTLET);
+			if (portlet != null) {
+				portletId = portlet.getPortletId();
+			}
 
-		if (portlet != null) {
-			portletId = portlet.getPortletId();
-		}
+			String propertyName =
+				_className + StringPool.UNDERLINE + "RatingsType";
 
-		String propertyName = _className + StringPool.UNDERLINE + "RatingsType";
+			PortletRatingsDefinition.RatingsType ratingsType = null;
 
-		String companyRatingsType = PrefsParamUtil.getString(
-			companyPortletPreferences, request, propertyName,
-			PortletRatingsDefinitionUtil.getDefaultType(
-				portletId, _className).toString());
+			PortletRatingsDefinition.RatingsType defaultRatingsType =
+				PortletRatingsDefinitionUtil.getDefaultType(
+					portletId, _className);
 
-		_type = PropertiesParamUtil.getString(
-			groupTypeSettings, request, propertyName, companyRatingsType);
+			if (defaultRatingsType != null) {
+				String companyRatingsType = PrefsParamUtil.getString(
+					companyPortletPreferences, request, propertyName,
+					defaultRatingsType.getValue());
 
-		if (Validator.isNull(_type)) {
-			_type = _DEFAULT_TYPE;
+				ratingsType = PortletRatingsDefinition.RatingsType.valueOf(
+					PropertiesParamUtil.getString(
+						groupTypeSettings, request, propertyName,
+						companyRatingsType));
+			}
+
+			if (ratingsType != null) {
+				_type = ratingsType.getValue();
+			}
+
+			if (Validator.isNull(_type)) {
+				_type = _DEFAULT_TYPE;
+			}
 		}
 
 		return _type;
@@ -170,8 +184,7 @@ public class RatingsTag extends IncludeTag {
 			"liferay-ui:ratings:setRatingsStats",
 			String.valueOf(_setRatingsStats));
 
-		request.setAttribute(
-			"liferay-ui:ratings:type", getSelectedType(request));
+		request.setAttribute("liferay-ui:ratings:type", getType(request));
 
 		request.setAttribute("liferay-ui:ratings:url", _url);
 	}
@@ -181,7 +194,8 @@ public class RatingsTag extends IncludeTag {
 	private static final int _DEFAULT_NUMBER_OF_STARS = GetterUtil.getInteger(
 		PropsUtil.get(PropsKeys.RATINGS_DEFAULT_NUMBER_OF_STARS));
 
-	private static final String _DEFAULT_TYPE = "stars";
+	private static final String _DEFAULT_TYPE =
+		PortletRatingsDefinition.RatingsType.STARS.getValue();
 
 	private static final String _PAGE = "/html/taglib/ui/ratings/page.jsp";
 
