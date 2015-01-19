@@ -111,14 +111,17 @@ public class RatingsTag extends IncludeTag {
 
 			Group group = themeDisplay.getSiteGroup();
 
-			UnicodeProperties groupTypeSettings = null;
+			if (group.isStagingGroup()) {
+				group = group.getLiveGroup();
+			}
+
+			UnicodeProperties groupTypeSettings = new UnicodeProperties();
 
 			if (group != null) {
 				groupTypeSettings = group.getTypeSettingsProperties();
 			}
-			else {
-				groupTypeSettings = new UnicodeProperties();
-			}
+
+			PortletRatingsDefinition.RatingsType ratingsType = null;
 
 			String portletId = null;
 
@@ -127,26 +130,24 @@ public class RatingsTag extends IncludeTag {
 
 			if (portlet != null) {
 				portletId = portlet.getPortletId();
-			}
 
-			String propertyName =
-				_className + StringPool.UNDERLINE + "RatingsType";
+				String propertyName =
+					_className + StringPool.UNDERLINE + "RatingsType";
 
-			PortletRatingsDefinition.RatingsType ratingsType = null;
+				PortletRatingsDefinition.RatingsType defaultRatingsType =
+					PortletRatingsDefinitionUtil.getDefaultType(
+						portletId, _className);
 
-			PortletRatingsDefinition.RatingsType defaultRatingsType =
-				PortletRatingsDefinitionUtil.getDefaultType(
-					portletId, _className);
+				if (defaultRatingsType != null) {
+					String companyRatingsType = PrefsParamUtil.getString(
+						companyPortletPreferences, request, propertyName,
+						defaultRatingsType.getValue());
 
-			if (defaultRatingsType != null) {
-				String companyRatingsType = PrefsParamUtil.getString(
-					companyPortletPreferences, request, propertyName,
-					defaultRatingsType.getValue());
-
-				ratingsType = PortletRatingsDefinition.RatingsType.valueOf(
-					PropertiesParamUtil.getString(
-						groupTypeSettings, request, propertyName,
-						companyRatingsType));
+					ratingsType = PortletRatingsDefinition.RatingsType.valueOf(
+						PropertiesParamUtil.getString(
+							groupTypeSettings, request, propertyName,
+							companyRatingsType));
+				}
 			}
 
 			if (ratingsType != null) {
