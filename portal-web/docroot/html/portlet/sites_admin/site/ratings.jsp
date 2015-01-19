@@ -29,63 +29,70 @@ if (liveGroup != null) {
 else {
 	groupTypeSettings = new UnicodeProperties();
 }
+
+String[] portletIds = PortletRatingsDefinitionUtil.getPortletIds();
 %>
 
 <liferay-ui:error-marker key="errorSection" value="ratings" />
 
 <h3><liferay-ui:message key="ratings" /></h3>
 
-<div class="alert alert-info">
-	<p><liferay-ui:message key="changing-rating-type-could-produce-inaccurate-info" /></p>
-</div>
+<c:choose>
+	<c:when test="<%= ArrayUtil.isEmpty(portletIds) %>">
+		<div class="alert alert-info">
+			<p><liferay-ui:message key="no-portlet-has-rating-type-change-capabilities" /></p>
+		</div>
+	</c:when>
+	<c:otherwise>
+		<div class="alert alert-info">
+			<p><liferay-ui:message key="changing-rating-type-could-produce-inaccurate-info" /></p>
+		</div>
 
-<p><liferay-ui:message key="select-the-rating-type-for-the-portlets" /></p>
+		<p><liferay-ui:message key="select-the-rating-type-for-the-portlets" /></p>
 
-<aui:fieldset>
-
-	<%
-	String[] portletIds = PortletRatingsDefinitionUtil.getPortletIds();
-
-	for (String portletId : portletIds) {
-
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
-	%>
-
-		<p><%= PortalUtil.getPortletTitle(portlet, application, locale) %></p>
-
-		<%
-		String[] classNames = PortletRatingsDefinitionUtil.getClassNames(portletId);
-
-		for (String className : classNames) {
-		%>
+		<aui:fieldset>
 
 			<%
-			String propertyName = className + StringPool.UNDERLINE + "RatingsType";
+			for (String portletId : portletIds) {
 
-			String companyRatingsType = PrefsParamUtil.getString(companyPortletPreferences, request, propertyName, PortletRatingsDefinitionUtil.getDefaultType(portletId, className).toString());
-
-			String ratingsType = PropertiesParamUtil.getString(groupTypeSettings, request, propertyName, companyRatingsType);
+				Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
 			%>
 
-			<div class="ratings-type-select">
-				<aui:select label='<%= (classNames.length > 1) ? ResourceActionsUtil.getModelResource(locale, className) : "" %>' name='<%= "TypeSettingsProperties--" + propertyName + "--" %>' value="<%= ratingsType %>">
+				<p><%= PortalUtil.getPortletTitle(portlet, application, locale) %></p>
 
-					<%
-					for (PortletRatingsDefinition.RatingsType value : PortletRatingsDefinition.RatingsType.values()) {
-					%>
+				<%
+				String[] classNames = PortletRatingsDefinitionUtil.getClassNames(portletId);
 
-						<aui:option label="<%= LanguageUtil.get(request, value.getValue()) %>" value="<%= value.getValue() %>" />
+				for (String className : classNames) {
 
-					<%
-					}
-					%>
+					String propertyName = className + StringPool.UNDERLINE + "RatingsType";
 
-				</aui:select>
-			</div>
+					String companyRatingsType = PrefsParamUtil.getString(companyPortletPreferences, request, propertyName, PortletRatingsDefinitionUtil.getDefaultType(portletId, className).toString());
 
-	<%
-		}
-	}
-	%>
+					String ratingsType = PropertiesParamUtil.getString(groupTypeSettings, request, propertyName, companyRatingsType);
+				%>
 
-</aui:fieldset>
+					<div class="ratings-type-select">
+						<aui:select label='<%= (classNames.length > 1) ? ResourceActionsUtil.getModelResource(locale, className) : "" %>' name='<%= "TypeSettingsProperties--" + propertyName + "--" %>' value="<%= ratingsType %>">
+
+							<%
+							for (PortletRatingsDefinition.RatingsType value : PortletRatingsDefinition.RatingsType.values()) {
+							%>
+
+								<aui:option label="<%= LanguageUtil.get(request, value.getValue()) %>" value="<%= value.getValue() %>" />
+
+							<%
+							}
+							%>
+
+						</aui:select>
+					</div>
+
+			<%
+				}
+			}
+			%>
+
+		</aui:fieldset>
+	</c:otherwise>
+</c:choose>
