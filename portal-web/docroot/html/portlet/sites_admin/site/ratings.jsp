@@ -36,7 +36,7 @@ groupTypeSettings = new UnicodeProperties();
 <h3><liferay-ui:message key="ratings" /></h3>
 
 <div class="alert alert-info">
-	<p><liferay-ui:message key="changing-rating-type-could-produce-inaccurate-info-due-different-data-treatment-beetwen-types-or-irreversible-data-migration" /></p>
+	<p><liferay-ui:message key="changing-rating-type-could-produce-inaccurate-info" /></p>
 </div>
 
 <p><liferay-ui:message key="select-the-rating-type-for-the-portlets" /></p>
