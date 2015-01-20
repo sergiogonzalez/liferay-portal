@@ -17,25 +17,11 @@
 <%@ include file="/html/portlet/journal/init.jsp" %>
 
 <%
-AssetRenderer assetRenderer = (AssetRenderer)request.getAttribute(WebKeys.ASSET_RENDERER);
 int abstractLength = (Integer)request.getAttribute(WebKeys.ASSET_PUBLISHER_ABSTRACT_LENGTH);
+
 String viewURL = (String)request.getAttribute(WebKeys.ASSET_PUBLISHER_VIEW_URL);
 
-JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_ARTICLE);
-JournalArticleResource articleResource = JournalArticleResourceLocalServiceUtil.getArticleResource(article.getResourcePrimKey());
-
-String languageId = LanguageUtil.getLanguageId(request);
-
-boolean workflowAssetPreview = GetterUtil.getBoolean((Boolean)request.getAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW));
-
-JournalArticleDisplay articleDisplay = null;
-
-if (!workflowAssetPreview && article.isApproved()) {
-	articleDisplay = JournalContentUtil.getDisplay(articleResource.getGroupId(), articleResource.getArticleId(), null, null, languageId, 1, new PortletRequestModel(renderRequest, renderResponse), themeDisplay);
-}
-else {
-	articleDisplay = JournalArticleLocalServiceUtil.getArticleDisplay(article, null, null, languageId, 1, new PortletRequestModel(renderRequest, renderResponse), themeDisplay);
-}
+JournalArticleDisplay articleDisplay = (JournalArticleDisplay)request.getAttribute(WebKeys.JOURNAL_ARTICLE_DISPLAY);
 %>
 
 <c:if test="<%= articleDisplay.isSmallImage() %>">

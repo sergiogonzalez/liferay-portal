@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -103,8 +102,7 @@ public class BlogsEntryAssetRenderer
 		String summary = _entry.getDescription();
 
 		if (Validator.isNull(summary)) {
-			summary = StringUtil.shorten(
-				HtmlUtil.stripHtml(_entry.getContent()), 200);
+			summary = HtmlUtil.stripHtml(_entry.getContent());
 		}
 
 		return summary;
