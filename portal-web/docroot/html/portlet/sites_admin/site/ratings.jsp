@@ -72,13 +72,21 @@ String[] portletIds = PortletRatingsDefinitionUtil.getPortletIds();
 					String ratingsType = PropertiesParamUtil.getString(groupTypeSettings, request, propertyName, companyRatingsType);
 				%>
 
-				<div class="ratings-type-select">
-					<aui:select label='<%= (classNames.length > 1) ? ResourceActionsUtil.getModelResource(locale, className) : "" %>' name='<%= "TypeSettingsProperties--" + propertyName + "--" %>' value="<%= ratingsType %>">
-						<aui:option label='<%= LanguageUtil.get(request, "like") %>' value="like" />
-						<aui:option label='<%= LanguageUtil.get(request, "stars") %>' value="stars" />
-						<aui:option label='<%= LanguageUtil.get(request, "thumbs") %>' value="thumbs" />
-					</aui:select>
-				</div>
+					<div class="ratings-type-select">
+						<aui:select label='<%= (classNames.length > 1) ? ResourceActionsUtil.getModelResource(locale, className) : "" %>' name='<%= "TypeSettingsProperties--" + propertyName + "--" %>' value="<%= ratingsType %>">
+
+							<%
+							for (PortletRatingsDefinition.RatingsType value : PortletRatingsDefinition.RatingsType.values()) {
+							%>
+
+								<aui:option label="<%= LanguageUtil.get(request, value.getValue()) %>" value="<%= value.getValue() %>" />
+
+							<%
+							}
+							%>
+
+						</aui:select>
+					</div>
 
 			<%
 				}
