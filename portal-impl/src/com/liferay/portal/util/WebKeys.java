@@ -310,6 +310,8 @@ public class WebKeys implements com.liferay.portal.kernel.util.WebKeys {
 
 	public static final String ORGANIZATION = "ORGANIZATION";
 
+	public static final String ORIGINAL_TITLE = "ORIGINAL_TITLE";
+
 	public static final String OUTER_PORTLET_ID = "OUTER_PORTLET_ID";
 
 	public static final String PASSWORD_POLICY = "PASSWORD_POLICY";
@@ -466,6 +468,8 @@ public class WebKeys implements com.liferay.portal.kernel.util.WebKeys {
 	public static final String WIKI_NODE = "WIKI_NODE";
 
 	public static final String WIKI_NODE_ID = "WIKI_NODE_ID";
+
+	public static final String WIKI_ORIGINAL_PAGE = "WIKI_ORIGINAL_PAGE";
 
 	public static final String WIKI_PAGE = "WIKI_PAGE";
 
