@@ -17,6 +17,9 @@
 <%@ include file="/html/taglib/init.jsp" %>
 
 <%
+String portletId = portletDisplay.getRootPortletId();
+
+boolean autoCreate = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:autoCreate"));
 String contents = (String)request.getAttribute("liferay-ui:input-editor:contents");
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:cssClass"));
 String initMethod = (String)request.getAttribute("liferay-ui:input-editor:initMethod");
@@ -37,16 +40,44 @@ if (Validator.isNotNull(onInitMethod)) {
 boolean resizable = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:resizable"));
 %>
 
+<liferay-util:buffer var="editor">
+	<table bgcolor="#FFFFFF" cellpadding="0" cellspacing="0" height="100%" width="100%">
+		<tr>
+			<td bgcolor="#FFFFFF" height="100%">
+				<textarea class="lfr-editor-textarea" id="<%= name %>" name="<%= name %>" <%= Validator.isNotNull(onChangeMethod) ? "onChange=\"" + HtmlUtil.escapeJS(onChangeMethod) + "(this.value)\"" : StringPool.BLANK %> style="resize:<%= resizable ? "vertical" : "none" %>"><%= (contents != null) ? contents : StringPool.BLANK %></textarea>
+			</td>
+		</tr>
+	</table>
+</liferay-util:buffer>
+
 <aui:script use='<%= resizable ? "resize" : "aui-base" %>'>
 	window['<%= name %>'] = {
+		create: function() {
+			if (! window['<%= name %>'].instanceReady) {
+				var editorNode = A.Node.create('<%= HtmlUtil.escapeJS(editor) %>');
+
+				var editorContainer = A.one('#<%= name %>Container');
+
+				editorContainer.appendChild(editorNode);
+
+				window['<%= name %>'].initEditor();
+			}
+		},
+
 		destroy: function() {
+			window['<%= name %>'].dispose();
+
+			window['<%= name %>'] = null;
+		},
+
+		dispose: function() {
 			var editorEl = document.getElementById('<%= name %>');
 
 			if (editorEl) {
 				editorEl.parentNode.removeChild(editorEl);
-			}
 
-			window['<%= name %>'] = null;
+				window['<%= name %>'].instanceReady = false;
+			}
 		},
 
 		focus: function() {
@@ -66,7 +97,7 @@ boolean resizable = GetterUtil.getBoolean((String)request.getAttribute("liferay-
 				new A.Resize(
 					{
 						handles: 'br',
-						node: '#<%= name %>_container',
+						node: '#<%= name %>Container',
 						wrap: true
 					}
 				);
@@ -86,15 +117,23 @@ boolean resizable = GetterUtil.getBoolean((String)request.getAttribute("liferay-
 		}
 	};
 
-	window['<%= name %>'].initEditor();
+	<c:if test="<%= autoCreate %>">
+		window['<%= name %>'].initEditor();
+	</c:if>
+
+	var destroyInstance = function(event) {
+		if (event.portletId === '<%= portletId %>') {
+			window['<%= name %>'].destroy();
+
+			Liferay.detach('destroyPortlet', destroyInstance);
+		}
+	};
+
+	Liferay.on('destroyPortlet', destroyInstance);
 </aui:script>
 
-<div class="<%= cssClass %>" id="<%= name %>_container">
-	<table bgcolor="#FFFFFF" cellpadding="0" cellspacing="0" height="100%" width="100%">
-	<tr>
-		<td bgcolor="#FFFFFF" height="100%">
-			<textarea class="lfr-editor-textarea" id="<%= name %>" name="<%= name %>" <%= Validator.isNotNull(onChangeMethod) ? "onChange=\"" + HtmlUtil.escapeJS(onChangeMethod) + "(this.value)\"" : StringPool.BLANK %> style="resize:<%= resizable ? "vertical" : "none" %>"><%= (contents != null) ? contents : StringPool.BLANK %></textarea>
-		</td>
-	</tr>
-	</table>
+<div class="<%= cssClass %>" id="<%= name %>Container">
+	<c:if test="<%= autoCreate %>">
+		<%= editor %>
+	</c:if>
 </div>

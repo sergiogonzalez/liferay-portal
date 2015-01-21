@@ -10,10 +10,31 @@
 		}
 	}
 
+	.alloy-editor-placeholder {
+		min-height: 90px;
+
+		p {
+			margin-bottom : 0;
+		}
+	}
+
+	.add-comment {
+		.row {
+			margin-top: 30px;
+		}
+	}
+
+	.depth-1 {
+		margin-left: 75px;
+	}
+
+	.depth-2 {
+		margin-left: 150px;
+	}
+
 	.lfr-discussion {
-		border-bottom: 1px solid transparent;
-		margin: 0 0 5px;
-		padding: 5px 0 5px 0;
+		border-top: 1px solid transparent;
+		padding: 24px 0;
 		position: relative;
 		width: auto;
 
@@ -26,12 +47,20 @@
 		}
 
 		&.last {
-			border-bottom-width: 0;
+			border-top-width: 0;
+		}
+
+		&:hover .lfr-discussion-actions li a, .lfr-discussion-actions li a:focus {
+			clip: rect(auto auto auto auto);
+			position: static;
 		}
 	}
 
 	.lfr-discussion-details {
-		width: 15%;
+		float: left;
+		padding-left: 0;
+		padding-right: 0;
+		width: 100px;
 
 		.column-content {
 			padding: 0;
@@ -51,17 +80,56 @@
 				vertical-align: top;
 			}
 
-			.user-profile-image img {
+			.user-profile-image .avatar {
+				background-size: 50px;
+				height: 50px;
 				width: 50px;
 			}
 		}
 	}
 
 	.lfr-discussion-body {
-		width: 85%;
+		overflow: hidden;
+		padding-left: 0;
+
+		.lfr-discussion-actions {
+			float: right;
+			margin: -10px 10px 0;
+
+			li {
+				&, a {
+					display: inline-block;
+					list-style: none;
+					vertical-align: top;
+				}
+
+				a {
+					clip: rect(0 0 0 0);
+					position: absolute;
+
+					@include respond-to(phone, tablet) {
+						position: static;
+					}
+				}
+			}
+
+			a.rating-element {
+				margin: 0 1px;
+			}
+		}
 
 		.lfr-discussion-controls .taglib-ratings .rating-label-element {
 			padding-left: 0;
+		}
+
+		.lfr-discussion-message {
+			padding-bottom: 1em;
+
+			@include word-wrap(break-all);
+
+			.lfr-discussion-message-author {
+				margin-bottom: 12px;
+			}
 		}
 	}
 
@@ -69,58 +137,18 @@
 		padding: 5px 0 0 0.5em;
 	}
 
-	.lfr-discussion-posted-on {
-		clear: both;
-		float: right;
-		padding-top: 0.5em;
-	}
-
-	.lfr-discussion-message {
-		padding-bottom: 1em;
-
-		@include word-wrap(break-all);
-	}
-
 	.taglib-ratings {
 		display: inline-block;
 		margin-right: 1em;
 	}
 
-	.lfr-discussion-actions {
-		float: right;
-		margin: 0;
-
-		li {
-			&, a {
-				display: inline-block;
-				list-style: none;
-				vertical-align: top;
-			}
-
-			a {
-				clip: rect(0 0 0 0);
-				position: absolute;
-
-				@include respond-to(phone, tablet) {
-					position: static;
-				}
-			}
-		}
-
-		a.rating-element {
-			margin: 0 1px;
-		}
-	}
-
-	.lfr-discussion {
-		&:hover .lfr-discussion-actions li a, .lfr-discussion-actions li a:focus {
-			clip: rect(auto auto auto auto);
-			position: static;
-		}
-	}
-
 	.lfr-discussion-form-container {
 		clear: both;
+		overflow: hidden;
+
+		.lfr-discussion-form-reply, .lfr-discussion-form-edit {
+			margin-top: 30px;
+		}
 
 		.lfr-discussion-form {
 			display: inline-block;
@@ -145,6 +173,8 @@
 					top: 5px;
 
 					.avatar {
+						background-size: 40px;
+						height: 40px;
 						width: 40px;
 					}
 				}
@@ -201,7 +231,11 @@
 	}
 
 	.lfr-discussion {
-		border-bottom-color: #DDD;
+		border-top-color: rgba(176, 180, 187, 0.5);
+
+		&.depth-0 {
+			border-top-color: rgba(176, 180, 187, 1);
+		}
 	}
 
 	.lfr-discussion-details {
@@ -218,15 +252,6 @@
 					text-decoration: underline;
 				}
 			}
-		}
-	}
-
-	.lfr-discussion-posted-on {
-		color: #999;
-		font-size: 0.9em;
-
-		.lfr-discussion-parent-link {
-			cursor: pointer;
 		}
 	}
 
