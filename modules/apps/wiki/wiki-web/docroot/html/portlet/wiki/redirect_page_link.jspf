@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,28 +12,17 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-package com.liferay.wiki.constants;
+<%
+PortletURL originalViewPageURL = renderResponse.createRenderURL();
 
-/**
- * @author Iván Zaera
- */
-public class WikiWebKeys {
+originalViewPageURL.setParameter("struts_action", "/wiki/view");
+originalViewPageURL.setParameter("nodeName", node.getName());
+originalViewPageURL.setParameter("title", title);
+originalViewPageURL.setParameter("followRedirect", "false");
+%>
 
-	public static final String WIKI_NODE = "WIKI_NODE";
-
-	public static final String WIKI_NODE_ID = "WIKI_NODE_ID";
-
-	public static final String WIKI_PAGE = "WIKI_PAGE";
-
-	public static final String WIKI_REDIRECT_PAGE = "WIKI_REDIRECT_PAGE";
-
-	public static final String WIKI_TREE_WALKER_DEPTH =
-		"WIKI_TREE_WALKER_DEPTH";
-
-	public static final String WIKI_TREE_WALKER_PAGE = "WIKI_TREE_WALKER_PAGE";
-
-	public static final String WIKI_TREE_WALKER_PARENT =
-		"WIKI_TREE_WALKER_PARENT";
-
-}
+<div class="page-redirect" onClick="location.href = '<%= originalViewPageURL.toString() %>';">
+	(<%= LanguageUtil.format(request, "redirected-from-x", title, false) %>)
+</div>

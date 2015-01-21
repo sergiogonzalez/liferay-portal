@@ -33,7 +33,15 @@
 		}
 	}
 
-	String title = ParamUtil.getString(request, "title");
+	WikiPage wikiPage = (WikiPage)renderRequest.getAttribute(WikiWebKeys.WIKI_PAGE);
+
+	String title = ParamUtil.getString(request, "title", wikiPage.getTitle());
+
+	String redirectPageTitle = StringPool.BLANK;
+
+	if (Validator.isNotNull(wikiPage.getRedirectTitle())) {
+		redirectPageTitle = wikiPage.getRedirectTitle();
+	}
 
 	boolean hasDraftPage = false;
 
@@ -92,6 +100,17 @@
 			</c:choose>
 		</c:when>
 		<c:otherwise>
+
+			<%
+			WikiNode node = (WikiNode)request.getAttribute(WikiWebKeys.WIKI_NODE);
+			%>
+
+			<c:if test="<%= (wikiPage != null) && Validator.isNotNull(wikiPage.getRedirectTitle()) %>">
+				<div class="page-redirect-link">
+					<%@ include file="/html/portlet/wiki/redirect_page_link.jspf" %>
+				</div>
+			</c:if>
+
 			<div class="alert alert-info">
 				<liferay-ui:message key="this-page-is-empty.-use-the-buttons-below-to-create-it-or-to-search-for-the-words-in-the-title" />
 			</div>
@@ -102,13 +121,13 @@
 				String taglibSearch = "location.href = '" + searchURL.toString() + "';";
 				%>
 
-				<aui:button onClick="<%= taglibSearch %>" value='<%= LanguageUtil.format(request, "search-for-x", HtmlUtil.escapeAttribute(title), false) %>' />
+				<aui:button onClick="<%= taglibSearch %>" value='<%= LanguageUtil.format(request, "search-for-x", HtmlUtil.escapeAttribute(Validator.isNotNull(redirectPageTitle) ? redirectPageTitle : title), false) %>' />
 
 				<%
 				String taglibEditPage = "location.href = '" + editPageURL.toString() + "';";
 				%>
 
-				<aui:button onClick="<%= taglibEditPage %>" value='<%= LanguageUtil.format(request, "create-page-x", HtmlUtil.escapeAttribute(title), false) %>' />
+				<aui:button onClick="<%= taglibEditPage %>" value='<%= LanguageUtil.format(request, "create-page-x", HtmlUtil.escapeAttribute(Validator.isNotNull(redirectPageTitle) ? redirectPageTitle : title), false) %>' />
 			</div>
 		</c:otherwise>
 	</c:choose>

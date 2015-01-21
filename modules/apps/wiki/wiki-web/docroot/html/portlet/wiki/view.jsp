@@ -21,14 +21,7 @@ boolean followRedirect = ParamUtil.getBoolean(request, "followRedirect", true);
 
 WikiNode node = (WikiNode)request.getAttribute(WikiWebKeys.WIKI_NODE);
 WikiPage wikiPage = (WikiPage)request.getAttribute(WikiWebKeys.WIKI_PAGE);
-
-WikiPage originalPage = null;
-WikiPage redirectPage = wikiPage.getRedirectPage();
-
-if (followRedirect && (redirectPage != null)) {
-	originalPage = wikiPage;
-	wikiPage = redirectPage;
-}
+WikiPage redirectPage = (WikiPage)request.getAttribute(WikiWebKeys.WIKI_REDIRECT_PAGE);
 
 String title = wikiPage.getTitle();
 
@@ -36,6 +29,12 @@ String parentTitle = StringPool.BLANK;
 
 if (wikiPage != null) {
 	parentTitle = wikiPage.getParentTitle();
+}
+
+String redirectPageTitle = StringPool.BLANK;
+
+if (redirectPage != null) {
+	redirectPageTitle = redirectPage.getTitle();
 }
 
 List childPages = wikiPage.getViewableChildPages();
@@ -217,20 +216,8 @@ contextObjects.put("wikiPortletInstanceSettings", wikiPortletInstanceSettings);
 		</div>
 	</c:if>
 
-	<c:if test="<%= originalPage != null %>">
-
-		<%
-		PortletURL originalViewPageURL = renderResponse.createRenderURL();
-
-		originalViewPageURL.setParameter("struts_action", "/wiki/view");
-		originalViewPageURL.setParameter("nodeName", node.getName());
-		originalViewPageURL.setParameter("title", originalPage.getTitle());
-		originalViewPageURL.setParameter("followRedirect", "false");
-		%>
-
-		<div class="page-redirect" onClick="location.href = '<%= originalViewPageURL.toString() %>';">
-			(<%= LanguageUtil.format(request, "redirected-from-x", originalPage.getTitle(), false) %>)
-		</div>
+	<c:if test="<%= redirectPage != null %>">
+		<%@ include file="/html/portlet/wiki/redirect_page_link.jspf" %>
 	</c:if>
 
 	<c:if test="<%= !wikiPage.isHead() %>">
