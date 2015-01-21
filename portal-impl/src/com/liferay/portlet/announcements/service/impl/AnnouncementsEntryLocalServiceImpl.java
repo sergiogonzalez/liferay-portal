@@ -467,7 +467,7 @@ public class AnnouncementsEntryLocalServiceImpl
 				params);
 		}
 
-		IntervalAction intervalAction = new IntervalAction(total);
+		final IntervalAction intervalAction = new IntervalAction(total);
 
 		intervalAction.setPerformActionMethod(
 			new IntervalAction.PerformIntervalActionMethod() {
@@ -491,6 +491,8 @@ public class AnnouncementsEntryLocalServiceImpl
 
 					notifyUsers(
 						users, entry, company.getLocale(), toAddress, toName);
+
+					intervalAction.incrementStart(users.size());
 				}
 
 			});
