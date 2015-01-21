@@ -258,6 +258,10 @@
 		text-decoration: underline;
 	}
 
+	.page-redirect-link {
+		margin-top: 2em;
+	}
+
 	.popup-print {
 		float: right;
 	}

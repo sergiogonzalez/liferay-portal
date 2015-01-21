@@ -33,27 +33,24 @@
 		}
 	}
 
-	String title = ParamUtil.getString(request, "title");
+	WikiPage wikiPage = (WikiPage)renderRequest.getAttribute(WikiWebKeys.WIKI_PAGE);
+
+	String title = StringPool.BLANK;
+	String redirectPageTitle = StringPool.BLANK;
+
+	if (wikiPage != null) {
+		title = wikiPage.getTitle();
+		redirectPageTitle = wikiPage.getRedirectTitle();
+	}
+	else {
+		title = ParamUtil.getString(request, "title");
+	}
 
 	boolean hasDraftPage = false;
 
 	if (nodeId > 0) {
 		hasDraftPage = WikiPageLocalServiceUtil.hasDraftPage(nodeId, title);
 	}
-
-	PortletURL searchURL = renderResponse.createRenderURL();
-
-	searchURL.setParameter("struts_action", "/wiki/search");
-	searchURL.setParameter("redirect", currentURL);
-	searchURL.setParameter("nodeId", String.valueOf(nodeId));
-	searchURL.setParameter("keywords", title);
-
-	PortletURL editPageURL = renderResponse.createRenderURL();
-
-	editPageURL.setParameter("struts_action", "/wiki/edit_page");
-	editPageURL.setParameter("redirect", currentURL);
-	editPageURL.setParameter("nodeId", String.valueOf(nodeId));
-	editPageURL.setParameter("title", title);
 	%>
 
 	<c:choose>
@@ -78,7 +75,14 @@
 					<div class="btn-toolbar">
 
 						<%
-						String taglibEditPage = "location.href = '" + editPageURL.toString() + "';";
+						PortletURL editDraftPageURL = renderResponse.createRenderURL();
+
+						editDraftPageURL.setParameter("struts_action", "/wiki/edit_page");
+						editDraftPageURL.setParameter("redirect", currentURL);
+						editDraftPageURL.setParameter("nodeId", String.valueOf(nodeId));
+						editDraftPageURL.setParameter("title", title);
+
+						String taglibEditPage = "location.href = '" + editDraftPageURL.toString() + "';";
 						%>
 
 						<aui:button onClick="<%= taglibEditPage %>" value="edit-draft" />
@@ -92,6 +96,24 @@
 			</c:choose>
 		</c:when>
 		<c:otherwise>
+			<c:if test="<%= Validator.isNotNull(redirectPageTitle) %>">
+				<div class="page-redirect-link">
+
+					<%
+					PortletURL viewPageURL = renderResponse.createRenderURL();
+
+					viewPageURL.setParameter("struts_action", "/wiki/view");
+					viewPageURL.setParameter("nodeId", String.valueOf(nodeId));
+					viewPageURL.setParameter("title", wikiPage.getTitle());
+					viewPageURL.setParameter("followRedirect", "false");
+					%>
+
+					<div class="page-redirect" onClick="location.href = '<%= viewPageURL.toString() %>';">
+						(<%= LanguageUtil.format(request, "redirected-from-x", wikiPage.getTitle(), false) %>)
+					</div>
+				</div>
+			</c:if>
+
 			<div class="alert alert-info">
 				<liferay-ui:message key="this-page-is-empty.-use-the-buttons-below-to-create-it-or-to-search-for-the-words-in-the-title" />
 			</div>
@@ -99,16 +121,30 @@
 			<div class="btn-toolbar">
 
 				<%
+				PortletURL searchURL = renderResponse.createRenderURL();
+
+				searchURL.setParameter("struts_action", "/wiki/search");
+				searchURL.setParameter("redirect", currentURL);
+				searchURL.setParameter("nodeId", String.valueOf(nodeId));
+				searchURL.setParameter("keywords", Validator.isNotNull(redirectPageTitle) ? redirectPageTitle : title);
+
 				String taglibSearch = "location.href = '" + searchURL.toString() + "';";
 				%>
 
-				<aui:button onClick="<%= taglibSearch %>" value='<%= LanguageUtil.format(request, "search-for-x", HtmlUtil.escapeAttribute(title), false) %>' />
+				<aui:button onClick="<%= taglibSearch %>" value='<%= LanguageUtil.format(request, "search-for-x", HtmlUtil.escapeAttribute(Validator.isNotNull(redirectPageTitle) ? redirectPageTitle : title), false) %>' />
 
 				<%
+				PortletURL editPageURL = renderResponse.createRenderURL();
+
+				editPageURL.setParameter("struts_action", "/wiki/edit_page");
+				editPageURL.setParameter("redirect", currentURL);
+				editPageURL.setParameter("nodeId", String.valueOf(nodeId));
+				editPageURL.setParameter("title", Validator.isNotNull(redirectPageTitle) ? redirectPageTitle : title);
+
 				String taglibEditPage = "location.href = '" + editPageURL.toString() + "';";
 				%>
 
-				<aui:button onClick="<%= taglibEditPage %>" value='<%= LanguageUtil.format(request, "create-page-x", HtmlUtil.escapeAttribute(title), false) %>' />
+				<aui:button onClick="<%= taglibEditPage %>" value='<%= LanguageUtil.format(request, "create-page-x", HtmlUtil.escapeAttribute(Validator.isNotNull(redirectPageTitle) ? redirectPageTitle : title), false) %>' />
 			</div>
 		</c:otherwise>
 	</c:choose>
