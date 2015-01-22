@@ -2587,7 +2587,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 			wikiPagePersistence.update(childPage);
 
-			if (!childPage.isInTrashExplicitly()) {
+			if (!childPage.isInTrash()) {
 				moveDependentFromTrash(childPage, page.getNodeId(), title);
 			}
 		}
@@ -2606,7 +2606,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 			wikiPagePersistence.update(childPage);
 
-			if (!childPage.isInTrashExplicitly()) {
+			if (!childPage.isInTrash()) {
 				moveDependentToTrash(
 					childPage, trashEntryId, createTrashVersion);
 			}
