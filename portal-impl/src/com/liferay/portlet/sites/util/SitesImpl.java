@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -239,13 +240,22 @@ public class SitesImpl implements Sites {
 		serviceContext.setAttribute(
 			"layoutPrototypeUuid", layoutPrototype.getUuid());
 
+		Map<Locale, String> friendlyURLMap = targetLayout.getFriendlyURLMap();
+
+		String value = friendlyURLMap.get(LocaleUtil.getSiteDefault());
+
+		if (Validator.isNull(value)) {
+			friendlyURLMap.put(
+				LocaleUtil.getSiteDefault(), targetLayout.getFriendlyURL());
+		}
+
 		targetLayout = LayoutLocalServiceUtil.updateLayout(
 			targetLayout.getGroupId(), targetLayout.isPrivateLayout(),
 			targetLayout.getLayoutId(), targetLayout.getParentLayoutId(),
 			targetLayout.getNameMap(), targetLayout.getTitleMap(),
 			targetLayout.getDescriptionMap(), targetLayout.getKeywordsMap(),
 			targetLayout.getRobotsMap(), layoutPrototypeLayout.getType(),
-			targetLayout.getHidden(), targetLayout.getFriendlyURLMap(),
+			targetLayout.getHidden(), friendlyURLMap,
 			targetLayout.getIconImage(), null, serviceContext);
 
 		targetLayout = LayoutLocalServiceUtil.updateLayout(
