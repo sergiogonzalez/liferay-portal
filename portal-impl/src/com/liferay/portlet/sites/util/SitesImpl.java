@@ -242,9 +242,7 @@ public class SitesImpl implements Sites {
 
 		Map<Locale, String> friendlyURLMap = targetLayout.getFriendlyURLMap();
 
-		String value = friendlyURLMap.get(LocaleUtil.getSiteDefault());
-
-		if (Validator.isNull(value)) {
+		if (friendlyURLMap.isEmpty()) {
 			friendlyURLMap.put(
 				LocaleUtil.getSiteDefault(), targetLayout.getFriendlyURL());
 		}
