@@ -16,14 +16,14 @@
 
 <%
 try {
-	formattedContent = WikiUtil.getFormattedContent(renderRequest, renderResponse, wikiPage, viewPageURL, editPageURL, title, preview);
+	formattedContent = WikiUtil.getFormattedContent(renderRequest, renderResponse, (originalPage != null) ? originalPage : wikiPage, viewPageURL, editPageURL, title, preview);
 %>
 
 	<div class="wiki-body">
 		<c:choose>
-			<c:when test="<%= !followRedirect && (redirectPage != null) %>">
+			<c:when test="<%= !followRedirect && (Validator.isNotNull(wikiPage.getRedirectTitle())) %>">
 				<div class="alert alert-info">
-					<%= LanguageUtil.format(request, "this-page-is-currently-redirected-to-x", redirectPage.getTitle(), false) %>
+					<%= LanguageUtil.format(request, "this-page-is-currently-redirected-to-x", wikiPage.getRedirectTitle(), false) %>
 				</div>
 
 				<c:if test="<%= WikiPagePermission.contains(permissionChecker, wikiPage, ActionKeys.UPDATE) %>">

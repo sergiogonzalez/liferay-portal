@@ -24,8 +24,6 @@ boolean followRedirect = false;
 WikiNode node = (WikiNode)request.getAttribute(WikiWebKeys.WIKI_NODE);
 WikiPage wikiPage = (WikiPage)request.getAttribute(WikiWebKeys.WIKI_PAGE);
 
-WikiPage redirectPage = null;
-
 long nodeId = BeanParamUtil.getLong(wikiPage, request, "nodeId");
 String title = BeanParamUtil.getString(wikiPage, request, "title");
 
