@@ -2600,7 +2600,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 			wikiPagePersistence.update(childPage);
 
-			if (!childPage.isInTrashExplicitly()) {
+			if (childPage.isInTrashImplicitly()) {
 				moveDependentFromTrash(childPage, page.getNodeId(), title);
 			}
 		}
@@ -2619,7 +2619,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 			wikiPagePersistence.update(childPage);
 
-			if (!childPage.isInTrashExplicitly()) {
+			if (!childPage.isInTrash()) {
 				moveDependentToTrash(
 					childPage, trashEntryId, createTrashVersion);
 			}
@@ -2741,7 +2741,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 			wikiPagePersistence.update(curPage);
 
-			if (!curPage.isInTrash()) {
+			if (curPage.isInTrashImplicitly()) {
 				moveDependentFromTrash(
 					curPage, page.getNodeId(), curPage.getParentTitle());
 			}
