@@ -354,7 +354,6 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 												classPK="<%= message.getMessageId() %>"
 												ratingsEntry="<%= ratingsEntry %>"
 												ratingsStats="<%= ratingStats %>"
-												type="<%= RatingsType.THUMBS.getValue() %>"
 											/>
 										</c:if>
 
