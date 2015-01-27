@@ -304,7 +304,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		if (className.equals(Group.class.getName())) {
 			if (!site && (liveGroupId == 0) &&
-				!groupKey.equals(GroupConstants.CONTROL_PANEL)) {
+				!groupKey.equals(GroupConstants.CONTROL_PANEL) &&
+				!groupKey.equals(GroupConstants.USER_PERSONAL_SPACE)) {
 
 				throw new IllegalArgumentException();
 			}
@@ -708,6 +709,12 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 						GroupConstants.USER_PERSONAL_SITE_FRIENDLY_URL;
 					site = false;
 				}
+				else if (groupKey.equals(GroupConstants.USER_PERSONAL_SPACE)) {
+					type = GroupConstants.TYPE_SITE_PRIVATE;
+					friendlyURL =
+						GroupConstants.USER_PERSONAL_SPACE_FRIENDLY_URL;
+					site = false;
+				}
 
 				group = groupLocalService.addGroup(
 					defaultUserId, GroupConstants.DEFAULT_PARENT_GROUP_ID,
@@ -736,6 +743,15 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 				if (layoutSet.getPageCount() == 0) {
 					addDefaultGuestPublicLayouts(group);
+				}
+			}
+
+			if (groupKey.equals(GroupConstants.USER_PERSONAL_SPACE)) {
+				LayoutSet layoutSet = layoutSetLocalService.getLayoutSet(
+					group.getGroupId(), true);
+
+				if (layoutSet.getPageCount() == 0) {
+					addPersonalSpaceLayouts(group);
 				}
 			}
 
@@ -3646,6 +3662,23 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		layoutLocalService.importLayouts(
 			defaultUserId, group.getGroupId(), false, parameterMap, larFile);
+	}
+
+	protected void addPersonalSpaceLayouts(Group group) throws PortalException {
+		long defaultUserId = userLocalService.getDefaultUserId(
+			group.getCompanyId());
+
+		String friendlyURL = getFriendlyURL(
+			PropsValues.USER_PERSONAL_SPACE_LAYOUT_FRIENDLY_URL);
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		layoutLocalService.addLayout(
+			defaultUserId, group.getGroupId(), true,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+			PropsValues.USER_PERSONAL_SPACE_LAYOUT_NAME, StringPool.BLANK,
+			StringPool.BLANK, LayoutConstants.TYPE_PORTLET, false, friendlyURL,
+			serviceContext);
 	}
 
 	protected void addPortletDefaultData(Group group) throws PortalException {

@@ -1183,6 +1183,8 @@ public interface PropsKeys {
 
 	public static final String JOURNAL_ARTICLES_SEARCH_WITH_INDEX = "journal.articles.search.with.index";
 
+	public static final String JOURNAL_CHAR_BLACKLIST = "journal.char.blacklist";
+
 	public static final String JOURNAL_CONTENT_SEARCH_SHOW_LISTED = "journal.content.search.show.listed";
 
 	public static final String JOURNAL_DEFAULT_DISPLAY_VIEW = "journal.default.display.view";
@@ -2089,6 +2091,8 @@ public interface PropsKeys {
 
 	public static final String PORTAL_FABRIC_SHUTDOWN_TIMEOUT = "portal.fabric.shutdown.timeout";
 
+	public static final String PORTAL_IMPERSONATION_DEFAULT_URL = "portal.impersonation.default.url";
+
 	public static final String PORTAL_IMPERSONATION_ENABLE = "portal.impersonation.enable";
 
 	public static final String PORTAL_INSTANCE_INET_SOCKET_ADDRESS = "portal.instance.inet.socket.address";
@@ -2642,6 +2646,10 @@ public interface PropsKeys {
 	public static final String USER_GROUPS_SEARCH_WITH_INDEX = "user.groups.search.with.index";
 
 	public static final String USER_NOTIFICATION_EVENT_CONFIRMATION_ENABLED = "user.notification.event.confirmation.enabled";
+
+	public static final String USER_PERSONAL_SPACE_LAYOUT_FRIENDLY_URL = "user.personal.space.layout.friendly.url";
+
+	public static final String USER_PERSONAL_SPACE_LAYOUT_NAME = "user.personal.space.layout.name";
 
 	public static final String USERS_ADMIN_ORGANIZATION_COLUMN_LIMIT = "users.admin.organization.column.limit";
 
