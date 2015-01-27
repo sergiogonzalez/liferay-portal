@@ -23,9 +23,10 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
-		"model.class.name=com.liferay.portlet.blogs.model.BlogsEntry",
-		"javax.portlet.name=33", "ratings.type.default=thumbs"
+		"model.class.name=com.liferay.portlet.messageboards.model.MBDiscussion",
+		"javax.portlet.name=196", "ratings.type.default=thumbs"
 	}
 )
-public class BlogsPortletRatingsDefinition implements PortletRatingsDefinition {
+public class CommentsPortletRatingsDefinition
+	implements PortletRatingsDefinition {
 }
