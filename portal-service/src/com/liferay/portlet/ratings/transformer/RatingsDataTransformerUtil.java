@@ -35,6 +35,10 @@ import javax.portlet.PortletPreferences;
  */
 public class RatingsDataTransformerUtil {
 
+	public static String getPropertyName(String className) {
+		return className + StringPool.UNDERLINE + "RatingsType";
+	}
+
 	public static void transformCompanyRatingsData(
 			final long companyId, PortletPreferences oldPortletPreferences,
 			UnicodeProperties properties)
@@ -61,10 +65,6 @@ public class RatingsDataTransformerUtil {
 		_serviceTracker.open();
 	}
 
-	private String _getPropertyKey(String className) {
-		return className + StringPool.UNDERLINE + "RatingsType";
-	}
-
 	private void _transformCompanyRatingsData(
 			final long companyId, PortletPreferences oldPortletPreferences,
 			UnicodeProperties properties)
@@ -77,19 +77,15 @@ public class RatingsDataTransformerUtil {
 			return;
 		}
 
-		for (String portletId : PortletRatingsDefinitionUtil.getPortletIds()) {
-			String[] classNames = PortletRatingsDefinitionUtil.getClassNames(
-				portletId);
+		String[] classNames = PortletRatingsDefinitionUtil.getClassNames();
 
-			for (final String className : classNames) {
-				String propertyKey = _getPropertyKey(className);
+		for (final String className : classNames) {
+			String propertyKey = getPropertyName(className);
 
-				_transformRatingsData(
-					"companyId", companyId, className,
-					oldPortletPreferences.getValue(
-						propertyKey, StringPool.BLANK),
-					properties.getProperty(propertyKey));
-			}
+			_transformRatingsData(
+				"companyId", companyId, className,
+				oldPortletPreferences.getValue(propertyKey, StringPool.BLANK),
+				properties.getProperty(propertyKey));
 		}
 	}
 
@@ -105,18 +101,15 @@ public class RatingsDataTransformerUtil {
 			return;
 		}
 
-		for (String portletId : PortletRatingsDefinitionUtil.getPortletIds()) {
-			String[] classNames = PortletRatingsDefinitionUtil.getClassNames(
-				portletId);
+		String[] classNames = PortletRatingsDefinitionUtil.getClassNames();
 
-			for (final String className : classNames) {
-				String propertyKey = _getPropertyKey(className);
+		for (final String className : classNames) {
+			String propertyKey = getPropertyName(className);
 
-				_transformRatingsData(
-					"groupId", groupId, className,
-					oldProperties.getProperty(propertyKey),
-					properties.getProperty(propertyKey));
-			}
+			_transformRatingsData(
+				"groupId", groupId, className,
+				oldProperties.getProperty(propertyKey),
+				properties.getProperty(propertyKey));
 		}
 	}
 
