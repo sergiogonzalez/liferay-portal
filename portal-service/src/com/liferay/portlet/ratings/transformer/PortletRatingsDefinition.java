@@ -19,44 +19,4 @@ package com.liferay.portlet.ratings.transformer;
  * @author Sergio González
  */
 public interface PortletRatingsDefinition {
-
-	public String[] getClassNames();
-
-	public RatingsType getDefaultRatingsType(String className);
-
-	public static enum RatingsType {
-
-		LIKE("like"), STARS("stars"), THUMBS("thumbs");
-
-		public static RatingsType parse(String value) {
-			if (LIKE.getValue().equals(value)) {
-				return LIKE;
-			}
-			else if (STARS.getValue().equals(value)) {
-				return STARS;
-			}
-			else if (THUMBS.getValue().equals(value)) {
-				return THUMBS;
-			}
-
-			throw new IllegalArgumentException("Invalid value " + value);
-		}
-
-		public String getValue() {
-			return _value;
-		}
-
-		@Override
-		public String toString() {
-			return _value;
-		}
-
-		private RatingsType(String value) {
-			_value = value;
-		}
-
-		private final String _value;
-
-	}
-
 }
