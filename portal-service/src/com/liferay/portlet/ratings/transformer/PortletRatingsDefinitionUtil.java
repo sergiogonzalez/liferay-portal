@@ -24,10 +24,9 @@ import com.liferay.registry.ServiceTrackerCustomizer;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerMap;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -37,24 +36,20 @@ import java.util.concurrent.ConcurrentHashMap;
 public class PortletRatingsDefinitionUtil {
 
 	public static String[] getClassNames() {
-		List<String> classNames = new ArrayList<>();
+		Set<String> keySet = _serviceTrackerMap.keySet();
 
-		for (String className : _serviceTrackerMap.keySet()) {
-			classNames.add(className);
-		}
-
-		return classNames.toArray(new String[classNames.size()]);
+		return (String[])keySet.toArray();
 	}
 
 	public static RatingsType getDefaultRatingsType(String className) {
-		PortletRatingsDefinitionValues portletRatingsDefinitionVO =
+		PortletRatingsDefinitionValues portletRatingsDefinitionValues =
 			_serviceTrackerMap.getService(className);
 
-		if (portletRatingsDefinitionVO == null) {
+		if (portletRatingsDefinitionValues == null) {
 			return null;
 		}
 
-		return portletRatingsDefinitionVO.getDefaultRatingsType();
+		return portletRatingsDefinitionValues.getDefaultRatingsType();
 	}
 
 	public static Map<String, PortletRatingsDefinitionValues>
