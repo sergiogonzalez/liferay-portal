@@ -14,11 +14,20 @@
 
 package com.liferay.portlet.ratings.transformer;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceReference;
+import com.liferay.registry.ServiceTrackerCustomizer;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerMap;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Roberto Díaz
@@ -26,43 +35,102 @@ import java.util.List;
  */
 public class PortletRatingsDefinitionUtil {
 
-	public static String[] getClassNames(String portletId) {
-		PortletRatingsDefinition portletRatingsDefinition =
-			_serviceTrackerMap.getService(portletId);
+	public static String[] getClassNames() {
+		List<String> classNames = new ArrayList<>();
 
-		if (portletRatingsDefinition == null) {
+		for (String className : _serviceTrackerMap.keySet()) {
+			classNames.add(className);
+		}
+
+		return classNames.toArray(new String[classNames.size()]);
+	}
+
+	public static RatingsType getDefaultRatingsType(String className) {
+		PortletRatingsDefinitionValues portletRatingsDefinitionVO =
+			_serviceTrackerMap.getService(className);
+
+		if (portletRatingsDefinitionVO == null) {
 			return null;
 		}
 
-		return portletRatingsDefinition.getClassNames();
+		return portletRatingsDefinitionVO.getDefaultRatingsType();
 	}
 
-	public static RatingsType getDefaultRatingsType(
-		String portletId, String className) {
+	public static Map<String, PortletRatingsDefinitionValues>
+		getPortletRatingsDefinitionBeansMap() {
 
-		PortletRatingsDefinition portletRatingsDefinition =
-			_serviceTrackerMap.getService(portletId);
+		Map<String, PortletRatingsDefinitionValues>
+			portletRatingsDefinitionBeansMap = new ConcurrentHashMap<>();
 
-		if (portletRatingsDefinition == null) {
-			return null;
+		for (String className : _serviceTrackerMap.keySet()) {
+			portletRatingsDefinitionBeansMap.put(
+				className, _serviceTrackerMap.getService(className));
 		}
 
-		return portletRatingsDefinition.getDefaultRatingsType(className);
+		return Collections.unmodifiableMap(portletRatingsDefinitionBeansMap);
 	}
 
-	public static String[] getPortletIds() {
-		List<String> portletIds = new ArrayList<>();
+	private static final
+		ServiceTrackerMap<String, PortletRatingsDefinitionValues>
+			_serviceTrackerMap = ServiceTrackerCollections.singleValueMap(
+				PortletRatingsDefinition.class, "model.class.name",
+				new ServiceTrackerCustomizer<PortletRatingsDefinition,
+					PortletRatingsDefinitionValues>() {
 
-		for (String portletId :_serviceTrackerMap.keySet()) {
-			portletIds.add(portletId);
-		}
+				@Override
+				public PortletRatingsDefinitionValues addingService(
+					ServiceReference<PortletRatingsDefinition>
+						serviceReference) {
 
-		return portletIds.toArray(new String[portletIds.size()]);
-	}
+					String portletId = (String)serviceReference.getProperty(
+						"javax.portlet.name");
+					Object property = serviceReference.getProperty(
+						"model.class.name");
 
-	private static final ServiceTrackerMap<String, PortletRatingsDefinition>
-		_serviceTrackerMap = ServiceTrackerCollections.singleValueMap(
-			PortletRatingsDefinition.class, "javax.portlet.name");
+					String[] classNames = new String[0];
+
+					if (property instanceof Object[]) {
+						classNames = (String[])property;
+					}
+					else {
+						classNames = ArrayUtil.append(
+							classNames, (String)property);
+					}
+
+					RatingsType defaultRatingsType = RatingsType.parse(
+						(String)serviceReference.getProperty(
+							"ratings.type.default"));
+
+					if (Validator.isNull(portletId) ||
+						ArrayUtil.isEmpty(classNames) ||
+						(defaultRatingsType == null)) {
+
+						return null;
+					}
+
+					return new PortletRatingsDefinitionValues(
+						classNames, defaultRatingsType, portletId);
+				}
+
+				@Override
+				public void modifiedService(
+					ServiceReference<PortletRatingsDefinition> serviceReference,
+					PortletRatingsDefinitionValues
+						portletRatingsDefinitionValues) {
+				}
+
+				@Override
+				public void removedService(
+					ServiceReference<PortletRatingsDefinition> serviceReference,
+					PortletRatingsDefinitionValues
+						portletRatingsDefinitionValues) {
+
+					Registry registry = RegistryUtil.getRegistry();
+
+					registry.ungetService(serviceReference);
+				}
+
+			});
 
 	static {
 		_serviceTrackerMap.open();
