@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.blogs.ratings;
+package com.liferay.messageboards.ratings;
 
 import com.liferay.portlet.ratings.transformer.PortletRatingsDefinition;
 
@@ -23,9 +23,9 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
-		"model.class.name=com.liferay.portlet.blogs.model.BlogsEntry",
-		"javax.portlet.name=33", "ratings.type.default=thumbs"
+		"model.class.name=com.liferay.portlet.messageboards.model.MBMessage",
+		"javax.portlet.name=19", "ratings.type.default=thumbs"
 	}
 )
-public class BlogsPortletRatingsDefinition implements PortletRatingsDefinition {
+public class MBPortletRatingsDefinition implements PortletRatingsDefinition {
 }
