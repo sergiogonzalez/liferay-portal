@@ -12,11 +12,20 @@
  * details.
  */
 
-package com.liferay.portlet.ratings.transformer;
+package com.liferay.wiki.ratings.definition;
+
+import com.liferay.portlet.ratings.definition.PortletRatingsDefinition;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Roberto Díaz
- * @author Sergio González
  */
-public interface PortletRatingsDefinition {
+@Component(
+	property = {
+		"model.class.name=com.liferay.wiki.model.WikiPage",
+		"javax.portlet.name=36_WAR_wikiweb", "ratings.type.default=stars"
+	}
+)
+public class WikiPortletRatingsDefinition implements PortletRatingsDefinition {
 }

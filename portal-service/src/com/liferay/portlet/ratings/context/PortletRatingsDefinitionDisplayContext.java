@@ -14,9 +14,9 @@
 
 package com.liferay.portlet.ratings.context;
 
-import com.liferay.portlet.ratings.transformer.PortletRatingsDefinitionUtil;
-import com.liferay.portlet.ratings.transformer.PortletRatingsDefinitionValues;
 import com.liferay.portlet.ratings.RatingsType;
+import com.liferay.portlet.ratings.definition.PortletRatingsDefinitionUtil;
+import com.liferay.portlet.ratings.definition.PortletRatingsDefinitionValues;
 
 import java.util.Collections;
 import java.util.HashMap;

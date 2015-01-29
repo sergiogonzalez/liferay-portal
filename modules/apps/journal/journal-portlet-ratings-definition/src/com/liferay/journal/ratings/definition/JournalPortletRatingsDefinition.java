@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.documentlibrary.ratings;
+package com.liferay.journal.ratings.definition;
 
-import com.liferay.portlet.ratings.transformer.PortletRatingsDefinition;
+import com.liferay.portlet.ratings.definition.PortletRatingsDefinition;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -23,10 +23,10 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
-		"model.class.name=" +
-			"com.liferay.portlet.documentlibrary.model.DLFileEntry",
-		"javax.portlet.name=20", "ratings.type.default=stars"
+		"model.class.name=com.liferay.portlet.journal.model.JournalArticle",
+		"javax.portlet.name=15", "ratings.type.default=stars"
 	}
 )
-public class DLPortletRatingsDefinition implements PortletRatingsDefinition {
+public class JournalPortletRatingsDefinition
+	implements PortletRatingsDefinition {
 }

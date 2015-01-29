@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.bookmarks.ratings;
+package com.liferay.comments.ratings.definition;
 
-import com.liferay.portlet.ratings.transformer.PortletRatingsDefinition;
+import com.liferay.portlet.ratings.definition.PortletRatingsDefinition;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -23,10 +23,10 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
-		"model.class.name=com.liferay.bookmarks.model.BookmarksEntry",
-		"javax.portlet.name=28_WAR_bookmarksweb", "ratings.type.default=stars"
+		"model.class.name=com.liferay.portlet.messageboards.model.MBDiscussion",
+		"javax.portlet.name=196", "ratings.type.default=thumbs"
 	}
 )
-public class BookmarksPortletRatingsDefinition
+public class CommentsPortletRatingsDefinition
 	implements PortletRatingsDefinition {
 }
