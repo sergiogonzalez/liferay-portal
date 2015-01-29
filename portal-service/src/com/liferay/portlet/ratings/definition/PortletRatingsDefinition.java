@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.ratings.transformer;
+package com.liferay.portlet.ratings.definition;
 
 /**
  * @author Roberto Díaz
