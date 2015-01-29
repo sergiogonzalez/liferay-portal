@@ -44,44 +44,46 @@ else {
 <aui:fieldset>
 
 	<%
-	String[] portletIds = PortletRatingsDefinitionUtil.getPortletIds();
+	PortletRatingsDefinitionDisplayContext portletRatingsDefinitionDisplayContext = new PortletRatingsDefinitionDisplayContext();
 
-	for (String portletId : portletIds) {
+	Map<String, Map<String, RatingsType>> portletRatingsDefinitionMap = portletRatingsDefinitionDisplayContext.getPortletRatingsDefinitionMap();
+
+	for (String portletId : portletRatingsDefinitionMap.keySet()) {
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
 	%>
 
 		<p>
-			<%= PortalUtil.getPortletTitle(portlet, application, locale) %>
+			<strong><%= PortalUtil.getPortletTitle(portlet, application, locale) %></strong>
 		</p>
 
 		<%
-		String[] classNames = PortletRatingsDefinitionUtil.getClassNames(portletId);
+		Map<String, RatingsType> ratingsTypeMap = portletRatingsDefinitionMap.get(portletId);
+
+		Set<String> classNames = ratingsTypeMap.keySet();
 
 		for (String className : classNames) {
-			String propertyKey = className + StringPool.UNDERLINE + "RatingsType";
+			String propertyKey = RatingsDataTransformerUtil.getPropertyKey(className);
 
-			PortletRatingsDefinition.RatingsType defaultRatingsType = PortletRatingsDefinitionUtil.getDefaultRatingsType(portletId, className);
+			RatingsType defaultRatingsType = PortletRatingsDefinitionUtil.getDefaultRatingsType(className);
 
 			String companyRatingsTypeString = PrefsParamUtil.getString(companyPortletPreferences, request, propertyKey, defaultRatingsType.toString());
 
 			String ratingsTypeString = PropertiesParamUtil.getString(groupTypeSettings, request, propertyKey, companyRatingsTypeString);
 		%>
 
-			<div class="ratings-type-select">
-				<aui:select label='<%= (classNames.length > 1) ? ResourceActionsUtil.getModelResource(locale, className) : "" %>' name='<%= "TypeSettingsProperties--" + propertyKey + "--" %>'>
+			<aui:select label="<%= (classNames.size() > 1) ? ResourceActionsUtil.getModelResource(locale, className) : StringPool.BLANK %>" name='<%= "TypeSettingsProperties--" + propertyKey + "--" %>'>
 
-					<%
-					for (PortletRatingsDefinition.RatingsType ratingsType : PortletRatingsDefinition.RatingsType.values()) {
-					%>
+				<%
+				for (RatingsType ratingsType : RatingsType.values()) {
+				%>
 
-						<aui:option label="<%= LanguageUtil.get(request, ratingsType.getValue()) %>" selected="<%= ratingsTypeString.equals(ratingsType.getValue()) %>" value="<%= ratingsType.getValue() %>" />
+					<aui:option label="<%= LanguageUtil.get(request, ratingsType.getValue()) %>" selected="<%= ratingsTypeString.equals(ratingsType.getValue()) %>" value="<%= ratingsType.getValue() %>" />
 
-					<%
-					}
-					%>
+				<%
+				}
+				%>
 
-				</aui:select>
-			</div>
+			</aui:select>
 
 	<%
 		}
