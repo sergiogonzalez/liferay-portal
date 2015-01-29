@@ -58,17 +58,17 @@ public class PortletRatingsDefinitionUtil {
 	}
 
 	public static Map<String, PortletRatingsDefinitionValues>
-		getPortletRatingsDefinitionBeansMap() {
+		getPortletRatingsDefinitionValuesMap() {
 
 		Map<String, PortletRatingsDefinitionValues>
-			portletRatingsDefinitionBeansMap = new ConcurrentHashMap<>();
+			portletRatingsDefinitionValuesMap = new ConcurrentHashMap<>();
 
 		for (String className : _serviceTrackerMap.keySet()) {
-			portletRatingsDefinitionBeansMap.put(
+			portletRatingsDefinitionValuesMap.put(
 				className, _serviceTrackerMap.getService(className));
 		}
 
-		return Collections.unmodifiableMap(portletRatingsDefinitionBeansMap);
+		return Collections.unmodifiableMap(portletRatingsDefinitionValuesMap);
 	}
 
 	private static final

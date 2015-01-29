@@ -35,9 +35,9 @@ PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(com
 	<%
 	PortletRatingsDefinitionDisplayContext portletRatingsDisplayContext = new PortletRatingsDefinitionDisplayContext();
 
-	Map<String, Map<String, RatingsType>> portletIdClassNamesRatingsTypeMap = portletRatingsDisplayContext.getPortletRatingDefinitionsMap();
+	Map<String, Map<String, RatingsType>> portletRatingsDefinitionMap = portletRatingsDisplayContext.getPortletRatingsDefinitionMap();
 
-	for (String portletId : portletIdClassNamesRatingsTypeMap.keySet()) {
+	for (String portletId : portletRatingsDefinitionMap.keySet()) {
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
 	%>
 
@@ -46,9 +46,9 @@ PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(com
 		</p>
 
 		<%
-		Map<String, RatingsType> classNamesRatingsTypeMap = portletIdClassNamesRatingsTypeMap.get(portletId);
+		Map<String, RatingsType> ratingsTypeMap = portletRatingsDefinitionMap.get(portletId);
 
-		Set<String> classNames = classNamesRatingsTypeMap.keySet();
+		Set<String> classNames = ratingsTypeMap.keySet();
 
 		for (String className : classNames) {
 			String propertyKey = RatingsDataTransformerUtil.getPropertyKey(className);
