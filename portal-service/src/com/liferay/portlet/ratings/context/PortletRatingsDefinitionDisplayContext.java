@@ -57,7 +57,7 @@ public class PortletRatingsDefinitionDisplayContext {
 			Map<String, RatingsType> ratingsTypeMap =
 				portletRatingsDefinitionMap.get(portletId);
 
-			if ((ratingsTypeMap == null) || ratingsTypeMap.isEmpty()) {
+			if ((ratingsTypeMap == null)) {
 				ratingsTypeMap = new HashMap<>();
 			}
 
