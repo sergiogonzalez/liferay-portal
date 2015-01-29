@@ -127,15 +127,15 @@ public class RatingsTag extends IncludeTag {
 			PortletRatingsDefinitionUtil.getDefaultRatingsType(_className);
 
 		if (defaultRatingsType != null) {
-			String propertyName = RatingsDataTransformerUtil.getPropertyName(
+			String propertyKey = RatingsDataTransformerUtil.getPropertyKey(
 				_className);
 
 			String companyRatingsType = PrefsParamUtil.getString(
-				companyPortletPreferences, request, propertyName,
+				companyPortletPreferences, request, propertyKey,
 				defaultRatingsType.getValue());
 
 			_type = PropertiesParamUtil.getString(
-				groupTypeSettings, request, propertyName, companyRatingsType);
+				groupTypeSettings, request, propertyKey, companyRatingsType);
 		}
 
 		if (Validator.isNotNull(_type)) {

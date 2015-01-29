@@ -62,7 +62,7 @@ else {
 		Set<String> classNames = classNameRatingsTypeMap.keySet();
 
 		for (String className : classNames) {
-			String propertyKey = RatingsDataTransformerUtil.getPropertyName(className);
+			String propertyKey = RatingsDataTransformerUtil.getPropertyKey(className);
 
 			RatingsType defaultRatingsType = PortletRatingsDefinitionUtil.getDefaultRatingsType(className);
 

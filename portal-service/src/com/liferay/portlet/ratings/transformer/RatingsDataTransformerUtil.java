@@ -35,7 +35,7 @@ import javax.portlet.PortletPreferences;
  */
 public class RatingsDataTransformerUtil {
 
-	public static String getPropertyName(String className) {
+	public static String getPropertyKey(String className) {
 		return className + StringPool.UNDERLINE + "RatingsType";
 	}
 
@@ -80,7 +80,7 @@ public class RatingsDataTransformerUtil {
 		String[] classNames = PortletRatingsDefinitionUtil.getClassNames();
 
 		for (final String className : classNames) {
-			String propertyKey = getPropertyName(className);
+			String propertyKey = getPropertyKey(className);
 
 			_transformRatingsData(
 				"companyId", companyId, className,
@@ -104,7 +104,7 @@ public class RatingsDataTransformerUtil {
 		String[] classNames = PortletRatingsDefinitionUtil.getClassNames();
 
 		for (final String className : classNames) {
-			String propertyKey = getPropertyName(className);
+			String propertyKey = getPropertyKey(className);
 
 			_transformRatingsData(
 				"groupId", groupId, className,

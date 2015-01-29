@@ -51,7 +51,7 @@ PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(com
 		Set<String> classNames = classNamesRatingsTypeMap.keySet();
 
 		for (String className : classNames) {
-			String propertyKey = RatingsDataTransformerUtil.getPropertyName(className);
+			String propertyKey = RatingsDataTransformerUtil.getPropertyKey(className);
 
 			RatingsType defaultRatingsType = PortletRatingsDefinitionUtil.getDefaultRatingsType(className);
 
