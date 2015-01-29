@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.messageboards.ratings;
+package com.liferay.journal.ratings.definition;
 
-import com.liferay.portlet.ratings.transformer.PortletRatingsDefinition;
+import com.liferay.portlet.ratings.definition.PortletRatingsDefinition;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -23,9 +23,10 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
-		"model.class.name=com.liferay.portlet.messageboards.model.MBMessage",
-		"javax.portlet.name=19", "ratings.type.default=thumbs"
+		"model.class.name=com.liferay.portlet.journal.model.JournalArticle",
+		"javax.portlet.name=15", "ratings.type.default=stars"
 	}
 )
-public class MBPortletRatingsDefinition implements PortletRatingsDefinition {
+public class JournalPortletRatingsDefinition
+	implements PortletRatingsDefinition {
 }

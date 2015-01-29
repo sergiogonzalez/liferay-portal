@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.documentlibrary.ratings;
+package com.liferay.documentlibrary.ratings.definition;
 
-import com.liferay.portlet.ratings.transformer.PortletRatingsDefinition;
+import com.liferay.portlet.ratings.definition.PortletRatingsDefinition;
 
 import org.osgi.service.component.annotations.Component;
 
