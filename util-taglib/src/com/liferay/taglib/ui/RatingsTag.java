@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.Portlet;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.ratings.model.RatingsEntry;
 import com.liferay.portlet.ratings.model.RatingsStats;
@@ -124,25 +123,19 @@ public class RatingsTag extends IncludeTag {
 			groupTypeSettings = group.getTypeSettingsProperties();
 		}
 
-		Portlet portlet = (Portlet)request.getAttribute(WebKeys.RENDER_PORTLET);
+		RatingsType defaultRatingsType =
+			PortletRatingsDefinitionUtil.getDefaultRatingsType(_className);
 
-		if (portlet != null) {
-			RatingsType defaultRatingsType =
-				PortletRatingsDefinitionUtil.getDefaultRatingsType(
-					portlet.getPortletId(), _className);
+		if (defaultRatingsType != null) {
+			String propertyName = RatingsDataTransformerUtil.getPropertyName(
+				_className);
 
-			if (defaultRatingsType != null) {
-				String propertyName =
-					RatingsDataTransformerUtil.getPropertyName(_className);
+			String companyRatingsType = PrefsParamUtil.getString(
+				companyPortletPreferences, request, propertyName,
+				defaultRatingsType.getValue());
 
-				String companyRatingsType = PrefsParamUtil.getString(
-					companyPortletPreferences, request, propertyName,
-					defaultRatingsType.getValue());
-
-				_type = PropertiesParamUtil.getString(
-					groupTypeSettings, request, propertyName,
-					companyRatingsType);
-			}
+			_type = PropertiesParamUtil.getString(
+				groupTypeSettings, request, propertyName, companyRatingsType);
 		}
 
 		if (Validator.isNotNull(_type)) {
@@ -183,8 +176,7 @@ public class RatingsTag extends IncludeTag {
 	private static final int _DEFAULT_NUMBER_OF_STARS = GetterUtil.getInteger(
 		PropsUtil.get(PropsKeys.RATINGS_DEFAULT_NUMBER_OF_STARS));
 
-	private static final String _DEFAULT_TYPE =
-		RatingsType.STARS.getValue();
+	private static final String _DEFAULT_TYPE = RatingsType.STARS.getValue();
 
 	private static final String _PAGE = "/html/taglib/ui/ratings/page.jsp";
 
