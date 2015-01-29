@@ -29,7 +29,7 @@ import com.liferay.portlet.ratings.model.RatingsEntry;
 import com.liferay.portlet.ratings.model.RatingsStats;
 import com.liferay.portlet.ratings.transformer.PortletRatingsDefinitionUtil;
 import com.liferay.portlet.ratings.transformer.RatingsDataTransformerUtil;
-import com.liferay.portlet.ratings.transformer.RatingsType;
+import com.liferay.portlet.ratings.RatingsType;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.portlet.PortletPreferences;

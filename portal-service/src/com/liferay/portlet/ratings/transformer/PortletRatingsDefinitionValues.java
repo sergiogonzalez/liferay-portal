@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.ratings.transformer;
 
+import com.liferay.portlet.ratings.RatingsType;
+
 /**
  * @author Roberto Díaz
  */
