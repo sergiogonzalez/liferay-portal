@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.ratings.transformer;
+package com.liferay.portlet.ratings.definition;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Validator;
