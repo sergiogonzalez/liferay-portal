@@ -33,6 +33,16 @@ if (folder != null) {
 	DLUtil.addPortletBreadcrumbEntries(folder, request, renderResponse);
 }
 
+String referringPortletResource = ParamUtil.getString(request, "referringPortletResource");
+
+String referringPortletResourceRootPortletId = PortletConstants.getRootPortletId(referringPortletResource);
+
+boolean includeMountfolders = true;
+
+if (referringPortletResourceRootPortletId.equals(PortletKeys.ASSET_PUBLISHER)) {
+	includeMountfolders = false;
+}
+
 DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(request, dlPortletInstanceSettings);
 %>
 
@@ -77,11 +87,11 @@ DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(re
 
 	<liferay-ui:search-container
 		iteratorURL="<%= portletURL %>"
-		total="<%= DLAppServiceUtil.getFoldersCount(repositoryId, folderId) %>"
+		total="<%= DLAppServiceUtil.getFoldersCount(repositoryId, folderId, includeMountfolders) %>"
 	>
 
 		<liferay-ui:search-container-results
-			results="<%= DLAppServiceUtil.getFolders(repositoryId, folderId, searchContainer.getStart(), searchContainer.getEnd()) %>"
+			results="<%= DLAppServiceUtil.getFolders(repositoryId, folderId, includeMountfolders, searchContainer.getStart(), searchContainer.getEnd()) %>"
 		/>
 
 		<liferay-ui:search-container-row
