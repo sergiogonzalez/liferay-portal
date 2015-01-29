@@ -28,25 +28,25 @@ import java.util.Map;
 public class PortletRatingsDefinitionDisplayContext {
 
 	public PortletRatingsDefinitionDisplayContext() {
-		_portletRatingDefinitionsMap = _populatePortletRatingDefinitionsMap();
+		_portletRatingsDefinitionMap = _populatePortletRatingsDefinitionMap();
 	}
 
 	public Map<String, Map<String, RatingsType>>
-		getPortletRatingDefinitionsMap() {
+		getPortletRatingsDefinitionMap() {
 
-		return Collections.unmodifiableMap(_portletRatingDefinitionsMap);
+		return Collections.unmodifiableMap(_portletRatingsDefinitionMap);
 	}
 
 	private Map<String, Map<String, RatingsType>>
-		_populatePortletRatingDefinitionsMap() {
+		_populatePortletRatingsDefinitionMap() {
 
-		Map<String, Map<String, RatingsType>> portletRatingDefinitionsMap =
+		Map<String, Map<String, RatingsType>> portletRatingsDefinitionMap =
 			new HashMap<>();
 
 		Map<String, PortletRatingsDefinitionValues>
 			portletRatingsDefinitionValuesMap =
 				PortletRatingsDefinitionUtil.
-					getPortletRatingsDefinitionBeansMap();
+					getPortletRatingsDefinitionValuesMap();
 
 		for (String className : portletRatingsDefinitionValuesMap.keySet()) {
 			PortletRatingsDefinitionValues portletRatingsDefinitionValues =
@@ -55,7 +55,7 @@ public class PortletRatingsDefinitionDisplayContext {
 			String portletId = portletRatingsDefinitionValues.getPortletId();
 
 			Map<String, RatingsType> ratingsTypeMap =
-				portletRatingDefinitionsMap.get(portletId);
+				portletRatingsDefinitionMap.get(portletId);
 
 			if ((ratingsTypeMap == null) || ratingsTypeMap.isEmpty()) {
 				ratingsTypeMap = new HashMap<>();
@@ -65,13 +65,13 @@ public class PortletRatingsDefinitionDisplayContext {
 				className,
 				portletRatingsDefinitionValues.getDefaultRatingsType());
 
-			portletRatingDefinitionsMap.put(portletId, ratingsTypeMap);
+			portletRatingsDefinitionMap.put(portletId, ratingsTypeMap);
 		}
 
-		return portletRatingDefinitionsMap;
+		return portletRatingsDefinitionMap;
 	}
 
 	private final Map<String, Map<String, RatingsType>>
-		_portletRatingDefinitionsMap;
+		_portletRatingsDefinitionMap;
 
 }
