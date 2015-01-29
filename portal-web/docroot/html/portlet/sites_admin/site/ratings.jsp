@@ -46,9 +46,9 @@ else {
 	<%
 	PortletRatingsDefinitionDisplayContext portletRatingsDefinitionDisplayContext = new PortletRatingsDefinitionDisplayContext();
 
-	Map<String, Map<String, RatingsType>> portletIdClassNamesRatingsTypeMap = portletRatingsDefinitionDisplayContext.getPortletRatingDefinitionsMap();
+	Map<String, Map<String, RatingsType>> portletRatingsDefinitionMap = portletRatingsDefinitionDisplayContext.getPortletRatingsDefinitionMap();
 
-	for (String portletId : portletIdClassNamesRatingsTypeMap.keySet()) {
+	for (String portletId : portletRatingsDefinitionMap.keySet()) {
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
 	%>
 
@@ -57,9 +57,9 @@ else {
 		</p>
 
 		<%
-		Map<String, RatingsType> classNameRatingsTypeMap = portletIdClassNamesRatingsTypeMap.get(portletId);
+		Map<String, RatingsType> ratingsTypeMap = portletRatingsDefinitionMap.get(portletId);
 
-		Set<String> classNames = classNameRatingsTypeMap.keySet();
+		Set<String> classNames = ratingsTypeMap.keySet();
 
 		for (String className : classNames) {
 			String propertyKey = RatingsDataTransformerUtil.getPropertyKey(className);
