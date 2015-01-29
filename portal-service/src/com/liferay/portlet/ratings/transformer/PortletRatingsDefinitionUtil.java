@@ -25,9 +25,9 @@ import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerMap;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Roberto Díaz
@@ -56,7 +56,7 @@ public class PortletRatingsDefinitionUtil {
 		getPortletRatingsDefinitionValuesMap() {
 
 		Map<String, PortletRatingsDefinitionValues>
-			portletRatingsDefinitionValuesMap = new ConcurrentHashMap<>();
+			portletRatingsDefinitionValuesMap = new HashMap<>();
 
 		for (String className : _serviceTrackerMap.keySet()) {
 			portletRatingsDefinitionValuesMap.put(
