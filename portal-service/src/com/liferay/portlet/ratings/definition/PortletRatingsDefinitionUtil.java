@@ -35,12 +35,6 @@ import java.util.Set;
  */
 public class PortletRatingsDefinitionUtil {
 
-	public static String[] getClassNames() {
-		Set<String> keySet = _serviceTrackerMap.keySet();
-
-		return (String[])keySet.toArray();
-	}
-
 	public static RatingsType getDefaultRatingsType(String className) {
 		PortletRatingsDefinitionValues portletRatingsDefinitionValues =
 			_serviceTrackerMap.getService(className);
@@ -64,6 +58,16 @@ public class PortletRatingsDefinitionUtil {
 		}
 
 		return Collections.unmodifiableMap(portletRatingsDefinitionValuesMap);
+	}
+
+	public static boolean hasPortletRatingsDefinitions() {
+		Set<String> keySet = _serviceTrackerMap.keySet();
+
+		if (keySet.isEmpty()) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private static final
