@@ -25,8 +25,8 @@
 
 <%@ page contentType="text/html; charset=UTF-8" %>
 
-<%@ page import="com.liferay.iframe.web.util.IFrameUtil" %><%@
-page import="com.liferay.iframe.web.util.IFrameWebKeys" %><%@
+<%@ page import="com.liferay.iframe.web.constants.IFrameWebKeys" %><%@
+page import="com.liferay.iframe.web.util.IFrameUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.util.CharPool" %><%@

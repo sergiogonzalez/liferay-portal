@@ -86,6 +86,8 @@ request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
 
 DLActionsDisplayContext dlActionsDisplayContext = new DLActionsDisplayContext(request, dlPortletInstanceSettings);
 DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = DLDisplayContextProviderUtil.getDLViewFileVersionDisplayContext(request, response, fileVersion);
+
+String rootPortletId = portletDisplay.getRootPortletId();
 %>
 
 <portlet:actionURL var="editFileEntry">
@@ -667,7 +669,7 @@ DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = DLDisplayConte
 </aui:script>
 
 <%
-if (!portletId.equals(PortletKeys.TRASH)) {
+if (!portletId.equals(PortletKeys.TRASH) && !rootPortletId.equals(PortletKeys.ASSET_PUBLISHER)) {
 	DLUtil.addPortletBreadcrumbEntries(fileEntry, request, renderResponse);
 }
 %>

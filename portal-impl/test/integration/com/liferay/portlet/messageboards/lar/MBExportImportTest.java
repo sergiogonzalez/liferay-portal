@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.messageboards.lar;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.test.AggregateTestRule;
 import com.liferay.portal.kernel.util.Constants;
@@ -153,9 +152,7 @@ public class MBExportImportTest extends BasePortletExportImportTestCase {
 	}
 
 	@Override
-	protected StagedModel getStagedModel(String uuid, long groupId)
-		throws PortalException {
-
+	protected StagedModel getStagedModel(String uuid, long groupId) {
 		return MBMessageLocalServiceUtil.fetchMBMessageByUuidAndGroupId(
 			uuid, groupId);
 	}

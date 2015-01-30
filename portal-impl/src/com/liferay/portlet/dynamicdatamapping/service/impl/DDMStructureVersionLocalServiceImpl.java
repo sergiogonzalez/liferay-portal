@@ -71,9 +71,7 @@ public class DDMStructureVersionLocalServiceImpl
 	}
 
 	@Override
-	public List<DDMStructureVersion> getStructureVersions(long structureId)
-		throws PortalException {
-
+	public List<DDMStructureVersion> getStructureVersions(long structureId) {
 		return ddmStructureVersionPersistence.findByStructureId(structureId);
 	}
 
