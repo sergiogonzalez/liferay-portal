@@ -138,10 +138,6 @@ public class RatingsTag extends IncludeTag {
 				groupTypeSettings, request, propertyKey, companyRatingsType);
 		}
 
-		if (Validator.isNotNull(_type)) {
-			return _type;
-		}
-
 		return _DEFAULT_TYPE;
 	}
 
