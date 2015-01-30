@@ -23,12 +23,15 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.ratings.definition.PortletRatingsDefinitionUtil;
+import com.liferay.portlet.ratings.definition.PortletRatingsDefinitionValues;
 import com.liferay.portlet.ratings.service.RatingsEntryLocalServiceUtil;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceTracker;
+import com.liferay.registry.collections.ServiceTrackerMap;
 
 import javax.portlet.PortletPreferences;
+import java.util.Map;
 
 /**
  * @author Roberto Díaz
@@ -78,9 +81,14 @@ public class RatingsDataTransformerUtil {
 			return;
 		}
 
-		String[] classNames = PortletRatingsDefinitionUtil.getClassNames();
+		Map<String, PortletRatingsDefinitionValues>
+			portletRatingsDefinitionValuesMap =
+				PortletRatingsDefinitionUtil.
+					getPortletRatingsDefinitionValuesMap();
 
-		for (final String className : classNames) {
+		for (final String className :
+				portletRatingsDefinitionValuesMap.keySet()) {
+
 			String propertyKey = getPropertyKey(className);
 
 			_transformRatingsData(
@@ -102,9 +110,14 @@ public class RatingsDataTransformerUtil {
 			return;
 		}
 
-		String[] classNames = PortletRatingsDefinitionUtil.getClassNames();
+		Map<String, PortletRatingsDefinitionValues>
+			portletRatingsDefinitionValuesMap =
+				PortletRatingsDefinitionUtil.
+					getPortletRatingsDefinitionValuesMap();
 
-		for (final String className : classNames) {
+		for (final String className :
+				portletRatingsDefinitionValuesMap.keySet()) {
+
 			String propertyKey = getPropertyKey(className);
 
 			_transformRatingsData(
