@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.ratings.context;
+package com.liferay.portlet.ratings.display.context;
 
 import com.liferay.portlet.ratings.RatingsType;
 import com.liferay.portlet.ratings.definition.PortletRatingsDefinitionUtil;
