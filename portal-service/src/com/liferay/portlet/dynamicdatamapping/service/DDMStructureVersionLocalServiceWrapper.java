@@ -274,8 +274,7 @@ public class DDMStructureVersionLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion> getStructureVersions(
-		long structureId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		long structureId) {
 		return _ddmStructureVersionLocalService.getStructureVersions(structureId);
 	}
 

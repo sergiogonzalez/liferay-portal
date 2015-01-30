@@ -12,13 +12,18 @@
  * details.
  */
 
-package com.liferay.iframe.web.util;
+package com.liferay.portal.sso.cas.constants;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Michael C. Han
  */
-public class IFrameWebKeys {
+public interface CASWebKeys {
 
-	public static final String IFRAME_SRC = "IFRAME_SRC";
+	public static final String CAS_FORCE_LOGOUT = "CAS_FORCE_LOGOUT";
+
+	public static final String CAS_LOGIN = "CAS_LOGIN";
+
+	public static final String CAS_NO_SUCH_USER_EXCEPTION =
+		"CAS_NO_SUCH_USER_EXCEPTION";
 
 }
