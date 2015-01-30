@@ -43,6 +43,7 @@ public class DDMStructureLayoutServiceTest extends BaseDDMServiceTestCase {
 			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE);
 
 	@Before
+	@Override
 	public void setUp() throws Exception {
 		super.setUp();
 

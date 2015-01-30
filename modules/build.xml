@@ -7,14 +7,17 @@
 		<dirset dir="apps/asset" includes="*" />
 		<dirset dir="apps/blogs" includes="*" />
 		<dirset dir="apps/bookmarks" includes="*" />
+		<dirset dir="apps/comments" includes="*" />
 		<dirset dir="apps/currency-converter" includes="*" />
 		<dirset dir="apps/dictionary" includes="*" />
+		<dirset dir="apps/document-library" excludes="document-library-google-docs" includes="*" />
 		<dirset dir="apps/document-selector" includes="*" />
 		<dirset dir="apps/hello-velocity" includes="*" />
 		<dirset dir="apps/iframe" includes="*" />
 		<dirset dir="apps/invitation" includes="*" />
 		<dirset dir="apps/journal" includes="*" />
 		<dirset dir="apps/loan-calculator" includes="*" />
+		<dirset dir="apps/message-boards" includes="*" />
 		<dirset dir="apps/nested-portlets" includes="*" />
 		<dirset dir="apps/network-utilities" includes="*" />
 		<dirset dir="apps/password-generator" includes="*" />

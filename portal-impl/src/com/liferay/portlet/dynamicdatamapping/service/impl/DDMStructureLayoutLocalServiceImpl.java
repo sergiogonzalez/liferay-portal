@@ -65,9 +65,7 @@ public class DDMStructureLayoutLocalServiceImpl
 
 	@Override
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
-	public void deleteStructureLayout(DDMStructureLayout structureLayout)
-		throws PortalException {
-
+	public void deleteStructureLayout(DDMStructureLayout structureLayout) {
 		ddmStructureLayoutPersistence.remove(structureLayout);
 	}
 
