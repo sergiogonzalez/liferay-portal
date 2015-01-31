@@ -425,8 +425,7 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 
 		@Override
 		public List<DDMFormFieldValue> getDDMFormFieldValues(
-				String ddmFormFieldType)
-			throws PortalException {
+			String ddmFormFieldType) {
 
 			return Collections.emptyList();
 		}

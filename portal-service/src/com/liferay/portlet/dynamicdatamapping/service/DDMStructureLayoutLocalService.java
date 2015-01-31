@@ -106,8 +106,7 @@ public interface DDMStructureLayoutLocalService extends BaseLocalService,
 
 	@com.liferay.portal.kernel.systemevent.SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public void deleteStructureLayout(
-		com.liferay.portlet.dynamicdatamapping.model.DDMStructureLayout structureLayout)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		com.liferay.portlet.dynamicdatamapping.model.DDMStructureLayout structureLayout);
 
 	public void deleteStructureLayout(long structureLayoutId)
 		throws com.liferay.portal.kernel.exception.PortalException;

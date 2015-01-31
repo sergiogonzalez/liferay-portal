@@ -14,9 +14,9 @@
 
 package com.liferay.iframe.web.portlet;
 
+import com.liferay.iframe.web.constants.IFrameWebKeys;
 import com.liferay.iframe.web.upgrade.IFrameWebUpgrade;
 import com.liferay.iframe.web.util.IFrameUtil;
-import com.liferay.iframe.web.util.IFrameWebKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

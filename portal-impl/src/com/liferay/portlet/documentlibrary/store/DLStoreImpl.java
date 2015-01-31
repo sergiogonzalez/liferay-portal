@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.ByteArrayFileInputStream;
-import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.service.GroupLocalService;
 import com.liferay.portal.util.PropsValues;
@@ -581,9 +580,5 @@ public class DLStoreImpl implements DLStore {
 
 	@BeanReference(type = Store.class)
 	protected Store store;
-
-	private static final String[] _KEYWORDS_FIELDS = {
-		Field.ASSET_TAG_NAMES, Field.CONTENT, Field.PROPERTIES
-	};
 
 }

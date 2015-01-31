@@ -50,8 +50,13 @@ public class LogAssertionHandler extends Handler {
 			sb.append(", message=");
 			sb.append(logRecord.getMessage());
 
-			LogAssertionTestRule.caughtFailure(
-				new AssertionError(sb.toString(), logRecord.getThrown()));
+			LogAssertionExecutor logAssertionExecutor =
+				LogAssertionExecutorUtil.getInstance();
+
+			logAssertionExecutor.caughtFailure(
+				Thread.currentThread(),
+				new AssertionError(
+					new AssertionError(sb.toString(), logRecord.getThrown())));
 		}
 	}
 
