@@ -17,7 +17,6 @@
 <%@ include file="/html/portlet/portal_settings/init.jsp" %>
 
 <%
-PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(company.getCompanyId());
 %>
 
 <liferay-ui:error-marker key="errorSection" value="ratings" />
@@ -33,9 +32,7 @@ PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(com
 <aui:fieldset>
 
 	<%
-	PortletRatingsDefinitionDisplayContext portletRatingsDisplayContext = new PortletRatingsDefinitionDisplayContext();
-
-	Map<String, Map<String, RatingsType>> portletRatingsDefinitionMap = portletRatingsDisplayContext.getPortletRatingsDefinitionMap();
+	Map<String, Map<String, RatingsType>> portletRatingsDefinitionMap = portletRatingsDefinitionDisplayContext.getCompanyPortletRatingsDefinitionMap();
 
 	for (String portletId : portletRatingsDefinitionMap.keySet()) {
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
@@ -53,10 +50,8 @@ PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(com
 		for (String className : classNames) {
 			String propertyKey = RatingsDataTransformerUtil.getPropertyKey(className);
 
-			RatingsType defaultRatingsType = PortletRatingsDefinitionUtil.getDefaultRatingsType(className);
-
-			String ratingsTypeString = PrefsParamUtil.getString(companyPortletPreferences, request, propertyKey, defaultRatingsType.toString());
-			%>
+			RatingsType ratingsType = ratingsTypeMap.get(className);
+		%>
 
 			<aui:select label="<%= (classNames.size() > 1) ? ResourceActionsUtil.getModelResource(locale, className) : StringPool.BLANK %>" name='<%= "settings--" + propertyKey + "--" %>'>
 
@@ -64,7 +59,7 @@ PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(com
 				for (RatingsType curRatingsType : RatingsType.values()) {
 				%>
 
-					<aui:option label="<%= LanguageUtil.get(request, curRatingsType.getValue()) %>" selected="<%= ratingsTypeString.equals(curRatingsType.getValue()) %>" value="<%= curRatingsType.getValue() %>" />
+					<aui:option label="<%= LanguageUtil.get(request, curRatingsType.getValue()) %>" selected="<%= Validator.equals(ratingsType, curRatingsType) %>" value="<%= curRatingsType.getValue() %>" />
 
 				<%
 				}
