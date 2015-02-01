@@ -18,10 +18,10 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.registry.ServiceReference;
 
 /**
- * @author Iv·n Zaera
+ * @author Iv√°n Zaera
  */
 public class DisplayContextFactoryReference<T extends DisplayContextFactory>
-	implements Comparable<DisplayContextFactoryReference> {
+	implements Comparable<DisplayContextFactoryReference<?>> {
 
 	public DisplayContextFactoryReference(
 		T displayContextFactory, ServiceReference<T> serviceReference) {
@@ -32,7 +32,7 @@ public class DisplayContextFactoryReference<T extends DisplayContextFactory>
 
 	@Override
 	public int compareTo(
-		DisplayContextFactoryReference displayContextFactoryReference) {
+		DisplayContextFactoryReference<?> displayContextFactoryReference) {
 
 		return _serviceReference.compareTo(
 			displayContextFactoryReference._serviceReference);
@@ -48,8 +48,8 @@ public class DisplayContextFactoryReference<T extends DisplayContextFactory>
 			return false;
 		}
 
-		DisplayContextFactoryReference displayContextFactoryReference =
-			(DisplayContextFactoryReference)obj;
+		DisplayContextFactoryReference<?> displayContextFactoryReference =
+			(DisplayContextFactoryReference<?>)obj;
 
 		if (Validator.equals(
 				_serviceReference,
