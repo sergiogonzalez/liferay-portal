@@ -56,6 +56,23 @@ public class PortletRatingsDefinitionDisplayContext {
 		return Collections.unmodifiableMap(_groupPortletRatingsDefinitionMap);
 	}
 
+	public boolean showRatingsSection(String[] sections) {
+		if (!ArrayUtil.contains(sections, "ratings")) {
+			return false;
+		}
+
+		Map<String, PortletRatingsDefinitionValues>
+			portletRatingsDefinitionValuesMap =
+				PortletRatingsDefinitionUtil.
+					getPortletRatingsDefinitionValuesMap();
+
+		if (portletRatingsDefinitionValuesMap.isEmpty()) {
+			return false;
+		}
+
+		return true;
+	}
+
 	private void _populatePortletRatingsDefinitionMaps(
 		HttpServletRequest request) {
 
