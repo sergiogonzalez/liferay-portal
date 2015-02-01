@@ -28,10 +28,10 @@ import com.liferay.portlet.ratings.service.RatingsEntryLocalServiceUtil;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceTracker;
-import com.liferay.registry.collections.ServiceTrackerMap;
+
+import java.util.Map;
 
 import javax.portlet.PortletPreferences;
-import java.util.Map;
 
 /**
  * @author Roberto Díaz
