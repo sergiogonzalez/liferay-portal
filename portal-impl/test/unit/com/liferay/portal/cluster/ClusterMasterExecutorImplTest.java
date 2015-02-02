@@ -28,9 +28,9 @@ import com.liferay.portal.kernel.cluster.FutureClusterResponses;
 import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.test.CaptureHandler;
-import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
@@ -45,6 +45,8 @@ import java.io.DataOutput;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
+
+import java.net.InetAddress;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -741,7 +743,8 @@ public class ClusterMasterExecutorImplTest {
 
 				try {
 					clusterNodeResponse.setClusterNode(
-						new ClusterNode(mockAddress.getName()));
+						new ClusterNode(
+							mockAddress.getName(), InetAddress.getLocalHost()));
 
 					MethodHandler methodHandler =
 						clusterRequest.getMethodHandler();

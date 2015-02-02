@@ -14,10 +14,10 @@
 
 package com.liferay.arquillian.extension.persistence;
 
-import com.liferay.arquillian.extension.internal.descriptor.SpringDescriptor;
-import com.liferay.arquillian.extension.internal.descriptor.SpringDescriptorImpl;
-import com.liferay.arquillian.extension.persistence.internal.descriptor.PersistenceTestSpringDescriptorImpl;
+import com.liferay.arquillian.extension.persistence.internal.instanceproducer.ExtensionInstanceProducer;
 import com.liferay.arquillian.extension.persistence.internal.observer.PersistenceTestObserver;
+import com.liferay.portal.kernel.test.rule.executor.PersistenceTestInitializer;
+import com.liferay.portal.test.rule.executor.PersistenceTestInitializerImpl;
 
 import org.jboss.arquillian.core.spi.LoadableExtension;
 
@@ -28,11 +28,12 @@ public class PersistenceTestScenarioExtension implements LoadableExtension {
 
 	@Override
 	public void register(ExtensionBuilder builder) {
+		builder.observer(ExtensionInstanceProducer.class);
 		builder.observer(PersistenceTestObserver.class);
 
-		builder.override(
-			SpringDescriptor.class, SpringDescriptorImpl.class,
-			PersistenceTestSpringDescriptorImpl.class);
+		builder.service(
+			PersistenceTestInitializer.class,
+			PersistenceTestInitializerImpl.class);
 	}
 
 }

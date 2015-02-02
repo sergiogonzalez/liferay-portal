@@ -525,7 +525,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/junit.jar</file-name>
-				<version>4.12 B3</version>
+				<version>4.12</version>
 				<project-name>JUnit</project-name>
 				<project-url>http://www.junit.org/index.htm</project-url>
 				<licenses>
@@ -683,8 +683,8 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/development/powermock-api.jar</file-name>
-				<version>1.5.6</version>
+				<file-name>lib/development/powermock-api-mockito.jar</file-name>
+				<version>1.6.1</version>
 				<project-name>Powermock</project-name>
 				<project-url>http://code.google.com/p/powermock</project-url>
 				<licenses>
@@ -696,7 +696,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/powermock-api-support.jar</file-name>
-				<version>1.5.6</version>
+				<version>1.6.1</version>
 				<project-name>Powermock</project-name>
 				<project-url>http://code.google.com/p/powermock</project-url>
 				<licenses>
@@ -708,7 +708,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/powermock-core.jar</file-name>
-				<version>1.5.6</version>
+				<version>1.6.1</version>
 				<project-name>Powermock</project-name>
 				<project-url>http://code.google.com/p/powermock</project-url>
 				<licenses>
@@ -720,7 +720,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/powermock-module-junit4.jar</file-name>
-				<version>1.5.6</version>
+				<version>1.6.1</version>
 				<project-name>Powermock</project-name>
 				<project-url>http://code.google.com/p/powermock</project-url>
 				<licenses>
@@ -732,7 +732,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/powermock-module-junit4-common.jar</file-name>
-				<version>1.5.6</version>
+				<version>1.6.1</version>
 				<project-name>Powermock</project-name>
 				<project-url>http://code.google.com/p/powermock</project-url>
 				<licenses>
@@ -744,7 +744,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/powermock-reflect.jar</file-name>
-				<version>1.5.6</version>
+				<version>1.6.1</version>
 				<project-name>Powermock</project-name>
 				<project-url>http://code.google.com/p/powermock</project-url>
 				<licenses>
@@ -1313,18 +1313,6 @@
 					<license>
 						<license-name>LGPL 2.1</license-name>
 						<license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/portal/cas-client-core.jar</file-name>
-				<version>3.1.9</version>
-				<project-name>CAS Java Client</project-name>
-				<project-url>http://www.ja-sig.org/downloads/cas-clients</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
 					</license>
 				</licenses>
 			</library>
@@ -3986,14 +3974,14 @@
 			</library>
 			<library>
 				<file-name>lib/portal/xstream.jar</file-name>
-				<version>1.4.3</version>
+				<version>1.4.7</version>
 				<project-name>XStream</project-name>
 				<project-url>http://xstream.codehaus.org</project-url>
 				<licenses>
 					<license>
 						<license-name>BSD Style License</license-name>
 						<license-url>http://en.wikipedia.org/wiki/BSD_licenses</license-url>
-						<copyright-notice>Copyright (c) 2003-2006, Joe Walnes. Copyright (c) 2006-2007, XStream Committers. All rights reserved.</copyright-notice>
+						<copyright-notice>Copyright (c) 2003-2006, Joe Walnes. Copyright (c) 2006-2009, 2011 XStream Committers. All rights reserved.</copyright-notice>
 					</license>
 				</licenses>
 			</library>

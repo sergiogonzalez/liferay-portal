@@ -14,9 +14,19 @@
 
 package com.liferay.arquillian.extension;
 
-import com.liferay.arquillian.extension.internal.descriptor.SpringDescriptor;
-import com.liferay.arquillian.extension.internal.descriptor.SpringDescriptorImpl;
-import com.liferay.arquillian.extension.internal.observer.InitializeLiferayTestEnvironment;
+import com.liferay.arquillian.extension.internal.event.LiferayEventTestRunnerAdapter;
+import com.liferay.arquillian.extension.internal.instanceproducer.ExtensionInstanceProducer;
+import com.liferay.arquillian.extension.internal.log.LogAssertionExecutorInArquillian;
+import com.liferay.arquillian.extension.internal.log.LogAssertionObserver;
+import com.liferay.portal.kernel.test.rule.executor.ClearThreadLocalExecutor;
+import com.liferay.portal.kernel.test.rule.executor.DeleteAfterTestRunExecutor;
+import com.liferay.portal.kernel.test.rule.executor.DeleteAfterTestRunExecutorImpl;
+import com.liferay.portal.kernel.test.rule.executor.InitTestLiferayContextExecutor;
+import com.liferay.portal.kernel.test.rule.executor.UniqueStringRandomizerBumperExecutor;
+import com.liferay.portal.test.rule.executor.ClearThreadLocalExecutorImpl;
+import com.liferay.portal.test.rule.executor.InitTestLiferayContextExecutorImpl;
+import com.liferay.portal.test.rule.executor.LogAssertionExecutor;
+import com.liferay.portal.test.rule.executor.UniqueStringRandomizerBumperExecutorImpl;
 
 import org.jboss.arquillian.core.spi.LoadableExtension;
 
@@ -27,10 +37,23 @@ public class LiferayTestScenarioExtension implements LoadableExtension {
 
 	@Override
 	public void register(ExtensionBuilder extensionBuilder) {
-		extensionBuilder.observer(InitializeLiferayTestEnvironment.class);
+		extensionBuilder.observer(ExtensionInstanceProducer.class);
+		extensionBuilder.observer(LiferayEventTestRunnerAdapter.class);
+		extensionBuilder.observer(LogAssertionObserver.class);
 
 		extensionBuilder.service(
-			SpringDescriptor.class, SpringDescriptorImpl.class);
+			ClearThreadLocalExecutor.class, ClearThreadLocalExecutorImpl.class);
+		extensionBuilder.service(
+			DeleteAfterTestRunExecutor.class,
+			DeleteAfterTestRunExecutorImpl.class);
+		extensionBuilder.service(
+			InitTestLiferayContextExecutor.class,
+			InitTestLiferayContextExecutorImpl.class);
+		extensionBuilder.service(
+			LogAssertionExecutor.class, LogAssertionExecutorInArquillian.class);
+		extensionBuilder.service(
+			UniqueStringRandomizerBumperExecutor.class,
+			UniqueStringRandomizerBumperExecutorImpl.class);
 	}
 
 }

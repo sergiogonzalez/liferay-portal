@@ -424,12 +424,41 @@ public class FileEntryStagedModelDataHandler
 
 				boolean indexEnabled = serviceContext.isIndexingEnabled();
 
+				boolean updateFileEntry = false;
+
+				if (!Validator.equals(
+						fileVersion.getUuid(),
+						latestExistingFileVersion.getUuid())) {
+
+					updateFileEntry = true;
+				}
+				else {
+					InputStream existingFileVersionInputStream = null;
+
+					try {
+						existingFileVersionInputStream =
+							latestExistingFileVersion.getContentStream(false);
+
+						if (existingFileVersionInputStream == null) {
+							updateFileEntry = true;
+						}
+					}
+					catch (Exception e) {
+						if (_log.isDebugEnabled()) {
+							_log.debug(e, e);
+						}
+					}
+					finally {
+						if (existingFileVersionInputStream != null) {
+							existingFileVersionInputStream.close();
+						}
+					}
+				}
+
 				try {
 					serviceContext.setIndexingEnabled(false);
 
-					if (!fileVersion.getUuid().equals(
-							latestExistingFileVersion.getUuid())) {
-
+					if (updateFileEntry) {
 						DLFileVersion alreadyExistingFileVersion =
 							DLFileVersionLocalServiceUtil.
 								getFileVersionByUuidAndGroupId(
