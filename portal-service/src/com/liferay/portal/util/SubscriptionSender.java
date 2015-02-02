@@ -822,6 +822,14 @@ public class SubscriptionSender implements Serializable {
 	}
 
 	protected void sendNotification(User user) throws Exception {
+		if (contextUserId == user.getUserId() ) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Skip current user in context " + contextUserId);
+			}
+
+			return;
+		}
+
 		sendEmailNotification(user);
 		sendUserNotification(user);
 	}
