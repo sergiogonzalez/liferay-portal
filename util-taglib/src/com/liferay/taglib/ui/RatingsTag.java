@@ -134,12 +134,12 @@ public class RatingsTag extends IncludeTag {
 				companyPortletPreferences, request, propertyKey,
 				defaultRatingsType.getValue());
 
-			_type = PropertiesParamUtil.getString(
+			String type = PropertiesParamUtil.getString(
 				groupTypeSettings, request, propertyKey, companyRatingsType);
-		}
 
-		if (Validator.isNotNull(_type)) {
-			return _type;
+			if (Validator.isNotNull(type)) {
+				return type;
+			}
 		}
 
 		return _DEFAULT_TYPE;
