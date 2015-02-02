@@ -562,6 +562,14 @@ public class SubscriptionSender implements Serializable {
 		}
 
 		if (bulk) {
+			if (contextUserId == user.getUserId() ) {
+				if (_log.isDebugEnabled()) {
+					_log.debug("Skip current user in context " + contextUserId);
+				}
+
+				return;
+			}
+
 			if (UserNotificationManagerUtil.isDeliver(
 					user.getUserId(), portletId, _notificationClassNameId,
 					_notificationType,
