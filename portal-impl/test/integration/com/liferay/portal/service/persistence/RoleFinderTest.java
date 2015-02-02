@@ -15,7 +15,12 @@
 package com.liferay.portal.service.persistence;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.test.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ResourceBlockPermissionTestUtil;
+import com.liferay.portal.kernel.test.util.ResourceBlockTestUtil;
+import com.liferay.portal.kernel.test.util.ResourcePermissionTestUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.ResourceAction;
 import com.liferay.portal.model.ResourceBlock;
@@ -29,13 +34,8 @@ import com.liferay.portal.service.ResourceBlockLocalServiceUtil;
 import com.liferay.portal.service.ResourceBlockPermissionLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
-import com.liferay.portal.test.LiferayIntegrationTestRule;
-import com.liferay.portal.test.MainServletTestRule;
-import com.liferay.portal.test.TransactionalTestRule;
-import com.liferay.portal.util.test.RandomTestUtil;
-import com.liferay.portal.util.test.ResourceBlockPermissionTestUtil;
-import com.liferay.portal.util.test.ResourceBlockTestUtil;
-import com.liferay.portal.util.test.ResourcePermissionTestUtil;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.MainServletTestRule;
 
 import java.util.ArrayList;
 import java.util.List;

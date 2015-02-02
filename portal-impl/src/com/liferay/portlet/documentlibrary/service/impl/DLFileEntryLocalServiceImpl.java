@@ -424,7 +424,7 @@ public class DLFileEntryLocalServiceImpl
 				Lock lock = lockLocalService.getLock(
 					DLFileEntry.class.getName(), fileEntryId);
 
-				if (!lock.getUuid().equals(lockUuid)) {
+				if (!Validator.equals(lock.getUuid(), lockUuid)) {
 					throw new InvalidLockException("UUIDs do not match");
 				}
 			}
@@ -1847,7 +1847,8 @@ public class DLFileEntryLocalServiceImpl
 			// File entry
 
 			if ((status != WorkflowConstants.STATUS_IN_TRASH) &&
-				dlFileEntry.getVersion().equals(dlFileVersion.getVersion())) {
+				Validator.equals(
+					dlFileEntry.getVersion(), dlFileVersion.getVersion())) {
 
 				String newVersion = DLFileEntryConstants.VERSION_DEFAULT;
 
@@ -1867,7 +1868,8 @@ public class DLFileEntryLocalServiceImpl
 
 			// Indexer
 
-			if (dlFileVersion.getVersion().equals(
+			if (Validator.equals(
+					dlFileVersion.getVersion(),
 					DLFileEntryConstants.VERSION_DEFAULT)) {
 
 				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
@@ -1953,7 +1955,7 @@ public class DLFileEntryLocalServiceImpl
 			Lock lock = lockLocalService.getLock(
 				DLFileEntry.class.getName(), fileEntryId);
 
-			if (lock.getUuid().equals(lockUuid)) {
+			if (Validator.equals(lock.getUuid(), lockUuid)) {
 				lockVerified = true;
 			}
 		}
@@ -2467,7 +2469,14 @@ public class DLFileEntryLocalServiceImpl
 			dlFileVersionLocalService.getLatestFileVersion(
 				fileEntryId, !checkedOut);
 
-		boolean autoCheckIn = !checkedOut && dlFileVersion.isApproved();
+		boolean autoCheckIn = false;
+
+		if (!checkedOut && dlFileVersion.isApproved() &&
+			!Validator.equals(
+				dlFileVersion.getUuid(), serviceContext.getUuid())) {
+
+			autoCheckIn = true;
+		}
 
 		if (autoCheckIn) {
 			dlFileEntry = checkOutFileEntry(

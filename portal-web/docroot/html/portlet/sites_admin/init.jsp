@@ -43,7 +43,6 @@ page import="com.liferay.portal.service.permission.TeamPermissionUtil" %><%@
 page import="com.liferay.portal.util.CustomJspRegistryUtil" %><%@
 page import="com.liferay.portal.util.RobotsUtil" %><%@
 page import="com.liferay.portlet.backgroundtask.util.comparator.BackgroundTaskCreateDateComparator" %><%@
-page import="com.liferay.portlet.ratings.transformer.PortletRatingsDefinitionUtil" %><%@
 page import="com.liferay.portlet.rolesadmin.search.GroupRoleChecker" %><%@
 page import="com.liferay.portlet.rolesadmin.search.RoleSearch" %><%@
 page import="com.liferay.portlet.rolesadmin.search.RoleSearchTerms" %><%@
@@ -74,6 +73,8 @@ if (GroupPermissionUtil.contains(permissionChecker, ActionKeys.VIEW)) {
 }
 
 long[] classNameIds = new long[] {PortalUtil.getClassNameId(Company.class), PortalUtil.getClassNameId(Group.class), PortalUtil.getClassNameId(Organization.class)};
+
+PortletRatingsDefinitionDisplayContext portletRatingsDefinitionDisplayContext = new PortletRatingsDefinitionDisplayContext(request);
 %>
 
 <%@ include file="/html/portlet/sites_admin/init-ext.jsp" %>
