@@ -230,6 +230,10 @@ public class SubscriptionSender implements Serializable {
 		return _context.get(key);
 	}
 
+	public long getContextUserId() {
+		return contextUserId;
+	}
+
 	public String getMailId() {
 		return this.mailId;
 	}
@@ -314,6 +318,10 @@ public class SubscriptionSender implements Serializable {
 		for (int i = 0; i < values.length; i += 2) {
 			setContextAttribute(String.valueOf(values[i]), values[i + 1]);
 		}
+	}
+
+	public void setContextUserId(long contextUserId) {
+		this.contextUserId = contextUserId;
 	}
 
 	public void setContextUserPrefix(String contextUserPrefix) {
@@ -855,6 +863,7 @@ public class SubscriptionSender implements Serializable {
 	protected String body;
 	protected boolean bulk;
 	protected long companyId;
+	protected long contextUserId;
 	protected List<FileAttachment> fileAttachments = new ArrayList<>();
 	protected String fromAddress;
 	protected String fromName;
