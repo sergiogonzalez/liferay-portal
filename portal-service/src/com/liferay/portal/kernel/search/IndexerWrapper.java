@@ -49,6 +49,7 @@ public class IndexerWrapper implements Indexer {
 		_indexer.delete(obj);
 	}
 
+	@Override
 	public String getClassName() {
 		return _indexer.getClassName();
 	}

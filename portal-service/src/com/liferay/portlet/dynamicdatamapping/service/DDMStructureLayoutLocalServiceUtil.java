@@ -107,8 +107,7 @@ public class DDMStructureLayoutLocalServiceUtil {
 	}
 
 	public static void deleteStructureLayout(
-		com.liferay.portlet.dynamicdatamapping.model.DDMStructureLayout structureLayout)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		com.liferay.portlet.dynamicdatamapping.model.DDMStructureLayout structureLayout) {
 		getService().deleteStructureLayout(structureLayout);
 	}
 

@@ -31,8 +31,8 @@ import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
-import com.liferay.portal.kernel.test.NewEnv;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.rule.NewEnv;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
@@ -41,8 +41,8 @@ import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.security.auth.TransientTokenUtil;
-import com.liferay.portal.test.AdviseWith;
-import com.liferay.portal.test.AspectJNewEnvTestRule;
+import com.liferay.portal.test.rule.AdviseWith;
+import com.liferay.portal.test.rule.AspectJNewEnvTestRule;
 import com.liferay.portal.util.PortalImpl;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PortalUtil;
@@ -147,7 +147,7 @@ public class LuceneHelperImplTest {
 
 		luceneHelperUtil.setLuceneHelper(_luceneHelperImpl);
 
-		_clusterNode = new ClusterNode(_CLUSER_NODE_ID);
+		_clusterNode = new ClusterNode(_CLUSER_NODE_ID, _localhostInetAddress);
 
 		_clusterNode.setPortalProtocol(Http.HTTP);
 
@@ -831,7 +831,8 @@ public class LuceneHelperImplTest {
 				clusterNodeResponse.setMulticast(clusterRequest.isMulticast());
 				clusterNodeResponse.setUuid(clusterRequest.getUuid());
 
-				ClusterNode clusterNode = new ClusterNode(address.toString());
+				ClusterNode clusterNode = new ClusterNode(
+					address.toString(), _localhostInetAddress);
 
 				try {
 					clusterNode.setPortalInetSocketAddress(
