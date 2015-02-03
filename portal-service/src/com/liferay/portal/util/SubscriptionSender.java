@@ -162,6 +162,10 @@ public class SubscriptionSender implements Serializable {
 
 			_persistestedSubscribersOVPs.clear();
 
+			boolean currentBulk = bulk;
+
+			bulk = false;
+
 			for (ObjectValuePair<String, String> ovp :
 					_runtimeSubscribersOVPs) {
 
@@ -196,6 +200,8 @@ public class SubscriptionSender implements Serializable {
 			}
 
 			_runtimeSubscribersOVPs.clear();
+
+			bulk = currentBulk;
 		}
 		finally {
 			if ((_classLoader != null) &&
