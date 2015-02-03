@@ -1776,6 +1776,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			// Subscriptions
 
 			notifySubscribers(
+				userId,
 				(MBMessage)message.clone(),
 				(String)workflowContext.get(WorkflowConstants.CONTEXT_URL),
 				serviceContext);
@@ -1914,7 +1915,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	}
 
 	protected void notifyDiscussionSubscribers(
-			MBMessage message, ServiceContext serviceContext)
+			long contextUserId, MBMessage message,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		if (!PrefsPropsUtil.getBoolean(
@@ -1960,6 +1962,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		subscriptionSender.setContextAttributes(
 			"[$COMMENTS_USER_ADDRESS$]", userAddress, "[$COMMENTS_USER_NAME$]",
 			userName, "[$CONTENT_URL$]", contentURL);
+		subscriptionSender.setContextUserId(contextUserId);
 		subscriptionSender.setEntryTitle(message.getBody());
 		subscriptionSender.setEntryURL(contentURL);
 		subscriptionSender.setFrom(fromAddress, fromName);
@@ -1997,7 +2000,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	}
 
 	protected void notifySubscribers(
-			MBMessage message, String messageURL, ServiceContext serviceContext)
+			long contextUserId, MBMessage message, String messageURL,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		if (!message.isApproved() || Validator.isNull(messageURL)) {
@@ -2006,7 +2010,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		if (message.isDiscussion()) {
 			try {
-				notifyDiscussionSubscribers(message, serviceContext);
+				notifyDiscussionSubscribers(
+					contextUserId, message, serviceContext);
 			}
 			catch (Exception e) {
 				_log.error(e, e);
@@ -2185,6 +2190,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			(SubscriptionSender)SerializableUtil.clone(
 				subscriptionSenderPrototype);
 
+		subscriptionSender.setContextUserId(contextUserId);
 		subscriptionSender.addPersistedSubscribers(
 			MBCategory.class.getName(), message.getGroupId());
 

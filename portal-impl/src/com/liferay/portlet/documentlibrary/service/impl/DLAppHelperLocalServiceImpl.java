@@ -75,7 +75,6 @@ import com.liferay.portlet.trash.model.TrashVersion;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.io.Serializable;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -1410,6 +1409,7 @@ public class DLAppHelperLocalServiceImpl
 				// Subscriptions
 
 				notifySubscribers(
+					userId,
 					latestFileVersion,
 					(String)workflowContext.get(WorkflowConstants.CONTEXT_URL),
 					serviceContext);
@@ -1845,7 +1845,7 @@ public class DLAppHelperLocalServiceImpl
 	}
 
 	protected void notifySubscribers(
-			FileVersion fileVersion, String entryURL,
+			long contextUserId, FileVersion fileVersion, String entryURL,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -1919,6 +1919,7 @@ public class DLAppHelperLocalServiceImpl
 			"[$DOCUMENT_TYPE$]",
 			dlFileEntryType.getName(serviceContext.getLocale()),
 			"[$DOCUMENT_URL$]", entryURL, "[$FOLDER_NAME$]", folderName);
+		subscriptionSender.setContextUserId(contextUserId);
 		subscriptionSender.setContextUserPrefix("DOCUMENT");
 		subscriptionSender.setEntryTitle(entryTitle);
 		subscriptionSender.setEntryURL(entryURL);

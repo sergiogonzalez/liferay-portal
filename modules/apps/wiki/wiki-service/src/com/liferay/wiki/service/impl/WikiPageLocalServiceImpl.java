@@ -2116,6 +2116,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 				 wikiSettings.isPageMinorEditSendMail())) {
 
 				notifySubscribers(
+					userId,
 					page,
 					(String)workflowContext.get(WorkflowConstants.CONTEXT_URL),
 					serviceContext);
@@ -3000,7 +3001,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	}
 
 	protected void notifySubscribers(
-			WikiPage page, String pageURL, ServiceContext serviceContext)
+			long contextUserId, WikiPage page, String pageURL,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		if (!page.isApproved() || Validator.isNull(pageURL)) {
@@ -3091,6 +3093,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			"[$PAGE_SUMMARY$]", page.getSummary(), "[$PAGE_TITLE$]", pageTitle,
 			"[$PAGE_URL$]", pageURL);
 
+		subscriptionSender.setContextUserId(contextUserId);
 		subscriptionSender.setContextUserPrefix("PAGE");
 		subscriptionSender.setEntryTitle(pageTitle);
 		subscriptionSender.setEntryURL(pageURL);
