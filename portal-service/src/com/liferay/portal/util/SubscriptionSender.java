@@ -148,16 +148,6 @@ public class SubscriptionSender implements Serializable {
 							"Unable to process subscription: " + subscription);
 					}
 				}
-
-				if (bulk) {
-					Locale locale = LocaleUtil.getDefault();
-
-					InternetAddress to = new InternetAddress(
-						replaceContent(replyToAddress, locale),
-						replaceContent(replyToAddress, locale));
-
-					sendEmail(to, locale);
-				}
 			}
 
 			_persistestedSubscribersOVPs.clear();
@@ -196,6 +186,16 @@ public class SubscriptionSender implements Serializable {
 			}
 
 			_runtimeSubscribersOVPs.clear();
+
+			if (bulk) {
+				Locale locale = LocaleUtil.getDefault();
+
+				InternetAddress to = new InternetAddress(
+					replaceContent(replyToAddress, locale),
+					replaceContent(replyToAddress, locale));
+
+				sendEmail(to, locale);
+			}
 		}
 		finally {
 			if ((_classLoader != null) &&
