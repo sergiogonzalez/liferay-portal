@@ -5729,6 +5729,7 @@ public class JournalArticleLocalServiceImpl
 			notifySubscribers(
 				article,
 				(String)workflowContext.get(WorkflowConstants.CONTEXT_URL),
+				user.getUserId(),
 				serviceContext);
 		}
 
@@ -6855,7 +6856,7 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	protected void notifySubscribers(
-			JournalArticle article, String articleURL,
+			JournalArticle article, String articleURL, long contextUserId,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -6958,6 +6959,7 @@ public class JournalArticleLocalServiceImpl
 			"[$ARTICLE_ID$]", article.getArticleId(), "[$ARTICLE_TITLE$]",
 			articleTitle, "[$ARTICLE_URL$]", articleURL, "[$ARTICLE_VERSION$]",
 			article.getVersion());
+		subscriptionSender.setContextUserId(contextUserId);
 		subscriptionSender.setContextUserPrefix("ARTICLE");
 		subscriptionSender.setEntryTitle(articleTitle);
 		subscriptionSender.setEntryURL(articleURL);
