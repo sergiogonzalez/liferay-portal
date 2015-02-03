@@ -561,35 +561,7 @@ public class SubscriptionSender implements Serializable {
 			return;
 		}
 
-		if (bulk) {
-			if (contextUserId == user.getUserId() ) {
-				if (_log.isDebugEnabled()) {
-					_log.debug("Skip current user in context " + contextUserId);
-				}
-
-				return;
-			}
-
-			if (UserNotificationManagerUtil.isDeliver(
-					user.getUserId(), portletId, _notificationClassNameId,
-					_notificationType,
-					UserNotificationDeliveryConstants.TYPE_EMAIL)) {
-
-				InternetAddress bulkAddress = new InternetAddress(
-					user.getEmailAddress(), user.getFullName());
-
-				if (_bulkAddresses == null) {
-					_bulkAddresses = new ArrayList<>();
-				}
-
-				_bulkAddresses.add(bulkAddress);
-			}
-
-			sendUserNotification(user);
-		}
-		else {
-			sendNotification(user);
-		}
+		sendNotification(user);
 	}
 
 	protected void notifyRuntimeSubscriber(InternetAddress to, Locale locale)
@@ -824,6 +796,16 @@ public class SubscriptionSender implements Serializable {
 
 			InternetAddress to = new InternetAddress(
 				user.getEmailAddress(), user.getFullName());
+
+			if (bulk) {
+				if (_bulkAddresses == null) {
+					_bulkAddresses = new ArrayList<>();
+				}
+
+				_bulkAddresses.add(to);
+
+				return;
+			}
 
 			sendEmail(to, user.getLocale());
 		}
