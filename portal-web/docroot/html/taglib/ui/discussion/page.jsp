@@ -38,7 +38,6 @@ MBTreeWalker treeWalker = messageDisplay.getTreeWalker();
 MBMessage rootMessage = treeWalker.getRoot();
 List<MBMessage> messages = treeWalker.getMessages();
 int messagesCount = messages.size();
-SearchContainer searchContainer = null;
 %>
 
 <section>
@@ -170,22 +169,9 @@ SearchContainer searchContainer = null;
 					<aui:row>
 
 						<%
-						if (messages != null) {
-							messages = ListUtil.copy(messages);
+						messages = ListUtil.copy(messages);
 
-							messages.remove(0);
-						}
-						else {
-							PortletURL currentURLObj = PortletURLUtil.getCurrent(renderRequest, renderResponse);
-
-							searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, currentURLObj, null, null);
-
-							searchContainer.setTotal(messagesCount - 1);
-
-							messages = MBMessageLocalServiceUtil.getThreadRepliesMessages(message.getThreadId(), WorkflowConstants.STATUS_ANY, searchContainer.getStart(), searchContainer.getEnd());
-
-							searchContainer.setResults(messages);
-						}
+						messages.remove(0);
 
 						List<Long> classPKs = new ArrayList<Long>();
 
@@ -228,10 +214,6 @@ SearchContainer searchContainer = null;
 						%>
 
 					</aui:row>
-
-					<c:if test="<%= (searchContainer != null) && (searchContainer.getTotal() > searchContainer.getDelta()) %>">
-						<liferay-ui:search-paginator searchContainer="<%= searchContainer %>" />
-					</c:if>
 				</c:if>
 			</aui:form>
 		</div>
