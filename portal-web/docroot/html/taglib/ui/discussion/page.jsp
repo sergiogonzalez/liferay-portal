@@ -25,6 +25,7 @@ long classPK = GetterUtil.getLong((String)request.getAttribute("liferay-ui:discu
 String formAction = (String)request.getAttribute("liferay-ui:discussion:formAction");
 String formName = (String)request.getAttribute("liferay-ui:discussion:formName");
 boolean hideControls = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:discussion:hideControls"));
+String paginationURL = (String)request.getAttribute("liferay-ui:discussion:paginationURL");
 String permissionClassName = (String)request.getAttribute("liferay-ui:discussion:permissionClassName");
 long permissionClassPK = GetterUtil.getLong((String)request.getAttribute("liferay-ui:discussion:permissionClassPK"));
 boolean ratingsEnabled = GetterUtil.getBoolean((String) request.getAttribute("liferay-ui:discussion:ratingsEnabled"));
@@ -519,10 +520,6 @@ int messagesCount = messages.size();
 		</aui:script>
 
 		<aui:script use="aui-base,aui-io-request,aui-parse-content">
-			<portlet:resourceURL var="showMoreCommentsURL">
-				<portlet:param name="struts_action" value="/blogs/edit_entry_discussion" />
-			</portlet:resourceURL>
-
 			var moreCommentsLink = A.one('#<%= namespace %>moreComments');
 
 			if (moreCommentsLink) {
@@ -533,7 +530,7 @@ int messagesCount = messages.size();
 						var rootIndexPage = A.one('#<%= namespace %>rootIndexPage');
 
 						A.io.request(
-							'<%= showMoreCommentsURL %>',
+							'<%= paginationURL %>',
 							{
 								data: {
 									'<portlet:namespace />className': '<%= className %>',

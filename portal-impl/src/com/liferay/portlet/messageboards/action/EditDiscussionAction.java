@@ -37,10 +37,13 @@ import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBDiscussionLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBMessageServiceUtil;
 
+import java.io.IOException;
+
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletContext;
+import javax.portlet.PortletException;
 import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -155,7 +158,7 @@ public class EditDiscussionAction extends PortletAction {
 			ActionMapping actionMapping, ActionForm actionForm,
 			PortletConfig portletConfig, ResourceRequest resourceRequest,
 			ResourceResponse resourceResponse)
-		throws Exception {
+		throws IOException, PortletException {
 
 		String className = ParamUtil.getString(resourceRequest, "className");
 		long classPK = ParamUtil.getLong(resourceRequest, "classPK");
