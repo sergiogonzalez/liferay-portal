@@ -32,7 +32,6 @@ long userId = GetterUtil.getLong((String)request.getAttribute("liferay-ui:discus
 
 MBMessageDisplay messageDisplay = MBMessageLocalServiceUtil.getDiscussionMessageDisplay(userId, scopeGroupId, className, classPK, WorkflowConstants.STATUS_ANY);
 
-MBCategory category = messageDisplay.getCategory();
 MBThread thread = messageDisplay.getThread();
 MBTreeWalker treeWalker = messageDisplay.getTreeWalker();
 MBMessage rootMessage = treeWalker.getRoot();
@@ -187,19 +186,8 @@ int messagesCount = messages.size();
 						for (int j = range[0] - 1; j < range[1] - 1; j++) {
 							message = (MBMessage)messages.get(j);
 
-							boolean lastChildNode = false;
-
-							if ((j + 1) == range[1]) {
-								lastChildNode = true;
-							}
-
 							request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER, treeWalker);
-							request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CATEGORY, category);
 							request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_CUR_MESSAGE, message);
-							request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_DEPTH, new Integer(0));
-							request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_LAST_NODE, Boolean.valueOf(lastChildNode));
-							request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_SEL_MESSAGE, rootMessage);
-							request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER_THREAD, thread);
 
 							request.setAttribute("liferay-ui:discussion:randomNamespace", randomNamespace);
 							request.setAttribute("liferay-ui:discussion:ratingsEntries", ratingsEntries);
@@ -554,24 +542,4 @@ int messagesCount = messages.size();
 
 <%!
 public static final String EDITOR_TEXT_IMPL_KEY = "editor.wysiwyg.portal-web.docroot.html.taglib.ui.discussion.jsp";
-
-private RatingsEntry getRatingsEntry(List<RatingsEntry> ratingEntries, long classPK) {
-	for (RatingsEntry ratingsEntry : ratingEntries) {
-		if (ratingsEntry.getClassPK() == classPK) {
-			return ratingsEntry;
-		}
-	}
-
-	return null;
-}
-
-private RatingsStats getRatingsStats(List<RatingsStats> ratingsStatsList, long classPK) {
-	for (RatingsStats ratingsStats : ratingsStatsList) {
-		if (ratingsStats.getClassPK() == classPK) {
-			return ratingsStats;
-		}
-	}
-
-	return RatingsStatsUtil.create(0);
-}
 %>
