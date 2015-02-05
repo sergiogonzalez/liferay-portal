@@ -27,6 +27,7 @@ String formName = (String)request.getAttribute("liferay-ui:discussion:formName")
 boolean hideControls = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:discussion:hideControls"));
 String permissionClassName = (String)request.getAttribute("liferay-ui:discussion:permissionClassName");
 long permissionClassPK = GetterUtil.getLong((String)request.getAttribute("liferay-ui:discussion:permissionClassPK"));
+boolean ratingsEnabled = GetterUtil.getBoolean((String) request.getAttribute("liferay-ui:discussion:ratingsEnabled"));
 String redirect = (String)request.getAttribute("liferay-ui:discussion:redirect");
 long userId = GetterUtil.getLong((String)request.getAttribute("liferay-ui:discussion:userId"));
 
@@ -183,7 +184,21 @@ int messagesCount = messages.size();
 
 						int[] range = treeWalker.getChildrenRange(rootMessage);
 
+						int index = 0;
+						int rootIndexPage = 0;
+						boolean done = false;
+
 						for (int j = range[0] - 1; j < range[1] - 1; j++) {
+							index = GetterUtil.getInteger(request.getAttribute("liferay-ui:discussion:index"), 1);
+
+							rootIndexPage = j;
+
+							if ((index + 1) > PropsValues.DISCUSSION_DELTA_VALUE) {
+								done = true;
+
+								break;
+							}
+
 							message = (MBMessage)messages.get(j);
 
 							request.setAttribute(WebKeys.MESSAGE_BOARDS_TREE_WALKER, treeWalker);
@@ -201,6 +216,16 @@ int messagesCount = messages.size();
 						}
 						%>
 
+						<c:if test="<%= done %>">
+							<div id="<%= namespace %>moreCommentsPage"></div>
+						</c:if>
+
+						<c:if test="<%= messages.size() > PropsValues.DISCUSSION_DELTA_VALUE %>">
+							<a class="btn btn-default" href="javascript:;" id="<%= namespace %>moreComments"><liferay-ui:message key="more-comments" /></a>
+						</c:if>
+
+						<aui:input name="rootIndexPage" type="hidden" value="<%= String.valueOf(rootIndexPage) %>" />
+						<aui:input name="index" type="hidden" value="<%= String.valueOf(index) %>" />
 					</aui:row>
 				</c:if>
 			</aui:form>
@@ -491,6 +516,56 @@ int messagesCount = messages.size();
 				},
 				['aui-base']
 			);
+		</aui:script>
+
+		<aui:script use="aui-base,aui-io-request,aui-parse-content">
+			<portlet:resourceURL var="showMoreCommentsURL">
+				<portlet:param name="struts_action" value="/blogs/edit_entry_discussion" />
+			</portlet:resourceURL>
+
+			var moreCommentsLink = A.one('#<%= namespace %>moreComments');
+
+			if (moreCommentsLink) {
+				moreCommentsLink.on(
+					'click',
+					function(event) {
+						var index = A.one('#<%= namespace %>index');
+						var rootIndexPage = A.one('#<%= namespace %>rootIndexPage');
+
+						A.io.request(
+							'<%= showMoreCommentsURL %>',
+							{
+								data: {
+									'<portlet:namespace />className': '<%= className %>',
+									'<portlet:namespace />classPK': <%= classPK %>,
+									'<portlet:namespace />hideControls': '<%= hideControls %>',
+									'<portlet:namespace />index': index.val(),
+									'<portlet:namespace />permissionClassName': '<%= permissionClassName %>',
+									'<portlet:namespace />permissionClassPK': '<%= permissionClassPK %>',
+									'<portlet:namespace />randomNamespace': '<%= randomNamespace %>',
+									'<portlet:namespace />ratingsEnabled': '<%= ratingsEnabled %>',
+									'<portlet:namespace />rootIndexPage': rootIndexPage.val(),
+									'<portlet:namespace />userId': '<%= userId %>'
+								},
+								on: {
+									failure: function() {
+										alert('failure');
+									},
+									success: function(event, id, obj) {
+										var responseData = this.get('responseData');
+
+										var moreCommentsPage = A.one('#<%= namespace %>moreCommentsPage');
+
+										moreCommentsPage.plug(A.Plugin.ParseContent);
+
+										moreCommentsPage.append(responseData);
+									}
+								}
+							}
+						);
+					}
+				)
+			}
 		</aui:script>
 
 		<aui:script use="aui-popover,event-outside">
