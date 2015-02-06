@@ -30,7 +30,9 @@ public abstract class BaseSubscriptionRootContainerModelTestCase
 			testSubscriptionRootContainerModelWhenAddingBaseModelInContainerModel()
 		throws Exception {
 
-		addSubscriptionContainerModel(PARENT_CONTAINER_MODEL_ID_DEFAULT);
+		addSubscriptionContainerModel(
+				user.getUserId(),
+				PARENT_CONTAINER_MODEL_ID_DEFAULT);
 
 		long containerModelId = addContainerModel(
 			contextUser.getUserId(),
@@ -46,7 +48,9 @@ public abstract class BaseSubscriptionRootContainerModelTestCase
 			testSubscriptionRootContainerModelWhenAddingBaseModelInRootContainerModel()
 		throws Exception {
 
-		addSubscriptionContainerModel(PARENT_CONTAINER_MODEL_ID_DEFAULT);
+		addSubscriptionContainerModel(
+				user.getUserId(),
+				PARENT_CONTAINER_MODEL_ID_DEFAULT);
 
 		addBaseModel(
 			contextUser.getUserId(), PARENT_CONTAINER_MODEL_ID_DEFAULT);
@@ -59,7 +63,9 @@ public abstract class BaseSubscriptionRootContainerModelTestCase
 			testSubscriptionRootContainerModelWhenAddingBaseModelInSubcontainerModel()
 		throws Exception {
 
-		addSubscriptionContainerModel(PARENT_CONTAINER_MODEL_ID_DEFAULT);
+		addSubscriptionContainerModel(
+				user.getUserId(),
+				PARENT_CONTAINER_MODEL_ID_DEFAULT);
 
 		long containerModelId = addContainerModel(
 			contextUser.getUserId(), PARENT_CONTAINER_MODEL_ID_DEFAULT);
@@ -83,7 +89,9 @@ public abstract class BaseSubscriptionRootContainerModelTestCase
 		long baseModelId = addBaseModel(
 			contextUser.getUserId(), containerModelId);
 
-		addSubscriptionContainerModel(PARENT_CONTAINER_MODEL_ID_DEFAULT);
+		addSubscriptionContainerModel(
+				user.getUserId(),
+				PARENT_CONTAINER_MODEL_ID_DEFAULT);
 
 		updateBaseModel(contextUser.getUserId(), baseModelId);
 
@@ -98,7 +106,9 @@ public abstract class BaseSubscriptionRootContainerModelTestCase
 		long baseModelId = addBaseModel(
 			contextUser.getUserId(), PARENT_CONTAINER_MODEL_ID_DEFAULT);
 
-		addSubscriptionContainerModel(PARENT_CONTAINER_MODEL_ID_DEFAULT);
+		addSubscriptionContainerModel(
+				user.getUserId(),
+				PARENT_CONTAINER_MODEL_ID_DEFAULT);
 
 		updateBaseModel(contextUser.getUserId(), baseModelId);
 
@@ -120,6 +130,7 @@ public abstract class BaseSubscriptionRootContainerModelTestCase
 			contextUser.getUserId(), subcontainerModelId);
 
 		addSubscriptionContainerModel(
+			user.getUserId(),
 			PARENT_CONTAINER_MODEL_ID_DEFAULT);
 
 		updateBaseModel(contextUser.getUserId(), baseModelId);
@@ -128,7 +139,7 @@ public abstract class BaseSubscriptionRootContainerModelTestCase
 	}
 
 	protected abstract void addSubscriptionContainerModel(
-			long containerModelId)
+			long userId, long containerModelId)
 		throws Exception;
 
 }

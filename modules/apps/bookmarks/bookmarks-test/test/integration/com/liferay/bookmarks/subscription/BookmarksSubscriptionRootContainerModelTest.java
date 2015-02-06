@@ -74,11 +74,12 @@ public class BookmarksSubscriptionRootContainerModelTest
 	}
 
 	@Override
-	protected void addSubscriptionContainerModel(long containerModelId)
+	protected void addSubscriptionContainerModel(
+			long userId, long containerModelId)
 		throws Exception {
 
 		BookmarksFolderLocalServiceUtil.subscribeFolder(
-			user.getUserId(), group.getGroupId(), containerModelId);
+			userId, group.getGroupId(), containerModelId);
 	}
 
 	@Override

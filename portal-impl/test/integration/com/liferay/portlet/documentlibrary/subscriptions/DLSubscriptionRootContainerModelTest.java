@@ -75,11 +75,12 @@ public class DLSubscriptionRootContainerModelTest
 	}
 
 	@Override
-	protected void addSubscriptionContainerModel(long containerModelId)
+	protected void addSubscriptionContainerModel(
+			long userId, long containerModelId)
 		throws Exception {
 
 		DLAppLocalServiceUtil.subscribeFolder(
-			user.getUserId(), group.getGroupId(), containerModelId);
+			userId, group.getGroupId(), containerModelId);
 	}
 
 	@Override

@@ -67,11 +67,12 @@ public class MBSubscriptionRootContainerModelTest
 	}
 
 	@Override
-	protected void addSubscriptionContainerModel(long containerModelId)
+	protected void addSubscriptionContainerModel(
+			long userId, long containerModelId)
 		throws Exception {
 
 		MBCategoryLocalServiceUtil.subscribeCategory(
-			user.getUserId(), group.getGroupId(), containerModelId);
+			userId, group.getGroupId(), containerModelId);
 	}
 
 	@Override

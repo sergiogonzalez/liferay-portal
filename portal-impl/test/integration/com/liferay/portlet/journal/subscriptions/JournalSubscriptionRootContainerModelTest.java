@@ -79,11 +79,12 @@ public class JournalSubscriptionRootContainerModelTest
 	}
 
 	@Override
-	protected void addSubscriptionContainerModel(long containerModelId)
+	protected void addSubscriptionContainerModel(
+			long userId, long containerModelId)
 		throws Exception {
 
 		JournalFolderLocalServiceUtil.subscribe(
-			user.getUserId(), group.getGroupId(), containerModelId);
+			userId, group.getGroupId(), containerModelId);
 	}
 
 	@Override

@@ -80,11 +80,12 @@ public class BlogsSubscriptionRootContainerModelTest
 	}
 
 	@Override
-	protected void addSubscriptionContainerModel(long containerModelId)
+	protected void addSubscriptionContainerModel(
+			long userId, long containerModelId)
 		throws Exception {
 
 		BlogsEntryLocalServiceUtil.subscribe(
-			user.getUserId(), group.getGroupId());
+			userId, group.getGroupId());
 	}
 
 	@Override
