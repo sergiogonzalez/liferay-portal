@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
+import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.service.ServiceContext;
 
 /**
@@ -38,6 +39,19 @@ public class BookmarksTestUtil {
 
 	public static BookmarksEntry addEntry(boolean approved) throws Exception {
 		return addEntry(TestPropsValues.getGroupId(), approved);
+	}
+
+	public static BookmarksEntry addEntry(
+			long userId, long groupId, boolean approved)
+		throws Exception {
+
+		ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(groupId, userId);
+
+		return addEntry(
+				userId,
+				BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID, approved,
+				serviceContext);
 	}
 
 	public static BookmarksEntry addEntry(long groupId, boolean approved)
@@ -95,6 +109,25 @@ public class BookmarksTestUtil {
 		}
 	}
 
+	public static BookmarksEntry addEntry(
+			long userId, long folderId, boolean approved,
+			ServiceContext serviceContext)
+		throws Exception {
+		boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
+
+		String name = PrincipalThreadLocal.getName();
+
+		try {
+			PrincipalThreadLocal.setName(userId);
+
+			return addEntry(folderId, approved, serviceContext);
+		}
+		finally {
+			WorkflowThreadLocal.setEnabled(workflowEnabled);
+			PrincipalThreadLocal.setName(name);
+		}
+	}
+
 	public static BookmarksFolder addFolder(
 			long groupId, long parentFolderId, String name)
 		throws Exception {
@@ -110,6 +143,24 @@ public class BookmarksTestUtil {
 
 		return addFolder(
 			groupId, BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID, name);
+	}
+
+	public static BookmarksFolder addFolder(
+			long userId, long parentFolderId, String folderName,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		String name = PrincipalThreadLocal.getName();
+
+		try {
+			PrincipalThreadLocal.setName(userId);
+
+			return addFolder(
+				parentFolderId, folderName, serviceContext);
+		}
+		finally {
+			PrincipalThreadLocal.setName(name);
+		}
 	}
 
 	public static BookmarksFolder addFolder(
@@ -157,22 +208,37 @@ public class BookmarksTestUtil {
 	public static BookmarksEntry updateEntry(BookmarksEntry entry)
 		throws Exception {
 
-		return updateEntry(entry, RandomTestUtil.randomString());
+		return updateEntry(
+			TestPropsValues.getUserId(), entry, RandomTestUtil.randomString());
 	}
 
-	public static BookmarksEntry updateEntry(BookmarksEntry entry, String name)
+	public static BookmarksEntry updateEntry(long userId, BookmarksEntry entry)
+		throws Exception {
+
+			return updateEntry(userId, entry, RandomTestUtil.randomString());
+	}
+
+	public static BookmarksEntry updateEntry(
+			BookmarksEntry entry, String name)
+		throws Exception {
+
+		return updateEntry(entry.getUserId(), entry, name);
+	}
+
+	public static BookmarksEntry updateEntry(
+			long userId, BookmarksEntry entry, String name)
 		throws Exception {
 
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(entry.getGroupId());
+			ServiceContextTestUtil.getServiceContext(
+				entry.getGroupId(), userId);
 
 		serviceContext.setCommand(Constants.UPDATE);
 		serviceContext.setLayoutFullURL("http://localhost");
 
 		return BookmarksEntryLocalServiceUtil.updateEntry(
-			TestPropsValues.getUserId(), entry.getEntryId(), entry.getGroupId(),
-			entry.getFolderId(), name, entry.getUrl(), entry.getDescription(),
-			serviceContext);
+			userId, entry.getEntryId(), entry.getGroupId(), entry.getFolderId(),
+			name, entry.getUrl(), entry.getDescription(), serviceContext);
 	}
 
 }

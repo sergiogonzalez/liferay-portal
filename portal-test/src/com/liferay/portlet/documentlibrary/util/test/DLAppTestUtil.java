@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.model.RepositoryEntry;
+import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.service.RepositoryEntryLocalServiceUtil;
 import com.liferay.portal.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
@@ -48,7 +49,6 @@ import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUt
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 
 import java.io.Serializable;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -177,6 +177,55 @@ public abstract class DLAppTestUtil {
 
 		if (workflowEnabled && approved) {
 			updateStatus(fileEntry, serviceContext);
+		}
+
+		return fileEntry;
+	}
+
+	public static FileEntry addFileEntry(
+			long userId, long groupId, long repositoryId, long folderId,
+			String sourceFileName, long fileEntryTypeId,
+			boolean workflowEnabled, boolean approved)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId, userId);
+
+		if (fileEntryTypeId !=
+				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL) {
+
+			serviceContext.setAttribute("fileEntryTypeId", fileEntryTypeId);
+		}
+
+		serviceContext.setCommand(Constants.ADD);
+		serviceContext.setLayoutFullURL("http://localhost");
+
+		if (workflowEnabled && !approved) {
+			serviceContext.setWorkflowAction(
+				WorkflowConstants.ACTION_SAVE_DRAFT);
+		}
+		else {
+			serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+		}
+
+		String name = PrincipalThreadLocal.getName();
+
+		FileEntry fileEntry = null;
+
+		try {
+			PrincipalThreadLocal.setName(userId);
+
+			fileEntry = addFileEntry(
+				repositoryId, folderId, sourceFileName, ContentTypes.TEXT_PLAIN,
+				sourceFileName, null, serviceContext.getWorkflowAction(),
+				serviceContext);
+
+			if (workflowEnabled && approved) {
+				updateStatus(userId, fileEntry, serviceContext);
+			}
+		}
+		finally {
+			PrincipalThreadLocal.setName(name);
 		}
 
 		return fileEntry;
@@ -354,6 +403,17 @@ public abstract class DLAppTestUtil {
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL, true, approved);
 	}
 
+	public static FileEntry addFileEntryWithWorkflow(
+			long userId, long groupId, long repositoryId, long folderId,
+			boolean approved)
+		throws Exception {
+
+		return addFileEntry(
+			userId, groupId, repositoryId, folderId,
+			RandomTestUtil.randomString(),
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL, true, approved);
+	}
+
 	public static Folder addFolder(long groupId, long parentFolderId)
 		throws Exception {
 
@@ -391,7 +451,7 @@ public abstract class DLAppTestUtil {
 	}
 
 	public static Folder addFolder(
-			long repositoryId, long parentFolderId, String name,
+			long repositoryId, long parentFolderId, String folderName,
 			boolean deleteExisting, ServiceContext serviceContext)
 		throws Exception {
 
@@ -400,14 +460,36 @@ public abstract class DLAppTestUtil {
 		if (deleteExisting) {
 			try {
 				DLAppServiceUtil.deleteFolder(
-					serviceContext.getScopeGroupId(), parentFolderId, name);
+					serviceContext.getScopeGroupId(), parentFolderId,
+					folderName);
 			}
 			catch (NoSuchFolderException nsfe) {
 			}
 		}
 
 		return DLAppServiceUtil.addFolder(
-			repositoryId, parentFolderId, name, description, serviceContext);
+			repositoryId, parentFolderId, folderName, description,
+			serviceContext);
+	}
+
+	public static Folder addFolder(
+			long userId, long repositoryId, long parentFolderId,
+			String folderName, boolean deleteExisting,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		String name = PrincipalThreadLocal.getName();
+
+		try {
+			PrincipalThreadLocal.setName(userId);
+
+			return addFolder(
+					repositoryId, parentFolderId, folderName,
+					deleteExisting, serviceContext);
+		}
+		finally {
+			PrincipalThreadLocal.setName(name);
+		}
 	}
 
 	public static Folder addFolder(
@@ -560,12 +642,23 @@ public abstract class DLAppTestUtil {
 			serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 		}
 
-		FileEntry fileEntry = DLAppServiceUtil.updateFileEntry(
-			fileEntryId, sourceFileName, mimeType, title, description,
-			changeLog, majorVersion, bytes, serviceContext);
+		String name = PrincipalThreadLocal.getName();
 
-		if (workflowEnabled && approved) {
-			updateStatus(fileEntry, serviceContext);
+		FileEntry fileEntry = null;
+
+		try {
+			PrincipalThreadLocal.setName(serviceContext.getUserId());
+
+			fileEntry = DLAppServiceUtil.updateFileEntry(
+				fileEntryId, sourceFileName, mimeType, title, description,
+				changeLog, majorVersion, bytes, serviceContext);
+
+			if (workflowEnabled && approved) {
+				updateStatus(fileEntry, serviceContext);
+			}
+		}
+		finally {
+			PrincipalThreadLocal.setName(name);
 		}
 
 		return fileEntry;
@@ -595,6 +688,23 @@ public abstract class DLAppTestUtil {
 		return DLAppServiceUtil.updateFileEntry(
 			fileEntryId, sourceFileName, mimeType, title, description,
 			changeLog, majorVersion, bytes, serviceContext);
+	}
+
+	public static FileEntry updateFileEntryWithWorkflow(
+			long userId, long groupId, long fileEntryId, boolean majorVersion,
+			boolean approved)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId, userId);
+
+		serviceContext.setCommand(Constants.UPDATE);
+		serviceContext.setLayoutFullURL("http://localhost");
+
+		return updateFileEntry(
+			groupId, fileEntryId, RandomTestUtil.randomString(),
+			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString(),
+			majorVersion, true, approved, serviceContext);
 	}
 
 	public static FileEntry updateFileEntryWithWorkflow(
@@ -646,13 +756,20 @@ public abstract class DLAppTestUtil {
 			FileEntry fileEntry, ServiceContext serviceContext)
 		throws Exception {
 
+		updateStatus(TestPropsValues.getUserId(), fileEntry, serviceContext);
+	}
+
+	protected static void updateStatus(
+			long userId, FileEntry fileEntry, ServiceContext serviceContext)
+		throws Exception {
+
 		Map<String, Serializable> workflowContext = new HashMap<>();
 
 		workflowContext.put(WorkflowConstants.CONTEXT_URL, "http://localhost");
 		workflowContext.put("event", DLSyncConstants.EVENT_ADD);
 
 		DLAppHelperLocalServiceUtil.updateStatus(
-			TestPropsValues.getUserId(), fileEntry,
+			userId, fileEntry,
 			fileEntry.getLatestFileVersion(), WorkflowConstants.STATUS_PENDING,
 			WorkflowConstants.STATUS_APPROVED, serviceContext, workflowContext);
 	}
