@@ -78,7 +78,7 @@ public class WikiSubscriptionContainerModelTest
 
 		WikiPage page = WikiTestUtil.addPage(
 			userId, group.getGroupId(), containerModelId,
-			RandomTestUtil.randomString());
+			RandomTestUtil.randomString(), true);
 
 		return page.getResourcePrimKey();
 	}
@@ -97,7 +97,8 @@ public class WikiSubscriptionContainerModelTest
 	protected void addSubscriptionContainerModel(long containerModelId)
 		throws Exception {
 
-		WikiNodeLocalServiceUtil.subscribeNode(containerModelId);
+		WikiNodeLocalServiceUtil.subscribeNode(
+			user.getUserId(), containerModelId);
 	}
 
 	@Override
@@ -107,7 +108,7 @@ public class WikiSubscriptionContainerModelTest
 
 		WikiPage page = WikiPageLocalServiceUtil.getPage(baseModelId, true);
 
-		WikiTestUtil.updatePage(userId, page);
+		WikiTestUtil.updatePage(page, userId);
 	}
 
 }

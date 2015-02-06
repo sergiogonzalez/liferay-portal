@@ -55,9 +55,12 @@ public class WikiSubscriptionLocalizedContentTest
 	}
 
 	@Override
-	protected long addBaseModel(long containerModelId) throws Exception {
+	protected long addBaseModel(
+			long userId, long containerModelId)
+		throws Exception {
+
 		WikiPage page = WikiTestUtil.addPage(
-			group.getGroupId(), _node.getNodeId(), true);
+			userId, group.getGroupId(), _node.getNodeId(), true);
 
 		return page.getResourcePrimKey();
 	}
@@ -91,10 +94,13 @@ public class WikiSubscriptionLocalizedContentTest
 	}
 
 	@Override
-	protected void updateBaseModel(long baseModelId) throws Exception {
+	protected void updateBaseModel(
+			long userId, long baseModelId)
+		throws Exception {
+
 		WikiPage page = WikiPageLocalServiceUtil.getPage(baseModelId);
 
-		WikiTestUtil.updatePage(page);
+		WikiTestUtil.updatePage(userId, page);
 	}
 
 	private WikiNode _node;
