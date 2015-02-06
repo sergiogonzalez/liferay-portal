@@ -76,6 +76,11 @@ public class MBSubscriptionRootContainerModelTest
 	}
 
 	@Override
+	protected boolean isAuthorSubscriptionEnabled() {
+		return true;
+	}
+
+	@Override
 	protected void updateBaseModel(
 			long userId, long baseModelId)
 		throws Exception {
@@ -86,5 +91,4 @@ public class MBSubscriptionRootContainerModelTest
 			userId, message, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(50), true);
 	}
-
 }
