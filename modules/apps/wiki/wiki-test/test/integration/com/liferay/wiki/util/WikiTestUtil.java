@@ -448,7 +448,9 @@ public class WikiTestUtil {
 		return updatePage(page, page.getUserId());
 	}
 
-	public static WikiPage updatePage(WikiPage page, long userId) throws Exception {
+	public static WikiPage updatePage(WikiPage page, long userId)
+		throws Exception {
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(page.getGroupId());
 
@@ -456,8 +458,8 @@ public class WikiTestUtil {
 		serviceContext.setLayoutFullURL("http://localhost");
 
 		return updatePage(
-			page, userId, page.getTitle(),
-			RandomTestUtil.randomString(50), true, serviceContext);
+			page, userId, page.getTitle(), RandomTestUtil.randomString(50),
+			true, serviceContext);
 	}
 
 	public static WikiPage updatePage(
@@ -501,13 +503,6 @@ public class WikiTestUtil {
 	}
 
 	protected static WikiPage updateStatus(
-			WikiPage page, ServiceContext serviceContext)
-		throws Exception {
-
-		return updateStatus(page.getUserId(), page, serviceContext);
-	}
-
-	protected static WikiPage updateStatus(
 			long userId, WikiPage page, ServiceContext serviceContext)
 		throws Exception {
 
@@ -516,9 +511,17 @@ public class WikiTestUtil {
 		workflowContext.put(WorkflowConstants.CONTEXT_URL, "http://localhost");
 
 		page = WikiPageLocalServiceUtil.updateStatus(
-			userId, page, WorkflowConstants.STATUS_APPROVED,
-			serviceContext, workflowContext);
+			userId, page, WorkflowConstants.STATUS_APPROVED, serviceContext,
+			workflowContext);
 
 		return page;
 	}
+
+	protected static WikiPage updateStatus(
+			WikiPage page, ServiceContext serviceContext)
+		throws Exception {
+
+		return updateStatus(page.getUserId(), page, serviceContext);
+	}
+
 }

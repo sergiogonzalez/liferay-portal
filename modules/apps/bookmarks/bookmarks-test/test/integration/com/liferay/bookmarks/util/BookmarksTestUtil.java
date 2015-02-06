@@ -41,19 +41,6 @@ public class BookmarksTestUtil {
 		return addEntry(TestPropsValues.getGroupId(), approved);
 	}
 
-	public static BookmarksEntry addEntry(
-			long userId, long groupId, boolean approved)
-		throws Exception {
-
-		ServiceContext serviceContext =
-				ServiceContextTestUtil.getServiceContext(groupId, userId);
-
-		return addEntry(
-				userId,
-				BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID, approved,
-				serviceContext);
-	}
-
 	public static BookmarksEntry addEntry(long groupId, boolean approved)
 		throws Exception {
 
@@ -110,9 +97,22 @@ public class BookmarksTestUtil {
 	}
 
 	public static BookmarksEntry addEntry(
+			long userId, long groupId, boolean approved)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId, userId);
+
+		return addEntry(
+				userId, BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				approved, serviceContext);
+	}
+
+	public static BookmarksEntry addEntry(
 			long userId, long folderId, boolean approved,
 			ServiceContext serviceContext)
 		throws Exception {
+
 		boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
 
 		String name = PrincipalThreadLocal.getName();
@@ -138,13 +138,6 @@ public class BookmarksTestUtil {
 		return addFolder(parentFolderId, name, serviceContext);
 	}
 
-	public static BookmarksFolder addFolder(long groupId, String name)
-		throws Exception {
-
-		return addFolder(
-			groupId, BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID, name);
-	}
-
 	public static BookmarksFolder addFolder(
 			long userId, long parentFolderId, String folderName,
 			ServiceContext serviceContext)
@@ -155,12 +148,18 @@ public class BookmarksTestUtil {
 		try {
 			PrincipalThreadLocal.setName(userId);
 
-			return addFolder(
-				parentFolderId, folderName, serviceContext);
+			return addFolder(parentFolderId, folderName, serviceContext);
 		}
 		finally {
 			PrincipalThreadLocal.setName(name);
 		}
+	}
+
+	public static BookmarksFolder addFolder(long groupId, String name)
+		throws Exception {
+
+		return addFolder(
+			groupId, BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID, name);
 	}
 
 	public static BookmarksFolder addFolder(
@@ -212,17 +211,16 @@ public class BookmarksTestUtil {
 			TestPropsValues.getUserId(), entry, RandomTestUtil.randomString());
 	}
 
+	public static BookmarksEntry updateEntry(BookmarksEntry entry, String name)
+		throws Exception {
+
+		return updateEntry(entry.getUserId(), entry, name);
+	}
+
 	public static BookmarksEntry updateEntry(long userId, BookmarksEntry entry)
 		throws Exception {
 
 			return updateEntry(userId, entry, RandomTestUtil.randomString());
-	}
-
-	public static BookmarksEntry updateEntry(
-			BookmarksEntry entry, String name)
-		throws Exception {
-
-		return updateEntry(entry.getUserId(), entry, name);
 	}
 
 	public static BookmarksEntry updateEntry(

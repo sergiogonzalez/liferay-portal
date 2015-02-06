@@ -47,21 +47,19 @@ public class DLSubscriptionContainerModelTest
 			SynchronousMailTestRule.INSTANCE);
 
 	@Override
-	protected long addBaseModel(
-			long userId, long containerModelId)
-	throws Exception {
+	protected long addBaseModel(long userId, long containerModelId)
+		throws Exception {
 
 		FileEntry fileEntry = DLAppTestUtil.addFileEntryWithWorkflow(
-			userId, group.getGroupId(), group.getGroupId(),
-			containerModelId, true);
+			userId, group.getGroupId(), group.getGroupId(), containerModelId,
+			true);
 
 		return fileEntry.getFileEntryId();
 	}
 
 	@Override
-	protected long addContainerModel(
-			long userId, long containerModelId)
-	throws Exception {
+	protected long addContainerModel(long userId, long containerModelId)
+		throws Exception {
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -83,9 +81,9 @@ public class DLSubscriptionContainerModelTest
 	}
 
 	@Override
-	protected void updateBaseModel(
-			long userId, long baseModelId)
-	throws Exception {
+	protected void updateBaseModel(long userId, long baseModelId)
+		throws Exception {
+
 		DLAppTestUtil.updateFileEntryWithWorkflow(
 			userId, group.getGroupId(), baseModelId, false, true);
 	}

@@ -120,8 +120,7 @@ public class JournalSubscriptionClassTypeTest
 	}
 
 	@Override
-	protected void updateBaseModel(
-			long userId, long baseModelId)
+	protected void updateBaseModel(long userId, long baseModelId)
 		throws Exception {
 
 		JournalArticle article =

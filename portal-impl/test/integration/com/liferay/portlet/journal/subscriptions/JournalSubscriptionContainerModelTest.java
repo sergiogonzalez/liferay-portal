@@ -46,8 +46,7 @@ public class JournalSubscriptionContainerModelTest
 			SynchronousMailTestRule.INSTANCE);
 
 	@Override
-	protected long addBaseModel(
-			long userId, long containerModelId)
+	protected long addBaseModel(long userId, long containerModelId)
 		throws Exception {
 
 		JournalArticle article = JournalTestUtil.addArticle(
@@ -57,8 +56,7 @@ public class JournalSubscriptionContainerModelTest
 	}
 
 	@Override
-	protected long addContainerModel(
-			long userId, long containerModelId)
+	protected long addContainerModel(long userId, long containerModelId)
 		throws Exception {
 
 		JournalFolder folder = JournalTestUtil.addFolder(
@@ -77,8 +75,7 @@ public class JournalSubscriptionContainerModelTest
 	}
 
 	@Override
-	protected void updateBaseModel(
-			long userId, long baseModelId)
+	protected void updateBaseModel(long userId, long baseModelId)
 		throws Exception {
 
 		JournalArticle article =

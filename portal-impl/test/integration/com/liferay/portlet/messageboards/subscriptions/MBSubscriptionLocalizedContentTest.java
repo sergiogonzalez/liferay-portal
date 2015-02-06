@@ -46,8 +46,7 @@ public class MBSubscriptionLocalizedContentTest
 			SynchronousMailTestRule.INSTANCE);
 
 	@Override
-	protected long addBaseModel(
-			long userId, long containerModelId)
+	protected long addBaseModel(long userId, long containerModelId)
 		throws Exception {
 
 		MBMessage message = MBTestUtil.addMessage(
@@ -85,8 +84,7 @@ public class MBSubscriptionLocalizedContentTest
 	}
 
 	@Override
-	protected void updateBaseModel(
-			long userId, long baseModelId)
+	protected void updateBaseModel(long userId, long baseModelId)
 		throws Exception {
 
 		MBMessage message = MBMessageLocalServiceUtil.getMessage(baseModelId);

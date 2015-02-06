@@ -103,8 +103,7 @@ public abstract class BaseSubscriptionLocalizedContentTestCase
 		long baseModelId = addBaseModel(
 			contextUser.getUserId(), PARENT_CONTAINER_MODEL_ID_DEFAULT);
 
-		addSubscriptionContainerModel(
-			PARENT_CONTAINER_MODEL_ID_DEFAULT);
+		addSubscriptionContainerModel(PARENT_CONTAINER_MODEL_ID_DEFAULT);
 
 		updateBaseModel(contextUser.getUserId(), baseModelId);
 

@@ -47,8 +47,7 @@ public class BlogsSubscriptionLocalizedContentTest
 			SynchronousMailTestRule.INSTANCE);
 
 	@Override
-	protected long addBaseModel(
-			long userId, long containerModelId)
+	protected long addBaseModel(long userId, long containerModelId)
 		throws Exception {
 
 		BlogsEntry entry = BlogsTestUtil.addEntry(userId, group, true);
@@ -85,8 +84,7 @@ public class BlogsSubscriptionLocalizedContentTest
 	}
 
 	@Override
-	protected void updateBaseModel(
-			long userId, long baseModelId)
+	protected void updateBaseModel(long userId, long baseModelId)
 		throws Exception {
 
 		BlogsEntry entry = BlogsEntryLocalServiceUtil.getEntry(baseModelId);

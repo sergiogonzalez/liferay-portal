@@ -48,8 +48,7 @@ public class MBSubscriptionBaseModelTest
 			SynchronousMailTestRule.INSTANCE);
 
 	@Override
-	protected long addBaseModel(
-			long userId, long containerModelId)
+	protected long addBaseModel(long userId, long containerModelId)
 		throws Exception {
 
 		MBMessage message = MBTestUtil.addMessage(
@@ -59,8 +58,7 @@ public class MBSubscriptionBaseModelTest
 	}
 
 	@Override
-	protected long addContainerModel(
-			long userId, long containerModelId)
+	protected long addContainerModel(long userId, long containerModelId)
 		throws Exception {
 
 		_category = MBTestUtil.addCategory(
@@ -91,8 +89,7 @@ public class MBSubscriptionBaseModelTest
 	}
 
 	@Override
-	protected void updateBaseModel(
-			long userId, long baseModelId)
+	protected void updateBaseModel(long userId, long baseModelId)
 		throws Exception {
 
 		MBMessage message = MBMessageLocalServiceUtil.getMessage(baseModelId);

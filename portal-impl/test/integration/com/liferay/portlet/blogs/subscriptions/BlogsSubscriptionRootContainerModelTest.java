@@ -72,8 +72,9 @@ public class BlogsSubscriptionRootContainerModelTest
 	}
 
 	@Override
-	protected long addBaseModel(
-			long userId, long containerModelId) throws Exception {
+	protected long addBaseModel(long userId, long containerModelId)
+		throws Exception {
+
 		BlogsEntry entry = BlogsTestUtil.addEntry(userId, group, true);
 
 		return entry.getEntryId();
@@ -84,8 +85,7 @@ public class BlogsSubscriptionRootContainerModelTest
 			long userId, long containerModelId)
 		throws Exception {
 
-		BlogsEntryLocalServiceUtil.subscribe(
-			userId, group.getGroupId());
+		BlogsEntryLocalServiceUtil.subscribe(userId, group.getGroupId());
 	}
 
 	@Override

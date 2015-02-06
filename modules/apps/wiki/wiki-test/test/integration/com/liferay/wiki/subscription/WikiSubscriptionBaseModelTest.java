@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousMailTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -58,8 +57,7 @@ public class WikiSubscriptionBaseModelTest
 	}
 
 	@Override
-	protected long addBaseModel(
-			long userId, long containerModelId)
+	protected long addBaseModel(long userId, long containerModelId)
 		throws Exception {
 
 		WikiPage page = WikiTestUtil.addPage(
@@ -70,8 +68,7 @@ public class WikiSubscriptionBaseModelTest
 	}
 
 	@Override
-	protected long addContainerModel(
-			long userId, long containerModelId)
+	protected long addContainerModel(long userId, long containerModelId)
 		throws Exception {
 
 		_node = WikiTestUtil.addNode(
@@ -105,8 +102,7 @@ public class WikiSubscriptionBaseModelTest
 	}
 
 	@Override
-	protected void updateBaseModel(
-			long userId, long baseModelId)
+	protected void updateBaseModel(long userId, long baseModelId)
 		throws Exception {
 
 		WikiPage page = WikiPageLocalServiceUtil.getPage(baseModelId, true);

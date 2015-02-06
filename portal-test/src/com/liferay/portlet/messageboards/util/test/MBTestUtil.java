@@ -162,6 +162,20 @@ public class MBTestUtil {
 	}
 
 	public static MBMessage addMessage(
+			long groupId, long categoryId, boolean approved)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
+
+		serviceContext.setCommand(Constants.ADD);
+		serviceContext.setLayoutFullURL("http://localhost");
+
+		return addMessage(
+			groupId, categoryId, StringPool.BLANK, approved, serviceContext);
+	}
+
+	public static MBMessage addMessage(
 			long userId, long groupId, long categoryId, boolean approved)
 		throws Exception {
 
@@ -174,20 +188,6 @@ public class MBTestUtil {
 		return addMessage(
 			userId, groupId, categoryId, StringPool.BLANK, approved,
 			serviceContext);
-	}
-
-	public static MBMessage addMessage(
-			long groupId, long categoryId, boolean approved)
-		throws Exception {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(groupId);
-
-		serviceContext.setCommand(Constants.ADD);
-		serviceContext.setLayoutFullURL("http://localhost");
-
-		return addMessage(
-			groupId, categoryId, StringPool.BLANK, approved, serviceContext);
 	}
 
 	public static MBMessage addMessage(
@@ -212,6 +212,30 @@ public class MBTestUtil {
 			userId, userName, groupId, categoryId, threadId, parentMessageId,
 			subject, body, format, inputStreamOVPs, anonymous, priority,
 			allowPingbacks, serviceContext);
+	}
+
+	public static MBMessage addMessage(
+			long userId, long groupId, long categoryId, String keywords,
+			boolean approved, ServiceContext serviceContext)
+		throws Exception {
+
+		String subject = "subject";
+		String body = "body";
+
+		if (!Validator.isBlank(keywords)) {
+			subject = keywords;
+			body = keywords;
+		}
+
+		MBMessage message = MBMessageLocalServiceUtil.addMessage(
+			userId, RandomTestUtil.randomString(), groupId, categoryId, subject,
+			body, serviceContext);
+
+		if (!approved) {
+			message = updateStatus(userId, message, serviceContext);
+		}
+
+		return message;
 	}
 
 	public static MBMessage addMessage(
@@ -241,30 +265,6 @@ public class MBTestUtil {
 
 		if (!approved) {
 			message = updateStatus(message, serviceContext);
-		}
-
-		return message;
-	}
-
-	public static MBMessage addMessage(
-			long userId, long groupId, long categoryId, String keywords,
-			boolean approved, ServiceContext serviceContext)
-		throws Exception {
-
-		String subject = "subject";
-		String body = "body";
-
-		if (!Validator.isBlank(keywords)) {
-			subject = keywords;
-			body = keywords;
-		}
-
-		MBMessage message = MBMessageLocalServiceUtil.addMessage(
-			userId, RandomTestUtil.randomString(), groupId,
-			categoryId, subject, body, serviceContext);
-
-		if (!approved) {
-			message = updateStatus(userId, message, serviceContext);
 		}
 
 		return message;
@@ -361,22 +361,6 @@ public class MBTestUtil {
 			classPK);
 	}
 
-	public static MBMessage updateMessage(MBMessage message, boolean approved)
-		throws Exception {
-
-		return updateMessage(
-			message, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(50), approved);
-	}
-
-	public static MBMessage updateMessage(
-			MBMessage message, String subject, String body, boolean approved)
-		throws Exception {
-
-		return updateMessage(
-			TestPropsValues.getUserId(), message, subject, body, approved);
-	}
-
 	public static MBMessage updateMessage(
 			long userId, MBMessage message, String subject, String body,
 			boolean approved)
@@ -397,8 +381,7 @@ public class MBTestUtil {
 				WorkflowConstants.ACTION_SAVE_DRAFT);
 
 			message = MBMessageLocalServiceUtil.updateMessage(
-				userId, message.getMessageId(), subject,
-				body,
+				userId, message.getMessageId(), subject, body,
 				Collections.<ObjectValuePair<String, InputStream>>emptyList(),
 				Collections.<String>emptyList(), message.getPriority(),
 				message.isAllowPingbacks(), serviceContext);
@@ -412,6 +395,22 @@ public class MBTestUtil {
 		finally {
 			WorkflowThreadLocal.setEnabled(workflowEnabled);
 		}
+	}
+
+	public static MBMessage updateMessage(MBMessage message, boolean approved)
+		throws Exception {
+
+		return updateMessage(
+			message, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(50), approved);
+	}
+
+	public static MBMessage updateMessage(
+			MBMessage message, String subject, String body, boolean approved)
+		throws Exception {
+
+		return updateMessage(
+			TestPropsValues.getUserId(), message, subject, body, approved);
 	}
 
 	protected static MBMessage addMessage(
@@ -456,6 +455,21 @@ public class MBTestUtil {
 	}
 
 	protected static MBMessage updateStatus(
+			long userId, MBMessage message, ServiceContext serviceContext)
+		throws Exception {
+
+		Map<String, Serializable> workflowContext = new HashMap<>();
+
+		workflowContext.put(WorkflowConstants.CONTEXT_URL, "http://localhost");
+
+		message = MBMessageLocalServiceUtil.updateStatus(
+			userId, message.getMessageId(), WorkflowConstants.STATUS_APPROVED,
+			serviceContext, workflowContext);
+
+		return message;
+	}
+
+	protected static MBMessage updateStatus(
 			MBMessage message, ServiceContext serviceContext)
 		throws Exception {
 
@@ -470,18 +484,4 @@ public class MBTestUtil {
 		return message;
 	}
 
-	protected static MBMessage updateStatus(
-			long userId, MBMessage message, ServiceContext serviceContext)
-		throws Exception {
-
-		Map<String, Serializable> workflowContext = new HashMap<>();
-
-		workflowContext.put(WorkflowConstants.CONTEXT_URL, "http://localhost");
-
-		message = MBMessageLocalServiceUtil.updateStatus(
-			userId, message.getMessageId(), WorkflowConstants.STATUS_APPROVED,
-			serviceContext, workflowContext);
-
-		return message;
-	}
 }

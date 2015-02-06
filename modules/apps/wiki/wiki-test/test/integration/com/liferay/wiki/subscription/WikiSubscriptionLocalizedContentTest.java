@@ -55,8 +55,7 @@ public class WikiSubscriptionLocalizedContentTest
 	}
 
 	@Override
-	protected long addBaseModel(
-			long userId, long containerModelId)
+	protected long addBaseModel(long userId, long containerModelId)
 		throws Exception {
 
 		WikiPage page = WikiTestUtil.addPage(
@@ -94,8 +93,7 @@ public class WikiSubscriptionLocalizedContentTest
 	}
 
 	@Override
-	protected void updateBaseModel(
-			long userId, long baseModelId)
+	protected void updateBaseModel(long userId, long baseModelId)
 		throws Exception {
 
 		WikiPage page = WikiPageLocalServiceUtil.getPage(baseModelId);

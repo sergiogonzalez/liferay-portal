@@ -72,8 +72,7 @@ public class WikiSubscriptionContainerModelTest
 	}
 
 	@Override
-	protected long addBaseModel(
-			long userId, long containerModelId)
+	protected long addBaseModel(long userId, long containerModelId)
 		throws Exception {
 
 		WikiPage page = WikiTestUtil.addPage(
@@ -84,8 +83,7 @@ public class WikiSubscriptionContainerModelTest
 	}
 
 	@Override
-	protected long addContainerModel(
-			long userId, long containerModelId)
+	protected long addContainerModel(long userId, long containerModelId)
 		throws Exception {
 
 		WikiNode node = WikiTestUtil.addNode(userId, group.getGroupId());
@@ -102,8 +100,7 @@ public class WikiSubscriptionContainerModelTest
 	}
 
 	@Override
-	protected void updateBaseModel(
-			long userId, long baseModelId)
+	protected void updateBaseModel(long userId, long baseModelId)
 		throws Exception {
 
 		WikiPage page = WikiPageLocalServiceUtil.getPage(baseModelId, true);

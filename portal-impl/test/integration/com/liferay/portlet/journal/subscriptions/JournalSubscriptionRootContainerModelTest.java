@@ -56,8 +56,7 @@ public class JournalSubscriptionRootContainerModelTest
 	}
 
 	@Override
-	protected long addBaseModel(
-			long userId, long containerModelId)
+	protected long addBaseModel(long userId, long containerModelId)
 		throws Exception {
 
 		JournalArticle article = JournalTestUtil.addArticle(
@@ -67,8 +66,7 @@ public class JournalSubscriptionRootContainerModelTest
 	}
 
 	@Override
-	protected long addContainerModel(
-			long userId, long containerModelId)
+	protected long addContainerModel(long userId, long containerModelId)
 		throws Exception {
 
 		JournalFolder folder = JournalTestUtil.addFolder(
@@ -88,8 +86,7 @@ public class JournalSubscriptionRootContainerModelTest
 	}
 
 	@Override
-	protected void updateBaseModel(
-			long userId, long baseModelId)
+	protected void updateBaseModel(long userId, long baseModelId)
 		throws Exception {
 
 		JournalArticle article =
