@@ -33,6 +33,12 @@ if (folder != null) {
 	DLUtil.addPortletBreadcrumbEntries(folder, request, renderResponse);
 }
 
+String referringPortletResource = ParamUtil.getString(request, "referringPortletResource");
+
+PortletPreferences preferences = PortletPreferencesFactoryUtil.getPortletPreferences(request, referringPortletResource);
+
+boolean includeMountfolders = Boolean.parseBoolean(preferences.getValue("includeMountfolders", "true"));
+
 DLVisualizationHelper dlVisualizationHelper = new DLVisualizationHelper(dlRequestHelper);
 %>
 
@@ -77,11 +83,11 @@ DLVisualizationHelper dlVisualizationHelper = new DLVisualizationHelper(dlReques
 
 	<liferay-ui:search-container
 		iteratorURL="<%= portletURL %>"
-		total="<%= DLAppServiceUtil.getFoldersCount(repositoryId, folderId) %>"
+		total="<%= DLAppServiceUtil.getFoldersCount(repositoryId, folderId, includeMountfolders) %>"
 	>
 
 		<liferay-ui:search-container-results
-			results="<%= DLAppServiceUtil.getFolders(repositoryId, folderId, searchContainer.getStart(), searchContainer.getEnd()) %>"
+			results="<%= DLAppServiceUtil.getFolders(repositoryId, folderId, includeMountfolders, searchContainer.getStart(), searchContainer.getEnd()) %>"
 		/>
 
 		<liferay-ui:search-container-row
