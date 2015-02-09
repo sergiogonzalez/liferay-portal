@@ -5729,8 +5729,7 @@ public class JournalArticleLocalServiceImpl
 			notifySubscribers(
 				article,
 				(String)workflowContext.get(WorkflowConstants.CONTEXT_URL),
-				user.getUserId(),
-				serviceContext);
+				user.getUserId(), serviceContext);
 		}
 
 		return article;

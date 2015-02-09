@@ -2132,8 +2132,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 				 wikiSettings.isPageMinorEditSendMail())) {
 
 				notifySubscribers(
-					userId,
-					page,
+					userId, page,
 					(String)workflowContext.get(WorkflowConstants.CONTEXT_URL),
 					serviceContext);
 			}
