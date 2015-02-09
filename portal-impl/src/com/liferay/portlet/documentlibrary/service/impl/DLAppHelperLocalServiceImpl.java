@@ -75,6 +75,7 @@ import com.liferay.portlet.trash.model.TrashVersion;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -1409,8 +1410,7 @@ public class DLAppHelperLocalServiceImpl
 				// Subscriptions
 
 				notifySubscribers(
-					userId,
-					latestFileVersion,
+					userId, latestFileVersion,
 					(String)workflowContext.get(WorkflowConstants.CONTEXT_URL),
 					serviceContext);
 			}

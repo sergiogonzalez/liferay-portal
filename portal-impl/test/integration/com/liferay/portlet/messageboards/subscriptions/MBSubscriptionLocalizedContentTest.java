@@ -17,6 +17,7 @@ package com.liferay.portlet.messageboards.subscriptions;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousMailTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.util.PortletKeys;
@@ -45,9 +46,11 @@ public class MBSubscriptionLocalizedContentTest
 			SynchronousMailTestRule.INSTANCE);
 
 	@Override
-	protected long addBaseModel(long containerModelId) throws Exception {
+	protected long addBaseModel(long userId, long containerModelId)
+		throws Exception {
+
 		MBMessage message = MBTestUtil.addMessage(
-			group.getGroupId(), containerModelId, true);
+			userId, group.getGroupId(), containerModelId, true);
 
 		return message.getMessageId();
 	}
@@ -81,10 +84,14 @@ public class MBSubscriptionLocalizedContentTest
 	}
 
 	@Override
-	protected void updateBaseModel(long baseModelId) throws Exception {
+	protected void updateBaseModel(long userId, long baseModelId)
+		throws Exception {
+
 		MBMessage message = MBMessageLocalServiceUtil.getMessage(baseModelId);
 
-		MBTestUtil.updateMessage(message, true);
+		MBTestUtil.updateMessage(
+				userId, message, RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(50), true);
 	}
 
 }

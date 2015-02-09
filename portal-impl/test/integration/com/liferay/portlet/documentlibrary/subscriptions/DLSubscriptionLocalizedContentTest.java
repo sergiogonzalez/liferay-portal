@@ -45,9 +45,12 @@ public class DLSubscriptionLocalizedContentTest
 			SynchronousMailTestRule.INSTANCE);
 
 	@Override
-	protected long addBaseModel(long containerModelId) throws Exception {
+	protected long addBaseModel(long userId, long containerModelId)
+		throws Exception {
+
 		FileEntry fileEntry = DLAppTestUtil.addFileEntryWithWorkflow(
-			group.getGroupId(), group.getGroupId(), containerModelId, true);
+			userId, group.getGroupId(), group.getGroupId(), containerModelId,
+			true);
 
 		return fileEntry.getFileEntryId();
 	}
@@ -81,9 +84,11 @@ public class DLSubscriptionLocalizedContentTest
 	}
 
 	@Override
-	protected void updateBaseModel(long baseModelId) throws Exception {
+	protected void updateBaseModel(long userId, long baseModelId)
+		throws Exception {
+
 		DLAppTestUtil.updateFileEntryWithWorkflow(
-			group.getGroupId(), baseModelId, false, true);
+			userId, group.getGroupId(), baseModelId, false, true);
 	}
 
 }

@@ -17,6 +17,7 @@ package com.liferay.portlet.messageboards.subscriptions;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousMailTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.RoleConstants;
@@ -47,7 +48,9 @@ public class MBSubscriptionBaseModelTest
 			SynchronousMailTestRule.INSTANCE);
 
 	@Override
-	protected long addBaseModel(long containerModelId) throws Exception {
+	protected long addBaseModel(long userId, long containerModelId)
+		throws Exception {
+
 		MBMessage message = MBTestUtil.addMessage(
 			group.getGroupId(), containerModelId, true);
 
@@ -55,9 +58,11 @@ public class MBSubscriptionBaseModelTest
 	}
 
 	@Override
-	protected long addContainerModel(long containerModelId) throws Exception {
+	protected long addContainerModel(long userId, long containerModelId)
+		throws Exception {
+
 		_category = MBTestUtil.addCategory(
-			group.getGroupId(), containerModelId);
+			userId, group.getGroupId(), containerModelId);
 
 		return _category.getCategoryId();
 	}
@@ -84,10 +89,14 @@ public class MBSubscriptionBaseModelTest
 	}
 
 	@Override
-	protected void updateBaseModel(long baseModelId) throws Exception {
+	protected void updateBaseModel(long userId, long baseModelId)
+		throws Exception {
+
 		MBMessage message = MBMessageLocalServiceUtil.getMessage(baseModelId);
 
-		MBTestUtil.updateMessage(message, true);
+		MBTestUtil.updateMessage(
+				userId, message, RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(50), true);
 	}
 
 	private MBCategory _category;
