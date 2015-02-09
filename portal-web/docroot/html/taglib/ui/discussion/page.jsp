@@ -518,14 +518,14 @@ int messagesCount = messages.size();
 		</aui:script>
 
 		<aui:script use="aui-base,aui-io-request,aui-parse-content">
-			var moreCommentsLink = A.one('#<%= namespace %>moreComments');
+			var moreCommentsLink = $('#<%= namespace %>moreComments');
 
 			if (moreCommentsLink) {
 				moreCommentsLink.on(
 					'click',
 					function(event) {
-						var index = A.one('#<%= namespace %>index');
-						var rootIndexPage = A.one('#<%= namespace %>rootIndexPage');
+						var index = $('#<%= namespace %>index');
+						var rootIndexPage = $('#<%= namespace %>rootIndexPage');
 
 						A.io.request(
 							'<%= paginationURL %>',

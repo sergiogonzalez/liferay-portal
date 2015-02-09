@@ -68,14 +68,14 @@ for (;rootIndexPage < range[1] - 1; rootIndexPage++) {
 %>
 
 <aui:script use="aui-base">
-	var rootIndexPage = A.one('#<%= namespace %>rootIndexPage');
-	var index = A.one('#<%= namespace %>index');
+	var rootIndexPage = $('#<%= namespace %>rootIndexPage');
+	var index = $('#<%= namespace %>index');
 
 	rootIndexPage.val('<%= String.valueOf(rootIndexPage) %>');
 	index.val('<%= String.valueOf(index) %>');
 
 	<c:if test="<%= messages.size() <= (index) %>">
-		var moreCommentsLink = A.one('#<%= namespace %>moreComments');
+		var moreCommentsLink = $('#<%= namespace %>moreComments');
 
 		moreCommentsLink.hide();
 	</c:if>
