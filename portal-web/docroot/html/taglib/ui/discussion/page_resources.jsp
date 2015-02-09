@@ -46,7 +46,7 @@ List<RatingsStats> ratingsStatsList = RatingsStatsLocalServiceUtil.getStats(MBDi
 int[] range = treeWalker.getChildrenRange(rootMessage);
 
 for (;rootIndexPage < range[1] - 1; rootIndexPage++) {
-	if (index > (initialIndex + PropsValues.DISCUSSION_DELTA_VALUE)) {
+	if (index >= (initialIndex + PropsValues.DISCUSSION_DELTA_VALUE)) {
 		break;
 	}
 
@@ -74,7 +74,7 @@ for (;rootIndexPage < range[1] - 1; rootIndexPage++) {
 	rootIndexPage.val('<%= String.valueOf(rootIndexPage) %>');
 	index.val('<%= String.valueOf(index) %>');
 
-	<c:if test="<%= messages.size() <= (index + 1) %>">
+	<c:if test="<%= messages.size() <= (index) %>">
 		var moreCommentsLink = A.one('#<%= namespace %>moreComments');
 
 		moreCommentsLink.hide();
