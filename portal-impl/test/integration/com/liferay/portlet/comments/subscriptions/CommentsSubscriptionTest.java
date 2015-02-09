@@ -56,7 +56,7 @@ public class CommentsSubscriptionTest {
 		_group = GroupTestUtil.addGroup();
 
 		_contextUser = UserTestUtil.addGroupUser(
-				_group, RoleConstants.SITE_MEMBER);
+			_group, RoleConstants.SITE_MEMBER);
 
 		_user = UserTestUtil.addGroupUser(_group, RoleConstants.SITE_MEMBER);
 	}
