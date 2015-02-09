@@ -187,7 +187,7 @@ int messagesCount = messages.size();
 
 						int index = 0;
 						int rootIndexPage = 0;
-						boolean done = false;
+						boolean moreCommentsPagination = false;
 
 						for (int j = range[0] - 1; j < range[1] - 1; j++) {
 							index = GetterUtil.getInteger(request.getAttribute("liferay-ui:discussion:index"), 1);
@@ -195,7 +195,7 @@ int messagesCount = messages.size();
 							rootIndexPage = j;
 
 							if ((index + 1) > PropsValues.DISCUSSION_DELTA_VALUE) {
-								done = true;
+								moreCommentsPagination = true;
 
 								break;
 							}
@@ -217,16 +217,14 @@ int messagesCount = messages.size();
 						}
 						%>
 
-						<c:if test="<%= done %>">
+						<c:if test="<%= moreCommentsPagination %>">
 							<div id="<%= namespace %>moreCommentsPage"></div>
-						</c:if>
 
-						<c:if test="<%= messages.size() > PropsValues.DISCUSSION_DELTA_VALUE %>">
 							<a class="btn btn-default" href="javascript:;" id="<%= namespace %>moreComments"><liferay-ui:message key="more-comments" /></a>
-						</c:if>
 
-						<aui:input name="rootIndexPage" type="hidden" value="<%= String.valueOf(rootIndexPage) %>" />
-						<aui:input name="index" type="hidden" value="<%= String.valueOf(index) %>" />
+							<aui:input name="rootIndexPage" type="hidden" value="<%= String.valueOf(rootIndexPage) %>" />
+							<aui:input name="index" type="hidden" value="<%= String.valueOf(index) %>" />
+						</c:if>
 					</aui:row>
 				</c:if>
 			</aui:form>
