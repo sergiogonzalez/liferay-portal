@@ -22,22 +22,20 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
-import com.liferay.portlet.blogs.util.BlogsConstants;
 import com.liferay.portlet.blogs.util.test.BlogsTestUtil;
-import com.liferay.portlet.subscriptions.test.BaseSubscriptionLocalizedContentTestCase;
+import com.liferay.portlet.subscriptions.test.BaseSubscriptionAuthorTestCase;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
 
 /**
- * @author Roberto Díaz
+ * @author José Ángel Jiménez
  */
 @Sync
-public class BlogsSubscriptionLocalizedContentTest
-	extends BaseSubscriptionLocalizedContentTestCase {
+public class BlogsSubscriptionAuthorTest
+	extends BaseSubscriptionAuthorTestCase {
 
 	@ClassRule
 	@Rule
@@ -47,40 +45,18 @@ public class BlogsSubscriptionLocalizedContentTest
 			SynchronousMailTestRule.INSTANCE);
 
 	@Override
-	protected long addBaseModel(long userId, long containerModelId)
-		throws Exception {
-
-		BlogsEntry entry = BlogsTestUtil.addEntry(userId, group, true);
+	protected long addBaseModel(long userId, long groupId) throws Exception {
+		BlogsEntry entry = BlogsTestUtil.addEntry(
+			userId, groupId, RandomTestUtil.randomString(), true);
 
 		return entry.getEntryId();
 	}
 
 	@Override
-	protected void addSubscriptionContainerModel(long containerModelId)
+	protected void addSubscription(long userId, long containerModelId)
 		throws Exception {
 
-		BlogsEntryLocalServiceUtil.subscribe(
-			user.getUserId(), group.getGroupId());
-	}
-
-	@Override
-	protected String getPortletId() {
-		return PortletKeys.BLOGS;
-	}
-
-	@Override
-	protected String getServiceName() {
-		return BlogsConstants.SERVICE_NAME;
-	}
-
-	@Override
-	protected String getSubscriptionAddedBodyPreferenceName() {
-		return "emailEntryAddedBody";
-	}
-
-	@Override
-	protected String getSubscriptionUpdatedBodyPreferenceName() {
-		return "emailEntryUpdatedBody";
+		BlogsEntryLocalServiceUtil.subscribe(userId, group.getGroupId());
 	}
 
 	@Override

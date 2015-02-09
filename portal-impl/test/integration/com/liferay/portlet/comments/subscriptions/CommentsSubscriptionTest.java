@@ -55,6 +55,9 @@ public class CommentsSubscriptionTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
+		_contextUser = UserTestUtil.addGroupUser(
+				_group, RoleConstants.SITE_MEMBER);
+
 		_user = UserTestUtil.addGroupUser(_group, RoleConstants.SITE_MEMBER);
 	}
 
@@ -62,14 +65,15 @@ public class CommentsSubscriptionTest {
 	public void testSubscriptionMBDiscussionWhenAddingMBMessage()
 		throws Exception {
 
-		BlogsEntry blogsEntry = BlogsTestUtil.addEntry(_group, true);
+		BlogsEntry blogsEntry = BlogsTestUtil.addEntry(
+			_contextUser.getUserId(), _group, true);
 
 		MBDiscussionLocalServiceUtil.subscribeDiscussion(
 			_user.getUserId(), _group.getGroupId(), BlogsEntry.class.getName(),
 			blogsEntry.getEntryId());
 
 		MBTestUtil.addDiscussionMessage(
-			_group.getGroupId(), BlogsEntry.class.getName(),
+			_contextUser, _group.getGroupId(), BlogsEntry.class.getName(),
 			blogsEntry.getEntryId());
 
 		Assert.assertEquals(1, MailServiceTestUtil.getInboxSize());
@@ -79,10 +83,11 @@ public class CommentsSubscriptionTest {
 	public void testSubscriptionMBDiscussionWhenUpdatingMBMessage()
 		throws Exception {
 
-		BlogsEntry blogsEntry = BlogsTestUtil.addEntry(_group, true);
+		BlogsEntry blogsEntry = BlogsTestUtil.addEntry(
+			_contextUser.getUserId(), _group, true);
 
 		MBMessage mbMessage = MBTestUtil.addDiscussionMessage(
-			_group.getGroupId(), BlogsEntry.class.getName(),
+			_contextUser, _group.getGroupId(), BlogsEntry.class.getName(),
 			blogsEntry.getEntryId());
 
 		MBDiscussionLocalServiceUtil.subscribeDiscussion(
@@ -90,15 +95,61 @@ public class CommentsSubscriptionTest {
 			blogsEntry.getEntryId());
 
 		MBTestUtil.updateDiscussionMessage(
-			_group.getGroupId(), mbMessage.getMessageId(),
-			BlogsEntry.class.getName(), blogsEntry.getEntryId());
+			_contextUser.getUserId() ,_group.getGroupId(),
+			mbMessage.getMessageId(), BlogsEntry.class.getName(),
+			blogsEntry.getEntryId());
 
 		Assert.assertEquals(1, MailServiceTestUtil.getInboxSize());
+	}
+
+	@Test
+	public void testSubscriptionMBDiscussionForAuthorWhenAddingMBMessage()
+		throws Exception {
+
+		BlogsEntry blogsEntry = BlogsTestUtil.addEntry(
+			_contextUser.getUserId(), _group, true);
+
+		MBDiscussionLocalServiceUtil.subscribeDiscussion(
+			_contextUser.getUserId(), _group.getGroupId(),
+			BlogsEntry.class.getName(), blogsEntry.getEntryId());
+
+		MBTestUtil.addDiscussionMessage(
+			_contextUser, _group.getGroupId(), BlogsEntry.class.getName(),
+			blogsEntry.getEntryId());
+
+		Assert.assertEquals(0, MailServiceTestUtil.getInboxSize());
+	}
+
+	@Test
+	public void testSubscriptionMBDiscussionForAuthorWhenUpdatingMBMessage()
+		throws Exception {
+
+		BlogsEntry blogsEntry = BlogsTestUtil.addEntry(
+			_contextUser.getUserId(), _group, true);
+
+		MBMessage mbMessage = MBTestUtil.addDiscussionMessage(
+			_contextUser, _group.getGroupId(), BlogsEntry.class.getName(),
+			blogsEntry.getEntryId());
+
+		MBDiscussionLocalServiceUtil.subscribeDiscussion(
+			_contextUser.getUserId(), _group.getGroupId(),
+			BlogsEntry.class.getName(), blogsEntry.getEntryId());
+
+		MBTestUtil.updateDiscussionMessage(
+			_contextUser.getUserId() ,_group.getGroupId(),
+			mbMessage.getMessageId(), BlogsEntry.class.getName(),
+			blogsEntry.getEntryId());
+
+		Assert.assertEquals(0, MailServiceTestUtil.getInboxSize());
 	}
 
 	@DeleteAfterTestRun
 	private Group _group;
 
+	@DeleteAfterTestRun
+	private User _contextUser;
+
+	@DeleteAfterTestRun
 	private User _user;
 
 }

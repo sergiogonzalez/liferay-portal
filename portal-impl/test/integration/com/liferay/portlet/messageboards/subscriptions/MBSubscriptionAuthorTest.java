@@ -12,30 +12,29 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.subscriptions;
+package com.liferay.portlet.messageboards.subscriptions;
 
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousMailTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
-import com.liferay.portal.util.PortletKeys;
-import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.util.DLConstants;
-import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
-import com.liferay.portlet.subscriptions.test.BaseSubscriptionLocalizedContentTestCase;
+import com.liferay.portlet.messageboards.model.MBCategory;
+import com.liferay.portlet.messageboards.model.MBMessage;
+import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
+import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
+import com.liferay.portlet.messageboards.util.test.MBTestUtil;
+import com.liferay.portlet.subscriptions.test.BaseSubscriptionAuthorTestCase;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
 
 /**
- * @author Sergio González
- * @author Roberto Díaz
+ * @author José Ángel Jiménez
  */
 @Sync
-public class DLSubscriptionLocalizedContentTest
-	extends BaseSubscriptionLocalizedContentTestCase {
+public class MBSubscriptionAuthorTest extends BaseSubscriptionAuthorTestCase {
 
 	@ClassRule
 	@Rule
@@ -48,47 +47,44 @@ public class DLSubscriptionLocalizedContentTest
 	protected long addBaseModel(long userId, long containerModelId)
 		throws Exception {
 
-		FileEntry fileEntry = DLAppTestUtil.addFileEntryWithWorkflow(
-			userId, group.getGroupId(), group.getGroupId(), containerModelId,
-			true);
+		MBMessage message = MBTestUtil.addMessage(
+			userId, group.getGroupId(), containerModelId, true);
 
-		return fileEntry.getFileEntryId();
+		return message.getMessageId();
 	}
 
 	@Override
-	protected void addSubscriptionContainerModel(long containerModelId)
+	protected long addContainerModel(long userId, long containerModelId)
 		throws Exception {
 
-		DLAppLocalServiceUtil.subscribeFolder(
-			user.getUserId(), group.getGroupId(), containerModelId);
+		MBCategory category = MBTestUtil.addCategory(
+			userId, group.getGroupId(), containerModelId);
+
+		return category.getCategoryId();
 	}
 
 	@Override
-	protected String getPortletId() {
-		return PortletKeys.DOCUMENT_LIBRARY;
+	protected void addSubscription(long userId, long containerModelId)
+		throws Exception {
+
+		MBCategoryLocalServiceUtil.subscribeCategory(
+			userId, group.getGroupId(), containerModelId);
 	}
 
 	@Override
-	protected String getServiceName() {
-		return DLConstants.SERVICE_NAME;
-	}
-
-	@Override
-	protected String getSubscriptionAddedBodyPreferenceName() {
-		return "emailFileEntryAddedBody";
-	}
-
-	@Override
-	protected String getSubscriptionUpdatedBodyPreferenceName() {
-		return "emailFileEntryUpdatedBody";
+	protected boolean isSubscriptionForAuthorEnabled() {
+		return true;
 	}
 
 	@Override
 	protected void updateBaseModel(long userId, long baseModelId)
 		throws Exception {
 
-		DLAppTestUtil.updateFileEntryWithWorkflow(
-			userId, group.getGroupId(), baseModelId, false, true);
+		MBMessage message = MBMessageLocalServiceUtil.getMessage(baseModelId);
+
+		MBTestUtil.updateMessage(
+				userId, message, RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(50), true);
 	}
 
 }

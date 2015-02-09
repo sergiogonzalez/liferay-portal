@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.subscriptions;
+package com.liferay.portlet.journal.subscriptions;
 
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -20,22 +20,22 @@ import com.liferay.portal.kernel.test.rule.SynchronousMailTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
-import com.liferay.portlet.messageboards.model.MBCategory;
-import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
-import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
-import com.liferay.portlet.messageboards.util.test.MBTestUtil;
-import com.liferay.portlet.subscriptions.test.BaseSubscriptionRootContainerModelTestCase;
+import com.liferay.portlet.journal.model.JournalArticle;
+import com.liferay.portlet.journal.model.JournalFolder;
+import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
+import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
+import com.liferay.portlet.journal.util.test.JournalTestUtil;
+import com.liferay.portlet.subscriptions.test.BaseSubscriptionAuthorTestCase;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
 
 /**
- * @author Roberto Díaz
+ * @author José Ángel Jiménez
  */
 @Sync
-public class MBSubscriptionRootContainerModelTest
-	extends BaseSubscriptionRootContainerModelTestCase {
+public class JournalSubscriptionAuthorTest
+	extends BaseSubscriptionAuthorTestCase {
 
 	@ClassRule
 	@Rule
@@ -48,39 +48,39 @@ public class MBSubscriptionRootContainerModelTest
 	protected long addBaseModel(long userId, long containerModelId)
 		throws Exception {
 
-		MBMessage message = MBTestUtil.addMessage(
-			userId, group.getGroupId(), containerModelId, true);
-
-		return message.getMessageId();
-	}
-
-	@Override
-	protected long addContainerModel(long userId,  long containerModelId)
-		throws Exception {
-
-		MBCategory category = MBTestUtil.addCategory(
+		JournalArticle article = JournalTestUtil.addArticle(
 			userId, group.getGroupId(), containerModelId);
 
-		return category.getCategoryId();
+		return article.getResourcePrimKey();
 	}
 
 	@Override
-	protected void addSubscriptionContainerModel(long containerModelId)
+	protected long addContainerModel(long userId, long containerModelId)
 		throws Exception {
 
-		MBCategoryLocalServiceUtil.subscribeCategory(
-			user.getUserId(), group.getGroupId(), containerModelId);
+		JournalFolder folder = JournalTestUtil.addFolder(
+			userId, group.getGroupId(), containerModelId,
+			RandomTestUtil.randomString());
+
+		return folder.getFolderId();
+	}
+
+	@Override
+	protected void addSubscription(long userId, long containerModelId)
+		throws Exception {
+
+		JournalFolderLocalServiceUtil.subscribe(
+			userId, group.getGroupId(), containerModelId);
 	}
 
 	@Override
 	protected void updateBaseModel(long userId, long baseModelId)
 		throws Exception {
 
-		MBMessage message = MBMessageLocalServiceUtil.getMessage(baseModelId);
+		JournalArticle article =
+			JournalArticleLocalServiceUtil.getLatestArticle(baseModelId);
 
-		MBTestUtil.updateMessage(
-			userId, message, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(50), true);
+		JournalTestUtil.updateArticleWithWorkflow(userId, article, true);
 	}
 
 }

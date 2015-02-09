@@ -12,20 +12,22 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.subscriptions;
+package com.liferay.bookmarks.subscription;
 
+import com.liferay.bookmarks.model.BookmarksEntry;
+import com.liferay.bookmarks.model.BookmarksFolder;
+import com.liferay.bookmarks.service.BookmarksEntryLocalServiceUtil;
+import com.liferay.bookmarks.service.BookmarksFolderLocalServiceUtil;
+import com.liferay.bookmarks.util.BookmarksTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousMailTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
-import com.liferay.portlet.messageboards.model.MBCategory;
-import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
-import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
-import com.liferay.portlet.messageboards.util.test.MBTestUtil;
-import com.liferay.portlet.subscriptions.test.BaseSubscriptionRootContainerModelTestCase;
+import com.liferay.portlet.subscriptions.test.BaseSubscriptionAuthorTestCase;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -34,8 +36,8 @@ import org.junit.Rule;
  * @author Roberto Díaz
  */
 @Sync
-public class MBSubscriptionRootContainerModelTest
-	extends BaseSubscriptionRootContainerModelTestCase {
+public class BookmarksSubscriptionAuthorTest
+	extends BaseSubscriptionAuthorTestCase {
 
 	@ClassRule
 	@Rule
@@ -48,39 +50,46 @@ public class MBSubscriptionRootContainerModelTest
 	protected long addBaseModel(long userId, long containerModelId)
 		throws Exception {
 
-		MBMessage message = MBTestUtil.addMessage(
-			userId, group.getGroupId(), containerModelId, true);
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), userId);
 
-		return message.getMessageId();
+		BookmarksEntry entry = BookmarksTestUtil.addEntry(
+			userId, containerModelId, true, serviceContext);
+
+		return entry.getEntryId();
 	}
 
 	@Override
-	protected long addContainerModel(long userId,  long containerModelId)
+	protected long addContainerModel(long userId, long containerModelId)
 		throws Exception {
 
-		MBCategory category = MBTestUtil.addCategory(
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		BookmarksFolder folder = BookmarksTestUtil.addFolder(
+			userId, containerModelId, RandomTestUtil.randomString(),
+			serviceContext);
+
+		return folder.getFolderId();
+	}
+
+	@Override
+	protected void addSubscription(long userId, long containerModelId)
+		throws Exception {
+
+		BookmarksFolderLocalServiceUtil.subscribeFolder(
 			userId, group.getGroupId(), containerModelId);
-
-		return category.getCategoryId();
-	}
-
-	@Override
-	protected void addSubscriptionContainerModel(long containerModelId)
-		throws Exception {
-
-		MBCategoryLocalServiceUtil.subscribeCategory(
-			user.getUserId(), group.getGroupId(), containerModelId);
 	}
 
 	@Override
 	protected void updateBaseModel(long userId, long baseModelId)
 		throws Exception {
 
-		MBMessage message = MBMessageLocalServiceUtil.getMessage(baseModelId);
+		BookmarksEntry entry = BookmarksEntryLocalServiceUtil.getEntry(
+			baseModelId);
 
-		MBTestUtil.updateMessage(
-			userId, message, RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(50), true);
+		BookmarksTestUtil.updateEntry(userId, entry);
 	}
 
 }

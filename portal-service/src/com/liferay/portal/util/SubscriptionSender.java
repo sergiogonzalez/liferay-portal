@@ -162,6 +162,10 @@ public class SubscriptionSender implements Serializable {
 
 			_persistestedSubscribersOVPs.clear();
 
+			boolean currentBulk = bulk;
+
+			bulk = false;
+
 			for (ObjectValuePair<String, String> ovp :
 					_runtimeSubscribersOVPs) {
 
@@ -196,6 +200,8 @@ public class SubscriptionSender implements Serializable {
 			}
 
 			_runtimeSubscribersOVPs.clear();
+
+			bulk = currentBulk;
 		}
 		finally {
 			if ((_classLoader != null) &&
@@ -228,6 +234,10 @@ public class SubscriptionSender implements Serializable {
 
 	public Object getContextAttribute(String key) {
 		return _context.get(key);
+	}
+
+	public long getContextUserId() {
+		return contextUserId;
 	}
 
 	public String getMailId() {
@@ -314,6 +324,10 @@ public class SubscriptionSender implements Serializable {
 		for (int i = 0; i < values.length; i += 2) {
 			setContextAttribute(String.valueOf(values[i]), values[i + 1]);
 		}
+	}
+
+	public void setContextUserId(long contextUserId) {
+		this.contextUserId = contextUserId;
 	}
 
 	public void setContextUserPrefix(String contextUserPrefix) {
@@ -553,27 +567,7 @@ public class SubscriptionSender implements Serializable {
 			return;
 		}
 
-		if (bulk) {
-			if (UserNotificationManagerUtil.isDeliver(
-					user.getUserId(), portletId, _notificationClassNameId,
-					_notificationType,
-					UserNotificationDeliveryConstants.TYPE_EMAIL)) {
-
-				InternetAddress bulkAddress = new InternetAddress(
-					user.getEmailAddress(), user.getFullName());
-
-				if (_bulkAddresses == null) {
-					_bulkAddresses = new ArrayList<>();
-				}
-
-				_bulkAddresses.add(bulkAddress);
-			}
-
-			sendUserNotification(user);
-		}
-		else {
-			sendNotification(user);
-		}
+		sendNotification(user);
 	}
 
 	protected void notifyRuntimeSubscriber(InternetAddress to, Locale locale)
@@ -809,11 +803,29 @@ public class SubscriptionSender implements Serializable {
 			InternetAddress to = new InternetAddress(
 				user.getEmailAddress(), user.getFullName());
 
+			if (bulk) {
+				if (_bulkAddresses == null) {
+					_bulkAddresses = new ArrayList<>();
+				}
+
+				_bulkAddresses.add(to);
+
+				return;
+			}
+
 			sendEmail(to, user.getLocale());
 		}
 	}
 
 	protected void sendNotification(User user) throws Exception {
+		if (contextUserId == user.getUserId() ) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Skip current user in context " + contextUserId);
+			}
+
+			return;
+		}
+
 		sendEmailNotification(user);
 		sendUserNotification(user);
 	}
@@ -855,6 +867,7 @@ public class SubscriptionSender implements Serializable {
 	protected String body;
 	protected boolean bulk;
 	protected long companyId;
+	protected long contextUserId;
 	protected List<FileAttachment> fileAttachments = new ArrayList<>();
 	protected String fromAddress;
 	protected String fromName;
