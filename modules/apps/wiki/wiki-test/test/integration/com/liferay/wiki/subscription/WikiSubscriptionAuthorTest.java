@@ -12,32 +12,29 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.subscriptions;
+package com.liferay.wiki.subscription;
 
-import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousMailTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
-import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
-import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
-import com.liferay.portlet.subscriptions.test.BaseSubscriptionContainerModelTestCase;
+import com.liferay.portlet.subscriptions.test.BaseSubscriptionAuthorTestCase;
+import com.liferay.wiki.model.WikiNode;
+import com.liferay.wiki.model.WikiPage;
+import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
+import com.liferay.wiki.service.WikiPageLocalServiceUtil;
+import com.liferay.wiki.util.WikiTestUtil;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
 
 /**
- * @author Sergio González
- * @author Roberto Díaz
+ * @author José Ángel Jiménez
  */
 @Sync
-public class DLSubscriptionContainerModelTest
-	extends BaseSubscriptionContainerModelTestCase {
+public class WikiSubscriptionAuthorTest extends BaseSubscriptionAuthorTestCase {
 
 	@ClassRule
 	@Rule
@@ -50,42 +47,36 @@ public class DLSubscriptionContainerModelTest
 	protected long addBaseModel(long userId, long containerModelId)
 		throws Exception {
 
-		FileEntry fileEntry = DLAppTestUtil.addFileEntryWithWorkflow(
-			userId, group.getGroupId(), group.getGroupId(), containerModelId,
-			true);
+		WikiPage page = WikiTestUtil.addPage(
+			userId, group.getGroupId(), containerModelId,
+			RandomTestUtil.randomString(), true);
 
-		return fileEntry.getFileEntryId();
+		return page.getResourcePrimKey();
 	}
 
 	@Override
 	protected long addContainerModel(long userId, long containerModelId)
 		throws Exception {
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				group.getGroupId(), userId);
+		WikiNode node = WikiTestUtil.addNode(userId, group.getGroupId());
 
-		Folder folder = DLAppTestUtil.addFolder(
-			userId, group.getGroupId(), containerModelId,
-			RandomTestUtil.randomString(), false, serviceContext);
-
-		return folder.getFolderId();
+		return node.getNodeId();
 	}
 
 	@Override
-	protected void addSubscriptionContainerModel(long containerModelId)
+	protected void addSubscription(long userId, long containerModelId)
 		throws Exception {
 
-		DLAppLocalServiceUtil.subscribeFolder(
-			user.getUserId(), group.getGroupId(), containerModelId);
+		WikiNodeLocalServiceUtil.subscribeNode(userId, containerModelId);
 	}
 
 	@Override
 	protected void updateBaseModel(long userId, long baseModelId)
 		throws Exception {
 
-		DLAppTestUtil.updateFileEntryWithWorkflow(
-			userId, group.getGroupId(), baseModelId, false, true);
+		WikiPage page = WikiPageLocalServiceUtil.getPage(baseModelId, true);
+
+		WikiTestUtil.updatePage(page, userId);
 	}
 
 }
