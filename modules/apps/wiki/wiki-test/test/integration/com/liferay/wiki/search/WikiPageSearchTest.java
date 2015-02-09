@@ -214,7 +214,7 @@ public class WikiPageSearchTest extends BaseSearchTestCase {
 		WikiPage page = (WikiPage)baseModel;
 
 		return WikiTestUtil.updatePage(
-			page, TestPropsValues.getUserId(), keywords, serviceContext);
+			TestPropsValues.getUserId(), page, keywords, serviceContext);
 	}
 
 	protected class TestSpecificFieldsHelper {
