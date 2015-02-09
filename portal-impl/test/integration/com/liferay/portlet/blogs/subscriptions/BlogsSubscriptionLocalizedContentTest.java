@@ -47,8 +47,10 @@ public class BlogsSubscriptionLocalizedContentTest
 			SynchronousMailTestRule.INSTANCE);
 
 	@Override
-	protected long addBaseModel(long containerModelId) throws Exception {
-		BlogsEntry entry = BlogsTestUtil.addEntry(group, true);
+	protected long addBaseModel(long userId, long containerModelId)
+		throws Exception {
+
+		BlogsEntry entry = BlogsTestUtil.addEntry(userId, group, true);
 
 		return entry.getEntryId();
 	}
@@ -82,11 +84,14 @@ public class BlogsSubscriptionLocalizedContentTest
 	}
 
 	@Override
-	protected void updateBaseModel(long baseModelId) throws Exception {
+	protected void updateBaseModel(long userId, long baseModelId)
+		throws Exception {
+
 		BlogsEntry entry = BlogsEntryLocalServiceUtil.getEntry(baseModelId);
 
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), userId);
 
 		serviceContext.setAttribute("sendEmailEntryUpdated", true);
 

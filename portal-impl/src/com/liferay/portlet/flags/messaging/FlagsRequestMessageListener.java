@@ -215,7 +215,7 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 			Company company, String groupName, String reporterEmailAddress,
 			long reporterUserId, String reporterUserName,
 			String reportedEmailAddress, String reportedUserName,
-			String reportedUserURL, long contentId,	String contentTitle,
+			String reportedUserURL, long contentId, String contentTitle,
 			String contentType, String contentURL, String reason,
 			String fromName, String fromAddress, String toName,
 			String toAddress, String subject, String body,
