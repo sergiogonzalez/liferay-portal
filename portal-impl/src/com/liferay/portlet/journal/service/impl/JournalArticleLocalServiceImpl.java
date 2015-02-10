@@ -5727,8 +5727,7 @@ public class JournalArticleLocalServiceImpl
 			// Subscriptions
 
 			notifySubscribers(
-				user.getUserId(),
-				article,
+				user.getUserId(), article,
 				(String)workflowContext.get(WorkflowConstants.CONTEXT_URL),
 				serviceContext);
 		}
