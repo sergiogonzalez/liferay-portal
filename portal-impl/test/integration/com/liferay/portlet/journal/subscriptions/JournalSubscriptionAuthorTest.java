@@ -12,32 +12,30 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.subscriptions;
+package com.liferay.portlet.journal.subscriptions;
 
-import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousMailTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
-import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
-import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
-import com.liferay.portlet.subscriptions.test.BaseSubscriptionContainerModelTestCase;
+import com.liferay.portlet.journal.model.JournalArticle;
+import com.liferay.portlet.journal.model.JournalFolder;
+import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
+import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
+import com.liferay.portlet.journal.util.test.JournalTestUtil;
+import com.liferay.portlet.subscriptions.test.BaseSubscriptionAuthorTestCase;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
 
 /**
- * @author Sergio González
- * @author Roberto Díaz
+ * @author José Ángel Jiménez
  */
 @Sync
-public class DLSubscriptionContainerModelTest
-	extends BaseSubscriptionContainerModelTestCase {
+public class JournalSubscriptionAuthorTest
+	extends BaseSubscriptionAuthorTestCase {
 
 	@ClassRule
 	@Rule
@@ -50,42 +48,39 @@ public class DLSubscriptionContainerModelTest
 	protected long addBaseModel(long userId, long containerModelId)
 		throws Exception {
 
-		FileEntry fileEntry = DLAppTestUtil.addFileEntryWithWorkflow(
-			userId, group.getGroupId(), group.getGroupId(), containerModelId,
-			true);
+		JournalArticle article = JournalTestUtil.addArticle(
+			userId, group.getGroupId(), containerModelId);
 
-		return fileEntry.getFileEntryId();
+		return article.getResourcePrimKey();
 	}
 
 	@Override
 	protected long addContainerModel(long userId, long containerModelId)
 		throws Exception {
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				group.getGroupId(), userId);
-
-		Folder folder = DLAppTestUtil.addFolder(
+		JournalFolder folder = JournalTestUtil.addFolder(
 			userId, group.getGroupId(), containerModelId,
-			RandomTestUtil.randomString(), false, serviceContext);
+			RandomTestUtil.randomString());
 
 		return folder.getFolderId();
 	}
 
 	@Override
-	protected void addSubscriptionContainerModel(long containerModelId)
+	protected void addSubscription(long userId, long containerModelId)
 		throws Exception {
 
-		DLAppLocalServiceUtil.subscribeFolder(
-			user.getUserId(), group.getGroupId(), containerModelId);
+		JournalFolderLocalServiceUtil.subscribe(
+			userId, group.getGroupId(), containerModelId);
 	}
 
 	@Override
 	protected void updateBaseModel(long userId, long baseModelId)
 		throws Exception {
 
-		DLAppTestUtil.updateFileEntryWithWorkflow(
-			userId, group.getGroupId(), baseModelId, false, true);
+		JournalArticle article =
+			JournalArticleLocalServiceUtil.getLatestArticle(baseModelId);
+
+		JournalTestUtil.updateArticleWithWorkflow(userId, article, true);
 	}
 
 }

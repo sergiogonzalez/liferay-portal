@@ -17,6 +17,7 @@ package com.liferay.wiki.subscription;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousMailTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.RoleConstants;
@@ -56,16 +57,23 @@ public class WikiSubscriptionBaseModelTest
 	}
 
 	@Override
-	protected long addBaseModel(long containerModelId) throws Exception {
+	protected long addBaseModel(long userId, long containerModelId)
+		throws Exception {
+
 		WikiPage page = WikiTestUtil.addPage(
-			group.getGroupId(), containerModelId, true);
+			userId, group.getGroupId(), containerModelId,
+			RandomTestUtil.randomString(),  true);
 
 		return page.getResourcePrimKey();
 	}
 
 	@Override
-	protected long addContainerModel(long containerModelId) throws Exception {
-		_node = WikiTestUtil.addNode(group.getGroupId());
+	protected long addContainerModel(long userId, long containerModelId)
+		throws Exception {
+
+		_node = WikiTestUtil.addNode(
+			userId, group.getGroupId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(50));
 
 		return _node.getNodeId();
 	}
@@ -94,10 +102,12 @@ public class WikiSubscriptionBaseModelTest
 	}
 
 	@Override
-	protected void updateBaseModel(long baseModelId) throws Exception {
+	protected void updateBaseModel(long userId, long baseModelId)
+		throws Exception {
+
 		WikiPage page = WikiPageLocalServiceUtil.getPage(baseModelId, true);
 
-		WikiTestUtil.updatePage(page);
+		WikiTestUtil.updatePage(userId, page);
 	}
 
 	private WikiNode _node;

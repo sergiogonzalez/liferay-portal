@@ -99,9 +99,11 @@ public class DLSubscriptionClassTypeTest
 	}
 
 	@Override
-	protected void updateBaseModel(long baseModelId) throws Exception {
+	protected void updateBaseModel(long userId, long baseModelId)
+		throws Exception {
+
 		DLAppTestUtil.updateFileEntryWithWorkflow(
-			group.getGroupId(), baseModelId, false, true);
+			userId, group.getGroupId(), baseModelId, false, true);
 	}
 
 }
