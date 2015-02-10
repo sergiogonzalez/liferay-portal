@@ -45,8 +45,7 @@ public class BlogsSubscriptionAuthorTest
 			SynchronousMailTestRule.INSTANCE);
 
 	@Override
-	protected long addBaseModel(
-			long userId, long containerModelId)
+	protected long addBaseModel(long userId, long containerModelId)
 		throws Exception {
 
 		BlogsEntry entry = BlogsTestUtil.addEntry(

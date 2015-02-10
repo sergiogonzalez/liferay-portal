@@ -444,10 +444,6 @@ public class WikiTestUtil {
 		return copyPage;
 	}
 
-	public static WikiPage updatePage(WikiPage page) throws Exception {
-		return updatePage(page.getUserId(), page);
-	}
-
 	public static WikiPage updatePage(long userId, WikiPage page)
 		throws Exception {
 
@@ -500,6 +496,10 @@ public class WikiTestUtil {
 		finally {
 			WorkflowThreadLocal.setEnabled(workflowEnabled);
 		}
+	}
+
+	public static WikiPage updatePage(WikiPage page) throws Exception {
+		return updatePage(page.getUserId(), page);
 	}
 
 	protected static WikiPage updateStatus(
