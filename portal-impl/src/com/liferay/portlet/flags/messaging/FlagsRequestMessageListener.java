@@ -150,7 +150,8 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 		for (User recipient : recipients) {
 			try {
 				notify(
-					company, groupName, reporterEmailAddress, reporterUserName,
+					company, groupName, reporterEmailAddress,
+					reporterUser.getUserId(), reporterUserName,
 					reportedEmailAddress, reportedUserName, reportedURL,
 					flagsRequest.getClassPK(), flagsRequest.getContentTitle(),
 					contentType, flagsRequest.getContentURL(), reason, fromName,
@@ -212,10 +213,11 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 
 	protected void notify(
 			Company company, String groupName, String reporterEmailAddress,
-			String reporterUserName, String reportedEmailAddress,
-			String reportedUserName, String reportedUserURL, long contentId,
-			String contentTitle, String contentType, String contentURL,
-			String reason, String fromName, String fromAddress, String toName,
+			long reporterUserId, String reporterUserName,
+			String reportedEmailAddress, String reportedUserName,
+			String reportedUserURL, long contentId, String contentTitle,
+			String contentType, String contentURL, String reason,
+			String fromName, String fromAddress, String toName,
 			String toAddress, String subject, String body,
 			ServiceContext serviceContext)
 		throws Exception {
@@ -238,6 +240,7 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 			"[$CONTENT_TITLE$]", contentTitle, false);
 		subscriptionSender.setContextAttribute(
 			"[$CONTENT_URL$]", contentURL, false);
+		subscriptionSender.setContextUserId(reporterUserId);
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);
 		subscriptionSender.setMailId("flags_request", contentId);

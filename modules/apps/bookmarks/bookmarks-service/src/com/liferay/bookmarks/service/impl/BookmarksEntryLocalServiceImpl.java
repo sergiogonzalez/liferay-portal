@@ -138,7 +138,7 @@ public class BookmarksEntryLocalServiceImpl
 
 		// Subscriptions
 
-		notifySubscribers(entry, serviceContext);
+		notifySubscribers(userId, entry, serviceContext);
 
 		return entry;
 	}
@@ -624,7 +624,7 @@ public class BookmarksEntryLocalServiceImpl
 
 		// Subscriptions
 
-		notifySubscribers(entry, serviceContext);
+		notifySubscribers(userId, entry, serviceContext);
 
 		return entry;
 	}
@@ -700,7 +700,8 @@ public class BookmarksEntryLocalServiceImpl
 	}
 
 	protected void notifySubscribers(
-			BookmarksEntry entry, ServiceContext serviceContext)
+			long contextUserId, BookmarksEntry entry,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		String layoutFullURL = serviceContext.getLayoutFullURL();

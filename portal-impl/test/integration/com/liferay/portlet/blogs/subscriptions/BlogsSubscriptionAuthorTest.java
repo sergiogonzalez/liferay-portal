@@ -12,10 +12,8 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.subscriptions;
+package com.liferay.portlet.blogs.subscriptions;
 
-import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousMailTestRule;
@@ -24,20 +22,20 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
-import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
-import com.liferay.portlet.subscriptions.test.BaseSubscriptionContainerModelTestCase;
+import com.liferay.portlet.blogs.model.BlogsEntry;
+import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
+import com.liferay.portlet.blogs.util.test.BlogsTestUtil;
+import com.liferay.portlet.subscriptions.test.BaseSubscriptionAuthorTestCase;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
 
 /**
- * @author Sergio González
- * @author Roberto Díaz
+ * @author José Ángel Jiménez
  */
 @Sync
-public class DLSubscriptionContainerModelTest
-	extends BaseSubscriptionContainerModelTestCase {
+public class BlogsSubscriptionAuthorTest
+	extends BaseSubscriptionAuthorTestCase {
 
 	@ClassRule
 	@Rule
@@ -50,42 +48,33 @@ public class DLSubscriptionContainerModelTest
 	protected long addBaseModel(long userId, long containerModelId)
 		throws Exception {
 
-		FileEntry fileEntry = DLAppTestUtil.addFileEntryWithWorkflow(
-			userId, group.getGroupId(), group.getGroupId(), containerModelId,
-			true);
+		BlogsEntry entry = BlogsTestUtil.addEntry(
+			userId, group.getGroupId(), RandomTestUtil.randomString(), true);
 
-		return fileEntry.getFileEntryId();
+		return entry.getEntryId();
 	}
 
 	@Override
-	protected long addContainerModel(long userId, long containerModelId)
+	protected void addSubscription(long userId, long containerModelId)
 		throws Exception {
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				group.getGroupId(), userId);
-
-		Folder folder = DLAppTestUtil.addFolder(
-			userId, group.getGroupId(), containerModelId,
-			RandomTestUtil.randomString(), false, serviceContext);
-
-		return folder.getFolderId();
-	}
-
-	@Override
-	protected void addSubscriptionContainerModel(long containerModelId)
-		throws Exception {
-
-		DLAppLocalServiceUtil.subscribeFolder(
-			user.getUserId(), group.getGroupId(), containerModelId);
+		BlogsEntryLocalServiceUtil.subscribe(userId, group.getGroupId());
 	}
 
 	@Override
 	protected void updateBaseModel(long userId, long baseModelId)
 		throws Exception {
 
-		DLAppTestUtil.updateFileEntryWithWorkflow(
-			userId, group.getGroupId(), baseModelId, false, true);
+		BlogsEntry entry = BlogsEntryLocalServiceUtil.getEntry(baseModelId);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), userId);
+
+		serviceContext.setAttribute("sendEmailEntryUpdated", true);
+
+		BlogsTestUtil.updateEntry(
+			entry, RandomTestUtil.randomString(), true, serviceContext);
 	}
 
 }
