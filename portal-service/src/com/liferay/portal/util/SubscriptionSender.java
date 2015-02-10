@@ -579,6 +579,16 @@ public class SubscriptionSender implements Serializable {
 						" does not exist for company " + companyId);
 			}
 
+			if (bulk) {
+				if (_bulkAddresses == null) {
+					_bulkAddresses = new ArrayList<>();
+				}
+
+				_bulkAddresses.add(to);
+
+				return;
+			}
+
 			sendEmail(to, locale);
 		}
 		else {
