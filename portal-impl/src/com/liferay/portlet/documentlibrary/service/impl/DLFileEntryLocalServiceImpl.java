@@ -605,11 +605,11 @@ public class DLFileEntryLocalServiceImpl
 
 		final IntervalAction intervalAction = new IntervalAction(total);
 
-		intervalAction.setPerformActionMethod(
+		intervalAction.setPerformIntervalActionMethod(
 			new IntervalAction.PerformIntervalActionMethod() {
 
 				@Override
-				public void performAction(int start, int end)
+				public void performIntervalAction(int start, int end)
 					throws PortalException {
 
 					List<DLFileEntry> dlFileEntries =
@@ -624,7 +624,7 @@ public class DLFileEntryLocalServiceImpl
 
 			});
 
-		intervalAction.performActions();
+		intervalAction.performIntervalActions();
 	}
 
 	@Override
@@ -962,11 +962,11 @@ public class DLFileEntryLocalServiceImpl
 
 		final IntervalAction intervalAction = new IntervalAction(total);
 
-		intervalAction.setPerformActionMethod(
+		intervalAction.setPerformIntervalActionMethod(
 			new IntervalAction.PerformIntervalActionMethod() {
 
 				@Override
-				public void performAction(int start, int end)
+				public void performIntervalAction(int start, int end)
 					throws PortalException {
 
 					List<DLFileEntry> dlFileEntries =
@@ -988,7 +988,7 @@ public class DLFileEntryLocalServiceImpl
 
 			});
 
-		intervalAction.performActions();
+		intervalAction.performIntervalActions();
 	}
 
 	@Override

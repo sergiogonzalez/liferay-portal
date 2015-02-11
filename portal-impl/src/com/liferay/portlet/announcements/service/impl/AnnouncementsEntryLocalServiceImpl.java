@@ -469,11 +469,11 @@ public class AnnouncementsEntryLocalServiceImpl
 
 		final IntervalAction intervalAction = new IntervalAction(total);
 
-		intervalAction.setPerformActionMethod(
+		intervalAction.setPerformIntervalActionMethod(
 			new IntervalAction.PerformIntervalActionMethod() {
 
 				@Override
-				public void performAction(int start, int end)
+				public void performIntervalAction(int start, int end)
 					throws PortalException {
 
 					List<User> users = null;
@@ -497,7 +497,7 @@ public class AnnouncementsEntryLocalServiceImpl
 
 			});
 
-		intervalAction.performActions();
+		intervalAction.performIntervalActions();
 	}
 
 	protected void notifyUsers(
