@@ -15,7 +15,7 @@
 package com.liferay.portlet.announcements.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.interval.IntervalAction;
+import com.liferay.portal.kernel.interval.IntervalActionProcessor;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -467,10 +467,11 @@ public class AnnouncementsEntryLocalServiceImpl
 				params);
 		}
 
-		final IntervalAction intervalAction = new IntervalAction(total);
+		final IntervalActionProcessor intervalActionProcessor =
+			new IntervalActionProcessor(total);
 
-		intervalAction.setPerformIntervalActionMethod(
-			new IntervalAction.PerformIntervalActionMethod() {
+		intervalActionProcessor.setPerformIntervalActionMethod(
+			new IntervalActionProcessor.PerformIntervalActionMethod() {
 
 				@Override
 				public void performIntervalAction(int start, int end)
@@ -492,12 +493,12 @@ public class AnnouncementsEntryLocalServiceImpl
 					notifyUsers(
 						users, entry, company.getLocale(), toAddress, toName);
 
-					intervalAction.incrementStart(users.size());
+					intervalActionProcessor.incrementStart(users.size());
 				}
 
 			});
 
-		intervalAction.performIntervalActions();
+		intervalActionProcessor.performIntervalActions();
 	}
 
 	protected void notifyUsers(

@@ -20,21 +20,21 @@ import com.liferay.portal.kernel.exception.PortalException;
  * @author Jonathan McCann
  * @author Sergio González
  */
-public class IntervalAction {
+public class IntervalActionProcessor {
 
-	public static final int DEFAULT_INTERVAL = 100;
+	public static final int INTERVAL_DEFAULT = 100;
 
-	public IntervalAction(int total) {
+	public IntervalActionProcessor(int total) {
 		if (total < 0) {
 			throw new IllegalArgumentException();
 		}
 
 		_total = total;
 
-		_interval = DEFAULT_INTERVAL;
+		_interval = INTERVAL_DEFAULT;
 	}
 
-	public IntervalAction(int total, int interval) {
+	public IntervalActionProcessor(int total, int interval) {
 		if ((total < 0) || (interval <= 0)) {
 			throw new IllegalArgumentException();
 		}

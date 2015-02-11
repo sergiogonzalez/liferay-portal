@@ -16,7 +16,7 @@ package com.liferay.portal.security.membershippolicy;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.interval.IntervalAction;
+import com.liferay.portal.kernel.interval.IntervalActionProcessor;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -215,10 +215,11 @@ public class DefaultSiteMembershipPolicy extends BaseSiteMembershipPolicy {
 
 		int total = UserLocalServiceUtil.getGroupUsersCount(group.getGroupId());
 
-		final IntervalAction intervalAction = new IntervalAction(total);
+		final IntervalActionProcessor intervalActionProcessor =
+			new IntervalActionProcessor(total);
 
-		intervalAction.setPerformIntervalActionMethod(
-			new IntervalAction.PerformIntervalActionMethod() {
+		intervalActionProcessor.setPerformIntervalActionMethod(
+			new IntervalActionProcessor.PerformIntervalActionMethod() {
 
 				@Override
 				public void performIntervalAction(int start, int end)
@@ -236,14 +237,14 @@ public class DefaultSiteMembershipPolicy extends BaseSiteMembershipPolicy {
 								new long[]{user.getUserId()}, null);
 						}
 						else {
-							intervalAction.incrementStart();
+							intervalActionProcessor.incrementStart();
 						}
 					}
 				}
 
 			});
 
-		intervalAction.performIntervalActions();
+		intervalActionProcessor.performIntervalActions();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

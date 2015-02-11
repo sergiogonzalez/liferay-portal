@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.documentlibrary.service;
 
-import com.liferay.portal.kernel.interval.IntervalAction;
+import com.liferay.portal.kernel.interval.IntervalActionProcessor;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -92,7 +92,7 @@ public class DLFileEntryLocalServiceTest {
 				fileEntry.getFileEntryId());
 		}
 
-		for (int i = 0; i < IntervalAction.DEFAULT_INTERVAL; i++) {
+		for (int i = 0; i < IntervalActionProcessor.INTERVAL_DEFAULT; i++) {
 			DLAppTestUtil.addFileEntry(
 				_group.getGroupId(), _group.getGroupId(), folder.getFolderId());
 		}
