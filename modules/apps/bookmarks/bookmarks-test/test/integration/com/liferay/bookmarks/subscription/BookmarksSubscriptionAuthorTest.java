@@ -12,10 +12,13 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.subscriptions;
+package com.liferay.bookmarks.subscription;
 
-import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.bookmarks.model.BookmarksEntry;
+import com.liferay.bookmarks.model.BookmarksFolder;
+import com.liferay.bookmarks.service.BookmarksEntryLocalServiceUtil;
+import com.liferay.bookmarks.service.BookmarksFolderLocalServiceUtil;
+import com.liferay.bookmarks.util.BookmarksTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousMailTestRule;
@@ -24,20 +27,17 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
-import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
-import com.liferay.portlet.subscriptions.test.BaseSubscriptionContainerModelTestCase;
+import com.liferay.portlet.subscriptions.test.BaseSubscriptionAuthorTestCase;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
 
 /**
- * @author Sergio González
  * @author Roberto Díaz
  */
 @Sync
-public class DLSubscriptionContainerModelTest
-	extends BaseSubscriptionContainerModelTestCase {
+public class BookmarksSubscriptionAuthorTest
+	extends BaseSubscriptionAuthorTestCase {
 
 	@ClassRule
 	@Rule
@@ -50,11 +50,14 @@ public class DLSubscriptionContainerModelTest
 	protected long addBaseModel(long userId, long containerModelId)
 		throws Exception {
 
-		FileEntry fileEntry = DLAppTestUtil.addFileEntryWithWorkflow(
-			userId, group.getGroupId(), group.getGroupId(), containerModelId,
-			true);
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), userId);
 
-		return fileEntry.getFileEntryId();
+		BookmarksEntry entry = BookmarksTestUtil.addEntry(
+			userId, containerModelId, true, serviceContext);
+
+		return entry.getEntryId();
 	}
 
 	@Override
@@ -62,30 +65,31 @@ public class DLSubscriptionContainerModelTest
 		throws Exception {
 
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				group.getGroupId(), userId);
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
-		Folder folder = DLAppTestUtil.addFolder(
-			userId, group.getGroupId(), containerModelId,
-			RandomTestUtil.randomString(), false, serviceContext);
+		BookmarksFolder folder = BookmarksTestUtil.addFolder(
+			userId, containerModelId, RandomTestUtil.randomString(),
+			serviceContext);
 
 		return folder.getFolderId();
 	}
 
 	@Override
-	protected void addSubscriptionContainerModel(long containerModelId)
+	protected void addSubscription(long userId, long containerModelId)
 		throws Exception {
 
-		DLAppLocalServiceUtil.subscribeFolder(
-			user.getUserId(), group.getGroupId(), containerModelId);
+		BookmarksFolderLocalServiceUtil.subscribeFolder(
+			userId, group.getGroupId(), containerModelId);
 	}
 
 	@Override
 	protected void updateBaseModel(long userId, long baseModelId)
 		throws Exception {
 
-		DLAppTestUtil.updateFileEntryWithWorkflow(
-			userId, group.getGroupId(), baseModelId, false, true);
+		BookmarksEntry entry = BookmarksEntryLocalServiceUtil.getEntry(
+			baseModelId);
+
+		BookmarksTestUtil.updateEntry(userId, entry);
 	}
 
 }
