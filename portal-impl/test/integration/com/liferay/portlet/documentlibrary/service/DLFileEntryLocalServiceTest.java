@@ -15,8 +15,10 @@
 package com.liferay.portlet.documentlibrary.service;
 
 import com.liferay.portal.kernel.events.IntervalAction;
+import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.repository.util.RepositoryTrashUtil;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -29,6 +31,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
@@ -80,8 +83,13 @@ public class DLFileEntryLocalServiceTest {
 			FileEntry fileEntry = DLAppTestUtil.addFileEntry(
 				_group.getGroupId(), _group.getGroupId(), folder.getFolderId());
 
-			DLAppLocalServiceUtil.moveFileEntryToTrash(
-				TestPropsValues.getUserId(), fileEntry.getFileEntryId());
+			LocalRepository localRepository =
+				RepositoryLocalServiceUtil.getLocalRepositoryImpl(
+					0, fileEntry.getFileEntryId(), 0);
+
+			RepositoryTrashUtil.moveFileEntryToTrash(
+				TestPropsValues.getUserId(), localRepository.getRepositoryId(),
+				fileEntry.getFileEntryId());
 		}
 
 		for (int i = 0; i < IntervalAction.DEFAULT_INTERVAL; i++) {
