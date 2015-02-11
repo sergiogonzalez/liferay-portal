@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.events;
+package com.liferay.portal.kernel.interval;
 
 import java.util.concurrent.atomic.AtomicInteger;
 

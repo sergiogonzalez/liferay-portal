@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.documentlibrary.service;
 
-import com.liferay.portal.kernel.events.IntervalAction;
+import com.liferay.portal.kernel.interval.IntervalAction;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
