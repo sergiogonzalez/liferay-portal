@@ -281,6 +281,15 @@ public class ActionUtil {
 			}
 		}
 
+		boolean followRedirect = ParamUtil.getBoolean(
+			request, "followRedirect", true);
+
+		if (followRedirect && Validator.isNotNull(page.getRedirectTitle())) {
+			request.setAttribute(WikiWebKeys.WIKI_ORIGINAL_PAGE, page);
+
+			page = page.getRedirectPage();
+		}
+
 		request.setAttribute(WikiWebKeys.WIKI_PAGE, page);
 	}
 

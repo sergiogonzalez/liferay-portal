@@ -35,6 +35,12 @@
 
 	String title = ParamUtil.getString(request, "title");
 
+	WikiPage originalPage = (WikiPage)renderRequest.getAttribute(WikiWebKeys.WIKI_ORIGINAL_PAGE);
+
+	if (originalPage != null) {
+		title = originalPage.getRedirectTitle();
+	}
+
 	boolean hasDraftPage = false;
 
 	if (nodeId > 0) {
@@ -92,6 +98,15 @@
 			</c:choose>
 		</c:when>
 		<c:otherwise>
+
+			<%
+				WikiNode node = (WikiNode)request.getAttribute(WikiWebKeys.WIKI_NODE);
+			%>
+
+			<div class="page-redirect-link">
+				<%@ include file="/html/portlet/wiki/redirect_page_link.jspf" %>
+			</div>
+
 			<div class="alert alert-info">
 				<liferay-ui:message key="this-page-is-empty.-use-the-buttons-below-to-create-it-or-to-search-for-the-words-in-the-title" />
 			</div>

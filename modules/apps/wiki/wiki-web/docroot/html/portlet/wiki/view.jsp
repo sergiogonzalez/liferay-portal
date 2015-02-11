@@ -21,14 +21,7 @@ boolean followRedirect = ParamUtil.getBoolean(request, "followRedirect", true);
 
 WikiNode node = (WikiNode)request.getAttribute(WikiWebKeys.WIKI_NODE);
 WikiPage wikiPage = (WikiPage)request.getAttribute(WikiWebKeys.WIKI_PAGE);
-
-WikiPage originalPage = null;
-WikiPage redirectPage = wikiPage.getRedirectPage();
-
-if (followRedirect && (redirectPage != null)) {
-	originalPage = wikiPage;
-	wikiPage = redirectPage;
-}
+WikiPage originalPage = (WikiPage)request.getAttribute(WikiWebKeys.WIKI_ORIGINAL_PAGE);
 
 String title = wikiPage.getTitle();
 
@@ -183,7 +176,7 @@ contextObjects.put("wikiPortletInstanceSettings", wikiPortletInstanceSettings);
 	<c:if test="<%= !print %>">
 		<div class="page-actions top-actions">
 			<c:if test="<%= WikiPagePermission.contains(permissionChecker, wikiPage, ActionKeys.UPDATE) %>">
-				<c:if test="<%= followRedirect || (redirectPage == null) %>">
+				<c:if test="<%= followRedirect || (originalPage == null) %>">
 					<liferay-ui:icon
 						iconCssClass="icon-edit"
 						label="<%= true %>"
@@ -217,21 +210,7 @@ contextObjects.put("wikiPortletInstanceSettings", wikiPortletInstanceSettings);
 		</div>
 	</c:if>
 
-	<c:if test="<%= originalPage != null %>">
-
-		<%
-		PortletURL originalViewPageURL = renderResponse.createRenderURL();
-
-		originalViewPageURL.setParameter("struts_action", "/wiki/view");
-		originalViewPageURL.setParameter("nodeName", node.getName());
-		originalViewPageURL.setParameter("title", originalPage.getTitle());
-		originalViewPageURL.setParameter("followRedirect", "false");
-		%>
-
-		<div class="page-redirect" onClick="location.href = '<%= originalViewPageURL.toString() %>';">
-			(<%= LanguageUtil.format(request, "redirected-from-x", originalPage.getTitle(), false) %>)
-		</div>
-	</c:if>
+	<%@ include file="/html/portlet/wiki/redirect_page_link.jspf" %>
 
 	<c:if test="<%= !wikiPage.isHead() %>">
 		<div class="page-old-version">
@@ -271,7 +250,7 @@ contextObjects.put("wikiPortletInstanceSettings", wikiPortletInstanceSettings);
 		/>
 	</liferay-ui:custom-attributes-available>
 
-	<c:if test="<%= (wikiPage != null) && Validator.isNotNull(formattedContent) && (followRedirect || (redirectPage == null)) %>">
+	<c:if test="<%= (wikiPage != null) && Validator.isNotNull(formattedContent) && (followRedirect || (originalPage == null)) %>">
 		<c:if test="<%= !childPages.isEmpty() %>">
 			<div class="child-pages">
 				<h2><liferay-ui:message key="children-pages" /></h2>
