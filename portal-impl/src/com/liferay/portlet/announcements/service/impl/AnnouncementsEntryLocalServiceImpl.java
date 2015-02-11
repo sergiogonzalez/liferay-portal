@@ -14,8 +14,8 @@
 
 package com.liferay.portlet.announcements.service.impl;
 
-import com.liferay.portal.kernel.events.IntervalAction;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.interval.IntervalAction;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
