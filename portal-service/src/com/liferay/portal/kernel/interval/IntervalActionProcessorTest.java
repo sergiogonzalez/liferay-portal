@@ -23,14 +23,15 @@ import org.junit.Test;
  * @author Jonathan McCann
  * @author Sergio González
  */
-public class IntervalActionTest {
+public class IntervalActionProcessorTest {
 
 	@Test
 	public void testIntervalActionEndCalculation() throws Exception {
-		final IntervalAction intervalAction = new IntervalAction(125);
+		final IntervalActionProcessor intervalActionProcessor =
+			new IntervalActionProcessor(125);
 
-		intervalAction.setPerformIntervalActionMethod(
-			new IntervalAction.PerformIntervalActionMethod() {
+		intervalActionProcessor.setPerformIntervalActionMethod(
+			new IntervalActionProcessor.PerformIntervalActionMethod() {
 
 				@Override
 				public void performIntervalAction(int start, int end) {
@@ -38,12 +39,12 @@ public class IntervalActionTest {
 						_count.incrementAndGet();
 					}
 
-					intervalAction.incrementStart(end - start);
+					intervalActionProcessor.incrementStart(end - start);
 				}
 
 			});
 
-		intervalAction.performIntervalActions();
+		intervalActionProcessor.performIntervalActions();
 
 		Assert.assertEquals(125, _count.get());
 	}
@@ -52,10 +53,11 @@ public class IntervalActionTest {
 	public void testIntervalActionEndCalculationWithInterval()
 		throws Exception {
 
-		final IntervalAction intervalAction = new IntervalAction(125, 200);
+		final IntervalActionProcessor intervalActionProcessor =
+			new IntervalActionProcessor(125, 200);
 
-		intervalAction.setPerformIntervalActionMethod(
-			new IntervalAction.PerformIntervalActionMethod() {
+		intervalActionProcessor.setPerformIntervalActionMethod(
+			new IntervalActionProcessor.PerformIntervalActionMethod() {
 
 				@Override
 				public void performIntervalAction(int start, int end) {
@@ -63,33 +65,34 @@ public class IntervalActionTest {
 						_count.incrementAndGet();
 					}
 
-					intervalAction.incrementStart(end - start);
+					intervalActionProcessor.incrementStart(end - start);
 				}
 
 			});
 
-		intervalAction.performIntervalActions();
+		intervalActionProcessor.performIntervalActions();
 
 		Assert.assertEquals(125, _count.get());
 	}
 
 	@Test
 	public void testIntervalActionPageCalculation() throws Exception {
-		final IntervalAction intervalAction = new IntervalAction(125);
+		final IntervalActionProcessor intervalActionProcessor =
+			new IntervalActionProcessor(125);
 
-		intervalAction.setPerformIntervalActionMethod(
-			new IntervalAction.PerformIntervalActionMethod() {
+		intervalActionProcessor.setPerformIntervalActionMethod(
+			new IntervalActionProcessor.PerformIntervalActionMethod() {
 
 				@Override
 				public void performIntervalAction(int start, int end) {
 					_count.incrementAndGet();
 
-					intervalAction.incrementStart(end - start);
+					intervalActionProcessor.incrementStart(end - start);
 				}
 
 			});
 
-		intervalAction.performIntervalActions();
+		intervalActionProcessor.performIntervalActions();
 
 		Assert.assertEquals(2, _count.get());
 	}
@@ -98,21 +101,22 @@ public class IntervalActionTest {
 	public void testIntervalActionPageCalculationWithInterval()
 		throws Exception {
 
-		final IntervalAction intervalAction = new IntervalAction(125, 200);
+		final IntervalActionProcessor intervalActionProcessor =
+			new IntervalActionProcessor(125, 200);
 
-		intervalAction.setPerformIntervalActionMethod(
-			new IntervalAction.PerformIntervalActionMethod() {
+		intervalActionProcessor.setPerformIntervalActionMethod(
+			new IntervalActionProcessor.PerformIntervalActionMethod() {
 
 				@Override
 				public void performIntervalAction(int start, int end) {
 					_count.incrementAndGet();
 
-					intervalAction.incrementStart(end - start);
+					intervalActionProcessor.incrementStart(end - start);
 				}
 
 			});
 
-		intervalAction.performIntervalActions();
+		intervalActionProcessor.performIntervalActions();
 
 		Assert.assertEquals(1, _count.get());
 	}
@@ -121,47 +125,49 @@ public class IntervalActionTest {
 	public void testIntervalActionWithNegativeIncrementStart()
 		throws Exception {
 
-		final IntervalAction intervalAction = new IntervalAction(125, 200);
+		final IntervalActionProcessor intervalActionProcessor =
+			new IntervalActionProcessor(125, 200);
 
-		intervalAction.setPerformIntervalActionMethod(
-			new IntervalAction.PerformIntervalActionMethod() {
+		intervalActionProcessor.setPerformIntervalActionMethod(
+			new IntervalActionProcessor.PerformIntervalActionMethod() {
 
 				@Override
 				public void performIntervalAction(int start, int end) {
-					intervalAction.incrementStart(start - end);
+					intervalActionProcessor.incrementStart(start - end);
 				}
 
 			});
 
-		intervalAction.performIntervalActions();
+		intervalActionProcessor.performIntervalActions();
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testIntervalActionWithNegativeInterval() throws Exception {
-		new IntervalAction(125, -10);
+		new IntervalActionProcessor(125, -10);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testIntervalActionWithNegativeTotal1() throws Exception {
-		new IntervalAction(-10);
+		new IntervalActionProcessor(-10);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testIntervalActionWithNegativeTotal2() throws Exception {
-		new IntervalAction(-10, 200);
+		new IntervalActionProcessor(-10, 200);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testIntervalActionWithZeroInterval() throws Exception {
-		new IntervalAction(125, 0);
+		new IntervalActionProcessor(125, 0);
 	}
 
 	@Test
 	public void testIntervalActionWithZeroTotal() throws Exception {
-		final IntervalAction intervalAction = new IntervalAction(0);
+		final IntervalActionProcessor intervalActionProcessor =
+			new IntervalActionProcessor(0);
 
-		intervalAction.setPerformIntervalActionMethod(
-			new IntervalAction.PerformIntervalActionMethod() {
+		intervalActionProcessor.setPerformIntervalActionMethod(
+			new IntervalActionProcessor.PerformIntervalActionMethod() {
 
 				@Override
 				public void performIntervalAction(int start, int end) {
@@ -169,12 +175,12 @@ public class IntervalActionTest {
 						_count.incrementAndGet();
 					}
 
-					intervalAction.incrementStart(end - start);
+					intervalActionProcessor.incrementStart(end - start);
 				}
 
 			});
 
-		intervalAction.performIntervalActions();
+		intervalActionProcessor.performIntervalActions();
 
 		Assert.assertEquals(0, _count.get());
 	}
