@@ -14,8 +14,6 @@
 
 package com.liferay.portal.kernel.events;
 
-import com.liferay.portal.kernel.exception.PortalException;
-
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.junit.Assert;
@@ -35,9 +33,7 @@ public class IntervalActionTest {
 			new IntervalAction.PerformIntervalActionMethod() {
 
 				@Override
-				public void performIntervalAction(int start, int end)
-					throws PortalException {
-
+				public void performIntervalAction(int start, int end) {
 					for (int i = start; i < end; i++) {
 						_count.incrementAndGet();
 					}
@@ -62,9 +58,7 @@ public class IntervalActionTest {
 			new IntervalAction.PerformIntervalActionMethod() {
 
 				@Override
-				public void performIntervalAction(int start, int end)
-					throws PortalException {
-
+				public void performIntervalAction(int start, int end) {
 					for (int i = start; i < end; i++) {
 						_count.incrementAndGet();
 					}
@@ -87,9 +81,7 @@ public class IntervalActionTest {
 			new IntervalAction.PerformIntervalActionMethod() {
 
 				@Override
-				public void performIntervalAction(int start, int end)
-					throws PortalException {
-
+				public void performIntervalAction(int start, int end) {
 					_count.incrementAndGet();
 
 					intervalAction.incrementStart(end - start);
@@ -112,9 +104,7 @@ public class IntervalActionTest {
 			new IntervalAction.PerformIntervalActionMethod() {
 
 				@Override
-				public void performIntervalAction(int start, int end)
-					throws PortalException {
-
+				public void performIntervalAction(int start, int end) {
 					_count.incrementAndGet();
 
 					intervalAction.incrementStart(end - start);
@@ -137,9 +127,7 @@ public class IntervalActionTest {
 			new IntervalAction.PerformIntervalActionMethod() {
 
 				@Override
-				public void performIntervalAction(int start, int end)
-					throws PortalException {
-
+				public void performIntervalAction(int start, int end) {
 					intervalAction.incrementStart(start - end);
 				}
 
@@ -176,9 +164,7 @@ public class IntervalActionTest {
 			new IntervalAction.PerformIntervalActionMethod() {
 
 				@Override
-				public void performIntervalAction(int start, int end)
-					throws PortalException {
-
+				public void performIntervalAction(int start, int end) {
 					for (int i = start; i < end; i++) {
 						_count.incrementAndGet();
 					}
