@@ -36,8 +36,8 @@ import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 
-
 import java.io.InputStream;
+
 import java.util.ArrayList;
 import java.util.List;
 
