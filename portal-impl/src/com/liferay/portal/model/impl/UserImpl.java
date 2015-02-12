@@ -818,6 +818,20 @@ public class UserImpl extends UserBaseImpl {
 	}
 
 	@Override
+	public Date getUnlockDate() throws PortalException {
+		return getUnlockDate(getPasswordPolicy());
+	}
+
+	@Override
+	public Date getUnlockDate(PasswordPolicy passwordPolicy) {
+		Date lockoutDate = getLockoutDate();
+
+		return new Date(
+			lockoutDate.getTime() +
+				(passwordPolicy.getLockoutDuration() * 1000));
+	}
+
+	@Override
 	public long[] getUserGroupIds() {
 		return UserLocalServiceUtil.getUserGroupPrimaryKeys(getUserId());
 	}

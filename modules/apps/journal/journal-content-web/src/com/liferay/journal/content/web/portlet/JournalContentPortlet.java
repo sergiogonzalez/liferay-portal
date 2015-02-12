@@ -19,7 +19,6 @@ import com.liferay.journal.content.web.portlet.upgrade.JournalContentUpgrade;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -65,7 +64,6 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.private-session-attributes=false",
 		"com.liferay.portlet.render-weight=50",
 		"com.liferay.portlet.scopeable=true",
-		"com.liferay.portlet.struts-path=journal_content",
 		"com.liferay.portlet.use-default-template=true",
 		"javax.portlet.display-name=Web Content Display",
 		"javax.portlet.expiration-cache=0",
@@ -92,14 +90,9 @@ public class JournalContentPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long articleGroupId = ParamUtil.getLong(
-			renderRequest, "articleGroupId");
-
-		if (articleGroupId <= 0) {
-			articleGroupId = GetterUtil.getLong(
-				portletPreferences.getValue(
-					"groupId", String.valueOf(themeDisplay.getScopeGroupId())));
-		}
+		long articleGroupId = PrefsParamUtil.getLong(
+			portletPreferences, renderRequest, "groupId",
+			themeDisplay.getScopeGroupId());
 
 		String articleId = PrefsParamUtil.getString(
 			portletPreferences, renderRequest, "articleId");

@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.kernel.xml;
-
-import aQute.bnd.annotation.ProviderType;
+package com.liferay.portal.model.adapter.builder;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Carlos Sierra Andrés
  */
-@ProviderType
-public class UnsecureSAXReaderUtil extends SAXReaderUtil {
+public interface ModelAdapterBuilder<T, V> {
+
+	public V build(T adapteeModel);
+
 }

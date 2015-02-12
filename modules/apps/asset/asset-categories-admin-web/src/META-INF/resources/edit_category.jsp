@@ -27,6 +27,22 @@ long parentCategoryId = BeanParamUtil.getLong(category, request, "parentCategory
 
 long vocabularyId = ParamUtil.getLong(request, "vocabularyId");
 
+if (Validator.isNull(redirect)) {
+	PortletURL backURL = renderResponse.createRenderURL();
+
+	backURL.setParameter("mvcPath", "/view_categories.jsp");
+
+	if (parentCategoryId > 0) {
+		backURL.setParameter("categoryId", String.valueOf(parentCategoryId));
+	}
+
+	if (vocabularyId > 0) {
+		backURL.setParameter("vocabularyId", String.valueOf(vocabularyId));
+	}
+
+	redirect = backURL.toString();
+}
+
 int[] categoryPropertiesIndexes = null;
 
 List<AssetCategoryProperty> categoryProperties = Collections.emptyList();
@@ -68,6 +84,7 @@ else {
 %>
 
 <liferay-ui:header
+	backURL="<%= redirect %>"
 	title='<%= (category != null) ? category.getTitle(locale) : "add-new-category" %>'
 />
 
