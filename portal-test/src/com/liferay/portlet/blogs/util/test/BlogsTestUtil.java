@@ -17,6 +17,7 @@ package com.liferay.portlet.blogs.util.test;
 import com.liferay.portal.kernel.editor.EditorConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -29,7 +30,7 @@ import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 
 import java.io.InputStream;
 import java.io.Serializable;
-
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -49,18 +50,6 @@ public class BlogsTestUtil {
 
 		try {
 			WorkflowThreadLocal.setEnabled(true);
-
-			String subtitle = StringPool.BLANK;
-			String description = "Description";
-			String content = "Content";
-			int displayDateMonth = 1;
-			int displayDateDay = 1;
-			int displayDateYear = 2012;
-			int displayDateHour = 12;
-			int displayDateMinute = 0;
-			boolean allowPingbacks = true;
-			boolean allowTrackbacks = true;
-			String[] trackbacks = new String[0];
 
 			ImageSelector coverImageSelector = null;
 			ImageSelector smallImageSelector = null;
@@ -97,10 +86,10 @@ public class BlogsTestUtil {
 				WorkflowConstants.ACTION_SAVE_DRAFT);
 
 			BlogsEntry entry = BlogsEntryLocalServiceUtil.addEntry(
-				userId, title, subtitle, description, content, displayDateMonth,
-				displayDateDay, displayDateYear, displayDateHour,
-				displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
-				coverImageSelector, smallImageSelector, serviceContext);
+				userId, title, RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				new Date(), true, true, new String[0], coverImageSelector,
+				smallImageSelector, serviceContext);
 
 			if (approved) {
 				return updateStatus(entry, serviceContext);
