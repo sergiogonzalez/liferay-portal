@@ -18,9 +18,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.service.WikiNodeServiceUtil;
+import com.liferay.wiki.settings.WikiPortletInstanceSettings;
 import com.liferay.wiki.util.WikiUtil;
 import com.liferay.wiki.web.display.context.util.WikiRequestHelper;
-import com.liferay.wiki.web.settings.WikiPortletInstanceSettings;
 
 import java.util.List;
 
@@ -49,6 +49,19 @@ public class WikiPortletInstanceSettingsHelper {
 		}
 
 		return _allNodes;
+	}
+
+	public List<WikiNode> getAllPermittedNodes() throws PortalException {
+		if (_allPermittedNodes == null) {
+			WikiPortletInstanceSettings wikiPortletInstanceSettings =
+				_wikiRequestHelper.getWikiPortletInstanceSettings();
+
+			_allPermittedNodes = WikiUtil.getNodes(
+				getAllNodes(), wikiPortletInstanceSettings.getHiddenNodes(),
+				_wikiRequestHelper.getPermissionChecker());
+		}
+
+		return _allPermittedNodes;
 	}
 
 	public String[] getVisibleNodeNames() throws PortalException {
@@ -81,6 +94,7 @@ public class WikiPortletInstanceSettingsHelper {
 
 	private List<String> _allNodeNames;
 	private List<WikiNode> _allNodes;
+	private List<WikiNode> _allPermittedNodes;
 	private String[] _visibleNodeNames;
 	private final WikiRequestHelper _wikiRequestHelper;
 
