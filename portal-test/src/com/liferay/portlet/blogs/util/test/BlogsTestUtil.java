@@ -18,8 +18,6 @@ import com.liferay.portal.kernel.editor.EditorConstants;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -27,8 +25,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
@@ -36,6 +32,7 @@ import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import java.io.InputStream;
 import java.io.Serializable;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,74 +43,8 @@ import org.junit.Assert;
  */
 public class BlogsTestUtil {
 
-	public static BlogsEntry addEntry(Group group, boolean approved)
-		throws Exception {
-
-		return addEntry(TestPropsValues.getUserId(), group, approved);
-	}
-
-	public static BlogsEntry addEntry(
-			long userId, Group group, boolean approved)
-		throws Exception {
-
-		return addEntry(userId, group, "Title", approved);
-	}
-
-	public static BlogsEntry addEntry(
-			long userId, Group group, boolean approved, boolean smallImage)
-		throws Exception {
-
-		return addEntry(userId, group, "Title", approved, smallImage);
-	}
-
-	public static BlogsEntry addEntry(
-			long userId, Group group, String title, boolean approved)
-		throws Exception {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(group.getGroupId());
-
-		serviceContext.setCommand(Constants.ADD);
-		serviceContext.setLayoutFullURL("http://localhost");
-
-		return addEntry(userId, title, approved, serviceContext);
-	}
-
-	public static BlogsEntry addEntry(
-			long userId, Group group, String title, boolean approved,
-			boolean smallImage)
-		throws Exception {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(group.getGroupId());
-
-		serviceContext.setCommand(Constants.ADD);
-		serviceContext.setLayoutFullURL("http://localhost");
-
-		return addEntry(userId, title, approved, smallImage, serviceContext);
-	}
-
-	public static BlogsEntry addEntry(
-			long userId, long groupId, String title, boolean approved)
-		throws Exception {
-
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
-
-		return addEntry(userId, group, title, approved);
-	}
-
-	public static BlogsEntry addEntry(
-			long userId, long groupId, String title, boolean approved,
-			boolean smallImage)
-		throws Exception {
-
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
-
-		return addEntry(userId, group, title, approved, smallImage);
-	}
-
-	public static BlogsEntry addEntry(
-			long userId, String title, boolean approved, boolean smallImage,
+	public static BlogsEntry addEntryWithWorkflow(
+			long userId, String title, boolean smallImage,
 			ServiceContext serviceContext)
 		throws Exception {
 
@@ -121,18 +52,6 @@ public class BlogsTestUtil {
 
 		try {
 			WorkflowThreadLocal.setEnabled(true);
-
-			String subtitle = StringPool.BLANK;
-			String description = "Description";
-			String content = "Content";
-			int displayDateMonth = 1;
-			int displayDateDay = 1;
-			int displayDateYear = 2012;
-			int displayDateHour = 12;
-			int displayDateMinute = 0;
-			boolean allowPingbacks = true;
-			boolean allowTrackbacks = true;
-			String[] trackbacks = new String[0];
 
 			ImageSelector coverImageSelector = null;
 			ImageSelector smallImageSelector = null;
@@ -169,28 +88,16 @@ public class BlogsTestUtil {
 				WorkflowConstants.ACTION_SAVE_DRAFT);
 
 			BlogsEntry entry = BlogsEntryLocalServiceUtil.addEntry(
-				userId, title, subtitle, description, content, displayDateMonth,
-				displayDateDay, displayDateYear, displayDateHour,
-				displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
-				coverImageSelector, smallImageSelector, serviceContext);
+				userId, title, RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+				new Date(), true, true, new String[0], coverImageSelector,
+				smallImageSelector, serviceContext);
 
-			if (approved) {
-				return updateStatus(entry, serviceContext);
-			}
-
-			return entry;
+			return updateStatus(entry, serviceContext);
 		}
 		finally {
 			WorkflowThreadLocal.setEnabled(workflowEnabled);
 		}
-	}
-
-	public static BlogsEntry addEntry(
-			long userId, String title, boolean approved,
-			ServiceContext serviceContext)
-		throws Exception {
-
-		return addEntry(userId, title, approved, false, serviceContext);
 	}
 
 	public static void assertEquals(
@@ -228,25 +135,8 @@ public class BlogsTestUtil {
 		return sb.toString();
 	}
 
-	public static BlogsEntry updateEntry(BlogsEntry entry, boolean approved)
-		throws Exception {
-
-		return updateEntry(entry, RandomTestUtil.randomString(), approved);
-	}
-
-	public static BlogsEntry updateEntry(
-			BlogsEntry entry, String title, boolean approved)
-		throws Exception {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(entry.getGroupId());
-
-		return updateEntry(entry, title, approved, serviceContext);
-	}
-
-	public static BlogsEntry updateEntry(
-			BlogsEntry entry, String title, boolean approved,
-			ServiceContext serviceContext)
+	public static BlogsEntry updateEntryWithWorkflow(
+			BlogsEntry entry, String title, ServiceContext serviceContext)
 		throws Exception {
 
 		boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
@@ -263,15 +153,9 @@ public class BlogsTestUtil {
 
 			entry = BlogsEntryLocalServiceUtil.updateEntry(
 				entry.getUserId(), entry.getEntryId(), title,
-				entry.getSubtitle(), entry.getDescription(), entry.getContent(),
-				1, 1, 2012, 12, 00, true, true, new String[0], null, null,
-				serviceContext);
+				RandomTestUtil.randomString(), serviceContext);
 
-			if (approved) {
-				return updateStatus(entry, serviceContext);
-			}
-
-			return entry;
+			return updateStatus(entry, serviceContext);
 		}
 		finally {
 			WorkflowThreadLocal.setEnabled(workflowEnabled);

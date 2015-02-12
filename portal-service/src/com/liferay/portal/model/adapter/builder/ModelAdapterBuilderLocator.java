@@ -12,13 +12,14 @@
  * details.
  */
 
-package com.liferay.portlet.layoutsadmin.lar;
-
-import com.liferay.portal.model.StagedModel;
-import com.liferay.portal.model.Theme;
+package com.liferay.portal.model.adapter.builder;
 
 /**
- * @author Mate Thurzo
+ * @author Carlos Sierra Andrés
  */
-public interface StagedTheme extends Theme, StagedModel {
+public interface ModelAdapterBuilderLocator {
+
+	public <T, V> ModelAdapterBuilder<T, V> locate(
+		Class<T> adapteeModelClass, Class<V> adaptedModelClass);
+
 }
