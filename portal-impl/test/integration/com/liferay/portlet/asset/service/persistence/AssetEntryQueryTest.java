@@ -828,8 +828,15 @@ public class AssetEntryQueryTest {
 
 		threadLocalCache.removeAll();
 
+		ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(
+					_group.getGroupId(), TestPropsValues.getUserId());
+
 		for (int i = 0; i < scores.length; i++) {
-			BlogsEntry entry = BlogsTestUtil.addEntry(_group, true);
+			BlogsEntry entry =
+				BlogsEntryLocalServiceUtil.addEntry(
+					TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+					RandomTestUtil.randomString(), serviceContext);
 
 			RatingsEntryServiceUtil.updateEntry(
 				BlogsEntry.class.getName(), entry.getEntryId(), scores[i]);
@@ -867,8 +874,16 @@ public class AssetEntryQueryTest {
 
 		threadLocalCache.removeAll();
 
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
 		for (int i = 0; i < viewCounts.length; i++) {
-			BlogsEntry entry = BlogsTestUtil.addEntry(_group, true);
+
+			BlogsEntry entry =
+				BlogsEntryLocalServiceUtil.addEntry(
+					TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+					RandomTestUtil.randomString(), serviceContext);
 
 			AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
 				BlogsEntry.class.getName(), entry.getEntryId());
