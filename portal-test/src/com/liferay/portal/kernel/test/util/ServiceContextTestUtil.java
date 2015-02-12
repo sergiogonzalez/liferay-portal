@@ -72,6 +72,7 @@ public class ServiceContextTestUtil {
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
 		serviceContext.setCompanyId(companyId);
+		serviceContext.setLayoutFullURL("http://localhost");
 		serviceContext.setScopeGroupId(groupId);
 		serviceContext.setUserId(userId);
 
