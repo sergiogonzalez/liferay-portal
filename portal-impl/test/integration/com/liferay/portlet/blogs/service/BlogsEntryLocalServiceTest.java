@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -29,6 +31,7 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.SubscriptionLocalServiceUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
@@ -366,7 +369,7 @@ public class BlogsEntryLocalServiceTest {
 
 	@Test
 	public void testGetNoAssetEntries() throws Exception {
-		BlogsEntry entry = BlogsTestUtil.addEntry(_group, true);
+		BlogsEntry entry = addEntry(false);
 
 		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
 			BlogsEntry.class.getName(), entry.getEntryId());
@@ -452,7 +455,14 @@ public class BlogsEntryLocalServiceTest {
 	protected BlogsEntry addEntry(long userId, boolean statusInTrash)
 		throws Exception {
 
-		BlogsEntry entry = BlogsTestUtil.addEntry(userId, _group, true);
+		ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(
+					_group.getGroupId(), userId);
+
+		BlogsEntry entry =
+			BlogsEntryLocalServiceUtil.addEntry(
+				userId, RandomTestUtil.randomString(),
+				RandomTestUtil.randomString(), serviceContext);
 
 		if (statusInTrash) {
 			entry = BlogsEntryLocalServiceUtil.moveEntryToTrash(userId, entry);
@@ -484,8 +494,7 @@ public class BlogsEntryLocalServiceTest {
 		int initialCount = BlogsEntryLocalServiceUtil.getGroupEntriesCount(
 			_group.getGroupId(), _statusApprovedQueryDefinition);
 
-		BlogsEntry entry = BlogsTestUtil.addEntry(
-			TestPropsValues.getUserId(), _group, true, smallImage);
+		BlogsEntry entry = addEntry(false);
 
 		int actualCount = BlogsEntryLocalServiceUtil.getGroupEntriesCount(
 			_group.getGroupId(), _statusApprovedQueryDefinition);
