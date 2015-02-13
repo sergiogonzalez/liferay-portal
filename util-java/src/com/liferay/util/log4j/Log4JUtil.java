@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.security.xml.SecureXMLFactoryProviderUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -50,8 +49,6 @@ import org.apache.log4j.xml.DOMConfigurator;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
-
-import org.xml.sax.XMLReader;
 
 /**
  * @author Brian Wing Shun Chan
@@ -127,15 +124,7 @@ public class Log4JUtil {
 		}
 
 		try {
-			XMLReader xmlReader = null;
-
-			if (SecureXMLFactoryProviderUtil.getSecureXMLFactoryProvider()
-					!= null) {
-
-				xmlReader = SecureXMLFactoryProviderUtil.newXMLReader();
-			}
-
-			SAXReader saxReader = new SAXReader(xmlReader);
+			SAXReader saxReader = new SAXReader();
 
 			Reader reader = new StringReader(urlContent);
 

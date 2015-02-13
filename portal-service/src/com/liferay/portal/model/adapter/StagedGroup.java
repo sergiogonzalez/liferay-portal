@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.kernel.xml;
+package com.liferay.portal.model.adapter;
 
-import aQute.bnd.annotation.ProviderType;
+import com.liferay.portal.model.GroupModel;
+import com.liferay.portal.model.StagedModel;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Daniel Kocsis
  */
-@ProviderType
-public class SecureSAXReaderUtil extends SAXReaderUtil {
+public interface StagedGroup extends GroupModel, StagedModel {
 }

@@ -22,6 +22,10 @@ import com.liferay.portal.kernel.resiliency.spi.agent.annotation.Distributed;
  */
 public interface WebKeys {
 
+	public static final String ASSET_ENTRY_ABSTRACT_LENGTH = "ASSET_ENTRY_ABSTRACT_LENGTH";
+
+	public static final String ASSET_ENTRY_VIEW_URL = "ASSET_ENTRY_VIEW_URL";
+
 	public static final String ASSET_RENDERER = "ASSET_RENDERER";
 
 	public static final String ASSET_RENDERER_FACTORY = "ASSET_RENDERER_FACTORY";

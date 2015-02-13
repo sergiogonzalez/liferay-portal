@@ -27,10 +27,27 @@ AssetCategory parentCategory = category.getParentCategory();
 
 long vocabularyId = ParamUtil.getLong(request, "vocabularyId");
 
+if (Validator.isNull(redirect)) {
+	PortletURL backURL = renderResponse.createRenderURL();
+
+	backURL.setParameter("mvcPath", "/view_categories.jsp");
+
+	if (parentCategory != null) {
+		backURL.setParameter("categoryId", String.valueOf(parentCategory.getCategoryId()));
+	}
+
+	if (vocabularyId > 0) {
+		backURL.setParameter("vocabularyId", String.valueOf(vocabularyId));
+	}
+
+	redirect = backURL.toString();
+}
+
 List<AssetVocabulary> vocabularies = AssetVocabularyServiceUtil.getGroupVocabularies(scopeGroupId);
 %>
 
 <liferay-ui:header
+	backURL="<%= redirect %>"
 	title='<%= LanguageUtil.format(request, "move-x", category.getTitle(locale)) %>'
 />
 
