@@ -40,6 +40,7 @@ import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.DuplicateDirectoryException;
+import com.liferay.portlet.documentlibrary.model.DLProcessorConstants;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 
 import java.awt.image.RenderedImage;
@@ -142,6 +143,24 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 		throws Exception {
 
 		doExportGeneratedFiles(portletDataContext, fileEntry, fileEntryElement);
+	}
+
+	@Override
+	public String getType() {
+		if (this instanceof AudioProcessor) {
+			return DLProcessorConstants.AUDIO_PROCESSOR;
+		}
+		else if (this instanceof ImageProcessor) {
+			return DLProcessorConstants.IMAGE_PROCESSOR;
+		}
+		else if (this instanceof PDFProcessor) {
+			return DLProcessorConstants.PDF_PROCESSOR;
+		}
+		else if (this instanceof VideoProcessor) {
+			return DLProcessorConstants.VIDEO_PROCESSOR;
+		}
+
+		return null;
 	}
 
 	@Override
