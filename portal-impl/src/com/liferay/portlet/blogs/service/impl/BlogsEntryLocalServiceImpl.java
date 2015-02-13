@@ -1334,6 +1334,10 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			serviceContext.setAttribute("trackbacks", null);
 		}
 
+		if (Validator.isNull(serviceContext.getCommand())) {
+			serviceContext.setCommand(Constants.UPDATE);
+		}
+
 		return startWorkflowInstance(userId, entry, serviceContext);
 	}
 
