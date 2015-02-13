@@ -142,7 +142,23 @@ int messagesCount = messages.size();
 									</div>
 
 									<div class="lfr-discussion-body">
-										<liferay-ui:input-editor contents="" editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name='<%= randomNamespace + "postReplyBody0" %>' onChangeMethod='<%= randomNamespace + "0OnChange" %>' placeholder="type-your-comment-here" />
+
+										<%
+										Map<String, Object> dataTextEditor = new HashMap<String, Object>();
+
+										JSONObject editorConfig = JSONFactoryUtil.createJSONObject();
+										editorConfig.put("allowedContent", "p strong em u");
+										editorConfig.put("toolbars", JSONFactoryUtil.createJSONObject());
+
+										JSONObject editorOptions = JSONFactoryUtil.createJSONObject();
+										editorOptions.put("textMode", Boolean.FALSE);
+										editorOptions.put("showSource", Boolean.FALSE);
+
+										dataTextEditor.put("editorConfig", editorConfig);
+										dataTextEditor.put("editorOptions", editorOptions);
+										%>
+
+										<liferay-ui:input-editor contents="" data="<%= dataTextEditor %>" editorImpl="<%= EDITOR_IMPL_KEY %>" name='<%= randomNamespace + "postReplyBody0" %>' onChangeMethod='<%= randomNamespace + "0OnChange" %>' placeholder="type-your-comment-here" />
 
 										<aui:input name="postReplyBody0" type="hidden" />
 
@@ -261,17 +277,17 @@ int messagesCount = messages.size();
 			}
 
 			function <%= randomNamespace %>hideEditor(editorName, formId) {
-				if (window[editorName + 'Editor']) {
-					window[editorName + 'Editor'].dispose();
+				if (window[editorName]) {
+					window[editorName].dispose();
 				}
 
 				<%= randomNamespace %>hideForm(formId);
 			}
 
 			function <%= randomNamespace %>showEditor(editorName, formId) {
-				window[editorName + 'Editor'].create();
+				window[editorName].create();
 
-				var html = window[editorName + 'Editor'].getHTML();
+				var html = window[editorName].getHTML();
 
 				Liferay.Util.toggleDisabled('#' + editorName.replace('Body', 'Button'), (html === ''));
 
@@ -344,7 +360,7 @@ int messagesCount = messages.size();
 
 					var form = A.one('#<%= namespace %><%= HtmlUtil.escapeJS(formName) %>');
 
-					var editorInstance = window['<%= namespace + randomNamespace %>postReplyBody' + i + 'Editor'];
+					var editorInstance = window['<%= namespace + randomNamespace %>postReplyBody' + i];
 
 					var parentMessageId = form.one('#<%= namespace %>parentMessageId' + i).val();
 
@@ -497,7 +513,7 @@ int messagesCount = messages.size();
 
 					var form = A.one('#<%= namespace %><%= HtmlUtil.escapeJS(formName) %>');
 
-					var editorInstance = window['<%= namespace + randomNamespace %>editReplyBody' + i + 'Editor'];
+					var editorInstance = window['<%= namespace + randomNamespace %>editReplyBody' + i];
 
 					var messageId = form.one('#<%= namespace %>messageId' + i).val();
 
@@ -553,7 +569,7 @@ int messagesCount = messages.size();
 							}
 						);
 					}
-				)
+				);
 			}
 		</aui:script>
 
@@ -605,5 +621,5 @@ int messagesCount = messages.size();
 </section>
 
 <%!
-public static final String EDITOR_TEXT_IMPL_KEY = "editor.wysiwyg.portal-web.docroot.html.taglib.ui.discussion.jsp";
+public static final String EDITOR_IMPL_KEY = "editor.wysiwyg.portal-web.docroot.html.taglib.ui.discussion.jsp";
 %>

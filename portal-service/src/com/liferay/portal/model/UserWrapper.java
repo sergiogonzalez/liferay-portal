@@ -1296,6 +1296,18 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	}
 
 	@Override
+	public java.util.Date getUnlockDate()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _user.getUnlockDate();
+	}
+
+	@Override
+	public java.util.Date getUnlockDate(
+		com.liferay.portal.model.PasswordPolicy passwordPolicy) {
+		return _user.getUnlockDate(passwordPolicy);
+	}
+
+	@Override
 	public long[] getUserGroupIds() {
 		return _user.getUserGroupIds();
 	}

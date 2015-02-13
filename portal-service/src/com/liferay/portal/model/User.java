@@ -396,6 +396,12 @@ public interface User extends UserModel, PersistedModel {
 
 	public java.util.TimeZone getTimeZone();
 
+	public java.util.Date getUnlockDate()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public java.util.Date getUnlockDate(
+		com.liferay.portal.model.PasswordPolicy passwordPolicy);
+
 	public long[] getUserGroupIds();
 
 	public java.util.List<com.liferay.portal.model.UserGroup> getUserGroups();

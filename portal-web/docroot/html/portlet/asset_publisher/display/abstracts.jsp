@@ -33,7 +33,7 @@ if (Validator.isNull(title)) {
 
 boolean viewInContext = ((Boolean)request.getAttribute("view.jsp-viewInContext")).booleanValue();
 
-String viewURL = AssetPublisherHelperUtil.getAssetViewURL(liferayPortletRequest, liferayPortletResponse, assetEntry, viewInContext);
+String viewURL = AssetPublisherHelper.getAssetViewURL(liferayPortletRequest, liferayPortletResponse, assetEntry, viewInContext);
 
 String viewURLMessage = viewInContext ? assetRenderer.getViewInContextMessage() : "read-more-x-about-x";
 
@@ -96,9 +96,9 @@ String summary = StringUtil.shorten(assetRenderer.getSummary(liferayPortletReque
 				<%
 				String path = assetRenderer.render(renderRequest, renderResponse, AssetRenderer.TEMPLATE_ABSTRACT);
 
+				request.setAttribute(WebKeys.ASSET_ENTRY_ABSTRACT_LENGTH, assetPublisherDisplayContext.getAbstractLength());
+				request.setAttribute(WebKeys.ASSET_ENTRY_VIEW_URL, viewURL);
 				request.setAttribute(WebKeys.ASSET_RENDERER, assetRenderer);
-				request.setAttribute(WebKeys.ASSET_PUBLISHER_ABSTRACT_LENGTH, assetPublisherDisplayContext.getAbstractLength());
-				request.setAttribute(WebKeys.ASSET_PUBLISHER_VIEW_URL, viewURL);
 				%>
 
 				<c:choose>
