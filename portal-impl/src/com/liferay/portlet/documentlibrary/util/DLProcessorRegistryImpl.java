@@ -159,7 +159,7 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 
 	@Override
 	public void register(DLProcessor dlProcessor) {
-		String type = _getType(dlProcessor);
+		String type = dlProcessor.getType();
 
 		_dlProcessors.put(type, dlProcessor);
 	}
@@ -197,7 +197,7 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 
 	@Override
 	public void unregister(DLProcessor dlProcessor) {
-		String type = _getType(dlProcessor);
+		String type = dlProcessor.getType();
 
 		_dlProcessors.remove(type);
 	}
