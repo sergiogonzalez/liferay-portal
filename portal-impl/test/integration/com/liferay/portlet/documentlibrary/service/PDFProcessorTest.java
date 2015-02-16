@@ -36,11 +36,14 @@ import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.model.DLProcessorConstants;
 import com.liferay.portlet.documentlibrary.util.DLProcessor;
-import com.liferay.portlet.documentlibrary.util.DLProcessorRegistryUtil;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceRegistration;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
+import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -73,10 +76,8 @@ public class PDFProcessorTest {
 
 	@After
 	public void tearDown() {
-		if (_cleanUpDLProcessor != null) {
-			DLProcessorRegistryUtil.unregister(_cleanUpDLProcessor);
-
-			DLProcessorRegistryUtil.register(_originalDLProcessor);
+		if (_dlProcessorServiceRegistration != null) {
+			_dlProcessorServiceRegistration.unregister();
 		}
 	}
 
@@ -381,12 +382,9 @@ public class PDFProcessorTest {
 	}
 
 	protected AtomicBoolean registerCleanUpDLProcessor() {
-		_originalDLProcessor = DLProcessorRegistryUtil.getDLProcessor(
-			DLProcessorConstants.PDF_PROCESSOR);
-
 		final AtomicBoolean cleanUp = new AtomicBoolean(false);
 
-		_cleanUpDLProcessor = new DLProcessor() {
+		DLProcessor cleanUpDLProcessor = new DLProcessor() {
 
 			@Override
 			public void afterPropertiesSet() throws Exception {
@@ -445,7 +443,14 @@ public class PDFProcessorTest {
 
 		};
 
-		DLProcessorRegistryUtil.register(_cleanUpDLProcessor);
+		Registry registry = RegistryUtil.getRegistry();
+
+		HashMap<String, Object> properties = new HashMap<>();
+
+		properties.put("service.ranking", 1000);
+
+		_dlProcessorServiceRegistration = registry.registerService(
+			DLProcessor.class, cleanUpDLProcessor, properties);
 
 		return cleanUp;
 	}
@@ -481,12 +486,11 @@ public class PDFProcessorTest {
 	private static final String _PDF_DATA =
 		"%PDF-1.\ntrailer<</Root<</Pages<</Kids[<</MediaBox[0 0 3 3]>>]>>>>>>";
 
-	private DLProcessor _cleanUpDLProcessor;
+	private ServiceRegistration<DLProcessor> _dlProcessorServiceRegistration;
 
 	@DeleteAfterTestRun
 	private Group _group;
 
-	private DLProcessor _originalDLProcessor;
 	private ServiceContext _serviceContext;
 
 }
