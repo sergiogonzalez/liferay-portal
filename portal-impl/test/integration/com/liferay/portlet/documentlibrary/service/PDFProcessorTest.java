@@ -37,7 +37,6 @@ import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.model.DLProcessorConstants;
 import com.liferay.portlet.documentlibrary.util.DLProcessor;
 import com.liferay.portlet.documentlibrary.util.DLProcessorRegistryUtil;
-import com.liferay.portlet.documentlibrary.util.PDFProcessorImpl;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -387,7 +386,11 @@ public class PDFProcessorTest {
 
 		final AtomicBoolean cleanUp = new AtomicBoolean(false);
 
-		_cleanUpDLProcessor = new PDFProcessorImpl() {
+		_cleanUpDLProcessor = new DLProcessor() {
+
+			@Override
+			public void afterPropertiesSet() throws Exception {
+			}
 
 			@Override
 			public void cleanUp(FileEntry fileEntry) {
@@ -413,10 +416,25 @@ public class PDFProcessorTest {
 			}
 
 			@Override
+			public String getType() {
+				return DLProcessorConstants.PDF_PROCESSOR;
+			}
+
+			@Override
 			public void importGeneratedFiles(
 					PortletDataContext portletDataContext, FileEntry fileEntry,
 					FileEntry importedFileEntry, Element fileEntryElement)
 				throws Exception {
+			}
+
+			@Override
+			public boolean isSupported(FileVersion fileVersion) {
+				return true;
+			}
+
+			@Override
+			public boolean isSupported(String mimeType) {
+				return true;
 			}
 
 			@Override
