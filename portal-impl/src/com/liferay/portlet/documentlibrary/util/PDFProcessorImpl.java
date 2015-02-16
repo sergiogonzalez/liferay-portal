@@ -383,7 +383,18 @@ public class PDFProcessorImpl
 					destinationFileVersion.getFileEntryId(),
 					destinationFileVersion.getVersion());
 
-				File file = DocumentConversionUtil.convert(
+				File file = new File(
+					DocumentConversionUtil.getFilePath(tempFileId, "pdf"));
+
+				System.out.println(destinationFileVersion.getVersion());
+
+				if (Validator.equals(
+						"PWC", destinationFileVersion.getVersion())) {
+
+					FileUtil.delete(file);
+				}
+
+				file = DocumentConversionUtil.convert(
 					tempFileId, inputStream, extension, "pdf");
 
 				_generateImages(destinationFileVersion, file);
