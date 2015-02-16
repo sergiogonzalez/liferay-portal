@@ -192,6 +192,13 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 	public void register(DLProcessor dlProcessor) {
 		Registry registry = RegistryUtil.getRegistry();
 
+		ServiceRegistration<DLProcessor> previousServiceRegistration =
+			_serviceRegistrations.remove(dlProcessor.getType());
+
+		if (previousServiceRegistration != null) {
+			previousServiceRegistration.unregister();
+		}
+
 		ServiceRegistration<DLProcessor> serviceRegistration =
 			registry.registerService(DLProcessor.class, dlProcessor);
 
