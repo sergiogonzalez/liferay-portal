@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.TemplateResourceLoader;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.template.TemplateResourceThreadLocal;
-import com.liferay.portal.template.freemarker.configuration.FreemarkerEngineConfiguration;
+import com.liferay.portal.template.freemarker.configuration.FreeMarkerEngineConfiguration;
 
 import freemarker.cache.TemplateCache;
 
@@ -43,7 +43,7 @@ public class LiferayTemplateCache extends TemplateCache {
 
 	public LiferayTemplateCache(
 		Configuration configuration,
-		FreemarkerEngineConfiguration freemarkerEngineConfiguration,
+		FreeMarkerEngineConfiguration freemarkerEngineConfiguration,
 		TemplateResourceLoader templateResourceLoader) {
 
 		_configuration = configuration;
@@ -150,7 +150,7 @@ public class LiferayTemplateCache extends TemplateCache {
 	}
 
 	private final Configuration _configuration;
-	private final FreemarkerEngineConfiguration _freemarkerEngineConfiguration;
+	private final FreeMarkerEngineConfiguration _freemarkerEngineConfiguration;
 	private final PortalCache<TemplateResource, Object> _portalCache;
 	private final TemplateResourceLoader _templateResourceLoader;
 

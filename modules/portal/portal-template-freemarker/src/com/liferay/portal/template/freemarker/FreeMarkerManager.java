@@ -32,7 +32,7 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.template.BaseTemplateManager;
 import com.liferay.portal.template.RestrictedTemplate;
 import com.liferay.portal.template.TemplateContextHelper;
-import com.liferay.portal.template.freemarker.configuration.FreemarkerEngineConfiguration;
+import com.liferay.portal.template.freemarker.configuration.FreeMarkerEngineConfiguration;
 import com.liferay.taglib.util.VelocityTaglib;
 import com.liferay.taglib.util.VelocityTaglibImpl;
 
@@ -90,7 +90,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Raymond Augé
  */
 @Component(
-	configurationPid = "com.liferay.portal.template.freemarker",
+	configurationPid = "com.liferay.portal.template.freemarker.configuration.FreeMarkerEngineConfiguration",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	service = TemplateManager.class
 )
@@ -281,7 +281,7 @@ public class FreeMarkerManager extends BaseTemplateManager {
 	@Modified
 	protected void activate(ComponentContext componentContext) {
 		_freemarkerEngineConfiguration = Configurable.createConfigurable(
-			FreemarkerEngineConfiguration.class,
+			FreeMarkerEngineConfiguration.class,
 			componentContext.getProperties());
 
 		BundleContext bundleContext = componentContext.getBundleContext();
@@ -349,7 +349,7 @@ public class FreeMarkerManager extends BaseTemplateManager {
 	private Bundle _bundle;
 	private ClassLoader _classLoader;
 	private Configuration _configuration;
-	private volatile FreemarkerEngineConfiguration
+	private volatile FreeMarkerEngineConfiguration
 		_freemarkerEngineConfiguration;
 	private final Map<String, TemplateModel> _templateModels =
 		new ConcurrentHashMap<>();

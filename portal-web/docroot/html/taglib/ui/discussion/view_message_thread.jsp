@@ -135,6 +135,10 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 
 				<%
 				String msgBody = message.getBody();
+
+				if (message.isFormatBBCode()) {
+					msgBody = MBUtil.getBBCodeHTML(msgBody, themeDisplay.getPathThemeImages());
+				}
 				%>
 
 				<div class="lfr-discussion-message-body">
@@ -155,7 +159,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 						classPK="<%= message.getMessageId() %>"
 						ratingsEntry="<%= ratingsEntry %>"
 						ratingsStats="<%= ratingStats %>"
-						type="<%= PortletRatingsDefinition.RatingsType.THUMBS.getValue() %>"
+						type="<%= RatingsType.THUMBS.getValue() %>"
 					/>
 				</c:if>
 
