@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.TemplateResourceLoader;
 import com.liferay.portal.template.DefaultTemplateResourceLoader;
-import com.liferay.portal.template.freemarker.configuration.FreemarkerEngineConfiguration;
+import com.liferay.portal.template.freemarker.configuration.FreeMarkerEngineConfiguration;
 
 import java.util.Map;
 
@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Igor Spasic
  */
 @Component(
-	configurationPid = "com.liferay.portal.template.freemarker",
+	configurationPid = "com.liferay.portal.template.freemarker.configuration.FreeMarkerEngineConfiguration",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	service = {
 		FreeMarkerTemplateResourceLoader.class, TemplateResourceLoader.class
@@ -78,7 +78,7 @@ public class FreeMarkerTemplateResourceLoader implements TemplateResourceLoader{
 	@Modified
 	protected void activate(Map<String, Object> properties) {
 		_freemarkerEngineConfiguration = Configurable.createConfigurable(
-			FreemarkerEngineConfiguration.class, properties);
+			FreeMarkerEngineConfiguration.class, properties);
 
 		_defaultTemplateResourceLoader = new DefaultTemplateResourceLoader(
 			TemplateConstants.LANG_TYPE_FTL,
@@ -96,7 +96,7 @@ public class FreeMarkerTemplateResourceLoader implements TemplateResourceLoader{
 
 	private static volatile DefaultTemplateResourceLoader
 		_defaultTemplateResourceLoader;
-	private static volatile FreemarkerEngineConfiguration
+	private static volatile FreeMarkerEngineConfiguration
 		_freemarkerEngineConfiguration;
 
 }

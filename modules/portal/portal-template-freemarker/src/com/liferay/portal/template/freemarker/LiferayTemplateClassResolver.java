@@ -16,7 +16,7 @@ package com.liferay.portal.template.freemarker;
 
 import aQute.bnd.annotation.metatype.Configurable;
 
-import com.liferay.portal.template.freemarker.configuration.FreemarkerEngineConfiguration;
+import com.liferay.portal.template.freemarker.configuration.FreeMarkerEngineConfiguration;
 import com.liferay.portal.util.ClassLoaderUtil;
 
 import freemarker.core.Environment;
@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Modified;
  * @author Raymond Augé
  */
 @Component(
-	configurationPid = "com.liferay.portal.template.freemarker",
+	configurationPid = "com.liferay.portal.template.freemarker.configuration.FreeMarkerEngineConfiguration",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true
 )
 public class LiferayTemplateClassResolver implements TemplateClassResolver {
@@ -88,10 +88,10 @@ public class LiferayTemplateClassResolver implements TemplateClassResolver {
 	@Modified
 	protected void activate(Map<String, Object> properties) {
 		_freemarkerEngineConfiguration = Configurable.createConfigurable(
-			FreemarkerEngineConfiguration.class, properties);
+			FreeMarkerEngineConfiguration.class, properties);
 	}
 
-	private volatile FreemarkerEngineConfiguration
+	private volatile FreeMarkerEngineConfiguration
 		_freemarkerEngineConfiguration;
 
 }
