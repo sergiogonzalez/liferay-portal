@@ -18,7 +18,13 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousMailTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.BaseModel;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.util.PortletKeys;
@@ -26,6 +32,8 @@ import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.util.test.BlogsTestUtil;
 import com.liferay.portlet.messageboards.model.MBDiscussion;
 import com.liferay.portlet.messageboards.model.MBMessage;
+import com.liferay.portlet.messageboards.model.MBMessageDisplay;
+import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.MBDiscussionLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.util.test.MBTestUtil;
@@ -57,9 +65,27 @@ public class CommentsUserNotificationTest extends BaseUserNotificationTestCase {
 
 	@Override
 	protected BaseModel<?> addBaseModel() throws Exception {
-		return MBTestUtil.addDiscussionMessage(
-			group.getGroupId(), BlogsEntry.class.getName(),
-			_entry.getEntryId());
+		MBMessageDisplay messageDisplay =
+			MBMessageLocalServiceUtil.getDiscussionMessageDisplay(
+				TestPropsValues.getUserId(), group.getGroupId(),
+				BlogsEntry.class.getName(), _entry.getEntryId(),
+				WorkflowConstants.STATUS_APPROVED);
+
+		MBThread thread =  messageDisplay.getThread();
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId());
+
+		MBTestUtil.populateNotificationsServiceContext(
+			serviceContext,Constants.ADD);
+
+		return MBMessageLocalServiceUtil.addDiscussionMessage(
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+			group.getGroupId(), BlogsEntry.class.getName(), _entry.getEntryId(),
+			thread.getThreadId(), thread.getRootMessageId(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(50),
+			serviceContext);
 	}
 
 	@Override
@@ -102,9 +128,20 @@ public class CommentsUserNotificationTest extends BaseUserNotificationTestCase {
 	protected BaseModel<?> updateBaseModel(BaseModel<?> baseModel)
 		throws Exception {
 
-		return MBTestUtil.updateDiscussionMessage(
-			group.getGroupId(), (Long)baseModel.getPrimaryKeyObj(),
-			BlogsEntry.class.getName(), _entry.getEntryId());
+		MBMessage message = (MBMessage) baseModel;
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId());
+
+		MBTestUtil.populateNotificationsServiceContext(
+			serviceContext,Constants.UPDATE);
+
+		return MBMessageLocalServiceUtil.updateDiscussionMessage(
+			TestPropsValues.getUserId(), message.getMessageId(),
+			BlogsEntry.class.getName(), _entry.getEntryId(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(50),
+			serviceContext);
 	}
 
 	private BlogsEntry _entry;
