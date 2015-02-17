@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -62,12 +61,12 @@ import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBMessageDisplay;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
-import com.liferay.portlet.messageboards.util.test.MBTestUtil;
 import com.liferay.portlet.ratings.model.RatingsEntry;
 import com.liferay.portlet.ratings.service.RatingsEntryLocalServiceUtil;
 import com.liferay.portlet.ratings.util.test.RatingsTestUtil;
 
 import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -160,8 +159,8 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 			return;
 		}
 
-		String className =
-			ExportImportClassedModelUtil.getClassName(stagedModel);
+		String className = ExportImportClassedModelUtil.getClassName(
+			stagedModel);
 
 		long classPK = ExportImportClassedModelUtil.getClassPK(stagedModel);
 
@@ -169,8 +168,8 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 
 		MBMessageDisplay messageDisplay =
 			MBMessageLocalServiceUtil.getDiscussionMessageDisplay(
-				user.getUserId(), stagingGroup.getGroupId(), className,
-				classPK, WorkflowConstants.STATUS_APPROVED);
+				user.getUserId(), stagingGroup.getGroupId(), className, classPK,
+				WorkflowConstants.STATUS_APPROVED);
 
 		MBThread thread =  messageDisplay.getThread();
 

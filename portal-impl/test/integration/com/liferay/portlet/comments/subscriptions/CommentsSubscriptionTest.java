@@ -100,7 +100,7 @@ public class CommentsSubscriptionTest {
 				_group.getGroupId(), TestPropsValues.getUserId());
 
 		MBTestUtil.populateNotificationsServiceContext(
-			serviceContext,Constants.UPDATE);
+			serviceContext, Constants.UPDATE);
 
 		MBMessageLocalServiceUtil.updateDiscussionMessage(
 			TestPropsValues.getUserId(), message.getMessageId(),
@@ -126,7 +126,7 @@ public class CommentsSubscriptionTest {
 				_group.getGroupId(), TestPropsValues.getUserId());
 
 		MBTestUtil.populateNotificationsServiceContext(
-			serviceContext,Constants.ADD);
+			serviceContext, Constants.ADD);
 
 		return MBMessageLocalServiceUtil.addDiscussionMessage(
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(),

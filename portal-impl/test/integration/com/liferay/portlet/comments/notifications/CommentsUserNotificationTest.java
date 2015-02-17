@@ -78,7 +78,7 @@ public class CommentsUserNotificationTest extends BaseUserNotificationTestCase {
 				group.getGroupId(), TestPropsValues.getUserId());
 
 		MBTestUtil.populateNotificationsServiceContext(
-			serviceContext,Constants.ADD);
+			serviceContext, Constants.ADD);
 
 		return MBMessageLocalServiceUtil.addDiscussionMessage(
 			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
@@ -128,14 +128,14 @@ public class CommentsUserNotificationTest extends BaseUserNotificationTestCase {
 	protected BaseModel<?> updateBaseModel(BaseModel<?> baseModel)
 		throws Exception {
 
-		MBMessage message = (MBMessage) baseModel;
+		MBMessage message = (MBMessage)baseModel;
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), TestPropsValues.getUserId());
 
 		MBTestUtil.populateNotificationsServiceContext(
-			serviceContext,Constants.UPDATE);
+			serviceContext, Constants.UPDATE);
 
 		return MBMessageLocalServiceUtil.updateDiscussionMessage(
 			TestPropsValues.getUserId(), message.getMessageId(),
