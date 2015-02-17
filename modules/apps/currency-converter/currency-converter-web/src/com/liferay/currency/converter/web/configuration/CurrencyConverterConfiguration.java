@@ -19,7 +19,9 @@ import aQute.bnd.annotation.metatype.Meta;
 /**
  * @author Peter Fellwock
  */
-@Meta.OCD(id = "com.liferay.currency.converter.web")
+@Meta.OCD(
+	id = "com.liferay.currency.converter.web.configuration.CurrencyConverterConfiguration"
+)
 public interface CurrencyConverterConfiguration {
 
 	@Meta.AD(

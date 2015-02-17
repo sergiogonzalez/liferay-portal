@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.template.TemplateContextHelper;
-import com.liferay.portal.template.freemarker.configuration.FreemarkerEngineConfiguration;
+import com.liferay.portal.template.freemarker.configuration.FreeMarkerEngineConfiguration;
 import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.RegistryUtil;
 
@@ -346,9 +346,9 @@ public class FreeMarkerTemplateTest {
 	private static final String _WRONG_TEMPLATE_ID = "WRONG_TEMPLATE_ID";
 
 	private Configuration _configuration;
-	private final FreemarkerEngineConfiguration _freemarkerEngineConfiguration =
+	private final FreeMarkerEngineConfiguration _freemarkerEngineConfiguration =
 		Configurable.createConfigurable(
-			FreemarkerEngineConfiguration.class, Collections.emptyMap());
+			FreeMarkerEngineConfiguration.class, Collections.emptyMap());
 	private TemplateContextHelper _templateContextHelper;
 
 	private class MockTemplateContextHelper extends TemplateContextHelper {
