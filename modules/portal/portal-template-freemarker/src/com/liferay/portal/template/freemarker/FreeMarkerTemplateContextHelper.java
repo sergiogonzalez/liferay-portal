@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Theme;
 import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.template.TemplatePortletPreferences;
-import com.liferay.portal.template.freemarker.configuration.FreemarkerEngineConfiguration;
+import com.liferay.portal.template.freemarker.configuration.FreeMarkerEngineConfiguration;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
 
@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Modified;
  * @author Raymond Augé
  */
 @Component(
-	configurationPid = "com.liferay.portal.template.freemarker",
+	configurationPid = "com.liferay.portal.template.freemarker.configuration.FreeMarkerEngineConfiguration",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	service = {
 		FreeMarkerTemplateContextHelper.class, TemplateContextHelper.class
@@ -119,7 +119,7 @@ public class FreeMarkerTemplateContextHelper extends TemplateContextHelper {
 	@Modified
 	protected void activate(Map<String, Object> properties) {
 		_freemarkerEngineConfiguration = Configurable.createConfigurable(
-			FreemarkerEngineConfiguration.class, properties);
+			FreeMarkerEngineConfiguration.class, properties);
 	}
 
 	@Override
@@ -146,7 +146,7 @@ public class FreeMarkerTemplateContextHelper extends TemplateContextHelper {
 			"staticUtil", BeansWrapper.getDefaultInstance().getStaticModels());
 	}
 
-	private volatile FreemarkerEngineConfiguration
+	private volatile FreeMarkerEngineConfiguration
 		_freemarkerEngineConfiguration;
 
 }
