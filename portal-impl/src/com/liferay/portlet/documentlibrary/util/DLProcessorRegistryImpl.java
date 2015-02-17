@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
@@ -282,7 +281,8 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 
 						Registry registry = RegistryUtil.getRegistry();
 
-						DLProcessor service = registry.getService(serviceReference);
+						DLProcessor service = registry.getService(
+							serviceReference);
 
 						try {
 							emitter.emit(service.getType());
