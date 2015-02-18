@@ -80,6 +80,39 @@ public class LiferayProcessorLocalRepositoryWrapper
 		_processorCapability.cleanUp(fileEntry);
 	}
 
+	@Override
+	public FileEntry updateFileEntry(
+			long userId, long fileEntryId, String sourceFileName,
+			String mimeType, String title, String description, String changeLog,
+			boolean majorVersion, File file, ServiceContext serviceContext)
+		throws PortalException {
+
+		FileEntry fileEntry = super.updateFileEntry(
+			userId, fileEntryId, sourceFileName, mimeType, title, description,
+			changeLog, majorVersion, file, serviceContext);
+
+		_processorCapability.cleanUp(fileEntry.getLatestFileVersion(true));
+
+		return fileEntry;
+	}
+
+	@Override
+	public FileEntry updateFileEntry(
+			long userId, long fileEntryId, String sourceFileName,
+			String mimeType, String title, String description, String changeLog,
+			boolean majorVersion, InputStream is, long size,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		FileEntry fileEntry = super.updateFileEntry(
+			userId, fileEntryId, sourceFileName, mimeType, title, description,
+			changeLog, majorVersion, is, size, serviceContext);
+
+		_processorCapability.cleanUp(fileEntry.getLatestFileVersion(true));
+
+		return fileEntry;
+	}
+
 	private final ProcessorCapability _processorCapability;
 
 }
