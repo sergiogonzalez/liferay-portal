@@ -62,6 +62,7 @@ public class SubscriptionWrapper implements Subscription,
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
 		attributes.put("frequency", getFrequency());
+		attributes.put("groupId", getGroupId());
 
 		return attributes;
 	}
@@ -126,6 +127,12 @@ public class SubscriptionWrapper implements Subscription,
 
 		if (frequency != null) {
 			setFrequency(frequency);
+		}
+
+		Long groupId = (Long)attributes.get("groupId");
+
+		if (groupId != null) {
+			setGroupId(groupId);
 		}
 	}
 
@@ -202,6 +209,16 @@ public class SubscriptionWrapper implements Subscription,
 	@Override
 	public java.lang.String getFrequency() {
 		return _subscription.getFrequency();
+	}
+
+	/**
+	* Returns the group ID of this subscription.
+	*
+	* @return the group ID of this subscription
+	*/
+	@Override
+	public long getGroupId() {
+		return _subscription.getGroupId();
 	}
 
 	/**
@@ -380,6 +397,16 @@ public class SubscriptionWrapper implements Subscription,
 	@Override
 	public void setFrequency(java.lang.String frequency) {
 		_subscription.setFrequency(frequency);
+	}
+
+	/**
+	* Sets the group ID of this subscription.
+	*
+	* @param groupId the group ID of this subscription
+	*/
+	@Override
+	public void setGroupId(long groupId) {
+		_subscription.setGroupId(groupId);
 	}
 
 	/**

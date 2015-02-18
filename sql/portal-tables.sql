@@ -2083,7 +2083,8 @@ create table Subscription (
 	modifiedDate DATE null,
 	classNameId LONG,
 	classPK LONG,
-	frequency VARCHAR(75) null
+	frequency VARCHAR(75) null,
+	groupId LONG
 );
 
 create table SystemEvent (

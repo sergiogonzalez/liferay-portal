@@ -125,6 +125,7 @@ public class SubscriptionLocalServiceImpl
 			subscription.setClassNameId(classNameId);
 			subscription.setClassPK(classPK);
 			subscription.setFrequency(frequency);
+			subscription.setGroupId(groupId);
 
 			subscriptionPersistence.update(subscription);
 		}
@@ -272,6 +273,18 @@ public class SubscriptionLocalServiceImpl
 	public void deleteSubscriptions(long userId) throws PortalException {
 		List<Subscription> subscriptions = subscriptionPersistence.findByUserId(
 			userId);
+
+		for (Subscription subscription : subscriptions) {
+			deleteSubscription(subscription);
+		}
+	}
+
+	@Override
+	public void deleteSubscriptions(long userId, long groupId)
+		throws PortalException {
+
+		List<Subscription> subscriptions = subscriptionPersistence.findByU_G(
+			userId, groupId);
 
 		for (Subscription subscription : subscriptions) {
 			deleteSubscription(subscription);
