@@ -15,6 +15,7 @@
 package com.liferay.portal.repository.liferayrepository;
 
 import com.liferay.portal.kernel.repository.Repository;
+import com.liferay.portal.kernel.repository.capabilities.ProcessorCapability;
 import com.liferay.portal.repository.util.RepositoryWrapper;
 
 /**
@@ -22,7 +23,9 @@ import com.liferay.portal.repository.util.RepositoryWrapper;
  */
 public class LiferayProcessorRepositoryWrapper extends RepositoryWrapper {
 
-	public LiferayProcessorRepositoryWrapper(Repository repository) {
+	public LiferayProcessorRepositoryWrapper(
+		Repository repository, ProcessorCapability processorCapability) {
+
 		super(repository);
 	}
 

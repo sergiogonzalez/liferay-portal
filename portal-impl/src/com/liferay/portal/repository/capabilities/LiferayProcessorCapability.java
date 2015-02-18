@@ -15,10 +15,15 @@
 package com.liferay.portal.repository.capabilities;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.repository.LocalRepository;
+import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.capabilities.ProcessorCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackRegistryUtil;
+import com.liferay.portal.repository.liferayrepository.LiferayProcessorLocalRepositoryWrapper;
+import com.liferay.portal.repository.liferayrepository.LiferayProcessorRepositoryWrapper;
+import com.liferay.portal.repository.util.RepositoryWrapperAware;
 import com.liferay.portlet.documentlibrary.util.DLProcessorRegistryUtil;
 
 import java.util.concurrent.Callable;
@@ -26,7 +31,8 @@ import java.util.concurrent.Callable;
 /**
  * @author Adolfo Pérez
  */
-public class LiferayProcessorCapability implements ProcessorCapability {
+public class LiferayProcessorCapability
+	implements ProcessorCapability, RepositoryWrapperAware {
 
 	@Override
 	public void cleanUp(FileEntry fileEntry) throws PortalException {
@@ -46,6 +52,19 @@ public class LiferayProcessorCapability implements ProcessorCapability {
 	@Override
 	public void generateNew(FileEntry fileEntry) throws PortalException {
 		registerDLProcessorCallback(fileEntry, null);
+	}
+
+	@Override
+	public LocalRepository wrapLocalRepository(
+		LocalRepository localRepository) {
+
+		return new LiferayProcessorLocalRepositoryWrapper(
+			localRepository, this);
+	}
+
+	@Override
+	public Repository wrapRepository(Repository repository) {
+		return new LiferayProcessorRepositoryWrapper(repository, this);
 	}
 
 	protected void registerDLProcessorCallback(
