@@ -68,7 +68,6 @@ import com.liferay.portlet.documentlibrary.service.base.DLAppHelperLocalServiceB
 import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
 import com.liferay.portlet.documentlibrary.social.DLActivityKeys;
 import com.liferay.portlet.documentlibrary.util.DLAppHelperThreadLocal;
-import com.liferay.portlet.documentlibrary.util.DLProcessorRegistryUtil;
 import com.liferay.portlet.documentlibrary.util.comparator.FileVersionVersionComparator;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
@@ -221,10 +220,6 @@ public class DLAppHelperLocalServiceImpl
 		subscriptionLocalService.deleteSubscriptions(
 			fileEntry.getCompanyId(), DLFileEntryConstants.getClassName(),
 			fileEntry.getFileEntryId());
-
-		// File previews
-
-		DLProcessorRegistryUtil.cleanUp(fileEntry);
 
 		// File ranks
 

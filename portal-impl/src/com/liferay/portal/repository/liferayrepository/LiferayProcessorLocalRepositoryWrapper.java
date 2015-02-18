@@ -71,6 +71,15 @@ public class LiferayProcessorLocalRepositoryWrapper
 		return fileEntry;
 	}
 
+	@Override
+	public void deleteFileEntry(long fileEntryId) throws PortalException {
+		FileEntry fileEntry = getFileEntry(fileEntryId);
+
+		super.deleteFileEntry(fileEntryId);
+
+		_processorCapability.cleanUp(fileEntry);
+	}
+
 	private final ProcessorCapability _processorCapability;
 
 }

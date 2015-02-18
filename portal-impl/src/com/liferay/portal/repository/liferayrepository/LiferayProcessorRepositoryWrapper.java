@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.capabilities.ProcessorCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.repository.util.RepositoryWrapper;
 import com.liferay.portal.service.ServiceContext;
 
@@ -67,6 +68,39 @@ public class LiferayProcessorRepositoryWrapper extends RepositoryWrapper {
 		_processorCapability.generateNew(fileEntry);
 
 		return fileEntry;
+	}
+
+	@Override
+	public void deleteFileEntry(long fileEntryId) throws PortalException {
+		FileEntry fileEntry = getFileEntry(fileEntryId);
+
+		super.deleteFileEntry(fileEntryId);
+
+		_processorCapability.cleanUp(fileEntry);
+	}
+
+	@Override
+	public void deleteFileEntry(long folderId, String title)
+		throws PortalException {
+
+		FileEntry fileEntry = getFileEntry(folderId, title);
+
+		super.deleteFileEntry(folderId, title);
+
+		_processorCapability.cleanUp(fileEntry);
+	}
+
+	@Override
+	public void deleteFileVersion(long fileEntryId, String version)
+		throws PortalException {
+
+		FileEntry fileEntry = getFileEntry(fileEntryId);
+
+		FileVersion fileVersion = fileEntry.getFileVersion(version);
+
+		super.deleteFileVersion(fileEntryId, version);
+
+		_processorCapability.cleanUp(fileVersion);
 	}
 
 	private final ProcessorCapability _processorCapability;
