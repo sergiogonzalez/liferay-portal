@@ -71,6 +71,15 @@ public class LiferayProcessorRepositoryWrapper extends RepositoryWrapper {
 	}
 
 	@Override
+	public FileVersion cancelCheckOut(long fileEntryId) throws PortalException {
+		FileEntry fileEntry = getFileEntry(fileEntryId);
+
+		_processorCapability.cleanUp(fileEntry.getLatestFileVersion());
+
+		return super.cancelCheckOut(fileEntryId);
+	}
+
+	@Override
 	public void checkInFileEntry(
 			long userId, long fileEntryId, boolean major, String changeLog,
 			ServiceContext serviceContext)
