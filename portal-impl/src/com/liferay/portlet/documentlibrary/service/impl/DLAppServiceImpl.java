@@ -2917,11 +2917,6 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			getUserId(), fileEntryId, sourceFileName, mimeType, title,
 			description, changeLog, majorVersion, file, serviceContext);
 
-		ProcessorCapability processorCapability =
-			new LiferayProcessorCapability();
-
-		processorCapability.cleanUp(fileEntry.getLatestFileVersion());
-
 		dlAppHelperLocalService.updateFileEntry(
 			getUserId(), fileEntry, null, fileEntry.getFileVersion(),
 			serviceContext);
@@ -3012,11 +3007,6 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			description, changeLog, majorVersion, is, size, serviceContext);
 
 		if (is != null) {
-			ProcessorCapability processorCapability =
-				new LiferayProcessorCapability();
-
-			processorCapability.cleanUp(fileEntry.getLatestFileVersion());
-
 			oldFileVersion = null;
 		}
 
@@ -3045,11 +3035,6 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		FileEntry fileEntry = repository.updateFileEntry(
 			getUserId(), fileEntryId, sourceFileName, mimeType, title,
 			description, changeLog, majorVersion, file, serviceContext);
-
-		ProcessorCapability processorCapability =
-			new LiferayProcessorCapability();
-
-		processorCapability.cleanUp(fileEntry.getLatestFileVersion());
 
 		repository.checkInFileEntry(
 			getUserId(), fileEntryId, majorVersion, changeLog, serviceContext);
@@ -3080,11 +3065,6 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			description, changeLog, majorVersion, is, size, serviceContext);
 
 		if (is != null) {
-			ProcessorCapability processorCapability =
-				new LiferayProcessorCapability();
-
-			processorCapability.cleanUp(fileEntry.getLatestFileVersion());
-
 			oldFileVersion = null;
 		}
 

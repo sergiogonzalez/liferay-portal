@@ -71,6 +71,29 @@ public class LiferayProcessorRepositoryWrapper extends RepositoryWrapper {
 	}
 
 	@Override
+	public void checkInFileEntry(
+			long userId, long fileEntryId, boolean major, String changeLog,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		FileEntry fileEntry = getFileEntry(fileEntryId);
+
+		_processorCapability.cleanUp(fileEntry.getLatestFileVersion());
+
+		super.checkInFileEntry(
+			userId, fileEntryId, major, changeLog, serviceContext);
+	}
+
+	@Override
+	public void checkInFileEntry(
+			long userId, long fileEntryId, String lockUuid,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		super.checkInFileEntry(userId, fileEntryId, lockUuid, serviceContext);
+	}
+
+	@Override
 	public void deleteFileEntry(long fileEntryId) throws PortalException {
 		FileEntry fileEntry = getFileEntry(fileEntryId);
 
@@ -101,6 +124,41 @@ public class LiferayProcessorRepositoryWrapper extends RepositoryWrapper {
 		super.deleteFileVersion(fileEntryId, version);
 
 		_processorCapability.cleanUp(fileVersion);
+	}
+
+	@Override
+	public FileEntry updateFileEntry(
+			long userId, long fileEntryId, String sourceFileName,
+			String mimeType, String title, String description, String changeLog,
+			boolean majorVersion, File file, ServiceContext serviceContext)
+		throws PortalException {
+
+		FileEntry fileEntry = super.updateFileEntry(
+			userId, fileEntryId, sourceFileName, mimeType, title, description,
+			changeLog, majorVersion, file, serviceContext);
+
+		_processorCapability.cleanUp(fileEntry.getLatestFileVersion());
+
+		return fileEntry;
+	}
+
+	@Override
+	public FileEntry updateFileEntry(
+			long userId, long fileEntryId, String sourceFileName,
+			String mimeType, String title, String description, String changeLog,
+			boolean majorVersion, InputStream is, long size,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		FileEntry fileEntry = super.updateFileEntry(
+			userId, fileEntryId, sourceFileName, mimeType, title, description,
+			changeLog, majorVersion, is, size, serviceContext);
+
+		if (is != null) {
+			_processorCapability.cleanUp(fileEntry.getLatestFileVersion());
+		}
+
+		return fileEntry;
 	}
 
 	private final ProcessorCapability _processorCapability;
