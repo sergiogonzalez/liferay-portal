@@ -91,6 +91,8 @@ public class LiferayProcessorRepositoryWrapper extends RepositoryWrapper {
 
 		super.checkInFileEntry(
 			userId, fileEntryId, major, changeLog, serviceContext);
+
+		_processorCapability.copyPrevious(fileEntry.getFileVersion());
 	}
 
 	@Override
@@ -99,7 +101,48 @@ public class LiferayProcessorRepositoryWrapper extends RepositoryWrapper {
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		FileEntry fileEntry = getFileEntry(fileEntryId);
+
+		_processorCapability.cleanUp(fileEntry.getLatestFileVersion());
+
 		super.checkInFileEntry(userId, fileEntryId, lockUuid, serviceContext);
+
+		_processorCapability.copyPrevious(fileEntry.getFileVersion());
+	}
+
+	@Override
+	public FileEntry checkOutFileEntry(
+			long fileEntryId, ServiceContext serviceContext)
+		throws PortalException {
+
+		FileEntry oldFileEntry = getFileEntry(fileEntryId);
+
+		FileVersion oldFileVersion = oldFileEntry.getFileVersion();
+
+		FileEntry fileEntry = super.checkOutFileEntry(
+			fileEntryId, serviceContext);
+
+		_processorCapability.copyPrevious(oldFileVersion);
+
+		return fileEntry;
+	}
+
+	@Override
+	public FileEntry checkOutFileEntry(
+			long fileEntryId, String owner, long expirationTime,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		FileEntry oldFileEntry = getFileEntry(fileEntryId);
+
+		FileVersion oldFileVersion = oldFileEntry.getFileVersion();
+
+		FileEntry fileEntry = super.checkOutFileEntry(
+			fileEntryId, owner, expirationTime, serviceContext);
+
+		_processorCapability.copyPrevious(oldFileVersion);
+
+		return fileEntry;
 	}
 
 	@Override

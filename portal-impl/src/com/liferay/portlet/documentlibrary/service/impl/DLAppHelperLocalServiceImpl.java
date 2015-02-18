@@ -1256,16 +1256,6 @@ public class DLAppHelperLocalServiceImpl
 			updateAsset(
 				userId, fileEntry, destinationFileVersion, assetClassPk);
 		}
-
-		ProcessorCapability processorCapability =
-			new LiferayProcessorCapability();
-
-		if (sourceFileVersion == null) {
-			processorCapability.generateNew(fileEntry);
-		}
-		else {
-			processorCapability.copyPrevious(sourceFileVersion);
-		}
 	}
 
 	@Override
