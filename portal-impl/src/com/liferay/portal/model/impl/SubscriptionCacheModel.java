@@ -79,7 +79,7 @@ public class SubscriptionCacheModel implements CacheModel<Subscription>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -101,6 +101,8 @@ public class SubscriptionCacheModel implements CacheModel<Subscription>,
 		sb.append(classPK);
 		sb.append(", frequency=");
 		sb.append(frequency);
+		sb.append(", groupId=");
+		sb.append(groupId);
 		sb.append("}");
 
 		return sb.toString();
@@ -146,6 +148,8 @@ public class SubscriptionCacheModel implements CacheModel<Subscription>,
 			subscriptionImpl.setFrequency(frequency);
 		}
 
+		subscriptionImpl.setGroupId(groupId);
+
 		subscriptionImpl.resetOriginalValues();
 
 		return subscriptionImpl;
@@ -163,6 +167,7 @@ public class SubscriptionCacheModel implements CacheModel<Subscription>,
 		classNameId = objectInput.readLong();
 		classPK = objectInput.readLong();
 		frequency = objectInput.readUTF();
+		groupId = objectInput.readLong();
 	}
 
 	@Override
@@ -191,6 +196,8 @@ public class SubscriptionCacheModel implements CacheModel<Subscription>,
 		else {
 			objectOutput.writeUTF(frequency);
 		}
+
+		objectOutput.writeLong(groupId);
 	}
 
 	public long mvccVersion;
@@ -203,4 +210,5 @@ public class SubscriptionCacheModel implements CacheModel<Subscription>,
 	public long classNameId;
 	public long classPK;
 	public String frequency;
+	public long groupId;
 }

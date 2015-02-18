@@ -74,9 +74,10 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "classNameId", Types.BIGINT },
 			{ "classPK", Types.BIGINT },
-			{ "frequency", Types.VARCHAR }
+			{ "frequency", Types.VARCHAR },
+			{ "groupId", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table Subscription (mvccVersion LONG default 0,subscriptionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,frequency VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table Subscription (mvccVersion LONG default 0,subscriptionId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,frequency VARCHAR(75) null,groupId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table Subscription";
 	public static final String ORDER_BY_JPQL = " ORDER BY subscription.subscriptionId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY Subscription.subscriptionId ASC";
@@ -95,8 +96,9 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 	public static final long CLASSNAMEID_COLUMN_BITMASK = 1L;
 	public static final long CLASSPK_COLUMN_BITMASK = 2L;
 	public static final long COMPANYID_COLUMN_BITMASK = 4L;
-	public static final long USERID_COLUMN_BITMASK = 8L;
-	public static final long SUBSCRIPTIONID_COLUMN_BITMASK = 16L;
+	public static final long GROUPID_COLUMN_BITMASK = 8L;
+	public static final long USERID_COLUMN_BITMASK = 16L;
+	public static final long SUBSCRIPTIONID_COLUMN_BITMASK = 32L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portal.model.Subscription"));
 
@@ -147,6 +149,7 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
 		attributes.put("frequency", getFrequency());
+		attributes.put("groupId", getGroupId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -214,6 +217,12 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 
 		if (frequency != null) {
 			setFrequency(frequency);
+		}
+
+		Long groupId = (Long)attributes.get("groupId");
+
+		if (groupId != null) {
+			setGroupId(groupId);
 		}
 	}
 
@@ -411,6 +420,28 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 		_frequency = frequency;
 	}
 
+	@Override
+	public long getGroupId() {
+		return _groupId;
+	}
+
+	@Override
+	public void setGroupId(long groupId) {
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+
+		if (!_setOriginalGroupId) {
+			_setOriginalGroupId = true;
+
+			_originalGroupId = _groupId;
+		}
+
+		_groupId = groupId;
+	}
+
+	public long getOriginalGroupId() {
+		return _originalGroupId;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -452,6 +483,7 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 		subscriptionImpl.setClassNameId(getClassNameId());
 		subscriptionImpl.setClassPK(getClassPK());
 		subscriptionImpl.setFrequency(getFrequency());
+		subscriptionImpl.setGroupId(getGroupId());
 
 		subscriptionImpl.resetOriginalValues();
 
@@ -530,6 +562,10 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 
 		subscriptionModelImpl._setOriginalClassPK = false;
 
+		subscriptionModelImpl._originalGroupId = subscriptionModelImpl._groupId;
+
+		subscriptionModelImpl._setOriginalGroupId = false;
+
 		subscriptionModelImpl._columnBitmask = 0;
 	}
 
@@ -583,12 +619,14 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 			subscriptionCacheModel.frequency = null;
 		}
 
+		subscriptionCacheModel.groupId = getGroupId();
+
 		return subscriptionCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{mvccVersion=");
 		sb.append(getMvccVersion());
@@ -610,6 +648,8 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 		sb.append(getClassPK());
 		sb.append(", frequency=");
 		sb.append(getFrequency());
+		sb.append(", groupId=");
+		sb.append(getGroupId());
 		sb.append("}");
 
 		return sb.toString();
@@ -617,7 +657,7 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(34);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.model.Subscription");
@@ -663,6 +703,10 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 			"<column><column-name>frequency</column-name><column-value><![CDATA[");
 		sb.append(getFrequency());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>groupId</column-name><column-value><![CDATA[");
+		sb.append(getGroupId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -691,6 +735,9 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 	private long _originalClassPK;
 	private boolean _setOriginalClassPK;
 	private String _frequency;
+	private long _groupId;
+	private long _originalGroupId;
+	private boolean _setOriginalGroupId;
 	private long _columnBitmask;
 	private Subscription _escapedModel;
 }
