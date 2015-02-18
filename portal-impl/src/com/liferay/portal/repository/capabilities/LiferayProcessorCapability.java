@@ -18,6 +18,10 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.capabilities.ProcessorCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackRegistryUtil;
+import com.liferay.portlet.documentlibrary.util.DLProcessorRegistryUtil;
+
+import java.util.concurrent.Callable;
 
 /**
  * @author Adolfo Pérez
@@ -26,22 +30,39 @@ public class LiferayProcessorCapability implements ProcessorCapability {
 
 	@Override
 	public void cleanUp(FileEntry fileEntry) throws PortalException {
-		throw new UnsupportedOperationException();
+		DLProcessorRegistryUtil.cleanUp(fileEntry);
 	}
 
 	@Override
 	public void cleanUp(FileVersion fileVersion) throws PortalException {
-		throw new UnsupportedOperationException();
+		DLProcessorRegistryUtil.cleanUp(fileVersion);
 	}
 
 	@Override
 	public void copyPrevious(FileVersion fileVersion) throws PortalException {
-		throw new UnsupportedOperationException();
+		registerDLProcessorCallback(fileVersion.getFileEntry(), fileVersion);
 	}
 
 	@Override
 	public void generateNew(FileEntry fileEntry) throws PortalException {
-		throw new UnsupportedOperationException();
+		registerDLProcessorCallback(fileEntry, null);
+	}
+
+	protected void registerDLProcessorCallback(
+		final FileEntry fileEntry, final FileVersion fileVersion) {
+
+		TransactionCommitCallbackRegistryUtil.registerCallback(
+			new Callable<Void>() {
+
+				@Override
+				public Void call() throws Exception {
+					DLProcessorRegistryUtil.trigger(
+						fileEntry, fileVersion, true);
+
+					return null;
+				}
+
+			});
 	}
 
 }

@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.Repository;
+import com.liferay.portal.kernel.repository.capabilities.ProcessorCapability;
 import com.liferay.portal.kernel.repository.capabilities.RepositoryEventTriggerCapability;
 import com.liferay.portal.kernel.repository.event.RepositoryEventType;
 import com.liferay.portal.kernel.repository.event.TrashRepositoryEventType;
@@ -33,7 +34,6 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.repository.model.RepositoryModel;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.transaction.TransactionCommitCallbackRegistryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.model.UserConstants;
+import com.liferay.portal.repository.capabilities.LiferayProcessorCapability;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
@@ -82,7 +83,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.concurrent.Callable;
 
 /**
  * Provides the local service helper for the document library application.
@@ -109,7 +109,10 @@ public class DLAppHelperLocalServiceImpl
 				fileEntry.getFileEntryId(), WorkflowConstants.ACTION_PUBLISH);
 		}
 
-		registerDLProcessorCallback(fileEntry, null);
+		ProcessorCapability processorCapability =
+			new LiferayProcessorCapability();
+
+		processorCapability.generateNew(fileEntry);
 	}
 
 	@Override
@@ -1264,7 +1267,15 @@ public class DLAppHelperLocalServiceImpl
 				userId, fileEntry, destinationFileVersion, assetClassPk);
 		}
 
-		registerDLProcessorCallback(fileEntry, sourceFileVersion);
+		ProcessorCapability processorCapability =
+			new LiferayProcessorCapability();
+
+		if (sourceFileVersion == null) {
+			processorCapability.generateNew(fileEntry);
+		}
+		else {
+			processorCapability.copyPrevious(sourceFileVersion);
+		}
 	}
 
 	@Override
@@ -1283,7 +1294,15 @@ public class DLAppHelperLocalServiceImpl
 			serviceContext.getAssetTagNames(),
 			serviceContext.getAssetLinkEntryIds());
 
-		registerDLProcessorCallback(fileEntry, sourceFileVersion);
+		ProcessorCapability processorCapability =
+			new LiferayProcessorCapability();
+
+		if (sourceFileVersion == null) {
+			processorCapability.generateNew(fileEntry);
+		}
+		else {
+			processorCapability.copyPrevious(sourceFileVersion);
+		}
 	}
 
 	@Override
@@ -1975,23 +1994,6 @@ public class DLAppHelperLocalServiceImpl
 			DLFileEntry.class.getName(), fileEntry.getFileEntryId());
 
 		subscriptionSender.flushNotificationsAsync();
-	}
-
-	protected void registerDLProcessorCallback(
-		final FileEntry fileEntry, final FileVersion fileVersion) {
-
-		TransactionCommitCallbackRegistryUtil.registerCallback(
-			new Callable<Void>() {
-
-				@Override
-				public Void call() throws Exception {
-					DLProcessorRegistryUtil.trigger(
-						fileEntry, fileVersion, true);
-
-					return null;
-				}
-
-			});
 	}
 
 	protected <T extends RepositoryModel<T>> void triggerRepositoryEvent(
