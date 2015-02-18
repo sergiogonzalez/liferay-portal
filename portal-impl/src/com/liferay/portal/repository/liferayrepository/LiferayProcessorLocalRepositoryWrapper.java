@@ -83,6 +83,8 @@ public class LiferayProcessorLocalRepositoryWrapper
 
 		super.checkInFileEntry(
 			userId, fileEntryId, major, changeLog, serviceContext);
+
+		_processorCapability.copyPrevious(fileEntry.getFileVersion());
 	}
 
 	@Override
@@ -96,6 +98,8 @@ public class LiferayProcessorLocalRepositoryWrapper
 		_processorCapability.cleanUp(fileEntry.getLatestFileVersion(true));
 
 		super.checkInFileEntry(userId, fileEntryId, lockUuid, serviceContext);
+
+		_processorCapability.copyPrevious(fileEntry.getFileVersion());
 	}
 
 	@Override
