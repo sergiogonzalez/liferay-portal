@@ -108,11 +108,6 @@ public class DLAppHelperLocalServiceImpl
 				fileEntry.getGroupId(), DLFileEntryConstants.getClassName(),
 				fileEntry.getFileEntryId(), WorkflowConstants.ACTION_PUBLISH);
 		}
-
-		ProcessorCapability processorCapability =
-			new LiferayProcessorCapability();
-
-		processorCapability.generateNew(fileEntry);
 	}
 
 	@Override

@@ -14,9 +14,15 @@
 
 package com.liferay.portal.repository.liferayrepository;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.capabilities.ProcessorCapability;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.repository.util.RepositoryWrapper;
+import com.liferay.portal.service.ServiceContext;
+
+import java.io.File;
+import java.io.InputStream;
 
 /**
  * @author Adolfo Pérez
@@ -27,6 +33,42 @@ public class LiferayProcessorRepositoryWrapper extends RepositoryWrapper {
 		Repository repository, ProcessorCapability processorCapability) {
 
 		super(repository);
+
+		_processorCapability = processorCapability;
 	}
+
+	@Override
+	public FileEntry addFileEntry(
+			long userId, long folderId, String sourceFileName, String mimeType,
+			String title, String description, String changeLog, File file,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		FileEntry fileEntry = super.addFileEntry(
+			userId, folderId, sourceFileName, mimeType, title, description,
+			changeLog, file, serviceContext);
+
+		_processorCapability.generateNew(fileEntry);
+
+		return fileEntry;
+	}
+
+	@Override
+	public FileEntry addFileEntry(
+			long userId, long folderId, String sourceFileName, String mimeType,
+			String title, String description, String changeLog, InputStream is,
+			long size, ServiceContext serviceContext)
+		throws PortalException {
+
+		FileEntry fileEntry = super.addFileEntry(
+			userId, folderId, sourceFileName, mimeType, title, description,
+			changeLog, is, size, serviceContext);
+
+		_processorCapability.generateNew(fileEntry);
+
+		return fileEntry;
+	}
+
+	private final ProcessorCapability _processorCapability;
 
 }
