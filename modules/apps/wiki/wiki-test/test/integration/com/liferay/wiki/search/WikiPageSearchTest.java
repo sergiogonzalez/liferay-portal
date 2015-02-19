@@ -109,7 +109,7 @@ public class WikiPageSearchTest extends BaseSearchTestCase {
 		TestSpecificFieldsHelper testSpecificFieldsHelper =
 			new TestSpecificFieldsHelper();
 
-		testSpecificFieldsHelper.searchSpecificFields();
+		testSpecificFieldsHelper.testSearchSpecificFields();
 	}
 
 	@Override
@@ -222,7 +222,7 @@ public class WikiPageSearchTest extends BaseSearchTestCase {
 		/**
 		 * See https://dev.liferay.com/discover/portal/-/knowledge_base/6-2/searching-for-content-in-liferay
 		 */
-		public void searchSpecificFields() throws Exception {
+		public void testSearchSpecificFields() throws Exception {
 			Assume.assumeTrue(
 				isSearchSpecificFieldsImplementedForSearchEngine());
 

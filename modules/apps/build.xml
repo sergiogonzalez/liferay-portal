@@ -8,6 +8,7 @@
 		<dirset dir="blogs" includes="*" />
 		<dirset dir="bookmarks" includes="*" />
 		<dirset dir="breadcrumb" includes="*" />
+		<dirset dir="comments" includes="*" />
 		<dirset dir="configuration-admin" includes="*" />
 		<dirset dir="currency-converter" includes="*" />
 		<dirset dir="dictionary" includes="*" />
@@ -19,6 +20,8 @@
 		<dirset dir="invitation" includes="*" />
 		<dirset dir="journal" includes="*" />
 		<dirset dir="loan-calculator" includes="*" />
+		<dirset dir="message-boards" includes="*" />
+		<dirset dir="navigation" includes="*" />
 		<dirset dir="nested-portlets" includes="*" />
 		<dirset dir="network-utilities" includes="*" />
 		<dirset dir="password-generator" includes="*" />
