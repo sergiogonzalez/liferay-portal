@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.capabilities.ProcessorCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.repository.util.LocalRepositoryWrapper;
 import com.liferay.portal.service.ServiceContext;
 
@@ -112,6 +113,19 @@ public class LiferayProcessorLocalRepositoryWrapper
 	}
 
 	@Override
+	public void revertFileEntry(
+			long userId, long fileEntryId, String version,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		super.revertFileEntry(userId, fileEntryId, version, serviceContext);
+
+		FileEntry fileEntry = getFileEntry(fileEntryId);
+
+		_processorCapability.copyPrevious(fileEntry.getFileVersion(version));
+	}
+
+	@Override
 	public FileEntry updateFileEntry(
 			long userId, long fileEntryId, String sourceFileName,
 			String mimeType, String title, String description, String changeLog,
@@ -123,6 +137,7 @@ public class LiferayProcessorLocalRepositoryWrapper
 			changeLog, majorVersion, file, serviceContext);
 
 		_processorCapability.cleanUp(fileEntry.getLatestFileVersion(true));
+		_processorCapability.generateNew(fileEntry);
 
 		return fileEntry;
 	}
@@ -135,11 +150,25 @@ public class LiferayProcessorLocalRepositoryWrapper
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		FileEntry oldFileEntry = null;
+		FileVersion oldFileVersion = null;
+
+		if (is == null) {
+			oldFileEntry = getFileEntry(fileEntryId);
+			oldFileVersion = oldFileEntry.getLatestFileVersion(true);
+		}
+
 		FileEntry fileEntry = super.updateFileEntry(
 			userId, fileEntryId, sourceFileName, mimeType, title, description,
 			changeLog, majorVersion, is, size, serviceContext);
 
-		_processorCapability.cleanUp(fileEntry.getLatestFileVersion(true));
+		if (is == null) {
+			_processorCapability.copyPrevious(oldFileVersion);
+		}
+		else {
+			_processorCapability.cleanUp(fileEntry.getLatestFileVersion(true));
+			_processorCapability.generateNew(fileEntry);
+		}
 
 		return fileEntry;
 	}

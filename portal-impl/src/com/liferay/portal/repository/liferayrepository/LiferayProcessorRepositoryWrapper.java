@@ -76,7 +76,11 @@ public class LiferayProcessorRepositoryWrapper extends RepositoryWrapper {
 
 		_processorCapability.cleanUp(fileEntry.getLatestFileVersion());
 
-		return super.cancelCheckOut(fileEntryId);
+		FileVersion fileVersion = super.cancelCheckOut(fileEntryId);
+
+		_processorCapability.generateNew(fileEntry);
+
+		return fileVersion;
 	}
 
 	@Override
@@ -179,6 +183,19 @@ public class LiferayProcessorRepositoryWrapper extends RepositoryWrapper {
 	}
 
 	@Override
+	public void revertFileEntry(
+			long userId, long fileEntryId, String version,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		super.revertFileEntry(userId, fileEntryId, version, serviceContext);
+
+		FileEntry fileEntry = getFileEntry(fileEntryId);
+
+		_processorCapability.copyPrevious(fileEntry.getFileVersion(version));
+	}
+
+	@Override
 	public FileEntry updateFileEntry(
 			long userId, long fileEntryId, String sourceFileName,
 			String mimeType, String title, String description, String changeLog,
@@ -190,6 +207,7 @@ public class LiferayProcessorRepositoryWrapper extends RepositoryWrapper {
 			changeLog, majorVersion, file, serviceContext);
 
 		_processorCapability.cleanUp(fileEntry.getLatestFileVersion());
+		_processorCapability.generateNew(fileEntry);
 
 		return fileEntry;
 	}
@@ -202,12 +220,24 @@ public class LiferayProcessorRepositoryWrapper extends RepositoryWrapper {
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		FileEntry oldFileEntry = null;
+		FileVersion oldFileVersion = null;
+
+		if (is == null) {
+			oldFileEntry = getFileEntry(fileEntryId);
+			oldFileVersion = oldFileEntry.getLatestFileVersion(true);
+		}
+
 		FileEntry fileEntry = super.updateFileEntry(
 			userId, fileEntryId, sourceFileName, mimeType, title, description,
 			changeLog, majorVersion, is, size, serviceContext);
 
-		if (is != null) {
+		if (is == null) {
+			_processorCapability.copyPrevious(oldFileVersion);
+		}
+		else {
 			_processorCapability.cleanUp(fileEntry.getLatestFileVersion());
+			_processorCapability.generateNew(fileEntry);
 		}
 
 		return fileEntry;
