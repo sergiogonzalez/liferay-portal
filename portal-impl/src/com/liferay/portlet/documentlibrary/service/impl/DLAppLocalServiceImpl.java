@@ -200,7 +200,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			changeLog, file, serviceContext);
 
 		dlAppHelperLocalService.addFileEntry(
-			userId, fileEntry, fileEntry.getFileVersion(), serviceContext);
+			userId, fileEntry, null, serviceContext);
 
 		return fileEntry;
 	}
@@ -288,7 +288,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			changeLog, is, size, serviceContext);
 
 		dlAppHelperLocalService.addFileEntry(
-			userId, fileEntry, fileEntry.getFileVersion(), serviceContext);
+			userId, fileEntry, null, serviceContext);
 
 		return fileEntry;
 	}
@@ -1155,20 +1155,12 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		LocalRepository localRepository = getFileEntryLocalRepository(
 			fileEntryId);
 
-		FileEntry oldFileEntry = localRepository.getFileEntry(fileEntryId);
-
-		FileVersion oldFileVersion = oldFileEntry.getFileVersion();
-
 		FileEntry fileEntry = localRepository.updateFileEntry(
 			userId, fileEntryId, sourceFileName, mimeType, title, description,
 			changeLog, majorVersion, is, size, serviceContext);
 
-		if (is != null) {
-			oldFileVersion = null;
-		}
-
 		dlAppHelperLocalService.updateFileEntry(
-			userId, fileEntry, oldFileVersion, fileEntry.getFileVersion(),
+			userId, fileEntry, null, fileEntry.getFileVersion(),
 			serviceContext);
 
 		return fileEntry;
@@ -1319,8 +1311,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		}
 
 		dlAppHelperLocalService.addFileEntry(
-			userId, destinationFileEntry, destinationFileEntry.getFileVersion(),
-			serviceContext);
+			userId, destinationFileEntry, null, serviceContext);
 
 		return destinationFileEntry;
 	}
