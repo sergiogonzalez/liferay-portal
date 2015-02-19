@@ -19,6 +19,8 @@
 <%
 boolean emailFileEntryAnyEventEnabled = dlSettings.isEmailFileEntryAddedEnabled() || dlSettings.isEmailFileEntryUpdatedEnabled();
 
+String browseBy = ParamUtil.getString(request, "browseBy");
+
 String navigation = ParamUtil.getString(request, "navigation", "home");
 
 Folder folder = (Folder)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDER);
@@ -50,6 +52,9 @@ PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/document_library/view");
 portletURL.setParameter("folderId", String.valueOf(folderId));
+portletURL.setParameter("browseBy", browseBy);
+portletURL.setParameter("fileEntryTypeId", String.valueOf(fileEntryTypeId));
+portletURL.setParameter("navigation", navigation);
 
 SearchContainer dlSearchContainer = new SearchContainer(liferayPortletRequest, null, null, "cur2", SearchContainer.DEFAULT_DELTA, portletURL, null, null);
 
