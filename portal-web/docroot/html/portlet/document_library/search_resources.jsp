@@ -47,6 +47,10 @@ List<Folder> mountFolders = DLAppServiceUtil.getMountFolders(scopeGroupId, DLFol
 
 String keywords = ParamUtil.getString(request, "keywords");
 
+String navigation = ParamUtil.getString(request, "navigation");
+String browseBy = ParamUtil.getString(request, "browseBy");
+String fileEntryTypeId = ParamUtil.getString(request, "fileEntryTypeId");
+
 boolean showRepositoryTabs = ParamUtil.getBoolean(request, "showRepositoryTabs");
 boolean showSearchInfo = ParamUtil.getBoolean(request, "showSearchInfo");
 
@@ -57,6 +61,9 @@ portletURL.setParameter("redirect", redirect);
 portletURL.setParameter("breadcrumbsFolderId", String.valueOf(breadcrumbsFolderId));
 portletURL.setParameter("searchFolderId", String.valueOf(searchFolderId));
 portletURL.setParameter("keywords", keywords);
+portletURL.setParameter("navigation", navigation);
+portletURL.setParameter("browseBy", browseBy);
+portletURL.setParameter("fileEntryTypeId", fileEntryTypeId);
 
 SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, portletURL, null, null);
 %>
@@ -92,6 +99,9 @@ SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, por
 						<portlet:param name="keywords" value="<%= keywords %>" />
 						<portlet:param name="showRepositoryTabs" value="<% (searchEverywhere) ? Boolean.TRUE.toString() : Boolean.FALSE.toString() %>" />
 						<portlet:param name="showSearchInfo" value="<%= Boolean.TRUE.toString() %>" />
+						<portlet:param name="navigation" value="<%= navigation %>" />
+						<portlet:param name="browseBy" value="<%= browseBy %>" />
+						<portlet:param name="fileEntryTypeId" value="<%= fileEntryTypeId %>" />
 					</portlet:renderURL>
 
 					<aui:button href="<%= changeSearchFolderURL %>" value='<%= !searchEverywhere ? "search-everywhere" : "search-in-the-current-folder" %>' />
@@ -100,6 +110,11 @@ SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, por
 
 			<portlet:renderURL var="closeSearchURL">
 				<portlet:param name="struts_action" value="/document_library/view" />
+				<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
+				<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
+				<portlet:param name="navigation" value="<%= navigation %>" />
+				<portlet:param name="browseBy" value="<%= browseBy %>" />
+				<portlet:param name="fileEntryTypeId" value="<%= fileEntryTypeId %>" />
 			</portlet:renderURL>
 
 			<liferay-ui:icon cssClass="close-search" iconCssClass="icon-remove" id="closeSearch" message="remove" url="<%= closeSearchURL %>" />

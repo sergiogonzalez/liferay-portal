@@ -21,6 +21,8 @@ boolean emailFileEntryAnyEventEnabled = dlSettings.isEmailFileEntryAddedEnabled(
 
 String navigation = ParamUtil.getString(request, "navigation", "home");
 
+String browseBy = ParamUtil.getString(request, "browseBy");
+
 Folder folder = (Folder)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FOLDER);
 
 long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
@@ -50,6 +52,9 @@ PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/document_library/view");
 portletURL.setParameter("folderId", String.valueOf(folderId));
+portletURL.setParameter("navigation", navigation);
+portletURL.setParameter("browseBy", browseBy);
+portletURL.setParameter("fileEntryTypeId", String.valueOf(fileEntryTypeId));
 
 SearchContainer dlSearchContainer = new SearchContainer(liferayPortletRequest, null, null, "cur2", SearchContainer.DEFAULT_DELTA, portletURL, null, null);
 
