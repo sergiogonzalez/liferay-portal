@@ -717,10 +717,8 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 
 				// Move file entries within repository
 
-				FileEntry fileEntry = fromLocalRepository.moveFileEntry(
+				return fromLocalRepository.moveFileEntry(
 					userId, fileEntryId, newFolderId, serviceContext);
-
-				return fileEntry;
 			}
 
 			// Move file entries between repositories
@@ -796,26 +794,20 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 				}
 			}
 
-			Folder folder = null;
-
 			if (sourceLocalRepository.getRepositoryId() ==
 					destinationLocalRepository.getRepositoryId()) {
 
 				// Move file entries within repository
 
-				folder = sourceLocalRepository.moveFolder(
+				return sourceLocalRepository.moveFolder(
 					userId, folderId, parentFolderId, serviceContext);
 			}
-			else {
 
-				// Move file entries between repositories
+			// Move file entries between repositories
 
-				folder = moveFolders(
-					userId, folderId, parentFolderId, sourceLocalRepository,
-					destinationLocalRepository, serviceContext);
-			}
-
-			return folder;
+			return moveFolders(
+				userId, folderId, parentFolderId, sourceLocalRepository,
+				destinationLocalRepository, serviceContext);
 		}
 		finally {
 			SystemEventHierarchyEntryThreadLocal.pop(Folder.class);
@@ -1412,16 +1404,11 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			long folderId, long groupId)
 		throws PortalException {
 
-		LocalRepository localRepository = null;
-
 		if (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			localRepository = getLocalRepository(groupId);
-		}
-		else {
-			localRepository = getFolderLocalRepository(folderId);
+			return getLocalRepository(groupId);
 		}
 
-		return localRepository;
+		return getFolderLocalRepository(folderId);
 	}
 
 	protected LocalRepository getLocalRepository(long repositoryId)
