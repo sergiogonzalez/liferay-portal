@@ -27,9 +27,9 @@ long repositoryId = GetterUtil.getLong((String)request.getAttribute("view.jsp-re
 
 String keywords = ParamUtil.getString(request, "keywords");
 
-String navigation = ParamUtil.getString(request, "navigation");
 String browseBy = ParamUtil.getString(request, "browseBy");
 String fileEntryTypeId = ParamUtil.getString(request, "fileEntryTypeId");
+String navigation = ParamUtil.getString(request, "navigation");
 %>
 
 <aui:nav-bar>
@@ -119,9 +119,9 @@ String fileEntryTypeId = ParamUtil.getString(request, "fileEntryTypeId");
 					<portlet:param name="searchFolderId" value="<%= String.valueOf(folderId) %>" />
 					<portlet:param name="showRepositoryTabs" value="<%= (folderId == 0) ? Boolean.TRUE.toString() : Boolean.FALSE.toString() %>" />
 					<portlet:param name="showSearchInfo" value="<%= Boolean.TRUE.toString() %>" />
-					<portlet:param name="navigation" value="<%= navigation %>" />
 					<portlet:param name="browseBy" value="<%= browseBy %>" />
 					<portlet:param name="fileEntryTypeId" value="<%= fileEntryTypeId %>" />
+					<portlet:param name="navigation" value="<%= navigation %>" />
 				</liferay-portlet:renderURL>
 
 				<aui:form action="<%= searchURL %>" method="get" name="fm1">
