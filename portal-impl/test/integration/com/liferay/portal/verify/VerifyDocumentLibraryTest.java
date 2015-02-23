@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -36,9 +38,11 @@ import com.liferay.portal.verify.test.BaseVerifyProcessTestCase;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalServiceUtil;
@@ -162,9 +166,7 @@ public class VerifyDocumentLibraryTest extends BaseVerifyProcessTestCase {
 		Folder parentFolder = DLAppTestUtil.addFolder(
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
-		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
-			_group.getGroupId(), parentFolder.getFolderId(),
-			RandomTestUtil.randomString());
+		FileEntry fileEntry = addFileEntry(parentFolder.getFolderId());
 
 		DLAppServiceUtil.moveFileEntryToTrash(fileEntry.getFileEntryId());
 
@@ -184,9 +186,7 @@ public class VerifyDocumentLibraryTest extends BaseVerifyProcessTestCase {
 		Folder parentFolder = DLAppTestUtil.addFolder(
 			_group.getGroupId(), grandparentFolder.getFolderId());
 
-		DLAppTestUtil.addFileEntry(
-			_group.getGroupId(), parentFolder.getFolderId(),
-			RandomTestUtil.randomString());
+		addFileEntry(parentFolder.getFolderId());
 
 		DLAppServiceUtil.moveFolderToTrash(parentFolder.getFolderId());
 
@@ -203,12 +203,16 @@ public class VerifyDocumentLibraryTest extends BaseVerifyProcessTestCase {
 		Folder parentFolder = DLAppTestUtil.addFolder(
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
-		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
-			_group.getGroupId(), parentFolder.getFolderId(),
-			RandomTestUtil.randomString());
+		FileEntry fileEntry = addFileEntry(parentFolder.getFolderId());
 
-		DLFileShortcut dlFileShortcut = DLAppTestUtil.addDLFileShortcut(
-			fileEntry, _group.getGroupId(), parentFolder.getFolderId());
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		DLFileShortcut dlFileShortcut = DLAppLocalServiceUtil.addFileShortcut(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			parentFolder.getFolderId(), fileEntry.getFileEntryId(),
+			serviceContext);
 
 		DLAppServiceUtil.moveFileShortcutToTrash(
 			dlFileShortcut.getFileShortcutId());
@@ -229,9 +233,7 @@ public class VerifyDocumentLibraryTest extends BaseVerifyProcessTestCase {
 		Folder parentFolder = DLAppTestUtil.addFolder(
 			_group.getGroupId(), grandparentFolder.getFolderId());
 
-		DLAppTestUtil.addFileEntry(
-			_group.getGroupId(), parentFolder.getFolderId(),
-			RandomTestUtil.randomString());
+		addFileEntry(parentFolder.getFolderId());
 
 		DLAppServiceUtil.moveFolderToTrash(parentFolder.getFolderId());
 
@@ -317,6 +319,21 @@ public class VerifyDocumentLibraryTest extends BaseVerifyProcessTestCase {
 			null, null, dlFileEntryType.getFileEntryTypeId(), ddmFormValuesMap,
 			null, byteArrayInputStream, byteArrayInputStream.available(),
 			serviceContext);
+	}
+
+	protected FileEntry addFileEntry(long folderId) throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		DLAppTestUtil.populateServiceContext(
+			serviceContext, Constants.ADD,
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL, true);
+
+		return DLAppLocalServiceUtil.addFileEntry(
+			TestPropsValues.getUserId(), _group.getGroupId(), folderId,
+			RandomTestUtil.randomString() + ".txt", ContentTypes.TEXT_PLAIN,
+			RandomTestUtil.randomString().getBytes(), serviceContext);
 	}
 
 	protected Map<String, DDMFormValues> getDDMFormValuesMap(

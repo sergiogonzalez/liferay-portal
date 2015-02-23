@@ -19,13 +19,19 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.lar.test.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.StagedModel;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
@@ -69,9 +75,19 @@ public class DLFileShortcutStagedModelDataHandlerTest
 		addDependentStagedModel(
 			dependentStagedModelsMap, DLFolder.class, folder);
 
-		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
-			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString());
+		ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(
+					group.getGroupId(), TestPropsValues.getUserId());
+
+		DLAppTestUtil.populateServiceContext(
+			serviceContext, Constants.ADD,
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL, true);
+
+		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
+			TestPropsValues.getUserId(), group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString() + ".txt", ContentTypes.TEXT_PLAIN,
+			RandomTestUtil.randomString().getBytes(), serviceContext);
 
 		addDependentStagedModel(
 			dependentStagedModelsMap, DLFileEntry.class, fileEntry);
@@ -95,8 +111,13 @@ public class DLFileShortcutStagedModelDataHandlerTest
 
 		FileEntry fileEntry = (FileEntry)fileEntryDependentStagedModels.get(0);
 
-		return DLAppTestUtil.addDLFileShortcut(
-			fileEntry, group.getGroupId(), folder.getFolderId());
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId());
+
+		return DLAppLocalServiceUtil.addFileShortcut(
+			TestPropsValues.getUserId(), group.getGroupId(),
+			folder.getFolderId(), fileEntry.getFileEntryId(), serviceContext);
 	}
 
 	@Override
