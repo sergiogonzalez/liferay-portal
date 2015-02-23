@@ -21,6 +21,7 @@ import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.model.BookmarksFolderConstants;
 import com.liferay.bookmarks.service.base.BookmarksEntryLocalServiceBaseImpl;
 import com.liferay.bookmarks.service.permission.BookmarksPermission;
+import com.liferay.bookmarks.service.settings.BookmarksServiceSettingsProvider;
 import com.liferay.bookmarks.settings.BookmarksSettings;
 import com.liferay.bookmarks.social.BookmarksActivityKeys;
 import com.liferay.bookmarks.util.comparator.EntryModifiedDateComparator;
@@ -44,6 +45,7 @@ import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
+import com.liferay.portal.kernel.settings.SettingsProvider;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -710,8 +712,16 @@ public class BookmarksEntryLocalServiceImpl
 			return;
 		}
 
-		BookmarksSettings bookmarksSettings = BookmarksSettings.getInstance(
-			entry.getGroupId());
+		BookmarksServiceSettingsProvider bookmarksServiceSettingsProvider =
+			BookmarksServiceSettingsProvider.
+				getBookmarksServiceSettingsProvider();
+
+		SettingsProvider<BookmarksSettings> bookmarksSettingsProvider =
+			bookmarksServiceSettingsProvider.getBookmarksSettingsProvider();
+
+		BookmarksSettings bookmarksSettings =
+			bookmarksSettingsProvider.getGroupServiceSettings(
+				entry.getGroupId());
 
 		if ((serviceContext.isCommandAdd() &&
 			 !bookmarksSettings.isEmailEntryAddedEnabled()) ||
