@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/journal/init.jsp" %>
 
 <%
-long folderId = GetterUtil.getLong((String) request.getAttribute("view.jsp-folderId"));
+long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
 
 String browseBy = ParamUtil.getString(request, "browseBy");
 

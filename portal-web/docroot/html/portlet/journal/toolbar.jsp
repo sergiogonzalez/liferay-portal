@@ -19,7 +19,7 @@
 <%
 String browseBy = ParamUtil.getString(request, "browseBy");
 String ddmStructureKey = ParamUtil.getString(request, "ddmStructureKey");
-long folderId = GetterUtil.getLong((String) liferayPortletRequest.getAttribute("view.jsp-folderId"));
+long folderId = GetterUtil.getLong((String)liferayPortletRequest.getAttribute("view.jsp-folderId"));
 String navigation = ParamUtil.getString(request, "navigation", "home");
 
 PortletURL portletURL = liferayPortletResponse.createRenderURL();
