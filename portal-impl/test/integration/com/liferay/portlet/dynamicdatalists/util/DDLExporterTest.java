@@ -22,16 +22,24 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
 import com.liferay.portlet.dynamicdatalists.util.test.DDLRecordSetTestHelper;
@@ -220,9 +228,19 @@ public class DDLExporterTest {
 	}
 
 	protected String createDocumentLibraryDDMFormFieldValue() throws Exception {
-		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
-			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			"file.txt");
+		ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(
+					_group.getGroupId(), TestPropsValues.getUserId());
+
+		DLAppTestUtil.populateServiceContext(
+			serviceContext, Constants.ADD,
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL, true);
+
+		FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "file.txt",
+			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString().getBytes(),
+			serviceContext);
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
