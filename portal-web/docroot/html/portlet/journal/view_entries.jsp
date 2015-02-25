@@ -19,6 +19,12 @@
 <%
 long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
 
+String browseBy = ParamUtil.getString(request, "browseBy");
+
+String ddmStructureKey = ParamUtil.getString(request, "ddmStructureKey");
+
+String navigation = ParamUtil.getString(request, "navigation", "home");
+
 long ddmStructureId = 0;
 
 String ddmStructureName = LanguageUtil.get(request, "basic-web-content");
@@ -27,6 +33,9 @@ PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/journal/view");
 portletURL.setParameter("folderId", String.valueOf(folderId));
+portletURL.setParameter("browseBy", browseBy);
+portletURL.setParameter("ddmStructureKey", ddmStructureKey);
+portletURL.setParameter("navigation", navigation);
 
 ArticleSearch articleSearchContainer = new ArticleSearch(liferayPortletRequest, portletURL);
 

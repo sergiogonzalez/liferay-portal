@@ -31,6 +31,10 @@ if (searchFolderId > 0) {
 
 String keywords = ParamUtil.getString(request, "keywords");
 
+String browseBy = ParamUtil.getString(request, "browseBy");
+String ddmStructureKey = ParamUtil.getString(request, "ddmStructureKey");
+String navigation = ParamUtil.getString(request, "navigation");
+
 int total = 0;
 
 boolean advancedSearch = ParamUtil.getBoolean(liferayPortletRequest, ArticleDisplayTerms.ADVANCED_SEARCH);
@@ -41,6 +45,9 @@ portletURL.setParameter("struts_action", "/journal/view");
 portletURL.setParameter("redirect", redirect);
 portletURL.setParameter("searchFolderId", String.valueOf(searchFolderId));
 portletURL.setParameter("keywords", keywords);
+portletURL.setParameter("browseBy", browseBy);
+portletURL.setParameter("ddmStructureKey", ddmStructureKey);
+portletURL.setParameter("navigation", navigation);
 
 ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, portletURL);
 %>
@@ -80,6 +87,9 @@ ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, portlet
 				<portlet:param name="searchFolderId" value="<%= (folder != null) ? String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) : String.valueOf(folderId) %>" />
 				<portlet:param name="keywords" value="<%= keywords %>" />
 				<portlet:param name="displayStyle" value="<%= journalDisplayContext.getDisplayStyle() %>" />
+				<portlet:param name="browseBy" value="<%= browseBy %>" />
+				<portlet:param name="ddmStructureKey" value="<%= ddmStructureKey %>" />
+				<portlet:param name="navigation" value="<%= navigation %>" />
 			</portlet:renderURL>
 
 			<aui:button href="<%= changeSearchFolderURL %>" value='<%= (folder != null) ? "search-everywhere" : "search-in-the-current-folder" %>' />
@@ -89,6 +99,9 @@ ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, portlet
 	<portlet:renderURL var="closeSearchURL">
 		<portlet:param name="struts_action" value="/journal/view" />
 		<portlet:param name="displayStyle" value="<%= journalDisplayContext.getDisplayStyle() %>" />
+		<portlet:param name="browseBy" value="<%= browseBy %>" />
+		<portlet:param name="ddmStructureKey" value="<%= ddmStructureKey %>" />
+		<portlet:param name="navigation" value="<%= navigation %>" />
 	</portlet:renderURL>
 
 	<liferay-ui:icon

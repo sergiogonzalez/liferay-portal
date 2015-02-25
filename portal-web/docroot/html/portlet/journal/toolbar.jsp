@@ -17,12 +17,18 @@
 <%@ include file="/html/portlet/journal/init.jsp" %>
 
 <%
+String browseBy = ParamUtil.getString(request, "browseBy");
+String ddmStructureKey = ParamUtil.getString(request, "ddmStructureKey");
 long folderId = GetterUtil.getLong((String)liferayPortletRequest.getAttribute("view.jsp-folderId"));
+String navigation = ParamUtil.getString(request, "navigation", "home");
 
 PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/journal/view");
 portletURL.setParameter("folderId", String.valueOf(folderId));
+portletURL.setParameter("browseBy", browseBy);
+portletURL.setParameter("ddmStructureKey", ddmStructureKey);
+portletURL.setParameter("navigation", navigation);
 %>
 
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm1">
