@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -101,6 +102,7 @@ import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.util.SerializableUtil;
 
+import java.io.File;
 import java.io.InputStream;
 import java.io.Serializable;
 
@@ -468,6 +470,23 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		return addMessage(
 			userId, userName, groupId, categoryId, subject, body,
 			serviceContext);
+	}
+
+	public void addMessageAttachment(
+			long messageId, String fileName, File file, boolean indexingEnabled)
+		throws PortalException {
+
+		MBMessage message = mbMessagePersistence.findByPrimaryKey(messageId);
+
+		Folder folder = message.addAttachmentsFolder();
+
+		String mimeType = MimeTypesUtil.getContentType(file);
+
+		PortletFileRepositoryUtil.addPortletFileEntry(
+			message.getGroupId(), message.getUserId(),
+			MBMessage.class.getName(), message.getMessageId(),
+			PortletKeys.MESSAGE_BOARDS, folder.getFolderId(), file, fileName,
+			mimeType, indexingEnabled);
 	}
 
 	@Override
@@ -1956,6 +1975,13 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 				"message_boards/view_message/" + message.getMessageId();
 		}
 		else {
+			if (serviceContext.getThemeDisplay() == null) {
+				return PortalUtil.getControlPanelFullURL(
+						serviceContext.getScopeGroupId(),
+						PortletKeys.MESSAGE_BOARDS,
+						null);
+			}
+
 			long controlPanelPlid = PortalUtil.getControlPanelPlid(
 				serviceContext.getCompanyId());
 
