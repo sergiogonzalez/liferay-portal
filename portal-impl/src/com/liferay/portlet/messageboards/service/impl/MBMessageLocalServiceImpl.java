@@ -1994,9 +1994,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		else {
 			if (serviceContext.getThemeDisplay() == null) {
 				return PortalUtil.getControlPanelFullURL(
-						serviceContext.getScopeGroupId(),
-						PortletKeys.MESSAGE_BOARDS,
-						null);
+					serviceContext.getScopeGroupId(),
+					PortletKeys.MESSAGE_BOARDS, null);
 			}
 
 			long controlPanelPlid = PortalUtil.getControlPanelPlid(
