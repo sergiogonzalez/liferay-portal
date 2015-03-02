@@ -584,22 +584,22 @@ public class MBUtil {
 	}
 
 	public static long getMessageId(String mailId) {
-		int x = mailId.indexOf(CharPool.LESS_THAN) + 1;
+		int x = mailId.indexOf(CharPool.LESS_THAN);
 		int y = mailId.indexOf(CharPool.AT);
 
-		long messageId = 0;
-
-		if ((x > 0 ) && (y != -1)) {
-			String temp = mailId.substring(x, y);
-
-			int z = temp.lastIndexOf(CharPool.PERIOD);
-
-			if (z != -1) {
-				messageId = GetterUtil.getLong(temp.substring(z + 1));
-			}
+		if ((x == -1) || (y == -1)) {
+			return 0;
 		}
 
-		return messageId;
+		String temp = mailId.substring(x + 1, y);
+
+		String[] mailIdParts = StringUtil.split(temp, CharPool.PERIOD);
+
+		if (mailIdParts.length == 4) {
+			return GetterUtil.getLong(mailIdParts[2]);
+		}
+
+		return 0;
 	}
 
 	public static long getParentMessageId(Message message) throws Exception {
