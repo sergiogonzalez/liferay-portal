@@ -589,6 +589,14 @@ public class MBUtil {
 		return entries;
 	}
 
+	public static int getMessageIdStringOffset() {
+		if (PropsValues.POP_SERVER_SUBDOMAIN.length() == 0) {
+			return 1;
+		}
+
+		return 0;
+	}
+
 	public static String[] getMessageIdStringParts(String messageIdString) {
 		int pos = messageIdString.indexOf(CharPool.AT);
 
@@ -598,14 +606,6 @@ public class MBUtil {
 			pos);
 
 		return StringUtil.split(target, CharPool.PERIOD);
-	}
-
-	public static int getMessageIdStringOffset() {
-		if (PropsValues.POP_SERVER_SUBDOMAIN.length() == 0) {
-			return 1;
-		}
-
-		return 0;
 	}
 
 	public static long getParentMessageId(Message message) throws Exception {
