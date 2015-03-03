@@ -167,7 +167,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			String body, ServiceContext serviceContext)
 		throws PortalException {
 
-		if (isMaxDiscussionMessageCountReached(className, classPK)) {
+		if (isMaxDiscussionMessagesCountReached(className, classPK)) {
 			throw new DiscussionMessageNumberException();
 		}
 
@@ -1177,9 +1177,18 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			nextThread = prevAndNextThreads[2];
 		}
 
+		boolean maxDiscussionMessageCountReached = false;
+
+		if (message.isDiscussion()) {
+			maxDiscussionMessageCountReached =
+				isMaxDiscussionMessagesCountReached(
+					message.getClassName(), message.getClassPK());
+		}
+
 		return new MBMessageDisplayImpl(
 			message, parentMessage, category, thread, previousThread,
-			nextThread, status, threadView, this);
+			nextThread, status, threadView, maxDiscussionMessageCountReached,
+			this);
 	}
 
 	@Override
@@ -1344,25 +1353,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		return getUserDiscussionMessagesCount(
 			userId, classNameId, classPK, status);
-	}
-
-	@Override
-	public boolean isMaxDiscussionMessageCountReached(
-		String className, long classPK) {
-
-		boolean maxDiscussionMessageCountReached = false;
-
-		int discussionMessagesCount = getDiscussionMessagesCount(
-			className, classPK, WorkflowConstants.STATUS_APPROVED);
-
-		if ((PropsValues.DISCUSSION_COMMENTS_MAX_NUMBER > 0) &&
-			(discussionMessagesCount >=
-				PropsValues.DISCUSSION_COMMENTS_MAX_NUMBER)) {
-
-			maxDiscussionMessageCountReached = true;
-		}
-
-		return maxDiscussionMessageCountReached;
 	}
 
 	@Override
@@ -1978,6 +1968,22 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		}
 
 		return subject;
+	}
+
+	protected boolean isMaxDiscussionMessagesCountReached(
+		String className, long classPK) {
+
+		int discussionMessagesCount = getDiscussionMessagesCount(
+			className, classPK, WorkflowConstants.STATUS_APPROVED);
+
+		if ((PropsValues.DISCUSSION_COMMENTS_MAX_NUMBER > 0) &&
+			(discussionMessagesCount >=
+				PropsValues.DISCUSSION_COMMENTS_MAX_NUMBER)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	protected void notifyDiscussionSubscribers(

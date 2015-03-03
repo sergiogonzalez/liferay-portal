@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.messageboards.model.impl;
 
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBMessageDisplay;
@@ -31,7 +33,7 @@ public class MBMessageDisplayImpl implements MBMessageDisplay {
 	public MBMessageDisplayImpl(
 		MBMessage message, MBMessage parentMessage, MBCategory category,
 		MBThread thread, MBThread previousThread, MBThread nextThread,
-		int status, String threadView,
+		int status, String threadView, boolean maxMessageCountReached,
 		MBMessageLocalService messageLocalService) {
 
 		_message = message;
@@ -50,6 +52,26 @@ public class MBMessageDisplayImpl implements MBMessageDisplay {
 		_previousThread = previousThread;
 		_nextThread = nextThread;
 		_threadView = threadView;
+		_maxMessageCountReached = maxMessageCountReached;
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #MBMessageDisplayImpl(
+	 *             MBMessage, MBMessage, MBCategory, MBThread, .MBThread,
+	 *             MBThread, int, String, boolean, MBMessageLocalService)}
+	 */
+	@Deprecated
+	public MBMessageDisplayImpl(
+		MBMessage message, MBMessage parentMessage, MBCategory category,
+		MBThread thread, MBThread previousThread, MBThread nextThread,
+		int status, String threadView,
+		MBMessageLocalService messageLocalService) {
+
+		this(
+			message, parentMessage, category, thread, previousThread,
+			nextThread, status, threadView,
+			_getMaxMessageCountReachedValue(message, messageLocalService),
+			messageLocalService);
 	}
 
 	@Override
@@ -92,7 +114,33 @@ public class MBMessageDisplayImpl implements MBMessageDisplay {
 		return _treeWalker;
 	}
 
+	@Override
+	public boolean isMaxMessageCountReached() {
+		return _maxMessageCountReached;
+	}
+
+	private static boolean _getMaxMessageCountReachedValue(
+		MBMessage message, MBMessageLocalService messageLocalService) {
+
+		if (message.isDiscussion()) {
+			int discussionMessagesCount =
+				messageLocalService.getDiscussionMessagesCount(
+					message.getClassName(), message.getClassPK(),
+					WorkflowConstants.STATUS_APPROVED);
+
+			if ((PropsValues.DISCUSSION_COMMENTS_MAX_NUMBER > 0) &&
+				(discussionMessagesCount >=
+					PropsValues.DISCUSSION_COMMENTS_MAX_NUMBER)) {
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	private final MBCategory _category;
+	private final boolean _maxMessageCountReached;
 	private final MBMessage _message;
 	private final MBThread _nextThread;
 	private final MBMessage _parentMessage;
