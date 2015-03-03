@@ -616,7 +616,7 @@ public class MBUtil {
 				_log.debug("Parent header " + messageIdString);
 			}
 
-				parentMessageId = getParentMessageId(messageIdString);
+			parentMessageId = getParentMessageId(messageIdString);
 
 			if (_log.isDebugEnabled()) {
 				_log.debug("Parent message id " + parentMessageId);
