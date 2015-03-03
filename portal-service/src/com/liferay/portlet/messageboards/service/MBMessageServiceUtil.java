@@ -55,6 +55,16 @@ public class MBMessageServiceUtil {
 
 	public static com.liferay.portlet.messageboards.model.MBMessage addMessage(
 		long categoryId, java.lang.String subject, java.lang.String body,
+		java.lang.String fileName, java.io.File file, boolean indexingEnabled,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addMessage(categoryId, subject, body, fileName, file,
+			indexingEnabled, serviceContext);
+	}
+
+	public static com.liferay.portlet.messageboards.model.MBMessage addMessage(
+		long categoryId, java.lang.String subject, java.lang.String body,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().addMessage(categoryId, subject, body, serviceContext);
@@ -102,6 +112,13 @@ public class MBMessageServiceUtil {
 		return getService()
 				   .addMessage(parentMessageId, subject, body, format,
 			inputStreamOVPs, anonymous, priority, allowPingbacks, serviceContext);
+	}
+
+	public static void addMessageAttachment(long messageId,
+		java.lang.String fileName, java.io.File file, boolean indexingEnabled)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.addMessageAttachment(messageId, fileName, file, indexingEnabled);
 	}
 
 	public static void deleteDiscussionMessage(long groupId,
