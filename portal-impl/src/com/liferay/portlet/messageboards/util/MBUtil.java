@@ -593,12 +593,14 @@ public class MBUtil {
 		int pos = messageIdString.indexOf(CharPool.AT);
 
 		String target = messageIdString.substring(
-			MBUtil.MESSAGE_POP_PORTLET_PREFIX.length() + getOffset(), pos);
+			MBUtil.MESSAGE_POP_PORTLET_PREFIX.length() +
+				getMessageIdStringOffset(),
+			pos);
 
 		return StringUtil.split(target, CharPool.PERIOD);
 	}
 
-	public static int getOffset() {
+	public static int getMessageIdStringOffset() {
 		if (PropsValues.POP_SERVER_SUBDOMAIN.length() == 0) {
 			return 1;
 		}
