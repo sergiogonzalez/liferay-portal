@@ -15,7 +15,7 @@
 package com.liferay.productivity.center.service.panel;
 
 import com.liferay.productivity.center.panel.PanelCategory;
-import com.liferay.productivity.center.service.util.PanelEntryServiceReferenceMapper;
+import com.liferay.productivity.center.service.util.ParentPanelCategoryServiceReferenceMapper;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerMap;
 
@@ -28,20 +28,21 @@ import java.util.List;
 public class PanelCategoryRegistry {
 
 	public static Iterable<PanelCategory> getPanelCategories(
-		PanelCategory panelCategory) {
+		PanelCategory parentPanelCategory) {
 
-		return _instance._getPanelCategories(panelCategory);
+		return _instance._getPanelCategories(parentPanelCategory);
 	}
 
 	private PanelCategoryRegistry() {
-		_serviceTrackerMap.open();
+		_parentCategoryServiceTrackerMap.open();
 	}
 
 	private Iterable<PanelCategory> _getPanelCategories(
-		PanelCategory panelCategory) {
+		PanelCategory parentPanelCategory) {
 
-		Iterable<PanelCategory> panelCategories = _serviceTrackerMap.getService(
-			panelCategory.getKey());
+		Iterable<PanelCategory> panelCategories =
+			_parentCategoryServiceTrackerMap.getService(
+				parentPanelCategory.getKey());
 
 		if (panelCategories == null) {
 			return Collections.emptyList();
@@ -54,8 +55,9 @@ public class PanelCategoryRegistry {
 		new PanelCategoryRegistry();
 
 	private final ServiceTrackerMap<String, List<PanelCategory>>
-		_serviceTrackerMap = ServiceTrackerCollections.multiValueMap(
-			PanelCategory.class, "(panel.category=*)",
-			PanelEntryServiceReferenceMapper.<PanelCategory>create());
+		_parentCategoryServiceTrackerMap =
+			ServiceTrackerCollections.multiValueMap(
+				PanelCategory.class, "(panel.category=*)",
+				ParentPanelCategoryServiceReferenceMapper.<PanelCategory>create());
 
 }
