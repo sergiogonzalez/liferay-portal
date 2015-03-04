@@ -39,10 +39,18 @@ MBTreeWalker treeWalker = messageDisplay.getTreeWalker();
 MBMessage rootMessage = treeWalker.getRoot();
 List<MBMessage> messages = treeWalker.getMessages();
 int messagesCount = messages.size();
+
+CommentsEditorDisplayContext commentsEditorDisplayContext = new CommentsEditorDisplayContext();
 %>
 
 <section>
 	<div class="hide lfr-message-response" id="<portlet:namespace />discussionStatusMessages"></div>
+
+	<c:if test="<%= messageDisplay.isMaxMessageCountReached() %>">
+		<div class="alert alert-warning">
+			<liferay-ui:message key="max-number-of-comments-has-been-reached" />
+		</div>
+	</c:if>
 
 	<c:if test="<%= (messagesCount > 1) || MBDiscussionPermission.contains(permissionChecker, company.getCompanyId(), scopeGroupId, permissionClassName, permissionClassPK, userId, ActionKeys.VIEW) %>">
 		<div class="taglib-discussion" id="<portlet:namespace />discussionContainer">
@@ -70,24 +78,26 @@ int messagesCount = messages.size();
 
 				<c:if test="<%= !hideControls && MBDiscussionPermission.contains(permissionChecker, company.getCompanyId(), scopeGroupId, permissionClassName, permissionClassPK, userId, ActionKeys.ADD_DISCUSSION) %>">
 					<aui:fieldset cssClass="add-comment" id='<%= randomNamespace + "messageScroll0" %>'>
-						<div id="<%= randomNamespace %>messageScroll<%= message.getMessageId() %>">
-							<aui:input name="messageId0" type="hidden" value="<%= message.getMessageId() %>" />
-							<aui:input name="parentMessageId0" type="hidden" value="<%= message.getMessageId() %>" />
-						</div>
+						<c:if test="<%= !messageDisplay.isMaxMessageCountReached() %>">
+							<div id="<%= randomNamespace %>messageScroll<%= message.getMessageId() %>">
+								<aui:input name="messageId0" type="hidden" value="<%= message.getMessageId() %>" />
+								<aui:input name="parentMessageId0" type="hidden" value="<%= message.getMessageId() %>" />
+							</div>
 
-						<%
-						String taglibPostReplyURL = "javascript:" + randomNamespace + "showEl('" + randomNamespace + "postReplyForm0');";
-						%>
+							<%
+							String taglibPostReplyURL = "javascript:" + randomNamespace + "showEl('" + randomNamespace + "postReplyForm0');";
+							%>
 
-						<c:if test="<%= messagesCount == 1 %>">
-							<c:choose>
-								<c:when test="<%= themeDisplay.isSignedIn() || !SSOUtil.isLoginRedirectRequired(themeDisplay.getCompanyId()) %>">
-									<liferay-ui:message key="no-comments-yet" /> <a href="<%= taglibPostReplyURL %>"><liferay-ui:message key="be-the-first" /></a>
-								</c:when>
-								<c:otherwise>
-									<liferay-ui:message key="no-comments-yet" /> <a href="<%= themeDisplay.getURLSignIn() %>"><liferay-ui:message key="please-sign-in-to-comment" /></a>
-								</c:otherwise>
-							</c:choose>
+							<c:if test="<%= messagesCount == 1 %>">
+								<c:choose>
+									<c:when test="<%= themeDisplay.isSignedIn() || !SSOUtil.isLoginRedirectRequired(themeDisplay.getCompanyId()) %>">
+										<liferay-ui:message key="no-comments-yet" /> <a href="<%= taglibPostReplyURL %>"><liferay-ui:message key="be-the-first" /></a>
+									</c:when>
+									<c:otherwise>
+										<liferay-ui:message key="no-comments-yet" /> <a href="<%= themeDisplay.getURLSignIn() %>"><liferay-ui:message key="please-sign-in-to-comment" /></a>
+									</c:otherwise>
+								</c:choose>
+							</c:if>
 						</c:if>
 
 						<%
@@ -119,55 +129,43 @@ int messagesCount = messages.size();
 							</c:choose>
 						</c:if>
 
-						<aui:input name="emailAddress" type="hidden" />
+						<c:if test="<%= !messageDisplay.isMaxMessageCountReached() %>">
 
-						<c:choose>
-							<c:when test="<%= themeDisplay.isSignedIn() || !SSOUtil.isLoginRedirectRequired(themeDisplay.getCompanyId()) %>">
-								<aui:row fluid="<%= true %>">
-									<div class="lfr-discussion-details">
-										<liferay-ui:user-display
-											displayStyle="2"
-											showUserName="<%= false %>"
-											userId="<%= user.getUserId() %>"
-										/>
-									</div>
+							<aui:input name="emailAddress" type="hidden" />
 
-									<div class="lfr-discussion-body">
+							<c:choose>
+								<c:when test="<%= themeDisplay.isSignedIn() || !SSOUtil.isLoginRedirectRequired(themeDisplay.getCompanyId()) %>">
+									<aui:row fluid="<%= true %>">
+										<div class="lfr-discussion-details">
+											<liferay-ui:user-display
+												displayStyle="2"
+												showUserName="<%= false %>"
+												userId="<%= user.getUserId() %>"
+											/>
+										</div>
 
-										<%
-										Map<String, Object> dataTextEditor = new HashMap<String, Object>();
+										<div class="lfr-discussion-body">
 
-										JSONObject editorConfig = JSONFactoryUtil.createJSONObject();
-										editorConfig.put("allowedContent", PropsValues.DISCUSSION_COMMENTS_ALLOWED_CONTENT);
-										editorConfig.put("toolbars", JSONFactoryUtil.createJSONObject());
+											<liferay-ui:input-editor contents="" data="<%= commentsEditorDisplayContext.getMainEditorData() %>" editorImpl="<%= EDITOR_IMPL_KEY %>" name='<%= randomNamespace + "postReplyBody0" %>' onChangeMethod='<%= randomNamespace + "0OnChange" %>' placeholder="type-your-comment-here" />
 
-										JSONObject editorOptions = JSONFactoryUtil.createJSONObject();
-										editorOptions.put("textMode", Boolean.FALSE);
-										editorOptions.put("showSource", Boolean.FALSE);
+											<aui:input name="postReplyBody0" type="hidden" />
 
-										dataTextEditor.put("editorConfig", editorConfig);
-										dataTextEditor.put("editorOptions", editorOptions);
-										%>
-
-										<liferay-ui:input-editor contents="" data="<%= dataTextEditor %>" editorImpl="<%= EDITOR_IMPL_KEY %>" name='<%= randomNamespace + "postReplyBody0" %>' onChangeMethod='<%= randomNamespace + "0OnChange" %>' placeholder="type-your-comment-here" />
-
-										<aui:input name="postReplyBody0" type="hidden" />
-
-										<aui:button-row>
-											<aui:button cssClass="btn-comment btn-primary" disabled="<%= true %>" id='<%= randomNamespace + "postReplyButton0" %>' onClick='<%= randomNamespace + "postReply(0);" %>' value='<%= LanguageUtil.get(request, "reply") %>' />
-										</aui:button-row>
-									</div>
-								</aui:row>
-							</c:when>
-							<c:otherwise>
-								<liferay-ui:icon
-									iconCssClass="icon-reply"
-									label="<%= true %>"
-									message="please-sign-in-to-comment"
-									url="<%= themeDisplay.getURLSignIn() %>"
-								/>
-							</c:otherwise>
-						</c:choose>
+												<aui:button-row>
+													<aui:button cssClass="btn-comment btn-primary" disabled="<%= true %>" id='<%= randomNamespace + "postReplyButton0" %>' onClick='<%= randomNamespace + "postReply(0);" %>' value='<%= LanguageUtil.get(request, "reply") %>' />
+												</aui:button-row>
+										</div>
+									</aui:row>
+								</c:when>
+								<c:otherwise>
+									<liferay-ui:icon
+										iconCssClass="icon-reply"
+										label="<%= true %>"
+										message="please-sign-in-to-comment"
+										url="<%= themeDisplay.getURLSignIn() %>"
+									/>
+								</c:otherwise>
+							</c:choose>
+						</c:if>
 					</aui:fieldset>
 				</c:if>
 
@@ -451,6 +449,44 @@ int messagesCount = messages.size();
 
 				editorInstance.dispose();
 			}
+		</aui:script>
+
+		<aui:script sandbox="<%= true %>">
+			$('#<%= namespace %>moreComments').on(
+				'click',
+				function(event) {
+					var form = $('#<%= namespace %><%= HtmlUtil.escapeJS(formName) %>');
+
+					var data = Liferay.Util.ns(
+						'<portlet:namespace />',
+						{
+							className: '<%= className %>',
+							classPK: <%= classPK %>,
+							hideControls: '<%= hideControls %>',
+							index: form.fm('index').val(),
+							permissionClassName: '<%= permissionClassName %>',
+							permissionClassPK: '<%= permissionClassPK %>',
+							randomNamespace: '<%= randomNamespace %>',
+							ratingsEnabled: '<%= ratingsEnabled %>',
+							rootIndexPage: form.fm('rootIndexPage').val(),
+							userId: '<%= userId %>'
+						}
+					);
+
+					$.ajax(
+						'<%= paginationURL %>',
+						{
+							data: data,
+							error: function() {
+								<portlet:namespace />showStatusMessage('danger', '<%= UnicodeLanguageUtil.get(request, "your-request-failed-to-complete") %>');
+							},
+							success: function(data) {
+								$('#<%= namespace %>moreCommentsPage').append(data);
+							}
+						}
+					);
+				}
+			);
 		</aui:script>
 
 		<aui:script use="aui-popover,event-outside">

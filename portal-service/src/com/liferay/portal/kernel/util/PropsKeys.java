@@ -595,6 +595,8 @@ public interface PropsKeys {
 
 	public static final String DISCUSSION_COMMENTS_FORMAT = "discussion.comments.format";
 
+	public static final String DISCUSSION_COMMENTS_MAX_NUMBER = "discussion.comments.max.number";
+
 	public static final String DISCUSSION_EMAIL_BODY = "discussion.email.body";
 
 	public static final String DISCUSSION_EMAIL_COMMENTS_ADDED_ENABLED = "discussion.email.comments.added.enabled";
@@ -2232,8 +2234,6 @@ public interface PropsKeys {
 	public static final String SEARCH_CONTAINER_SHOW_PAGINATION_TOP = "search.container.show.pagination.top";
 
 	public static final String SEARCH_CONTAINER_SHOW_PAGINATION_TOP_DELTA = "search.container.show.pagination.top.delta";
-
-	public static final String SEARCH_FACET_CONFIGURATION = "search.facet.configuration";
 
 	public static final String SERVICE_BUILDER_SERVICE_READ_ONLY_PREFIXES = "service.builder.service.read.only.prefixes";
 

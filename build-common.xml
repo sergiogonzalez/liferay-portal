@@ -1369,6 +1369,12 @@ rerun your task.
 		<echoproperties />
 	</target>
 
+	<target name="run-cpd">
+		<ant antfile="build-common.xml" dir="${project.dir}/tools/sdk" inheritRefs="true" target="run-cpd">
+			<property name="cpd.basedir" value="${basedir}" />
+		</ant>
+	</target>
+
 	<target name="run-pmd">
 		<ant antfile="build-common.xml" dir="${project.dir}/tools/sdk" inheritRefs="true" target="run-pmd">
 			<property name="pmd.basedir" value="${basedir}" />

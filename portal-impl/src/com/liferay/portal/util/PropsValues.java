@@ -490,6 +490,8 @@ public class PropsValues {
 
 	public static final String DISCUSSION_COMMENTS_FORMAT = PropsUtil.get(PropsKeys.DISCUSSION_COMMENTS_FORMAT);
 
+	public static final int  DISCUSSION_COMMENTS_MAX_NUMBER = GetterUtil.getInteger(PropsUtil.get(PropsKeys.DISCUSSION_COMMENTS_MAX_NUMBER));
+
 	public static final boolean DISCUSSION_SUBSCRIBE_BY_DEFAULT = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.DISCUSSION_SUBSCRIBE_BY_DEFAULT));
 
 	public static final String[] DL_CHAR_BLACKLIST = PropsUtil.getArray(PropsKeys.DL_CHAR_BLACKLIST);
@@ -1591,8 +1593,6 @@ public class PropsValues {
 	public static final boolean SEARCH_CONTAINER_SHOW_PAGINATION_TOP = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.SEARCH_CONTAINER_SHOW_PAGINATION_TOP));
 
 	public static final int SEARCH_CONTAINER_SHOW_PAGINATION_TOP_DELTA = GetterUtil.getInteger(PropsUtil.get(PropsKeys.SEARCH_CONTAINER_SHOW_PAGINATION_TOP_DELTA), 10);
-
-	public static final String SEARCH_FACET_CONFIGURATION = PropsUtil.get(PropsKeys.SEARCH_FACET_CONFIGURATION);
 
 	public static final String[] SERVICE_BUILDER_SERVICE_READ_ONLY_PREFIXES = PropsUtil.getArray(PropsKeys.SERVICE_BUILDER_SERVICE_READ_ONLY_PREFIXES);
 

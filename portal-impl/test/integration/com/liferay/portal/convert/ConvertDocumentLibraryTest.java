@@ -44,6 +44,7 @@ import com.liferay.portlet.documentlibrary.NoSuchContentException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLContentLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.store.DBStore;
@@ -52,7 +53,6 @@ import com.liferay.portlet.documentlibrary.store.Store;
 import com.liferay.portlet.documentlibrary.store.StoreFactory;
 import com.liferay.portlet.documentlibrary.util.DLPreviewableProcessor;
 import com.liferay.portlet.documentlibrary.util.ImageProcessorUtil;
-import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBMessageConstants;
@@ -99,7 +99,7 @@ public class ConvertDocumentLibraryTest {
 			ConvertDocumentLibrary.class.getName());
 
 		_convertProcess.setParameterValues(
-			new String[]{DBStore.class.getName(), Boolean.TRUE.toString()});
+			new String[] {DBStore.class.getName(), Boolean.TRUE.toString()});
 	}
 
 	@After
@@ -124,9 +124,14 @@ public class ConvertDocumentLibraryTest {
 
 	@Test
 	public void testMigrateDLWhenFileEntryInFolder() throws Exception {
-		Folder folder = DLAppTestUtil.addFolder(
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		Folder folder = DLAppServiceUtil.addFolder(
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString());
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			serviceContext);
 
 		testMigrateDL(folder.getFolderId());
 	}
@@ -254,9 +259,14 @@ public class ConvertDocumentLibraryTest {
 			RandomTestUtil.randomString() + ".txt", ContentTypes.TEXT_PLAIN,
 			RandomTestUtil.randomBytes());
 
-		Folder folder = DLAppTestUtil.addFolder(
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		Folder folder = DLAppServiceUtil.addFolder(
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString());
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			serviceContext);
 
 		FileEntry folderFileEntry = addFileEntry(
 			folder.getFolderId(), "liferay.jpg", ContentTypes.IMAGE_JPEG,
