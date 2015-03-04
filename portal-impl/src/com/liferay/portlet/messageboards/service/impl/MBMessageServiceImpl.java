@@ -133,8 +133,8 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 
 		MBMessage message = addMessage(
 			groupId, categoryId, subject, body,
-			MBMessageConstants.DEFAULT_FORMAT, inputStreamOVPs, false, 0.0,
-			false, serviceContext);
+			MBMessageConstants.DEFAULT_FORMAT, inputStreamOVPs, false,
+			MBThreadConstants.PRIORITY_NOT_GIVEN, false, serviceContext);
 
 		return message;
 	}
