@@ -245,25 +245,6 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 	}
 
 	@Override
-	public void addMessageAttachment(long messageId, String fileName, File file)
-		throws PortalException {
-
-		MBMessage message = mbMessagePersistence.findByPrimaryKey(messageId);
-
-		if (lockLocalService.isLocked(
-				MBThread.class.getName(), message.getThreadId())) {
-
-			throw new LockedThreadException();
-		}
-
-		MBCategoryPermission.check(
-			getPermissionChecker(), message.getGroupId(),
-			message.getCategoryId(), ActionKeys.ADD_FILE);
-
-		mbMessageLocalService.addMessageAttachment(messageId, fileName, file);
-	}
-
-	@Override
 	public void deleteDiscussionMessage(
 			long groupId, String className, long classPK,
 			String permissionClassName, long permissionClassPK,
