@@ -225,12 +225,9 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 
 			<div class="entry-footer">
 				<div class="entry-author">
-					<liferay-ui:user-display
-						userId="<%= entry.getUserId() %>"
-						userName="<%= entry.getUserName() %>"
-					>
-						<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - entry.getCreateDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
-					</liferay-ui:user-display>
+					<div class="entry-author icon-user">
+						<liferay-ui:message key="written-by" /> <%= HtmlUtil.escape(PortalUtil.getUserName(entry)) %>
+					</div>
 				</div>
 
 				<div class="entry-social">
@@ -284,7 +281,7 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 					<h2><liferay-ui:message key="tags" /></h2>
 
 					<liferay-ui:asset-tags-summary
-						className="<%= BlogsEntry.class.getName() %>"
+							className="<%= BlogsEntry.class.getName() %>"
 						classPK="<%= entry.getEntryId() %>"
 						portletURL="<%= renderResponse.createRenderURL() %>"
 					/>
