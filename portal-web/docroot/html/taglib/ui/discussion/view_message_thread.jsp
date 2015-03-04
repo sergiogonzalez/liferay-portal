@@ -41,6 +41,8 @@ index++;
 request.setAttribute("liferay-ui:discussion:index", new Integer(index));
 
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
+
+CommentsEditorDisplayContext commentsEditorDisplayContext = new CommentsEditorDisplayContext();
 %>
 
 <c:if test="<%= !(!message.isApproved() && ((message.getUserId() != user.getUserId()) || user.isDefaultUser()) && !permissionChecker.isGroupAdmin(scopeGroupId)) && MBDiscussionPermission.contains(permissionChecker, company.getCompanyId(), scopeGroupId, permissionClassName, permissionClassPK, userId, ActionKeys.VIEW) %>">
@@ -149,27 +151,9 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 					<%= msgBody %>
 				</div>
 
-				<%
-				Map<String, Object> data = new HashMap<String, Object>();
-
-				JSONObject editorConfigJSONObject = JSONFactoryUtil.createJSONObject();
-
-				editorConfigJSONObject.put("allowedContent", "p strong em u");
-				editorConfigJSONObject.put("toolbars", JSONFactoryUtil.createJSONObject());
-
-				data.put("editorConfig", editorConfigJSONObject);
-
-				JSONObject editorOptionsJSONObject = JSONFactoryUtil.createJSONObject();
-
-				editorOptionsJSONObject.put("showSource", Boolean.FALSE);
-				editorOptionsJSONObject.put("textMode", Boolean.FALSE);
-
-				data.put("editorOptions", editorOptionsJSONObject);
-				%>
-
 				<c:if test="<%= !hideControls && MBDiscussionPermission.contains(permissionChecker, company.getCompanyId(), scopeGroupId, permissionClassName, permissionClassPK, message.getMessageId(), message.getUserId(), ActionKeys.UPDATE_DISCUSSION) %>">
 					<div class="lfr-discussion-form lfr-discussion-form-edit" id="<%= namespace + randomNamespace %>editForm<%= index %>" style='<%= "display: none; max-width: " + ModelHintsConstants.TEXTAREA_DISPLAY_WIDTH + "px;" %>'>
-						<liferay-ui:input-editor autoCreate="<%= false %>" contents="<%= message.getBody() %>" data="<%= data %>" editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name='<%= randomNamespace + "editReplyBody" + index %>' />
+						<liferay-ui:input-editor autoCreate="<%= false %>" contents="<%= message.getBody() %>" data="<%= commentsEditorDisplayContext.getReplyEditorData() %>" editorImpl="<%= EDITOR_TEXT_IMPL_KEY %>" name='<%= randomNamespace + "editReplyBody" + index %>' />
 
 						<aui:input name='<%= "editReplyBody" + index %>' type="hidden" value="<%= message.getBody() %>" />
 
