@@ -1187,7 +1187,7 @@ public class DLFileEntryFinderTest {
 
 	@Test
 	public void testFindByMisversioned() throws Exception {
-		long oldFileEntryId =  _defaultRepositoryDLFileVersion.getFileEntryId();
+		long oldFileEntryId = _defaultRepositoryDLFileVersion.getFileEntryId();
 
 		try {
 			_defaultRepositoryDLFileVersion.setFileEntryId(
@@ -1465,9 +1465,10 @@ public class DLFileEntryFinderTest {
 			"FE3.txt", titleSuffix, ContentTypes.TEXT_PLAIN,
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL);
 
-		fileEntry = DLAppTestUtil.updateFileEntry(
-			_group.getGroupId(), fileEntry.getFileEntryId(), "FE3.txt",
-			"FE3.txt".concat(titleSuffix));
+		fileEntry = DLAppServiceUtil.updateFileEntry(
+			fileEntry.getFileEntryId(), "FE3.txt", ContentTypes.TEXT_PLAIN,
+			"FE3.txt".concat(titleSuffix), StringPool.BLANK, StringPool.BLANK,
+			false, RandomTestUtil.randomBytes(), serviceContext);
 
 		dlFileEntry = ((LiferayFileEntry)fileEntry).getDLFileEntry();
 

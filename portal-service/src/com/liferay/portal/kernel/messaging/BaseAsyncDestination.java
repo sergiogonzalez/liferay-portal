@@ -14,14 +14,13 @@
 
 package com.liferay.portal.kernel.messaging;
 
-import com.liferay.portal.kernel.cluster.ClusterLink;
+import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
 import com.liferay.portal.kernel.concurrent.RejectedExecutionHandler;
 import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
 import com.liferay.portal.kernel.concurrent.ThreadPoolHandlerAdapter;
 import com.liferay.portal.kernel.executor.PortalExecutorManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.messaging.proxy.MessageValuesThreadLocal;
 import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.NamedThreadFactory;
@@ -72,7 +71,15 @@ public abstract class BaseAsyncDestination extends BaseDestination {
 
 	@Override
 	public void close(boolean force) {
-		PortalExecutorManagerUtil.shutdown(getName(), force);
+		ThreadPoolExecutor threadPoolExecutor =
+			PortalExecutorManagerUtil.getPortalExecutor(getName());
+
+		if (force) {
+			threadPoolExecutor.shutdownNow();
+		}
+		else {
+			threadPoolExecutor.shutdown();
+		}
 	}
 
 	@Override
@@ -225,6 +232,10 @@ public abstract class BaseAsyncDestination extends BaseDestination {
 			message.put("companyId", CompanyThreadLocal.getCompanyId());
 		}
 
+		if (!ClusterInvokeThreadLocal.isEnabled()) {
+			message.put("clusterInvoke", Boolean.FALSE);
+		}
+
 		if (!message.contains("defaultLocale")) {
 			message.put("defaultLocale", LocaleThreadLocal.getDefaultLocale());
 		}
@@ -265,6 +276,12 @@ public abstract class BaseAsyncDestination extends BaseDestination {
 
 		if (companyId > 0) {
 			CompanyThreadLocal.setCompanyId(companyId);
+		}
+
+		Boolean clusterInvoke = (Boolean)message.get("clusterInvoke");
+
+		if (clusterInvoke != null) {
+			ClusterInvokeThreadLocal.setEnabled(clusterInvoke);
 		}
 
 		Locale defaultLocale = (Locale)message.get("defaultLocale");
@@ -308,14 +325,6 @@ public abstract class BaseAsyncDestination extends BaseDestination {
 
 		if (Validator.isNotNull(principalPassword)) {
 			PrincipalThreadLocal.setPassword(principalPassword);
-		}
-
-		Boolean clusterForwardMessage = (Boolean)message.get(
-			ClusterLink.CLUSTER_FORWARD_MESSAGE);
-
-		if (clusterForwardMessage != null) {
-			MessageValuesThreadLocal.setValue(
-				ClusterLink.CLUSTER_FORWARD_MESSAGE, clusterForwardMessage);
 		}
 
 		Locale siteDefaultLocale = (Locale)message.get("siteDefaultLocale");
