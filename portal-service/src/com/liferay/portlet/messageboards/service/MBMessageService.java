@@ -57,14 +57,15 @@ public interface MBMessageService extends BaseService {
 
 	public com.liferay.portlet.messageboards.model.MBMessage addMessage(
 		long categoryId, java.lang.String subject, java.lang.String body,
-		java.lang.String fileName, java.io.File file, boolean indexingEnabled,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public com.liferay.portlet.messageboards.model.MBMessage addMessage(
-		long categoryId, java.lang.String subject, java.lang.String body,
+		long groupId, long categoryId, java.lang.String subject,
+		java.lang.String body, java.lang.String fileName, java.io.File file,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
+		throws com.liferay.portal.kernel.exception.PortalException,
+			java.io.FileNotFoundException;
 
 	public com.liferay.portlet.messageboards.model.MBMessage addMessage(
 		long groupId, long categoryId, java.lang.String subject,
@@ -95,10 +96,6 @@ public interface MBMessageService extends BaseService {
 		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.io.InputStream>> inputStreamOVPs,
 		boolean anonymous, double priority, boolean allowPingbacks,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException;
-
-	public void addMessageAttachment(long messageId, java.lang.String fileName,
-		java.io.File file, boolean indexingEnabled)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	public void deleteDiscussionMessage(long groupId,

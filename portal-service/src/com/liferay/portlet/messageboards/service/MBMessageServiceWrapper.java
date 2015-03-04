@@ -48,20 +48,21 @@ public class MBMessageServiceWrapper implements MBMessageService,
 	@Override
 	public com.liferay.portlet.messageboards.model.MBMessage addMessage(
 		long categoryId, java.lang.String subject, java.lang.String body,
-		java.lang.String fileName, java.io.File file, boolean indexingEnabled,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _mbMessageService.addMessage(categoryId, subject, body,
-			fileName, file, indexingEnabled, serviceContext);
-	}
-
-	@Override
-	public com.liferay.portlet.messageboards.model.MBMessage addMessage(
-		long categoryId, java.lang.String subject, java.lang.String body,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbMessageService.addMessage(categoryId, subject, body,
 			serviceContext);
+	}
+
+	@Override
+	public com.liferay.portlet.messageboards.model.MBMessage addMessage(
+		long groupId, long categoryId, java.lang.String subject,
+		java.lang.String body, java.lang.String fileName, java.io.File file,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			java.io.FileNotFoundException {
+		return _mbMessageService.addMessage(groupId, categoryId, subject, body,
+			fileName, file, serviceContext);
 	}
 
 	@Override
@@ -108,14 +109,6 @@ public class MBMessageServiceWrapper implements MBMessageService,
 		return _mbMessageService.addMessage(parentMessageId, subject, body,
 			format, inputStreamOVPs, anonymous, priority, allowPingbacks,
 			serviceContext);
-	}
-
-	@Override
-	public void addMessageAttachment(long messageId, java.lang.String fileName,
-		java.io.File file, boolean indexingEnabled)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_mbMessageService.addMessageAttachment(messageId, fileName, file,
-			indexingEnabled);
 	}
 
 	@Override
