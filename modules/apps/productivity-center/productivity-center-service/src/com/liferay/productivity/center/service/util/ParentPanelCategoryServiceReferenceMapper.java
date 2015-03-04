@@ -23,15 +23,15 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 /**
- * @author Adolfo Pérez
- */
-public class PanelEntryServiceReferenceMapper<T extends PanelEntry>
+* @author Adolfo Pérez
+*/
+public class ParentPanelCategoryServiceReferenceMapper<T extends PanelEntry>
 	implements ServiceReferenceMapper<String, T> {
 
-	public static final <S extends PanelEntry>
-		PanelEntryServiceReferenceMapper<S> create() {
+	public static <S extends PanelEntry>
+		ParentPanelCategoryServiceReferenceMapper<S> create() {
 
-		return new PanelEntryServiceReferenceMapper<>();
+		return new ParentPanelCategoryServiceReferenceMapper<>();
 	}
 
 	@Override
@@ -52,6 +52,6 @@ public class PanelEntryServiceReferenceMapper<T extends PanelEntry>
 	}
 
 	private static final Log _log = LogFactory.getLog(
-		PanelEntryServiceReferenceMapper.class);
+		ParentPanelCategoryServiceReferenceMapper.class);
 
 }
