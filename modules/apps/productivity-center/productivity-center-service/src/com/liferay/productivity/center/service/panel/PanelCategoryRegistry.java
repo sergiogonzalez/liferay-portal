@@ -16,6 +16,10 @@ package com.liferay.productivity.center.service.panel;
 
 import com.liferay.productivity.center.panel.PanelCategory;
 import com.liferay.productivity.center.service.util.ParentPanelCategoryServiceReferenceMapper;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceReference;
+import com.liferay.registry.collections.ServiceReferenceMapper;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerMap;
 
@@ -33,7 +37,12 @@ public class PanelCategoryRegistry {
 		return _instance._getPanelCategories(parentPanelCategory);
 	}
 
+	public static PanelCategory getPanelCategory(String panelCategoryKey) {
+		return _instance._getPanelCategory(panelCategoryKey);
+	}
+
 	private PanelCategoryRegistry() {
+		_panelCategoryServiceTrackerMap.open();
 		_parentCategoryServiceTrackerMap.open();
 	}
 
@@ -51,13 +60,50 @@ public class PanelCategoryRegistry {
 		return panelCategories;
 	}
 
+	private PanelCategory _getPanelCategory(String panelCategoryKey) {
+		PanelCategory panelCategory =
+			_panelCategoryServiceTrackerMap.getService(panelCategoryKey);
+
+		if (panelCategory == null) {
+			throw new IllegalArgumentException(
+				"category doesn't exist: " + panelCategoryKey);
+		}
+
+		return panelCategory;
+	}
+
 	private static final PanelCategoryRegistry _instance =
 		new PanelCategoryRegistry();
+
+	private final ServiceTrackerMap<String, PanelCategory>
+		_panelCategoryServiceTrackerMap =
+			ServiceTrackerCollections.singleValueMap(
+				PanelCategory.class, null,
+				new ServiceReferenceMapper<String, PanelCategory>() {
+					@Override
+					public void map(
+						ServiceReference<PanelCategory> serviceReference,
+						Emitter<String> emitter) {
+
+						Registry registry = RegistryUtil.getRegistry();
+
+						PanelCategory panelCategory = registry.getService(
+							serviceReference);
+
+						try {
+							emitter.emit(panelCategory.getKey());
+						}
+						finally {
+							registry.ungetService(serviceReference);
+						}
+					}
+				});
 
 	private final ServiceTrackerMap<String, List<PanelCategory>>
 		_parentCategoryServiceTrackerMap =
 			ServiceTrackerCollections.multiValueMap(
 				PanelCategory.class, "(panel.category=*)",
-				ParentPanelCategoryServiceReferenceMapper.<PanelCategory>create());
+				ParentPanelCategoryServiceReferenceMapper.
+					<PanelCategory>create());
 
 }
