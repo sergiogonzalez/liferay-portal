@@ -143,13 +143,12 @@ int messagesCount = messages.size();
 
 										JSONObject editorOptions = JSONFactoryUtil.createJSONObject();
 										editorOptions.put("textMode", Boolean.FALSE);
-										editorOptions.put("showSource", Boolean.FALSE);
 
 										dataTextEditor.put("editorConfig", editorConfig);
 										dataTextEditor.put("editorOptions", editorOptions);
 										%>
 
-										<liferay-ui:input-editor contents="" data="<%= dataTextEditor %>" editorImpl="<%= EDITOR_IMPL_KEY %>" name='<%= randomNamespace + "postReplyBody0" %>' onChangeMethod='<%= randomNamespace + "0OnChange" %>' placeholder="type-your-comment-here" />
+										<liferay-ui:input-editor contents="" data="<%= dataTextEditor %>" editorImpl="<%= EDITOR_IMPL_KEY %>" name='<%= randomNamespace + "postReplyBody0" %>' onChangeMethod='<%= randomNamespace + "0OnChange" %>' placeholder="type-your-comment-here" showSource="<%= false %>" />
 
 										<aui:input name="postReplyBody0" type="hidden" />
 
@@ -451,6 +450,44 @@ int messagesCount = messages.size();
 
 				editorInstance.dispose();
 			}
+		</aui:script>
+
+		<aui:script sandbox="<%= true %>">
+			$('#<%= namespace %>moreComments').on(
+				'click',
+				function(event) {
+					var form = $('#<%= namespace %><%= HtmlUtil.escapeJS(formName) %>');
+
+					var data = Liferay.Util.ns(
+						'<portlet:namespace />',
+						{
+							className: '<%= className %>',
+							classPK: <%= classPK %>,
+							hideControls: '<%= hideControls %>',
+							index: form.fm('index').val(),
+							permissionClassName: '<%= permissionClassName %>',
+							permissionClassPK: '<%= permissionClassPK %>',
+							randomNamespace: '<%= randomNamespace %>',
+							ratingsEnabled: '<%= ratingsEnabled %>',
+							rootIndexPage: form.fm('rootIndexPage').val(),
+							userId: '<%= userId %>'
+						}
+					);
+
+					$.ajax(
+						'<%= paginationURL %>',
+						{
+							data: data,
+							error: function() {
+								<portlet:namespace />showStatusMessage('danger', '<%= UnicodeLanguageUtil.get(request, "your-request-failed-to-complete") %>');
+							},
+							success: function(data) {
+								$('#<%= namespace %>moreCommentsPage').append(data);
+							}
+						}
+					);
+				}
+			);
 		</aui:script>
 
 		<aui:script use="aui-popover,event-outside">

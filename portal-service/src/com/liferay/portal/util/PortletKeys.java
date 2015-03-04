@@ -60,7 +60,7 @@ public class PortletKeys {
 	public static final String DOCUMENT_LIBRARY_DISPLAY = "110";
 
 	public static final String DOCUMENT_SELECTOR =
-		"com_liferay_documentselector_web_portlet_DocumentSelectorPortlet";
+		"com_liferay_document_selector_web_portlet_DocumentSelectorPortlet";
 
 	public static final String DYNAMIC_DATA_LIST_DISPLAY = "169";
 
@@ -171,8 +171,6 @@ public class PortletKeys {
 	public static final String REQUESTS = "121";
 
 	public static final String ROLES_ADMIN = "128";
-
-	public static final String SEARCH = "3";
 
 	public static final String SHOPPING = "34";
 
