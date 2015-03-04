@@ -53,7 +53,7 @@ public class PanelCategoryRegistry {
 	private static final PanelCategoryRegistry _instance =
 		new PanelCategoryRegistry();
 
-	private static final ServiceTrackerMap<String, List<PanelCategory>>
+	private final ServiceTrackerMap<String, List<PanelCategory>>
 		_serviceTrackerMap = ServiceTrackerCollections.multiValueMap(
 			PanelCategory.class, "(panel.category=*)",
 			PanelEntryServiceReferenceMapper.<PanelCategory>create());
