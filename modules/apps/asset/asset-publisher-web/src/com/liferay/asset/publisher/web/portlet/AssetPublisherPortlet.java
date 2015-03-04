@@ -21,9 +21,9 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.auth.PrincipalException;
@@ -103,12 +103,6 @@ public class AssetPublisherPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String cmd = ParamUtil.getString(resourceRequest, Constants.CMD);
-
-		if (!cmd.equals("getFieldValue")) {
-			return;
-		}
-
 		try {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				resourceRequest);
@@ -157,7 +151,7 @@ public class AssetPublisherPortlet extends MVCPortlet {
 			jsonObject.put("displayValue", String.valueOf(displayValue));
 
 			if (fieldValue instanceof Boolean) {
-				jsonObject.put("value", (Boolean) fieldValue);
+				jsonObject.put("value", (Boolean)fieldValue);
 			}
 			else if (fieldValue instanceof Date) {
 				DateFormat dateFormat =
@@ -223,16 +217,18 @@ public class AssetPublisherPortlet extends MVCPortlet {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws IOException, PortletException {
 
-		String cmd = ParamUtil.getString(resourceRequest, Constants.CMD);
+		String resourceID = GetterUtil.getString(
+			resourceRequest.getResourceID());
 
-		if (cmd.equals("getFieldValue")) {
+		if (resourceID.equals("getFieldValue")) {
 			getFieldValue(resourceRequest, resourceResponse);
 		}
-		else if (cmd.equals("rss")) {
+		else if (resourceID.equals("getRSS")) {
 			getRSS(resourceRequest, resourceResponse);
 		}
-
-		super.serveResource(resourceRequest, resourceResponse);
+		else {
+			super.serveResource(resourceRequest, resourceResponse);
+		}
 	}
 
 	public void subscribe(
