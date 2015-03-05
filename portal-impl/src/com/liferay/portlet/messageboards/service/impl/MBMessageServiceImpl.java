@@ -122,7 +122,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 		throws FileNotFoundException, PortalException {
 
 		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
-			Collections.emptyList();
+			new ArrayList<>(1);
 
 		InputStream inputStream = new FileInputStream(file);
 
