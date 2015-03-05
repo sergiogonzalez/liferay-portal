@@ -1955,6 +1955,19 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			return layoutURL + Portal.FRIENDLY_URL_SEPARATOR +
 				"message_boards/view_message/" + message.getMessageId();
 		}
+		else if (Validator.isNull(serviceContext.getThemeDisplay())) {
+			Map<String, String[]> params = new HashMap<>();
+			String[] strutsAction= {"/message_boards_admin/view_message"};
+			String[] messageId = {String.valueOf(message.getMessageId())};
+			params.put("_"+ PortletKeys.MESSAGE_BOARDS_ADMIN +"_" +
+				"struts_action", strutsAction);
+			params.put("_" + PortletKeys.MESSAGE_BOARDS_ADMIN + "_" +
+				"messageId", messageId);
+
+			return PortalUtil.getControlPanelFullURL(
+				serviceContext.getScopeGroupId(),
+				PortletKeys.MESSAGE_BOARDS_ADMIN, params);
+		}
 		else {
 			long controlPanelPlid = PortalUtil.getControlPanelPlid(
 				serviceContext.getCompanyId());
