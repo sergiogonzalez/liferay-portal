@@ -140,6 +140,23 @@ public class MessageListenerImpl implements MessageListener {
 				_log.debug("Message id " + messageIdString);
 			}
 
+			long parentMessageId = MBUtil.getMessageId(messageIdString);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug("Parent message id " + parentMessageId);
+			}
+
+			MBMessage parentMessage = null;
+
+			if (parentMessageId > 0) {
+				parentMessage = MBMessageLocalServiceUtil.fetchMBMessage(
+					parentMessageId);
+			}
+
+			if (_log.isDebugEnabled()) {
+				_log.debug("Parent message " + parentMessage);
+			}
+
 			long groupId = 0;
 			long categoryId = MBUtil.getCategoryId(messageIdString);
 
@@ -172,23 +189,6 @@ public class MessageListenerImpl implements MessageListener {
 
 			User user = UserLocalServiceUtil.getUserByEmailAddress(
 				company.getCompanyId(), from);
-
-			long parentMessageId = MBUtil.getMessageId(messageIdString);
-
-			if (_log.isDebugEnabled()) {
-				_log.debug("Parent message id " + parentMessageId);
-			}
-
-			MBMessage parentMessage = null;
-
-			if (parentMessageId > 0) {
-				parentMessage = MBMessageLocalServiceUtil.fetchMBMessage(
-					parentMessageId);
-			}
-
-			if (_log.isDebugEnabled()) {
-				_log.debug("Parent message " + parentMessage);
-			}
 
 			String subject = MBUtil.getSubjectForEmail(message);
 
