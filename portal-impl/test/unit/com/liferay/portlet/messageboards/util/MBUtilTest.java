@@ -14,21 +14,29 @@
 
 package com.liferay.portlet.messageboards.util;
 
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PropsValues;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
+import org.powermock.reflect.Whitebox;
 
 /**
  * @author John Zhao
  */
+@PrepareForTest( {
+	MBUtil.class, StringPool.class, PropsValues.class
+})
+@RunWith(PowerMockRunner.class)
 public class MBUtilTest {
 
 	@Test
 	public void testGetCategoryId() {
-		ReflectionTestUtil.setFieldValue(
+		Whitebox.setInternalState(
 			PropsValues.class, "POP_SERVER_SUBDOMAIN", StringPool.BLANK);
 
 		Assert.assertEquals(
@@ -36,18 +44,18 @@ public class MBUtilTest {
 			MBUtil.getCategoryId(
 				"<mb_message.10640.20646.1425017183884@gmail.com>"));
 
-		ReflectionTestUtil.setFieldValue(
+		Whitebox.setInternalState(
 			PropsValues.class, "POP_SERVER_SUBDOMAIN", "events");
 
 		Assert.assertEquals(
 			10640,
 			MBUtil.getCategoryId(
-				"mb_message.10640.20646.1425017183884@event.gmail.com"));
+				"mb_message.10640.20646.1425017183884@events.gmail.com"));
 	}
 
 	@Test
 	public void testGetMessageId() {
-		ReflectionTestUtil.setFieldValue(
+		Whitebox.setInternalState(
 			PropsValues.class, "POP_SERVER_SUBDOMAIN", StringPool.BLANK);
 
 		Assert.assertEquals(
@@ -55,13 +63,13 @@ public class MBUtilTest {
 			MBUtil.getMessageId(
 				"<mb_message.10640.20646.1425017183884@gmail.com>"));
 
-		ReflectionTestUtil.setFieldValue(
+		Whitebox.setInternalState(
 			PropsValues.class, "POP_SERVER_SUBDOMAIN", "events");
 
 		Assert.assertEquals(
 			20646,
 			MBUtil.getMessageId(
-				"mb_message.10640.20646.1425017183884@event.gmail.com"));
+				"mb_message.10640.20646.1425017183884@events.gmail.com"));
 	}
 
 }
