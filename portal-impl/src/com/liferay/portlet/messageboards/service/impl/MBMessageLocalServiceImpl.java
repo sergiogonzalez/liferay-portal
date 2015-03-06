@@ -1957,12 +1957,14 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		}
 		else if (Validator.isNull(serviceContext.getThemeDisplay())) {
 			Map<String, String[]> params = new HashMap<>();
-			String[] strutsAction= {"/message_boards_admin/view_message"};
-			String[] messageId = {String.valueOf(message.getMessageId())};
-			params.put("_"+ PortletKeys.MESSAGE_BOARDS_ADMIN +"_" +
-				"struts_action", strutsAction);
-			params.put("_" + PortletKeys.MESSAGE_BOARDS_ADMIN + "_" +
-				"messageId", messageId);
+
+			params.put(
+				"_" + PortletKeys.MESSAGE_BOARDS_ADMIN + "_" + "struts_action",
+				new String[] {"/message_boards_admin/view_message"});
+
+			params.put(
+				"_" + PortletKeys.MESSAGE_BOARDS_ADMIN + "_" + "messageId",
+				new String[] {String.valueOf(message.getMessageId())});
 
 			return PortalUtil.getControlPanelFullURL(
 				serviceContext.getScopeGroupId(),
