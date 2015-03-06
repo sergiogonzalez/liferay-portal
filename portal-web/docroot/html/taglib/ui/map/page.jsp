@@ -25,6 +25,7 @@ double longitude = (Double)request.getAttribute("liferay-ui:map:longitude");
 String mapsAPIProvider = GetterUtil.getString((String)request.getAttribute("liferay-ui:map:provider"));
 String name = GetterUtil.getString((String)request.getAttribute("liferay-ui:map:name"));
 String points = GetterUtil.getString(request.getAttribute("liferay-ui:map:points"));
+String apiKey = GetterUtil.getString(request.getAttribute("liferay-ui:map:apikey"));
 
 if (Validator.isNull(mapsAPIProvider)) {
 	Group group = layout.getGroup();
@@ -51,7 +52,15 @@ name = namespace + name;
 			};
 		</script>
 
-		<script src="<%= protocol %>://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&callback=Liferay.Maps.onGMapsReady" type="text/javascript"></script>
+		<%
+			String mapsAPIUrl = protocol + "://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&callback=Liferay.Maps.onGMapsReady";
+
+			if (Validator.isNotNull(apiKey)) {
+				mapsAPIUrl += "&key=" + apiKey;
+			}
+		%>
+
+ 		<script src="<%= mapsAPIUrl %>" type="text/javascript"></script>
 	</liferay-util:html-bottom>
 </c:if>
 
