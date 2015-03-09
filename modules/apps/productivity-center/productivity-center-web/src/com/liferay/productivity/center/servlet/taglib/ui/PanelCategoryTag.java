@@ -28,6 +28,10 @@ public class PanelCategoryTag extends IncludeTag {
 		_panelCategory = panelCategory;
 	}
 
+	public void setParentId(String parentId) {
+		_parentId = parentId;
+	}
+
 	@Override
 	protected void cleanUp() {
 		super.cleanUp();
@@ -45,10 +49,14 @@ public class PanelCategoryTag extends IncludeTag {
 		request.setAttribute(
 			"productivity-center-ui:panel-category:panelCategory",
 			_panelCategory);
+
+		request.setAttribute(
+			"productivity-center-ui:panel-category:parentId", _parentId);
 	}
 
 	private static final String _PAGE = "/taglib/ui/panel_category/page.jsp";
 
 	private PanelCategory _panelCategory;
+	private String _parentId;
 
 }

@@ -18,6 +18,7 @@
 
 <%
 PanelCategory panelCategory = (PanelCategory)request.getAttribute("productivity-center-ui:panel-category:panelCategory");
+String parentId = (String)request.getAttribute("productivity-center-ui:panel-category:parentId");
 
 String panelPageCategoryId = "panel-manage-" + panelCategory.getKey();
 
@@ -32,7 +33,7 @@ PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(panelCategory)
 	extended="<%= true %>"
 	iconCssClass="<%= panelCategory.getIconCssClass() %>"
 	id="<%= panelPageCategoryId %>"
-	parentId="userPersonalPanelMenuAddContentPanelContainer"
+	parentId="<%= parentId %>"
 	persistState="<%= true %>"
 	state='<%= panelCategoryHelper.containsPortlet(portletId) ? "open" : "closed" %>'
 	title="<%= panelCategory.getLabel(themeDisplay.getLocale()) %>"
