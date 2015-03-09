@@ -25,7 +25,7 @@ PanelCategory panelCategory = PanelCategoryRegistry.getPanelCategory(PanelCatego
 <aui:container>
 	<aui:row>
 		<aui:col cssClass="panel-page-menu" width="<%= 25 %>">
-			<productivity-center-ui:panel panelCategory="<%= panelCategory %>" servletContext="<%= application %>" />
+			<productivity-center-ui:panel id="userPersonalPanel" panelCategory="<%= panelCategory %>" servletContext="<%= application %>" />
 		</aui:col>
 		<aui:col cssClass="panel-page-application panel-page-body" width="<%= 75 %>">
 			<productivity-center-ui:panel-content portletId="<%= portletId %>" servletContext="<%= application %>" />
