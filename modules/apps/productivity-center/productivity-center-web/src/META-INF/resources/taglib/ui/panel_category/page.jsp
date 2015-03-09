@@ -28,6 +28,7 @@ String panelPageCategoryId = "panel-manage-" + panelCategory.getKey();
 	extended="<%= true %>"
 	iconCssClass="<%= panelCategory.getIconCssClass() %>"
 	id="<%= panelPageCategoryId %>"
+	parentId="userPersonalPanelMenuAddContentPanelContainer"
 	persistState="<%= true %>"
 	state="closed"
 	title="<%= panelCategory.getLabel(themeDisplay.getLocale()) %>"
