@@ -26,5 +26,11 @@ PanelCategory panelCategory = (PanelCategory)request.getAttribute("productivity-
 	id="userPersonalPanelMenuAddContentPanelContainer"
 	persistState="<%= true %>"
 >
-	<productivity-center-ui:panel-category panelCategory="<%= panelCategory %>" servletContext="<%= application %>" />
+
+	<% for (PanelCategory panelSubcategory : PanelCategoryRegistry.getPanelCategories(panelCategory)) { %>
+
+		<productivity-center-ui:panel-category panelCategory="<%= panelSubcategory %>" servletContext="<%= application %>" />
+
+	<% } %>
+
 </liferay-ui:panel-container>
