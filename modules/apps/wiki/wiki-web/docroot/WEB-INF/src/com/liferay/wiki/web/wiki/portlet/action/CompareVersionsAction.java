@@ -157,7 +157,7 @@ public class CompareVersionsAction extends PortletAction {
 		editPageURL.setParameter("title", title);
 
 		String attachmentURLPrefix = WikiUtil.getAttachmentURLPrefix(
-			themeDisplay.getPathMain(), themeDisplay.getPlid(), nodeId, title);
+			themeDisplay.getPlid(), nodeId, title);
 
 		return WikiUtil.diffHtml(
 			sourcePage, targetPage, viewPageURL, editPageURL,

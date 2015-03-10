@@ -3039,8 +3039,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		WikiPage previousVersionPage = getPreviousVersionPage(page);
 
 		String attachmentURLPrefix = WikiUtil.getAttachmentURLPrefix(
-			serviceContext.getPathMain(), serviceContext.getPlid(),
-			page.getNodeId(), page.getTitle());
+			serviceContext.getPlid(), page.getNodeId(), page.getTitle());
 
 		attachmentURLPrefix = portalURL + attachmentURLPrefix;
 

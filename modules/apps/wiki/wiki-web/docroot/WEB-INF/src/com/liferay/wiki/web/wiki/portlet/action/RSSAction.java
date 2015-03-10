@@ -74,8 +74,7 @@ public class RSSAction extends com.liferay.portal.struts.RSSAction {
 
 		if (nodeId > 0) {
 			String attachmentURLPrefix = WikiUtil.getAttachmentURLPrefix(
-				themeDisplay.getPathMain(), themeDisplay.getPlid(), nodeId,
-				title);
+				themeDisplay.getPlid(), nodeId, title);
 
 			if (Validator.isNotNull(title)) {
 				rss = WikiPageServiceUtil.getPagesRSS(

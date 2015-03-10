@@ -14,6 +14,11 @@
 
 package com.liferay.portal.module.framework;
 
+import com.liferay.portal.model.User;
+import com.liferay.portal.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.security.permission.PermissionThreadLocal;
+import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 
@@ -48,7 +53,50 @@ public class ModuleFrameworkServletAdapter extends HttpServlet {
 
 		HttpServlet httpServlet = _servlets.get(0);
 
-		httpServlet.service(request, response);
+		boolean principalSet = false;
+
+		try {
+			principalSet = _setPrincipal(request);
+
+			httpServlet.service(request, response);
+		}
+		finally {
+			if (principalSet) {
+				PermissionThreadLocal.setPermissionChecker(null);
+
+				PrincipalThreadLocal.setName(null);
+			}
+		}
+	}
+
+	private boolean _setPrincipal(HttpServletRequest request)
+		throws ServletException {
+
+		String requestURI = request.getRequestURI();
+
+		if (!requestURI.startsWith(Portal.PATH_MODULE)) {
+			return false;
+		}
+
+		try {
+			if (PrincipalThreadLocal.getName() == null) {
+				User user = PortalUtil.getUser(request);
+
+				if (user != null) {
+					PrincipalThreadLocal.setName(user.getUserId());
+
+					PermissionThreadLocal.setPermissionChecker(
+						PermissionCheckerFactoryUtil.create(user));
+
+					return true;
+				}
+			}
+
+			return false;
+		}
+		catch (Exception e) {
+			throw new ServletException(e);
+		}
 	}
 
 	private final List<HttpServlet> _servlets = ServiceTrackerCollections.list(

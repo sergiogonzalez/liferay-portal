@@ -14,7 +14,11 @@
 
 package com.liferay.taglib.ui;
 
+import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.taglib.util.IncludeTag;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.portlet.PortletURL;
 
@@ -24,7 +28,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author Brian Wing Shun Chan
  * @author Jorge Ferrer
  */
-public class AssetCategoriesSummaryTag extends IncludeTag {
+public class AssetCategoriesSummaryTag<R> extends IncludeTag {
 
 	public PortletURL getPortletURL() {
 		return _portletURL;
@@ -66,6 +70,20 @@ public class AssetCategoriesSummaryTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
+		List<AssetCategory> assetCategories = new ArrayList<>();
+
+		AssetCategoriesAvailableTag<R> assetCategoriesAvailableTag =
+			(AssetCategoriesAvailableTag<R>)findAncestorWithClass(
+				this, AssetCategoriesAvailableTag.class);
+
+		if (assetCategoriesAvailableTag != null) {
+			assetCategories = assetCategoriesAvailableTag.getAssetCategories();
+		}
+
+		request.setAttribute(
+			"liferay-ui:asset-categories-summary:assetCategories",
+			assetCategories);
+
 		request.setAttribute(
 			"liferay-ui:asset-categories-summary:className", _className);
 		request.setAttribute(

@@ -127,12 +127,12 @@ public interface VelocityTaglib {
 			String message, long reportedUserId)
 		throws Exception;
 
-	public AssetCategoriesSummaryTag getAssetCategoriesSummaryTag()
+	public AssetCategoriesSummaryTag<?> getAssetCategoriesSummaryTag()
 		throws Exception;
 
 	public AssetLinksTag getAssetLinksTag() throws Exception;
 
-	public AssetTagsSummaryTag getAssetTagsSummaryTag() throws Exception;
+	public AssetTagsSummaryTag<?> getAssetTagsSummaryTag() throws Exception;
 
 	public BreadcrumbTag getBreadcrumbTag() throws Exception;
 
