@@ -171,7 +171,7 @@ public class DummyVelocityTaglib implements VelocityTaglib {
 	}
 
 	@Override
-	public AssetCategoriesSummaryTag getAssetCategoriesSummaryTag()
+	public AssetCategoriesSummaryTag<?> getAssetCategoriesSummaryTag()
 		throws Exception {
 
 		return null;
@@ -183,7 +183,7 @@ public class DummyVelocityTaglib implements VelocityTaglib {
 	}
 
 	@Override
-	public AssetTagsSummaryTag getAssetTagsSummaryTag() throws Exception {
+	public AssetTagsSummaryTag<?> getAssetTagsSummaryTag() throws Exception {
 		return null;
 	}
 

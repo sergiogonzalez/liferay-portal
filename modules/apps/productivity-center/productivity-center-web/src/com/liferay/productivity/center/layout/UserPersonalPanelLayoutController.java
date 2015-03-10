@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutTypeController;
-import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
@@ -31,10 +30,12 @@ import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
@@ -71,9 +72,8 @@ public class UserPersonalPanelLayoutController implements LayoutTypeController {
 			Layout layout)
 		throws Exception {
 
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher(
-			Portal.PATH_MODULE + StringPool.SLASH + "productivity_center_web" +
-				_EDIT_PAGE);
+		RequestDispatcher requestDispatcher =
+			_servletContext.getRequestDispatcher(getEditPage());
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
@@ -91,9 +91,8 @@ public class UserPersonalPanelLayoutController implements LayoutTypeController {
 			Layout layout)
 		throws Exception {
 
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher(
-			Portal.PATH_MODULE + StringPool.SLASH + "productivity_center_web" +
-				_VIEW_PATH);
+		RequestDispatcher requestDispatcher =
+			_servletContext.getRequestDispatcher(_VIEW_PATH);
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
@@ -150,6 +149,13 @@ public class UserPersonalPanelLayoutController implements LayoutTypeController {
 		}
 	}
 
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.productivity.center.web)"
+	)
+	protected void setServletContext(ServletContext servletContext) {
+		_servletContext = servletContext;
+	}
+
 	private static final String _EDIT_PAGE =
 		"/layout/edit/user_personal_panel.jsp";
 
@@ -164,5 +170,7 @@ public class UserPersonalPanelLayoutController implements LayoutTypeController {
 
 	private static final String _VIEW_PATH =
 		"/layout/view/user_personal_panel.jsp";
+
+	private ServletContext _servletContext;
 
 }

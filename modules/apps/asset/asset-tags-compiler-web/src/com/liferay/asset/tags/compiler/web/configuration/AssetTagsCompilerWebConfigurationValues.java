@@ -12,24 +12,16 @@
  * details.
  */
 
-package com.liferay.productivity.center.portlet;
+package com.liferay.asset.tags.compiler.web.configuration;
 
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-
-import javax.portlet.Portlet;
-
-import org.osgi.service.component.annotations.Component;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 /**
- * @author Sergio González
+ * @author Jürgen Kappler
  */
-@Component(
-	immediate = true,
-	property = {
-		"com.liferay.portlet.display-category=category.hidden",
-		"javax.portlet.init-param.template-path=/"
-	},
-	service = Portlet.class
-)
-public class ProductivityCenterPortlet extends MVCPortlet {
+public class AssetTagsCompilerWebConfigurationValues {
+
+	public static final boolean ENABLED = GetterUtil.getBoolean(
+		AssetTagsCompilerWebConfigurationUtil.get("enabled"));
+
 }
