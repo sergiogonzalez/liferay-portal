@@ -80,7 +80,8 @@ public class WikiActivityInterpreter extends BaseSocialActivityInterpreter {
 				StringBundler sb = new StringBundler(9);
 
 				sb.append(serviceContext.getPathMain());
-				sb.append("/wiki/get_page_attachment?p_l_id=");
+				sb.append(
+					"/o/wiki-web/struts/wiki/get_page_attachment?p_l_id=");
 				sb.append(serviceContext.getPlid());
 				sb.append("&nodeId=");
 				sb.append(pageResource.getNodeId());

@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Modified;
  */
 @Component(
 	immediate = true, property =
-		BaseAuthPublicPath.AUTH_PUBLIC_PATH + "=/wiki/get_page_attachment",
+		BaseAuthPublicPath.AUTH_PUBLIC_PATH + "=/struts/wiki/get_page_attachment",
 	service = AuthPublicPath.class
 )
 public class GetPageAttachmentPath extends BaseAuthPublicPath {
