@@ -165,12 +165,11 @@ public class WikiUtil {
 	}
 
 	public static String getAttachmentURLPrefix(
-		String mainPath, long plid, long nodeId, String title) {
+		long plid, long nodeId, String title) {
 
 		StringBundler sb = new StringBundler(8);
 
-		sb.append(mainPath);
-		sb.append("/wiki/get_page_attachment?p_l_id=");
+		sb.append("/o/wiki-web/struts/wiki/get_page_attachment?p_l_id=");
 		sb.append(plid);
 		sb.append("&nodeId=");
 		sb.append(nodeId);
@@ -301,8 +300,7 @@ public class WikiUtil {
 
 		StringBundler sb = new StringBundler(8);
 
-		sb.append(themeDisplay.getPathMain());
-		sb.append("/wiki/get_page_attachment?p_l_id=");
+		sb.append("/o/wiki-web/struts/wiki/get_page_attachment?p_l_id=");
 		sb.append(themeDisplay.getPlid());
 		sb.append("&nodeId=");
 		sb.append(wikiPage.getNodeId());

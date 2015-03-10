@@ -142,7 +142,7 @@ public class ExportPageAction extends PortletAction {
 		String content = page.getContent();
 
 		String attachmentURLPrefix = WikiUtil.getAttachmentURLPrefix(
-			themeDisplay.getPathMain(), themeDisplay.getPlid(), nodeId, title);
+			themeDisplay.getPlid(), nodeId, title);
 
 		try {
 			content = WikiUtil.convert(
