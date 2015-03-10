@@ -1981,8 +1981,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	}
 
 	protected void notifyDiscussionSubscribers(
-			long creatorUserId, MBMessage message,
-			ServiceContext serviceContext)
+			long userId, MBMessage message, ServiceContext serviceContext)
 		throws PortalException {
 
 		if (!PrefsPropsUtil.getBoolean(
@@ -2028,7 +2027,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		subscriptionSender.setContextAttributes(
 			"[$COMMENTS_USER_ADDRESS$]", userAddress, "[$COMMENTS_USER_NAME$]",
 			userName, "[$CONTENT_URL$]", contentURL);
-		subscriptionSender.setCreatorUserId(creatorUserId);
 		subscriptionSender.setEntryTitle(message.getBody());
 		subscriptionSender.setEntryURL(contentURL);
 		subscriptionSender.setFrom(fromAddress, fromName);
@@ -2055,7 +2053,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		subscriptionSender.setServiceContext(serviceContext);
 		subscriptionSender.setSubject(subject);
 		subscriptionSender.setUniqueMailId(false);
-		subscriptionSender.setUserId(message.getUserId());
+		subscriptionSender.setUserId(userId);
 
 		String className = (String)serviceContext.getAttribute("className");
 		long classPK = ParamUtil.getLong(serviceContext, "classPK");
@@ -2066,7 +2064,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	}
 
 	protected void notifySubscribers(
-			long creatorUserId, MBMessage message, String messageURL,
+			long userId, MBMessage message, String messageURL,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -2076,8 +2074,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 		if (message.isDiscussion()) {
 			try {
-				notifyDiscussionSubscribers(
-					creatorUserId, message, serviceContext);
+				notifyDiscussionSubscribers(userId, message, serviceContext);
 			}
 			catch (Exception e) {
 				_log.error(e, e);
@@ -2253,13 +2250,12 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		subscriptionSenderPrototype.setScopeGroupId(message.getGroupId());
 		subscriptionSenderPrototype.setServiceContext(serviceContext);
 		subscriptionSenderPrototype.setUniqueMailId(false);
-		subscriptionSenderPrototype.setUserId(message.getUserId());
+		subscriptionSenderPrototype.setUserId(userId);
 
 		SubscriptionSender subscriptionSender =
 			(SubscriptionSender)SerializableUtil.clone(
 				subscriptionSenderPrototype);
 
-		subscriptionSender.setCreatorUserId(creatorUserId);
 		subscriptionSender.addPersistedSubscribers(
 			MBCategory.class.getName(), message.getGroupId());
 

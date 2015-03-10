@@ -214,8 +214,8 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 			PortletURL portletURL)
 		throws Exception {
 
-		AssetCategoriesSummaryTag assetCategorySummaryTag =
-			new AssetCategoriesSummaryTag();
+		AssetCategoriesSummaryTag<?> assetCategorySummaryTag =
+			new AssetCategoriesSummaryTag<>();
 
 		setUp(assetCategorySummaryTag);
 
@@ -248,7 +248,8 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 			String assetTagNames, PortletURL portletURL)
 		throws Exception {
 
-		AssetTagsSummaryTag assetTagsSummaryTag = new AssetTagsSummaryTag();
+		AssetTagsSummaryTag<?> assetTagsSummaryTag =
+			new AssetTagsSummaryTag<>();
 
 		setUp(assetTagsSummaryTag);
 
@@ -356,11 +357,11 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 	}
 
 	@Override
-	public AssetCategoriesSummaryTag getAssetCategoriesSummaryTag()
+	public AssetCategoriesSummaryTag<?> getAssetCategoriesSummaryTag()
 		throws Exception {
 
-		AssetCategoriesSummaryTag assetCategoriesSummaryTag =
-			new AssetCategoriesSummaryTag();
+		AssetCategoriesSummaryTag<?> assetCategoriesSummaryTag =
+			new AssetCategoriesSummaryTag<>();
 
 		setUp(assetCategoriesSummaryTag);
 
@@ -377,8 +378,9 @@ public class VelocityTaglibImpl implements VelocityTaglib {
 	}
 
 	@Override
-	public AssetTagsSummaryTag getAssetTagsSummaryTag() throws Exception {
-		AssetTagsSummaryTag assetTagsSummaryTag = new AssetTagsSummaryTag();
+	public AssetTagsSummaryTag<?> getAssetTagsSummaryTag() throws Exception {
+		AssetTagsSummaryTag<?> assetTagsSummaryTag =
+			new AssetTagsSummaryTag<>();
 
 		setUp(assetTagsSummaryTag);
 

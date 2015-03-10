@@ -135,21 +135,23 @@ int messagesCount = messages.size();
 									<div class="lfr-discussion-body">
 
 										<%
-										Map<String, Object> dataTextEditor = new HashMap<String, Object>();
+										Map<String, Object> data = new HashMap<String, Object>();
 
-										JSONObject editorConfig = JSONFactoryUtil.createJSONObject();
-										editorConfig.put("allowedContent", PropsValues.DISCUSSION_COMMENTS_ALLOWED_CONTENT);
-										editorConfig.put("toolbars", JSONFactoryUtil.createJSONObject());
+										JSONObject editorConfigJSONObject = JSONFactoryUtil.createJSONObject();
 
-										JSONObject editorOptions = JSONFactoryUtil.createJSONObject();
-										editorOptions.put("textMode", Boolean.FALSE);
-										editorOptions.put("showSource", Boolean.FALSE);
+										editorConfigJSONObject.put("allowedContent", PropsValues.DISCUSSION_COMMENTS_ALLOWED_CONTENT);
+										editorConfigJSONObject.put("toolbars", JSONFactoryUtil.createJSONObject());
 
-										dataTextEditor.put("editorConfig", editorConfig);
-										dataTextEditor.put("editorOptions", editorOptions);
+										data.put("editorConfig", editorConfigJSONObject);
+
+										JSONObject editorOptionsJSONObject = JSONFactoryUtil.createJSONObject();
+
+										editorOptionsJSONObject.put("textMode", Boolean.FALSE);
+
+										data.put("editorOptions", editorOptionsJSONObject);
 										%>
 
-										<liferay-ui:input-editor contents="" data="<%= dataTextEditor %>" editorImpl="<%= EDITOR_IMPL_KEY %>" name='<%= randomNamespace + "postReplyBody0" %>' onChangeMethod='<%= randomNamespace + "0OnChange" %>' placeholder="type-your-comment-here" />
+										<liferay-ui:input-editor contents="" data="<%= data %>" editorImpl="<%= EDITOR_IMPL_KEY %>" name='<%= randomNamespace + "postReplyBody0" %>' onChangeMethod='<%= randomNamespace + "0OnChange" %>' placeholder="type-your-comment-here" showSource="<%= false %>" />
 
 										<aui:input name="postReplyBody0" type="hidden" />
 

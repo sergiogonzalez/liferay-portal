@@ -230,12 +230,12 @@ public class SubscriptionSender implements Serializable {
 		return _context.get(key);
 	}
 
-	public long getCreatorUserId() {
-		return creatorUserId;
-	}
-
 	public String getMailId() {
 		return this.mailId;
+	}
+
+	public long getUserId() {
+		return userId;
 	}
 
 	public void initialize() throws Exception {
@@ -262,13 +262,15 @@ public class SubscriptionSender implements Serializable {
 			setContextAttribute("[$SITE_NAME$]", group.getDescriptiveName());
 		}
 
-		if ((userId > 0) && Validator.isNotNull(_contextUserPrefix)) {
+		if ((creatorUserId > 0) &&
+			Validator.isNotNull(_contextCreatorUserPrefix)) {
+
 			setContextAttribute(
-				"[$" + _contextUserPrefix + "_USER_ADDRESS$]",
-				PortalUtil.getUserEmailAddress(userId));
+				"[$" + _contextCreatorUserPrefix + "_USER_ADDRESS$]",
+				PortalUtil.getUserEmailAddress(creatorUserId));
 			setContextAttribute(
-				"[$" + _contextUserPrefix + "_USER_NAME$]",
-				PortalUtil.getUserName(userId, StringPool.BLANK));
+				"[$" + _contextCreatorUserPrefix + "_USER_NAME$]",
+				PortalUtil.getUserName(creatorUserId, StringPool.BLANK));
 		}
 
 		if (uniqueMailId) {
@@ -320,8 +322,8 @@ public class SubscriptionSender implements Serializable {
 		}
 	}
 
-	public void setContextUserPrefix(String contextUserPrefix) {
-		_contextUserPrefix = contextUserPrefix;
+	public void setContextCreatorUserPrefix(String contextCreatorUserPrefix) {
+		_contextCreatorUserPrefix = contextCreatorUserPrefix;
 	}
 
 	public void setCreatorUserId(long creatorUserId) {
@@ -822,9 +824,9 @@ public class SubscriptionSender implements Serializable {
 	}
 
 	protected void sendNotification(User user) throws Exception {
-		if (creatorUserId == user.getUserId() ) {
+		if (userId == user.getUserId() ) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Skip context user " + creatorUserId);
+				_log.debug("Skip user " + userId);
 			}
 
 			return;
@@ -925,7 +927,7 @@ public class SubscriptionSender implements Serializable {
 	private long _classPK;
 	private final Map<String, EscapableObject<String>> _context =
 		new HashMap<>();
-	private String _contextUserPrefix;
+	private String _contextCreatorUserPrefix;
 	private String _entryTitle;
 	private String _entryURL;
 	private boolean _initialized;
