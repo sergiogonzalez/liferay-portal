@@ -33,7 +33,7 @@
 		<dirset dir="apps/search" includes="*" />
 		<dirset dir="apps/site" includes="*" />
 		<dirset dir="apps/sites-directory" includes="*" />
-		<dirset dir="apps/social" includes="*" />
+		<dirset dir="apps/social" excludes="social-networking-*" includes="*" />
 		<dirset dir="apps/translator" includes="*" />
 		<dirset dir="apps/unit-converter" includes="*" />
 		<dirset dir="apps/web-proxy" includes="*" />

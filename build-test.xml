@@ -467,19 +467,40 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="get-test-url">
+		<sequential>
+			<get-testcase-property property.name="testcase.url" />
+
+			<if>
+				<isset property="test.url" />
+				<then>
+					<var name="test.url" value="${test.url}" />
+				</then>
+				<elseif>
+					<isset property="testcase.url" />
+					<then>
+						<var name="test.url" value="${testcase.url}" />
+					</then>
+				</elseif>
+				<else>
+					<var name="test.url" value="http://localhost:8080" />
+				</else>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="get-testcase-property">
 		<attribute name="property.name" />
 
 		<sequential>
+			<var name="@{property.name}" unset="true" />
+
 			<if>
 				<isset property="test.class" />
 				<then>
 					<property file="${project.dir}/test.generated.properties" />
 
-					<var name="property.name" unset="true" />
-					<var name="@{property.name}" unset="true" />
-
-					<property name="property.name" value="@{property.name}" />
+					<var name="property.name" value="@{property.name}" />
 
 					<get-test-method-name />
 					<get-test-simple-class-name />
@@ -3312,7 +3333,7 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 			</then>
 		</if>
 
-		<get-testcase-property property.name="portal.url" />
+		<get-test-url />
 
 		<if>
 			<equals arg1="${test.selenium.unit.enabled}" arg2="true" />
@@ -3330,10 +3351,10 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 				</then>
 			</elseif>
 			<elseif>
-				<isset property="portal.url" />
+				<isset property="test.url" />
 				<then>
 					<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-						portal.url=${portal.url}
+						portal.url=${test.url}
 					</echo>
 				</then>
 			</elseif>

@@ -129,10 +129,6 @@ public class DLAppHelperLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		updateFileEntry(
-			userId, fileEntry, sourceFileVersion, destinationFileVersion,
-			serviceContext);
-
 		if (draftFileVersion == null) {
 			return;
 		}

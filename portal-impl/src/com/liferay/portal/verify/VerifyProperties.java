@@ -733,6 +733,13 @@ public class VerifyProperties extends VerifyProcess {
 			"com.liferay.site.map.web"
 		},
 
+		// Tags Compiler
+
+		new String[] {
+			"tags.compiler.enabled", "enabled",
+			"com.liferay.asset.tags.compiler.web"
+		},
+
 		// Translator
 
 		new String[] {
@@ -1089,7 +1096,7 @@ public class VerifyProperties extends VerifyProcess {
 			"com.liferay.portal.kernel.util.StringBundler.unsafe.create." +
 				"threshold",
 			"com.liferay.portal.kernel.util.StringBundler.threadlocal.buffer." +
-				"limit",
+				"limit"
 		}
 	};
 

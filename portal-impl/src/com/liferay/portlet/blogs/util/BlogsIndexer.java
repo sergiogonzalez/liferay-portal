@@ -105,11 +105,12 @@ public class BlogsIndexer extends BaseIndexer {
 
 		Document document = getBaseModelDocument(CLASS_NAME, entry);
 
+		document.addText(Field.CAPTION, entry.getCoverImageCaption());
 		document.addText(
 			Field.CONTENT, HtmlUtil.extractText(entry.getContent()));
-		document.addText(Field.SUBTITLE, entry.getSubtitle());
 		document.addText(Field.DESCRIPTION, entry.getDescription());
 		document.addDate(Field.MODIFIED_DATE, entry.getModifiedDate());
+		document.addText(Field.SUBTITLE, entry.getSubtitle());
 		document.addText(Field.TITLE, entry.getTitle());
 
 		return document;

@@ -25,6 +25,7 @@ import com.liferay.sync.engine.service.SyncFileService;
 import com.liferay.sync.engine.service.SyncSiteService;
 import com.liferay.sync.engine.service.SyncWatchEventService;
 import com.liferay.sync.engine.util.FileUtil;
+import com.liferay.sync.engine.util.MSOfficeFileUtil;
 
 import java.nio.file.Files;
 import java.nio.file.LinkOption;
@@ -140,6 +141,15 @@ public class SyncSiteWatchEventListener extends BaseWatchEventListener {
 				}
 			}
 			else if (parentFilePath.equals(previousFilePath.getParent())) {
+				if (MSOfficeFileUtil.isTempRenamedFile(filePath) &&
+					MSOfficeFileUtil.isExcelFile(previousFilePath)) {
+
+					SyncWatchEventService.deleteSyncWatchEvent(
+						lastSyncWatchEvent.getSyncWatchEventId());
+
+					return;
+				}
+
 				lastSyncWatchEvent.setEventType(
 					SyncWatchEvent.EVENT_TYPE_RENAME);
 				lastSyncWatchEvent.setFilePathName(filePathName);
