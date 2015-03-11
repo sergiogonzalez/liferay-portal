@@ -66,7 +66,7 @@ public class WikiSubscriptionLocalizedContentTest
 		throws Exception {
 
 		WikiPage page = WikiTestUtil.addPage(
-			userId, group.getGroupId(), containerModelId,
+			userId, group.getGroupId(), _node.getNodeId(),
 			RandomTestUtil.randomString(), true);
 
 		return page.getResourcePrimKey();
