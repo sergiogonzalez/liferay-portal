@@ -15,6 +15,7 @@
 package com.liferay.portal.model;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.security.permission.PermissionChecker;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -25,6 +26,18 @@ public interface LayoutTypeAccessPolicy {
 
 	public void checkAccessAllowedToPortlet(
 			HttpServletRequest request, Layout layout, Portlet portlet)
+		throws PortalException;
+
+	public boolean isCustomizeLayoutAllowed(
+			PermissionChecker permissionChecker, Layout layout)
+		throws PortalException;
+
+	public boolean isDeleteLayoutAllowed(
+			PermissionChecker permissionChecker, Layout layout)
+		throws PortalException;
+
+	public boolean isUpdateLayoutAllowed(
+			PermissionChecker permissionChecker, Layout layout)
 		throws PortalException;
 
 }
