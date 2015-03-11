@@ -46,6 +46,10 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class DefaultLayoutTypeAccessPolicy implements LayoutTypeAccessPolicy {
 
+	public static LayoutTypeAccessPolicy create() {
+		return _instance;
+	}
+
 	@Override
 	public void checkAccessAllowedToPortlet(
 			HttpServletRequest request, Layout layout, Portlet portlet)
@@ -365,5 +369,8 @@ public class DefaultLayoutTypeAccessPolicy implements LayoutTypeAccessPolicy {
 
 		return false;
 	}
+
+	private static final LayoutTypeAccessPolicy _instance =
+		new DefaultLayoutTypeAccessPolicy();
 
 }

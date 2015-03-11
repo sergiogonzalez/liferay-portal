@@ -48,7 +48,7 @@ public class LayoutTypeAccessPolicyTracker {
 			_serviceTrackerMap.getService(type);
 
 		if (layoutTypeAccessPolicy == null) {
-			return new DefaultLayoutTypeAccessPolicy();
+			return DefaultLayoutTypeAccessPolicy.create();
 		}
 
 		return layoutTypeAccessPolicy;
