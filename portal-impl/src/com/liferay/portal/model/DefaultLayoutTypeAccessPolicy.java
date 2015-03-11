@@ -68,6 +68,45 @@ public class DefaultLayoutTypeAccessPolicy implements LayoutTypeAccessPolicy {
 		throw new PrincipalException();
 	}
 
+	@Override
+	public boolean isCustomizeLayoutAllowed(
+			PermissionChecker permissionChecker, Layout layout)
+		throws PortalException {
+
+		if (layout.isTypeControlPanel()) {
+			return false;
+		}
+
+		return LayoutPermissionUtil.contains(
+			permissionChecker, layout, ActionKeys.CUSTOMIZE);
+	}
+
+	@Override
+	public boolean isDeleteLayoutAllowed(
+			PermissionChecker permissionChecker, Layout layout)
+		throws PortalException {
+
+		if (layout.isTypeControlPanel()) {
+			return false;
+		}
+
+		return LayoutPermissionUtil.contains(
+			permissionChecker, layout, ActionKeys.DELETE);
+	}
+
+	@Override
+	public boolean isUpdateLayoutAllowed(
+			PermissionChecker permissionChecker, Layout layout)
+		throws PortalException {
+
+		if (layout.isTypeControlPanel()) {
+			return false;
+		}
+
+		return LayoutPermissionUtil.contains(
+			permissionChecker, layout, ActionKeys.UPDATE);
+	}
+
 	protected boolean hasAccessPermission(
 			HttpServletRequest request, Layout layout, Portlet portlet)
 		throws PortalException {

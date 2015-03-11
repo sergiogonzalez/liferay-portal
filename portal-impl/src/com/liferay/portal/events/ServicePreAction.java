@@ -55,6 +55,8 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutTemplate;
+import com.liferay.portal.model.LayoutType;
+import com.liferay.portal.model.LayoutTypeAccessPolicy;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.LayoutTypePortletConstants;
 import com.liferay.portal.model.Portlet;
@@ -519,14 +521,20 @@ public class ServicePreAction extends Action {
 			request, "customized_view", true);
 
 		if (layout != null) {
-			if (!layout.isTypeControlPanel()) {
-				hasCustomizeLayoutPermission = LayoutPermissionUtil.contains(
-					permissionChecker, layout, ActionKeys.CUSTOMIZE);
-				hasDeleteLayoutPermission = LayoutPermissionUtil.contains(
-					permissionChecker, layout, ActionKeys.DELETE);
-				hasUpdateLayoutPermission = LayoutPermissionUtil.contains(
-					permissionChecker, layout, ActionKeys.UPDATE);
-			}
+			LayoutType layoutType = layout.getLayoutType();
+
+			LayoutTypeAccessPolicy layoutTypeAccessPolicy =
+				layoutType.getLayoutTypeAccessPolicy();
+
+			hasCustomizeLayoutPermission =
+				layoutTypeAccessPolicy.isCustomizeLayoutAllowed(
+					permissionChecker, layout);
+			hasDeleteLayoutPermission =
+				layoutTypeAccessPolicy.isDeleteLayoutAllowed(
+					permissionChecker, layout);
+			hasUpdateLayoutPermission =
+				layoutTypeAccessPolicy.isUpdateLayoutAllowed(
+					permissionChecker, layout);
 
 			layoutSet = layout.getLayoutSet();
 
