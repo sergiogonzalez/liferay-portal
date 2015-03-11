@@ -14,8 +14,17 @@
 
 package com.liferay.portal.model;
 
+import com.liferay.portal.kernel.exception.PortalException;
+
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Adolfo Pérez
  */
 public interface LayoutTypeAccessPolicy {
+
+	public void checkAccessAllowedToPortlet(
+			HttpServletRequest request, Layout layout, Portlet portlet)
+		throws PortalException;
+
 }
