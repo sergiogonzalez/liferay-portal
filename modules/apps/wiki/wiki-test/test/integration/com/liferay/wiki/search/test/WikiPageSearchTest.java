@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.wiki.search;
+package com.liferay.wiki.search.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngine;
@@ -31,8 +32,8 @@ import com.liferay.portal.model.ClassedModel;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.search.test.BaseSearchTestCase;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.wiki.asset.WikiPageAssetRenderer;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
@@ -44,14 +45,17 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Assume;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Eudaldo Alonso
  */
+@RunWith(Arquillian.class)
 @Sync
 public class WikiPageSearchTest extends BaseSearchTestCase {
 
@@ -59,8 +63,15 @@ public class WikiPageSearchTest extends BaseSearchTestCase {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
+			new LiferayIntegrationTestRule(),
 			SynchronousDestinationTestRule.INSTANCE);
+
+	@Before
+	public void setUp() throws Exception {
+		ServiceTestUtil.setUser(TestPropsValues.getUser());
+
+		super.setUp();
+	}
 
 	@Ignore()
 	@Override
