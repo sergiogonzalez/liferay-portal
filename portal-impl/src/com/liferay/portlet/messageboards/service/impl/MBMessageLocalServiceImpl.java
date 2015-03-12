@@ -1972,6 +1972,11 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			return layoutURL + Portal.FRIENDLY_URL_SEPARATOR +
 				"message_boards/view_message/" + message.getMessageId();
 		}
+		else if (Validator.isNull(serviceContext.getThemeDisplay())) {
+			return PortalUtil.getPortalURL(request) + Portal.PATH_MAIN +
+				"/message_boards/find_message"+
+				"?messageId=" + message.getMessageId();
+		}
 		else {
 			if (serviceContext.getThemeDisplay() == null) {
 				return PortalUtil.getControlPanelFullURL(
