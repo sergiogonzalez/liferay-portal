@@ -633,15 +633,15 @@ public class JavadocFormatter {
 	private void _addReturnElement(Element methodElement, JavaMethod javaMethod)
 		throws Exception {
 
-		Type returns = javaMethod.getReturns();
+		Type returnType = javaMethod.getReturnType();
 
-		if (returns == null) {
+		if (returnType == null) {
 			return;
 		}
 
-		String returnsValue = returns.getValue();
+		String returnTypeValue = returnType.getValue();
 
-		if (returnsValue.equals("void")) {
+		if (returnTypeValue.equals("void")) {
 			return;
 		}
 
