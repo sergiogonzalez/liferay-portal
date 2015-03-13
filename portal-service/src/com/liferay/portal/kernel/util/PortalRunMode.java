@@ -29,4 +29,8 @@ public class PortalRunMode {
 		return false;
 	}
 
+	public static void setTestModel(boolean mode) {
+		SystemProperties.set("liferay.mode", String.valueOf(mode));
+	}
+
 }
