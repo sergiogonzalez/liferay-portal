@@ -548,9 +548,7 @@ public class WikiPageLocalServiceTest {
 		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
 			WikiPage.class.getName(), page.getResourcePrimKey());
 
-		Assert.assertNotNull(assetEntry);
-
-		AssetEntryLocalServiceUtil.deleteAssetEntry(assetEntry);
+		AssetEntryLocalServiceUtil.deleteAssetEntry(assetEntry.getEntryId());
 
 		List<WikiPage> pages = WikiPageLocalServiceUtil.getNoAssetPages();
 
