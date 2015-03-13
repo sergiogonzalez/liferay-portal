@@ -80,7 +80,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 		throws PortalException {
 
 		try {
-			if (!hasFileEntryLock(fileEntryId) &&
+			if (hasFileEntryLock(fileEntryId) &&
 				!_hasOverrideCheckoutPermission(fileEntryId)) {
 
 				throw new PrincipalException();
