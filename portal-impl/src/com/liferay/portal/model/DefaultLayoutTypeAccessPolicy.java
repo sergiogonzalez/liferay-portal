@@ -152,7 +152,7 @@ public class DefaultLayoutTypeAccessPolicy implements LayoutTypeAccessPolicy {
 			return;
 		}
 
-		if (isAccessGrantedByRuntimePortlet(request, portlet)) {
+		if (isAccessGrantedByRuntimePortlet(request)) {
 			return;
 		}
 
@@ -169,7 +169,7 @@ public class DefaultLayoutTypeAccessPolicy implements LayoutTypeAccessPolicy {
 			HttpServletRequest request, Layout layout, Portlet portlet)
 		throws PortalException {
 
-		if (isAccessGrantedByRuntimePortlet(request, portlet)) {
+		if (isAccessGrantedByRuntimePortlet(request)) {
 			return true;
 		}
 
@@ -259,7 +259,7 @@ public class DefaultLayoutTypeAccessPolicy implements LayoutTypeAccessPolicy {
 	}
 
 	protected boolean isAccessGrantedByRuntimePortlet(
-		HttpServletRequest request, Portlet portlet) {
+		HttpServletRequest request) {
 
 		Boolean renderPortletResource = (Boolean)request.getAttribute(
 			WebKeys.RENDER_PORTLET_RESOURCE);
