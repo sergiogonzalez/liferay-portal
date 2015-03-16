@@ -82,6 +82,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
+import javax.portlet.ActionRequest;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -132,6 +134,21 @@ public class DDMImpl implements DDM {
 		throw new IllegalArgumentException(
 			"No DDM display registered for " +
 				PortalUtil.getClassName(classNameId));
+	}
+
+	@Override
+	public DDMForm getDDMForm(ActionRequest actionRequest)
+		throws PortalException {
+
+		try {
+			String definition = ParamUtil.getString(
+				actionRequest, "definition");
+
+			return DDMFormJSONDeserializerUtil.deserialize(definition);
+		}
+		catch (PortalException pe) {
+			throw new StructureDefinitionException(pe);
+		}
 	}
 
 	@Override
