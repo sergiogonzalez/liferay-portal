@@ -56,7 +56,7 @@ public class DefaultLayoutTypeAccessPolicy implements LayoutTypeAccessPolicy {
 		throws PortalException {
 
 		if (layout.isTypeControlPanel()) {
-			isAccessAllowedToControlPanelPortlet(request, portlet);
+			isAccessAllowedToControlPanelPortlet(request, layout, portlet);
 
 			return;
 		}
@@ -137,7 +137,7 @@ public class DefaultLayoutTypeAccessPolicy implements LayoutTypeAccessPolicy {
 	}
 
 	protected void isAccessAllowedToControlPanelPortlet(
-			HttpServletRequest request, Portlet portlet)
+			HttpServletRequest request, Layout layout, Portlet portlet)
 		throws PortalException {
 
 		PermissionChecker permissionChecker =
@@ -156,7 +156,9 @@ public class DefaultLayoutTypeAccessPolicy implements LayoutTypeAccessPolicy {
 			return;
 		}
 
-		if (isAccessGrantedByPortletAuthenticationToken(request, portlet)) {
+		if (isAccessGrantedByPortletAuthenticationToken(
+				request, layout, portlet)) {
+
 			return;
 		}
 
@@ -179,7 +181,9 @@ public class DefaultLayoutTypeAccessPolicy implements LayoutTypeAccessPolicy {
 			return true;
 		}
 
-		if (isAccessGrantedByPortletAuthenticationToken(request, portlet)) {
+		if (isAccessGrantedByPortletAuthenticationToken(
+				request, layout, portlet)) {
+
 			return true;
 		}
 
@@ -187,10 +191,7 @@ public class DefaultLayoutTypeAccessPolicy implements LayoutTypeAccessPolicy {
 	}
 
 	protected boolean isAccessGrantedByPortletAuthenticationToken(
-		HttpServletRequest request, Portlet portlet) {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		HttpServletRequest request, Layout layout, Portlet portlet) {
 
 		String portletId = portlet.getPortletId();
 
@@ -223,7 +224,7 @@ public class DefaultLayoutTypeAccessPolicy implements LayoutTypeAccessPolicy {
 		}
 
 		if (AuthTokenUtil.isValidPortletInvocationToken(
-				request, themeDisplay.getPlid(), portletId, strutsAction,
+				request, layout.getPlid(), portletId, strutsAction,
 			requestPortletAuthenticationToken)) {
 
 			return true;
