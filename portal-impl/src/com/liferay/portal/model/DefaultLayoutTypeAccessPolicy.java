@@ -73,6 +73,19 @@ public class DefaultLayoutTypeAccessPolicy implements LayoutTypeAccessPolicy {
 	}
 
 	@Override
+	public boolean isAddLayoutAllowed(
+			PermissionChecker permissionChecker, Layout layout)
+		throws PortalException {
+
+		if (layout.isTypeControlPanel()) {
+			return false;
+		}
+
+		return LayoutPermissionUtil.contains(
+			permissionChecker, layout, ActionKeys.ADD_LAYOUT);
+	}
+
+	@Override
 	public boolean isCustomizeLayoutAllowed(
 			PermissionChecker permissionChecker, Layout layout)
 		throws PortalException {
