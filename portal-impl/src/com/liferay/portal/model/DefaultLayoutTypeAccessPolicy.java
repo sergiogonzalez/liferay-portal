@@ -265,11 +265,7 @@ public class DefaultLayoutTypeAccessPolicy implements LayoutTypeAccessPolicy {
 			WebKeys.RENDER_PORTLET_RESOURCE);
 
 		if (renderPortletResource != null) {
-			boolean runtimePortlet = renderPortletResource.booleanValue();
-
-			if (runtimePortlet) {
-				return true;
-			}
+			return renderPortletResource;
 		}
 
 		return false;
