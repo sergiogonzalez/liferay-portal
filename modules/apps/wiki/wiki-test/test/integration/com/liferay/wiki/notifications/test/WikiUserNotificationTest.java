@@ -12,10 +12,12 @@
  * details.
  */
 
-package com.liferay.wiki.notifications;
+package com.liferay.wiki.notifications.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
+import com.liferay.portal.kernel.test.rule.SynchronousMailTestRule;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
@@ -29,11 +31,13 @@ import com.liferay.wiki.util.test.WikiTestUtil;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.runner.RunWith;
 
 /**
  * @author Roberto Díaz
  * @author Sergio González
  */
+@RunWith(Arquillian.class)
 @Sync
 public class WikiUserNotificationTest extends BaseUserNotificationTestCase {
 

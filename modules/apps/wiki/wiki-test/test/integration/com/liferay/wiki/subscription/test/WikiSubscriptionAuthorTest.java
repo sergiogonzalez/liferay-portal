@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.wiki.subscription;
+package com.liferay.wiki.subscription.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -23,7 +24,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
-import com.liferay.portlet.subscriptions.test.BaseSubscriptionContainerModelTestCase;
+import com.liferay.portlet.subscriptions.test.BaseSubscriptionAuthorTestCase;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
@@ -31,17 +32,15 @@ import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.util.test.WikiTestUtil;
 
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
-import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
- * @author Sergio González
- * @author Roberto Díaz
+ * @author José Ángel Jiménez
  */
+@RunWith(Arquillian.class)
 @Sync
-public class WikiSubscriptionContainerModelTest
-	extends BaseSubscriptionContainerModelTestCase {
+public class WikiSubscriptionAuthorTest extends BaseSubscriptionAuthorTestCase {
 
 	@ClassRule
 	@Rule
@@ -49,30 +48,6 @@ public class WikiSubscriptionContainerModelTest
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
 			SynchronousMailTestRule.INSTANCE);
-
-	@Ignore
-	@Override
-	@Test
-	public void testSubscriptionContainerModelWhenAddingBaseModelInRootContainerModel() {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testSubscriptionContainerModelWhenAddingBaseModelInSubcontainerModel() {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testSubscriptionContainerModelWhenUpdatingBaseModelInRootContainerModel() {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testSubscriptionContainerModelWhenUpdatingBaseModelInSubcontainerModel() {
-	}
 
 	@Override
 	protected long addBaseModel(long userId, long containerModelId)
@@ -97,11 +72,10 @@ public class WikiSubscriptionContainerModelTest
 	}
 
 	@Override
-	protected void addSubscriptionContainerModel(long containerModelId)
+	protected void addSubscription(long userId, long containerModelId)
 		throws Exception {
 
-		WikiNodeLocalServiceUtil.subscribeNode(
-			user.getUserId(), containerModelId);
+		WikiNodeLocalServiceUtil.subscribeNode(userId, containerModelId);
 	}
 
 	@Override
