@@ -28,6 +28,10 @@ public interface LayoutTypeAccessPolicy {
 			HttpServletRequest request, Layout layout, Portlet portlet)
 		throws PortalException;
 
+	public boolean isAddLayoutAllowed(
+			PermissionChecker permissionChecker, Layout layout)
+		throws PortalException;
+
 	public boolean isCustomizeLayoutAllowed(
 			PermissionChecker permissionChecker, Layout layout)
 		throws PortalException;
