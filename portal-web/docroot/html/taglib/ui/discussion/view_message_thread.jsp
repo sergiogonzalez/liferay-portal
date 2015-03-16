@@ -139,8 +139,8 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 						</c:otherwise>
 					</c:choose>
 
-					<c:if test="<%= createDate.before(modifyDate) %>">
-						<strong onmouseover="Liferay.Portal.ToolTip.show(this, '<%= LanguageUtil.format(request, "x-ago", LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - modifyDate.getTime(), true), false) %>');">
+					<c:if test="<%= createDate.before(modifiedDate) %>">
+						<strong onmouseover="Liferay.Portal.ToolTip.show(this, '<%= dateFormatDateTime.format(modifyDate) %>');">
 							- <liferay-ui:message key="edited" />
 						</strong>
 					</c:if>
