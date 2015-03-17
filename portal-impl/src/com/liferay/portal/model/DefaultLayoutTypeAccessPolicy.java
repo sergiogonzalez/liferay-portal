@@ -186,7 +186,7 @@ public class DefaultLayoutTypeAccessPolicy implements LayoutTypeAccessPolicy {
 			return true;
 		}
 
-		if (isAccessGrantedByPortletOnPage(request, layout, portlet)) {
+		if (isAccessGrantedByPortletOnPage(layout, portlet)) {
 			return true;
 		}
 
@@ -247,7 +247,7 @@ public class DefaultLayoutTypeAccessPolicy implements LayoutTypeAccessPolicy {
 	}
 
 	protected boolean isAccessGrantedByPortletOnPage(
-			HttpServletRequest request, Layout layout, Portlet portlet)
+			Layout layout, Portlet portlet)
 		throws PortalException {
 
 		String portletId = portlet.getPortletId();
