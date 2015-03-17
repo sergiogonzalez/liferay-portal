@@ -250,9 +250,6 @@ public class DefaultLayoutTypeAccessPolicy implements LayoutTypeAccessPolicy {
 			HttpServletRequest request, Layout layout, Portlet portlet)
 		throws PortalException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		String portletId = portlet.getPortletId();
 
 		if (layout.isTypePanel() && isPanelSelectedPortlet(layout, portletId)) {
@@ -260,7 +257,7 @@ public class DefaultLayoutTypeAccessPolicy implements LayoutTypeAccessPolicy {
 		}
 
 		LayoutTypePortlet layoutTypePortlet =
-			themeDisplay.getLayoutTypePortlet();
+			(LayoutTypePortlet)layout.getLayoutType();
 
 		if ((layoutTypePortlet != null) &&
 			layoutTypePortlet.hasPortletId(portletId)) {
