@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -1973,6 +1974,18 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 				"message_boards/view_message/" + message.getMessageId();
 		}
 		else {
+			if (serviceContext.getThemeDisplay() == null) {
+				StringBundler sb = new StringBundler(5);
+
+				sb.append(PortalUtil.getPortalURL(request));
+				sb.append(Portal.PATH_MAIN);
+				sb.append("/message_boards/find_message");
+				sb.append("?messageId=");
+				sb.append(message.getMessageId());
+
+				return sb.toString();
+			}
+
 			long controlPanelPlid = PortalUtil.getControlPanelPlid(
 				serviceContext.getCompanyId());
 
