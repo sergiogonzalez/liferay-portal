@@ -31,10 +31,14 @@ import com.liferay.portal.model.LocalizedModel;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.model.WorkflowedModel;
+import com.liferay.portal.model.adapter.ModelAdapterUtil;
 import com.liferay.portal.model.adapter.StagedGroup;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portlet.asset.model.AssetCategory;
+import com.liferay.portlet.asset.model.AssetTag;
+import com.liferay.portlet.asset.model.adapter.StagedAssetTag;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
+import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.messageboards.model.MBDiscussion;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBDiscussionLocalServiceUtil;
@@ -44,8 +48,10 @@ import com.liferay.portlet.ratings.service.RatingsEntryLocalServiceUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Mate Thurzo
@@ -90,6 +96,7 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			doExportStagedModel(portletDataContext, (T)stagedModel.clone());
 
 			exportAssetCategories(portletDataContext, stagedModel);
+			exportAssetTags(portletDataContext, stagedModel);
 			exportComments(portletDataContext, stagedModel);
 			exportRatings(portletDataContext, stagedModel);
 
@@ -256,15 +263,15 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				Group.class);
 
-		long liveGroupId = GetterUtil.getLong(
-			referenceElement.attributeValue("live-group-id"));
+		long groupId = GetterUtil.getLong(
+			referenceElement.attributeValue("group-id"));
 
-		liveGroupId = MapUtil.getLong(groupIds, liveGroupId);
+		groupId = MapUtil.getLong(groupIds, groupId);
 
 		long classPK = GetterUtil.getLong(
 			referenceElement.attributeValue("class-pk"));
 
-		importMissingReference(portletDataContext, uuid, liveGroupId, classPK);
+		importMissingReference(portletDataContext, uuid, groupId, classPK);
 	}
 
 	@Override
@@ -321,6 +328,7 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			}
 
 			importAssetCategories(portletDataContext, stagedModel);
+			importAssetTags(portletDataContext, stagedModel);
 
 			importReferenceStagedModels(portletDataContext, stagedModel);
 
@@ -387,13 +395,13 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				Group.class);
 
-		long liveGroupId = GetterUtil.getLong(
-			referenceElement.attributeValue("live-group-id"));
+		long groupId = GetterUtil.getLong(
+			referenceElement.attributeValue("group-id"));
 
-		liveGroupId = MapUtil.getLong(groupIds, liveGroupId);
+		groupId = MapUtil.getLong(groupIds, groupId);
 
 		try {
-			return validateMissingReference(uuid, liveGroupId);
+			return validateMissingReference(uuid, groupId);
 		}
 		catch (Exception e) {
 			return false;
@@ -441,6 +449,24 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 		for (AssetCategory assetCategory : assetCategories) {
 			StagedModelDataHandlerUtil.exportReferenceStagedModel(
 				portletDataContext, stagedModel, assetCategory,
+				PortletDataContext.REFERENCE_TYPE_WEAK);
+		}
+	}
+
+	protected void exportAssetTags(
+			PortletDataContext portletDataContext, T stagedModel)
+		throws PortletDataException {
+
+		List<AssetTag> assetTags = AssetTagLocalServiceUtil.getTags(
+			ExportImportClassedModelUtil.getClassName(stagedModel),
+			ExportImportClassedModelUtil.getClassPK(stagedModel));
+
+		for (AssetTag assetTag : assetTags) {
+			StagedAssetTag stagedAssetTag = ModelAdapterUtil.adapt(
+				assetTag, AssetTag.class, StagedAssetTag.class);
+
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, stagedModel, stagedAssetTag,
 				PortletDataContext.REFERENCE_TYPE_WEAK);
 		}
 	}
@@ -556,6 +582,51 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			ExportImportClassedModelUtil.getClassName(stagedModel),
 			ExportImportClassedModelUtil.getClassPK(stagedModel),
 			importedAssetCategoryIds);
+	}
+
+	protected void importAssetTags(
+			PortletDataContext portletDataContext, T stagedModel)
+		throws PortletDataException {
+
+		List<Element> referenceElements =
+			portletDataContext.getReferenceElements(
+				stagedModel, StagedAssetTag.class);
+
+		List<Long> stagedAssetTagIds = new ArrayList<>(
+			referenceElements.size());
+
+		for (Element referenceElement : referenceElements) {
+			long classPK = GetterUtil.getLong(
+				referenceElement.attributeValue("class-pk"));
+
+			StagedModelDataHandlerUtil.importReferenceStagedModel(
+				portletDataContext, stagedModel, StagedAssetTag.class, classPK);
+
+			stagedAssetTagIds.add(classPK);
+		}
+
+		Map<Long, Long> stagedAssetTagIdsMap =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				StagedAssetTag.class);
+
+		Set<String> assetTagNames = new HashSet<>();
+
+		for (long stagedAssetTagId : stagedAssetTagIds) {
+			long importedStagedAssetTagId = MapUtil.getLong(
+				stagedAssetTagIdsMap, stagedAssetTagId, stagedAssetTagId);
+
+			AssetTag assetTag = AssetTagLocalServiceUtil.fetchAssetTag(
+				importedStagedAssetTagId);
+
+			if (assetTag != null) {
+				assetTagNames.add(assetTag.getName());
+			}
+		}
+
+		portletDataContext.addAssetTags(
+			ExportImportClassedModelUtil.getClassName(stagedModel),
+			ExportImportClassedModelUtil.getClassPK(stagedModel),
+			assetTagNames.toArray(new String[assetTagNames.size()]));
 	}
 
 	protected void importComments(
