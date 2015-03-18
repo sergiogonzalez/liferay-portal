@@ -27,7 +27,6 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.repository.cmis.CMISRepository;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.service.CMISRepositoryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
@@ -247,6 +246,8 @@ public class CMISFolder extends CMISModel implements Folder {
 			parentFolder = folder.getParentFolder();
 		}
 		else {
+			Session session = _cmisRepository.getSession();
+
 			String path = _cmisFolder.getPath();
 
 			path = path.substring(0, path.lastIndexOf(CharPool.SLASH));
@@ -255,14 +256,11 @@ public class CMISFolder extends CMISModel implements Folder {
 				path = StringPool.SLASH;
 			}
 
-			Session session =
-				(Session)CMISRepositoryLocalServiceUtil.getSession(
-					getRepositoryId());
-
 			CmisObject parentCmisFolder = session.getObjectByPath(path);
 
-			parentFolder = CMISRepositoryLocalServiceUtil.toFolder(
-				getRepositoryId(), parentCmisFolder);
+			parentFolder = _cmisRepository.toFolder(
+				(org.apache.chemistry.opencmis.client.api.Folder)
+					parentCmisFolder);
 		}
 
 		setParentFolder(parentFolder);

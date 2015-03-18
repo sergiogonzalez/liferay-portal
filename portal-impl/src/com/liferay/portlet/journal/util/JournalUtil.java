@@ -273,7 +273,8 @@ public class JournalUtil {
 
 		PortletURL portletURL = renderResponse.createRenderURL();
 
-		portletURL.setParameter("struts_action", "/article/view_article");
+		portletURL.setParameter(
+			"mvcPath", "/html/portlet/journal/view_article.jsp");
 		portletURL.setParameter(
 			"groupId", String.valueOf(article.getGroupId()));
 		portletURL.setParameter(
@@ -1449,8 +1450,7 @@ public class JournalUtil {
 			JournalArticle journalArticle = itr.next();
 
 			if (journalArticle.getArticleId().equals(articleId) &&
-				((journalArticle.getVersion() == version) ||
-				 (version == 0))) {
+				((journalArticle.getVersion() == version) || (version == 0))) {
 
 				itr.remove();
 			}
