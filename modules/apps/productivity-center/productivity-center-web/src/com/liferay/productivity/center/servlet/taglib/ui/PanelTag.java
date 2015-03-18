@@ -14,6 +14,8 @@
 
 package com.liferay.productivity.center.servlet.taglib.ui;
 
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.productivity.center.panel.PanelCategory;
 import com.liferay.productivity.center.panel.RootPanelCategory;
 import com.liferay.taglib.util.IncludeTag;
@@ -24,6 +26,10 @@ import javax.servlet.http.HttpServletRequest;
  * @author Adolfo Pérez
  */
 public class PanelTag extends IncludeTag {
+
+	public void setId(String id) {
+		_id = id;
+	}
 
 	public void setPanelCategory(PanelCategory panelCategory) {
 		_panelCategory = panelCategory;
@@ -49,10 +55,17 @@ public class PanelTag extends IncludeTag {
 
 		request.setAttribute(
 			"productivity-center-ui:panel:panelCategory", _panelCategory);
+
+		if (Validator.isNull(_id)) {
+			_id = StringUtil.randomId();
+		}
+
+		request.setAttribute("productivity-center-ui:panel:id", _id);
 	}
 
 	private static final String _PAGE = "/taglib/ui/panel/page.jsp";
 
+	private String _id;
 	private PanelCategory _panelCategory;
 
 }

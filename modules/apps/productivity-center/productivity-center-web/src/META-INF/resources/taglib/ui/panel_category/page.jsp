@@ -18,8 +18,13 @@
 
 <%
 PanelCategory panelCategory = (PanelCategory)request.getAttribute("productivity-center-ui:panel-category:panelCategory");
+String parentId = (String)request.getAttribute("productivity-center-ui:panel-category:parentId");
 
 String panelPageCategoryId = "panel-manage-" + panelCategory.getKey();
+
+String portletId = ParamUtil.getString(request, "p_p_id");
+
+PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(panelCategory);
 %>
 
 <liferay-ui:panel
@@ -28,8 +33,9 @@ String panelPageCategoryId = "panel-manage-" + panelCategory.getKey();
 	extended="<%= true %>"
 	iconCssClass="<%= panelCategory.getIconCssClass() %>"
 	id="<%= panelPageCategoryId %>"
+	parentId="<%= parentId %>"
 	persistState="<%= true %>"
-	state="closed"
+	state='<%= panelCategoryHelper.containsPortlet(portletId) ? "open" : "closed" %>'
 	title="<%= panelCategory.getLabel(themeDisplay.getLocale()) %>"
 >
 

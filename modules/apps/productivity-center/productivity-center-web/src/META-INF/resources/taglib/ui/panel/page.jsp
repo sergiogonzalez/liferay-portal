@@ -18,13 +18,22 @@
 
 <%
 PanelCategory panelCategory = (PanelCategory)request.getAttribute("productivity-center-ui:panel:panelCategory");
+String id = (String)request.getAttribute("productivity-center-ui:panel:id");
 %>
 
-<liferay-ui:panel-container
-	accordion="<%= true %>"
-	extended="<%= true %>"
-	id="userPersonalPanelMenuAddContentPanelContainer"
-	persistState="<%= true %>"
->
-	<productivity-center-ui:panel-category panelCategory="<%= panelCategory %>" servletContext="<%= application %>" />
-</liferay-ui:panel-container>
+<div class="portal-add-content">
+	<liferay-ui:panel-container
+		accordion="<%= true %>"
+		extended="<%= true %>"
+		id='<%= id + "MenuAddContentPanelContainer" %>'
+		persistState="<%= true %>"
+	>
+
+		<% for (PanelCategory panelSubcategory : PanelCategoryRegistry.getPanelCategories(panelCategory)) { %>
+
+			<productivity-center-ui:panel-category panelCategory="<%= panelSubcategory %>" parentId='<%= id + "MenuAddContentPanelContainer" %>' servletContext="<%= application %>" />
+
+		<% } %>
+
+	</liferay-ui:panel-container>
+</div>

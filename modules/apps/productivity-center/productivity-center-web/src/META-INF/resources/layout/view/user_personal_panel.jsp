@@ -18,14 +18,16 @@
 
 <%
 String portletId = ParamUtil.getString(request, "p_p_id");
+
+PanelCategory panelCategory = PanelCategoryRegistry.getPanelCategory(PanelCategoryKeys.USER_PERSONAL_PANEL);
 %>
 
 <aui:container>
 	<aui:row>
-		<aui:col width="<%= 25 %>">
-			<productivity-center-ui:panel servletContext="<%= application %>" />
+		<aui:col cssClass="panel-page-menu" width="<%= 25 %>">
+			<productivity-center-ui:panel id="userPersonalPanel" panelCategory="<%= panelCategory %>" servletContext="<%= application %>" />
 		</aui:col>
-		<aui:col width="<%= 75 %>">
+		<aui:col cssClass="panel-page-application panel-page-body" width="<%= 75 %>">
 			<productivity-center-ui:panel-content portletId="<%= portletId %>" servletContext="<%= application %>" />
 		</aui:col>
 	</aui:row>
