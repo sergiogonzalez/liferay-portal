@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Adolfo Pérez
  */
 @Component(
-	immediate = true, property = { "panel.category=" + PanelCategoryKeys.MY },
+	immediate = true, property = {"panel.category=" + PanelCategoryKeys.MY},
 	service = PanelApp.class
 )
 public class MyAccountPanelApp implements PanelApp {

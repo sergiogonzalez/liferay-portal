@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = { "panel.category=" + PanelCategoryKeys.USER_PERSONAL_PANEL },
+	property = {"panel.category=" + PanelCategoryKeys.USER_PERSONAL_PANEL},
 	service = PanelCategory.class
 )
 public class MyPanelCategory implements PanelCategory {
