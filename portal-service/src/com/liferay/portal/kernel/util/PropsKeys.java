@@ -279,12 +279,6 @@ public interface PropsKeys {
 
 	public static final String BLOGS_TRACKBACK_ENABLED = "blogs.trackback.enabled";
 
-	public static final String BREADCRUMB_DDM_TEMPLATE_KEY_DEFAULT = "breadcrumb.ddm.template.key.default";
-
-	public static final String BREADCRUMB_SHOW_GUEST_GROUP = "breadcrumb.show.guest.group";
-
-	public static final String BREADCRUMB_SHOW_PARENT_GROUPS = "breadcrumb.show.parent.groups";
-
 	public static final String BROWSER_CACHE_DISABLED = "browser.cache.disabled";
 
 	public static final String BROWSER_CACHE_SIGNED_IN_DISABLED = "browser.cache.signed.in.disabled";
@@ -754,6 +748,8 @@ public interface PropsKeys {
 	public static final String DL_PUBLISH_TO_LIVE_BY_DEFAULT = "dl.publish.to.live.by.default";
 
 	public static final String DL_RATINGS_ENABLED = "dl.ratings.enabled";
+
+	public static final String DL_RECENT_FILE_MAX_DISPLAY_ITEMS = "dl.recent.file.max.display.items";
 
 	public static final String DL_RELATED_ASSETS_ENABLED = "dl.related.assets.enabled";
 

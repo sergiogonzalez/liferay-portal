@@ -736,7 +736,7 @@ public class LiferaySeleniumHelper {
 		if (line.contains(
 				"Exception sending context destroyed event to listener " +
 					"instance of class com.liferay.portal.spring.context." +
-					"PortalContextLoaderListener")) {
+						"PortalContextLoaderListener")) {
 
 			return true;
 		}
@@ -1017,6 +1017,15 @@ public class LiferaySeleniumHelper {
 
 				return true;
 			}
+		}
+
+		// LPS-54334, temporary workaround until Raymond Aug� fixes it
+
+		if (line.contains(
+				"org.eclipse.equinox.http.servlet.internal.servlet." +
+					"HttpSessionAdaptor")) {
+
+			return true;
 		}
 
 		// WCM-202

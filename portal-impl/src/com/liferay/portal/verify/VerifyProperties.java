@@ -410,8 +410,20 @@ public class VerifyProperties extends VerifyProcess {
 		// Breadcrumb
 
 		new String[] {
+			"breadcrumb.display.style.default", "ddm.template.key.default",
+			"com.liferay.site.navigation.breadcrumb.web"
+		},
+		new String[] {
 			"breadcrumb.display.templates.config", "display.templates.config",
-			"com.liferay.breadcrumb.web"
+			"com.liferay.site.navigation.breadcrumb.web"
+		},
+		new String[] {
+			"breadcrumb.show.guest.group", "show.guest.group",
+			"com.liferay.site.navigation.breadcrumb.web"
+		},
+		new String[] {
+			"breadcrumb.show.parent.groups", "show.parent.groups",
+			"com.liferay.site.navigation.breadcrumb.web"
 		},
 
 		// CAS
@@ -523,7 +535,7 @@ public class VerifyProperties extends VerifyProcess {
 
 		new String[] {
 			"language.display.templates.config", "display.templates.config",
-			"com.liferay.language.web"
+			"com.liferay.site.navigation.language.web"
 		},
 
 		// LDAP
@@ -645,15 +657,15 @@ public class VerifyProperties extends VerifyProcess {
 
 		new String[] {
 			"navigation.display.style", "display.style",
-			"com.liferay.navigation.web"
+			"com.liferay.site.navigation.menu.web"
 		},
 		new String[] {
 			"navigation.display.style.default", "display.style.default",
-			"com.liferay.navigation.web"
+			"com.liferay.site.navigation.menu.web"
 		},
 		new String[] {
 			"navigation.display.style.options", "display.style.options",
-			"com.liferay.navigation.web"
+			"com.liferay.site.navigation.menu.web"
 		},
 
 		// Nested Portlets
@@ -952,10 +964,6 @@ public class VerifyProperties extends VerifyProcess {
 		},
 		new String[] {
 			"amazon.license.3", "amazon.access.key.id"
-		},
-		new String[] {
-			"breadcrumb.display.style.default",
-			"breadcrumb.ddm.template.key.default"
 		},
 		new String[] {
 			"cdn.host", "cdn.host.http"

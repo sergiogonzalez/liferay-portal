@@ -26,6 +26,8 @@ long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folder
 long repositoryId = GetterUtil.getLong((String)request.getAttribute("view.jsp-repositoryId"));
 
 String keywords = ParamUtil.getString(request, "keywords");
+
+String navigation = ParamUtil.getString(request, "navigation", "home");
 %>
 
 <aui:nav-bar>
@@ -84,7 +86,9 @@ String keywords = ParamUtil.getString(request, "keywords");
 
 		<liferay-util:include page="/html/portlet/document_library/add_button.jsp" />
 
-		<liferay-util:include page="/html/portlet/document_library/sort_button.jsp" />
+		<c:if test='<%= !navigation.equals("recent") %>'>
+			<liferay-util:include page="/html/portlet/document_library/sort_button.jsp" />
+		</c:if>
 
 		<c:if test="<%= !user.isDefaultUser() %>">
 			<aui:nav-item dropdown="<%= true %>" label="manage">

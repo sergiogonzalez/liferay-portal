@@ -93,8 +93,8 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 				(Long)getParameterValue("repositoryId"), getSyncAccountId());
 
 			if ((syncSite == null) ||
-				((Long)getParameterValue("lastAccessTime")
-					!= syncSite.getRemoteSyncTime())) {
+				((Long)getParameterValue("lastAccessTime") !=
+					syncSite.getRemoteSyncTime())) {
 
 				return;
 			}
@@ -111,8 +111,7 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 		Path filePath = Paths.get(filePathName);
 
 		if (Files.exists(filePath) &&
-			(syncFile.isFolder() ||
-			 !FileUtil.isModified(syncFile, filePath))) {
+			(syncFile.isFolder() || !FileUtil.isModified(syncFile, filePath))) {
 
 			return;
 		}
@@ -326,7 +325,7 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 			if (isIgnoredFilePath(sourceSyncFile, filePathName) ||
 				((sourceSyncFile != null) &&
 				 (sourceSyncFile.getModifiedTime() ==
-					targetSyncFile.getModifiedTime()))) {
+					 targetSyncFile.getModifiedTime()))) {
 
 				return;
 			}
