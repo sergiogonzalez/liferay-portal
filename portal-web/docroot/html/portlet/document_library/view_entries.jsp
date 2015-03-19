@@ -163,29 +163,25 @@ else {
 		long groupFileEntriesUserId = 0;
 
 		int dlRecentFileMaxDisplayItems = PropsValues.DL_RECENT_FILE_MAX_DISPLAY_ITEMS;
-		int end= dlSearchContainer.getEnd();
-		
-		if (dlRecentFileMaxDisplayItems > 0) {
-            total = dlRecentFileMaxDisplayItems;
-            
-            if (end > dlRecentFileMaxDisplayItems) {
-            	end = dlRecentFileMaxDisplayItems;
-            }
-        }
-        else {
-        	total = DLAppServiceUtil.getGroupFileEntriesCount(repositoryId, groupFileEntriesUserId, folderId, null, status);
-        	
-        }
+		int end = dlSearchContainer.getEnd();
 
-        dlSearchContainer.setTotal(total);
-        
-        orderByCol="modifiedDate";
-        orderByType="desc";
-       
-        orderByComparator = DLUtil.getRepositoryModelOrderByComparator(orderByCol, orderByType);
-        
-        dlSearchContainer.setOrderByComparator(orderByComparator);
-        
+		if (dlRecentFileMaxDisplayItems > 0) {
+			total = dlRecentFileMaxDisplayItems;
+
+			if (end > dlRecentFileMaxDisplayItems) {
+				end = dlRecentFileMaxDisplayItems;
+			}
+		}
+		else {
+			total = DLAppServiceUtil.getGroupFileEntriesCount(repositoryId, groupFileEntriesUserId, folderId, null, status);
+		}
+
+		dlSearchContainer.setTotal(total);
+
+		orderByComparator = DLUtil.getRepositoryModelOrderByComparator("modifiedDate", "desc");
+
+		dlSearchContainer.setOrderByComparator(orderByComparator);
+
 		results = DLAppServiceUtil.getGroupFileEntries(repositoryId, groupFileEntriesUserId, folderId, null, status, dlSearchContainer.getStart(), end, dlSearchContainer.getOrderByComparator());
 	}
 	else if (navigation.equals("mine")) {

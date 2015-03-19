@@ -85,11 +85,11 @@ String navigation = ParamUtil.getString(request, "navigation", "home");
 		</aui:nav-item>
 
 		<liferay-util:include page="/html/portlet/document_library/add_button.jsp" />
-		
+
 		<c:if test='<%= !navigation.equals("recent") %>'>
 			<liferay-util:include page="/html/portlet/document_library/sort_button.jsp" />
 		</c:if>
-		
+
 		<c:if test="<%= !user.isDefaultUser() %>">
 			<aui:nav-item dropdown="<%= true %>" label="manage">
 
