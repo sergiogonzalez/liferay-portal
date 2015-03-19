@@ -55,6 +55,7 @@ portletURL.setParameter("struts_action", "/document_library/view");
 portletURL.setParameter("curFolder", currentFolder);
 portletURL.setParameter("deltaFolder", deltaFolder);
 portletURL.setParameter("folderId", String.valueOf(folderId));
+portletURL.setParameter("navigation", navigation);
 
 SearchContainer dlSearchContainer = new SearchContainer(liferayPortletRequest, null, null, "curEntry", SearchContainer.DEFAULT_DELTA, portletURL, null, null);
 
@@ -158,7 +159,36 @@ else {
 			results = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(repositoryId, folderId, status, false, dlSearchContainer.getStart(), dlSearchContainer.getEnd(), dlSearchContainer.getOrderByComparator());
 		}
 	}
-	else if (navigation.equals("mine") || navigation.equals("recent")) {
+	else if (navigation.equals("recent")) {
+		long groupFileEntriesUserId = 0;
+
+		int dlRecentFileMaxDisplayItems = PropsValues.DL_RECENT_FILE_MAX_DISPLAY_ITEMS;
+		int end= dlSearchContainer.getEnd();
+		
+		if (dlRecentFileMaxDisplayItems > 0) {
+            total = dlRecentFileMaxDisplayItems;
+            
+            if (end > dlRecentFileMaxDisplayItems) {
+            	end = dlRecentFileMaxDisplayItems;
+            }
+        }
+        else {
+        	total = DLAppServiceUtil.getGroupFileEntriesCount(repositoryId, groupFileEntriesUserId, folderId, null, status);
+        	
+        }
+
+        dlSearchContainer.setTotal(total);
+        
+        orderByCol="modifiedDate";
+        orderByType="desc";
+       
+        orderByComparator = DLUtil.getRepositoryModelOrderByComparator(orderByCol, orderByType);
+        
+        dlSearchContainer.setOrderByComparator(orderByComparator);
+        
+		results = DLAppServiceUtil.getGroupFileEntries(repositoryId, groupFileEntriesUserId, folderId, null, status, dlSearchContainer.getStart(), end, dlSearchContainer.getOrderByComparator());
+	}
+	else if (navigation.equals("mine")) {
 		long groupFileEntriesUserId = 0;
 
 		if (navigation.equals("mine") && themeDisplay.isSignedIn()) {
