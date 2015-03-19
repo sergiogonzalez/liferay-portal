@@ -749,6 +749,8 @@ public interface PropsKeys {
 
 	public static final String DL_RATINGS_ENABLED = "dl.ratings.enabled";
 
+	public static final String DL_RECENT_FILE_MAX_DISPLAY_ITEMS = "dl.recent.file.max.display.items";
+	
 	public static final String DL_RELATED_ASSETS_ENABLED = "dl.related.assets.enabled";
 
 	public static final String DL_REPOSITORY_CMIS_DELETE_DEPTH = "dl.repository.cmis.delete.depth";
