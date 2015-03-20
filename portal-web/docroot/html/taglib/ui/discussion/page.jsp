@@ -96,7 +96,7 @@ CommentsEditorDisplayContext commentsEditorDisplayContext = new CommentsEditorDi
 
 							<c:choose>
 								<c:when test="<%= themeDisplay.isSignedIn() || !SSOUtil.isLoginRedirectRequired(themeDisplay.getCompanyId()) %>">
-									<a href="<%= taglibPostReplyURL %>"><liferay-ui:message key= '<%= messagesCount == 1 ? "be-the-first" : "reply" %>' /></a>
+									<a href="<%= taglibPostReplyURL %>"><liferay-ui:message key='<%= messagesCount == 1 ? "be-the-first" : "reply" %>' /></a>
 								</c:when>
 								<c:otherwise>
 									<a href="<%= themeDisplay.getURLSignIn() %>"><liferay-ui:message key="please-sign-in-to-comment" /></a>
