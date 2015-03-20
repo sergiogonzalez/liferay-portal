@@ -85,7 +85,9 @@ CommentsEditorDisplayContext commentsEditorDisplayContext = new CommentsEditorDi
 							</div>
 
 							<%
-							String taglibPostReplyURL = "javascript:" + randomNamespace + "showEl('" + randomNamespace + "postReplyForm0');";
+							String taglibPostReplyURL = "javascript:"
+								+ randomNamespace + "showEditor('" + namespace + randomNamespace + "postReplyBody0','" + namespace + randomNamespace + "postReplyForm0'); "
+								+ randomNamespace + "hideEditor('" + namespace + randomNamespace + "editReplyBody0','" + namespace + randomNamespace + "editForm0');" + randomNamespace + "showEl('" + namespace + randomNamespace + "discussionMessage0')";
 							%>
 
 							<c:if test="<%= messagesCount == 1 %>">
@@ -135,22 +137,24 @@ CommentsEditorDisplayContext commentsEditorDisplayContext = new CommentsEditorDi
 							<c:choose>
 								<c:when test="<%= themeDisplay.isSignedIn() || !SSOUtil.isLoginRedirectRequired(themeDisplay.getCompanyId()) %>">
 									<aui:row fluid="<%= true %>">
-										<div class="lfr-discussion-details">
-											<liferay-ui:user-display
-												displayStyle="2"
-												showUserName="<%= false %>"
-												userId="<%= user.getUserId() %>"
-											/>
-										</div>
+										<div class="lfr-discussion lfr-discussion-form-reply" id='<portlet:namespace /><%= randomNamespace + "postReplyForm0" %>' style="display: none;">
+											<div class="lfr-discussion-details">
+												<liferay-ui:user-display
+													displayStyle="2"
+													showUserName="<%= false %>"
+													userId="<%= user.getUserId() %>"
+												/>
+											</div>
 
-										<div class="lfr-discussion-body">
-											<liferay-ui:input-editor contents="" data="<%= commentsEditorDisplayContext.getEditorData() %>" editorImpl="<%= EDITOR_IMPL_KEY %>" name='<%= randomNamespace + "postReplyBody0" %>' onChangeMethod='<%= randomNamespace + "0OnChange" %>' placeholder="type-your-comment-here" />
+											<div class="lfr-discussion-body">
+												<liferay-ui:input-editor autoCreate="<%= false %>" contents="" data="<%= commentsEditorDisplayContext.getEditorData() %>" editorImpl="<%= EDITOR_IMPL_KEY %>" name='<%= randomNamespace + "postReplyBody0" %>' onChangeMethod='<%= randomNamespace + "0OnChange" %>' placeholder="type-your-comment-here" />
 
-											<aui:input name="postReplyBody0" type="hidden" />
+												<aui:input name="postReplyBody0" type="hidden" />
 
-											<aui:button-row>
-												<aui:button cssClass="btn-comment btn-primary" disabled="<%= true %>" id='<%= randomNamespace + "postReplyButton0" %>' onClick='<%= randomNamespace + "postReply(0);" %>' value='<%= LanguageUtil.get(request, "reply") %>' />
-											</aui:button-row>
+												<aui:button-row>
+													<aui:button cssClass="btn-comment btn-primary" disabled="<%= true %>" id='<%= randomNamespace + "postReplyButton0" %>' onClick='<%= randomNamespace + "postReply(0);" %>' value='<%= LanguageUtil.get(request, "reply") %>' />
+												</aui:button-row>
+											</div>
 										</div>
 									</aui:row>
 								</c:when>
