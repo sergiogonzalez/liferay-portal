@@ -91,15 +91,17 @@ CommentsEditorDisplayContext commentsEditorDisplayContext = new CommentsEditorDi
 							%>
 
 							<c:if test="<%= messagesCount == 1 %>">
-								<c:choose>
-									<c:when test="<%= themeDisplay.isSignedIn() || !SSOUtil.isLoginRedirectRequired(themeDisplay.getCompanyId()) %>">
-										<liferay-ui:message key="no-comments-yet" /> <a href="<%= taglibPostReplyURL %>"><liferay-ui:message key="be-the-first" /></a>
-									</c:when>
-									<c:otherwise>
-										<liferay-ui:message key="no-comments-yet" /> <a href="<%= themeDisplay.getURLSignIn() %>"><liferay-ui:message key="please-sign-in-to-comment" /></a>
-									</c:otherwise>
-								</c:choose>
+								<liferay-ui:message key="no-comments-yet" />
 							</c:if>
+
+							<c:choose>
+								<c:when test="<%= themeDisplay.isSignedIn() || !SSOUtil.isLoginRedirectRequired(themeDisplay.getCompanyId()) %>">
+									<a href="<%= taglibPostReplyURL %>"><liferay-ui:message key= '<%= messagesCount == 1 ? "be-the-first" : "reply" %>' /></a>
+								</c:when>
+								<c:otherwise>
+									<a href="<%= themeDisplay.getURLSignIn() %>"><liferay-ui:message key="please-sign-in-to-comment" /></a>
+								</c:otherwise>
+							</c:choose>
 						</c:if>
 
 						<%
