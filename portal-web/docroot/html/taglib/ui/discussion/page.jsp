@@ -85,9 +85,7 @@ CommentsEditorDisplayContext commentsEditorDisplayContext = new CommentsEditorDi
 							</div>
 
 							<%
-							String taglibPostReplyURL = "javascript:"
-								+ randomNamespace + "showEditor('" + namespace + randomNamespace + "postReplyBody0','" + namespace + randomNamespace + "postReplyForm0'); "
-								+ randomNamespace + "hideEditor('" + namespace + randomNamespace + "editReplyBody0','" + namespace + randomNamespace + "editForm0');" + randomNamespace + "showEl('" + namespace + randomNamespace + "discussionMessage0')";
+							String taglibPostReplyURL = "javascript:" + randomNamespace + "showEditor('" + namespace + randomNamespace + "postReplyBody0','" + namespace + randomNamespace + "postReplyForm0');" + randomNamespace + "hideEditor('" + namespace + randomNamespace + "editReplyBody0','" + namespace + randomNamespace + "editForm0');" + randomNamespace + "showEl('" + namespace + randomNamespace + "discussionMessage0')";
 							%>
 
 							<c:if test="<%= messagesCount == 1 %>">
@@ -96,7 +94,7 @@ CommentsEditorDisplayContext commentsEditorDisplayContext = new CommentsEditorDi
 
 							<c:choose>
 								<c:when test="<%= themeDisplay.isSignedIn() || !SSOUtil.isLoginRedirectRequired(themeDisplay.getCompanyId()) %>">
-									<a href="<%= taglibPostReplyURL %>"><liferay-ui:message key='<%= messagesCount == 1 ? "be-the-first" : "reply" %>' /></a>
+									<a href="<%= taglibPostReplyURL %>"><liferay-ui:message key='<%= (messagesCount == 1) ? "be-the-first" : "reply" %>' /></a>
 								</c:when>
 								<c:otherwise>
 									<a href="<%= themeDisplay.getURLSignIn() %>"><liferay-ui:message key="please-sign-in-to-comment" /></a>
