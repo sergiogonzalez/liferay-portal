@@ -25,6 +25,7 @@ import com.liferay.sync.engine.model.SyncWatchEvent;
 import com.liferay.sync.engine.service.SyncAccountService;
 import com.liferay.sync.engine.service.SyncFileService;
 import com.liferay.sync.engine.service.SyncWatchEventService;
+import com.liferay.sync.engine.util.FileKeyUtil;
 import com.liferay.sync.engine.util.FileUtil;
 import com.liferay.sync.engine.util.OSDetector;
 import com.liferay.sync.engine.util.SyncEngineUtil;
@@ -136,8 +137,7 @@ public class SyncWatchEventProcessor implements Runnable {
 			parentTargetFilePath.toString());
 
 		if ((parentSyncFile == null) ||
-			(!parentSyncFile.isSystem() &&
-			 (parentSyncFile.getTypePK() == 0))) {
+			(!parentSyncFile.isSystem() && (parentSyncFile.getTypePK() == 0))) {
 
 			queueSyncWatchEvent(
 				parentTargetFilePath.toString(), syncWatchEvent);
@@ -150,7 +150,7 @@ public class SyncWatchEventProcessor implements Runnable {
 
 		if (syncFile == null) {
 			syncFile = SyncFileService.fetchSyncFile(
-				FileUtil.getFileKey(targetFilePath));
+				FileKeyUtil.getFileKey(targetFilePath));
 		}
 
 		if (syncFile == null) {
@@ -264,8 +264,7 @@ public class SyncWatchEventProcessor implements Runnable {
 			parentTargetFilePath.toString());
 
 		if ((parentSyncFile == null) ||
-			(!parentSyncFile.isSystem() &&
-			 (parentSyncFile.getTypePK() == 0))) {
+			(!parentSyncFile.isSystem() && (parentSyncFile.getTypePK() == 0))) {
 
 			queueSyncWatchEvent(
 				parentTargetFilePath.toString(), syncWatchEvent);
@@ -278,7 +277,7 @@ public class SyncWatchEventProcessor implements Runnable {
 
 		if (syncFile == null) {
 			syncFile = SyncFileService.fetchSyncFile(
-				FileUtil.getFileKey(targetFilePath));
+				FileKeyUtil.getFileKey(targetFilePath));
 		}
 
 		if (syncFile == null) {
@@ -292,7 +291,7 @@ public class SyncWatchEventProcessor implements Runnable {
 		Path sourceFilePath = Paths.get(syncFile.getFilePathName());
 
 		if (targetFilePath.equals(sourceFilePath)) {
-			FileUtil.writeFileKey(
+			FileKeyUtil.writeFileKey(
 				targetFilePath, String.valueOf(syncFile.getSyncFileId()));
 		}
 		else if (Files.exists(sourceFilePath)) {
@@ -504,8 +503,7 @@ public class SyncWatchEventProcessor implements Runnable {
 			parentTargetFilePath.toString());
 
 		if ((parentSyncFile == null) ||
-			(!parentSyncFile.isSystem() &&
-			 (parentSyncFile.getTypePK() == 0))) {
+			(!parentSyncFile.isSystem() && (parentSyncFile.getTypePK() == 0))) {
 
 			queueSyncWatchEvent(
 				parentTargetFilePath.toString(), syncWatchEvent);

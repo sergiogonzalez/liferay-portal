@@ -24,6 +24,7 @@ import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutRevision;
 import com.liferay.portal.model.PortletPreferencesIds;
 import com.liferay.portal.model.User;
+import com.liferay.portal.model.UserConstants;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutRevisionLocalServiceUtil;
@@ -203,17 +204,27 @@ public class PortletPreferencesLocalServiceStagingAdvice
 			return methodInvocation.proceed();
 		}
 
-		User user = UserLocalServiceUtil.getUserById(
-			PrincipalThreadLocal.getUserId());
+		long userId = PrincipalThreadLocal.getUserId();
 
-		plid = StagingUtil.getRecentLayoutRevisionId(
-			user, layoutRevision.getLayoutSetBranchId(), layout.getPlid());
+		if (userId == UserConstants.USER_ID_DEFAULT) {
+			plid = layoutRevision.getLayoutRevisionId();
+		}
+		else {
+			User user = UserLocalServiceUtil.getUserById(userId);
+
+			plid = StagingUtil.getRecentLayoutRevisionId(
+				user, layoutRevision.getLayoutSetBranchId(), layout.getPlid());
+		}
 
 		if (arguments.length == 1) {
 			PortletPreferencesIds portletPreferencesIds =
 				(PortletPreferencesIds)arguments[0];
 
-			portletPreferencesIds.setPlid(plid);
+			arguments[0] = new PortletPreferencesIds(
+				portletPreferencesIds.getCompanyId(),
+				portletPreferencesIds.getOwnerId(),
+				portletPreferencesIds.getOwnerType(), plid,
+				portletPreferencesIds.getPortletId());
 		}
 		else {
 			arguments[3] = plid;

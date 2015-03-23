@@ -98,6 +98,9 @@ public class InvokerFilterChain implements FilterChain {
 					catch (IOException ioe) {
 						throw ioe;
 					}
+					catch (RuntimeException re) {
+						throw re;
+					}
 					catch (ServletException se) {
 						throw se;
 					}

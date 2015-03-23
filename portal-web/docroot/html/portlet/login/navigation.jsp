@@ -18,6 +18,7 @@
 
 <liferay-util:buffer var="navigation">
 	<liferay-ui:icon-list>
+		<liferay-util:dynamic-include key="/html/portlet/login/navigation.jsp#pre" />
 
 		<%
 		for (String section : PropsValues.LOGIN_FORM_NAVIGATION_PRE) {
@@ -37,6 +38,7 @@
 		}
 		%>
 
+		<liferay-util:dynamic-include key="/html/portlet/login/navigation.jsp#post" />
 	</liferay-ui:icon-list>
 </liferay-util:buffer>
 
