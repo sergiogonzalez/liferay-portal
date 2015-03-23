@@ -39,7 +39,7 @@ public class ImageUploaderValidatorUtil {
 	public static void validateFileSize(String fileName, byte[] bytes)
 		throws FileSizeException {
 
-			getImageUploaderValidator().validateFileSize(fileName, bytes);
+		getImageUploaderValidator().validateFileSize(fileName, bytes);
 	}
 
 	public static void validateFileSize(String fileName, long size)
