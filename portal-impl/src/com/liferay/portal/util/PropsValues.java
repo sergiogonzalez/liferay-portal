@@ -733,6 +733,8 @@ public class PropsValues {
 	public static final boolean IMAGE_IO_USE_DISK_CACHE = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.IMAGE_IO_USE_DISK_CACHE));
 
 	public static final boolean IMAGEMAGICK_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.IMAGEMAGICK_ENABLED));
+	
+	public static final long IMAGE_UPLOADER_MAX_SIZE = GetterUtil.getLong(PropsUtil.get(PropsKeys.IMAGE_UPLOADER_MAX_SIZE));
 
 	public static final String INDEX_DATE_FORMAT_PATTERN = PropsUtil.get(PropsKeys.INDEX_DATE_FORMAT_PATTERN);
 

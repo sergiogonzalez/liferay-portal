@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Image;
 import com.liferay.portal.service.base.ImageLocalServiceBaseImpl;
 import com.liferay.portal.webserver.WebServerServletTokenUtil;
+import com.liferay.portlet.imageuploader.util.ImageUploaderValidatorUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -169,6 +170,9 @@ public class ImageLocalServiceImpl extends ImageLocalServiceBaseImpl {
 		image.setHeight(height);
 		image.setWidth(width);
 		image.setSize(size);
+
+		ImageUploaderValidatorUtil.validateFileSize(
+			image.getImageId(), image.getType(), bytes);
 
 		Hook hook = HookFactory.getInstance();
 

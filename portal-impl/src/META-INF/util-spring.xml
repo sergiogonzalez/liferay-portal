@@ -910,6 +910,11 @@
 			<bean class="com.liferay.portlet.documentlibrary.util.DLValidatorImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portlet.imageuploader.util.ImageUploaderValidatorUtil" class="com.liferay.portlet.imageuploader.util.ImageUploaderValidatorUtil">
+		<property name="ImageUploaderValidator">
+			<bean class="com.liferay.portlet.imageuploader.util.ImageUploaderValidatorImpl" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portlet.dynamicdatalists.util.DDLExporterFactory" class="com.liferay.portlet.dynamicdatalists.util.DDLExporterFactory">
 		<property name="DDLExporters">
 			<map>

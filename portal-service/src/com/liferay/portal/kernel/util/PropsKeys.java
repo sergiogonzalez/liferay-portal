@@ -967,6 +967,8 @@ public interface PropsKeys {
 
 	public static final String IMAGE_IO_USE_DISK_CACHE = "image.io.use.disk.cache";
 
+	public static final String IMAGE_UPLOADER_MAX_SIZE = "image.uploader.max.size";
+
 	public static final String IMAGEMAGICK_ENABLED = "imagemagick.enabled";
 
 	public static final String IMAGEMAGICK_GLOBAL_SEARCH_PATH = "imagemagick.global.search.path";
