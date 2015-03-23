@@ -1,4 +1,4 @@
-create table App (
+create table Marketplace_App (
 	uuid_ VARCHAR(75) null,
 	appId LONG not null primary key,
 	companyId LONG,
@@ -8,17 +8,17 @@ create table App (
 	modifiedDate DATE null,
 	remoteAppId LONG,
 	title VARCHAR(75) null,
-	description VARCHAR(75) null,
+	description STRING null,
 	category VARCHAR(75) null,
-	iconURL VARCHAR(75) null,
+	iconURL STRING null,
 	version VARCHAR(75) null
 );
 
-create table Module (
+create table Marketplace_Module (
 	uuid_ VARCHAR(75) null,
 	moduleId LONG not null primary key,
 	appId LONG,
-	bundleSymbolicName VARCHAR(75) null,
+	bundleSymbolicName VARCHAR(500) null,
 	bundleVersion VARCHAR(75) null,
 	contextName VARCHAR(75) null
 );

@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Image;
 import com.liferay.portal.service.base.ImageLocalServiceBaseImpl;
 import com.liferay.portal.webserver.WebServerServletTokenUtil;
+import com.liferay.portlet.imageuploader.util.ImageUploaderValidatorUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -170,6 +171,9 @@ public class ImageLocalServiceImpl extends ImageLocalServiceBaseImpl {
 		image.setWidth(width);
 		image.setSize(size);
 
+		ImageUploaderValidatorUtil.validateFileSize(
+			image.getImageId(), image.getType(), bytes);
+
 		Hook hook = HookFactory.getInstance();
 
 		hook.updateImage(image, type, bytes);
@@ -235,8 +239,7 @@ public class ImageLocalServiceImpl extends ImageLocalServiceBaseImpl {
 	}
 
 	protected void validate(String type) throws PortalException {
-		if ((type == null) ||
-			type.contains(StringPool.BACK_SLASH) ||
+		if ((type == null) || type.contains(StringPool.BACK_SLASH) ||
 			type.contains(StringPool.COLON) ||
 			type.contains(StringPool.GREATER_THAN) ||
 			type.contains(StringPool.LESS_THAN) ||
@@ -246,8 +249,7 @@ public class ImageLocalServiceImpl extends ImageLocalServiceBaseImpl {
 			type.contains(StringPool.QUESTION) ||
 			type.contains(StringPool.QUOTE) ||
 			type.contains(StringPool.SLASH) ||
-			type.contains(StringPool.SPACE) ||
-			type.contains(StringPool.STAR)) {
+			type.contains(StringPool.SPACE) || type.contains(StringPool.STAR)) {
 
 			throw new ImageTypeException();
 		}

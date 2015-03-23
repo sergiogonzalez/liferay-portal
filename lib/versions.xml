@@ -18,7 +18,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/alloy-taglib.jar</file-name>
-				<version>1.1.1</version>
+				<version>1.1.2</version>
 				<project-name>Alloy TagLibs</project-name>
 				<project-url>https://github.com/liferay/alloy-taglibs</project-url>
 				<licenses>
@@ -2694,7 +2694,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/liferay-icu4j.jar</file-name>
-				<version>4.0.1</version>
+				<version>54.1.1.LIFERAY-PATCHED-1</version>
 				<project-name>ICU4J</project-name>
 				<project-url>http://www.icu-project.org</project-url>
 				<licenses>
@@ -2705,7 +2705,8 @@
 					</license>
 				</licenses>
 				<comments>
-					See LPS-1907 and LPS-36663.
+					See LPS-1907, LPS-36663, LPS-54422, and
+					modules/third-party/com-ibm-icu/build.xml.
 				</comments>
 			</library>
 			<library>

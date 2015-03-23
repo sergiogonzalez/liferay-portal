@@ -279,12 +279,6 @@ public interface PropsKeys {
 
 	public static final String BLOGS_TRACKBACK_ENABLED = "blogs.trackback.enabled";
 
-	public static final String BREADCRUMB_DDM_TEMPLATE_KEY_DEFAULT = "breadcrumb.ddm.template.key.default";
-
-	public static final String BREADCRUMB_SHOW_GUEST_GROUP = "breadcrumb.show.guest.group";
-
-	public static final String BREADCRUMB_SHOW_PARENT_GROUPS = "breadcrumb.show.parent.groups";
-
 	public static final String BROWSER_CACHE_DISABLED = "browser.cache.disabled";
 
 	public static final String BROWSER_CACHE_SIGNED_IN_DISABLED = "browser.cache.signed.in.disabled";
@@ -973,6 +967,8 @@ public interface PropsKeys {
 
 	public static final String IMAGE_IO_USE_DISK_CACHE = "image.io.use.disk.cache";
 
+	public static final String IMAGE_UPLOADER_MAX_SIZE = "image.uploader.max.size";
+
 	public static final String IMAGEMAGICK_ENABLED = "imagemagick.enabled";
 
 	public static final String IMAGEMAGICK_GLOBAL_SEARCH_PATH = "imagemagick.global.search.path";
@@ -1177,6 +1173,18 @@ public interface PropsKeys {
 
 	public static final String JOURNAL_EMAIL_ARTICLE_APPROVAL_REQUESTED_SUBJECT = "journal.email.article.approval.requested.subject";
 
+	public static final String JOURNAL_EMAIL_ARTICLE_MOVED_FROM_FOLDER_BODY = "journal.email.article.moved.from.folder.body";
+
+	public static final String JOURNAL_EMAIL_ARTICLE_MOVED_FROM_FOLDER_ENABLED = "journal.email.article.moved.from.folder.enabled";
+
+	public static final String JOURNAL_EMAIL_ARTICLE_MOVED_FROM_FOLDER_SUBJECT = "journal.email.article.moved.from.folder.subject";
+
+	public static final String JOURNAL_EMAIL_ARTICLE_MOVED_TO_FOLDER_BODY = "journal.email.article.moved.to.folder.body";
+
+	public static final String JOURNAL_EMAIL_ARTICLE_MOVED_TO_FOLDER_ENABLED = "journal.email.article.moved.to.folder.enabled";
+
+	public static final String JOURNAL_EMAIL_ARTICLE_MOVED_TO_FOLDER_SUBJECT = "journal.email.article.moved.to.folder.subject";
+
 	public static final String JOURNAL_EMAIL_ARTICLE_REVIEW_BODY = "journal.email.article.review.body";
 
 	public static final String JOURNAL_EMAIL_ARTICLE_REVIEW_ENABLED = "journal.email.article.review.enabled";
@@ -1302,8 +1310,6 @@ public interface PropsKeys {
 	public static final String LAYOUT_PROTOTYPE_MERGE_LOCK_MAX_TIME = "layout.prototype.merge.lock.max.time";
 
 	public static final String LAYOUT_REMEMBER_MAXIMIZED_WINDOW_STATE = "layout.remember.maximized.window.state";
-
-	public static final String LAYOUT_RESET_PORTLET_IDS = "layout.reset.portlet.ids";
 
 	public static final String LAYOUT_SET_FORM_UPDATE = "layout.set.form.update";
 
@@ -2096,6 +2102,8 @@ public interface PropsKeys {
 	public static final String PORTLET_INTERRUPTED_REQUEST_WHITELIST = "portlet.interrupted.request.whitelist";
 
 	public static final String PORTLET_INTERRUPTED_REQUEST_WHITELIST_ACTIONS = "portlet.interrupted.request.whitelist.actions";
+
+	public static final String PORTLET_PREFERENCES_STRICT_STORE = "portlet.preferences.strict.store";
 
 	public static final String PORTLET_PUBLIC_RENDER_PARAMETER_DISTRIBUTION = "portlet.public.render.parameter.distribution";
 

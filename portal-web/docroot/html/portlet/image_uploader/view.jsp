@@ -21,6 +21,12 @@ String currentImageURL = ParamUtil.getString(request, "currentLogoURL");
 long maxFileSize = ParamUtil.getLong(request, "maxFileSize");
 String tempImageFileName = ParamUtil.getString(request, "tempImageFileName");
 String randomNamespace = ParamUtil.getString(request, "randomNamespace");
+
+long uploaderMaxSize = PrefsPropsUtil.getLong(PropsKeys.IMAGE_UPLOADER_MAX_SIZE);
+
+if ((uploaderMaxSize > 0) && (maxFileSize > uploaderMaxSize)) {
+	maxFileSize = uploaderMaxSize;
+}
 %>
 
 <liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="previewURL">

@@ -214,12 +214,6 @@ public class PropsValues {
 
 	public static final boolean BLOGS_TRACKBACK_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.BLOGS_TRACKBACK_ENABLED));
 
-	public static final String BREADCRUMB_DDM_TEMPLATE_KEY_DEFAULT = PropsUtil.get(PropsKeys.BREADCRUMB_DDM_TEMPLATE_KEY_DEFAULT);
-
-	public static final boolean BREADCRUMB_SHOW_GUEST_GROUP = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.BREADCRUMB_SHOW_GUEST_GROUP));
-
-	public static final boolean BREADCRUMB_SHOW_PARENT_GROUPS = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.BREADCRUMB_SHOW_PARENT_GROUPS));
-
 	public static final boolean BROWSER_CACHE_DISABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.BROWSER_CACHE_DISABLED));
 
 	public static final boolean BROWSER_CACHE_SIGNED_IN_DISABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.BROWSER_CACHE_SIGNED_IN_DISABLED));
@@ -739,6 +733,8 @@ public class PropsValues {
 	public static final boolean IMAGE_IO_USE_DISK_CACHE = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.IMAGE_IO_USE_DISK_CACHE));
 
 	public static final boolean IMAGEMAGICK_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.IMAGEMAGICK_ENABLED));
+	
+	public static final long IMAGE_UPLOADER_MAX_SIZE = GetterUtil.getLong(PropsUtil.get(PropsKeys.IMAGE_UPLOADER_MAX_SIZE));
 
 	public static final String INDEX_DATE_FORMAT_PATTERN = PropsUtil.get(PropsKeys.INDEX_DATE_FORMAT_PATTERN);
 
@@ -850,6 +846,14 @@ public class PropsValues {
 
 	public static final String JOURNAL_EMAIL_ARTICLE_APPROVAL_REQUESTED_SUBJECT = PropsUtil.get(PropsKeys.JOURNAL_EMAIL_ARTICLE_APPROVAL_REQUESTED_SUBJECT);
 
+	public static final String JOURNAL_EMAIL_ARTICLE_MOVED_FROM_FOLDER_BODY = PropsUtil.get(PropsKeys.JOURNAL_EMAIL_ARTICLE_MOVED_FROM_FOLDER_BODY);
+
+	public static final String JOURNAL_EMAIL_ARTICLE_MOVED_FROM_FOLDER_SUBJECT = PropsUtil.get(PropsKeys.JOURNAL_EMAIL_ARTICLE_MOVED_FROM_FOLDER_SUBJECT);
+
+	public static final String JOURNAL_EMAIL_ARTICLE_MOVED_TO_FOLDER_BODY = PropsUtil.get(PropsKeys.JOURNAL_EMAIL_ARTICLE_MOVED_TO_FOLDER_BODY);
+
+	public static final String JOURNAL_EMAIL_ARTICLE_MOVED_TO_FOLDER_SUBJECT = PropsUtil.get(PropsKeys.JOURNAL_EMAIL_ARTICLE_MOVED_TO_FOLDER_SUBJECT);
+
 	public static final String JOURNAL_EMAIL_ARTICLE_REVIEW_BODY = PropsUtil.get(PropsKeys.JOURNAL_EMAIL_ARTICLE_REVIEW_BODY);
 
 	public static final String JOURNAL_EMAIL_ARTICLE_REVIEW_SUBJECT = PropsUtil.get(PropsKeys.JOURNAL_EMAIL_ARTICLE_REVIEW_SUBJECT);
@@ -943,8 +947,6 @@ public class PropsValues {
 	public static final long LAYOUT_PROTOTYPE_MERGE_LOCK_MAX_TIME = GetterUtil.getLong(PropsUtil.get(PropsKeys.LAYOUT_PROTOTYPE_MERGE_LOCK_MAX_TIME)) * Time.SECOND;
 
 	public static final boolean LAYOUT_REMEMBER_MAXIMIZED_WINDOW_STATE = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.LAYOUT_REMEMBER_MAXIMIZED_WINDOW_STATE));
-
-	public static final String[] LAYOUT_RESET_PORTLET_IDS = PropsUtil.getArray(PropsKeys.LAYOUT_RESET_PORTLET_IDS);
 
 	public static String[] LAYOUT_SET_FORM_UPDATE = PropsUtil.getArray(PropsKeys.LAYOUT_SET_FORM_UPDATE);
 
@@ -1481,6 +1483,8 @@ public class PropsValues {
 	public static String[] PORTLET_INTERRUPTED_REQUEST_WHITELIST = PropsUtil.getArray(PropsKeys.PORTLET_INTERRUPTED_REQUEST_WHITELIST);
 
 	public static String[] PORTLET_INTERRUPTED_REQUEST_WHITELIST_ACTIONS = PropsUtil.getArray(PropsKeys.PORTLET_INTERRUPTED_REQUEST_WHITELIST_ACTIONS);
+
+	public static final boolean PORTLET_PREFERENCES_STRICT_STORE = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.PORTLET_PREFERENCES_STRICT_STORE));
 
 	public static final String PORTLET_PUBLIC_RENDER_PARAMETER_DISTRIBUTION = PropsUtil.get(PropsKeys.PORTLET_PUBLIC_RENDER_PARAMETER_DISTRIBUTION);
 
