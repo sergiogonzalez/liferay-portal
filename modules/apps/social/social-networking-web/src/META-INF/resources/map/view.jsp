@@ -44,13 +44,9 @@ else if (friendsProfileMap) {
 else {
 	renderResponse.setTitle(LanguageUtil.format(request, "where-is-x", user2.getFirstName(), false));
 }
-%>
 
-<%
 IPGeocoder ipGeocoder = (IPGeocoder)request.getAttribute(SocialNetworkingWebKeys.IP_GEOCODER);
-%>
 
-<%
 PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(company.getCompanyId());
 
 String companyMapsAPIProvider = PrefsParamUtil.getString(companyPortletPreferences, request, "mapsAPIProvider", "Google");
