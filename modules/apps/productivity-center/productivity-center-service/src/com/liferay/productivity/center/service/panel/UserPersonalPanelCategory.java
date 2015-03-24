@@ -15,7 +15,6 @@
 package com.liferay.productivity.center.service.panel;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -47,7 +46,7 @@ public class UserPersonalPanelCategory implements PanelCategory {
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "category.user_personal_panel");
+		return StringPool.BLANK;
 	}
 
 	@Override
