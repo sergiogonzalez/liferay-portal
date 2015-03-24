@@ -71,10 +71,8 @@ boolean showToolbar = ParamUtil.getBoolean(request, "showToolbar", true);
 DDMDisplay ddmDisplay = DDMDisplayRegistryUtil.getDDMDisplay(refererPortletName);
 
 DDMPermissionHandler ddmPermissionHandler = ddmDisplay.getDDMPermissionHandler();
-
-long scopeClassNameId = PortalUtil.getClassNameId(ddmDisplay.getStructureType());
-
 String scopeAvailableFields = ddmDisplay.getAvailableFields();
+long scopeClassNameId = PortalUtil.getClassNameId(ddmDisplay.getStructureType());
 String scopeStorageType = ddmDisplay.getStorageType();
 String scopeTemplateType = ddmDisplay.getTemplateType();
 

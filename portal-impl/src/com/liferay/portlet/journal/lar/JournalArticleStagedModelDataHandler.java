@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -106,27 +105,21 @@ public class JournalArticleStagedModelDataHandler
 	}
 
 	@Override
-	public JournalArticle fetchStagedModelByUuidAndCompanyId(
-		String uuid, long companyId) {
-
-		List<JournalArticle> articles =
-			JournalArticleLocalServiceUtil.getJournalArticlesByUuidAndCompanyId(
-				uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				new StagedModelModifiedDateComparator<JournalArticle>());
-
-		if (ListUtil.isEmpty(articles)) {
-			return null;
-		}
-
-		return articles.get(0);
-	}
-
-	@Override
 	public JournalArticle fetchStagedModelByUuidAndGroupId(
 		String uuid, long groupId) {
 
 		return JournalArticleLocalServiceUtil.
 			fetchJournalArticleByUuidAndGroupId(uuid, groupId);
+	}
+
+	@Override
+	public List<JournalArticle> fetchStagedModelsByUuidAndCompanyId(
+		String uuid, long companyId) {
+
+		return JournalArticleLocalServiceUtil.
+			getJournalArticlesByUuidAndCompanyId(
+				uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				new StagedModelModifiedDateComparator<JournalArticle>());
 	}
 
 	@Override
@@ -204,10 +197,10 @@ public class JournalArticleStagedModelDataHandler
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				Group.class);
 
-		long liveGroupId = GetterUtil.getLong(
-			referenceElement.attributeValue("live-group-id"));
+		long groupId = GetterUtil.getLong(
+			referenceElement.attributeValue("group-id"));
 
-		liveGroupId = MapUtil.getLong(groupIds, liveGroupId);
+		groupId = MapUtil.getLong(groupIds, groupId);
 
 		String articleArticleId = referenceElement.attributeValue("article-id");
 		boolean preloaded = GetterUtil.getBoolean(
@@ -216,7 +209,7 @@ public class JournalArticleStagedModelDataHandler
 		JournalArticle existingArticle = null;
 
 		existingArticle = fetchExistingArticle(
-			uuid, articleResourceUuid, liveGroupId, articleArticleId, null, 0.0,
+			uuid, articleResourceUuid, groupId, articleArticleId, null, 0.0,
 			preloaded);
 
 		Map<String, String> articleArticleIds =
@@ -249,17 +242,17 @@ public class JournalArticleStagedModelDataHandler
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				Group.class);
 
-		long liveGroupId = GetterUtil.getLong(
-			referenceElement.attributeValue("live-group-id"));
+		long groupId = GetterUtil.getLong(
+			referenceElement.attributeValue("group-id"));
 
-		liveGroupId = MapUtil.getLong(groupIds, liveGroupId);
+		groupId = MapUtil.getLong(groupIds, groupId);
 
 		String articleArticleId = referenceElement.attributeValue("article-id");
 		boolean preloaded = GetterUtil.getBoolean(
 			referenceElement.attributeValue("preloaded"));
 
 		JournalArticle existingArticle = fetchExistingArticle(
-			uuid, articleResourceUuid, liveGroupId, articleArticleId, null, 0.0,
+			uuid, articleResourceUuid, groupId, articleArticleId, null, 0.0,
 			preloaded);
 
 		if (existingArticle == null) {

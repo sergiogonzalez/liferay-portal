@@ -127,7 +127,7 @@ public class ShoppingItemLocalServiceImpl
 
 			if ((sale == null) && (itemPrice.getDiscount() > 0) &&
 				((itemPrice.getStatus() ==
-					 ShoppingItemPriceConstants.STATUS_ACTIVE_DEFAULT) ||
+					ShoppingItemPriceConstants.STATUS_ACTIVE_DEFAULT) ||
 				 (itemPrice.getStatus() ==
 					 ShoppingItemPriceConstants.STATUS_ACTIVE))) {
 
@@ -496,7 +496,7 @@ public class ShoppingItemLocalServiceImpl
 
 			if ((sale == null) && (itemPrice.getDiscount() > 0) &&
 				((itemPrice.getStatus() ==
-					 ShoppingItemPriceConstants.STATUS_ACTIVE_DEFAULT) ||
+					ShoppingItemPriceConstants.STATUS_ACTIVE_DEFAULT) ||
 				 (itemPrice.getStatus() ==
 					 ShoppingItemPriceConstants.STATUS_ACTIVE))) {
 
@@ -721,7 +721,7 @@ public class ShoppingItemLocalServiceImpl
 			}
 
 			long smallImageMaxSize = PrefsPropsUtil.getLong(
-				PropsKeys.SHOPPING_IMAGE_MEDIUM_MAX_SIZE);
+				PropsKeys.SHOPPING_IMAGE_SMALL_MAX_SIZE);
 
 			if ((smallImageMaxSize > 0) &&
 				((smallImageBytes == null) ||

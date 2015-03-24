@@ -173,6 +173,14 @@ public class PortletPreferencesFactoryUtil {
 			scopeGroupId, userId, layout, portletId, modeEditGuest);
 	}
 
+	public static PortletPreferencesIds getPortletPreferencesIds(
+		long companyId, long siteGroupId, long plid, String portletId,
+		String settingsScope) {
+
+		return getPortletPreferencesFactory().getPortletPreferencesIds(
+			companyId, siteGroupId, plid, portletId, settingsScope);
+	}
+
 	public static PortletPreferences getPortletSetup(
 			HttpServletRequest request, String portletId)
 		throws PortalException {
@@ -252,6 +260,14 @@ public class PortletPreferencesFactoryUtil {
 
 		return getPortletPreferencesFactory().getStrictPortletSetup(
 			layout, portletId);
+	}
+
+	public static PortletPreferences strictFromXML(
+		long companyId, long ownerId, int ownerType, long plid,
+		String portletId, String xml) {
+
+		return getPortletPreferencesFactory().strictFromXML(
+			companyId, ownerId, ownerType, plid, portletId, xml);
 	}
 
 	public static String toXML(PortalPreferences portalPreferences) {

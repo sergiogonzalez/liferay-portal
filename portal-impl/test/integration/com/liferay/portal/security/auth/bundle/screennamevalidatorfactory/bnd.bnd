@@ -1,5 +1,5 @@
 Bundle-Description: Test Bundle for ScreeNameValidatorFactoryTest
-Bundle-Version: 1.0
+Bundle-Version: 1.0.0
 Private-Package: $(bundle.package).*
 
 -dsannotations: *

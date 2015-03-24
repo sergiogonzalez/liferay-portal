@@ -64,9 +64,18 @@ public class PortletLocalServiceWrapper implements PortletLocalService,
 		_portletLocalService.clearCache();
 	}
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #clearPortletsMap)}
+	*/
+	@Deprecated
 	@Override
 	public void clearCompanyPortletsPool() {
 		_portletLocalService.clearCompanyPortletsPool();
+	}
+
+	@Override
+	public void clearPortletsMap() {
+		_portletLocalService.clearPortletsMap();
 	}
 
 	/**
@@ -423,6 +432,16 @@ public class PortletLocalServiceWrapper implements PortletLocalService,
 			xmls, pluginPackage);
 	}
 
+	@Override
+	public java.util.Map<java.lang.String, com.liferay.portal.model.Portlet> loadGetPortletsMap(
+		long companyId) {
+		return _portletLocalService.loadGetPortletsMap(companyId);
+	}
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #loadGetPortletsMap(long))}
+	*/
+	@Deprecated
 	@Override
 	public java.util.Map<java.lang.String, com.liferay.portal.model.Portlet> loadGetPortletsPool(
 		long companyId) {

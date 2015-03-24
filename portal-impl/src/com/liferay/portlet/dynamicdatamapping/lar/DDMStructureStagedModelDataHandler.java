@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.lar.PortletDataException;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.lar.StagedModelModifiedDateComparator;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Group;
@@ -61,27 +60,20 @@ public class DDMStructureStagedModelDataHandler
 	}
 
 	@Override
-	public DDMStructure fetchStagedModelByUuidAndCompanyId(
-		String uuid, long companyId) {
-
-		List<DDMStructure> structures =
-			DDMStructureLocalServiceUtil.getDDMStructuresByUuidAndCompanyId(
-				uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				new StagedModelModifiedDateComparator<DDMStructure>());
-
-		if (ListUtil.isEmpty(structures)) {
-			return null;
-		}
-
-		return structures.get(0);
-	}
-
-	@Override
 	public DDMStructure fetchStagedModelByUuidAndGroupId(
 		String uuid, long groupId) {
 
 		return DDMStructureLocalServiceUtil.fetchDDMStructureByUuidAndGroupId(
 			uuid, groupId);
+	}
+
+	@Override
+	public List<DDMStructure> fetchStagedModelsByUuidAndCompanyId(
+		String uuid, long companyId) {
+
+		return DDMStructureLocalServiceUtil.getDDMStructuresByUuidAndCompanyId(
+			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			new StagedModelModifiedDateComparator<DDMStructure>());
 	}
 
 	@Override
@@ -138,10 +130,10 @@ public class DDMStructureStagedModelDataHandler
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				Group.class);
 
-		long liveGroupId = GetterUtil.getLong(
-			referenceElement.attributeValue("live-group-id"));
+		long groupId = GetterUtil.getLong(
+			referenceElement.attributeValue("group-id"));
 
-		liveGroupId = MapUtil.getLong(groupIds, liveGroupId);
+		groupId = MapUtil.getLong(groupIds, groupId);
 
 		long classNameId = PortalUtil.getClassNameId(
 			referenceElement.attributeValue("referenced-class-name"));
@@ -152,7 +144,7 @@ public class DDMStructureStagedModelDataHandler
 		DDMStructure existingStructure = null;
 
 		existingStructure = fetchExistingStructure(
-			uuid, liveGroupId, classNameId, structureKey, preloaded);
+			uuid, groupId, classNameId, structureKey, preloaded);
 
 		Map<Long, Long> structureIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
@@ -182,10 +174,10 @@ public class DDMStructureStagedModelDataHandler
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				Group.class);
 
-		long liveGroupId = GetterUtil.getLong(
-			referenceElement.attributeValue("live-group-id"));
+		long groupId = GetterUtil.getLong(
+			referenceElement.attributeValue("group-id"));
 
-		liveGroupId = MapUtil.getLong(groupIds, liveGroupId);
+		groupId = MapUtil.getLong(groupIds, groupId);
 
 		long classNameId = PortalUtil.getClassNameId(
 			referenceElement.attributeValue("referenced-class-name"));
@@ -194,7 +186,7 @@ public class DDMStructureStagedModelDataHandler
 			referenceElement.attributeValue("preloaded"));
 
 		DDMStructure existingStructure = fetchExistingStructure(
-			uuid, liveGroupId, classNameId, structureKey, preloaded);
+			uuid, groupId, classNameId, structureKey, preloaded);
 
 		if (existingStructure == null) {
 			return false;

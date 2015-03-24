@@ -26,6 +26,7 @@ import com.liferay.sync.engine.model.SyncFile;
 import com.liferay.sync.engine.model.SyncSite;
 import com.liferay.sync.engine.service.SyncFileService;
 import com.liferay.sync.engine.service.SyncSiteService;
+import com.liferay.sync.engine.util.FileKeyUtil;
 import com.liferay.sync.engine.util.FileUtil;
 import com.liferay.sync.engine.util.IODeltaUtil;
 import com.liferay.sync.engine.util.SyncEngineUtil;
@@ -93,8 +94,8 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 				(Long)getParameterValue("repositoryId"), getSyncAccountId());
 
 			if ((syncSite == null) ||
-				((Long)getParameterValue("lastAccessTime")
-					!= syncSite.getRemoteSyncTime())) {
+				((Long)getParameterValue("lastAccessTime") !=
+					syncSite.getRemoteSyncTime())) {
 
 				return;
 			}
@@ -111,8 +112,7 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 		Path filePath = Paths.get(filePathName);
 
 		if (Files.exists(filePath) &&
-			(syncFile.isFolder() ||
-			 !FileUtil.isModified(syncFile, filePath))) {
+			(syncFile.isFolder() || !FileUtil.isModified(syncFile, filePath))) {
 
 			return;
 		}
@@ -128,7 +128,7 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 
 			SyncFileService.update(syncFile);
 
-			FileUtil.writeFileKey(
+			FileKeyUtil.writeFileKey(
 				filePath, String.valueOf(syncFile.getSyncFileId()));
 		}
 		else {
@@ -274,7 +274,7 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 
 			sourceSyncFile.setState(SyncFile.STATE_SYNCED);
 
-			FileUtil.writeFileKey(
+			FileKeyUtil.writeFileKey(
 				targetFilePath, String.valueOf(sourceSyncFile.getSyncFileId()));
 		}
 		else {
@@ -326,7 +326,7 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 			if (isIgnoredFilePath(sourceSyncFile, filePathName) ||
 				((sourceSyncFile != null) &&
 				 (sourceSyncFile.getModifiedTime() ==
-					targetSyncFile.getModifiedTime()))) {
+					 targetSyncFile.getModifiedTime()))) {
 
 				return;
 			}
@@ -462,7 +462,7 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 
 				SyncFileService.update(sourceSyncFile);
 
-				FileUtil.writeFileKey(
+				FileKeyUtil.writeFileKey(
 					targetFilePath,
 					String.valueOf(sourceSyncFile.getSyncFileId()));
 			}

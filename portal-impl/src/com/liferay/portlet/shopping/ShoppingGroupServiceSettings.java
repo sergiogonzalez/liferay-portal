@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.settings.ParameterMapSettings;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.kernel.settings.TypedSettings;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -176,10 +177,8 @@ public class ShoppingGroupServiceSettings implements GroupServiceSettings {
 
 	@Settings.Property(ignore = true)
 	public String getEmailOrderConfirmationBodyXml() {
-		LocalizedValuesMap emailOrderConfirmationBodyMap =
-			getEmailOrderConfirmationBody();
-
-		return emailOrderConfirmationBodyMap.getLocalizationXml();
+		return LocalizationUtil.getXml(
+			getEmailOrderConfirmationBody(), "emailOrderConfirmationBody");
 	}
 
 	public LocalizedValuesMap getEmailOrderConfirmationSubject() {
@@ -192,10 +191,9 @@ public class ShoppingGroupServiceSettings implements GroupServiceSettings {
 
 	@Settings.Property(ignore = true)
 	public String getEmailOrderConfirmationSubjectXml() {
-		LocalizedValuesMap emailOrderConfirmationSubjectMap =
-			getEmailOrderConfirmationSubject();
-
-		return emailOrderConfirmationSubjectMap.getLocalizationXml();
+		return LocalizationUtil.getXml(
+			getEmailOrderConfirmationSubject(),
+			"emailOrderConfirmationSubject");
 	}
 
 	public LocalizedValuesMap getEmailOrderShippingBody() {
@@ -204,10 +202,8 @@ public class ShoppingGroupServiceSettings implements GroupServiceSettings {
 
 	@Settings.Property(ignore = true)
 	public String getEmailOrderShippingBodyXml() {
-		LocalizedValuesMap emailOrderShippingBodyMap =
-			getEmailOrderShippingBody();
-
-		return emailOrderShippingBodyMap.getLocalizationXml();
+		return LocalizationUtil.getXml(
+			getEmailOrderShippingBody(), "emailOrderShippingBody");
 	}
 
 	public LocalizedValuesMap getEmailOrderShippingSubject() {
@@ -217,10 +213,8 @@ public class ShoppingGroupServiceSettings implements GroupServiceSettings {
 
 	@Settings.Property(ignore = true)
 	public String getEmailOrderShippingSubjectXml() {
-		LocalizedValuesMap emailOrderShippingSubjectMap =
-			getEmailOrderShippingSubject();
-
-		return emailOrderShippingSubjectMap.getLocalizationXml();
+		return LocalizationUtil.getXml(
+			getEmailOrderShippingSubject(), "emailOrderShippingSubject");
 	}
 
 	public String[] getInsurance() {

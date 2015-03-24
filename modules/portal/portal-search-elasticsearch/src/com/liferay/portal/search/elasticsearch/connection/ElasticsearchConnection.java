@@ -22,14 +22,14 @@ import org.elasticsearch.client.Client;
  */
 public interface ElasticsearchConnection {
 
-	public static final String CLUSTER_NAME = "LiferayElasticSearch";
-
 	public void close();
 
 	public Client getClient();
 
 	public ClusterHealthResponse getClusterHealthResponse(
 		long timeout, int nodesCount);
+
+	public OperationMode getOperationMode();
 
 	public void initialize();
 
