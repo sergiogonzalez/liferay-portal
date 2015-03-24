@@ -194,6 +194,8 @@ import com.liferay.portlet.RenderResponseImpl;
 import com.liferay.portlet.StateAwareResponseImpl;
 import com.liferay.portlet.UserAttributes;
 import com.liferay.portlet.admin.util.OmniadminUtil;
+import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
+import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.AssetTag;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.blogs.model.BlogsEntry;
@@ -205,7 +207,6 @@ import com.liferay.portlet.expando.ValueDataException;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.model.ExpandoColumnConstants;
 import com.liferay.portlet.journal.NoSuchFeedException;
-import com.liferay.portlet.journal.asset.JournalArticleAssetRendererFactory;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleConstants;
 import com.liferay.portlet.journal.model.JournalFolder;
@@ -1417,7 +1418,7 @@ public class PortalImpl implements Portal {
 
 		if ((groupFriendlyURL.contains(layoutFriendlyURL) ||
 			 groupFriendlyURL.contains(
-				StringPool.SLASH + layout.getLayoutId())) &&
+				 StringPool.SLASH + layout.getLayoutId())) &&
 			(!layout.isFirstParent() || Validator.isNotNull(parametersURL))) {
 
 			canonicalLayoutFriendlyURL = defaultLayoutFriendlyURL;
@@ -2831,9 +2832,14 @@ public class PortalImpl implements Portal {
 
 		actualParams.put(
 			namespace + "mvcPath", new String[] {"/view_content.jsp"});
+
+		AssetRendererFactory assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				JournalArticle.class.getName());
+
 		actualParams.put(
-			namespace + "type",
-			new String[] {JournalArticleAssetRendererFactory.TYPE});
+			namespace + "type", new String[] {assetRendererFactory.getType()});
+
 		actualParams.put(
 			namespace + "urlTitle",
 			new String[] {journalArticle.getUrlTitle()});
@@ -3746,7 +3752,7 @@ public class PortalImpl implements Portal {
 	 */
 	@Deprecated
 	@Override
-	public long getParentGroupId(long groupId) throws PortalException {
+	public long getParentGroupId(long groupId) {
 		return getSiteGroupId(groupId);
 	}
 
@@ -5186,12 +5192,16 @@ public class PortalImpl implements Portal {
 	}
 
 	@Override
-	public long getSiteGroupId(long groupId) throws PortalException {
+	public long getSiteGroupId(long groupId) {
 		if (groupId <= 0) {
 			return 0;
 		}
 
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
+		Group group = GroupLocalServiceUtil.fetchGroup(groupId);
+
+		if (group == null) {
+			return 0;
+		}
 
 		long siteGroupId = groupId;
 
@@ -6906,15 +6916,7 @@ public class PortalImpl implements Portal {
 			}
 
 			if (status == 0) {
-
-				// LPS-5352
-
-				if (PropsValues.TCK_URL) {
-					status = HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
-				}
-				else {
-					status = HttpServletResponse.SC_BAD_REQUEST;
-				}
+				status = HttpServletResponse.SC_BAD_REQUEST;
 			}
 		}
 
@@ -6928,7 +6930,7 @@ public class PortalImpl implements Portal {
 		}
 		else if ((e instanceof NoSuchLayoutException) &&
 				 Validator.isNotNull(
-					PropsValues.LAYOUT_FRIENDLY_URL_PAGE_NOT_FOUND)) {
+					 PropsValues.LAYOUT_FRIENDLY_URL_PAGE_NOT_FOUND)) {
 
 			redirect = PropsValues.LAYOUT_FRIENDLY_URL_PAGE_NOT_FOUND;
 		}
@@ -7580,7 +7582,11 @@ public class PortalImpl implements Portal {
 
 		long siteGroupId = getSiteGroupId(groupId);
 
-		Group siteGroup = GroupLocalServiceUtil.getGroup(siteGroupId);
+		Group siteGroup = GroupLocalServiceUtil.fetchGroup(siteGroupId);
+
+		if (siteGroup == null) {
+			return groups;
+		}
 
 		for (Group group : siteGroup.getAncestors()) {
 			if (checkContentSharingWithChildrenEnabled &&
