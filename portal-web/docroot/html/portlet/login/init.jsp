@@ -45,19 +45,12 @@ page import="com.liferay.portal.UserPasswordException" %><%@
 page import="com.liferay.portal.UserReminderQueryException" %><%@
 page import="com.liferay.portal.UserScreenNameException" %><%@
 page import="com.liferay.portal.WebsiteURLException" %><%@
-page import="com.liferay.portal.kernel.facebook.FacebookConnectUtil" %><%@
 page import="com.liferay.portal.kernel.util.CamelCaseUtil" %><%@
 page import="com.liferay.portal.security.auth.AuthException" %><%@
 page import="com.liferay.portal.security.auth.FullNameDefinition" %><%@
 page import="com.liferay.portal.security.auth.FullNameDefinitionFactory" %><%@
 page import="com.liferay.portal.security.auth.FullNameField" %><%@
-page import="com.liferay.portal.util.OpenIdUtil" %><%@
 page import="com.liferay.portlet.login.util.LoginUtil" %>
-
-<%@ page import="org.openid4java.association.AssociationException" %><%@
-page import="org.openid4java.consumer.ConsumerException" %><%@
-page import="org.openid4java.discovery.DiscoveryException" %><%@
-page import="org.openid4java.message.MessageException" %>
 
 <%
 String authType = portletPreferences.getValue("authType", StringPool.BLANK);

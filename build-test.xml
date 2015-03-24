@@ -1312,9 +1312,14 @@
 				app.server.bundle.index="@{app.server.bundle.index}"
 			/>
 
-			<antcall target="clean-up-logs" />
+			<if>
+				<equals arg1="@{app.server.bundle.index}" arg2="0" />
+				<then>
+					<antcall target="clean-up-logs" />
 
-			<record action="start" name="log" />
+					<record action="start" name="log" />
+				</then>
+			</if>
 
 			<exec dir="${test.app.server.bin.dir}" executable="${app.server.stop.executable}" resolveexecutable="true">
 				<arg line="${app.server.stop.executable.arg.line}" />
@@ -1569,8 +1574,6 @@ go]]></replacevalue>
 			<![CDATA[
 				<properties>
 					<property name="testray.component.names" value="${testray.component.names}" />
-					<property name="testray.logs.console" value="${testray.logs.console}" />
-					<property name="testray.logs.report" value="${testray.logs.report}" />
 					<property name="testray.main.component.name" value="${testray.main.component.name}" />
 					<property name="testray.team.name" value="${testray.team.name}" />
 					<property name="testray.testcase.description" value="${testray.testcase.description}" />
@@ -1618,10 +1621,21 @@ go]]></replacevalue>
 
 		<for param="file.name">
 			<path>
-				<fileset
-					dir="portal-web/test-results/functional"
-					includes="TEST-*.xml"
-				/>
+				<fileset dir="modules" erroronmissingdir="false">
+					<include name="**/TEST-*.xml" />
+				</fileset>
+				<fileset dir="portal-impl/test-results" erroronmissingdir="false">
+					<include name="**/TEST-*.xml" />
+				</fileset>
+				<fileset dir="portal-service/test-results" erroronmissingdir="false">
+					<include name="**/TEST-*.xml" />
+				</fileset>
+				<fileset dir="portal-web/test-results" erroronmissingdir="false">
+					<include name="**/TEST-*.xml" />
+				</fileset>
+				<fileset dir="util-java/test-results" erroronmissingdir="false">
+					<include name="**/TEST-*.xml" />
+				</fileset>
 			</path>
 			<sequential>
 				<var name="file.name" value="@{file.name}" />
@@ -1643,14 +1657,42 @@ go]]></replacevalue>
 				<replaceregexp
 					file="@{file.name}"
 					flags="g"
-					match="(\s*\&lt;testcase[^/]*)/&gt;"
+					match="&lt;testcase[^&lt;]*?&lt;skipped[\s\S]*?testcase&gt;"
+					replace=""
+				/>
+
+				<replaceregexp
+					file="@{file.name}"
+					flags="g"
+					match="(\s*\&lt;testcase[^/\n]*)/&gt;"
 					replace="\1&gt;${line.separator}&lt;/testcase&gt;"
 				/>
 
 				<replaceregexp
 					file="@{file.name}"
 					match="&lt;testcase[^&gt;]*&gt;"
-					replace="${test.suite.properties}\0${test.case.attachments}${line.separator}${test.case.properties}"
+					replace="${test.suite.properties}\0"
+				/>
+
+				<replaceregexp
+					file="@{file.name}"
+					flags="g"
+					match="&lt;testcase[^&gt;]*&gt;"
+					replace="\0${test.case.attachments}${line.separator}${test.case.properties}"
+				/>
+
+				<replaceregexp
+					file="@{file.name}"
+					flags="g"
+					match="(.*classname=&quot;\S+\.(\w+).*name=&quot;(\w+)[\s\S]+?)(\$\{testray\.testcase\.name\})"
+					replace="\1\2#\3"
+				/>
+
+				<replaceregexp
+					file="@{file.name}"
+					flags="g"
+					match="\$\{testray\.testcase\.name\}"
+					replace="${testray.main.component.name}"
 				/>
 
 				<replaceregexp
@@ -1658,6 +1700,13 @@ go]]></replacevalue>
 					flags="g"
 					match="\&gt;[\n\s]*\&lt;"
 					replace="\&gt;${line.separator}\&lt;"
+				/>
+
+				<replaceregexp
+					file="@{file.name}"
+					flags="g"
+					match="(&lt;/?)error"
+					replace="\1failure"
 				/>
 			</sequential>
 		</for>
@@ -2069,22 +2118,47 @@ ${marketplace.portlet.properties}</echo>
 
 				<property name="results.xml.file" value="portal-web/test-results/functional/TEST-${env.BUILD_FLOW_JOB_NAME}_${env.BUILD_FLOW_BUILD_NUMBER}_${test.class}.xml" />
 
+				<if>
+					<equals arg1="${build.status}" arg2="pass" />
+					<then>
+						<property name="testcase.element"><![CDATA[<testcase classname="${test.class.name}" name="${test.method.name}" time="0.00" />]]></property>
+					</then>
+					<else>
+						<property name="testcase.element"><![CDATA[
+							<testcase classname="${test.class.name}" name="${test.method.name}" time="0.00">
+								<failure message="Jenkins failure prior to running test.">Jenkins failure prior to running test.</failure>
+							</testcase>
+						]]></property>
+					</else>
+				</if>
+
 				<echo file="${results.xml.file}"><![CDATA[<?xml version="1.0"?>
 
 <testsuite>
-	<testcase classname="${test.class.name}" name="${test.method.name}" time="0.00">
-		<failure message="Jenkins failure prior to running test.">Jenkins failure prior to running test.</failure>
-	</testcase>
+	${testcase.element}
 	<system-out></system-out>
 	<system-err></system-err>
 </testsuite>]]></echo>
 
 				<antcall target="build-test-results-xml" />
 
-				<copy
-					file="${results.xml.file}"
-					tofile="${jenkins.shared.user.content.dir}/jobs/${env.BUILD_FLOW_JOB_NAME}/builds/${env.BUILD_FLOW_BUILD_NUMBER}/test-results/TEST-${env.BUILD_FLOW_JOB_NAME}_${env.BUILD_FLOW_BUILD_NUMBER}_${test.class}.xml"
-				/>
+				<copy flatten="true" todir="${jenkins.shared.user.content.dir}/jobs/${env.BUILD_FLOW_JOB_NAME}/builds/${env.BUILD_FLOW_BUILD_NUMBER}/test-results">
+					<fileset dir="modules" erroronmissingdir="false">
+						<include name="**/TEST-*.xml" />
+					</fileset>
+					<fileset dir="portal-impl/test-results" erroronmissingdir="false">
+						<include name="**/TEST-*.xml" />
+					</fileset>
+					<fileset dir="portal-service/test-results" erroronmissingdir="false">
+						<include name="**/TEST-*.xml" />
+					</fileset>
+					<fileset dir="portal-web/test-results" erroronmissingdir="false">
+						<include name="**/TEST-*.xml" />
+					</fileset>
+					<fileset dir="util-java/test-results" erroronmissingdir="false">
+						<include name="**/TEST-*.xml" />
+					</fileset>
+				</copy>
 			</then>
 		</if>
 	</target>
@@ -2413,7 +2487,12 @@ ${marketplace.portlet.properties}</echo>
 
 		<echo append="true" file="${jenkins.results.xml.suite.file}">&lt;/testsuite&gt;</echo>
 
-		<copy file="${jenkins.results.xml.suite.file}" tofile="${env.WORKSPACE}/TEST-ConsolidatedResults.xml" />
+		<if>
+			<contains string="${env.JOB_NAME}" substring="frontend" />
+			<then>
+				<copy file="${jenkins.results.xml.suite.file}" tofile="${env.WORKSPACE}/TEST-ConsolidatedResults.xml" />
+			</then>
+		</if>
 
 		<if>
 			<isset property="jenkins.testray.results.dir" />
@@ -3222,8 +3301,6 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 			<then>
 				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
 					mobile.device.enabled=${mobile.device.enabled}
-					mobile.device.resolution=${mobile.device.resolution}
-					mobile.device.user.agent=${mobile.device.user.agent}
 				</echo>
 			</then>
 		</if>
@@ -3668,8 +3745,8 @@ app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.27</echo>
 			</and>
 			<then>
 				<antcall target="prepare-test-bundle">
-					<param name="app.server.lib.global.dir" value="${app.server.tcserver.lib.global.dir}" />
-					<param name="app.server.portal.dir" value="${app.server.tcserver.portal.dir}" />
+					<param name="app.server.lib.global.dir" value="${app.server.weblogic.lib.global.dir}" />
+					<param name="app.server.portal.dir" value="${app.server.weblogic.portal.dir}" />
 					<param name="app.server.type" value="weblogic" />
 				</antcall>
 			</then>
@@ -4328,6 +4405,14 @@ if (ppstate.equals("normal")) {
 	</target>
 
 	<target name="record-test-plugin-names">
+		<loadproperties srcFile="${lp.plugins.dir}/build.properties">
+			<filterchain>
+				<linecontains>
+					<contains value="plugins.excludes" />
+				</linecontains>
+			</filterchain>
+		</loadproperties>
+
 		<script classpathref="project.classpath" language="beanshell">
 			<![CDATA[
 				import org.apache.tools.ant.DirectoryScanner;
@@ -4373,7 +4458,11 @@ if (ppstate.equals("normal")) {
 
 						String pluginName = fileName.substring(x + 1, y);
 
-						pluginNames.add(pluginName);
+						String pluginsExcludes = project.getProperty("plugins.excludes");
+
+						if (!pluginsExcludes.contains(pluginName)) {
+							pluginNames.add(pluginName);
+						}
 					}
 
 					Collections.sort(pluginNames);

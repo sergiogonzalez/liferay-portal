@@ -79,6 +79,7 @@ import org.osgi.framework.launch.Framework;
 import org.osgi.framework.launch.FrameworkFactory;
 import org.osgi.framework.startlevel.BundleStartLevel;
 import org.osgi.framework.startlevel.FrameworkStartLevel;
+import org.osgi.framework.wiring.BundleRevision;
 
 import org.springframework.beans.factory.BeanIsAbstractException;
 import org.springframework.context.ApplicationContext;
@@ -86,6 +87,7 @@ import org.springframework.context.ApplicationContext;
 /**
  * @author Raymond Augé
  * @author Miguel Pastor
+ * @author Kamesh Sampath
  */
 public class ModuleFrameworkImpl implements ModuleFramework {
 
@@ -757,11 +759,9 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 	}
 
 	private boolean _isFragmentBundle(Bundle bundle) {
-		Dictionary<String, String> headers = bundle.getHeaders();
+		BundleRevision bundleRevision = bundle.adapt(BundleRevision.class);
 
-		String fragmentHost = headers.get(Constants.FRAGMENT_HOST);
-
-		if (fragmentHost == null) {
+		if ((bundleRevision.getTypes() & BundleRevision.TYPE_FRAGMENT) == 0) {
 			return false;
 		}
 
@@ -775,7 +775,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			if (ignoredClass.equals(interfaceClassName) ||
 				(ignoredClass.endsWith(StringPool.STAR) &&
 				 interfaceClassName.startsWith(
-					ignoredClass.substring(0, ignoredClass.length() - 1)))) {
+					 ignoredClass.substring(0, ignoredClass.length() - 1)))) {
 
 				return true;
 			}

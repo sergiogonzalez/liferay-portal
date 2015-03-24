@@ -197,95 +197,97 @@ if (selUser != null) {
 	<portlet:param name="backURL" value="<%= backURL %>" />
 </portlet:renderURL>
 
-<aui:form action="<%= editUserActionURL %>" method="post" name="fm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (selUser == null) ? Constants.ADD : Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= editUserRenderURL %>" />
-	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
-	<aui:input name="p_u_i_d" type="hidden" value="<%= (selUser != null) ? selUser.getUserId() : 0 %>" />
-
-	<%
-	request.setAttribute("user.selUser", selUser);
-	request.setAttribute("user.selContact", selContact);
-	request.setAttribute("user.passwordPolicy", passwordPolicy);
-	request.setAttribute("user.groups", groups);
-	request.setAttribute("user.inheritedSites", inheritedSites);
-	request.setAttribute("user.organizations", organizations);
-	request.setAttribute("user.roles", roles);
-	request.setAttribute("user.organizationRoles", organizationRoles);
-	request.setAttribute("user.siteRoles", siteRoles);
-	request.setAttribute("user.inheritedSiteRoles", inheritedSiteRoles);
-	request.setAttribute("user.userGroups", userGroups);
-	request.setAttribute("user.allGroups", allGroups);
-	request.setAttribute("user.roleGroups", roleGroups);
-
-	request.setAttribute("addresses.className", Contact.class.getName());
-	request.setAttribute("emailAddresses.className", Contact.class.getName());
-	request.setAttribute("phones.className", Contact.class.getName());
-	request.setAttribute("websites.className", Contact.class.getName());
-
-	if (selContact != null) {
-		request.setAttribute("addresses.classPK", selContact.getContactId());
-		request.setAttribute("emailAddresses.classPK", selContact.getContactId());
-		request.setAttribute("phones.classPK", selContact.getContactId());
-		request.setAttribute("websites.classPK", selContact.getContactId());
-	}
-	else {
-		request.setAttribute("addresses.classPK", 0L);
-		request.setAttribute("emailAddresses.classPK", 0L);
-		request.setAttribute("phones.classPK", 0L);
-		request.setAttribute("websites.classPK", 0L);
-	}
-	%>
-
-	<liferay-util:buffer var="htmlTop">
-		<c:if test="<%= selUser != null %>">
-			<div class="user-info">
-				<div class="float-container">
-					<img alt="<%= HtmlUtil.escapeAttribute(selUser.getFullName()) %>" class="user-logo" src="<%= selUser.getPortraitURL(themeDisplay) %>" />
-
-					<span class="user-name"><%= HtmlUtil.escape(selUser.getFullName()) %></span>
-				</div>
-			</div>
-		</c:if>
-	</liferay-util:buffer>
-
-	<liferay-util:buffer var="htmlBottom">
+<div class="container-fluid">
+	<aui:form action="<%= editUserActionURL %>" method="post" name="fm">
+		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (selUser == null) ? Constants.ADD : Constants.UPDATE %>" />
+		<aui:input name="redirect" type="hidden" value="<%= editUserRenderURL %>" />
+		<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
+		<aui:input name="p_u_i_d" type="hidden" value="<%= (selUser != null) ? selUser.getUserId() : 0 %>" />
 
 		<%
-		boolean lockedOut = false;
+		request.setAttribute("user.selUser", selUser);
+		request.setAttribute("user.selContact", selContact);
+		request.setAttribute("user.passwordPolicy", passwordPolicy);
+		request.setAttribute("user.groups", groups);
+		request.setAttribute("user.inheritedSites", inheritedSites);
+		request.setAttribute("user.organizations", organizations);
+		request.setAttribute("user.roles", roles);
+		request.setAttribute("user.organizationRoles", organizationRoles);
+		request.setAttribute("user.siteRoles", siteRoles);
+		request.setAttribute("user.inheritedSiteRoles", inheritedSiteRoles);
+		request.setAttribute("user.userGroups", userGroups);
+		request.setAttribute("user.allGroups", allGroups);
+		request.setAttribute("user.roleGroups", roleGroups);
 
-		if ((selUser != null) && (passwordPolicy != null)) {
-			try {
-				UserLocalServiceUtil.checkLockout(selUser);
-			}
-			catch (UserLockoutException.PasswordPolicyLockout ule) {
-				lockedOut = true;
-			}
+		request.setAttribute("addresses.className", Contact.class.getName());
+		request.setAttribute("emailAddresses.className", Contact.class.getName());
+		request.setAttribute("phones.className", Contact.class.getName());
+		request.setAttribute("websites.className", Contact.class.getName());
+
+		if (selContact != null) {
+			request.setAttribute("addresses.classPK", selContact.getContactId());
+			request.setAttribute("emailAddresses.classPK", selContact.getContactId());
+			request.setAttribute("phones.classPK", selContact.getContactId());
+			request.setAttribute("websites.classPK", selContact.getContactId());
+		}
+		else {
+			request.setAttribute("addresses.classPK", 0L);
+			request.setAttribute("emailAddresses.classPK", 0L);
+			request.setAttribute("phones.classPK", 0L);
+			request.setAttribute("websites.classPK", 0L);
 		}
 		%>
 
-		<c:if test="<%= lockedOut %>">
-			<aui:button-row>
-				<div class="alert alert-warning"><liferay-ui:message key="this-user-account-has-been-locked-due-to-excessive-failed-login-attempts" /></div>
+		<liferay-util:buffer var="htmlTop">
+			<c:if test="<%= selUser != null %>">
+				<div class="user-info">
+					<div class="float-container">
+						<img alt="<%= HtmlUtil.escapeAttribute(selUser.getFullName()) %>" class="user-logo" src="<%= selUser.getPortraitURL(themeDisplay) %>" />
 
-				<%
-				String taglibOnClick = renderResponse.getNamespace() + "saveUser('unlock');";
-				%>
+						<span class="user-name"><%= HtmlUtil.escape(selUser.getFullName()) %></span>
+					</div>
+				</div>
+			</c:if>
+		</liferay-util:buffer>
 
-				<aui:button onClick="<%= taglibOnClick %>" value="unlock" />
-			</aui:button-row>
-		</c:if>
-	</liferay-util:buffer>
+		<liferay-util:buffer var="htmlBottom">
 
-	<liferay-ui:form-navigator
-		backURL="<%= backURL %>"
-		categoryNames="<%= _CATEGORY_NAMES %>"
-		categorySections="<%= categorySections %>"
-		htmlBottom="<%= htmlBottom %>"
-		htmlTop="<%= htmlTop %>"
-		jspPath="/html/portlet/users_admin/user/"
-	/>
-</aui:form>
+			<%
+			boolean lockedOut = false;
+
+			if ((selUser != null) && (passwordPolicy != null)) {
+				try {
+					UserLocalServiceUtil.checkLockout(selUser);
+				}
+				catch (UserLockoutException.PasswordPolicyLockout ule) {
+					lockedOut = true;
+				}
+			}
+			%>
+
+			<c:if test="<%= lockedOut %>">
+				<aui:button-row>
+					<div class="alert alert-warning"><liferay-ui:message key="this-user-account-has-been-locked-due-to-excessive-failed-login-attempts" /></div>
+
+					<%
+					String taglibOnClick = renderResponse.getNamespace() + "saveUser('unlock');";
+					%>
+
+					<aui:button onClick="<%= taglibOnClick %>" value="unlock" />
+				</aui:button-row>
+			</c:if>
+		</liferay-util:buffer>
+
+		<liferay-ui:form-navigator
+			backURL="<%= backURL %>"
+			categoryNames="<%= _CATEGORY_NAMES %>"
+			categorySections="<%= categorySections %>"
+			htmlBottom="<%= htmlBottom %>"
+			htmlTop="<%= htmlTop %>"
+			jspPath="/html/portlet/users_admin/user/"
+		/>
+	</aui:form>
+</div>
 
 <%
 if (selUser != null) {

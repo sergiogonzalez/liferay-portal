@@ -18,7 +18,7 @@
 			</library>
 			<library>
 				<file-name>lib/development/alloy-taglib.jar</file-name>
-				<version>1.1.1</version>
+				<version>1.1.2</version>
 				<project-name>Alloy TagLibs</project-name>
 				<project-url>https://github.com/liferay/alloy-taglibs</project-url>
 				<licenses>
@@ -1833,18 +1833,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/ehcache-jgroupsreplication.jar</file-name>
-				<version>1.7.0</version>
-				<project-name>Ehcache</project-name>
-				<project-url>http://ehcache.sourceforge.net</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/fastutil.jar</file-name>
 				<version>5.0.5</version>
 				<project-name>Fastutil</project-name>
@@ -2694,7 +2682,7 @@
 			</library>
 			<library>
 				<file-name>lib/portal/liferay-icu4j.jar</file-name>
-				<version>4.0.1</version>
+				<version>54.1.1.LIFERAY-PATCHED-1</version>
 				<project-name>ICU4J</project-name>
 				<project-url>http://www.icu-project.org</project-url>
 				<licenses>
@@ -2705,7 +2693,8 @@
 					</license>
 				</licenses>
 				<comments>
-					See LPS-1907 and LPS-36663.
+					See LPS-1907, LPS-36663, LPS-54422, and
+					modules/third-party/com-ibm-icu/build.xml.
 				</comments>
 			</library>
 			<library>
@@ -3010,19 +2999,6 @@
 					<license>
 						<license-name>Apache License 2.0</license-name>
 						<copyright-notice>Authored by David Jordan (as Java Editor of the Object Data Management Group)</copyright-notice>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/portal/openid4java.jar</file-name>
-				<version>0.9.5.593</version>
-				<project-name>OpenID 4 Java</project-name>
-				<project-url>http://code.google.com/p/openid4java</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-						<copyright-notice>Copyright (c) 2006-2008 Sxip Identity Corporation</copyright-notice>
 					</license>
 				</licenses>
 			</library>
@@ -3351,7 +3327,8 @@
 					</license>
 				</licenses>
 				<comments>
-					This includes missing OSGi headers. See LPS-49575.
+					This includes missing OSGi headers. See Lata from nodes,
+#    aggregating results, etc.PS-49575.
 				</comments>
 			</library>
 			<library>
