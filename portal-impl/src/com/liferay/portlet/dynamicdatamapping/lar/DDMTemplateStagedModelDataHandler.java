@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.lar.StagedModelModifiedDateComparator;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -70,27 +69,20 @@ public class DDMTemplateStagedModelDataHandler
 	}
 
 	@Override
-	public DDMTemplate fetchStagedModelByUuidAndCompanyId(
-		String uuid, long companyId) {
-
-		List<DDMTemplate> templates =
-			DDMTemplateLocalServiceUtil.getDDMTemplatesByUuidAndCompanyId(
-				uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				new StagedModelModifiedDateComparator<DDMTemplate>());
-
-		if (ListUtil.isEmpty(templates)) {
-			return null;
-		}
-
-		return templates.get(0);
-	}
-
-	@Override
 	public DDMTemplate fetchStagedModelByUuidAndGroupId(
 		String uuid, long groupId) {
 
 		return DDMTemplateLocalServiceUtil.fetchDDMTemplateByUuidAndGroupId(
 			uuid, groupId);
+	}
+
+	@Override
+	public List<DDMTemplate> fetchStagedModelsByUuidAndCompanyId(
+		String uuid, long companyId) {
+
+		return DDMTemplateLocalServiceUtil.getDDMTemplatesByUuidAndCompanyId(
+			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			new StagedModelModifiedDateComparator<DDMTemplate>());
 	}
 
 	@Override
@@ -147,10 +139,10 @@ public class DDMTemplateStagedModelDataHandler
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				Group.class);
 
-		long liveGroupId = GetterUtil.getLong(
-			referenceElement.attributeValue("live-group-id"));
+		long groupId = GetterUtil.getLong(
+			referenceElement.attributeValue("group-id"));
 
-		liveGroupId = MapUtil.getLong(groupIds, liveGroupId);
+		groupId = MapUtil.getLong(groupIds, groupId);
 
 		long classNameId = PortalUtil.getClassNameId(
 			referenceElement.attributeValue("referenced-class-name"));
@@ -161,7 +153,7 @@ public class DDMTemplateStagedModelDataHandler
 		DDMTemplate existingTemplate = null;
 
 		existingTemplate = fetchExistingTemplate(
-			uuid, liveGroupId, classNameId, templateKey, preloaded);
+			uuid, groupId, classNameId, templateKey, preloaded);
 
 		Map<Long, Long> templateIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
@@ -191,10 +183,10 @@ public class DDMTemplateStagedModelDataHandler
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				Group.class);
 
-		long liveGroupId = GetterUtil.getLong(
-			referenceElement.attributeValue("live-group-id"));
+		long groupId = GetterUtil.getLong(
+			referenceElement.attributeValue("group-id"));
 
-		liveGroupId = MapUtil.getLong(groupIds, liveGroupId);
+		groupId = MapUtil.getLong(groupIds, groupId);
 
 		long classNameId = PortalUtil.getClassNameId(
 			referenceElement.attributeValue("referenced-class-name"));
@@ -203,7 +195,7 @@ public class DDMTemplateStagedModelDataHandler
 			referenceElement.attributeValue("preloaded"));
 
 		DDMTemplate existingTemplate = fetchExistingTemplate(
-			uuid, liveGroupId, classNameId, templateKey, preloaded);
+			uuid, groupId, classNameId, templateKey, preloaded);
 
 		if (existingTemplate == null) {
 			return false;

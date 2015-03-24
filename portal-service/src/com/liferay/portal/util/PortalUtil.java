@@ -1354,9 +1354,7 @@ public class PortalUtil {
 	 * @deprecated As of 6.2.0 renamed to {@link #getSiteGroupId(long)}
 	 */
 	@Deprecated
-	public static long getParentGroupId(long scopeGroupId)
-		throws PortalException {
-
+	public static long getParentGroupId(long scopeGroupId) {
 		return getPortal().getParentGroupId(scopeGroupId);
 	}
 
@@ -1859,9 +1857,7 @@ public class PortalUtil {
 		return getPortal().getSiteDefaultLocale(groupId);
 	}
 
-	public static long getSiteGroupId(long scopeGroupId)
-		throws PortalException {
-
+	public static long getSiteGroupId(long scopeGroupId) {
 		return getPortal().getSiteGroupId(scopeGroupId);
 	}
 

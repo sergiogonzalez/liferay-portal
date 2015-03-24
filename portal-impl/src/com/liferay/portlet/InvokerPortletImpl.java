@@ -28,12 +28,14 @@ import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.PortletConstants;
+import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.tools.deploy.PortletDeployer;
 import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.WebKeys;
@@ -55,11 +57,13 @@ import javax.portlet.PortletConfig;
 import javax.portlet.PortletContext;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
+import javax.portlet.UnavailableException;
 import javax.portlet.filter.ActionFilter;
 import javax.portlet.filter.EventFilter;
 import javax.portlet.filter.FilterChain;
@@ -314,8 +318,7 @@ public class InvokerPortletImpl
 
 	@Override
 	public void processAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws IOException {
+		ActionRequest actionRequest, ActionResponse actionResponse) {
 
 		StopWatch stopWatch = new StopWatch();
 
@@ -324,9 +327,8 @@ public class InvokerPortletImpl
 		try {
 			invokeAction(actionRequest, actionResponse);
 		}
-		catch (PortletException pe) {
-			actionRequest.setAttribute(
-				_portletId + PortletException.class.getName(), pe);
+		catch (Exception e) {
+			processException(e, actionRequest, actionResponse);
 		}
 
 		if (_log.isDebugEnabled()) {
@@ -338,14 +340,18 @@ public class InvokerPortletImpl
 
 	@Override
 	public void processEvent(
-			EventRequest eventRequest, EventResponse eventResponse)
-		throws IOException, PortletException {
+		EventRequest eventRequest, EventResponse eventResponse) {
 
 		StopWatch stopWatch = new StopWatch();
 
 		stopWatch.start();
 
-		invokeEvent(eventRequest, eventResponse);
+		try {
+			invokeEvent(eventRequest, eventResponse);
+		}
+		catch (Exception e) {
+			processException(e, eventRequest, eventResponse);
+		}
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
@@ -447,8 +453,7 @@ public class InvokerPortletImpl
 
 	@Override
 	public void serveResource(
-			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
-		throws IOException {
+		ResourceRequest resourceRequest, ResourceResponse resourceResponse) {
 
 		StopWatch stopWatch = new StopWatch();
 
@@ -457,9 +462,8 @@ public class InvokerPortletImpl
 		try {
 			invokeResource(resourceRequest, resourceResponse);
 		}
-		catch (PortletException pe) {
-			resourceRequest.setAttribute(
-				_portletId + PortletException.class.getName(), pe);
+		catch (Exception e) {
+			processException(e, resourceRequest, resourceResponse);
 		}
 
 		if (_log.isDebugEnabled()) {
@@ -592,9 +596,16 @@ public class InvokerPortletImpl
 		LiferayPortletResponse portletResponse =
 			(LiferayPortletResponse)renderResponse;
 
-		invoke(
-			portletRequest, portletResponse, PortletRequest.RENDER_PHASE,
-			_invokerFilterContainer.getRenderFilters());
+		try {
+			invoke(
+				portletRequest, portletResponse, PortletRequest.RENDER_PHASE,
+				_invokerFilterContainer.getRenderFilters());
+		}
+		catch (Exception e) {
+			processException(e, renderRequest, renderResponse);
+
+			throw e;
+		}
 
 		RenderResponseImpl renderResponseImpl =
 			(RenderResponseImpl)renderResponse;
@@ -614,6 +625,47 @@ public class InvokerPortletImpl
 		invoke(
 			portletRequest, portletResponse, PortletRequest.RESOURCE_PHASE,
 			_invokerFilterContainer.getResourceFilters());
+	}
+
+	protected void processException(
+		Exception e, PortletRequest portletRequest,
+		PortletResponse portletResponse) {
+
+		if (portletResponse instanceof StateAwareResponseImpl) {
+
+			// PLT.5.4.7, TCK xxiii and PLT.15.2.6, cxlvi
+
+			StateAwareResponseImpl stateAwareResponseImpl =
+				(StateAwareResponseImpl)portletResponse;
+
+			stateAwareResponseImpl.reset();
+		}
+
+		if (e instanceof RuntimeException) {
+
+			// PLT.5.4.7, TCK xxv
+
+			e = new PortletException(e);
+		}
+
+		if (e instanceof UnavailableException) {
+
+			// PLT.5.4.7, TCK xxiv
+
+			destroy();
+
+			PortletLocalServiceUtil.deletePortlet(_portletModel);
+		}
+
+		if (e instanceof PortletException) {
+			if (!(portletRequest instanceof RenderRequest)) {
+				portletRequest.setAttribute(
+					_portletId + PortletException.class.getName(), e);
+			}
+		}
+		else {
+			ReflectionUtil.throwException(e);
+		}
 	}
 
 	private void _initialize(

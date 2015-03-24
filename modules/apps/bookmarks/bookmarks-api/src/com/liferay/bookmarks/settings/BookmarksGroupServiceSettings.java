@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.settings.GroupServiceSettings;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.TypedSettings;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 
 /**
  * @author Iván Zaera
@@ -37,9 +38,8 @@ public class BookmarksGroupServiceSettings implements GroupServiceSettings {
 
 	@Settings.Property(ignore = true)
 	public String getEmailEntryAddedBodyXml() {
-		LocalizedValuesMap emailEntryAddedBody = getEmailEntryAddedBody();
-
-		return emailEntryAddedBody.getLocalizationXml();
+		return LocalizationUtil.getXml(
+			getEmailEntryAddedBody(), "emailEntryAddedBody");
 	}
 
 	public LocalizedValuesMap getEmailEntryAddedSubject() {
@@ -48,9 +48,8 @@ public class BookmarksGroupServiceSettings implements GroupServiceSettings {
 
 	@Settings.Property(ignore = true)
 	public String getEmailEntryAddedSubjectXml() {
-		LocalizedValuesMap emailEntryAddedSubject = getEmailEntryAddedSubject();
-
-		return emailEntryAddedSubject.getLocalizationXml();
+		return LocalizationUtil.getXml(
+			getEmailEntryAddedSubject(), "emailEntryAddedSubject");
 	}
 
 	public LocalizedValuesMap getEmailEntryUpdatedBody() {
@@ -59,9 +58,8 @@ public class BookmarksGroupServiceSettings implements GroupServiceSettings {
 
 	@Settings.Property(ignore = true)
 	public String getEmailEntryUpdatedBodyXml() {
-		LocalizedValuesMap emailEntryUpdatedBody = getEmailEntryUpdatedBody();
-
-		return emailEntryUpdatedBody.getLocalizationXml();
+		return LocalizationUtil.getXml(
+			getEmailEntryUpdatedBody(), "emailEntryUpdatedBody");
 	}
 
 	public LocalizedValuesMap getEmailEntryUpdatedSubject() {
@@ -70,10 +68,8 @@ public class BookmarksGroupServiceSettings implements GroupServiceSettings {
 
 	@Settings.Property(ignore = true)
 	public String getEmailEntryUpdatedSubjectXml() {
-		LocalizedValuesMap emailEntryUpdatedSubject =
-			getEmailEntryUpdatedSubject();
-
-		return emailEntryUpdatedSubject.getLocalizationXml();
+		return LocalizationUtil.getXml(
+			getEmailEntryUpdatedSubject(), "emailEntryUpdatedSubject");
 	}
 
 	public String getEmailFromAddress() {

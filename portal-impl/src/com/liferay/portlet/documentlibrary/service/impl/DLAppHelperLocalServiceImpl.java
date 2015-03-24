@@ -33,8 +33,10 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.repository.model.RepositoryModel;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -78,7 +80,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -1852,19 +1853,19 @@ public class DLAppHelperLocalServiceImpl
 		String fromName = dlGroupServiceSettings.getEmailFromName();
 		String fromAddress = dlGroupServiceSettings.getEmailFromAddress();
 
-		Map<Locale, String> localizedSubjectMap = null;
-		Map<Locale, String> localizedBodyMap = null;
+		LocalizedValuesMap subjectLocalizedValuesMap = null;
+		LocalizedValuesMap bodyLocalizedValuesMap = null;
 
 		if (serviceContext.isCommandUpdate()) {
-			localizedSubjectMap =
+			subjectLocalizedValuesMap =
 				dlGroupServiceSettings.getEmailFileEntryUpdatedSubject();
-			localizedBodyMap =
+			bodyLocalizedValuesMap =
 				dlGroupServiceSettings.getEmailFileEntryUpdatedBody();
 		}
 		else {
-			localizedSubjectMap =
+			subjectLocalizedValuesMap =
 				dlGroupServiceSettings.getEmailFileEntryAddedSubject();
-			localizedBodyMap =
+			bodyLocalizedValuesMap =
 				dlGroupServiceSettings.getEmailFileEntryAddedBody();
 		}
 
@@ -1911,8 +1912,10 @@ public class DLAppHelperLocalServiceImpl
 		subscriptionSender.setEntryURL(entryURL);
 		subscriptionSender.setFrom(fromAddress, fromName);
 		subscriptionSender.setHtmlFormat(true);
-		subscriptionSender.setLocalizedBodyMap(localizedBodyMap);
-		subscriptionSender.setLocalizedSubjectMap(localizedSubjectMap);
+		subscriptionSender.setLocalizedBodyMap(
+			LocalizationUtil.getMap(bodyLocalizedValuesMap));
+		subscriptionSender.setLocalizedSubjectMap(
+			LocalizationUtil.getMap(subjectLocalizedValuesMap));
 		subscriptionSender.setMailId(
 			"file_entry", fileVersion.getFileEntryId());
 

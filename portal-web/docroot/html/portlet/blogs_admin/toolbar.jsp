@@ -33,7 +33,19 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem");
 				<portlet:param name="backURL" value="<%= viewEntriesURL %>" />
 			</portlet:renderURL>
 
-			<aui:nav-item href="<%= addEntryURL %>" iconCssClass="icon-plus" label="add" selected='<%= toolbarItem.equals("add") %>' />
+			<aui:nav-item href="<%= addEntryURL %>" iconCssClass="icon-plus" label="add-blog-entry" selected='<%= toolbarItem.equals("add") %>' />
+		</c:if>
+
+		<c:if test="<%= BlogsPermission.contains(permissionChecker, scopeGroupId, ActionKeys.PERMISSIONS) %>">
+			<liferay-security:permissionsURL
+				modelResource="com.liferay.portlet.blogs"
+				modelResourceDescription="<%= HtmlUtil.escape(themeDisplay.getScopeGroupName()) %>"
+				resourcePrimKey="<%= String.valueOf(scopeGroupId) %>"
+				var="permissionsURL"
+				windowState="<%= LiferayWindowState.POP_UP.toString() %>"
+				/>
+
+			<aui:nav-item href="<%= permissionsURL %>" label="permissions" title="edit-permissions" useDialog="<%= true %>" />
 		</c:if>
 	</aui:nav>
 
