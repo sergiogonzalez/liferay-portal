@@ -1,4 +1,3 @@
-
 <%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
@@ -109,7 +108,7 @@ name = namespace + name;
 		geolocation: <%= geolocation %>
 
 		<c:if test="<%= Validator.isNotNull(latitude) && Validator.isNotNull(longitude) %>">
-			,position: {
+			, position: {
 				location: {
 					lat: <%= latitude %>,
 					lng: <%= longitude %>
@@ -118,7 +117,7 @@ name = namespace + name;
 		</c:if>
 
 		<c:if test="<%= zoom != 0 %>">
-			,zoom: <%= zoom %>
+			, zoom: <%= zoom %>
 		</c:if>
 	};
 
