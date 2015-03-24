@@ -28,8 +28,8 @@ import com.liferay.portlet.asset.model.Renderer;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.taglib.util.IncludeTag;
 
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -170,8 +170,7 @@ public class AssetDisplayTag extends IncludeTag {
 			}
 		}
 
-		request.setAttribute(
-			"liferay-ui:asset-display:assetEntry", _assetEntry);
+		request.setAttribute("liferay-ui:asset-display:assetEntry", assetEntry);
 
 		Renderer renderer = _renderer;
 
@@ -190,8 +189,10 @@ public class AssetDisplayTag extends IncludeTag {
 
 		try {
 			_page = renderer.render(
-				(RenderRequest)pageContext.getAttribute("renderRequest"),
-				(RenderResponse)pageContext.getAttribute("renderResponse"),
+				(PortletRequest)pageContext.getAttribute(
+					"liferayPortletRequest"),
+				(PortletResponse)pageContext.getAttribute(
+					"liferayPortletResponse"),
 				_template);
 		}
 		catch (Exception e) {
@@ -199,7 +200,7 @@ public class AssetDisplayTag extends IncludeTag {
 		}
 
 		if (Validator.isNull(_page)) {
-			_page = "/html/taglib/ui/asset_diplay/" + _template + ".jsp";
+			_page = "/html/taglib/ui/asset_display/" + _template + ".jsp";
 		}
 
 		AssetRendererFactory assetRendererFactory = _assetRendererFactory;

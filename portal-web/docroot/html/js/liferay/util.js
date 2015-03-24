@@ -620,22 +620,6 @@
 			return Util.listCheckboxesExcept(form, except, name, false);
 		},
 
-		moveItem: function(fromBox, toBox, sort) {
-			fromBox = Util.getDOM(fromBox);
-			toBox = Util.getDOM(toBox);
-
-			fromBox = $(fromBox);
-			toBox = $(toBox);
-
-			var options = fromBox.find('option:selected');
-
-			toBox.append(options);
-
-			if (sort && (options.text() !== '')) {
-				Util.sortBox(toBox);
-			}
-		},
-
 		ns: function(namespace, obj) {
 			var instance = this;
 
@@ -882,28 +866,6 @@
 			}
 
 			$('#' + span).css('display', display);
-		},
-
-		sortBox: function(box) {
-			var newBox = _.map(
-				box.find('option'),
-				function(item) {
-					item = $(item);
-
-					return [item.val(), item.text()];
-				}
-			);
-
-			newBox.sort(Util.sortByAscending);
-
-			var optionsBuffer = _.map(
-				newBox,
-				function(item) {
-					return '<option value="' + item[0] + '">' + item[1] + '</option>';
-				}
-			);
-
-			box.html(optionsBuffer.join());
 		},
 
 		sortByAscending: function(a, b) {

@@ -35,6 +35,7 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutTemplate;
+import com.liferay.portal.model.LayoutTypeAccessPolicy;
 import com.liferay.portal.model.LayoutTypeController;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.LayoutTypePortletConstants;
@@ -83,9 +84,10 @@ public class LayoutTypePortletImpl
 	extends LayoutTypeImpl implements LayoutTypePortlet {
 
 	public LayoutTypePortletImpl(
-		Layout layout, LayoutTypeController layoutTypeController) {
+		Layout layout, LayoutTypeController layoutTypeController,
+		LayoutTypeAccessPolicy layoutTypeAccessPolicy) {
 
-		super(layout, layoutTypeController);
+		super(layout, layoutTypeController, layoutTypeAccessPolicy);
 
 		_layoutSetPrototypeLayout = SitesUtil.getLayoutSetPrototypeLayout(
 			layout);
@@ -597,8 +599,8 @@ public class LayoutTypePortletImpl
 				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, layout.getPlid(),
 				portletId) > 0) ||
 			 (PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
-				PortletKeys.PREFS_OWNER_TYPE_USER, layout.getPlid(),
-				portletId) > 0))) {
+				 PortletKeys.PREFS_OWNER_TYPE_USER, layout.getPlid(),
+				 portletId) > 0))) {
 
 			return true;
 		}

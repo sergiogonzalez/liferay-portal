@@ -45,9 +45,8 @@ boolean spreadsheet = GetterUtil.getBoolean(portletPreferences.getValue("spreads
 
 DDMDisplay ddmDisplay = DDMDisplayRegistryUtil.getDDMDisplay(PortletKeys.DYNAMIC_DATA_LISTS);
 
-long scopeClassNameId = PortalUtil.getClassNameId(ddmDisplay.getStructureType());
-
 DDMPermissionHandler ddmPermissionHandler = ddmDisplay.getDDMPermissionHandler();
+long scopeClassNameId = PortalUtil.getClassNameId(ddmDisplay.getStructureType());
 %>
 
 <%@ include file="/html/portlet/dynamic_data_list_display/init-ext.jsp" %>

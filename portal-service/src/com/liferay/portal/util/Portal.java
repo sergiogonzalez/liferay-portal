@@ -891,7 +891,7 @@ public interface Portal {
 	 * @deprecated As of 6.2.0 renamed to {@link #getSiteGroupId(long)}
 	 */
 	@Deprecated
-	public long getParentGroupId(long scopeGroupId) throws PortalException;
+	public long getParentGroupId(long scopeGroupId);
 
 	public String getPathContext();
 
@@ -1147,7 +1147,7 @@ public interface Portal {
 
 	public Locale getSiteDefaultLocale(long groupId) throws PortalException;
 
-	public long getSiteGroupId(long groupId) throws PortalException;
+	public long getSiteGroupId(long groupId);
 
 	/**
 	 * Returns the URL of the login page for the current site if one is

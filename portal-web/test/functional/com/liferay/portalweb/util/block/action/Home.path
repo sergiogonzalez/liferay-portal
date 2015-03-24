@@ -334,17 +334,17 @@
 <!--BREADCRUMB-->
 <tr>
 	<td>BREADCRUMB_1</td>
-	<td>xpath=(//nav[@id='breadcrumbs']/div/ul/li/a)[1]</td>
+	<td>xpath=(//nav[@id='navigation']/ul/li/a)[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BREADCRUMB_2</td>
-	<td>xpath=(//nav[@id='breadcrumbs']/div/ul/li/a)[2]</td>
+	<td>xpath=(//nav[@id='navigation']/ul/li/a)[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BREADCRUMB_3</td>
-	<td>xpath=(//nav[@id='breadcrumbs']/div/ul/li/a)[3]</td>
+	<td>xpath=(//nav[@id='navigation']/ul/li/a)[3]</td>
 	<td></td>
 </tr>
 <tr>
@@ -584,6 +584,11 @@
 	<td>SITE_ADMINISTRATION_NAVIGATION</td>
 	<td>//ul[contains(@class,'category-portlets')]/li[contains(.,'${key_portletName}')]/span/a</td>
 	<td>Site Administration Navigation</td>
+</tr>
+<tr>
+	<td>SITE_ADMINISTRATION_PORTLET_TITLE</td>
+	<td>//h2[@id='cpPortletTitle']/span[@class='portlet-title-text']</td>
+	<td></td>
 </tr>
 <tr>
 	<td>SITE_ADMINISTRATION_USERS</td>

@@ -68,9 +68,17 @@ public interface PortletLocalService extends BaseLocalService,
 	@com.liferay.portal.kernel.spring.aop.Skip
 	public void clearCache();
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #clearPortletsMap)}
+	*/
 	@com.liferay.portal.kernel.cluster.Clusterable
+	@java.lang.Deprecated
 	@com.liferay.portal.kernel.transaction.Transactional(enabled = false)
 	public void clearCompanyPortletsPool();
+
+	@com.liferay.portal.kernel.cluster.Clusterable
+	@com.liferay.portal.kernel.transaction.Transactional(enabled = false)
+	public void clearPortletsMap();
 
 	/**
 	* @deprecated As of 6.1.0, replaced by {@link #clonePortlet(String)}
@@ -340,6 +348,14 @@ public interface PortletLocalService extends BaseLocalService,
 		javax.servlet.ServletContext servletContext, java.lang.String[] xmls,
 		com.liferay.portal.kernel.plugin.PluginPackage pluginPackage);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.Map<java.lang.String, com.liferay.portal.model.Portlet> loadGetPortletsMap(
+		long companyId);
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #loadGetPortletsMap(long))}
+	*/
+	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.Map<java.lang.String, com.liferay.portal.model.Portlet> loadGetPortletsPool(
 		long companyId);

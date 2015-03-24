@@ -16,10 +16,9 @@ package com.liferay.portal.kernel.settings;
 
 import com.liferay.portal.kernel.util.LocaleUtil;
 
-import java.util.Locale;
-
-import org.junit.Assert;
 import org.junit.Test;
+
+import org.testng.Assert;
 
 /**
  * @author Iván Zaera
@@ -27,33 +26,22 @@ import org.junit.Test;
 public class LocalizedValuesMapTest {
 
 	@Test
-	public void testGetLocalizationXml() {
+	public void testGetReturnsDefaultValueForUnknownLocale() {
 		LocalizedValuesMap localizedValuesMap = new LocalizedValuesMap(
-			_KEY, _DEFAULT_LOCALE, _AVAILABLE_LOCALES);
-
-		for (Locale locale : _AVAILABLE_LOCALES) {
-			localizedValuesMap.put(locale, "value " +locale.toString() );
-		}
-
-		String xml = localizedValuesMap.getLocalizationXml();
+			"defaultValue");
 
 		Assert.assertEquals(
-			"<?xml version='1.0' encoding='UTF-8'?>" +
-				"<root available-locales=\"es_ES,en_GB,en_US\" " +
-						"default-locale=\"es_ES\">" +
-					"<key language-id=\"es_ES\">value es_ES</key>" +
-					"<key language-id=\"en_GB\">value en_GB</key>" +
-					"<key language-id=\"en_US\">value en_US</key>" +
-				"</root>",
-			xml);
+			"defaultValue", localizedValuesMap.get(LocaleUtil.BRAZIL));
 	}
 
-	private static final Locale[] _AVAILABLE_LOCALES = {
-		LocaleUtil.SPAIN, LocaleUtil.UK, LocaleUtil.US
-	};
+	@Test
+	public void testGetReturnsValueForKnownLocale() {
+		LocalizedValuesMap localizedValuesMap = new LocalizedValuesMap(
+			"defaultValue");
 
-	private static final Locale _DEFAULT_LOCALE = LocaleUtil.SPAIN;
+		localizedValuesMap.put(LocaleUtil.CANADA, "Hello");
 
-	private static final String _KEY = "key";
+		Assert.assertEquals("Hello", localizedValuesMap.get(LocaleUtil.CANADA));
+	}
 
 }

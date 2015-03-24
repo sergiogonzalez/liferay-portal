@@ -398,7 +398,6 @@
 				<classpath mode="compile">lib/portal/eclipse-core-runtime.jar</classpath>
 				<classpath mode="compile">lib/portal/ecs.jar</classpath>
 				<classpath mode="compile">lib/portal/ehcache.jar</classpath>
-				<classpath mode="compile">lib/portal/ehcache-jgroupsreplication.jar</classpath>
 				<classpath mode="compile">lib/portal/fastutil.jar</classpath>
 				<classpath mode="compile">lib/portal/fontbox.jar</classpath>
 				<classpath mode="compile">lib/portal/freshcookies-security.jar</classpath>
@@ -489,7 +488,6 @@
 				<classpath mode="compile">lib/portal/netcdf.jar</classpath>
 				<classpath mode="compile">lib/portal/netty-all.jar</classpath>
 				<classpath mode="compile">lib/portal/odmg.jar</classpath>
-				<classpath mode="compile">lib/portal/openid4java.jar</classpath>
 				<classpath mode="compile">lib/portal/oro.jar</classpath>
 				<classpath mode="compile">lib/portal/oscache.jar</classpath>
 				<classpath mode="compile">lib/portal/pdfbox.jar</classpath>

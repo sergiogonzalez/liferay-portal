@@ -60,6 +60,10 @@ public interface WebKeys {
 
 	public static final String EXTEND_SESSION = "EXTEND_SESSION";
 
+	public static final String FACEBOOK_INCOMPLETE_USER_ID = "FACEBOOK_INCOMPLETE_USER_ID";
+
+	public static final String FACEBOOK_USER_EMAIL_ADDRESS = "FACEBOOK_USER_EMAIL_ADDRESS";
+
 	public static final String FILE_ITEM_THRESHOLD_SIZE_EXCEEDED = "FILE_ITEM_THRESHOLD_SIZE_EXCEEDED";
 
 	public static final String FORGOT_PASSWORD_REMINDER_ATTEMPTS = "FORGOT_PASSWORD_REMINDER_ATTEMPTS";
@@ -98,6 +102,10 @@ public interface WebKeys {
 	 */
 	@Deprecated
 	public static final String LIFERAY_SHARED_VISITED_GROUP_ID_RECENT = "LIFERAY_SHARED_VISITED_GROUP_ID_RECENT";
+
+	public static final String OPEN_ID_LOGIN = "OPEN_ID_LOGIN";
+
+	public static final String OPEN_ID_LOGIN_PENDING = "OPEN_ID_LOGIN_PENDING";
 
 	public static final String OSGI_BUNDLE = "OSGI_BUNDLE";
 
@@ -174,6 +182,8 @@ public interface WebKeys {
 
 	public static final String RENDER_PORTLET_COLUMN_POS = "RENDER_PORTLET_COLUMN_POS";
 
+	public static final String RENDER_PORTLET_PREFERENCES = "RENDER_PORTLET_PREFERENCES";
+
 	public static final String RENDER_PORTLET_RESOURCE = "RENDER_PORTLET_RESOURCE";
 
 	public static final String SEARCH_CONTAINER = "SEARCH_CONTAINER";
@@ -193,6 +203,8 @@ public interface WebKeys {
 	public static final String SERVLET_CONTEXT_INCLUDE_FILTER_THEME = "SERVLET_CONTEXT_INCLUDE_FILTER_THEME";
 
 	public static final String SERVLET_PATH = "SERVLET_PATH";
+
+	public static final String SETTINGS_SCOPE = "SETTINGS_SCOPE";
 
 	public static final String SINGLE_PAGE_APPLICATION_LAST_PORTLET_ID = "SINGLE_PAGE_APPLICATION_LAST_PORTLET_ID";
 
