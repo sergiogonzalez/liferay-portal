@@ -96,6 +96,8 @@ featureCollectionJSONObject.put("type", "FeatureCollection");
 
 JSONArray featureJSONArray = JSONFactoryUtil.createJSONArray();
 
+IPInfo ipInfo = null;
+
 boolean hasPoints = false;
 
 for (int i = 0; i < users.size(); i++) {
@@ -105,7 +107,7 @@ for (int i = 0; i < users.size(); i++) {
 		continue;
 	}
 
-	IPInfo ipInfo = ipGeocoder.getIPInfo(mapUser.getLastLoginIP());
+	ipInfo = ipGeocoder.getIPInfo(mapUser.getLastLoginIP());
 
 	if (ipInfo == null) {
 		continue;
@@ -134,16 +136,11 @@ for (int i = 0; i < users.size(); i++) {
 
 featureCollectionJSONObject.put("features", featureJSONArray);
 
-double latitude = 0.0;
-double longitude = 0.0;
-
-if (userProfileMap) {
-	IPInfo ipInfo = ipGeocoder.getIPInfo(user2.getLastLoginIP());
-
-	if (ipInfo != null) {
-		latitude = ipInfo.getLatitude();
-		longitude = ipInfo.getLongitude();
-	}
+if (friendsProfileMap || userProfileMap) {
+	ipInfo = ipGeocoder.getIPInfo(user2.getLastLoginIP());
+}
+else {
+	ipInfo = ipGeocoder.getIPInfo(user.getLastLoginIP());
 }
 
 boolean maximized = windowState.equals(WindowState.MAXIMIZED);
@@ -162,10 +159,10 @@ if (maximized) {
 <div class="<%= maximized ? "maximized-map" : "default-map" %>">
 	<c:choose>
 		<c:when test="<%= hasPoints %>">
-			<liferay-ui:map apiKey="<%= groupGoogleMapsAPIKey %>" controls="MapControls.TYPE, MapControls.ZOOM" latitude="<%= latitude %>" longitude="<%= longitude %>" name="map" points="<%= featureCollectionJSONObject.toString() %>" provider="<%= groupMapsAPIProvider %>" zoom="<%= zoom %>" />
+			<liferay-ui:map apiKey="<%= groupGoogleMapsAPIKey %>" controls="MapControls.TYPE, MapControls.ZOOM" latitude="<%= (ipInfo != null) ? ipInfo.getLatitude() : 0 %>" longitude="<%= (ipInfo != null) ? ipInfo.getLongitude() : 0 %>" name="map" points="<%= featureCollectionJSONObject.toString() %>" provider="<%= groupMapsAPIProvider %>" zoom="<%= zoom %>" />
 		</c:when>
 		<c:otherwise>
-			<liferay-ui:map apiKey="<%= groupGoogleMapsAPIKey %>" controls="MapControls.TYPE, MapControls.ZOOM" latitude="<%= latitude %>" longitude="<%= longitude %>" name="map" provider="<%= groupMapsAPIProvider %>" zoom="<%= zoom %>" />
+			<liferay-ui:map apiKey="<%= groupGoogleMapsAPIKey %>" controls="MapControls.TYPE, MapControls.ZOOM" latitude="<%= (ipInfo != null) ? ipInfo.getLatitude() : 0 %>" longitude="<%= (ipInfo != null) ? ipInfo.getLongitude() : 0 %>" name="map" provider="<%= groupMapsAPIProvider %>" zoom="<%= zoom %>" />
 		</c:otherwise>
 	</c:choose>
 </div>
