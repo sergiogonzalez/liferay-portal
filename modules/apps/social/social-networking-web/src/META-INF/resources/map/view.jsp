@@ -170,7 +170,7 @@ if (maximized) {
 <div class="<%= maximized ? "maximized-map" : "default-map" %>">
 	<c:choose>
 		<c:when test="<%= hasPoints %>">
-			<liferay-ui:map apiKey="<%= groupGoogleMapsAPIKey %>" controlsJSONObject="controls: [MapControls.TYPE, MapControls.ZOOM]" latitude="<%= (ipInfo != null) ? ipInfo.getLatitude() : 0 %>" longitude="<%= (ipInfo != null) ? ipInfo.getLongitude() : 0 %>" name="map" points="<%= featureCollectionJSONObject.toString() %>" provider="<%= groupMapsAPIProvider %>" zoom="<%= zoom %>" />
+			<liferay-ui:map apiKey="<%= groupGoogleMapsAPIKey %>" controlsJSONObject="controls: [MapControls.TYPE, MapControls.ZOOM]" latitude="<%= (ipInfo != null) ? ipInfo.getLatitude() : 0 %>" longitude="<%= (ipInfo != null) ? ipInfo.getLongitude() : 0 %>" name="map" pointsJsonObject="<%= featureCollectionJSONObject %>" provider="<%= groupMapsAPIProvider %>" zoom="<%= zoom %>" />
 
 			<c:if test="<%= maximized %>">
 				<aui:script use="liferay-map-base">

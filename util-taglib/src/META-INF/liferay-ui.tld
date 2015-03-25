@@ -3194,7 +3194,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>points</name>
+			<name>pointsJsonObject</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

@@ -25,7 +25,7 @@ boolean geolocation = GetterUtil.getBoolean(request.getAttribute("liferay-ui:map
 double latitude = GetterUtil.getDouble(request.getAttribute("liferay-ui:map:latitude"));
 double longitude = GetterUtil.getDouble(request.getAttribute("liferay-ui:map:longitude"));
 String name = GetterUtil.getString((String)request.getAttribute("liferay-ui:map:name"));
-String points = GetterUtil.getString((String)request.getAttribute("liferay-ui:map:points"));
+JSONObject pointsJSONObject = (JSONObject)request.getAttribute("liferay-ui:map:pointsJSONObject");
 String provider = GetterUtil.getString((String)request.getAttribute("liferay-ui:map:provider"));
 int zoom = GetterUtil.getInteger(request.getAttribute("liferay-ui:map:zoom"));
 
@@ -85,8 +85,8 @@ name = namespace + name;
 			<%= controlsJSONObject.toString() %>,
 		</c:if>
 
-		<c:if test="<%= Validator.isNotNull(points) %>">
-			data: <%= points %>,
+		<c:if test="<%= pointsJSONObject != null %>">
+			data: <%= pointsJSONObject.toString() %>,
 		</c:if>
 
 		geolocation: <%= geolocation %>

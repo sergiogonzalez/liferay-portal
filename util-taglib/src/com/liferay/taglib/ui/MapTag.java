@@ -66,8 +66,18 @@ public class MapTag extends IncludeTag {
 		_name = name;
 	}
 
-	public void setPoints(String points) {
-		_points = points;
+	public void setPoints(JSONObject pointsJSONObject) {
+		_pointsJSONObject = pointsJSONObject;
+	}
+
+	public void setPoints(String pointsJSONObjectString) {
+		try {
+			_pointsJSONObject = JSONFactoryUtil.createJSONObject(
+				pointsJSONObjectString);
+		}
+		catch (JSONException e) {
+			_log.error("Error when instantiating json object");
+		}
 	}
 
 	public void setProvider(String provider) {
@@ -86,7 +96,7 @@ public class MapTag extends IncludeTag {
 		_latitude = 0;
 		_longitude = 0;
 		_name = null;
-		_points = null;
+		_pointsJSONObject = null;
 		_provider = null;
 		_zoom = 0;
 	}
@@ -106,7 +116,8 @@ public class MapTag extends IncludeTag {
 		request.setAttribute("liferay-ui:map:latitude", _latitude);
 		request.setAttribute("liferay-ui:map:longitude", _longitude);
 		request.setAttribute("liferay-ui:map:name", _name);
-		request.setAttribute("liferay-ui:map:points", _points);
+		request.setAttribute(
+			"liferay-ui:map:pointsJSONObject", _pointsJSONObject);
 		request.setAttribute("liferay-ui:map:provider", _provider);
 		request.setAttribute("liferay-ui:map:zoom", _zoom);
 	}
@@ -159,7 +170,7 @@ public class MapTag extends IncludeTag {
 	private double _latitude;
 	private double _longitude;
 	private String _name;
-	private String _points;
+	private JSONObject _pointsJSONObject;
 	private String _provider;
 	private int _zoom;
 
