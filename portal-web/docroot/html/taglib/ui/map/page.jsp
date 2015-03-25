@@ -19,21 +19,15 @@
 <%
 String protocol = HttpUtil.getProtocol(request);
 
-String apiKey = GetterUtil.getString(request.getAttribute("liferay-ui:map:apiKey"));
-String controls = GetterUtil.getString(request.getAttribute("liferay-ui:map:controls"));
+String apiKey = GetterUtil.getString((String)request.getAttribute("liferay-ui:map:apiKey"));
+JSONObject controlsJSONObject = (JSONObject)request.getAttribute("liferay-ui:map:controlsJSONObject");
 boolean geolocation = GetterUtil.getBoolean(request.getAttribute("liferay-ui:map:geolocation"));
-double latitude = (Double)request.getAttribute("liferay-ui:map:latitude");
-double longitude = (Double)request.getAttribute("liferay-ui:map:longitude");
+double latitude = GetterUtil.getDouble(request.getAttribute("liferay-ui:map:latitude"));
+double longitude = GetterUtil.getDouble(request.getAttribute("liferay-ui:map:longitude"));
 String name = GetterUtil.getString((String)request.getAttribute("liferay-ui:map:name"));
-String points = GetterUtil.getString(request.getAttribute("liferay-ui:map:points"));
+String points = GetterUtil.getString((String)request.getAttribute("liferay-ui:map:points"));
 String provider = GetterUtil.getString((String)request.getAttribute("liferay-ui:map:provider"));
-int zoom = (Integer)request.getAttribute("liferay-ui:map:zoom");
-
-boolean showControls = false;
-
-if (Validator.isNotNull(controls) || geolocation) {
-	showControls = true;
-}
+int zoom = GetterUtil.getInteger(request.getAttribute("liferay-ui:map:zoom"));
 
 if (Validator.isNull(provider)) {
 	Group group = layout.getGroup();
@@ -87,18 +81,8 @@ name = namespace + name;
 	var mapConfig = {
 		boundingBox: '#<%= name %>Map',
 
-		<c:if test="<%= showControls %>">
-			<c:choose>
-				<c:when test="<%= Validator.isNotNull(controls) %>">
-					controls: [<%= controls %>],
-				</c:when>
-				<c:when test="<%= BrowserSnifferUtil.isMobile(request) %>">
-					controls: [MapControls.HOME, MapControls.SEARCH],
-				</c:when>
-				<c:otherwise>
-					controls: [MapControls.HOME, MapControls.PAN, MapControls.SEARCH, MapControls.TYPE, MapControls.ZOOM],
-				</c:otherwise>
-			</c:choose>
+		<c:if test="<%= controlsJSONObject != null %>">
+			<%= controlsJSONObject.toString() %>,
 		</c:if>
 
 		<c:if test="<%= Validator.isNotNull(points) %>">

@@ -14,6 +14,14 @@
 
 package com.liferay.taglib.ui;
 
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,8 +36,18 @@ public class MapTag extends IncludeTag {
 		_apiKey = apiKey;
 	}
 
-	public void setControls(String controls) {
-		_controls = controls;
+	public void setControlsJSONObject(String controlsJSONObjectString) {
+		try {
+			_controlsJSONObject = JSONFactoryUtil.createJSONObject(
+				controlsJSONObjectString);
+		}
+		catch (JSONException e) {
+			_log.error("Error when instantiating json object");
+		}
+	}
+
+	public void setControlsJSONObject(JSONObject controlsJSONObject) {
+		_controlsJSONObject = controlsJSONObject;
 	}
 
 	public void setGeolocation(boolean geolocation) {
@@ -63,7 +81,7 @@ public class MapTag extends IncludeTag {
 	@Override
 	protected void cleanUp() {
 		_apiKey = null;
-		_controls = null;
+		_controlsJSONObject = null;
 		_geolocation = false;
 		_latitude = 0;
 		_longitude = 0;
@@ -81,7 +99,9 @@ public class MapTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute("liferay-ui:map:apiKey", _apiKey);
-		request.setAttribute("liferay-ui:map:controls", _controls);
+		request.setAttribute(
+			"liferay-ui:map:controlsJSONObject",
+			getControlsJSONObject(request));
 		request.setAttribute("liferay-ui:map:geolocation", _geolocation);
 		request.setAttribute("liferay-ui:map:latitude", _latitude);
 		request.setAttribute("liferay-ui:map:longitude", _longitude);
@@ -94,7 +114,47 @@ public class MapTag extends IncludeTag {
 	private static final String _PAGE = "/html/taglib/ui/map/page.jsp";
 
 	private String _apiKey;
-	private String _controls;
+
+	public JSONObject getControlsJSONObject(HttpServletRequest request) {
+		if (Validator.isNotNull(_controlsJSONObject)) {
+			return _controlsJSONObject;
+		}
+
+		if (!_geolocation) {
+			return null;
+		}
+
+		if (BrowserSnifferUtil.isMobile(request)) {
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+			JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+			jsonArray.put("MapControls.HOME");
+			jsonArray.put("MapControls.SEARCH");
+
+			jsonObject.put("controls", jsonArray);
+
+			return jsonObject;
+		}
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		jsonArray.put("MapControls.HOME");
+		jsonArray.put("MapControls.PAN");
+		jsonArray.put("MapControls.SEARCH");
+		jsonArray.put("MapControls.TYPE");
+		jsonArray.put("MapControls.ZOOM");
+
+		jsonObject.put("controls", jsonArray);
+
+		return jsonObject;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(MapTag.class);
+
+	private JSONObject _controlsJSONObject;
 	private boolean _geolocation;
 	private double _latitude;
 	private double _longitude;

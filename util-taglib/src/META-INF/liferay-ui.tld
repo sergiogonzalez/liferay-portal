@@ -3169,7 +3169,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>controls</name>
+			<name>controlsJSONObject</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
