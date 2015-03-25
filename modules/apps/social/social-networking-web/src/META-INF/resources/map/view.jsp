@@ -22,7 +22,7 @@ PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(com
 String companyMapsAPIProvider = PrefsParamUtil.getString(companyPortletPreferences, request, "mapsAPIProvider", "Google");
 String companyGoogleMapsAPIKey = PrefsParamUtil.getString(companyPortletPreferences, request, "googleMapsAPIKey", "");
 
-Group liveGroup = (Group)request.getAttribute("site.liveGroup");
+Group liveGroup = group.getLiveGroup();
 
 UnicodeProperties groupTypeSettings = null;
 
