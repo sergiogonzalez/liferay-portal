@@ -44,7 +44,6 @@ String coverImageCaption = BeanParamUtil.getString(entry, request, "coverImageCa
 long coverImageFileEntryId = BeanParamUtil.getLong(entry, request, "coverImageFileEntryId");
 long smallImageFileEntryId = BeanParamUtil.getLong(entry, request, "smallImageFileEntryId");
 
-boolean preview = ParamUtil.getBoolean(request, "preview");
 boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 
 BlogsEntryEditorDisplayContext blogsEntryEditorDisplayContext = new BlogsEntryEditorDisplayContext(liferayPortletResponse);
@@ -69,7 +68,6 @@ BlogsEntryEditorDisplayContext blogsEntryEditorDisplayContext = new BlogsEntryEd
 		<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
 		<aui:input name="referringPortletResource" type="hidden" value="<%= referringPortletResource %>" />
 		<aui:input name="entryId" type="hidden" value="<%= entryId %>" />
-		<aui:input name="preview" type="hidden" value="<%= false %>" />
 		<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_PUBLISH %>" />
 
 		<liferay-ui:error exception="<%= EntryContentException.class %>" message="please-enter-valid-content" />
@@ -309,24 +307,6 @@ BlogsEntryEditorDisplayContext blogsEntryEditorDisplayContext = new BlogsEntryEd
 		</liferay-ui:tabs>
 
 		<aui:fieldset>
-			<c:if test="<%= preview %>">
-
-				<%
-				if (entry == null) {
-					entry = new BlogsEntryImpl();
-				}
-
-				entry.setContent(content);
-				%>
-
-				<liferay-ui:message key="preview" />:
-
-				<div class="preview">
-					<%= entry.getContent() %>
-				</div>
-
-				<br />
-			</c:if>
 
 			<%
 			boolean pending = false;
@@ -368,10 +348,6 @@ BlogsEntryEditorDisplayContext blogsEntryEditorDisplayContext = new BlogsEntryEd
 
 				<aui:button name="saveButton"  primary="<%= false %>" type="submit" value="<%= saveButtonLabel %>" />
 
-				<c:if test="<%= (entry == null) || entry.isDraft() || preview %>">
-					<aui:button name="previewButton" value="preview" />
-				</c:if>
-
 				<aui:button href="<%= redirect %>" name="cancelButton" type="cancel" />
 			</aui:button-row>
 		</aui:fieldset>
@@ -381,7 +357,6 @@ BlogsEntryEditorDisplayContext blogsEntryEditorDisplayContext = new BlogsEntryEd
 <portlet:actionURL var="editEntryURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
 	<portlet:param name="struts_action" value="/blogs/edit_entry" />
 	<portlet:param name="ajax" value="true" />
-	<portlet:param name="preview" value="false" />
 </portlet:actionURL>
 
 <aui:script>
