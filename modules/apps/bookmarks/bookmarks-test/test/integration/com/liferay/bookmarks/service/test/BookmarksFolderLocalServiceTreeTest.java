@@ -12,20 +12,20 @@
  * details.
  */
 
-package com.liferay.portlet.journal.service;
+package com.liferay.bookmarks.service.test;
 
-import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.bookmarks.model.BookmarksFolder;
+import com.liferay.bookmarks.model.BookmarksFolderConstants;
+import com.liferay.bookmarks.service.BookmarksFolderLocalServiceUtil;
+import com.liferay.bookmarks.service.BookmarksFolderServiceUtil;
+import com.liferay.bookmarks.util.test.BookmarksTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.model.TreeModel;
-import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.service.tree.test.BaseLocalServiceTreeTestCase;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.MainServletTestRule;
-import com.liferay.portlet.journal.model.JournalFolder;
-import com.liferay.portlet.journal.model.JournalFolderConstants;
-import com.liferay.portlet.journal.util.test.JournalTestUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,50 +34,54 @@ import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Shinn Lok
  */
-public class JournalFolderLocalServiceTreeTest
+@RunWith(Arquillian.class)
+public class BookmarksFolderLocalServiceTreeTest
 	extends BaseLocalServiceTreeTestCase {
 
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE);
+	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
+		new LiferayIntegrationTestRule();
+
+	@Override
+	public void setUp() throws Exception {
+		ServiceTestUtil.setUser(TestPropsValues.getUser());
+
+		super.setUp();
+	}
 
 	@Test
-	public void testJournalFolderTreePathWhenMovingFolderWithSubfolder()
+	public void testFolderTreePathWhenMovingFolderWithSubfolder()
 		throws Exception {
 
-		List<JournalFolder> folders = new ArrayList<>();
+		List<BookmarksFolder> folders = new ArrayList<>();
 
-		JournalFolder folderA = JournalTestUtil.addFolder(
-			group.getGroupId(), JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			"Folder A");
+		BookmarksFolder folderA = BookmarksTestUtil.addFolder(
+			group.getGroupId(), "Folder A");
 
 		folders.add(folderA);
 
-		JournalFolder folderAA = JournalTestUtil.addFolder(
+		BookmarksFolder folderAA = BookmarksTestUtil.addFolder(
 			group.getGroupId(), folderA.getFolderId(), "Folder AA");
 
 		folders.add(folderAA);
 
-		JournalFolder folderAAA = JournalTestUtil.addFolder(
+		BookmarksFolder folderAAA = BookmarksTestUtil.addFolder(
 			group.getGroupId(), folderAA.getFolderId(), "Folder AAA");
 
 		folders.add(folderAAA);
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(group.getGroupId());
-
-		JournalFolderLocalServiceUtil.moveFolder(
+		BookmarksFolderServiceUtil.moveFolder(
 			folderAA.getFolderId(),
-			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, serviceContext);
+			BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
-		for (JournalFolder folder : folders) {
-			folder = JournalFolderLocalServiceUtil.fetchFolder(
+		for (BookmarksFolder folder : folders) {
+			folder = BookmarksFolderLocalServiceUtil.fetchBookmarksFolder(
 				folder.getFolderId());
 
 			Assert.assertEquals(folder.buildTreePath(), folder.getTreePath());
@@ -88,37 +92,37 @@ public class JournalFolderLocalServiceTreeTest
 	protected TreeModel addTreeModel(TreeModel parentTreeModel)
 		throws Exception {
 
-		long parentFolderId = JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+		long parentFolderId = BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 
 		if (parentTreeModel != null) {
-			JournalFolder folder = (JournalFolder)parentTreeModel;
+			BookmarksFolder folder = (BookmarksFolder)parentTreeModel;
 
 			parentFolderId = folder.getFolderId();
 		}
 
-		JournalFolder folder = JournalTestUtil.addFolder(
+		BookmarksFolder folder = BookmarksTestUtil.addFolder(
 			group.getGroupId(), parentFolderId, RandomTestUtil.randomString());
 
 		folder.setTreePath(null);
 
-		return JournalFolderLocalServiceUtil.updateJournalFolder(folder);
+		return BookmarksFolderLocalServiceUtil.updateBookmarksFolder(folder);
 	}
 
 	@Override
 	protected void deleteTreeModel(TreeModel treeModel) throws Exception {
-		JournalFolder folder = (JournalFolder)treeModel;
+		BookmarksFolder folder = (BookmarksFolder)treeModel;
 
-		JournalFolderLocalServiceUtil.deleteFolder(folder);
+		BookmarksFolderLocalServiceUtil.deleteFolder(folder);
 	}
 
 	@Override
 	protected TreeModel getTreeModel(long primaryKey) throws Exception {
-		return JournalFolderLocalServiceUtil.getFolder(primaryKey);
+		return BookmarksFolderLocalServiceUtil.getFolder(primaryKey);
 	}
 
 	@Override
 	protected void rebuildTree() throws Exception {
-		JournalFolderLocalServiceUtil.rebuildTree(
+		BookmarksFolderLocalServiceUtil.rebuildTree(
 			TestPropsValues.getCompanyId());
 	}
 
