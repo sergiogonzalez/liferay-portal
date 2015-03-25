@@ -20,12 +20,20 @@
 String protocol = HttpUtil.getProtocol(request);
 
 String apiKey = GetterUtil.getString(request.getAttribute("liferay-ui:map:apiKey"));
+String controls = GetterUtil.getString(request.getAttribute("liferay-ui:map:controls"));
 boolean geolocation = GetterUtil.getBoolean(request.getAttribute("liferay-ui:map:geolocation"));
 double latitude = (Double)request.getAttribute("liferay-ui:map:latitude");
 double longitude = (Double)request.getAttribute("liferay-ui:map:longitude");
 String name = GetterUtil.getString((String)request.getAttribute("liferay-ui:map:name"));
 String points = GetterUtil.getString(request.getAttribute("liferay-ui:map:points"));
 String provider = GetterUtil.getString((String)request.getAttribute("liferay-ui:map:provider"));
+int zoom = (Integer)request.getAttribute("liferay-ui:map:zoom");
+
+boolean showControls = false;
+
+if (Validator.isNotNull(controls) || geolocation) {
+	showControls = true;
+}
 
 if (Validator.isNull(provider)) {
 	Group group = layout.getGroup();
@@ -79,8 +87,11 @@ name = namespace + name;
 	var mapConfig = {
 		boundingBox: '#<%= name %>Map',
 
-		<c:if test="<%= geolocation %>">
+		<c:if test="<%= showControls %>">
 			<c:choose>
+				<c:when test="<%= Validator.isNotNull(controls) %>">
+					controls: [<%= controls %>],
+				</c:when>
 				<c:when test="<%= BrowserSnifferUtil.isMobile(request) %>">
 					controls: [MapControls.HOME, MapControls.SEARCH],
 				</c:when>
@@ -97,12 +108,16 @@ name = namespace + name;
 		geolocation: <%= geolocation %>
 
 		<c:if test="<%= Validator.isNotNull(latitude) && Validator.isNotNull(longitude) %>">
-			,position: {
+			, position: {
 				location: {
 					lat: <%= latitude %>,
 					lng: <%= longitude %>
 				}
 			}
+		</c:if>
+
+		<c:if test="<%= zoom != 0 %>">
+			, zoom: <%= zoom %>
 		</c:if>
 	};
 
