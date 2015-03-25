@@ -101,9 +101,7 @@ IPInfo ipInfo = null;
 boolean hasPoints = false;
 boolean maximized = windowState.equals(WindowState.MAXIMIZED);
 
-for (int i = 0; i < users.size(); i++) {
-	User mapUser = users.get(i);
-
+for (User mapUser : users) {
 	if (Validator.isNull(mapUser.getLastLoginIP())) {
 		continue;
 	}
