@@ -32,8 +32,49 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class MapTag extends IncludeTag {
 
+	public JSONObject getControlsJSONObject(HttpServletRequest request) {
+		if (Validator.isNotNull(_controlsJSONObject)) {
+			return _controlsJSONObject;
+		}
+
+		if (!_geolocation) {
+			return null;
+		}
+
+		if (BrowserSnifferUtil.isMobile(request)) {
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+			JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+			jsonArray.put("MapControls.HOME");
+			jsonArray.put("MapControls.SEARCH");
+
+			jsonObject.put("controls", jsonArray);
+
+			return jsonObject;
+		}
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		jsonArray.put("MapControls.HOME");
+		jsonArray.put("MapControls.PAN");
+		jsonArray.put("MapControls.SEARCH");
+		jsonArray.put("MapControls.TYPE");
+		jsonArray.put("MapControls.ZOOM");
+
+		jsonObject.put("controls", jsonArray);
+
+		return jsonObject;
+	}
+
 	public void setApiKey(String apiKey) {
 		_apiKey = apiKey;
+	}
+
+	public void setControlsJSONObject(JSONObject controlsJSONObject) {
+		_controlsJSONObject = controlsJSONObject;
 	}
 
 	public void setControlsJSONObject(String controlsJSONObjectString) {
@@ -44,10 +85,6 @@ public class MapTag extends IncludeTag {
 		catch (JSONException e) {
 			_log.error("Error when instantiating json object");
 		}
-	}
-
-	public void setControlsJSONObject(JSONObject controlsJSONObject) {
-		_controlsJSONObject = controlsJSONObject;
 	}
 
 	public void setGeolocation(boolean geolocation) {
@@ -124,47 +161,9 @@ public class MapTag extends IncludeTag {
 
 	private static final String _PAGE = "/html/taglib/ui/map/page.jsp";
 
-	private String _apiKey;
-
-	public JSONObject getControlsJSONObject(HttpServletRequest request) {
-		if (Validator.isNotNull(_controlsJSONObject)) {
-			return _controlsJSONObject;
-		}
-
-		if (!_geolocation) {
-			return null;
-		}
-
-		if (BrowserSnifferUtil.isMobile(request)) {
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-			JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
-			jsonArray.put("MapControls.HOME");
-			jsonArray.put("MapControls.SEARCH");
-
-			jsonObject.put("controls", jsonArray);
-
-			return jsonObject;
-		}
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
-		jsonArray.put("MapControls.HOME");
-		jsonArray.put("MapControls.PAN");
-		jsonArray.put("MapControls.SEARCH");
-		jsonArray.put("MapControls.TYPE");
-		jsonArray.put("MapControls.ZOOM");
-
-		jsonObject.put("controls", jsonArray);
-
-		return jsonObject;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(MapTag.class);
 
+	private String _apiKey;
 	private JSONObject _controlsJSONObject;
 	private boolean _geolocation;
 	private double _latitude;
