@@ -108,9 +108,6 @@ for (int i = 0; i < users.size(); i++) {
 
 	IPInfo ipInfo = ipGeocoder.getIPInfo(mapUser.getLastLoginIP());
 
-	double latitude = ipInfo.getLatitude();
-	double longitude = ipInfo.getLongitude();
-
 	if (ipInfo == null) {
 		continue;
 	}
@@ -126,8 +123,8 @@ for (int i = 0; i < users.size(); i++) {
 
 	JSONArray coordinatesJSONArray = JSONFactoryUtil.createJSONArray();
 
-	coordinatesJSONArray.put(longitude);
-	coordinatesJSONArray.put(latitude);
+	coordinatesJSONArray.put(ipInfo.getLongitude());
+	coordinatesJSONArray.put(ipInfo.getLatitude());
 
 	geometryJSONObject.put("coordinates", coordinatesJSONArray);
 
