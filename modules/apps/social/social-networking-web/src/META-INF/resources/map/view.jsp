@@ -17,6 +17,25 @@
 <%@ include file="/init.jsp" %>
 
 <%
+PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(company.getCompanyId());
+
+String companyMapsAPIProvider = PrefsParamUtil.getString(companyPortletPreferences, request, "mapsAPIProvider", "Google");
+String companyGoogleMapsAPIKey = PrefsParamUtil.getString(companyPortletPreferences, request, "googleMapsAPIKey", "");
+
+Group liveGroup = (Group)request.getAttribute("site.liveGroup");
+
+UnicodeProperties groupTypeSettings = null;
+
+if (liveGroup != null) {
+	groupTypeSettings = liveGroup.getTypeSettingsProperties();
+}
+else {
+	groupTypeSettings = new UnicodeProperties();
+}
+
+String groupMapsAPIProvider = PropertiesParamUtil.getString(groupTypeSettings, request, "mapsAPIProvider", companyMapsAPIProvider);
+String groupGoogleMapsAPIKey = PropertiesParamUtil.getString(groupTypeSettings, request, "googleMapsAPIKey", companyGoogleMapsAPIKey);
+
 boolean friendsProfileMap = false;
 boolean organizationProfileMap = false;
 boolean siteProfileMap = false;
@@ -47,25 +66,6 @@ else {
 
 IPGeocoder ipGeocoder = (IPGeocoder)request.getAttribute(SocialNetworkingWebKeys.IP_GEOCODER);
 
-PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(company.getCompanyId());
-
-String companyMapsAPIProvider = PrefsParamUtil.getString(companyPortletPreferences, request, "mapsAPIProvider", "Google");
-String companyGoogleMapsAPIKey = PrefsParamUtil.getString(companyPortletPreferences, request, "googleMapsAPIKey", "");
-
-Group liveGroup = (Group)request.getAttribute("site.liveGroup");
-
-UnicodeProperties groupTypeSettings = null;
-
-if (liveGroup != null) {
-	groupTypeSettings = liveGroup.getTypeSettingsProperties();
-}
-else {
-	groupTypeSettings = new UnicodeProperties();
-}
-
-String groupMapsAPIProvider = PropertiesParamUtil.getString(groupTypeSettings, request, "mapsAPIProvider", companyMapsAPIProvider);
-String groupGoogleMapsAPIKey = PropertiesParamUtil.getString(groupTypeSettings, request, "googleMapsAPIKey", companyGoogleMapsAPIKey);
-
 List<User> users = null;
 
 if (siteProfileMap) {
@@ -92,7 +92,6 @@ else if (userProfileMap) {
 }
 
 JSONObject featureCollectionJSONObject = JSONFactoryUtil.createJSONObject();
-
 featureCollectionJSONObject.put("type", "FeatureCollection");
 
 JSONArray featureJSONArray = JSONFactoryUtil.createJSONArray();
@@ -114,26 +113,20 @@ for (int i = 0; i < users.size(); i++) {
 
 	hasPoints = true;
 
-	JSONObject featureJSONObject = JSONFactoryUtil.createJSONObject();
-	featureJSONObject.put("type", "Feature");
-
-	JSONObject geometryJSONObject = JSONFactoryUtil.createJSONObject();
-
-	geometryJSONObject.put("type", "Point");
-
 	JSONArray coordinatesJSONArray = JSONFactoryUtil.createJSONArray();
-
 	coordinatesJSONArray.put(ipInfo.getLongitude());
 	coordinatesJSONArray.put(ipInfo.getLatitude());
 
+	JSONObject geometryJSONObject = JSONFactoryUtil.createJSONObject();
+	geometryJSONObject.put("type", "Point");
 	geometryJSONObject.put("coordinates", coordinatesJSONArray);
 
-	featureJSONObject.put("geometry", geometryJSONObject);
-
 	JSONObject propertiesJSONObject = JSONFactoryUtil.createJSONObject();
-
 	propertiesJSONObject.put("title", mapUser.getFullName());
 
+	JSONObject featureJSONObject = JSONFactoryUtil.createJSONObject();
+	featureJSONObject.put("type", "Feature");
+	featureJSONObject.put("geometry", geometryJSONObject);
 	featureJSONObject.put("properties", propertiesJSONObject);
 
 	featureJSONArray.put(featureJSONObject);
