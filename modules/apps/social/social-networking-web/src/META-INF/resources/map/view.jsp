@@ -76,7 +76,7 @@ if (siteProfileMap) {
 	users = UserLocalServiceUtil.search(company.getCompanyId(), null, WorkflowConstants.STATUS_APPROVED, userParams, 0, 50, new UserLoginDateComparator());
 }
 else if (friendsProfileMap) {
-	users = UserLocalServiceUtil.getSocialUsers(user2.getUserId(), SocialRelationConstants.TYPE_BI_FRIEND, 0, 50, new UserLoginDateComparator());
+	users = UserLocalServiceUtil.getSocialUsers(user2.getUserId(), SocialRelationConstants.TYPE_BI_FRIEND, StringPool.EQUAL, 0, 50, new UserLoginDateComparator());
 }
 else if (organizationProfileMap) {
 	LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
