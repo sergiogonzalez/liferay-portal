@@ -218,6 +218,14 @@ public class MBMailingListLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portlet.messageboards.model.MBMailingList fetchCategoryMailingList(
+		long groupId, long categoryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbMailingListLocalService.fetchCategoryMailingList(groupId,
+			categoryId);
+	}
+
+	@Override
 	public com.liferay.portlet.messageboards.model.MBMailingList fetchMBMailingList(
 		long mailingListId) {
 		return _mbMailingListLocalService.fetchMBMailingList(mailingListId);
