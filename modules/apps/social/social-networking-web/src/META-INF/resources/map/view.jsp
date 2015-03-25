@@ -99,6 +99,7 @@ JSONArray featureJSONArray = JSONFactoryUtil.createJSONArray();
 IPInfo ipInfo = null;
 
 boolean hasPoints = false;
+boolean maximized = windowState.equals(WindowState.MAXIMIZED);
 
 for (int i = 0; i < users.size(); i++) {
 	User mapUser = users.get(i);
@@ -126,6 +127,20 @@ for (int i = 0; i < users.size(); i++) {
 	JSONObject propertiesJSONObject = JSONFactoryUtil.createJSONObject();
 	propertiesJSONObject.put("title", mapUser.getFullName());
 
+	if (maximized) {
+		StringBundler sb = new StringBundler(7);
+
+		sb.append("<div style=\" height:100px; width:100px \"><center><img alt=\"");
+		sb.append(HtmlUtil.escapeJS(LanguageUtil.get(request, "user-portrait")));
+		sb.append("\" src=\"");
+		sb.append(mapUser.getPortraitURL(themeDisplay));
+		sb.append("\" width=\"65\" /><br />");
+		sb.append(HtmlUtil.escapeJS(HtmlUtil.escape(mapUser.getFullName())));
+		sb.append("</center></div>");
+
+		propertiesJSONObject.put("content", sb.toString());
+	}
+
 	JSONObject featureJSONObject = JSONFactoryUtil.createJSONObject();
 	featureJSONObject.put("type", "Feature");
 	featureJSONObject.put("geometry", geometryJSONObject);
@@ -143,8 +158,6 @@ else {
 	ipInfo = ipGeocoder.getIPInfo(user.getLastLoginIP());
 }
 
-boolean maximized = windowState.equals(WindowState.MAXIMIZED);
-
 int zoom = 0;
 
 if (maximized) {
@@ -160,6 +173,30 @@ if (maximized) {
 	<c:choose>
 		<c:when test="<%= hasPoints %>">
 			<liferay-ui:map apiKey="<%= groupGoogleMapsAPIKey %>" controls="MapControls.TYPE, MapControls.ZOOM" latitude="<%= (ipInfo != null) ? ipInfo.getLatitude() : 0 %>" longitude="<%= (ipInfo != null) ? ipInfo.getLongitude() : 0 %>" name="map" points="<%= featureCollectionJSONObject.toString() %>" provider="<%= groupMapsAPIProvider %>" zoom="<%= zoom %>" />
+
+			<c:if test="<%= maximized %>">
+				<aui:script use="liferay-map-base">
+					Liferay.MapBase.get(
+						'<portlet:namespace/>map',
+						function(map) {
+							map.on(
+								'featureClick',
+								function(event) {
+									var feature = event.feature;
+
+									map.openDialog(
+										{
+											content: feature.getProperty('content'),
+											marker: feature.getMarker(),
+											position: feature.getGeometry().get('location')
+										}
+									);
+								}
+							);
+						}
+					);
+				</aui:script>
+			</c:if>
 		</c:when>
 		<c:otherwise>
 			<liferay-ui:map apiKey="<%= groupGoogleMapsAPIKey %>" controls="MapControls.TYPE, MapControls.ZOOM" latitude="<%= (ipInfo != null) ? ipInfo.getLatitude() : 0 %>" longitude="<%= (ipInfo != null) ? ipInfo.getLongitude() : 0 %>" name="map" provider="<%= groupMapsAPIProvider %>" zoom="<%= zoom %>" />
