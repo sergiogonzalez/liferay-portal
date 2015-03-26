@@ -99,13 +99,12 @@ public class GroupServiceSettingsProviderBuilder
 
 		TypedSettings typedSettings = new TypedSettings(settings);
 
-		Object settingsExtraImplementation = constructor.newInstance(
-			typedSettings);
+		Object settingsExtraInstance = constructor.newInstance(typedSettings);
 
 		SettingsInvocationHandler<S, C> settingsInvocationHandler =
 			new SettingsInvocationHandler<>(
-				_settingsDefinition.getSettingsClass(),
-				settingsExtraImplementation, typedSettings);
+				_settingsDefinition.getSettingsClass(), settingsExtraInstance,
+				typedSettings);
 
 		return settingsInvocationHandler.createProxy();
 	}
