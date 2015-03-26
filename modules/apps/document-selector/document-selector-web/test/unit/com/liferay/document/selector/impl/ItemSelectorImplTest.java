@@ -98,7 +98,7 @@ public class ItemSelectorImplTest extends PowerMockito {
 			mediaItemSelectorCriterion.getMaxSize());
 		Assert.assertEquals(
 			MediaItemSelectorView.HTML,
-			mediaItemSelectorViewRenderer.getHTML());
+			mediaItemSelectorViewRenderer.getHTML("itemSelectedCallback"));
 
 		ItemSelectorViewRenderer<FlickrItemSelectorCriterion>
 			flickrItemSelectorViewRenderer =
@@ -113,7 +113,7 @@ public class ItemSelectorImplTest extends PowerMockito {
 			flickrItemSelectorCriterion.getUser());
 		Assert.assertEquals(
 			FlickrItemSelectorView.HTML,
-			flickrItemSelectorViewRenderer.getHTML());
+			flickrItemSelectorViewRenderer.getHTML("itemSelectedCallback"));
 
 		Assert.assertEquals(2, itemSelectorViewRenderers.size());
 	}
