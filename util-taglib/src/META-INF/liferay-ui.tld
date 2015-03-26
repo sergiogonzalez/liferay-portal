@@ -3169,6 +3169,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>controlsJSONObject</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>geolocation</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -3189,12 +3194,17 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>points</name>
+			<name>pointsJsonObject</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
 			<name>provider</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>zoom</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
