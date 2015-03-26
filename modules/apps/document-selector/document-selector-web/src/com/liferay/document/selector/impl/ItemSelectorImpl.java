@@ -20,9 +20,12 @@ import com.liferay.document.selector.ItemSelectorCriterionHandler;
 import com.liferay.document.selector.ItemSelectorView;
 import com.liferay.document.selector.ItemSelectorViewRenderer;
 import com.liferay.document.selector.web.constants.DocumentSelectorPortletKeys;
+import com.liferay.document.selector.web.portlet.DocumentSelectorPortlet;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.PortletURLFactoryUtil;
@@ -37,19 +40,26 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
+import javax.portlet.ActionRequest;
+import javax.portlet.PortletMode;
+import javax.portlet.PortletModeException;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
+import javax.portlet.WindowStateException;
 
 import org.apache.commons.beanutils.BeanUtils;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
 
 /**
  * @author Iván Zaera
  */
-@Component
+@Component(
+	service = ItemSelector.class
+)
 public class ItemSelectorImpl implements ItemSelector {
 
 	public static final String PARAM_CRITERIA = "criteria";
@@ -67,7 +77,15 @@ public class ItemSelectorImpl implements ItemSelector {
 
 		PortletURL portletURL = PortletURLFactoryUtil.create(
 			portletRequest, DocumentSelectorPortletKeys.DOCUMENT_SELECTOR,
-			themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
+			themeDisplay.getPlid(), PortletRequest.ACTION_PHASE);
+
+		_setPopup(portletURL);
+
+		portletURL.setParameter(
+			"mvcPath", DocumentSelectorPortlet.MVC_PATH_SHOW_ITEM_SELECTOR);
+		portletURL.setParameter(
+			ActionRequest.ACTION_NAME,
+			DocumentSelectorPortlet.ACTION_SHOW_ITEM_SELECTOR);
 
 		for (Map.Entry<String, String[]> entry : params.entrySet()) {
 			portletURL.setParameter(entry.getKey(), entry.getValue());
@@ -102,6 +120,19 @@ public class ItemSelectorImpl implements ItemSelector {
 		return itemSelectorViewRenderers;
 	}
 
+	protected void _setPopup(PortletURL portletURL) {
+		try {
+			portletURL.setPortletMode(PortletMode.VIEW);
+			portletURL.setWindowState(LiferayWindowState.POP_UP);
+		}
+		catch (WindowStateException wse) {
+			throw new SystemException(wse);
+		}
+		catch (PortletModeException pme) {
+			throw new SystemException(pme);
+		}
+	}
+
 	protected Map<String, String[]> getItemSelectorParameters(
 		ItemSelectorCriterion... itemSelectorCriteria) {
 
@@ -125,7 +156,10 @@ public class ItemSelectorImpl implements ItemSelector {
 		return params;
 	}
 
-	@Reference(policyOption = ReferencePolicyOption.GREEDY)
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC
+	)
 	protected <T extends ItemSelectorCriterion>
 		void setItemSelectionCriterionHandler(
 			ItemSelectorCriterionHandler<T> itemSelectionCriterionHandler) {
