@@ -14,11 +14,11 @@
 
 package com.liferay.wiki.web.settings;
 
+import com.liferay.document.selector.ItemSelector;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsProvider;
 import com.liferay.portal.kernel.settings.PortletInstanceSettingsProvider;
 import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
 import com.liferay.wiki.settings.WikiGroupServiceSettings;
-import com.liferay.wiki.settings.WikiPortletInstanceSettings;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -41,6 +41,10 @@ public class WikiWebSettingsProvider {
 		getGroupServiceSettingsProvider() {
 
 		return _groupServiceSettingsProvider;
+	}
+
+	public ItemSelector getItemSelector() {
+		return _itemSelector;
 	}
 
 	public PortletInstanceSettingsProvider<WikiPortletInstanceSettings>
@@ -73,8 +77,13 @@ public class WikiWebSettingsProvider {
 		_groupServiceSettingsProvider = groupServiceSettingsProvider;
 	}
 
+	@Reference
+	protected void setItemSelector(ItemSelector itemSelector) {
+		_itemSelector = itemSelector;
+	}
+
 	@Reference(
-		target = "(class.name=com.liferay.wiki.settings.WikiPortletInstanceSettings)"
+		target = "(class.name=com.liferay.wiki.web.settings.WikiPortletInstanceSettings)"
 	)
 	protected void setPortletInstanceSettingsProvider(
 		PortletInstanceSettingsProvider<WikiPortletInstanceSettings>
@@ -114,6 +123,7 @@ public class WikiWebSettingsProvider {
 
 	private GroupServiceSettingsProvider<WikiGroupServiceSettings>
 		_groupServiceSettingsProvider;
+	private ItemSelector _itemSelector;
 	private PortletInstanceSettingsProvider<WikiPortletInstanceSettings>
 		_portletInstanceSettingsProvider;
 	private WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;
