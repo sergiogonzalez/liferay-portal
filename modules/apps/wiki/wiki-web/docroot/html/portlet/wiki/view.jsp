@@ -1,3 +1,7 @@
+<%@ page import="com.liferay.document.selector.ItemSelector" %>
+
+<%@ page
+		import="com.liferay.item.selector.number.NumberItemSelectorCriterion" %>
 <%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
@@ -15,6 +19,36 @@
 --%>
 
 <%@ include file="/html/portlet/wiki/init.jsp" %>
+
+<%
+	ItemSelector itemSelector = wikiWebSettingsProvider.getItemSelector();
+	NumberItemSelectorCriterion numberItemSelectorCriterion = new NumberItemSelectorCriterion();
+	PortletURL selectNumberURL = itemSelector.getItemSelectorURL(renderRequest, numberItemSelectorCriterion);
+%>
+
+<script>
+	window.selectNumber = function() {
+		Liferay.Util.openWindow(
+			{
+				dialog: {
+					destroyOnHide: true,
+					on: {
+						visibleChange: function(event) {
+							if (!event.newVal) {
+								Liferay.Portlet.refresh('#p_p_id_<%= portletDisplay.getId() %>_');
+							}
+						}
+					}
+				},
+				id: '<portlet:namespace />openFileEntryTypeView',
+				title: 'Select a number',
+				uri: '<%= selectNumberURL %>'
+			}
+		);
+	}
+</script>
+<input onclick="window.selectNumber()" type="button" value="SELECT NUMBER!">
+</input>
 
 <%
 boolean followRedirect = ParamUtil.getBoolean(request, "followRedirect", true);

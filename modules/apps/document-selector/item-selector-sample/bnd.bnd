@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Item Selector Number
+Bundle-SymbolicName: com.liferay.item.selector.number
+Bundle-Version: 1.0.0
+Export-Package: \
+	com.liferay.item.selector.number
+Include-Resource:\
+	classes
