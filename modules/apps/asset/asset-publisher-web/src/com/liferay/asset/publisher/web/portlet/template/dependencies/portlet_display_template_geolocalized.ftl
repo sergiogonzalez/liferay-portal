@@ -125,7 +125,7 @@
 	<#assign apiKey = companyPortletPreferences.getValue("googleMapsAPIKey", "") />
 </#if>
 
-<@liferay_ui["map"] apiKey="${apiKey}" name='Map' points="${featureCollectionJSONObject}" />
+<@liferay_ui["map"] apiKey="${apiKey}" name='Map' pointsJSONObject="${featureCollectionJSONObject}" />
 
 <@liferay_aui.script use="liferay-map-base">
 	var map = Liferay.component('<@liferay_portlet.namespace />Map');

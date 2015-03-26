@@ -19,13 +19,15 @@
 <%
 String protocol = HttpUtil.getProtocol(request);
 
-String apiKey = GetterUtil.getString(request.getAttribute("liferay-ui:map:apiKey"));
+String apiKey = GetterUtil.getString((String)request.getAttribute("liferay-ui:map:apiKey"));
+JSONObject controlsJSONObject = (JSONObject)request.getAttribute("liferay-ui:map:controlsJSONObject");
 boolean geolocation = GetterUtil.getBoolean(request.getAttribute("liferay-ui:map:geolocation"));
-double latitude = (Double)request.getAttribute("liferay-ui:map:latitude");
-double longitude = (Double)request.getAttribute("liferay-ui:map:longitude");
+double latitude = GetterUtil.getDouble(request.getAttribute("liferay-ui:map:latitude"));
+double longitude = GetterUtil.getDouble(request.getAttribute("liferay-ui:map:longitude"));
 String name = GetterUtil.getString((String)request.getAttribute("liferay-ui:map:name"));
-String points = GetterUtil.getString(request.getAttribute("liferay-ui:map:points"));
+JSONObject pointsJSONObject = (JSONObject)request.getAttribute("liferay-ui:map:pointsJSONObject");
 String provider = GetterUtil.getString((String)request.getAttribute("liferay-ui:map:provider"));
+int zoom = GetterUtil.getInteger(request.getAttribute("liferay-ui:map:zoom"));
 
 if (Validator.isNull(provider)) {
 	Group group = layout.getGroup();
@@ -79,30 +81,27 @@ name = namespace + name;
 	var mapConfig = {
 		boundingBox: '#<%= name %>Map',
 
-		<c:if test="<%= geolocation %>">
-			<c:choose>
-				<c:when test="<%= BrowserSnifferUtil.isMobile(request) %>">
-					controls: [MapControls.HOME, MapControls.SEARCH],
-				</c:when>
-				<c:otherwise>
-					controls: [MapControls.HOME, MapControls.PAN, MapControls.SEARCH, MapControls.TYPE, MapControls.ZOOM],
-				</c:otherwise>
-			</c:choose>
+		<c:if test="<%= controlsJSONObject != null %>">
+			<%= controlsJSONObject.toString() %>,
 		</c:if>
 
-		<c:if test="<%= Validator.isNotNull(points) %>">
-			data: <%= points %>,
+		<c:if test="<%= pointsJSONObject != null %>">
+			data: <%= pointsJSONObject.toString() %>,
 		</c:if>
 
 		geolocation: <%= geolocation %>
 
 		<c:if test="<%= Validator.isNotNull(latitude) && Validator.isNotNull(longitude) %>">
-			,position: {
+			, position: {
 				location: {
 					lat: <%= latitude %>,
 					lng: <%= longitude %>
 				}
 			}
+		</c:if>
+
+		<c:if test="<%= zoom != 0 %>">
+			, zoom: <%= zoom %>
 		</c:if>
 	};
 
