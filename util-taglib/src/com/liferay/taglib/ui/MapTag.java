@@ -83,7 +83,7 @@ public class MapTag extends IncludeTag {
 				controlsJSONObjectString);
 		}
 		catch (JSONException e) {
-			_log.error("Error when instantiating json object");
+			_log.error("Error creating json object");
 		}
 	}
 
@@ -113,7 +113,7 @@ public class MapTag extends IncludeTag {
 				pointsJSONObjectString);
 		}
 		catch (JSONException e) {
-			_log.error("Error when instantiating json object");
+			_log.error("Error creating json object");
 		}
 	}
 
