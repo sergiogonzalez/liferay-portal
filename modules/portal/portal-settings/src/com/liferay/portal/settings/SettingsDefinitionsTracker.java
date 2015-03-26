@@ -25,11 +25,12 @@ import java.util.concurrent.ConcurrentMap;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.cm.ConfigurationAdmin;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
+import org.osgi.service.component.annotations.ReferencePolicy;
 
 /**
  * @author Iván Zaera
@@ -37,7 +38,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 @Component(immediate = true)
 public class SettingsDefinitionsTracker {
 
-	@Deactivate
+	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
 
@@ -46,18 +47,7 @@ public class SettingsDefinitionsTracker {
 
 	@Deactivate
 	protected void deactivate() {
-		for (SettingsDefinition<?, ?> settingsDefinition :
-				_settingsDefinitionLifecycleHandlers.keySet()) {
-
-			SettingsDefinitionLifecycleHandler<?, ?>
-				settingsDefinitionLifecycleHandler =
-					_settingsDefinitionLifecycleHandlers.get(
-						settingsDefinition);
-
-			settingsDefinitionLifecycleHandler.stop();
-		}
-
-		_settingsDefinitionLifecycleHandlers.clear();
+		_bundleContext = null;
 	}
 
 	@Reference(unbind = "-")
@@ -69,7 +59,7 @@ public class SettingsDefinitionsTracker {
 
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
-		policyOption = ReferencePolicyOption.GREEDY
+		policy = ReferencePolicy.DYNAMIC
 	)
 	protected void setSettingsDefinition(
 		SettingsDefinition<?, ?> settingsDefinition) {

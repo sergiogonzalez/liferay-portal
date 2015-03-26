@@ -420,6 +420,16 @@ public abstract class BaseRepositoryImpl
 		return _repositoryId;
 	}
 
+	@Override
+	public String[] getSupportedConfigurations() {
+		return _EMPTY_CONFIGURATIONS;
+	}
+
+	@Override
+	public String[][] getSupportedParameters() {
+		return _EMPTY_PARAMETERS;
+	}
+
 	public UnicodeProperties getTypeSettingsProperties() {
 		return _typeSettingsProperties;
 	}
@@ -739,6 +749,10 @@ public abstract class BaseRepositoryImpl
 	protected DLFolderLocalService dlFolderLocalService;
 	protected RepositoryEntryLocalService repositoryEntryLocalService;
 	protected UserLocalService userLocalService;
+
+	private static final String[] _EMPTY_CONFIGURATIONS = {};
+
+	private static final String[][] _EMPTY_PARAMETERS = {};
 
 	private long _companyId;
 	private long _groupId;

@@ -23,6 +23,10 @@ public interface RepositoryDefiner {
 
 	public String getClassName();
 
+	public String[] getSupportedConfigurations();
+
+	public String[][] getSupportedParameters();
+
 	public boolean isExternalRepository();
 
 	public void registerCapabilities(
