@@ -876,11 +876,13 @@ public class CMISRepository extends BaseCmisRepository {
 		}
 	}
 
+	@Deprecated
 	@Override
 	public String[] getSupportedConfigurations() {
 		return _cmisRepositoryHandler.getSupportedConfigurations();
 	}
 
+	@Deprecated
 	@Override
 	public String[][] getSupportedParameters() {
 		return _cmisRepositoryHandler.getSupportedParameters();

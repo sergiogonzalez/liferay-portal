@@ -96,6 +96,8 @@ public interface TrashEntryLocalService extends BaseLocalService,
 	public com.liferay.portlet.trash.model.TrashEntry createTrashEntry(
 		long entryId);
 
+	public void deleteEntries(long groupId);
+
 	/**
 	* Deletes the trash entry with the entity class name and primary key.
 	*

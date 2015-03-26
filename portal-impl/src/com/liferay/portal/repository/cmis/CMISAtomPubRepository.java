@@ -74,11 +74,13 @@ public class CMISAtomPubRepository extends CMISRepositoryHandler {
 		return CMISRepositoryUtil.createSession(parameters);
 	}
 
+	@Deprecated
 	@Override
 	public String[] getSupportedConfigurations() {
 		return _SUPPORTED_CONFIGURATIONS;
 	}
 
+	@Deprecated
 	@Override
 	public String[][] getSupportedParameters() {
 		return _SUPPORTED_PARAMETERS;

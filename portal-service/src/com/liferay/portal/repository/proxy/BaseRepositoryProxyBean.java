@@ -625,11 +625,13 @@ public class BaseRepositoryProxyBean
 		return _baseRepository.getSubfolderIds(folderId, recurse);
 	}
 
+	@Deprecated
 	@Override
 	public String[] getSupportedConfigurations() {
 		return _baseRepository.getSupportedConfigurations();
 	}
 
+	@Deprecated
 	@Override
 	public String[][] getSupportedParameters() {
 		return _baseRepository.getSupportedParameters();

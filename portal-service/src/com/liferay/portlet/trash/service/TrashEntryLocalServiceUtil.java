@@ -99,6 +99,10 @@ public class TrashEntryLocalServiceUtil {
 		return getService().createTrashEntry(entryId);
 	}
 
+	public static void deleteEntries(long groupId) {
+		getService().deleteEntries(groupId);
+	}
+
 	/**
 	* Deletes the trash entry with the entity class name and primary key.
 	*
