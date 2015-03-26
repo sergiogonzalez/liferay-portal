@@ -59,7 +59,7 @@ public class ItemSelectorImpl implements ItemSelector {
 		PortletRequest portletRequest,
 		ItemSelectorCriterion... itemSelectorCriteria) {
 
-		Map<String, String> params = getItemSelectorParameters(
+		Map<String, String[]> params = getItemSelectorParameters(
 			itemSelectorCriteria);
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
@@ -69,7 +69,7 @@ public class ItemSelectorImpl implements ItemSelector {
 			portletRequest, DocumentSelectorPortletKeys.DOCUMENT_SELECTOR,
 			themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
 
-		for (Map.Entry<String, String> entry : params.entrySet()) {
+		for (Map.Entry<String, String[]> entry : params.entrySet()) {
 			portletURL.setParameter(entry.getKey(), entry.getValue());
 		}
 
@@ -79,7 +79,7 @@ public class ItemSelectorImpl implements ItemSelector {
 	@Override
 	@SuppressWarnings("rawtypes")
 	public List<ItemSelectorViewRenderer<?>> getItemSelectorViewRenderers(
-		Map<String, String> parameters) {
+		Map<String, String[]> parameters) {
 
 		List<ItemSelectorViewRenderer<?>> itemSelectorViewRenderers =
 			new ArrayList<>();
@@ -102,10 +102,10 @@ public class ItemSelectorImpl implements ItemSelector {
 		return itemSelectorViewRenderers;
 	}
 
-	protected Map<String, String> getItemSelectorParameters(
+	protected Map<String, String[]> getItemSelectorParameters(
 		ItemSelectorCriterion... itemSelectorCriteria) {
 
-		Map<String, String> params = new HashMap<>();
+		Map<String, String[]> params = new HashMap<>();
 
 		_populateCriteria(params, itemSelectorCriteria);
 
@@ -150,10 +150,10 @@ public class ItemSelectorImpl implements ItemSelector {
 	}
 
 	private <T extends ItemSelectorCriterion> void
-		_addItemSelectorViewRenderers(
-			List<ItemSelectorViewRenderer<T>> itemSelectorViewRenderers,
-			Map<String, String> parameters, String paramPrefix,
-			Class<T> itemSelectorCriterionClass) {
+	_addItemSelectorViewRenderers(
+		List<ItemSelectorViewRenderer<T>> itemSelectorViewRenderers,
+		Map<String, String[]> parameters, String paramPrefix,
+		Class<T> itemSelectorCriterionClass) {
 
 		ItemSelectorCriterionHandler<T> itemSelectorCriterionHandler =
 			_getItemSelectorCriterionHandler(itemSelectorCriterionClass);
@@ -174,7 +174,7 @@ public class ItemSelectorImpl implements ItemSelector {
 	}
 
 	private <T extends ItemSelectorCriterion> T _getItemSelectorCriterion(
-		Map<String, String> params, String paramPrefix,
+		Map<String, String[]> params, String paramPrefix,
 		Class<T> itemSelectorCriterionClass) {
 
 		try {
@@ -185,7 +185,8 @@ public class ItemSelectorImpl implements ItemSelector {
 			for (String key : params.keySet()) {
 				if (key.startsWith(paramPrefix)) {
 					properties.put(
-						key.substring(paramPrefix.length()), params.get(key));
+						key.substring(paramPrefix.length()),
+						_getParameter(params, key));
 				}
 			}
 
@@ -202,9 +203,9 @@ public class ItemSelectorImpl implements ItemSelector {
 	}
 
 	private List<Class<? extends ItemSelectorCriterion>>
-		_getItemSelectorCriterionClasses(Map<String, String> parameters) {
+	_getItemSelectorCriterionClasses(Map<String, String[]> parameters) {
 
-		String criteria = parameters.get(PARAM_CRITERIA);
+		String criteria = _getParameter(parameters, PARAM_CRITERIA);
 
 		String[] itemSelectorCriterionClassNames = criteria.split(",");
 
@@ -234,8 +235,21 @@ public class ItemSelectorImpl implements ItemSelector {
 				itemSelectorCriterionClass.getName());
 	}
 
+	private String _getParameter(
+		Map<String, String[]> parameters, String param) {
+
+		String[] strings = parameters.get(param);
+
+		if (ArrayUtil.isEmpty(strings)) {
+			return StringPool.BLANK;
+		}
+		else {
+			return strings[0];
+		}
+	}
+
 	private void _populateCriteria(
-		Map<String, String> params,
+		Map<String, String[]> params,
 		ItemSelectorCriterion[] itemSelectorCriteria) {
 
 		Accessor<ItemSelectorCriterion, String> accessor =
@@ -261,11 +275,12 @@ public class ItemSelectorImpl implements ItemSelector {
 			};
 
 		params.put(
-			PARAM_CRITERIA, ArrayUtil.toString(itemSelectorCriteria, accessor));
+			PARAM_CRITERIA,
+			new String[] {ArrayUtil.toString(itemSelectorCriteria, accessor)});
 	}
 
 	private void _populateDesiredReturnTypes(
-		Map<String, String> params, String paramPrefix,
+		Map<String, String[]> params, String paramPrefix,
 		ItemSelectorCriterion itemSelectorCriterion) {
 
 		Set<Class<?>> desiredReturnTypes =
@@ -300,15 +315,16 @@ public class ItemSelectorImpl implements ItemSelector {
 
 		params.put(
 			paramPrefix + "desiredReturnTypes",
-			ArrayUtil.toString(
-				desiredReturnTypes.toArray(
-					new Class<?>[desiredReturnTypes.size()]),
-				accessor));
+			new String[] {
+				ArrayUtil.toString(
+					desiredReturnTypes.toArray(
+						new Class<?>[desiredReturnTypes.size()]),
+					accessor)});
 	}
 
 	@SuppressWarnings("unchecked")
 	private void _populateItemSelectorCriteria(
-		Map<String, String> params, String paramPrefix,
+		Map<String, String[]> params, String paramPrefix,
 		ItemSelectorCriterion itemSelectorCriterion) {
 
 		try {
@@ -326,7 +342,7 @@ public class ItemSelectorImpl implements ItemSelector {
 
 				Object value = entry.getValue();
 
-				params.put(paramPrefix + key, value.toString());
+				params.put(paramPrefix + key, new String[] {value.toString()});
 			}
 		}
 		catch (InvocationTargetException | NoSuchMethodException |
