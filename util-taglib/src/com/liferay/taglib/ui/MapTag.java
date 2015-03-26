@@ -78,13 +78,7 @@ public class MapTag extends IncludeTag {
 	}
 
 	public void setControlsJSONObject(String controlsJSONObjectString) {
-		try {
-			_controlsJSONObject = JSONFactoryUtil.createJSONObject(
-				controlsJSONObjectString);
-		}
-		catch (JSONException e) {
-			_log.error("Error when instantiating json object");
-		}
+		_controlsJSONObject = createJSONObject(controlsJSONObjectString);
 	}
 
 	public void setGeolocation(boolean geolocation) {
@@ -108,13 +102,7 @@ public class MapTag extends IncludeTag {
 	}
 
 	public void setPointsJSONObject(String pointsJSONObjectString) {
-		try {
-			_pointsJSONObject = JSONFactoryUtil.createJSONObject(
-				pointsJSONObjectString);
-		}
-		catch (JSONException e) {
-			_log.error("Error when instantiating json object");
-		}
+		_pointsJSONObject = createJSONObject(pointsJSONObjectString);
 	}
 
 	public void setProvider(String provider) {
@@ -136,6 +124,19 @@ public class MapTag extends IncludeTag {
 		_pointsJSONObject = null;
 		_provider = null;
 		_zoom = 0;
+	}
+
+	protected JSONObject createJSONObject(String json) {
+		try {
+			return JSONFactoryUtil.createJSONObject(json);
+		}
+		catch (JSONException jsone) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to create JSON", jsone);
+			}
+
+			return null;
+		}
 	}
 
 	@Override
