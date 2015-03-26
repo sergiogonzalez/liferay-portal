@@ -183,11 +183,11 @@ public class ItemSelectorImpl implements ItemSelector {
 			itemSelectorCriterionClass.getName());
 	}
 
-	private <T extends ItemSelectorCriterion> void
-	_addItemSelectorViewRenderers(
-		List<ItemSelectorViewRenderer<T>> itemSelectorViewRenderers,
-		Map<String, String[]> parameters, String paramPrefix,
-		Class<T> itemSelectorCriterionClass) {
+	private <T extends ItemSelectorCriterion>
+		void _addItemSelectorViewRenderers(
+			List<ItemSelectorViewRenderer<T>> itemSelectorViewRenderers,
+			Map<String, String[]> parameters, String paramPrefix,
+			Class<T> itemSelectorCriterionClass) {
 
 		ItemSelectorCriterionHandler<T> itemSelectorCriterionHandler =
 			_getItemSelectorCriterionHandler(itemSelectorCriterionClass);
@@ -229,7 +229,7 @@ public class ItemSelectorImpl implements ItemSelector {
 			return itemSelectorCriterion;
 		}
 		catch (InvocationTargetException | InstantiationException |
-				IllegalAccessException e) {
+			IllegalAccessException e) {
 
 			throw new SystemException(
 				"Unable to unmarshall item selector criterion", e);
@@ -237,7 +237,7 @@ public class ItemSelectorImpl implements ItemSelector {
 	}
 
 	private List<Class<? extends ItemSelectorCriterion>>
-	_getItemSelectorCriterionClasses(Map<String, String[]> parameters) {
+		_getItemSelectorCriterionClasses(Map<String, String[]> parameters) {
 
 		String criteria = _getParameter(parameters, PARAM_CRITERIA);
 
@@ -380,7 +380,7 @@ public class ItemSelectorImpl implements ItemSelector {
 			}
 		}
 		catch (InvocationTargetException | NoSuchMethodException |
-				IllegalAccessException e) {
+			IllegalAccessException e) {
 
 			throw new SystemException(
 				"Unable to marshall item selector criterion", e);
