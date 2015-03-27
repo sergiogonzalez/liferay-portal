@@ -40,16 +40,17 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
-import com.liferay.portlet.messageboards.NoSuchDiscussionException;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
+import com.liferay.portlet.messageboards.model.MBDiscussion;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
-import com.liferay.portlet.messageboards.service.MBCategoryServiceUtil;
 import com.liferay.portlet.messageboards.service.MBDiscussionLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
+import com.liferay.portlet.messageboards.service.permission.MBCategoryPermission;
 import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
 
 import java.util.List;
@@ -85,13 +86,10 @@ public class MBMessageIndexer extends BaseIndexer {
 
 		DLFileEntry dlFileEntry = (DLFileEntry)obj;
 
-		MBMessage message = null;
+		MBMessage message = MBMessageAttachmentsUtil.fetchMessage(
+			dlFileEntry.getFileEntryId());
 
-		try {
-			message = MBMessageAttachmentsUtil.getMessage(
-				dlFileEntry.getFileEntryId());
-		}
-		catch (Exception e) {
+		if (message == null) {
 			return;
 		}
 
@@ -183,14 +181,16 @@ public class MBMessageIndexer extends BaseIndexer {
 				searchContext);
 
 			for (long categoryId : categoryIds) {
-				try {
-					MBCategoryServiceUtil.getCategory(categoryId);
-				}
-				catch (Exception e) {
-					continue;
-				}
+				MBCategory category =
+					MBCategoryLocalServiceUtil.fetchMBCategory(categoryId);
 
-				categoriesQuery.addTerm(Field.CATEGORY_ID, categoryId);
+				if ((category != null) &&
+					MBCategoryPermission.contains(
+						PermissionThreadLocal.getPermissionChecker(), category,
+						ActionKeys.VIEW)) {
+
+					categoriesQuery.addTerm(Field.CATEGORY_ID, categoryId);
+				}
 			}
 
 			contextQuery.add(categoriesQuery, BooleanClauseOccur.MUST);
@@ -229,14 +229,15 @@ public class MBMessageIndexer extends BaseIndexer {
 			document.remove(Field.USER_NAME);
 		}
 
-		try {
-			MBDiscussionLocalServiceUtil.getThreadDiscussion(
+		MBDiscussion discussion =
+			MBDiscussionLocalServiceUtil.fetchThreadDiscussion(
 				message.getThreadId());
 
-			document.addKeyword("discussion", true);
-		}
-		catch (NoSuchDiscussionException nsde) {
+		if (discussion == null) {
 			document.addKeyword("discussion", false);
+		}
+		else {
+			document.addKeyword("discussion", true);
 		}
 
 		document.addKeyword("threadId", message.getThreadId());
