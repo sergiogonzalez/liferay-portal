@@ -116,6 +116,13 @@ public interface AssetRendererFactory {
 			LiferayPortletResponse liferayPortletResponse)
 		throws PortalException;
 
+	public PortletURL getURLAdd(
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse, long classTypeId,
+			long[] allAssetCategoryIds, String[] allAssetTagNames,
+			String redirect)
+		throws PortalException;
+
 	public PortletURL getURLView(
 			LiferayPortletResponse liferayPortletResponse,
 			WindowState windowState)

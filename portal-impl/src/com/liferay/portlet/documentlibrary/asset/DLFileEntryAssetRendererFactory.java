@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -30,6 +31,7 @@ import com.liferay.portlet.asset.model.BaseAssetRendererFactory;
 import com.liferay.portlet.asset.model.ClassTypeReader;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
@@ -189,6 +191,27 @@ public class DLFileEntryAssetRendererFactory extends BaseAssetRendererFactory {
 	@Override
 	protected String getIconPath(ThemeDisplay themeDisplay) {
 		return themeDisplay.getPathThemeImages() + "/common/clip.png";
+	}
+
+	@Override
+	protected void setAddPortletURLClassTypeId(
+			PortletURL addPortletURL, long classTypeId)
+		throws PortalException {
+
+		addPortletURL.setParameter(Constants.CMD, Constants.ADD);
+		addPortletURL.setParameter(
+			"folderId",
+			String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID));
+
+		long fileEntryTypeId =
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT;
+
+		if (classTypeId >= 0) {
+			fileEntryTypeId = classTypeId;
+		}
+
+		addPortletURL.setParameter(
+			"fileEntryTypeId", String.valueOf(fileEntryTypeId));
 	}
 
 }

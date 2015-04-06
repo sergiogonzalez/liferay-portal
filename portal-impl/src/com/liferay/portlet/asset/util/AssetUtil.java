@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
@@ -32,12 +31,10 @@ import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -50,7 +47,6 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.comparator.ModelResourceComparator;
 import com.liferay.portal.service.PortletLocalServiceUtil;
-import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
@@ -71,20 +67,14 @@ import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
 import com.liferay.portlet.asset.service.permission.AssetTagPermission;
 import com.liferay.portlet.asset.service.permission.AssetVocabularyPermission;
 import com.liferay.portlet.asset.service.persistence.AssetEntryQuery;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
-import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
-import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
-import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMIndexer;
-import com.liferay.portlet.journal.model.JournalArticle;
 
 import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -92,7 +82,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
-import javax.portlet.PortletMode;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -313,120 +302,9 @@ public class AssetUtil {
 			return null;
 		}
 
-		PortletURL addPortletURL = assetRendererFactory.getURLAdd(
-			liferayPortletRequest, liferayPortletResponse);
-
-		if (addPortletURL == null) {
-			return null;
-		}
-
-		if (redirect != null) {
-			addPortletURL.setParameter("redirect", redirect);
-		}
-
-		String referringPortletResource = ParamUtil.getString(
-			liferayPortletRequest, "portletResource");
-
-		if (Validator.isNotNull(referringPortletResource)) {
-			addPortletURL.setParameter(
-				"referringPortletResource", referringPortletResource);
-		}
-		else {
-			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-			addPortletURL.setParameter(
-				"referringPortletResource", portletDisplay.getId());
-
-			if (allAssetCategoryIds != null) {
-				Map<Long, String> assetVocabularyAssetCategoryIds =
-					new HashMap<>();
-
-				for (long assetCategoryId : allAssetCategoryIds) {
-					AssetCategory assetCategory =
-						AssetCategoryLocalServiceUtil.fetchAssetCategory(
-							assetCategoryId);
-
-					if (assetCategory == null) {
-						continue;
-					}
-
-					long assetVocabularyId = assetCategory.getVocabularyId();
-
-					if (assetVocabularyAssetCategoryIds.containsKey(
-							assetVocabularyId)) {
-
-						String assetCategoryIds =
-							assetVocabularyAssetCategoryIds.get(
-								assetVocabularyId);
-
-						assetVocabularyAssetCategoryIds.put(
-							assetVocabularyId,
-							assetCategoryIds + StringPool.COMMA +
-								assetCategoryId);
-					}
-					else {
-						assetVocabularyAssetCategoryIds.put(
-							assetVocabularyId, String.valueOf(assetCategoryId));
-					}
-				}
-
-				for (Map.Entry<Long, String> entry :
-						assetVocabularyAssetCategoryIds.entrySet()) {
-
-					long assetVocabularyId = entry.getKey();
-					String assetCategoryIds = entry.getValue();
-
-					addPortletURL.setParameter(
-						"assetCategoryIds_" + assetVocabularyId,
-						assetCategoryIds);
-				}
-			}
-
-			if (allAssetTagNames != null) {
-				addPortletURL.setParameter(
-					"assetTagNames", StringUtil.merge(allAssetTagNames));
-			}
-		}
-
-		if (classTypeId > 0) {
-			addPortletURL.setParameter(
-				"classTypeId", String.valueOf(classTypeId));
-
-			if (className.equals(DDLRecord.class.getName())) {
-				addPortletURL.setParameter(
-					"recordSetId", String.valueOf(classTypeId));
-			}
-
-			if (className.equals(JournalArticle.class.getName())) {
-				DDMStructure ddmStructure =
-					DDMStructureLocalServiceUtil.getStructure(classTypeId);
-
-				addPortletURL.setParameter(
-					"ddmStructureKey", ddmStructure.getStructureKey());
-			}
-		}
-
-		if (className.equals(DLFileEntry.class.getName())) {
-			addPortletURL.setParameter(Constants.CMD, Constants.ADD);
-			addPortletURL.setParameter(
-				"folderId",
-				String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID));
-
-			long fileEntryTypeId =
-				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT;
-
-			if (classTypeId >= 0) {
-				fileEntryTypeId = classTypeId;
-			}
-
-			addPortletURL.setParameter(
-				"fileEntryTypeId", String.valueOf(fileEntryTypeId));
-		}
-
-		addPortletURL.setPortletMode(PortletMode.VIEW);
-		addPortletURL.setWindowState(LiferayWindowState.POP_UP);
-
-		return addPortletURL;
+		return assetRendererFactory.getURLAdd(
+			liferayPortletRequest, liferayPortletResponse, classTypeId,
+			allAssetCategoryIds, allAssetTagNames, redirect);
 	}
 
 	/**

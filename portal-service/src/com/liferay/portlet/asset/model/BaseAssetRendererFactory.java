@@ -15,8 +15,14 @@
 package com.liferay.portlet.asset.model;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -24,9 +30,11 @@ import com.liferay.portal.model.Portlet;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
+import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.NoSuchClassTypeException;
+import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 
 import java.util.ArrayList;
@@ -36,6 +44,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.portlet.PortletMode;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
@@ -205,6 +214,46 @@ public abstract class BaseAssetRendererFactory implements AssetRendererFactory {
 	}
 
 	@Override
+	public PortletURL getURLAdd(
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse, long classTypeId,
+			long[] allAssetCategoryIds, String[] allAssetTagNames,
+			String redirect)
+		throws PortalException {
+
+		PortletURL addPortletURL = getURLAdd(
+			liferayPortletRequest, liferayPortletResponse);
+
+		if (addPortletURL == null) {
+			return null;
+		}
+
+		setAddPortletURLRedirect(addPortletURL, redirect);
+
+		String referringPortletResource = ParamUtil.getString(
+			liferayPortletRequest, "portletResource",
+			getPortletDisplayId(liferayPortletRequest));
+
+		setAddPortletURLReferringPortletResource(
+			addPortletURL, referringPortletResource);
+		setAddPortletURLAssetCategoryIds(addPortletURL, allAssetCategoryIds);
+		setAddPortletURLAssetTagNames(addPortletURL, allAssetTagNames);
+		setAddPortletURLClassTypeId(addPortletURL, classTypeId);
+
+		try {
+			addPortletURL.setPortletMode(PortletMode.VIEW);
+			addPortletURL.setWindowState(LiferayWindowState.POP_UP);
+		}
+		catch (Exception e) {
+			if (_log.isErrorEnabled()) {
+				_log.error(e);
+			}
+		}
+
+		return addPortletURL;
+	}
+
+	@Override
 	@SuppressWarnings("unused")
 	public PortletURL getURLView(
 			LiferayPortletResponse liferayPortletResponse,
@@ -311,6 +360,104 @@ public abstract class BaseAssetRendererFactory implements AssetRendererFactory {
 		return themeDisplay.getPathThemeImages() + "/common/page.png";
 	}
 
+	protected String getPortletDisplayId(
+		LiferayPortletRequest liferayPortletRequest) {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)liferayPortletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		return portletDisplay.getId();
+	}
+
+	protected void setAddPortletURLAssetCategoryIds(
+		PortletURL addPortletURL, long[] allAssetCategoryIds) {
+
+		if (allAssetCategoryIds == null) {
+			return;
+		}
+
+		Map<Long, String> assetVocabularyAssetCategoryIds = new HashMap<>();
+
+		for (long assetCategoryId : allAssetCategoryIds) {
+			AssetCategory assetCategory =
+				AssetCategoryLocalServiceUtil.fetchAssetCategory(
+					assetCategoryId);
+
+			if (assetCategory == null) {
+				continue;
+			}
+
+			long assetVocabularyId = assetCategory.getVocabularyId();
+
+			if (assetVocabularyAssetCategoryIds.containsKey(
+					assetVocabularyId)) {
+
+				String assetCategoryIds = assetVocabularyAssetCategoryIds.get(
+					assetVocabularyId);
+
+				assetVocabularyAssetCategoryIds.put(
+					assetVocabularyId,
+					assetCategoryIds + StringPool.COMMA + assetCategoryId);
+			}
+			else {
+				assetVocabularyAssetCategoryIds.put(
+					assetVocabularyId, String.valueOf(assetCategoryId));
+			}
+		}
+
+		for (Map.Entry<Long, String> entry :
+				assetVocabularyAssetCategoryIds.entrySet()) {
+
+			long assetVocabularyId = entry.getKey();
+			String assetCategoryIds = entry.getValue();
+
+			addPortletURL.setParameter(
+				"assetCategoryIds_" + assetVocabularyId, assetCategoryIds);
+		}
+	}
+
+	protected void setAddPortletURLAssetTagNames(
+		PortletURL addPortletURL, String[] allAssetTagNames) {
+
+		if (allAssetTagNames == null) {
+			return;
+		}
+
+		addPortletURL.setParameter(
+			"assetTagNames", StringUtil.merge(allAssetTagNames));
+	}
+
+	protected void setAddPortletURLClassTypeId(
+			PortletURL addPortletURL, long classTypeId)
+		throws PortalException {
+
+		if (classTypeId <= 0) {
+			return;
+		}
+
+		addPortletURL.setParameter("classTypeId", String.valueOf(classTypeId));
+	}
+
+	protected void setAddPortletURLRedirect(
+		PortletURL addPortletURL, String redirect) {
+
+		if (redirect == null) {
+			return;
+		}
+
+		addPortletURL.setParameter("redirect", redirect);
+	}
+
+	protected void setAddPortletURLReferringPortletResource(
+		PortletURL addPortletURL, String referringPortletResource) {
+
+		addPortletURL.setParameter(
+			"referringPortletResource", referringPortletResource);
+	}
+
 	protected void setCategorizable(boolean categorizable) {
 		_categorizable = categorizable;
 	}
@@ -334,6 +481,9 @@ public abstract class BaseAssetRendererFactory implements AssetRendererFactory {
 	}
 
 	private static final boolean _PERMISSION = true;
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		BaseAssetRendererFactory.class);
 
 	private boolean _categorizable = true;
 	private String _className;

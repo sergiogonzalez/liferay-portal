@@ -134,4 +134,16 @@ public class DDLRecordAssetRendererFactory extends BaseAssetRendererFactory {
 		return themeDisplay.getPathThemeImages() + "/common/history.png";
 	}
 
+	@Override
+	protected void setAddPortletURLClassTypeId(
+			PortletURL addPortletURL, long classTypeId)
+		throws PortalException {
+
+		if (classTypeId <= 0) {
+			return;
+		}
+
+		addPortletURL.setParameter("recordSetId", String.valueOf(classTypeId));
+	}
+
 }
