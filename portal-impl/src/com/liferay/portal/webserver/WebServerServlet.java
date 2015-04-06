@@ -79,6 +79,7 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
+import com.liferay.portlet.documentlibrary.NoSuchFileException;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
@@ -1183,7 +1184,9 @@ public class WebServerServlet extends HttpServlet {
 	}
 
 	protected void writeImage(
-		Image image, HttpServletRequest request, HttpServletResponse response) {
+			Image image, HttpServletRequest request,
+			HttpServletResponse response)
+		throws NoSuchFileException {
 
 		if (image == null) {
 			return;
@@ -1216,6 +1219,8 @@ public class WebServerServlet extends HttpServlet {
 			if (_log.isWarnEnabled()) {
 				_log.warn(e, e);
 			}
+
+			throw new NoSuchFileException(e);
 		}
 	}
 
