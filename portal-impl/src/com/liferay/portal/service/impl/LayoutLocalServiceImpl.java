@@ -81,7 +81,6 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.comparator.LayoutComparator;
 import com.liferay.portal.util.comparator.LayoutPriorityComparator;
 import com.liferay.portlet.documentlibrary.util.DLValidatorUtil;
-import com.liferay.portlet.dynamicdatalists.RecordSetDuplicateRecordSetKeyException;
 import com.liferay.portlet.dynamicdatamapping.StructureDuplicateStructureKeyException;
 import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance;
 import com.liferay.portlet.sites.util.Sites;
@@ -2102,8 +2101,6 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 				}
 
 				if ((cause instanceof LocaleException) ||
-					(cause instanceof
-						RecordSetDuplicateRecordSetKeyException) ||
 					(cause instanceof
 						StructureDuplicateStructureKeyException)) {
 
