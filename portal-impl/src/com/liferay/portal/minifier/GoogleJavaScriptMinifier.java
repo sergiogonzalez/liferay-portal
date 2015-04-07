@@ -38,6 +38,8 @@ public class GoogleJavaScriptMinifier implements JavaScriptMinifier {
 	public String compress(String resourceName, String content) {
 		Compiler compiler = new Compiler(new LogErrorManager());
 
+		compiler.disableThreads();
+
 		SourceFile sourceFile = SourceFile.fromCode(resourceName, content);
 
 		CompilerOptions compilerOptions = new CompilerOptions();
