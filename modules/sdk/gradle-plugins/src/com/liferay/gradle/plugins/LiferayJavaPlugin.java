@@ -24,7 +24,6 @@ import com.liferay.gradle.plugins.util.StringUtil;
 import java.io.File;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.Set;
 
 import org.gradle.api.Action;
@@ -40,6 +39,7 @@ import org.gradle.api.artifacts.ProjectDependency;
 import org.gradle.api.artifacts.ResolutionStrategy;
 import org.gradle.api.artifacts.dsl.RepositoryHandler;
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository;
+import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
@@ -50,6 +50,14 @@ import org.gradle.api.tasks.SourceSet;
  * @author Andrea Di Giorgi
  */
 public class LiferayJavaPlugin implements Plugin<Project> {
+
+	public static final String BUILD_CSS_TASK_NAME = "buildCss";
+
+	public static final String FORMAT_SOURCE_TASK_NAME = "formatSource";
+
+	public static final String INIT_GRADLE_TASK_NAME = "initGradle";
+
+	public static final String PORTAL_WEB_CONFIGURATION_NAME = "portalWeb";
 
 	@Override
 	public void apply(Project project) {
@@ -62,6 +70,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		configureRepositories(project);
 		configureSourceSets(project);
 
+		addConfigurations(project);
 		addTasks(project, liferayExtension);
 
 		project.afterEvaluate(
@@ -76,14 +85,44 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 			});
 	}
 
+	protected void addConfigurations(Project project) {
+		addPortalWebConfiguration(project);
+	}
+
+	protected void addDependenciesPortalWeb(Project project) {
+		GradleUtil.addDependency(
+			project, PORTAL_WEB_CONFIGURATION_NAME, "com.liferay.portal",
+			"portal-web", "default");
+	}
+
 	protected LiferayExtension addLiferayExtension(Project project) {
 		return GradleUtil.addExtension(
 			project, LiferayPlugin.PLUGIN_NAME, LiferayExtension.class);
 	}
 
+	protected void addPortalWebConfiguration(final Project project) {
+		Configuration configuration = GradleUtil.addConfiguration(
+			project, PORTAL_WEB_CONFIGURATION_NAME);
+
+		configuration.setDescription(
+			"Configures portal-web for compiling themes and CSS files.");
+		configuration.setVisible(false);
+
+		GradleUtil.executeIfEmpty(
+			configuration,
+			new Action<Configuration>() {
+
+				@Override
+				public void execute(Configuration configuration) {
+					addDependenciesPortalWeb(project);
+				}
+
+			});
+	}
+
 	protected BuildCssTask addTaskBuildCss(Project project) {
 		BuildCssTask buildCssTask = GradleUtil.addTask(
-			project, _BUILD_CSS_TASK_NAME, BuildCssTask.class);
+			project, BUILD_CSS_TASK_NAME, BuildCssTask.class);
 
 		buildCssTask.setDescription("Compiles CSS files.");
 		buildCssTask.setGroup(BasePlugin.BUILD_GROUP);
@@ -93,7 +132,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 	protected FormatSourceTask addTaskFormatSource(Project project) {
 		FormatSourceTask formatSourceTask = GradleUtil.addTask(
-			project, _FORMAT_SOURCE_TASK_NAME, FormatSourceTask.class);
+			project, FORMAT_SOURCE_TASK_NAME, FormatSourceTask.class);
 
 		formatSourceTask.setDescription(
 			"Runs Liferay Source Formatter to format files.");
@@ -103,7 +142,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 	protected InitGradleTask addTaskInitGradle(Project project) {
 		InitGradleTask initGradleTask = GradleUtil.addTask(
-			project, _INIT_GRADLE_TASK_NAME, InitGradleTask.class);
+			project, INIT_GRADLE_TASK_NAME, InitGradleTask.class);
 
 		initGradleTask.setDescription(
 			"Initializes build.gradle by migrating information from legacy " +
@@ -232,17 +271,34 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		configureSourceSetMain(project);
 	}
 
-	protected void configureTaskBuildCss(Project project) {
-		BuildCssTask buildCssTask = (BuildCssTask)GradleUtil.getTask(
-			project, _BUILD_CSS_TASK_NAME);
+	protected void configureTaskBuildCss(
+		Project project, LiferayExtension liferayExtension) {
 
-		configureTaskBuildCssDirNames(buildCssTask);
+		BuildCssTask buildCssTask = (BuildCssTask)GradleUtil.getTask(
+			project, BUILD_CSS_TASK_NAME);
+
+		configureTaskBuildCssPortalWebFile(buildCssTask);
+		configureTaskBuildCssRootDirs(buildCssTask);
+		configureTaskBuildCssTmpDir(buildCssTask, liferayExtension);
 	}
 
-	protected void configureTaskBuildCssDirNames(BuildCssTask buildCssTask) {
-		List<String> cssDirNames = buildCssTask.getCssDirNames();
+	protected void configureTaskBuildCssPortalWebFile(
+		BuildCssTask buildCssTask) {
 
-		if (!cssDirNames.isEmpty()) {
+		if (buildCssTask.getPortalWebFile() != null) {
+			return;
+		}
+
+		Configuration configuration = GradleUtil.getConfiguration(
+			buildCssTask.getProject(), PORTAL_WEB_CONFIGURATION_NAME);
+
+		buildCssTask.setPortalWebFile(configuration.getSingleFile());
+	}
+
+	protected void configureTaskBuildCssRootDirs(BuildCssTask buildCssTask) {
+		FileCollection rootDirs = buildCssTask.getRootDirs();
+
+		if ((rootDirs != null) && !rootDirs.isEmpty()) {
 			return;
 		}
 
@@ -253,10 +309,16 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 		SourceDirectorySet sourceDirectorySet = sourceSet.getResources();
 
-		for (File file : sourceDirectorySet.getSrcDirs()) {
-			String cssDirName = project.relativePath(file);
+		buildCssTask.setRootDirs(sourceDirectorySet.getSrcDirs());
+	}
 
-			cssDirNames.add(cssDirName);
+	protected void configureTaskBuildCssTmpDir(
+		BuildCssTask buildCssTask, LiferayExtension liferayExtension) {
+
+		if (buildCssTask.getTmpDir() == null) {
+			File tmpDir = new File(liferayExtension.getTmpDir(), "portal-web");
+
+			buildCssTask.setTmpDir(tmpDir);
 		}
 	}
 
@@ -268,7 +330,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 	}
 
 	protected void configureTaskClassesDependsOn(Task classesTask) {
-		classesTask.dependsOn(_BUILD_CSS_TASK_NAME);
+		classesTask.dependsOn(BUILD_CSS_TASK_NAME);
 	}
 
 	protected void configureTaskClean(Project project) {
@@ -316,7 +378,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 	protected void configureTasks(
 		Project project, LiferayExtension liferayExtension) {
 
-		configureTaskBuildCss(project);
+		configureTaskBuildCss(project, liferayExtension);
 		configureTaskClasses(project);
 		configureTaskClean(project);
 	}
@@ -344,12 +406,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		"org.eclipse.persistence:javax.persistence:2.0.0",
 		"postgresql:postgresql:9.2-1002.jdbc4"
 	};
-
-	private static final String _BUILD_CSS_TASK_NAME = "buildCss";
-
-	private static final String _FORMAT_SOURCE_TASK_NAME = "formatSource";
-
-	private static final String _INIT_GRADLE_TASK_NAME = "initGradle";
 
 	private static final String _REPOSITORY_URL =
 		"http://cdn.repository.liferay.com/nexus/content/groups/public";

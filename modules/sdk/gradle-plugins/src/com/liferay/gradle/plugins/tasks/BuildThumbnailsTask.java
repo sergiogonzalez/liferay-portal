@@ -15,6 +15,7 @@
 package com.liferay.gradle.plugins.tasks;
 
 import java.io.File;
+import java.io.OutputStream;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -22,8 +23,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.gradle.api.tasks.Input;
+import org.gradle.api.tasks.InputDirectory;
 import org.gradle.api.tasks.InputFiles;
+import org.gradle.api.tasks.JavaExec;
+import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.SkipWhenEmpty;
+import org.gradle.process.internal.streams.SafeStreams;
 
 /**
  * @author Andrea Di Giorgi
@@ -35,6 +41,9 @@ public class BuildThumbnailsTask extends BasePortalToolsTask {
 		Iterable<File> files = getScreenshotFiles();
 
 		for (File file : files) {
+			super.setErrorOutput(SafeStreams.systemErr());
+			super.setStandardOutput(SafeStreams.systemOut());
+
 			doExec(getArgs(file));
 		}
 	}
@@ -50,10 +59,13 @@ public class BuildThumbnailsTask extends BasePortalToolsTask {
 		return args;
 	}
 
+	@Input
 	public int getHeight() {
 		return _height;
 	}
 
+	@InputDirectory
+	@Optional
 	public File getImagesDir() {
 		return _imagesDir;
 	}
@@ -66,24 +78,33 @@ public class BuildThumbnailsTask extends BasePortalToolsTask {
 	@InputFiles
 	@SkipWhenEmpty
 	public Iterable<File> getScreenshotFiles() {
-		if (_imagesDir == null) {
+		File imagesDir = getImagesDir();
+
+		if (imagesDir == null) {
 			return Collections.emptyList();
 		}
 
 		Map<String, Object> args = new HashMap<>();
 
-		args.put("dir", getImagesDir());
+		args.put("dir", imagesDir);
 		args.put("include", "**/screenshot.png");
 
 		return project.fileTree(args);
 	}
 
+	@Input
 	public int getWidth() {
 		return _width;
 	}
 
+	@Input
 	public boolean isOverwrite() {
 		return _overwrite;
+	}
+
+	@Override
+	public JavaExec setErrorOutput(OutputStream outputStream) {
+		throw new UnsupportedOperationException();
 	}
 
 	public void setHeight(int height) {
@@ -96,6 +117,11 @@ public class BuildThumbnailsTask extends BasePortalToolsTask {
 
 	public void setOverwrite(boolean overwrite) {
 		_overwrite = overwrite;
+	}
+
+	@Override
+	public JavaExec setStandardOutput(OutputStream outputStream) {
+		throw new UnsupportedOperationException();
 	}
 
 	public void setWidth(int width) {

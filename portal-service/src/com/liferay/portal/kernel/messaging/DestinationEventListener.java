@@ -19,10 +19,6 @@ package com.liferay.portal.kernel.messaging;
  */
 public interface DestinationEventListener {
 
-	public void destinationAdded(Destination destination);
-
-	public void destinationRemoved(Destination destination);
-
 	public void messageListenerRegistered(
 		String destinationName, MessageListener messageListener);
 
