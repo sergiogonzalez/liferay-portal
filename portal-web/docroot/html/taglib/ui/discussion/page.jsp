@@ -81,21 +81,6 @@ int messagesCount = messages.size();
 								<aui:input name="messageId0" type="hidden" value="<%= message.getMessageId() %>" />
 								<aui:input name="parentMessageId0" type="hidden" value="<%= message.getMessageId() %>" />
 							</div>
-
-							<%
-							String taglibPostReplyURL = "javascript:" + randomNamespace + "showEl('" + randomNamespace + "postReplyForm0');";
-							%>
-
-							<c:if test="<%= messagesCount == 1 %>">
-								<c:choose>
-									<c:when test="<%= themeDisplay.isSignedIn() || !SSOUtil.isLoginRedirectRequired(themeDisplay.getCompanyId()) %>">
-										<liferay-ui:message key="no-comments-yet" /> <a href="<%= taglibPostReplyURL %>"><liferay-ui:message key="be-the-first" /></a>
-									</c:when>
-									<c:otherwise>
-										<liferay-ui:message key="no-comments-yet" /> <a href="<%= themeDisplay.getURLSignIn() %>"><liferay-ui:message key="please-sign-in-to-comment" /></a>
-									</c:otherwise>
-								</c:choose>
-							</c:if>
 						</c:if>
 
 						<%
@@ -142,12 +127,12 @@ int messagesCount = messages.size();
 										</div>
 
 										<div class="lfr-discussion-body">
-											<liferay-ui:input-editor configKey="commentsEditor" contents="" editorImpl="<%= EDITOR_IMPL_KEY %>" name='<%= randomNamespace + "postReplyBody0" %>' onChangeMethod='<%= randomNamespace + "0OnChange" %>' placeholder="type-your-comment-here" showSource="<%= false %>" />
+											<liferay-ui:input-editor contents="" editorName='<%= PropsUtil.get("editor.wysiwyg.portal-web.docroot.html.taglib.ui.discussion.jsp") %>' name='<%= randomNamespace + "postReplyBody0" %>' onChangeMethod='<%= randomNamespace + "0OnChange" %>' placeholder="type-your-comment-here" />
 
 											<aui:input name="postReplyBody0" type="hidden" />
 
 											<aui:button-row>
-												<aui:button cssClass="btn-comment btn-primary" disabled="<%= true %>" id='<%= randomNamespace + "postReplyButton0" %>' onClick='<%= randomNamespace + "postReply(0);" %>' value='<%= LanguageUtil.get(request, "reply") %>' />
+												<aui:button cssClass="btn-comment btn-primary" disabled="<%= true %>" id='<%= randomNamespace + "postReplyButton0" %>' onClick='<%= randomNamespace + "postReply(0);" %>' value='<%= themeDisplay.isSignedIn() ? "reply" : "reply-as" %>' />
 											</aui:button-row>
 										</div>
 									</aui:row>
@@ -533,7 +518,3 @@ int messagesCount = messages.size();
 		</aui:script>
 	</c:if>
 </section>
-
-<%!
-public static final String EDITOR_IMPL_KEY = "editor.wysiwyg.portal-web.docroot.html.taglib.ui.discussion.jsp";
-%>

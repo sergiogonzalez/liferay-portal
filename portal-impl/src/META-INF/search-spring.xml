@@ -26,20 +26,16 @@
 	<!-- Proxy -->
 
 	<bean id="com.liferay.portal.kernel.search.IndexSearcherProxyBean" class="com.liferay.portal.kernel.search.IndexSearcherProxyBean">
-		<property name="messageSender" ref="com.liferay.portal.kernel.messaging.sender.MessageSender" />
+		<property name="messageBus" ref="com.liferay.portal.kernel.messaging.MessageBus" />
 		<property name="synchronousMessageSender" ref="com.liferay.portal.kernel.messaging.sender.DirectSynchronousMessageSender" />
 	</bean>
 	<bean id="com.liferay.portal.kernel.search.IndexWriterProxyBean" class="com.liferay.portal.kernel.search.IndexWriterProxyBean">
-		<property name="messageSender" ref="com.liferay.portal.kernel.messaging.sender.MessageSender" />
+		<property name="messageBus" ref="com.liferay.portal.kernel.messaging.MessageBus" />
 		<property name="synchronousMessageSender" ref="com.liferay.portal.kernel.messaging.sender.DirectSynchronousMessageSender" />
 	</bean>
 
 	<!-- Util -->
 
-	<bean id="com.liferay.portal.kernel.repository.cmis.search.CMISSearchQueryBuilder" class="com.liferay.portal.kernel.repository.cmis.search.BaseCmisSearchQueryBuilder" />
-	<bean id="com.liferay.portal.kernel.repository.cmis.search.CMISSearchQueryBuilderUtil" class="com.liferay.portal.kernel.repository.cmis.search.CMISSearchQueryBuilderUtil">
-		<property name="cmisSearchQueryBuilder" ref="com.liferay.portal.kernel.repository.cmis.search.CMISSearchQueryBuilder" />
-	</bean>
 	<bean id="com.liferay.portal.kernel.repository.search.RepositorySearchQueryBuilder" class="com.liferay.portal.repository.search.RepositorySearchQueryBuilderImpl">
 		<property name="analyzer" ref="org.apache.lucene.analysis.KeywordAnalyzer" />
 	</bean>
