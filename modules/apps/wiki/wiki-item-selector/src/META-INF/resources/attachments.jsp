@@ -29,7 +29,7 @@ WikiPage wikiPage = WikiPageLocalServiceUtil.getPage(pageResource.getNodeId(), p
 %>
 
 <aui:form method="post" name="selectDocumentFm">
-	<liferay-ui:search-container
+	<liferay-ui:search-container delta="<%= 5 %>"
 		emptyResultsMessage="this-page-does-not-have-file-attachments"
 		iteratorURL="<%= portletURL %>"
 		total="<%= wikiPage.getAttachmentsFileEntriesCount() %>"
