@@ -1,4 +1,4 @@
-Bundle-Description: Test Bundle for AuthTokenUtil
+Bundle-Description: Test Bundle for AuthTokenUtilTest
 Bundle-Version: 1.0.0
 Private-Package: $(bundle.package).*
 

@@ -12,15 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.kernel.messaging.sender;
-
-import com.liferay.portal.kernel.messaging.Message;
+package com.liferay.portal.kernel.messaging;
 
 /**
- * @author Michael C. Han
+ * @author Shuyang Zhou
  */
-public interface MessageSender {
+public interface MessageBusEventListener {
 
-	public void send(String destinationName, Message message);
+	public void destinationAdded(Destination destination);
+
+	public void destinationRemoved(Destination destination);
 
 }

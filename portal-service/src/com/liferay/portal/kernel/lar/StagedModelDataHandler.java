@@ -45,7 +45,7 @@ public interface StagedModelDataHandler<T extends StagedModel> {
 
 	public String[] getClassNames();
 
-	public String getDisplayName(T StagedModel);
+	public String getDisplayName(T stagedModel);
 
 	public int[] getExportableStatuses();
 
