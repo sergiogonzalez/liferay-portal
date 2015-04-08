@@ -12,15 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.kernel.messaging.sender;
-
-import com.liferay.portal.kernel.messaging.Message;
+package com.liferay.item.selector.numbers;
 
 /**
- * @author Michael C. Han
+ * @author Iván Zaera
  */
-public interface MessageSender {
+public class CircleNumberItemSelectorView extends BaseNumberItemSelectorView {
 
-	public void send(String destinationName, Message message);
+	public CircleNumberItemSelectorView() {
+		super("border-radius: 12px;");
+	}
 
 }

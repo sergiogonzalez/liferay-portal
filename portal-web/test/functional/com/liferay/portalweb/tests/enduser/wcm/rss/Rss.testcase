@@ -11,7 +11,7 @@
 		<execute macro="Site#tearDownCP" />
 	</tear-down>
 
-	<command name="AddFeedBetweenFeeds" priority="4">
+	<command known-issues="LPS-54720" name="AddFeedBetweenFeeds" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -41,7 +41,7 @@
 			<var name="portletName" value="RSS" />
 		</execute>
 
-		<execute action="Home#refresh" />
+		<execute function="Refresh" />
 
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletName" value="RSS" />
@@ -70,7 +70,7 @@
 		</for>
 	</command>
 
-	<command name="AddFeedWithWrongUrl" priority="4">
+	<command known-issues="LPS-54720" name="AddFeedWithWrongUrl" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -100,7 +100,7 @@
 			<var name="portletName" value="RSS" />
 		</execute>
 
-		<execute action="Home#refresh" />
+		<execute function="Refresh" />
 
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletName" value="RSS" />
@@ -154,7 +154,7 @@
 		</execute>
 	</command>
 
-	<command name="AddRssFeed" priority="5">
+	<command known-issues="LPS-54720" name="AddRssFeed" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -184,7 +184,7 @@
 			<var name="portletName" value="RSS" />
 		</execute>
 
-		<execute action="Home#refresh" />
+		<execute function="Refresh" />
 
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletName" value="RSS" />
@@ -243,7 +243,7 @@
 			<var name="portletName" value="RSS" />
 		</execute>
 
-		<execute action="Home#refresh" />
+		<execute function="Refresh" />
 
 		<execute macro="Portlet#viewSpecificPG">
 			<var name="portletName" value="RSS" />
@@ -256,7 +256,7 @@
 		</for>
 	</command>
 
-	<command name="ChangeDefaultToNavigationDisplay" priority="5">
+	<command known-issues="LPS-54720" name="ChangeDefaultToNavigationDisplay" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -286,7 +286,7 @@
 			<var name="portletName" value="RSS" />
 		</execute>
 
-		<execute action="Home#refresh" />
+		<execute function="Refresh" />
 
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletName" value="RSS" />
@@ -340,7 +340,7 @@
 		</for>
 	</command>
 
-	<command name="ChangeOrderOfRssFeeds" priority="3">
+	<command known-issues="LPS-54720" name="ChangeOrderOfRssFeeds" priority="3">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -370,7 +370,7 @@
 			<var name="portletName" value="RSS" />
 		</execute>
 
-		<execute action="Home#refresh" />
+		<execute function="Refresh" />
 
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletName" value="RSS" />
@@ -426,7 +426,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteFeedFromRss" priority="5">
+	<command known-issues="LPS-54720" name="DeleteFeedFromRss" priority="5">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Page Name" />
 		</execute>
@@ -435,7 +435,7 @@
 			<var name="portletName" value="RSS" />
 		</execute>
 
-		<execute action="Home#refresh" />
+		<execute function="Refresh" />
 
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletName" value="RSS" />
@@ -479,6 +479,70 @@
 		<execute macro="Rss#viewDeleteFeed">
 			<var name="feedTitle" value="Latimes > Technology News" />
 		</execute>
+	</command>
+
+	<command name="DisabledFeedTitle" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#gotoPagesCP">
+			<var name="portletName" value="Site Pages" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="sitePageName" value="Site Page Name" />
+			<var name="sitePagePrivacy" value="Public" />
+			<var name="siteScopeSelected" value="true" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Site Page Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="RSS" />
+		</execute>
+
+		<execute action="Home#refresh" />
+
+		<execute macro="Portlet#viewSpecificPG">
+			<var name="portletName" value="RSS" />
+		</execute>
+
+		<for list="Liferay Blogs - General,NYT > Technology" param="feedTitle" >
+			<execute macro="Rss#viewDefaultDisplayFeedTitle">
+				<var name="feedTitle" value="${feedTitle}" />
+			</execute>
+		</for>
+
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="RSS" />
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute macro="Rss#disableShowFeedTitle" />
+
+		<execute macro="Rss#save" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Site Page Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<for list="Liferay Blogs - General,NYT > Technology" param="feedTitle" >
+			<execute macro="Rss#viewNoFeedTitle">
+				<var name="feedTitle" value="${feedTitle}" />
+			</execute>
+		</for>
 	</command>
 
 	<command known-issues="LPS-54683" name="EnableRssFeedFromAssetpublisher" priority="5">
@@ -527,7 +591,7 @@
 			<var name="portletName" value="Asset Publisher" />
 		</execute>
 
-		<execute action="Home#refresh" />
+		<execute function="Refresh" />
 
 		<execute macro="WebContent#addPGViaAP">
 			<var name="webContentContent" value="This is the web content test for rss feed" />
@@ -595,7 +659,7 @@
 			<var name="portletName" value="RSS" />
 		</execute>
 
-		<execute action="Home#refresh" />
+		<execute function="Refresh" />
 
 		<execute macro="Portlet#viewSpecificPG">
 			<var name="portletName" value="RSS" />

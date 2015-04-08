@@ -12,25 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.kernel.messaging.sender;
-
-import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.messaging.MessageBus;
+package com.liferay.portal.kernel.messaging;
 
 /**
- * @author Michael C. Han
+ * @author Shuyang Zhou
  */
-public class DefaultMessageSender implements MessageSender {
+public interface MessageBusEventListener {
 
-	@Override
-	public void send(String destinationName, Message message) {
-		_messageBus.sendMessage(destinationName, message);
-	}
+	public void destinationAdded(Destination destination);
 
-	public void setMessageBus(MessageBus messageBus) {
-		_messageBus = messageBus;
-	}
-
-	private MessageBus _messageBus;
+	public void destinationRemoved(Destination destination);
 
 }

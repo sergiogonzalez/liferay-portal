@@ -22,7 +22,6 @@ page import="com.liferay.portal.kernel.template.TemplateVariableDefinition" %><%
 page import="com.liferay.portal.kernel.template.TemplateVariableGroup" %><%@
 page import="com.liferay.portal.kernel.template.comparator.TemplateHandlerComparator" %><%@
 page import="com.liferay.portal.template.TemplateContextHelper" %><%@
-page import="com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata" %><%@
 page import="com.liferay.portlet.dynamicdatalists.model.DDLRecordSet" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.RequiredStructureException" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.RequiredTemplateException" %><%@
@@ -54,8 +53,7 @@ page import="com.liferay.portlet.dynamicdatamapping.util.DDMDisplay" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.util.DDMDisplayRegistryUtil" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.util.DDMPermissionHandler" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.util.DDMTemplateHelperUtil" %><%@
-page import="com.liferay.portlet.dynamicdatamapping.util.DDMUtil" %><%@
-page import="com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplate" %>
+page import="com.liferay.portlet.dynamicdatamapping.util.DDMUtil" %>
 
 <%@ page import="java.util.StringTokenizer" %>
 
