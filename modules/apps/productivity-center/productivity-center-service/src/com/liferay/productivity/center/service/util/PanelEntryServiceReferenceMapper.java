@@ -20,6 +20,7 @@ import com.liferay.productivity.center.panel.PanelEntry;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
 import org.osgi.framework.ServiceReference;
 
 /**

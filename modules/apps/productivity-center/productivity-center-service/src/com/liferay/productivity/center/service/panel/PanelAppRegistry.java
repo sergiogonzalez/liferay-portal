@@ -19,14 +19,15 @@ import com.liferay.osgi.service.tracker.map.ServiceTrackerMapFactory;
 import com.liferay.productivity.center.panel.PanelApp;
 import com.liferay.productivity.center.panel.PanelCategory;
 import com.liferay.productivity.center.service.util.PanelEntryServiceReferenceMapper;
+
+import java.util.Collections;
+import java.util.List;
+
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-
-import java.util.Collections;
-import java.util.List;
 
 /**
  * @author Adolfo Pérez
