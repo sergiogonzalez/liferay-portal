@@ -12,31 +12,15 @@
  * details.
  */
 
-package com.liferay.document.selector;
-
-import java.io.IOException;
-
-import java.util.Locale;
-
-import javax.portlet.PortletURL;
-
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
+package com.liferay.item.selector.numbers;
 
 /**
  * @author Iván Zaera
  */
-public interface ItemSelectorView<T extends ItemSelectorCriterion> {
+public class SquareNumberItemSelectorView extends BaseNumberItemSelectorView {
 
-	public Class<T> getItemSelectorCriterionClass();
-
-	public String getTitle(Locale locale);
-
-	public void renderHTML(
-			ServletRequest request, ServletResponse response,
-			T itemSelectorCriterion, PortletURL portletURL,
-			String itemSelectedCallback)
-		throws IOException, ServletException;
+	public SquareNumberItemSelectorView() {
+		super("");
+	}
 
 }
