@@ -36,12 +36,6 @@ public class PanelCategoryRegistry {
 	public Iterable<PanelCategory> getPanelCategories(
 		PanelCategory panelCategory) {
 
-		return _getPanelCategories(panelCategory);
-	}
-
-	private Iterable<PanelCategory> _getPanelCategories(
-		PanelCategory panelCategory) {
-
 		Iterable<PanelCategory> panelCategories = _serviceTrackerMap.getService(
 			panelCategory.getKey());
 

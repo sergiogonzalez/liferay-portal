@@ -35,10 +35,6 @@ import java.util.List;
 public class PanelAppRegistry {
 
 	public Iterable<PanelApp> getPanelApps(PanelCategory panelCategory) {
-		return _getPanelApps(panelCategory);
-	}
-
-	private Iterable<PanelApp> _getPanelApps(PanelCategory panelCategory) {
 		Iterable<PanelApp> panelItems = _serviceTrackerMap.getService(
 			panelCategory.getKey());
 
