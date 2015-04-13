@@ -45,7 +45,8 @@ public class MyAccountPanelApp implements PanelApp {
 	@Override
 	public String getLabel(Locale locale) {
 		return LanguageUtil.get(
-			locale, JavaConstants.JAVAX_PORTLET_TITLE + StringPool.PERIOD +
+			locale,
+			JavaConstants.JAVAX_PORTLET_TITLE + StringPool.PERIOD +
 				getPortletId());
 	}
 
