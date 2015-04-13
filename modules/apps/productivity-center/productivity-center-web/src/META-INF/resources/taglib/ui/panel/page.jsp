@@ -28,10 +28,14 @@ PanelCategoryRegistry panelCategoryRegistry = (PanelCategoryRegistry)request.get
 	persistState="<%= true %>"
 >
 
-	<% for (PanelCategory panelSubcategory : panelCategoryRegistry.getPanelCategories(panelCategory)) { %>
+	<%
+	for (PanelCategory childPanelCategory : panelCategoryRegistry.getPanelCategories(panelCategory)) {
+	%>
 
-		<productivity-center-ui:panel-category panelCategory="<%= panelSubcategory %>" servletContext="<%= application %>" />
+		<productivity-center-ui:panel-category panelCategory="<%= childPanelCategory %>" servletContext="<%= application %>" />
 
-	<% } %>
+	<%
+	}
+	%>
 
 </liferay-ui:panel-container>
