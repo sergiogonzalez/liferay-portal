@@ -14,7 +14,6 @@
 
 package com.liferay.productivity.center.layout;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.model.DefaultLayoutTypeAccessPolicyImpl;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
@@ -38,8 +37,7 @@ public class UserPersonalPanelLayoutTypeAccessPolicy
 
 	@Override
 	public void checkAccessAllowedToPortlet(
-			HttpServletRequest request, Layout layout, Portlet portlet)
-		throws PortalException {
+		HttpServletRequest request, Layout layout, Portlet portlet) {
 	}
 
 }

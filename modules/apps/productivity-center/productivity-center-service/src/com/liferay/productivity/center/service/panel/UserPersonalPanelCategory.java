@@ -14,7 +14,6 @@
 
 package com.liferay.productivity.center.service.panel;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -51,8 +50,7 @@ public class UserPersonalPanelCategory implements PanelCategory {
 
 	@Override
 	public boolean hasAccessPermission(
-			PermissionChecker permissionChecker, Group group)
-		throws PortalException {
+		PermissionChecker permissionChecker, Group group) {
 
 		return true;
 	}

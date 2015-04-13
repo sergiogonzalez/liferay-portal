@@ -14,7 +14,6 @@
 
 package com.liferay.productivity.center.service.panel;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.StringPool;
@@ -56,8 +55,7 @@ public class MyPagesPanelApp implements PanelApp {
 
 	@Override
 	public boolean hasAccessPermission(
-			PermissionChecker permissionChecker, Group group)
-		throws PortalException {
+		PermissionChecker permissionChecker, Group group) {
 
 		return true;
 	}
