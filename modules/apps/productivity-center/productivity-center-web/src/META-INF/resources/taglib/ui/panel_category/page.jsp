@@ -20,9 +20,9 @@
 PanelAppRegistry panelAppRegistry = (PanelAppRegistry)request.getAttribute(ProductivityCenterWebKeys.PANEL_APP_REGISTRY);
 PanelCategory panelCategory = (PanelCategory)request.getAttribute("productivity-center-ui:panel-category:panelCategory");
 
-String panelPageCategoryId = "panel-manage-" + panelCategory.getKey();
-
 PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(panelAppRegistry, panelCategory);
+
+String panelPageCategoryId = "panel-manage-" + panelCategory.getKey();
 %>
 
 <liferay-ui:panel
