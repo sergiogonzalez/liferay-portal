@@ -40,7 +40,7 @@ public class PanelCategoryRegistry {
 		PanelCategory parentPanelCategory) {
 
 		Iterable<PanelCategory> panelCategories =
-			_childPanelCategoryServiceTrackerMap.getService(
+			_childPanelCategoriesServiceTrackerMap.getService(
 				parentPanelCategory.getKey());
 
 		if (panelCategories == null) {
@@ -66,12 +66,12 @@ public class PanelCategoryRegistry {
 	protected void activate(final BundleContext bundleContext)
 		throws InvalidSyntaxException {
 
-		_childPanelCategoryServiceTrackerMap =
+		_childPanelCategoriesServiceTrackerMap =
 			ServiceTrackerMapFactory.multiValueMap(
 				bundleContext, PanelCategory.class, "(panel.category=*)",
 			ParentPanelCategoryServiceReferenceMapper.<PanelCategory>create());
 
-		_childPanelCategoryServiceTrackerMap.open();
+		_childPanelCategoriesServiceTrackerMap.open();
 
 		_panelCategoryServiceTrackerMap =
 			ServiceTrackerMapFactory.singleValueMap(
@@ -101,12 +101,12 @@ public class PanelCategoryRegistry {
 
 	@Deactivate
 	protected void deactivate() {
-		_childPanelCategoryServiceTrackerMap.close();
+		_childPanelCategoriesServiceTrackerMap.close();
 		_panelCategoryServiceTrackerMap.close();
 	}
 
 	private ServiceTrackerMap<String, List<PanelCategory>>
-		_childPanelCategoryServiceTrackerMap;
+		_childPanelCategoriesServiceTrackerMap;
 	private ServiceTrackerMap<String, PanelCategory>
 		_panelCategoryServiceTrackerMap;
 
