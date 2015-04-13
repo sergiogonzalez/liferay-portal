@@ -22,8 +22,6 @@ PanelCategory panelCategory = (PanelCategory)request.getAttribute("productivity-
 
 String panelPageCategoryId = "panel-manage-" + panelCategory.getKey();
 
-String portletId = ParamUtil.getString(request, "p_p_id");
-
 PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(panelAppRegistry, panelCategory);
 %>
 
@@ -34,7 +32,7 @@ PanelCategoryHelper panelCategoryHelper = new PanelCategoryHelper(panelAppRegist
 	iconCssClass="<%= panelCategory.getIconCssClass() %>"
 	id="<%= panelPageCategoryId %>"
 	persistState="<%= true %>"
-	state='<%= panelCategoryHelper.containsPortlet(portletId) ? "open" : "closed" %>'
+	state='<%= panelCategoryHelper.containsPortlet(themeDisplay.getPpid()) ? "open" : "closed" %>'
 	title="<%= panelCategory.getLabel(themeDisplay.getLocale()) %>"
 >
 
