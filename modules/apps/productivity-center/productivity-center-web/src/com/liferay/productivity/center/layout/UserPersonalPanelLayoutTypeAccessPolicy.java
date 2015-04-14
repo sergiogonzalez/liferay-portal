@@ -14,11 +14,11 @@
 
 package com.liferay.productivity.center.layout;
 
-import com.liferay.portal.model.DefaultLayoutTypeAccessPolicyImpl;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutTypeAccessPolicy;
 import com.liferay.portal.model.Portlet;
+import com.liferay.portal.model.impl.DefaultLayoutTypeAccessPolicyImpl;
 
 import javax.servlet.http.HttpServletRequest;
 
