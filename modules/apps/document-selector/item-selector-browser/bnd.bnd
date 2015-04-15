@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Item Selector Browser
+Bundle-SymbolicName: com.liferay.item.selector.browser
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.item.selector.browser.taglib.ui
+Include-Resource:\
+	classes,\
+	META-INF/resources=src/META-INF/resources
