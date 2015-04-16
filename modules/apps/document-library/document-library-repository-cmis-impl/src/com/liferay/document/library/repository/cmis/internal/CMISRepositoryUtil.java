@@ -19,9 +19,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.RepositoryException;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.Repository;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.service.persistence.RepositoryUtil;
+import com.liferay.portal.service.RepositoryLocalServiceUtil;
 
 import java.util.HashSet;
 import java.util.Map;
@@ -56,12 +55,8 @@ public class CMISRepositoryUtil {
 				typeSettingsKey, cmisRepository.getId());
 
 			try {
-				Repository repository = RepositoryUtil.findByPrimaryKey(
-					repositoryId);
-
-				repository.setTypeSettingsProperties(typeSettingsProperties);
-
-				RepositoryUtil.update(repository);
+				RepositoryLocalServiceUtil.updateRepository(
+					repositoryId, typeSettingsProperties);
 			}
 			catch (Exception e) {
 				throw new RepositoryException(e);
