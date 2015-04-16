@@ -16,6 +16,7 @@ package com.liferay.document.library.repository.cmis.internal;
 
 import com.liferay.portal.InvalidRepositoryException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.RepositoryException;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -58,7 +59,7 @@ public class CMISRepositoryUtil {
 				RepositoryLocalServiceUtil.updateRepository(
 					repositoryId, typeSettingsProperties);
 			}
-			catch (Exception e) {
+			catch (PortalException | SystemException e) {
 				throw new RepositoryException(e);
 			}
 		}
