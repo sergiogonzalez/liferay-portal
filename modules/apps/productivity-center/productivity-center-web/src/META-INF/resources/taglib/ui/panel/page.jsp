@@ -21,21 +21,25 @@ PanelCategory panelCategory = (PanelCategory)request.getAttribute("productivity-
 PanelCategoryRegistry panelCategoryRegistry = (PanelCategoryRegistry)request.getAttribute(ProductivityCenterWebKeys.PANEL_CATEGORY_REGISTRY);
 %>
 
-<liferay-ui:panel-container
-	accordion="<%= true %>"
-	extended="<%= true %>"
-	id="userPersonalPanelMenuAddContentPanelContainer"
-	persistState="<%= true %>"
->
+<div class="portal-add-content">
+	<div class="panel-group">
+		<liferay-ui:panel-container
+			accordion="<%= true %>"
+			extended="<%= true %>"
+			id="userPersonalPanelMenuAddContentPanelContainer"
+			persistState="<%= true %>"
+		>
 
-	<%
-	for (PanelCategory childPanelCategory : panelCategoryRegistry.getChildPanelCategories(panelCategory)) {
-	%>
+			<%
+			for (PanelCategory childPanelCategory : panelCategoryRegistry.getChildPanelCategories(panelCategory)) {
+			%>
 
-		<productivity-center-ui:panel-category panelCategory="<%= childPanelCategory %>" servletContext="<%= application %>" />
+				<productivity-center-ui:panel-category panelCategory="<%= childPanelCategory %>" servletContext="<%= application %>" />
 
-	<%
-	}
-	%>
+			<%
+			}
+			%>
 
-</liferay-ui:panel-container>
+		</liferay-ui:panel-container>
+	</div>
+</div>
