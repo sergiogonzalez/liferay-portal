@@ -14,15 +14,35 @@
 
 package com.liferay.item.selector.browser.taglib.ui;
 
+import com.liferay.item.selector.browser.ServletContextProvider;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.taglib.util.IncludeTag;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Roberto Díaz
  */
 public class BrowserTag extends IncludeTag {
+
+	public BrowserTag() {
+		super();
+
+		ServletContext customServletContext =
+			ServletContextProvider.getServletContext();
+
+		if (customServletContext == null) {
+			throw new RuntimeException();
+		}
+
+		setServletContext(customServletContext);
+	}
+
+	@Override
+	public boolean isCustomServletContext() {
+		return true;
+	}
 
 	public void setDisplayStyle(String displayStyle) {
 		_displayStyle = displayStyle;
