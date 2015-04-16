@@ -12,30 +12,29 @@
  * details.
  */
 
-package com.liferay.wiki.engine.impl;
+package com.liferay.wiki.engine.text;
 
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.wiki.engine.BaseWikiEngine;
 import com.liferay.wiki.engine.WikiEngine;
 import com.liferay.wiki.model.WikiPage;
 
-import java.util.Collections;
-import java.util.Map;
+import java.io.IOException;
 
 import javax.portlet.PortletURL;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Jorge Ferrer
  */
-@Component(
-	property = {
-		"edit.page=/html/portlet/wiki/edit/plain_text.jsp", "enabled=false",
-		"format=text"
-	},
-	service = WikiEngine.class
-)
-public class TextEngine implements WikiEngine {
+@Component(service = WikiEngine.class)
+public class TextEngine extends BaseWikiEngine {
 
 	@Override
 	public String convert(
@@ -51,13 +50,21 @@ public class TextEngine implements WikiEngine {
 	}
 
 	@Override
-	public Map<String, Boolean> getOutgoingLinks(WikiPage page) {
-		return Collections.emptyMap();
+	public String getFormat() {
+		return "plain_text";
 	}
 
 	@Override
-	public boolean validate(long nodeId, String newContent) {
-		return true;
+	public void renderEditPage(
+			ServletRequest request, ServletResponse response, WikiPage wikiPage)
+		throws IOException, ServletException {
+
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher(
+			"/o/wiki-engine-text/edit_page.jsp");
+
+		request.setAttribute("wikiPage", wikiPage);
+
+		requestDispatcher.include(request, response);
 	}
 
 }
