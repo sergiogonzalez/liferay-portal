@@ -470,7 +470,7 @@ public class ServicePreAction extends Action {
 					layout.getGroupId(), layout.isPrivateLayout(),
 					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
-				if (!group.isControlPanel()) {
+				if (!group.isControlPanel() && !group.isUserPersonalPanel()) {
 					doAsGroupId = 0;
 				}
 			}
@@ -686,7 +686,9 @@ public class ServicePreAction extends Action {
 		long siteGroupId = 0;
 
 		if (layout != null) {
-			if (layout.isTypeControlPanel()) {
+			if (layout.isTypeControlPanel() ||
+				layout.isTypeUserPersonalPanel()) {
+
 				siteGroupId = PortalUtil.getSiteGroupId(scopeGroupId);
 			}
 			else {
