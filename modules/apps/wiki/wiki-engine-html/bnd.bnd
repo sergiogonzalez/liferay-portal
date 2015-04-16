@@ -1,0 +1,9 @@
+Bundle-Name: Liferay HTML Wiki Engine
+Bundle-SymbolicName: com.liferay.wiki.engine.html
+Bundle-Version: 1.0.0
+Export-Package:
+Import-Package: *
+Include-Resource:\
+	classes,\
+	@../../../../lib/portal/jericho-html.jar
+Web-ContextPath: /wiki-engine-html

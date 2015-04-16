@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.wiki.engine.impl;
+package com.liferay.wiki.engine.html;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
@@ -21,60 +22,46 @@ import com.liferay.portal.kernel.portlet.Router;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.Portlet;
-import com.liferay.portal.service.PortletLocalServiceUtil;
+import com.liferay.portal.service.PortletLocalService;
 import com.liferay.portal.util.Portal;
 import com.liferay.wiki.constants.WikiPortletKeys;
+import com.liferay.wiki.engine.BaseWikiEngine;
 import com.liferay.wiki.engine.WikiEngine;
 import com.liferay.wiki.exception.NoSuchNodeException;
 import com.liferay.wiki.exception.PageContentException;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
 
+import java.io.IOException;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.portlet.PortletURL;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 
 import net.htmlparser.jericho.Source;
 import net.htmlparser.jericho.StartTag;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jorge Ferrer
  * @author Zsigmond Rab
  */
-@Component(
-	property = {
-		"edit.page=/html/portlet/wiki/edit/html.jsp", "enabled=true",
-		"format=html"
-	},
-	service = WikiEngine.class
-)
-public class HtmlEngine implements WikiEngine {
-
-	public HtmlEngine() {
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			WikiPortletKeys.WIKI);
-
-		_friendlyURLMapping =
-			Portal.FRIENDLY_URL_SEPARATOR + portlet.getFriendlyURLMapping();
-
-		FriendlyURLMapper friendlyURLMapper =
-			portlet.getFriendlyURLMapperInstance();
-
-		_router = friendlyURLMapper.getRouter();
-	}
+@Component(service = WikiEngine.class)
+public class HtmlEngine extends BaseWikiEngine {
 
 	@Override
-	public String convert(
-		WikiPage page, PortletURL viewPageURL, PortletURL editPageURL,
-		String attachmentURLPrefix) {
-
-		return page.getContent();
+	public String getFormat() {
+		return "html";
 	}
 
 	@Override
@@ -84,18 +71,51 @@ public class HtmlEngine implements WikiEngine {
 		try {
 			return _getOutgoingLinks(page);
 		}
-		catch (Exception e) {
-			throw new PageContentException(e);
+		catch (PortalException pe) {
+			throw new PageContentException(pe);
 		}
 	}
 
 	@Override
-	public boolean validate(long nodeId, String newContent) {
-		return true;
+	public void renderEditPage(
+			ServletRequest request, ServletResponse response, WikiPage wikiPage)
+		throws IOException, ServletException {
+
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher(
+			"/o/wiki-engine-html/edit_page.jsp");
+
+		request.setAttribute("wikiPage", wikiPage);
+
+		requestDispatcher.include(request, response);
+	}
+
+	@Activate
+	protected void activate() {
+	}
+
+	@Reference(target = "(javax.portlet.name=" + WikiPortletKeys.WIKI + ")")
+	protected void setFriendlyURLMapper(FriendlyURLMapper friendlyURLMapper) {
+		_friendlyURLMapping =
+			Portal.FRIENDLY_URL_SEPARATOR + friendlyURLMapper.getMapping();
+
+		_router = friendlyURLMapper.getRouter();
+	}
+
+	@Reference
+	protected void setPortletLocalService(
+		PortletLocalService portletLocalService) {
+
+		_portletLocalService = portletLocalService;
+	}
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.wiki.web)"
+	)
+	protected void setWikiWebServletContext(ServletContext servletContext) {
 	}
 
 	private Map<String, Boolean> _getOutgoingLinks(WikiPage page)
-		throws Exception {
+		throws PortalException {
 
 		if (Validator.isNull(page.getContent())) {
 			return Collections.emptyMap();
@@ -163,7 +183,8 @@ public class HtmlEngine implements WikiEngine {
 
 	private static final Log _log = LogFactoryUtil.getLog(HtmlEngine.class);
 
-	private final String _friendlyURLMapping;
-	private final Router _router;
+	private String _friendlyURLMapping;
+	private PortletLocalService _portletLocalService;
+	private Router _router;
 
 }
