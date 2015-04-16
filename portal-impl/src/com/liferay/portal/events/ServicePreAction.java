@@ -1108,7 +1108,8 @@ public class ServicePreAction extends Action {
 			boolean hasViewStagingPermission = GroupPermissionUtil.contains(
 				permissionChecker, scopeGroup, ActionKeys.VIEW_STAGING);
 
-			if (!group.isControlPanel() && !group.isUser() &&
+			if (!group.isControlPanel() && !group.isUserPersonalPanel() &&
+				!group.isUser() &&
 				!group.isUserGroup() && hasUpdateGroupPermission) {
 
 				themeDisplay.setShowSiteSettingsIcon(true);
@@ -1193,7 +1194,7 @@ public class ServicePreAction extends Action {
 				themeDisplay.setURLPublishToLive(null);
 			}
 
-			if (group.isControlPanel()) {
+			if (group.isControlPanel() || group.isUserPersonalPanel()) {
 				themeDisplay.setShowPageSettingsIcon(false);
 				themeDisplay.setURLPublishToLive(null);
 			}
