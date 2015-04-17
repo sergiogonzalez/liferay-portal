@@ -50,11 +50,13 @@ searchContainer.setResults(results);
 
 <liferay-ui:error exception="<%= RequiredNodeException.class %>" message="the-last-main-node-is-required-and-cannot-be-deleted" />
 
-<liferay-portlet:renderURL var="searchURL">
-	<portlet:param name="struts_action" value="/wiki/search" />
-</liferay-portlet:renderURL>
+<%
+WikiURLHelper wikiURLHelper = new WikiURLHelper(wikiRequestHelper, renderResponse, wikiGroupServiceConfiguration);
 
-<aui:form action="<%= searchURL %>" method="get" name="fm">
+PortletURL searchURL = wikiURLHelper.getSearchURL();
+%>
+
+<aui:form action="<%= searchURL.toString() %>" method="get" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
 	<%
