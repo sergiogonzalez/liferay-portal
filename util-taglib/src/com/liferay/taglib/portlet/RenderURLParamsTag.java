@@ -36,10 +36,25 @@ import javax.servlet.jsp.tagext.TagSupport;
  */
 public class RenderURLParamsTag extends TagSupport {
 
+	@Deprecated
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #doTag(PortletURL, String,
+	 *             PageContext)}
+	 */
 	public static String doTag(String varImpl, PageContext pageContext)
 		throws Exception {
 
-		PortletURL portletURL = (PortletURL)pageContext.getAttribute(varImpl);
+		return doTag(null, varImpl, pageContext);
+	}
+
+
+	public static String doTag(
+			PortletURL portletURL, String varImpl, PageContext pageContext)
+		throws Exception {
+
+		if (portletURL == null) {
+			portletURL = (PortletURL)pageContext.getAttribute(varImpl);
+		}
 
 		String params = StringPool.BLANK;
 
@@ -57,13 +72,17 @@ public class RenderURLParamsTag extends TagSupport {
 	@Override
 	public int doEndTag() throws JspException {
 		try {
-			doTag(_varImpl, pageContext);
+			doTag(_portletURL, _varImpl, pageContext);
 
 			return EVAL_PAGE;
 		}
 		catch (Exception e) {
 			throw new JspException(e);
 		}
+	}
+
+	public void setPortletURL(PortletURL portletURL) {
+		_portletURL = portletURL;
 	}
 
 	public void setVarImpl(String varImpl) {
@@ -117,6 +136,7 @@ public class RenderURLParamsTag extends TagSupport {
 		return sb.toString();
 	}
 
+	private PortletURL _portletURL;
 	private String _varImpl;
 
 }
