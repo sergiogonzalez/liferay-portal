@@ -147,7 +147,7 @@ public class EditEntryAction extends PortletAction {
 						ServletResponseConstants.SC_DUPLICATE_FILE_EXCEPTION);
 				}
 
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, e.getClass(), e);
 			}
 			else if (e instanceof AssetCategoryException ||
 					 e instanceof AssetTagException) {
