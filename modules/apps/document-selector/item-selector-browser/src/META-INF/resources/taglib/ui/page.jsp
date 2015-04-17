@@ -23,6 +23,10 @@ SearchContainer itemSearchContainer = (SearchContainer)request.getAttribute("ite
 String tabName = GetterUtil.getString(request.getAttribute("item-selector:view-entries:tabName"));
 %>
 
+<liferay-util:html-top outputKey="item-selector-browser-taglib">
+	<link href="/o/item-selector-browser/css/browser.css" rel="stylesheet" type="text/css" />
+</liferay-util:html-top>
+
 <div class="item-selector-browser-container style-<%= displayStyle %>" id="<%= idPrefix %>ItemSelectorContainer">
 
 	<c:choose>
