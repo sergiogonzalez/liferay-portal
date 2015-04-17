@@ -27,11 +27,23 @@ public interface Comment {
 
 	public Date getCreateDate();
 
+	public Class<?> getDiscussionClass();
+
+	public String getDiscussionClassName();
+
+	public long getDiscussionClassPK();
+
+	public int getDiscussionStatus();
+
+	public Object getModel();
+
+	public Class<?> getModelClass();
+
+	public long getModelClassPK();
+
 	public Date getModifiedDate();
 
 	public long getParentCommentId();
-
-	public int getStatus();
 
 	public String getTranslatedBody();
 

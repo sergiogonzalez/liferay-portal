@@ -64,10 +64,10 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 
 		<div class="lfr-discussion-body">
 			<c:if test="<%= commentTreeDisplayContext.isWorkflowStatusVisible() %>">
-				<aui:model-context bean="<%= message %>" model="<%= MBMessage.class %>" />
+				<aui:model-context bean="<%= comment.getModel() %>" model="<%= comment.getModelClass() %>" />
 
 				<div>
-					<aui:workflow-status model="<%= MBDiscussion.class %>" status="<%= comment.getStatus() %>" />
+					<aui:workflow-status model="<%= comment.getDiscussionClass() %>" status="<%= comment.getDiscussionStatus() %>" />
 				</div>
 			</c:if>
 
@@ -181,8 +181,8 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 					%>
 
 					<liferay-ui:ratings
-						className="<%= MBDiscussion.class.getName() %>"
-						classPK="<%= comment.getCommentId() %>"
+						className="<%= comment.getDiscussionClassName() %>"
+						classPK="<%= comment.getDiscussionClassPK() %>"
 						ratingsEntry="<%= ratingsEntry %>"
 						ratingsStats="<%= ratingStats %>"
 					/>
