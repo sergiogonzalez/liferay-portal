@@ -15,6 +15,7 @@
 package com.liferay.portlet.messageboards.comment;
 
 import com.liferay.portal.kernel.comment.Comment;
+import com.liferay.portlet.messageboards.model.MBDiscussion;
 import com.liferay.portlet.messageboards.model.MBMessage;
 
 import java.util.Date;
@@ -44,6 +45,41 @@ public class MBCommentImpl implements Comment {
 	}
 
 	@Override
+	public Class<?> getDiscussionClass() {
+		return MBDiscussion.class;
+	}
+
+	@Override
+	public String getDiscussionClassName() {
+		return getDiscussionClass().getName();
+	}
+
+	@Override
+	public long getDiscussionClassPK() {
+		return getCommentId();
+	}
+
+	@Override
+	public int getDiscussionStatus() {
+		return _message.getStatus();
+	}
+
+	@Override
+	public Object getModel() {
+		return _message;
+	}
+
+	@Override
+	public Class<?> getModelClass() {
+		return MBMessage.class;
+	}
+
+	@Override
+	public long getModelClassPK() {
+		return getCommentId();
+	}
+
+	@Override
 	public Date getModifiedDate() {
 		return _message.getModifiedDate();
 	}
@@ -51,11 +87,6 @@ public class MBCommentImpl implements Comment {
 	@Override
 	public long getParentCommentId() {
 		return _message.getParentMessageId();
-	}
-
-	@Override
-	public int getStatus() {
-		return _message.getStatus();
 	}
 
 	@Override
