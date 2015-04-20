@@ -31,7 +31,6 @@ page import="com.liferay.portlet.messageboards.util.comparator.MessageThreadComp
 page import="com.liferay.portlet.ratings.model.RatingsEntry" %><%@
 page import="com.liferay.portlet.ratings.model.RatingsStats" %><%@
 page import="com.liferay.portlet.ratings.service.RatingsEntryLocalServiceUtil" %><%@
-page import="com.liferay.portlet.ratings.service.RatingsStatsLocalServiceUtil" %><%@
-page import="com.liferay.portlet.ratings.service.persistence.RatingsStatsUtil" %>
+page import="com.liferay.portlet.ratings.service.RatingsStatsLocalServiceUtil" %>
 
 <portlet:defineObjects />
