@@ -15,6 +15,7 @@
 package com.liferay.portlet.messageboards.comment;
 
 import com.liferay.portal.kernel.comment.Comment;
+import com.liferay.portal.kernel.comment.CommentIterator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.UserLocalServiceUtil;
@@ -25,6 +26,7 @@ import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -113,19 +115,24 @@ public class MBCommentImpl implements Comment {
 
 	@Override
 	public List<Comment> getThreadComments() {
+		List<Comment> comments = new ArrayList<>();
+
+		Iterator<Comment> iterator = getThreadCommentsIterator();
+
+		while (iterator.hasNext()) {
+			comments.add(iterator.next());
+		}
+
+		return comments;
+	}
+
+	@Override
+	public CommentIterator getThreadCommentsIterator() {
 		List<MBMessage> messages = _treeWalker.getMessages();
 
 		int[] range = _treeWalker.getChildrenRange(_message);
 
-		List<Comment> comments = new ArrayList<>();
-
-		for (int i = range[0]; i < range[1]; i++) {
-			MBMessage message = messages.get(i);
-
-			comments.add(new MBCommentImpl(message, _treeWalker));
-		}
-
-		return comments;
+		return new MBCommentIterator(messages, range[0], range[1], _treeWalker);
 	}
 
 	@Override
@@ -155,5 +162,53 @@ public class MBCommentImpl implements Comment {
 
 	private final MBMessage _message;
 	private final MBTreeWalker _treeWalker;
+
+	private static class MBCommentIterator implements CommentIterator {
+
+		public MBCommentIterator(
+			List<MBMessage> messages, int from, int to,
+			MBTreeWalker treeWalker) {
+
+			_messages = messages;
+			_from = from;
+			_to = to;
+			_treeWalker = treeWalker;
+		}
+
+		@Override
+		public int getIndexPage() {
+			return _from;
+		}
+
+		@Override
+		public boolean hasNext() {
+			if (_from < _to) {
+				return true;
+			}
+
+			return false;
+		}
+
+		@Override
+		public Comment next() {
+			Comment comment = new MBCommentImpl(
+				_messages.get(_from), _treeWalker);
+
+			_from++;
+
+			return comment;
+		}
+
+		@Override
+		public void remove() {
+			throw new UnsupportedOperationException();
+		}
+
+		private int _from;
+		private final List<MBMessage> _messages;
+		private final int _to;
+		private final MBTreeWalker _treeWalker;
+
+	}
 
 }
