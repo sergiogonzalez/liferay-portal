@@ -58,6 +58,11 @@ AUI.add(
 						value: false
 					},
 
+					renderControls: {
+						validator: Lang.isBoolean,
+						value: true
+					},
+
 					showPlayer: {
 						value: false
 					},
@@ -171,13 +176,19 @@ AUI.add(
 						instance._captionEl.selectable();
 						container.append(instance._captionEl);
 
-						container.append(A.Node.create(TPL_CONTROL_LEFT));
+						var renderControls = instance.get('renderControls');
+
+						if (renderControls) {
+							container.append(A.Node.create(TPL_CONTROL_LEFT));
+						}
 
 						instance._infoEl = A.Node.create(instance.TPL_INFO);
 						instance._infoEl.selectable();
 						container.append(instance._infoEl);
 
-						container.append(A.Node.create(TPL_CONTROL_RIGHT));
+						if (renderControls) {
+							container.append(A.Node.create(TPL_CONTROL_RIGHT));
+						}
 
 						instance._footerButtons = A.Node.create(TPL_FOOTER_BUTTONS);
 						container.append(instance._footerButtons);
@@ -197,7 +208,7 @@ AUI.add(
 						instance._fire(
 							EVENT_CURRENT_IMAGE,
 							{
-								url: link.getData('url')
+								url: link.getData('url') || link.getAttribute('href')
 							}
 						);
 					},

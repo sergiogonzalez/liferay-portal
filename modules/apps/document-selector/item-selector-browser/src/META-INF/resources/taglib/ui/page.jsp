@@ -29,6 +29,48 @@ String tabName = GetterUtil.getString(request.getAttribute("item-selector:view-e
 
 <div class="item-selector-browser-container style-<%= displayStyle %>" id="<%= idPrefix %>ItemSelectorContainer">
 
+	<%
+		String dropContainerClass = displayStyle.equals("icon") ? "drop-zone preview-content" : "drop-zone";
+		Integer dropContainerWidth = displayStyle.equals("icon") ? 25 : 100;
+	%>
+	<aui:col cssClass="<%= dropContainerClass %>" width="<%= dropContainerWidth %>">
+		<a class="browse-image btn btn-primary" href="javascript:;" id="<%= idPrefix %>SelectFile"><liferay-ui:message key="select-file" />
+		</a>
+
+		<input type="file" style="visibility: hidden; width: 0; height: 0" id="<%= idPrefix %>InputFile"/>
+
+		<a id="<%= idPrefix %>Image" href=""></a>
+
+		<div class="hide image-info">
+			<dl>
+				<dt><liferay-ui:message key="format" /></dt>
+				<dd id="imageExtension"></dd>
+
+				<dt><liferay-ui:message key="size" /></dt>
+				<dd id="imageSize"></dd>
+
+				<dt><liferay-ui:message key="name" /></dt>
+				<dd id="imageName"></dd>
+			</dl>
+		</div>
+
+		<p>Upload an image by dropping it right here or by pressing this plus icon</p>
+	</aui:col>
+
+	<div class="drop-here-info">
+		<div class="drop-here-indicator">
+			<div class="drop-icons">
+				<span aria-hidden="true" class="glyphicon glyphicon-picture"></span>
+				<span aria-hidden="true" class="glyphicon glyphicon-picture"></span>
+				<span aria-hidden="true" class="glyphicon glyphicon-picture"></span>
+			</div>
+
+			<div class="drop-text">
+				<liferay-ui:message key="drop-files-here" />
+			</div>
+		</div>
+	</div>
+
 	<c:choose>
 		<c:when test='<%= !displayStyle.equals("list") %>'>
 
@@ -65,12 +107,24 @@ String tabName = GetterUtil.getString(request.getAttribute("item-selector:view-e
 </div>
 
 <div class="lfr-item-viewer" id="<%= idPrefix %>ItemViewerPreview"></div>
+<div class="lfr-item-viewer" id="<%= idPrefix %>UploadImagePreview"></div>
 
-<aui:script use="liferay-item-viewer">
+<aui:script use="liferay-item-viewer,liferay-item-browser">
 	var viewer = new A.LiferayItemViewer(
 		{
 			btnCloseCaption:'<%= tabName %>',
 			links: '#<%= idPrefix %>ItemSelectorContainer a.item-preview',
 		}
 	).render('#<%= idPrefix %>ItemViewerPreview');
+
+	var itemBrowser = new Liferay.ItemBrowser({
+		browseImageId: 'SelectFile',
+		inputFileId: 'InputFile',
+		itemViewerCloseCaption: '<%= tabName %>',
+		itemViewerContainer: 'UploadImagePreview',
+		linkId: 'Image',
+		namespace: '<%= idPrefix %>',
+		rootNode: '#<%= idPrefix %>ItemSelectorContainer'
+	});
+
 </aui:script>
