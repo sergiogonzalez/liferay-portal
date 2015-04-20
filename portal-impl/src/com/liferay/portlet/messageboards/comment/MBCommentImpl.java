@@ -20,17 +20,21 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portlet.messageboards.model.MBDiscussion;
 import com.liferay.portlet.messageboards.model.MBMessage;
+import com.liferay.portlet.messageboards.model.MBTreeWalker;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Adolfo Pérez
  */
 public class MBCommentImpl implements Comment {
 
-	public MBCommentImpl(MBMessage message) {
+	public MBCommentImpl(MBMessage message, MBTreeWalker treeWalker) {
 		_message = message;
+		_treeWalker = treeWalker;
 	}
 
 	@Override
@@ -68,6 +72,10 @@ public class MBCommentImpl implements Comment {
 		return _message.getStatus();
 	}
 
+	public MBMessage getMessage() {
+		return _message;
+	}
+
 	@Override
 	public Object getModel() {
 		return _message;
@@ -95,12 +103,29 @@ public class MBCommentImpl implements Comment {
 		MBMessage parentMessage = MBMessageLocalServiceUtil.getMessage(
 			parentMessageId);
 
-		return new MBCommentImpl(parentMessage);
+		return new MBCommentImpl(parentMessage, _treeWalker);
 	}
 
 	@Override
 	public long getParentCommentId() {
 		return _message.getParentMessageId();
+	}
+
+	@Override
+	public List<Comment> getThreadComments() {
+		List<MBMessage> messages = _treeWalker.getMessages();
+
+		int[] range = _treeWalker.getChildrenRange(_message);
+
+		List<Comment> comments = new ArrayList<>();
+
+		for (int i = range[0]; i < range[1]; i++) {
+			MBMessage message = messages.get(i);
+
+			comments.add(new MBCommentImpl(message, _treeWalker));
+		}
+
+		return comments;
 	}
 
 	@Override
@@ -123,6 +148,12 @@ public class MBCommentImpl implements Comment {
 		return _message.getUserName();
 	}
 
+	@Override
+	public boolean isRoot() {
+		return _message.isRoot();
+	}
+
 	private final MBMessage _message;
+	private final MBTreeWalker _treeWalker;
 
 }

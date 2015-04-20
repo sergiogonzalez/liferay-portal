@@ -14,10 +14,12 @@
 
 package com.liferay.portlet.messageboards.comment.context;
 
+import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.context.CommentSectionDisplayContext;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portlet.messageboards.comment.MBCommentImpl;
 import com.liferay.portlet.messageboards.comment.context.util.DiscussionRequestHelper;
 import com.liferay.portlet.messageboards.comment.context.util.DiscussionTaglibHelper;
 import com.liferay.portlet.messageboards.model.MBMessage;
@@ -45,14 +47,16 @@ public class MBCommentSectionDisplayContext
 	}
 
 	@Override
-	public long getRootMessageId() throws PortalException {
-		if (_rootMessage == null) {
+	public Comment getRootComment() throws PortalException {
+		if (_rootComment == null) {
 			MBTreeWalker treeWalker = getTreeWalker();
 
-			_rootMessage = treeWalker.getRoot();
+			MBMessage rootMessage = treeWalker.getRoot();
+
+			_rootComment = new MBCommentImpl(rootMessage, treeWalker);
 		}
 
-		return _rootMessage.getMessageId();
+		return _rootComment;
 	}
 
 	@Override
@@ -164,7 +168,7 @@ public class MBCommentSectionDisplayContext
 	private final DiscussionRequestHelper _discussionRequestHelper;
 	private final DiscussionTaglibHelper _discussionTaglibHelper;
 	private Integer _messagesCount;
-	private MBMessage _rootMessage;
+	private Comment _rootComment;
 	private MBThread _thread;
 	private MBTreeWalker _treeWalker;
 
