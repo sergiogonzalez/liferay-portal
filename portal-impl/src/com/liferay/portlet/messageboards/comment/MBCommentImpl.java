@@ -15,8 +15,12 @@
 package com.liferay.portlet.messageboards.comment;
 
 import com.liferay.portal.kernel.comment.Comment;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.model.User;
+import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portlet.messageboards.model.MBDiscussion;
 import com.liferay.portlet.messageboards.model.MBMessage;
+import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.util.MBUtil;
 
 import java.util.Date;
@@ -87,6 +91,16 @@ public class MBCommentImpl implements Comment {
 	}
 
 	@Override
+	public Comment getParentComment() throws PortalException {
+		long parentMessageId = _message.getParentMessageId();
+
+		MBMessage parentMessage = MBMessageLocalServiceUtil.getMessage(
+			parentMessageId);
+
+		return new MBCommentImpl(parentMessage, _pathThemeImages);
+	}
+
+	@Override
 	public long getParentCommentId() {
 		return _message.getParentMessageId();
 	}
@@ -98,6 +112,11 @@ public class MBCommentImpl implements Comment {
 		}
 
 		return getBody();
+	}
+
+	@Override
+	public User getUser() throws PortalException {
+		return UserLocalServiceUtil.fetchUser(getUserId());
 	}
 
 	@Override
