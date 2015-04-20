@@ -53,6 +53,8 @@ public interface Comment {
 
 	public List<Comment> getThreadComments();
 
+	public CommentIterator getThreadCommentsIterator();
+
 	public String getTranslatedBody();
 
 	public User getUser() throws PortalException;
