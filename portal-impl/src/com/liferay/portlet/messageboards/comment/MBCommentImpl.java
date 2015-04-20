@@ -24,6 +24,9 @@ import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBTreeWalker;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.util.MBUtil;
+import com.liferay.portlet.ratings.model.RatingsEntry;
+import com.liferay.portlet.ratings.model.RatingsStats;
+import com.liferay.portlet.ratings.service.persistence.RatingsStatsUtil;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -36,10 +39,14 @@ import java.util.List;
 public class MBCommentImpl implements Comment {
 
 	public MBCommentImpl(
-		MBMessage message, MBTreeWalker treeWalker, String pathThemeImages) {
+		MBMessage message, MBTreeWalker treeWalker,
+		List<RatingsEntry> ratingsEntries, List<RatingsStats> ratingsStats,
+		String pathThemeImages) {
 
 		_message = message;
 		_treeWalker = treeWalker;
+		_ratingsEntries = ratingsEntries;
+		_ratingsStats = ratingsStats;
 		_pathThemeImages = pathThemeImages;
 	}
 
@@ -109,12 +116,40 @@ public class MBCommentImpl implements Comment {
 		MBMessage parentMessage = MBMessageLocalServiceUtil.getMessage(
 			parentMessageId);
 
-		return new MBCommentImpl(parentMessage, _treeWalker, _pathThemeImages);
+		return new MBCommentImpl(
+			parentMessage, _treeWalker, _ratingsEntries, _ratingsStats,
+			_pathThemeImages);
 	}
 
 	@Override
 	public long getParentCommentId() {
 		return _message.getParentMessageId();
+	}
+
+	@Override
+	public RatingsEntry getRatingsEntry() {
+		long classPK = getCommentId();
+
+		for (RatingsEntry ratingsEntry : _ratingsEntries) {
+			if (ratingsEntry.getClassPK() == classPK) {
+				return ratingsEntry;
+			}
+		}
+
+		return null;
+	}
+
+	@Override
+	public RatingsStats getRatingsStats() {
+		long classPK = getCommentId();
+
+		for (RatingsStats ratingsStats : _ratingsStats) {
+			if (ratingsStats.getClassPK() == classPK) {
+				return ratingsStats;
+			}
+		}
+
+		return RatingsStatsUtil.create(0);
 	}
 
 	@Override
@@ -136,7 +171,8 @@ public class MBCommentImpl implements Comment {
 
 		int[] range = _treeWalker.getChildrenRange(_message);
 
-		return new MBCommentIterator(messages, range[0], range[1], _treeWalker);
+		return new MBCommentIterator(
+			messages, range[0], range[1], _treeWalker, _pathThemeImages);
 	}
 
 	@Override
@@ -170,9 +206,11 @@ public class MBCommentImpl implements Comment {
 
 	private final MBMessage _message;
 	private final String _pathThemeImages;
+	private final List<RatingsEntry> _ratingsEntries;
+	private final List<RatingsStats> _ratingsStats;
 	private final MBTreeWalker _treeWalker;
 
-	private static class MBCommentIterator implements CommentIterator {
+	private class MBCommentIterator implements CommentIterator {
 
 		public MBCommentIterator(
 			List<MBMessage> messages, int from, int to, MBTreeWalker treeWalker,
@@ -202,7 +240,8 @@ public class MBCommentImpl implements Comment {
 		@Override
 		public Comment next() {
 			Comment comment = new MBCommentImpl(
-				_messages.get(_from), _treeWalker, _pathThemeImages);
+				_messages.get(_from), _treeWalker, _ratingsEntries,
+				_ratingsStats, _pathThemeImages);
 
 			_from++;
 
