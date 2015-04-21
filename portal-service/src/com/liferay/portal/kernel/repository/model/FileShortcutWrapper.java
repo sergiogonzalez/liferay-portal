@@ -14,9 +14,10 @@
 
 package com.liferay.portal.kernel.repository.model;
 
-import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.model.ModelWrapper;
+import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.trash.model.TrashEntry;
 
@@ -39,6 +40,21 @@ public class FileShortcutWrapper
 	@Override
 	public Object clone() {
 		return new FileShortcutWrapper((FileShortcut)_fileShortcut.clone());
+	}
+
+	@Override
+	public boolean containsPermission(
+			PermissionChecker permissionChecker, String actionId)
+		throws PortalException {
+
+		return _fileShortcut.containsPermission(permissionChecker, actionId);
+	}
+
+	@Override
+	public void execute(RepositoryModelOperation repositoryModelOperation)
+		throws PortalException {
+
+		repositoryModelOperation.execute(this);
 	}
 
 	@Override
@@ -146,7 +162,7 @@ public class FileShortcutWrapper
 	}
 
 	@Override
-	public String getUserUuid() throws SystemException {
+	public String getUserUuid() {
 		return _fileShortcut.getUserUuid();
 	}
 

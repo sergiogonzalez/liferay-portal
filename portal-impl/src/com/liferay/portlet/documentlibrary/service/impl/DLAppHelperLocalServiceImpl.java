@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.repository.event.RepositoryEventType;
 import com.liferay.portal.kernel.repository.event.TrashRepositoryEventType;
 import com.liferay.portal.kernel.repository.event.WorkflowRepositoryEventType;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.repository.model.RepositoryModel;
@@ -559,13 +560,17 @@ public class DLAppHelperLocalServiceImpl
 	}
 
 	@Override
-	public DLFileShortcut moveFileShortcutFromTrash(
-			long userId, DLFileShortcut dlFileShortcut, long newFolderId,
+	public FileShortcut moveFileShortcutFromTrash(
+			long userId, FileShortcut fileShortcut, long newFolderId,
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		DLFileShortcut dlFileShortcut =
+			dlFileShortcutLocalService.getDLFileShortcut(
+				fileShortcut.getPrimaryKey());
+
 		if (dlFileShortcut.isInTrashExplicitly()) {
-			restoreFileShortcutFromTrash(userId, dlFileShortcut);
+			restoreFileShortcutFromTrash(userId, fileShortcut);
 		}
 		else {
 
@@ -614,16 +619,18 @@ public class DLAppHelperLocalServiceImpl
 	 * Moves the file shortcut to the recycle bin.
 	 *
 	 * @param  userId the primary key of the user moving the file shortcut
-	 * @param  dlFileShortcut the file shortcut to be moved
+	 * @param  fileShortcut the file shortcut to be moved
 	 * @return the moved file shortcut
 	 * @throws PortalException if a user with the primary key could not be found
 	 */
 	@Override
-	public DLFileShortcut moveFileShortcutToTrash(
-			long userId, DLFileShortcut dlFileShortcut)
+	public FileShortcut moveFileShortcutToTrash(
+			long userId, FileShortcut fileShortcut)
 		throws PortalException {
 
 		// File shortcut
+
+		DLFileShortcut dlFileShortcut = (DLFileShortcut)fileShortcut.getModel();
 
 		int oldStatus = dlFileShortcut.getStatus();
 
@@ -651,7 +658,7 @@ public class DLAppHelperLocalServiceImpl
 			dlFileShortcut.getFileShortcutId(), dlFileShortcut.getUuid(), null,
 			oldStatus, null, null);
 
-		return dlFileShortcut;
+		return fileShortcut;
 	}
 
 	@Override
