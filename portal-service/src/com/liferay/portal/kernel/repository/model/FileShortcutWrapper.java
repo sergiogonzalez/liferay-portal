@@ -16,8 +16,10 @@ package com.liferay.portal.kernel.repository.model;
 
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.StagedModelType;
+import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.model.ModelWrapper;
 import com.liferay.portlet.expando.model.ExpandoBridge;
+import com.liferay.portlet.trash.model.TrashEntry;
 
 import java.io.Serializable;
 
@@ -26,6 +28,7 @@ import java.util.Map;
 
 /**
  * @author Adolfo Pérez
+ * @author Roberto Díaz
  */
 public class FileShortcutWrapper
 	implements FileShortcut, ModelWrapper<FileShortcut> {
@@ -57,6 +60,26 @@ public class FileShortcutWrapper
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return _fileShortcut.getExpandoBridge();
+	}
+
+	@Override
+	public long getFileShortcutId() {
+		return _fileShortcut.getFileShortcutId();
+	}
+
+	@Override
+	public FileVersion getFileVersion() throws PortalException {
+		return _fileShortcut.getFileVersion();
+	}
+
+	@Override
+	public Folder getFolder() throws PortalException {
+		return _fileShortcut.getFolder();
+	}
+
+	@Override
+	public long getFolderId() {
+		return _fileShortcut.getFolderId();
 	}
 
 	@Override
@@ -100,6 +123,11 @@ public class FileShortcutWrapper
 	}
 
 	@Override
+	public int getStatus() {
+		return _fileShortcut.getStatus();
+	}
+
+	@Override
 	public long getToFileEntryId() {
 		return _fileShortcut.getToFileEntryId();
 	}
@@ -107,6 +135,16 @@ public class FileShortcutWrapper
 	@Override
 	public String getToTitle() {
 		return _fileShortcut.getToTitle();
+	}
+
+	@Override
+	public TrashEntry getTrashEntry() throws PortalException {
+		return _fileShortcut.getTrashEntry();
+	}
+
+	@Override
+	public TrashHandler getTrashHandler() {
+		return _fileShortcut.getTrashHandler();
 	}
 
 	@Override
@@ -136,6 +174,26 @@ public class FileShortcutWrapper
 	@Override
 	public boolean isEscapedModel() {
 		return _fileShortcut.isEscapedModel();
+	}
+
+	@Override
+	public boolean isInHiddenFolder() {
+		return _fileShortcut.isInHiddenFolder();
+	}
+
+	@Override
+	public boolean isInTrash() {
+		return _fileShortcut.isInTrash();
+	}
+
+	@Override
+	public boolean isInTrashContainer() {
+		return _fileShortcut.isInTrashContainer();
+	}
+
+	@Override
+	public boolean isInTrashExplicitly() {
+		return _fileShortcut.isInTrashExplicitly();
 	}
 
 	@Override
