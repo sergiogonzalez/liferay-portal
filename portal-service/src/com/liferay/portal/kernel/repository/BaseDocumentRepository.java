@@ -129,7 +129,7 @@ public class BaseDocumentRepository implements DocumentRepository {
 	}
 
 	@Override
-	public FileShortcut getFileShortcut(long dlFileShortcutId)
+	public FileShortcut getFileShortcut(long fileShortcutId)
 		throws PortalException {
 
 		throw new UnsupportedOperationException();

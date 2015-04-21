@@ -15,6 +15,7 @@
 package com.liferay.portlet.documentlibrary.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -35,6 +36,11 @@ public class DLFileShortcutPermission {
 		if (!contains(permissionChecker, dlFileShortcut, actionId)) {
 			throw new PrincipalException();
 		}
+	}
+
+	public static void check(
+		PermissionChecker permissionChecker, FileShortcut fileShortcut,
+		String update) {
 	}
 
 	public static void check(
