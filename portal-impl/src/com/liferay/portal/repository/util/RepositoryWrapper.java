@@ -37,8 +37,7 @@ import java.util.List;
 /**
  * @author Adolfo Pérez
  */
-public class RepositoryWrapper extends BaseDocumentRepository
-	implements Repository {
+public class RepositoryWrapper implements Repository {
 
 	public RepositoryWrapper(Repository repository) {
 		_repository = repository;

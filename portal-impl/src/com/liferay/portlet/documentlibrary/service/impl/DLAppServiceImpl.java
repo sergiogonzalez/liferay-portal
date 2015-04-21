@@ -51,6 +51,7 @@ import com.liferay.portal.model.Lock;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
+import com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
 import com.liferay.portlet.documentlibrary.NoSuchFileVersionException;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
@@ -322,13 +323,15 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	 *         found, or if the file shortcut's information was invalid
 	 */
 	@Override
-	public DLFileShortcut addFileShortcut(
+	public FileShortcut addFileShortcut(
 			long repositoryId, long folderId, long toFileEntryId,
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		return dlFileShortcutService.addFileShortcut(
-			repositoryId, folderId, toFileEntryId, serviceContext);
+		Repository repository = getRepository(repositoryId);
+
+		return repository.addFileShortcut(
+			getUserId(), folderId, toFileEntryId, serviceContext);
 	}
 
 	/**
@@ -1221,10 +1224,12 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	 * @throws PortalException if the file shortcut could not be found
 	 */
 	@Override
-	public DLFileShortcut getFileShortcut(long fileShortcutId)
+	public FileShortcut getFileShortcut(long fileShortcutId)
 		throws PortalException {
 
-		return dlFileShortcutService.getFileShortcut(fileShortcutId);
+		Repository repository = getFileShortcutRepository(fileShortcutId);
+
+		return repository.getFileShortcut(fileShortcutId);
 	}
 
 	/**
@@ -2288,12 +2293,12 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	 *         found
 	 */
 	@Override
-	public DLFileShortcut moveFileShortcutFromTrash(
+	public FileShortcut moveFileShortcutFromTrash(
 			long fileShortcutId, long newFolderId,
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		DLFileShortcut fileShortcut = getFileShortcut(fileShortcutId);
+		FileShortcut fileShortcut = getFileShortcut(fileShortcutId);
 
 		DLFileShortcutPermission.check(
 			getPermissionChecker(), fileShortcut, ActionKeys.UPDATE);
@@ -2310,13 +2315,14 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	 * @throws PortalException if the file shortcut could not be found
 	 */
 	@Override
-	public DLFileShortcut moveFileShortcutToTrash(long fileShortcutId)
+	public FileShortcut moveFileShortcutToTrash(long fileShortcutId)
 		throws PortalException {
 
-		DLFileShortcut fileShortcut = getFileShortcut(fileShortcutId);
+		FileShortcut fileShortcut = getFileShortcut(fileShortcutId);
 
 		DLFileShortcutPermission.check(
-			getPermissionChecker(), fileShortcut, ActionKeys.DELETE);
+			getPermissionChecker(), (DLFileShortcut)fileShortcut.getModel(),
+			ActionKeys.DELETE);
 
 		return dlAppHelperLocalService.moveFileShortcutToTrash(
 			getUserId(), fileShortcut);
@@ -2528,7 +2534,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	public void restoreFileShortcutFromTrash(long fileShortcutId)
 		throws PortalException {
 
-		DLFileShortcut fileShortcut = getFileShortcut(fileShortcutId);
+		FileShortcut fileShortcut = getFileShortcut(fileShortcutId);
 
 		DLFileShortcutPermission.check(
 			getPermissionChecker(), fileShortcut, ActionKeys.DELETE);
@@ -3056,13 +3062,16 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	 *         not be found
 	 */
 	@Override
-	public DLFileShortcut updateFileShortcut(
+	public FileShortcut updateFileShortcut(
 			long fileShortcutId, long folderId, long toFileEntryId,
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		return dlFileShortcutService.updateFileShortcut(
-			fileShortcutId, folderId, toFileEntryId, serviceContext);
+		Repository repository = getFileShortcutRepository(fileShortcutId);
+
+		return repository.updateFileShortcut(
+			getUserId(), fileShortcutId, folderId, toFileEntryId,
+			serviceContext);
 	}
 
 	/**
@@ -3342,6 +3351,23 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			sb.append("}");
 
 			throw new NoSuchFileEntryException(sb.toString(), irie);
+		}
+	}
+
+	protected Repository getFileShortcutRepository(long fileShortcutId)
+		throws PortalException {
+
+		try {
+			return repositoryService.getRepositoryImpl(0, 0, 0, fileShortcutId);
+		}
+		catch (InvalidRepositoryIdException irie) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append("No FileShortcut exists with the key {fileShortcutId=");
+			sb.append(fileShortcutId);
+			sb.append("}");
+
+			throw new NoSuchFileShortcutException(sb.toString(), irie);
 		}
 	}
 
