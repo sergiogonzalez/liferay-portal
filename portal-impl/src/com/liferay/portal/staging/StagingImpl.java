@@ -119,6 +119,7 @@ import com.liferay.portal.util.SessionClicks;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortalPreferences;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portlet.documentlibrary.DuplicateFileEntryException;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.FileExtensionException;
 import com.liferay.portlet.documentlibrary.FileNameException;
@@ -642,6 +643,13 @@ public class StagingImpl implements Staging {
 		JSONArray warningMessagesJSONArray = null;
 
 		if (e instanceof DuplicateFileException) {
+			errorMessage = LanguageUtil.get(
+				locale,
+				"the-storage-already-contains-a-file-with-that-name." +
+					"-please-enter-a-unique-document-name");
+			errorType = ServletResponseConstants.SC_DUPLICATE_FILE_EXCEPTION;
+		}
+		else if (e instanceof DuplicateFileEntryException) {
 			errorMessage = LanguageUtil.get(
 				locale, "please-enter-a-unique-document-name");
 			errorType = ServletResponseConstants.SC_DUPLICATE_FILE_EXCEPTION;
