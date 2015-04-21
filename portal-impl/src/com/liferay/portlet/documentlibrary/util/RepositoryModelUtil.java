@@ -66,8 +66,7 @@ public class RepositoryModelUtil {
 		List<Object> dlFileEntriesDLFileShortcutsAndDLFolders) {
 
 		List<RepositoryEntry> fileEntriesFileShortcutsAndFolders =
-			new ArrayList<>(
-				dlFileEntriesDLFileShortcutsAndDLFolders.size());
+			new ArrayList<>(dlFileEntriesDLFileShortcutsAndDLFolders.size());
 
 		for (Object object : dlFileEntriesDLFileShortcutsAndDLFolders) {
 			if (object instanceof DLFileEntry) {
