@@ -66,21 +66,21 @@ public class LiferayLocalRepository
 		DLFileEntryLocalService dlFileEntryLocalService,
 		DLFileEntryService dlFileEntryService,
 		DLFileEntryTypeLocalService dlFileEntryTypeLocalService,
+		DLFileShortcutLocalService dlFileShortcutLocalService,
+		DLFileShortcutService dlFileShortcutService,
 		DLFileVersionLocalService dlFileVersionLocalService,
 		DLFileVersionService dlFileVersionService,
 		DLFolderLocalService dlFolderLocalService,
 		DLFolderService dlFolderService,
-		DLFileShortcutLocalService dlFileShortcutLocalService,
-		DLFileShortcutService dlFileShortcutService,
 		ResourceLocalService resourceLocalService, long groupId,
 		long repositoryId, long dlFolderId) {
 
 		super(
 			repositoryLocalService, repositoryService, dlAppHelperLocalService,
 			dlFileEntryLocalService, dlFileEntryService,
-			dlFileEntryTypeLocalService, dlFileVersionLocalService,
+			dlFileEntryTypeLocalService, dlFileShortcutLocalService,
+			dlFileShortcutService, dlFileVersionLocalService,
 			dlFileVersionService, dlFolderLocalService, dlFolderService,
-			dlFileShortcutLocalService, dlFileShortcutService,
 			resourceLocalService, groupId, repositoryId, dlFolderId);
 	}
 
