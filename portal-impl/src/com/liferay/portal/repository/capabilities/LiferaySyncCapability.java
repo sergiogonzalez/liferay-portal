@@ -27,7 +27,9 @@ import com.liferay.portal.kernel.repository.event.RepositoryEventListener;
 import com.liferay.portal.kernel.repository.event.RepositoryEventType;
 import com.liferay.portal.kernel.repository.event.TrashRepositoryEventType;
 import com.liferay.portal.kernel.repository.event.WorkflowRepositoryEventType;
+import com.liferay.portal.kernel.repository.model.BaseRepositoryModelOperation;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.repository.model.RepositoryModelOperation;
@@ -302,16 +304,12 @@ public class LiferaySyncCapability
 	}
 
 	private class DeleteRepositoryModelOperation
-		implements RepositoryModelOperation {
+		extends BaseRepositoryModelOperation {
 
 		@Override
 		public void execute(FileEntry fileEntry) {
 			registerDLSyncEventCallback(
 				DLSyncConstants.EVENT_DELETE, fileEntry);
-		}
-
-		@Override
-		public void execute(FileVersion fileVersion) {
 		}
 
 		@Override

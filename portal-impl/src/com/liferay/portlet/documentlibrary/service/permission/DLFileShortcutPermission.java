@@ -39,8 +39,13 @@ public class DLFileShortcutPermission {
 	}
 
 	public static void check(
-		PermissionChecker permissionChecker, FileShortcut fileShortcut,
-		String update) {
+			PermissionChecker permissionChecker, FileShortcut fileShortcut,
+			String actionId)
+		throws PortalException {
+
+		if (!contains(permissionChecker, fileShortcut, actionId)) {
+			throw new PrincipalException();
+		}
 	}
 
 	public static void check(
@@ -77,6 +82,14 @@ public class DLFileShortcutPermission {
 		return permissionChecker.hasPermission(
 			dlFileShortcut.getGroupId(), DLFileShortcut.class.getName(),
 			dlFileShortcut.getFileShortcutId(), actionId);
+	}
+
+	public static boolean contains(
+			PermissionChecker permissionChecker, FileShortcut fileShortcut,
+			String actionId)
+		throws PortalException {
+
+		return fileShortcut.containsPermission(permissionChecker, actionId);
 	}
 
 	public static boolean contains(
