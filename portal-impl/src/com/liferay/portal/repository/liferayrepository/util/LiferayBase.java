@@ -17,6 +17,7 @@ package com.liferay.portal.repository.liferayrepository.util;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.repository.model.RepositoryEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
@@ -35,7 +36,7 @@ public abstract class LiferayBase {
 		return RepositoryModelUtil.toFileEntries(dlFileEntries);
 	}
 
-	public List<Object> toFileEntriesAndFolders(
+	public List<RepositoryEntry> toFileEntriesAndFolders(
 		List<Object> dlFileEntriesAndDLFolders) {
 
 		return (List)RepositoryModelUtil.toFileEntriesFileShortcutsAndFolders(

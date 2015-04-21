@@ -105,6 +105,11 @@ public class FileShortcutWrapper
 	}
 
 	@Override
+	public String getToTitle() {
+		return _fileShortcut.getToTitle();
+	}
+
+	@Override
 	public long getUserId() {
 		return _fileShortcut.getUserId();
 	}

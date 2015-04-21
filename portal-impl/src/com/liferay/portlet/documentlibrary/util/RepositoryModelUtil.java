@@ -15,13 +15,11 @@
 package com.liferay.portlet.documentlibrary.util;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.repository.model.RepositoryEntry;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
-import com.liferay.portal.repository.liferayrepository.model.LiferayFileShortcut;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
@@ -69,27 +67,14 @@ public class RepositoryModelUtil {
 			new ArrayList<>(dlFileEntriesDLFileShortcutsAndDLFolders.size());
 
 		for (Object object : dlFileEntriesDLFileShortcutsAndDLFolders) {
-			if (object instanceof DLFileEntry) {
-				DLFileEntry dlFileEntry = (DLFileEntry)object;
-
-				FileEntry fileEntry = new LiferayFileEntry(dlFileEntry);
-
-				fileEntriesFileShortcutsAndFolders.add(fileEntry);
+			if (object instanceof FileEntry) {
+				fileEntriesFileShortcutsAndFolders.add((FileEntry)object);
 			}
 			else if (object instanceof DLFolder) {
-				DLFolder dlFolder = (DLFolder)object;
-
-				Folder folder = new LiferayFolder(dlFolder);
-
-				fileEntriesFileShortcutsAndFolders.add(folder);
+				fileEntriesFileShortcutsAndFolders.add((Folder)object);
 			}
 			else if (object instanceof DLFileShortcut) {
-				DLFileShortcut dlFileShortcut = (DLFileShortcut)object;
-
-				FileShortcut fileShortcut = new LiferayFileShortcut(
-					dlFileShortcut);
-
-				fileEntriesFileShortcutsAndFolders.add(fileShortcut);
+				fileEntriesFileShortcutsAndFolders.add((RepositoryEntry)object);
 			}
 			else {
 				throw new IllegalArgumentException(

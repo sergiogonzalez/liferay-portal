@@ -14,8 +14,15 @@
 
 package com.liferay.portal.kernel.repository.model;
 
+import java.util.Date;
+
 /**
  * @author Adolfo Pérez
  */
 public interface RepositoryEntry {
+
+	public Date getCreateDate();
+
+	public Date getModifiedDate();
+
 }
