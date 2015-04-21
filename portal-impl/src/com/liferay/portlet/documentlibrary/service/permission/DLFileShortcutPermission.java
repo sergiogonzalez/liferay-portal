@@ -21,6 +21,7 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
+import com.liferay.portlet.documentlibrary.model.DLFileShortcutConstants;
 import com.liferay.portlet.documentlibrary.service.DLFileShortcutLocalServiceUtil;
 
 /**
@@ -64,15 +65,17 @@ public class DLFileShortcutPermission {
 
 		Boolean hasPermission = StagingPermissionUtil.hasPermission(
 			permissionChecker, dlFileShortcut.getGroupId(),
-			DLFileShortcut.class.getName(), dlFileShortcut.getFileShortcutId(),
-			PortletKeys.DOCUMENT_LIBRARY, actionId);
+			DLFileShortcutConstants.getClassName(),
+			dlFileShortcut.getFileShortcutId(), PortletKeys.DOCUMENT_LIBRARY,
+			actionId);
 
 		if (hasPermission != null) {
 			return hasPermission.booleanValue();
 		}
 
 		if (permissionChecker.hasOwnerPermission(
-				dlFileShortcut.getCompanyId(), DLFileShortcut.class.getName(),
+				dlFileShortcut.getCompanyId(),
+				DLFileShortcutConstants.getClassName(),
 				dlFileShortcut.getFileShortcutId(), dlFileShortcut.getUserId(),
 				actionId)) {
 
@@ -80,7 +83,7 @@ public class DLFileShortcutPermission {
 		}
 
 		return permissionChecker.hasPermission(
-			dlFileShortcut.getGroupId(), DLFileShortcut.class.getName(),
+			dlFileShortcut.getGroupId(), DLFileShortcutConstants.getClassName(),
 			dlFileShortcut.getFileShortcutId(), actionId);
 	}
 
