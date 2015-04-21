@@ -15,6 +15,7 @@
 package com.liferay.portal.repository.proxy;
 
 import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
+import com.liferay.portal.kernel.repository.BaseDocumentRepository;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
@@ -29,7 +30,7 @@ import java.util.List;
 /**
  * @author Mika Koivisto
  */
-public abstract class RepositoryModelProxyBean {
+public abstract class RepositoryModelProxyBean extends BaseDocumentRepository {
 
 	public RepositoryModelProxyBean(ClassLoader classLoader) {
 		_classLoader = classLoader;
