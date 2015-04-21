@@ -283,6 +283,8 @@ public class WebKeys implements com.liferay.portal.kernel.util.WebKeys {
 
 	public static final String ORGANIZATION = "ORGANIZATION";
 
+	public static final String ORIGINAL_TITLE = "ORIGINAL_TITLE";
+
 	public static final String OUTER_PORTLET_ID = "OUTER_PORTLET_ID";
 
 	public static final String PASSWORD_POLICY = "PASSWORD_POLICY";

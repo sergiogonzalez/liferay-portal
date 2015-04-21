@@ -296,6 +296,27 @@ public class ActionUtil {
 			}
 		}
 
+		WikiPage originalPage = null;
+
+		boolean followRedirect = ParamUtil.getBoolean(
+			request, "followRedirect", true);
+
+		if (Validator.isNotNull(page.getRedirectTitle()) && followRedirect) {
+			WikiPage redirectPage = page.fetchRedirectPage();
+
+			if (redirectPage == null) {
+				request.setAttribute(WebKeys.TITLE, page.getRedirectTitle());
+				request.setAttribute(WikiWebKeys.WIKI_ORIGINAL_PAGE, page);
+
+				throw new NoSuchPageException();
+			}
+			else {
+				originalPage = page;
+				page = redirectPage;
+			}
+		}
+
+		request.setAttribute(WikiWebKeys.WIKI_ORIGINAL_PAGE, originalPage);
 		request.setAttribute(WikiWebKeys.WIKI_PAGE, page);
 	}
 
