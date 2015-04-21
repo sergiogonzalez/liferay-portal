@@ -57,9 +57,13 @@ public interface Comment {
 
 	public RatingsStats getRatingsStats();
 
+	public int getThreadCommentCount();
+
 	public List<Comment> getThreadComments();
 
 	public CommentIterator getThreadCommentsIterator();
+
+	public CommentIterator getThreadCommentsIterator(int from);
 
 	public String getTranslatedBody();
 

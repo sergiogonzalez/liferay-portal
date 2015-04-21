@@ -149,6 +149,13 @@ public class MBCommentImpl implements Comment {
 	}
 
 	@Override
+	public int getThreadCommentCount() {
+		List<MBMessage> messages = _treeWalker.getMessages();
+
+		return messages.size();
+	}
+
+	@Override
 	public List<Comment> getThreadComments() {
 		List<Comment> comments = new ArrayList<>();
 
@@ -168,6 +175,15 @@ public class MBCommentImpl implements Comment {
 		int[] range = _treeWalker.getChildrenRange(_message);
 
 		return new MBCommentIterator(messages, range[0], range[1], _treeWalker);
+	}
+
+	@Override
+	public CommentIterator getThreadCommentsIterator(int from) {
+		List<MBMessage> messages = _treeWalker.getMessages();
+
+		int[] range = _treeWalker.getChildrenRange(_message);
+
+		return new MBCommentIterator(messages, from, range[1], _treeWalker);
 	}
 
 	@Override
