@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.repository.capabilities.Capability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.repository.model.RepositoryEntry;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -346,14 +347,15 @@ public class BaseRepositoryProxyBean
 	}
 
 	@Override
-	public List<Object> getFileEntriesAndFileShortcuts(
+	public List<RepositoryEntry> getFileEntriesAndFileShortcuts(
 			long folderId, int status, int start, int end)
 		throws PortalException {
 
-		List<Object> objects = _baseRepository.getFileEntriesAndFileShortcuts(
-			folderId, status, start, end);
+		List<RepositoryEntry> fileEntriesAndFileShortcuts =
+			_baseRepository.getFileEntriesAndFileShortcuts(
+				folderId, status, start, end);
 
-		return toObjectProxyBeans(objects);
+		return toObjectProxyBeans(fileEntriesAndFileShortcuts);
 	}
 
 	@Override
@@ -465,12 +467,12 @@ public class BaseRepositoryProxyBean
 	}
 
 	@Override
-	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
+	public List<RepositoryEntry> getFoldersAndFileEntriesAndFileShortcuts(
 			long folderId, int status, boolean includeMountFolders, int start,
 			int end, OrderByComparator<?> obc)
 		throws PortalException {
 
-		List<Object> objects =
+		List<RepositoryEntry> objects =
 			_baseRepository.getFoldersAndFileEntriesAndFileShortcuts(
 				folderId, status, includeMountFolders, start, end, obc);
 
@@ -478,13 +480,13 @@ public class BaseRepositoryProxyBean
 	}
 
 	@Override
-	public List<Object> getFoldersAndFileEntriesAndFileShortcuts(
+	public List<RepositoryEntry> getFoldersAndFileEntriesAndFileShortcuts(
 			long folderId, int status, String[] mimeTypes,
 			boolean includeMountFolders, int start, int end,
 			OrderByComparator<?> obc)
 		throws PortalException {
 
-		List<Object> objects =
+		List<RepositoryEntry> objects =
 			_baseRepository.getFoldersAndFileEntriesAndFileShortcuts(
 				folderId, status, mimeTypes, includeMountFolders, start, end,
 				obc);
