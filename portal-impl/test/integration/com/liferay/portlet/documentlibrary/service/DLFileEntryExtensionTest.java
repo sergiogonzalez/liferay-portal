@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
+import com.liferay.portlet.documentlibrary.DuplicateFileEntryException;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.FileNameException;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
@@ -291,7 +292,7 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 
 			Assert.fail("Created" + _FAIL_DUPLICATE_MESSAGE_SUFFIX);
 		}
-		catch (DuplicateFileException dfe) {
+		catch (DuplicateFileException | DuplicateFileEntryException dfe) {
 		}
 
 		FileEntry tempFileEntry = addFileEntry("Temp.txt", "Temp");
@@ -309,7 +310,7 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 
 			Assert.fail("Renamed" + _FAIL_DUPLICATE_MESSAGE_SUFFIX);
 		}
-		catch (DuplicateFileException dfe) {
+		catch (DuplicateFileException | DuplicateFileEntryException dfe) {
 		}
 		finally {
 			DLAppLocalServiceUtil.deleteFileEntry(
@@ -323,7 +324,7 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 
 			Assert.fail("Created" + _FAIL_DUPLICATE_MESSAGE_SUFFIX);
 		}
-		catch (DuplicateFileException dfe) {
+		catch (DuplicateFileException | DuplicateFileEntryException dfe) {
 		}
 
 		tempFileEntry = addFileEntry("Temp.txt", "");
@@ -337,7 +338,7 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 
 			Assert.fail("Renamed" + _FAIL_DUPLICATE_MESSAGE_SUFFIX);
 		}
-		catch (DuplicateFileException dfe) {
+		catch (DuplicateFileException | DuplicateFileEntryException dfe) {
 		}
 		finally {
 			DLAppLocalServiceUtil.deleteFileEntry(
@@ -351,7 +352,7 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 
 			Assert.fail("Created" + _FAIL_DUPLICATE_MESSAGE_SUFFIX);
 		}
-		catch (DuplicateFileException dfe) {
+		catch (DuplicateFileException | DuplicateFileEntryException dfe) {
 		}
 
 		tempFileEntry = addFileEntry( "Temp", "Temp.txt");
@@ -365,7 +366,7 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 
 			Assert.fail("Renamed" + _FAIL_DUPLICATE_MESSAGE_SUFFIX);
 		}
-		catch (DuplicateFileException dfe) {
+		catch (DuplicateFileException | DuplicateFileEntryException dfe) {
 		}
 		finally {
 			DLAppLocalServiceUtil.deleteFileEntry(
@@ -379,7 +380,7 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 
 			Assert.fail("Created" + _FAIL_DUPLICATE_MESSAGE_SUFFIX);
 		}
-		catch (DuplicateFileException dfe) {
+		catch (DuplicateFileException | DuplicateFileEntryException dfe) {
 		}
 
 		tempFileEntry = addFileEntry("", "Temp.txt");
@@ -392,7 +393,7 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 
 			Assert.fail("Renamed" + _FAIL_DUPLICATE_MESSAGE_SUFFIX);
 		}
-		catch (DuplicateFileException dfe) {
+		catch (DuplicateFileException | DuplicateFileEntryException dfe) {
 		}
 		finally {
 			DLAppLocalServiceUtil.deleteFileEntry(
@@ -414,7 +415,7 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 
 			Assert.fail("Created" + _FAIL_DUPLICATE_MESSAGE_SUFFIX);
 		}
-		catch (DuplicateFileException dfe) {
+		catch (DuplicateFileException | DuplicateFileEntryException dfe) {
 		}
 
 		FileEntry tempFileEntry = addFileEntry("Temp", "");
@@ -432,7 +433,7 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 
 			Assert.fail("Renamed" + _FAIL_DUPLICATE_MESSAGE_SUFFIX);
 		}
-		catch (DuplicateFileException dfe) {
+		catch (DuplicateFileException | DuplicateFileEntryException dfe) {
 		}
 		finally {
 			DLAppLocalServiceUtil.deleteFileEntry(
@@ -446,7 +447,7 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 
 			Assert.fail("Created" + _FAIL_DUPLICATE_MESSAGE_SUFFIX);
 		}
-		catch (DuplicateFileException dfe) {
+		catch (DuplicateFileException | DuplicateFileEntryException dfe) {
 		}
 
 		tempFileEntry = addFileEntry("", "Temp");
@@ -459,7 +460,7 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 
 			Assert.fail("Renamed" + _FAIL_DUPLICATE_MESSAGE_SUFFIX);
 		}
-		catch (DuplicateFileException dfe) {
+		catch (DuplicateFileException | DuplicateFileEntryException dfe) {
 		}
 		finally {
 			DLAppLocalServiceUtil.deleteFileEntry(
