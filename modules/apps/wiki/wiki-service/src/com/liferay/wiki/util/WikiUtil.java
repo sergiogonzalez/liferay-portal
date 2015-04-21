@@ -132,10 +132,6 @@ public class WikiUtil {
 			new UnsyncStringReader(targetContent));
 	}
 
-	public static String escapeName(String name) {
-		return StringUtil.replace(name, _UNESCAPED_CHARS, _ESCAPED_CHARS);
-	}
-
 	public static List<WikiPage> filterOrphans(List<WikiPage> pages)
 		throws PortalException {
 
@@ -491,10 +487,6 @@ public class WikiUtil {
 		writer.write(sb.toString());
 	}
 
-	public static String unescapeName(String name) {
-		return StringUtil.replace(name, _ESCAPED_CHARS, _UNESCAPED_CHARS);
-	}
-
 	public static boolean validate(long nodeId, String content, String format)
 		throws WikiFormatException {
 
@@ -653,14 +645,6 @@ public class WikiUtil {
 
 		return _getWikiEngine(format).validate(nodeId, content);
 	}
-
-	private static final String[] _ESCAPED_CHARS = new String[] {
-		"<PLUS>", "<QUESTION>", "<SLASH>"
-	};
-
-	private static final String[] _UNESCAPED_CHARS = new String[] {
-		StringPool.PLUS, StringPool.QUESTION, StringPool.SLASH
-	};
 
 	private static final Log _log = LogFactoryUtil.getLog(WikiUtil.class);
 
