@@ -56,9 +56,7 @@ public class MBCommentSectionDisplayContext
 	@Override
 	public Comment getRootComment() throws PortalException {
 		if (_rootComment == null) {
-			MBTreeWalker treeWalker = getTreeWalker();
-
-			List<MBMessage> messages = treeWalker.getMessages();
+			List<MBMessage> messages = getMessages();
 
 			List<RatingsEntry> ratingsEntries = Collections.emptyList();
 			List<RatingsStats> ratingsStats = Collections.emptyList();
@@ -79,6 +77,8 @@ public class MBCommentSectionDisplayContext
 				ratingsStats = RatingsStatsLocalServiceUtil.getStats(
 					MBDiscussion.class.getName(), classPKs);
 			}
+
+			MBTreeWalker treeWalker = getTreeWalker();
 
 			MBMessage rootMessage = treeWalker.getRoot();
 
@@ -133,9 +133,7 @@ public class MBCommentSectionDisplayContext
 
 	@Override
 	public boolean isMessageThreadVisible() throws PortalException {
-		List<MBMessage> messages = getMessages();
-
-		return messages.size() > 1;
+		return getMessagesCount() > 1;
 	}
 
 	protected MBMessageDisplay getMBMessageDisplay() throws PortalException {
@@ -161,11 +159,7 @@ public class MBCommentSectionDisplayContext
 
 	protected int getMessagesCount() throws PortalException {
 		if (_messagesCount == null) {
-			MBMessageDisplay messageDisplay = getMBMessageDisplay();
-
-			MBTreeWalker treeWalker = messageDisplay.getTreeWalker();
-
-			List<MBMessage> messages = treeWalker.getMessages();
+			List<MBMessage> messages = getMessages();
 
 			_messagesCount = messages.size();
 		}
