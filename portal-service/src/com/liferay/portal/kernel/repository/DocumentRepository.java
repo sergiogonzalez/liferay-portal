@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.repository;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.capabilities.CapabilityProvider;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -42,6 +43,11 @@ public interface DocumentRepository extends CapabilityProvider {
 			long userId, long folderId, String sourceFileName, String mimeType,
 			String title, String description, String changeLog, InputStream is,
 			long size, ServiceContext serviceContext)
+		throws PortalException;
+
+	public FileShortcut addFileShortcut(
+			long userId, long folderId, long toFileEntryId,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	public Folder addFolder(
@@ -76,6 +82,9 @@ public interface DocumentRepository extends CapabilityProvider {
 		throws PortalException;
 
 	public FileEntry getFileEntryByUuid(String uuid) throws PortalException;
+
+	public FileShortcut getFileShortcut(long dlFileShortcutId)
+		throws PortalException;
 
 	public FileVersion getFileVersion(long fileVersionId)
 		throws PortalException;
@@ -117,6 +126,11 @@ public interface DocumentRepository extends CapabilityProvider {
 			long userId, long fileEntryId, String sourceFileName,
 			String mimeType, String title, String description, String changeLog,
 			boolean majorVersion, InputStream is, long size,
+			ServiceContext serviceContext)
+		throws PortalException;
+
+	public FileShortcut updateFileShortcut(
+			long userId, long fileShortcutId, long folderId, long toFileEntryId,
 			ServiceContext serviceContext)
 		throws PortalException;
 
