@@ -14,11 +14,15 @@
 
 package com.liferay.portal.repository.liferayrepository.model;
 
-import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
+import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.repository.model.RepositoryModelOperation;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.expando.model.ExpandoBridge;
+import com.liferay.portlet.trash.model.TrashEntry;
 
 import java.io.Serializable;
 
@@ -27,6 +31,7 @@ import java.util.Map;
 
 /**
  * @author Adolfo Pérez
+ * @author Roberto Díaz
  */
 public class LiferayFileShortcut extends LiferayModel implements FileShortcut {
 
@@ -49,6 +54,13 @@ public class LiferayFileShortcut extends LiferayModel implements FileShortcut {
 	}
 
 	@Override
+	public void execute(RepositoryModelOperation repositoryModelOperation)
+		throws PortalException {
+
+		repositoryModelOperation.execute(this);
+	}
+
+	@Override
 	public Map<String, Serializable> getAttributes() {
 		ExpandoBridge expandoBridge = _dlFileShortcut.getExpandoBridge();
 
@@ -68,6 +80,26 @@ public class LiferayFileShortcut extends LiferayModel implements FileShortcut {
 	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return _dlFileShortcut.getExpandoBridge();
+	}
+
+	@Override
+	public long getFileShortcutId() {
+		return _dlFileShortcut.getFileShortcutId();
+	}
+
+	@Override
+	public FileVersion getFileVersion() throws PortalException {
+		return _dlFileShortcut.getFileVersion();
+	}
+
+	@Override
+	public Folder getFolder() throws PortalException {
+		return _dlFileShortcut.getFolder();
+	}
+
+	@Override
+	public long getFolderId() {
+		return _dlFileShortcut.getFolderId();
 	}
 
 	@Override
@@ -121,6 +153,11 @@ public class LiferayFileShortcut extends LiferayModel implements FileShortcut {
 	}
 
 	@Override
+	public TrashEntry getTrashEntry() throws PortalException {
+		return _dlFileShortcut.getTrashEntry();
+	}
+
+	@Override
 	public long getUserId() {
 		return _dlFileShortcut.getUserId();
 	}
@@ -131,7 +168,7 @@ public class LiferayFileShortcut extends LiferayModel implements FileShortcut {
 	}
 
 	@Override
-	public String getUserUuid() throws SystemException {
+	public String getUserUuid() {
 		return _dlFileShortcut.getUserUuid();
 	}
 
@@ -143,6 +180,21 @@ public class LiferayFileShortcut extends LiferayModel implements FileShortcut {
 	@Override
 	public boolean isEscapedModel() {
 		return _escapedModel;
+	}
+
+	@Override
+	public boolean isInHiddenFolder() {
+		return _dlFileShortcut.isInHiddenFolder();
+	}
+
+	@Override
+	public boolean isInTrash() {
+		return _dlFileShortcut.isInTrash();
+	}
+
+	@Override
+	public boolean isInTrashContainer() {
+		return _dlFileShortcut.isInTrashContainer();
 	}
 
 	@Override
