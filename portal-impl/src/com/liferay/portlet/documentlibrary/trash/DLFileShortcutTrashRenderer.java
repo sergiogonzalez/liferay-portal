@@ -17,6 +17,7 @@ package com.liferay.portlet.documentlibrary.trash;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.trash.BaseTrashRenderer;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -39,7 +40,7 @@ public class DLFileShortcutTrashRenderer extends BaseTrashRenderer {
 
 	public static final String TYPE = "shortcut";
 
-	public DLFileShortcutTrashRenderer(DLFileShortcut fileShortcut)
+	public DLFileShortcutTrashRenderer(FileShortcut fileShortcut)
 		throws PortalException {
 
 		_fileShortcut = fileShortcut;
@@ -111,6 +112,6 @@ public class DLFileShortcutTrashRenderer extends BaseTrashRenderer {
 	}
 
 	private final FileEntry _fileEntry;
-	private final DLFileShortcut _fileShortcut;
+	private final FileShortcut _fileShortcut;
 
 }

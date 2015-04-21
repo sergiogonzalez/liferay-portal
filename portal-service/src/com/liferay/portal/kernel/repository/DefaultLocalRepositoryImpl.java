@@ -22,9 +22,6 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.ServiceContext;
 
-import java.io.File;
-import java.io.InputStream;
-
 import java.util.List;
 
 /**
@@ -42,36 +39,11 @@ import java.util.List;
  *
  * @author Alexander Chow
  */
-public class DefaultLocalRepositoryImpl implements LocalRepository {
+public class DefaultLocalRepositoryImpl extends BaseDocumentRepository
+	implements LocalRepository {
 
 	public DefaultLocalRepositoryImpl(Repository repository) {
 		_repository = repository;
-	}
-
-	@Override
-	public FileEntry addFileEntry(
-		long userId, long folderId, String sourceFileName, String mimeType,
-		String title, String description, String changeLog, File file,
-		ServiceContext serviceContext) {
-
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public FileEntry addFileEntry(
-		long userId, long folderId, String sourceFileName, String mimeType,
-		String title, String description, String changeLog, InputStream is,
-		long size, ServiceContext serviceContext) {
-
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public Folder addFolder(
-		long userId, long parentFolderId, String name, String description,
-		ServiceContext serviceContext) {
-
-		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -102,11 +74,6 @@ public class DefaultLocalRepositoryImpl implements LocalRepository {
 
 		return _repository.copyFileEntry(
 			userId, groupId, fileEntryId, destFolderId, serviceContext);
-	}
-
-	@Override
-	public void deleteAll() {
-		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -183,22 +150,6 @@ public class DefaultLocalRepositoryImpl implements LocalRepository {
 	}
 
 	@Override
-	public FileEntry moveFileEntry(
-		long userId, long fileEntryId, long newFolderId,
-		ServiceContext serviceContext) {
-
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public Folder moveFolder(
-		long userId, long folderId, long parentFolderId,
-		ServiceContext serviceContext) {
-
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
 	public void revertFileEntry(
 			long userId, long fileEntryId, String version,
 			ServiceContext serviceContext)
@@ -217,33 +168,6 @@ public class DefaultLocalRepositoryImpl implements LocalRepository {
 		long userId, FileEntry fileEntry, FileVersion fileVersion,
 		long[] assetCategoryIds, String[] assetTagNames,
 		long[] assetLinkEntryIds) {
-
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public FileEntry updateFileEntry(
-		long userId, long fileEntryId, String sourceFileName, String mimeType,
-		String title, String description, String changeLog,
-		boolean majorVersion, File file, ServiceContext serviceContext) {
-
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public FileEntry updateFileEntry(
-		long userId, long fileEntryId, String sourceFileName, String mimeType,
-		String title, String description, String changeLog,
-		boolean majorVersion, InputStream is, long size,
-		ServiceContext serviceContext) {
-
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public Folder updateFolder(
-		long folderId, long parentFolderId, String name, String description,
-		ServiceContext serviceContext) {
 
 		throw new UnsupportedOperationException();
 	}
