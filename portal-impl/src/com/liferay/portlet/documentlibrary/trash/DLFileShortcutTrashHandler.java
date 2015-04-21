@@ -28,6 +28,7 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.RepositoryServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
+import com.liferay.portlet.documentlibrary.model.DLFileShortcutConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
@@ -52,7 +53,7 @@ public class DLFileShortcutTrashHandler extends DLBaseTrashHandler {
 
 	@Override
 	public String getClassName() {
-		return FileShortcut.class.getName();
+		return DLFileShortcutConstants.getClassName();
 	}
 
 	@Override

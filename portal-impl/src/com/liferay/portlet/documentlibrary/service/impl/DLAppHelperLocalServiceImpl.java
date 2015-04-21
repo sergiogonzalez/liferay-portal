@@ -61,6 +61,7 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
+import com.liferay.portlet.documentlibrary.model.DLFileShortcutConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
@@ -299,7 +300,7 @@ public class DLAppHelperLocalServiceImpl
 
 		for (DLFileShortcut fileShortcut : fileShortcuts) {
 			assetEntryLocalService.incrementViewCounter(
-				userId, DLFileShortcut.class.getName(),
+				userId, DLFileShortcutConstants.getClassName(),
 				fileShortcut.getFileShortcutId(), 1);
 		}
 	}
@@ -444,7 +445,7 @@ public class DLAppHelperLocalServiceImpl
 
 				if (oldStatus != WorkflowConstants.STATUS_APPROVED) {
 					trashVersionLocalService.addTrashVersion(
-						trashEntryId, DLFileShortcut.class.getName(),
+						trashEntryId, DLFileShortcutConstants.getClassName(),
 						dlFileShortcut.getFileShortcutId(), oldStatus, null);
 				}
 			}
@@ -573,7 +574,7 @@ public class DLAppHelperLocalServiceImpl
 			// File shortcut
 
 			TrashVersion trashVersion = trashVersionLocalService.fetchVersion(
-				DLFileShortcut.class.getName(),
+				DLFileShortcutConstants.getClassName(),
 				fileShortcut.getFileShortcutId());
 
 			int status = WorkflowConstants.STATUS_APPROVED;
@@ -600,7 +601,7 @@ public class DLAppHelperLocalServiceImpl
 
 			socialActivityLocalService.addActivity(
 				userId, fileShortcut.getGroupId(),
-				DLFileShortcut.class.getName(),
+				DLFileShortcutConstants.getClassName(),
 				fileShortcut.getFileShortcutId(),
 				SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
 				extraDataJSONObject.toString(), 0);
@@ -640,7 +641,8 @@ public class DLAppHelperLocalServiceImpl
 			"title", TrashUtil.getOriginalTitle(fileShortcut.getToTitle()));
 
 		socialActivityLocalService.addActivity(
-			userId, fileShortcut.getGroupId(), DLFileShortcut.class.getName(),
+			userId, fileShortcut.getGroupId(),
+			DLFileShortcutConstants.getClassName(),
 			fileShortcut.getFileShortcutId(),
 			SocialActivityConstants.TYPE_MOVE_TO_TRASH,
 			extraDataJSONObject.toString(), 0);
@@ -648,7 +650,8 @@ public class DLAppHelperLocalServiceImpl
 		// Trash
 
 		trashEntryLocalService.addTrashEntry(
-			userId, fileShortcut.getGroupId(), DLFileShortcut.class.getName(),
+			userId, fileShortcut.getGroupId(),
+			DLFileShortcutConstants.getClassName(),
 			fileShortcut.getFileShortcutId(), fileShortcut.getUuid(), null,
 			oldStatus, null, null);
 
@@ -801,7 +804,7 @@ public class DLAppHelperLocalServiceImpl
 
 				TrashVersion trashVersion =
 					trashVersionLocalService.fetchVersion(
-						DLFileShortcut.class.getName(),
+						DLFileShortcutConstants.getClassName(),
 						dlFileShortcut.getFileShortcutId());
 
 				int oldStatus = WorkflowConstants.STATUS_APPROVED;
@@ -976,7 +979,8 @@ public class DLAppHelperLocalServiceImpl
 		// File shortcut
 
 		TrashEntry trashEntry = trashEntryLocalService.getEntry(
-			DLFileShortcut.class.getName(), fileShortcut.getFileShortcutId());
+			DLFileShortcutConstants.getClassName(),
+			fileShortcut.getFileShortcutId());
 
 		dlFileShortcutLocalService.updateStatus(
 			userId, fileShortcut.getFileShortcutId(), trashEntry.getStatus(),
@@ -989,7 +993,8 @@ public class DLAppHelperLocalServiceImpl
 		extraDataJSONObject.put("title", fileShortcut.getToTitle());
 
 		socialActivityLocalService.addActivity(
-			userId, fileShortcut.getGroupId(), DLFileShortcut.class.getName(),
+			userId, fileShortcut.getGroupId(),
+			DLFileShortcutConstants.getClassName(),
 			fileShortcut.getFileShortcutId(),
 			SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
 			extraDataJSONObject.toString(), 0);
@@ -1171,7 +1176,7 @@ public class DLAppHelperLocalServiceImpl
 					userId, dlFileShortcut.getGroupId(),
 					dlFileShortcut.getCreateDate(),
 					dlFileShortcut.getModifiedDate(),
-					DLFileShortcut.class.getName(),
+					DLFileShortcutConstants.getClassName(),
 					dlFileShortcut.getFileShortcutId(),
 					dlFileShortcut.getUuid(), fileEntryTypeId, assetCategoryIds,
 					assetTagNames, true, null, null, null,
