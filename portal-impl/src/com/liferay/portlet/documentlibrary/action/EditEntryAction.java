@@ -33,6 +33,7 @@ import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.AssetCategoryException;
 import com.liferay.portlet.asset.AssetTagException;
+import com.liferay.portlet.documentlibrary.DuplicateFileEntryException;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.DuplicateFolderNameException;
 import com.liferay.portlet.documentlibrary.InvalidFolderException;
@@ -116,47 +117,31 @@ public class EditEntryAction extends PortletAction {
 				}
 			}
 		}
-		catch (Exception e) {
-			if (e instanceof DuplicateLockException ||
-				e instanceof NoSuchFileEntryException ||
-				e instanceof NoSuchFolderException ||
-				e instanceof PrincipalException) {
+		catch (DuplicateLockException dle) {
+			SessionErrors.add(actionRequest, dle.getClass(), dle.getLock());
 
-				if (e instanceof DuplicateLockException) {
-					DuplicateLockException dle = (DuplicateLockException)e;
-
-					SessionErrors.add(
-						actionRequest, dle.getClass(), dle.getLock());
-				}
-				else {
-					SessionErrors.add(actionRequest, e.getClass());
-				}
-
-				setForward(actionRequest, "portlet.document_library.error");
-			}
-			else if (e instanceof DuplicateFileException ||
-					 e instanceof DuplicateFolderNameException ||
-					 e instanceof SourceFileNameException) {
-
-				if (e instanceof DuplicateFileException) {
-					HttpServletResponse response =
-						PortalUtil.getHttpServletResponse(actionResponse);
-
-					response.setStatus(
-						ServletResponseConstants.SC_DUPLICATE_FILE_EXCEPTION);
-				}
+			setForward(actionRequest, "portlet.document_library.error");
+		} catch (NoSuchFileEntryException | NoSuchFolderException |
+				PrincipalException e) {
 
 				SessionErrors.add(actionRequest, e.getClass());
-			}
-			else if (e instanceof AssetCategoryException ||
-					 e instanceof AssetTagException ||
-					 e instanceof InvalidFolderException) {
+
+				setForward(actionRequest, "portlet.document_library.error");
+		}
+		catch (DuplicateFileException | DuplicateFileEntryException dfe) {
+			HttpServletResponse response = PortalUtil.getHttpServletResponse(
+				actionResponse);
+
+			response.setStatus(
+				ServletResponseConstants.SC_DUPLICATE_FILE_EXCEPTION);
+		}
+		catch (DuplicateFolderNameException | SourceFileNameException e) {
+			SessionErrors.add(actionRequest, e.getClass());
+		}
+		catch (AssetCategoryException | AssetTagException |
+			InvalidFolderException e) {
 
 				SessionErrors.add(actionRequest, e.getClass(), e);
-			}
-			else {
-				throw e;
-			}
 		}
 	}
 

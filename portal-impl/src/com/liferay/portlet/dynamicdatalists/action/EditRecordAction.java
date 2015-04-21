@@ -23,6 +23,7 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.struts.PortletAction;
+import com.liferay.portlet.documentlibrary.DuplicateFileEntryException;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.FileSizeException;
 import com.liferay.portlet.dynamicdatalists.NoSuchRecordException;
@@ -77,29 +78,24 @@ public class EditRecordAction extends PortletAction {
 				sendRedirect(actionRequest, actionResponse);
 			}
 		}
+		catch (NoSuchRecordException | PrincipalException e) {
+			SessionErrors.add(actionRequest, e.getClass());
+
+			setForward(actionRequest, "portlet.dynamic_data_lists.error");
+		}
+		catch (FileSizeException | StorageFieldRequiredException e) {
+			SessionErrors.add(actionRequest, e.getClass());
+		}
 		catch (Exception e) {
-			if (e instanceof NoSuchRecordException ||
-				e instanceof PrincipalException) {
+			Throwable cause = e.getCause();
 
-				SessionErrors.add(actionRequest, e.getClass());
+			if (cause instanceof DuplicateFileException ||
+				cause instanceof DuplicateFileEntryException) {
 
-				setForward(actionRequest, "portlet.dynamic_data_lists.error");
-			}
-			else if (e instanceof FileSizeException ||
-					 e instanceof StorageFieldRequiredException) {
-
-				SessionErrors.add(actionRequest, e.getClass());
+				SessionErrors.add(actionRequest, cause.getClass());
 			}
 			else {
-				Throwable cause = e.getCause();
-
-				if (cause instanceof DuplicateFileException) {
-					SessionErrors.add(
-						actionRequest, DuplicateFileException.class);
-				}
-				else {
-					throw e;
-				}
+				throw e;
 			}
 		}
 	}
