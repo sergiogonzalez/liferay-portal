@@ -63,12 +63,12 @@ public abstract class LiferayRepositoryBase extends BaseDocumentRepository
 		DLFileEntryLocalService dlFileEntryLocalService,
 		DLFileEntryService dlFileEntryService,
 		DLFileEntryTypeLocalService dlFileEntryTypeLocalService,
+		DLFileShortcutLocalService dlFileShortcutLocalService,
+		DLFileShortcutService dlFileShortcutService,
 		DLFileVersionLocalService dlFileVersionLocalService,
 		DLFileVersionService dlFileVersionService,
 		DLFolderLocalService dlFolderLocalService,
 		DLFolderService dlFolderService,
-		DLFileShortcutLocalService dlFileShortcutLocalService,
-		DLFileShortcutService dlFileShortcutService,
 		ResourceLocalService resourceLocalService, long groupId,
 		long repositoryId, long dlFolderId) {
 
@@ -78,12 +78,12 @@ public abstract class LiferayRepositoryBase extends BaseDocumentRepository
 		this.dlFileEntryLocalService = dlFileEntryLocalService;
 		this.dlFileEntryService = dlFileEntryService;
 		this.dlFileEntryTypeLocalService = dlFileEntryTypeLocalService;
+		this.dlFileShortcutLocalService = dlFileShortcutLocalService;
+		this.dlFileShortcutService = dlFileShortcutService;
 		this.dlFileVersionLocalService = dlFileVersionLocalService;
 		this.dlFileVersionService = dlFileVersionService;
 		this.dlFolderLocalService = dlFolderLocalService;
 		this.dlFolderService = dlFolderService;
-		this.dlFileShortcutLocalService = dlFileShortcutLocalService;
-		this.dlFileShortcutService = dlFileShortcutService;
 		this.resourceLocalService = resourceLocalService;
 		_groupId = groupId;
 		_repositoryId = repositoryId;
