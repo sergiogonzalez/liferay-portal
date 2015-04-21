@@ -14,9 +14,11 @@
 
 package com.liferay.portlet.documentlibrary.action;
 
+import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
@@ -122,10 +124,11 @@ public class EditFileShortcutAction extends PortletAction {
 			actionRequest, "fileShortcutId");
 
 		if (moveToTrash) {
-			DLFileShortcut fileShortcut =
+			FileShortcut fileShortcut =
 				DLAppServiceUtil.moveFileShortcutToTrash(fileShortcutId);
 
-			TrashUtil.addTrashSessionMessages(actionRequest, fileShortcut);
+			TrashUtil.addTrashSessionMessages(
+				actionRequest, (TrashedModel)fileShortcut.getModel());
 
 			hideDefaultSuccessMessage(actionRequest);
 		}
