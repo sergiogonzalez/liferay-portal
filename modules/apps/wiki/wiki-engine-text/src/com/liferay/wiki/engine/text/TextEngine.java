@@ -19,14 +19,7 @@ import com.liferay.wiki.engine.BaseWikiEngine;
 import com.liferay.wiki.engine.WikiEngine;
 import com.liferay.wiki.model.WikiPage;
 
-import java.io.IOException;
-
 import javax.portlet.PortletURL;
-
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -52,19 +45,6 @@ public class TextEngine extends BaseWikiEngine {
 	@Override
 	public String getFormat() {
 		return "plain_text";
-	}
-
-	@Override
-	public void renderEditPage(
-			ServletRequest request, ServletResponse response, WikiPage wikiPage)
-		throws IOException, ServletException {
-
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher(
-			"/o/wiki-engine-text/edit_page.jsp");
-
-		request.setAttribute("wikiPage", wikiPage);
-
-		requestDispatcher.include(request, response);
 	}
 
 }

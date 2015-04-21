@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.wiki.engine.BaseWikiEngine;
-import com.liferay.wiki.engine.WikiEngine;
 import com.liferay.wiki.exception.PageContentException;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 
@@ -46,11 +45,7 @@ import java.util.regex.Pattern;
 
 import javax.portlet.PortletURL;
 
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-
 import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Jorge Ferrer
@@ -144,21 +139,6 @@ public class JSPWikiEngine extends BaseWikiEngine {
 		catch (WikiException we) {
 			throw new PageContentException(we);
 		}
-	}
-
-	@Override
-	public void renderEditPage(
-			ServletRequest request, ServletResponse response,
-			com.liferay.wiki.model.WikiPage wikiPage)
-		throws IOException {
-
-		// TODO: no tenia edit page
-
-	}
-
-	@Override
-	public boolean validate(long nodeId, String newContent) {
-		return true;
 	}
 
 	@Activate

@@ -30,17 +30,10 @@ import com.liferay.wiki.exception.PageContentException;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 
-import java.io.IOException;
-
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.portlet.PortletURL;
-
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 
 import org.jamwiki.model.WikiUser;
 import org.jamwiki.parser.ParserException;
@@ -118,24 +111,6 @@ public class MediaWikiEngine extends BaseWikiEngine {
 		}
 
 		return outgoingLinks;
-	}
-
-	@Override
-	public void renderEditPage(
-			ServletRequest request, ServletResponse response, WikiPage wikiPage)
-		throws IOException, ServletException {
-
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher(
-			"/o/wiki-engine-mediawiki/edit_page.jsp");
-
-		request.setAttribute("wikiPage", wikiPage);
-
-		requestDispatcher.include(request, response);
-	}
-
-	@Override
-	public boolean validate(long nodeId, String content) {
-		return true;
 	}
 
 	protected ClassLoader getClassLoader() {

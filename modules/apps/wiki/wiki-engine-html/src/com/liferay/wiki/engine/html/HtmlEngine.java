@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.portlet.Router;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.service.PortletLocalService;
 import com.liferay.portal.util.Portal;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.engine.BaseWikiEngine;
@@ -32,23 +31,14 @@ import com.liferay.wiki.exception.PageContentException;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
 
-import java.io.IOException;
-
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-
 import net.htmlparser.jericho.Source;
 import net.htmlparser.jericho.StartTag;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -76,42 +66,12 @@ public class HtmlEngine extends BaseWikiEngine {
 		}
 	}
 
-	@Override
-	public void renderEditPage(
-			ServletRequest request, ServletResponse response, WikiPage wikiPage)
-		throws IOException, ServletException {
-
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher(
-			"/o/wiki-engine-html/edit_page.jsp");
-
-		request.setAttribute("wikiPage", wikiPage);
-
-		requestDispatcher.include(request, response);
-	}
-
-	@Activate
-	protected void activate() {
-	}
-
 	@Reference(target = "(javax.portlet.name=" + WikiPortletKeys.WIKI + ")")
 	protected void setFriendlyURLMapper(FriendlyURLMapper friendlyURLMapper) {
 		_friendlyURLMapping =
 			Portal.FRIENDLY_URL_SEPARATOR + friendlyURLMapper.getMapping();
 
 		_router = friendlyURLMapper.getRouter();
-	}
-
-	@Reference
-	protected void setPortletLocalService(
-		PortletLocalService portletLocalService) {
-
-		_portletLocalService = portletLocalService;
-	}
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.wiki.web)"
-	)
-	protected void setWikiWebServletContext(ServletContext servletContext) {
 	}
 
 	private Map<String, Boolean> _getOutgoingLinks(WikiPage page)
@@ -184,7 +144,6 @@ public class HtmlEngine extends BaseWikiEngine {
 	private static final Log _log = LogFactoryUtil.getLog(HtmlEngine.class);
 
 	private String _friendlyURLMapping;
-	private PortletLocalService _portletLocalService;
 	private Router _router;
 
 }
