@@ -18,5 +18,4 @@ package com.liferay.portal.kernel.repository.model;
  * @author Adolfo Pérez
  */
 public interface RepositoryEntry {
-
 }
