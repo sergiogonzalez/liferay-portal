@@ -64,13 +64,6 @@ else {
 	if (portletName.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY)) {
 		if (request.getAttribute("view_file_entry.jsp-fileEntry") != null) {
 			fileEntry = (FileEntry)request.getAttribute("view_file_entry.jsp-fileEntry");
-
-			if (request.getAttribute("view_file_entry.jsp-fileShortcut") != null) {
-				fileShortcut = (FileShortcut)request.getAttribute("view_file_entry.jsp-fileShortcut");
-			}
-		}
-		else {
-			fileShortcut = (FileShortcut)request.getAttribute("view_file_shortcut.jsp-fileShortcut");
 		}
 	}
 	else {
@@ -80,9 +73,6 @@ else {
 			if (request.getAttribute("view_entries.jsp-fileShortcut") != null) {
 				fileShortcut = (FileShortcut)request.getAttribute("view_entries.jsp-fileShortcut");
 			}
-		}
-		else {
-			fileShortcut = (FileShortcut)request.getAttribute("view_file_shortcut.jsp-fileShortcut");
 		}
 	}
 }
