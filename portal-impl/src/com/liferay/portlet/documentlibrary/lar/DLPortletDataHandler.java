@@ -61,6 +61,7 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileRank;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
+import com.liferay.portlet.documentlibrary.model.DLFileShortcutConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
@@ -121,7 +122,7 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 				DLFileEntryType.class.getName()),
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "shortcuts", true, false, null,
-				DLFileShortcut.class.getName()));
+				DLFileShortcutConstants.getClassName()));
 		setPublishToLiveByDefault(PropsValues.DL_PUBLISH_TO_LIVE_BY_DEFAULT);
 
 		XStreamAliasRegistryUtil.register(DLFileEntryImpl.class, "DLFileEntry");
