@@ -33,14 +33,17 @@
 			<%
 				FileVersion latestFileVersion = fileEntry.getLatestFileVersion();
 
+				String imagePreviewURL = DLUtil.getImagePreviewURL(fileEntry, themeDisplay);
+				String imageURL = DLUtil.getPreviewURL(fileEntry, latestFileVersion, themeDisplay, StringPool.BLANK);
 				String imageTitle = DLUtil.getTitleWithExtension(fileEntry);
+
 				String iconCssClass = DLUtil.getFileIconCssClass(imageTitle.substring(imageTitle.lastIndexOf(".") + 1));
 
 				String author = fileEntry.getUserName();
 			%>
 
 			<liferay-ui:search-container-column-text name="title">
-				<a class="image-preview" href="<%= DLUtil.getImagePreviewURL(fileEntry, themeDisplay) %>" title="<%= imageTitle %>">
+				<a class="item-preview" data-url="<%= imageURL %>" href="<%= imagePreviewURL %>" title="<%= imageTitle %>">
 					<c:if test="<%= Validator.isNotNull(iconCssClass) %>">
 						<i class="<%= iconCssClass %>"></i>
 					</c:if>

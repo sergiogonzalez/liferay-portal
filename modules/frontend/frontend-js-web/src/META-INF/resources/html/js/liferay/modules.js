@@ -502,6 +502,12 @@
 							'sortable'
 						]
 					},
+					'liferay-item-viewer': {
+						path: 'item_viewer.js',
+						requires: [
+							'aui-image-viewer'
+						]
+					},
 					'liferay-language': {
 						path: 'language.js'
 					},

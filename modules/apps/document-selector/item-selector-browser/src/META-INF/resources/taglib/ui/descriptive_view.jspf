@@ -19,7 +19,7 @@
 		<img align="left" src="<%= DLUtil.getThumbnailSrc(fileEntry, themeDisplay) %>" />
 	</div>
 	<div style="float: left">
-		<a class="image-preview" href="<%= imageURL %>" title="<%= imageTitle %>">
+		<a class="item-preview" data-url="<%= imageURL %>" href="<%= imagePreviewURL %>" title="<%= imageTitle %>">
 			<%= imageTitle %>
 		</a>
 

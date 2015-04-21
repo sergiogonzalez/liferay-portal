@@ -35,11 +35,11 @@ String tabName = GetterUtil.getString(request.getAttribute("item-selector:view-e
 			<%
 			for (Object result : itemSearchContainer.getResults()) {
 				FileEntry fileEntry = (FileEntry)result;
-
-				String imageURL = DLUtil.getImagePreviewURL(fileEntry, themeDisplay);
-				String imageTitle = DLUtil.getTitleWithExtension(fileEntry);
-
 				FileVersion latestFileVersion = fileEntry.getLatestFileVersion();
+
+				String imagePreviewURL = DLUtil.getImagePreviewURL(fileEntry, themeDisplay);
+				String imageURL = DLUtil.getPreviewURL(fileEntry, latestFileVersion, themeDisplay, StringPool.BLANK);
+				String imageTitle = DLUtil.getTitleWithExtension(fileEntry);
 			%>
 
 				<c:choose>
@@ -64,23 +64,13 @@ String tabName = GetterUtil.getString(request.getAttribute("item-selector:view-e
 	</c:choose>
 </div>
 
-<div class="lfr-image-viewer" id="<%= idPrefix %>ImageViewerPreview"></div>
+<div class="lfr-item-viewer" id="<%= idPrefix %>ItemViewerPreview"></div>
 
-<aui:script use="liferay-image-viewer">
-	var viewer = new A.LiferayImageViewer(
+<aui:script use="liferay-item-viewer">
+	var viewer = new A.LiferayItemViewer(
 		{
 			btnCloseCaption:'<%= tabName %>',
-			captionFromTitle: true,
-			centered: true,
-			circular: true,
-			height: '75%',
-			infoTemplate: '{current} of {total}',
-			links: '#<%= idPrefix %>ItemSelectorContainer a.image-preview',
-			playing: false,
-			preloadAllImages: false,
-			preloadNeighborImages: true,
-			showPlayer: false,
-			zIndex: 1
+			links: '#<%= idPrefix %>ItemSelectorContainer a.item-preview',
 		}
-	).render('#<%= idPrefix %>ImageViewerPreview');
+	).render('#<%= idPrefix %>ItemViewerPreview');
 </aui:script>

@@ -15,8 +15,8 @@
 --%>
 
 <aui:col cssClass="preview-content" width="<%= 25 %>">
-	<a class="image-preview" href="<%= DLUtil.getImagePreviewURL(fileEntry, themeDisplay) %>" title="<%= imageTitle %>">
-		<img align="left" src="<%= DLUtil.getPreviewURL(fileEntry, fileEntry.getLatestFileVersion(), themeDisplay, "&imageThumbnail=2") %>" />
+	<a class="item-preview" data-url="<%= imageURL %>" href="<%= imagePreviewURL %>" title="<%= imageTitle %>">
+		<img align="left" src="<%= DLUtil.getPreviewURL(fileEntry, latestFileVersion, themeDisplay, "&imageThumbnail=2") %>" />
 	</a>
 
 	<%@ include file="/META-INF/resources/taglib/ui/metadata_view.jspf" %>
