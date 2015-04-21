@@ -37,6 +37,8 @@ import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryService;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalService;
+import com.liferay.portlet.documentlibrary.service.DLFileShortcutLocalService;
+import com.liferay.portlet.documentlibrary.service.DLFileShortcutService;
 import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFileVersionService;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalService;
@@ -68,6 +70,8 @@ public class LiferayLocalRepository
 		DLFileVersionService dlFileVersionService,
 		DLFolderLocalService dlFolderLocalService,
 		DLFolderService dlFolderService,
+		DLFileShortcutLocalService dlFileShortcutLocalService,
+		DLFileShortcutService dlFileShortcutService,
 		ResourceLocalService resourceLocalService, long groupId,
 		long repositoryId, long dlFolderId) {
 
@@ -76,6 +80,7 @@ public class LiferayLocalRepository
 			dlFileEntryLocalService, dlFileEntryService,
 			dlFileEntryTypeLocalService, dlFileVersionLocalService,
 			dlFileVersionService, dlFolderLocalService, dlFolderService,
+			dlFileShortcutLocalService, dlFileShortcutService,
 			resourceLocalService, groupId, repositoryId, dlFolderId);
 	}
 

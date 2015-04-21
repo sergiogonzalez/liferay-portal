@@ -12,13 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.repository;
+package com.liferay.portal.kernel.repository;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.repository.BaseDocumentRepository;
-import com.liferay.portal.kernel.repository.DocumentRepository;
 import com.liferay.portal.kernel.repository.capabilities.Capability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -30,9 +29,9 @@ import java.io.InputStream;
 import java.util.List;
 
 /**
- * @author Adolfo Pérez
+ * @author Roberto Díaz
  */
-public class InitializedDocumentRepository extends BaseDocumentRepository {
+public class BaseDocumentRepository implements DocumentRepository {
 
 	@Override
 	public FileEntry addFileEntry(
@@ -41,11 +40,7 @@ public class InitializedDocumentRepository extends BaseDocumentRepository {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		_checkDocumentRepository();
-
-		return _documentRepository.addFileEntry(
-			userId, folderId, sourceFileName, mimeType, title, description,
-			changeLog, file, serviceContext);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -55,11 +50,16 @@ public class InitializedDocumentRepository extends BaseDocumentRepository {
 			long size, ServiceContext serviceContext)
 		throws PortalException {
 
-		_checkDocumentRepository();
+		throw new UnsupportedOperationException();
+	}
 
-		return _documentRepository.addFileEntry(
-			userId, folderId, sourceFileName, mimeType, title, description,
-			changeLog, is, size, serviceContext);
+	@Override
+	public FileShortcut addFileShortcut(
+			long userId, long folderId, long toFileEntryId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -68,10 +68,7 @@ public class InitializedDocumentRepository extends BaseDocumentRepository {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		_checkDocumentRepository();
-
-		return _documentRepository.addFolder(
-			userId, parentFolderId, name, description, serviceContext);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -79,11 +76,6 @@ public class InitializedDocumentRepository extends BaseDocumentRepository {
 			long userId, long fileEntryId, boolean major, String changeLog,
 			ServiceContext serviceContext)
 		throws PortalException {
-
-		_checkDocumentRepository();
-
-		_documentRepository.checkInFileEntry(
-			userId, fileEntryId, major, changeLog, serviceContext);
 	}
 
 	@Override
@@ -91,11 +83,6 @@ public class InitializedDocumentRepository extends BaseDocumentRepository {
 			long userId, long fileEntryId, String lockUuid,
 			ServiceContext serviceContext)
 		throws PortalException {
-
-		_checkDocumentRepository();
-
-		_documentRepository.checkInFileEntry(
-			userId, fileEntryId, lockUuid, serviceContext);
 	}
 
 	@Override
@@ -104,86 +91,67 @@ public class InitializedDocumentRepository extends BaseDocumentRepository {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		_checkDocumentRepository();
-
-		return _documentRepository.copyFileEntry(
-			userId, groupId, fileEntryId, destFolderId, serviceContext);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void deleteAll() throws PortalException {
-		_checkDocumentRepository();
-
-		_documentRepository.deleteAll();
 	}
 
 	@Override
 	public void deleteFileEntry(long fileEntryId) throws PortalException {
-		_checkDocumentRepository();
-
-		_documentRepository.deleteFileEntry(fileEntryId);
 	}
 
 	@Override
 	public void deleteFolder(long folderId) throws PortalException {
-		_checkDocumentRepository();
-
-		_documentRepository.deleteFolder(folderId);
 	}
 
 	@Override
 	public <T extends Capability> T getCapability(Class<T> capabilityClass) {
-		_checkDocumentRepository();
-
-		return _documentRepository.getCapability(capabilityClass);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public FileEntry getFileEntry(long fileEntryId) throws PortalException {
-		_checkDocumentRepository();
-
-		return _documentRepository.getFileEntry(fileEntryId);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public FileEntry getFileEntry(long folderId, String title)
 		throws PortalException {
 
-		_checkDocumentRepository();
-
-		return _documentRepository.getFileEntry(folderId, title);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public FileEntry getFileEntryByUuid(String uuid) throws PortalException {
-		_checkDocumentRepository();
+		throw new UnsupportedOperationException();
+	}
 
-		return _documentRepository.getFileEntryByUuid(uuid);
+	@Override
+	public FileShortcut getFileShortcut(long dlFileShortcutId)
+		throws PortalException {
+
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public FileVersion getFileVersion(long fileVersionId)
 		throws PortalException {
 
-		_checkDocumentRepository();
-
-		return _documentRepository.getFileVersion(fileVersionId);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public Folder getFolder(long folderId) throws PortalException {
-		_checkDocumentRepository();
-
-		return _documentRepository.getFolder(folderId);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public Folder getFolder(long parentFolderId, String name)
 		throws PortalException {
 
-		_checkDocumentRepository();
-
-		return _documentRepository.getFolder(parentFolderId, name);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -192,26 +160,19 @@ public class InitializedDocumentRepository extends BaseDocumentRepository {
 			OrderByComparator<FileEntry> obc)
 		throws PortalException {
 
-		_checkDocumentRepository();
-
-		return _documentRepository.getRepositoryFileEntries(
-			userId, rootFolderId, start, end, obc);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public long getRepositoryId() {
-		_checkDocumentRepository();
-
-		return _documentRepository.getRepositoryId();
+		return 0;
 	}
 
 	@Override
 	public <T extends Capability> boolean isCapabilityProvided(
 		Class<T> capabilityClass) {
 
-		_checkDocumentRepository();
-
-		return _documentRepository.isCapabilityProvided(capabilityClass);
+		return false;
 	}
 
 	@Override
@@ -220,10 +181,7 @@ public class InitializedDocumentRepository extends BaseDocumentRepository {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		_checkDocumentRepository();
-
-		return _documentRepository.moveFileEntry(
-			userId, fileEntryId, newFolderId, serviceContext);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -232,10 +190,7 @@ public class InitializedDocumentRepository extends BaseDocumentRepository {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		_checkDocumentRepository();
-
-		return _documentRepository.moveFolder(
-			userId, folderId, parentFolderId, serviceContext);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -243,20 +198,6 @@ public class InitializedDocumentRepository extends BaseDocumentRepository {
 			long userId, long fileEntryId, String version,
 			ServiceContext serviceContext)
 		throws PortalException {
-
-		_checkDocumentRepository();
-
-		_documentRepository.revertFileEntry(
-			userId, fileEntryId, version, serviceContext);
-	}
-
-	public void setDocumentRepository(DocumentRepository documentRepository) {
-		if (_documentRepository != null) {
-			throw new IllegalStateException(
-				"Unable to initialize an initialized document repository");
-		}
-
-		_documentRepository = documentRepository;
 	}
 
 	@Override
@@ -266,11 +207,7 @@ public class InitializedDocumentRepository extends BaseDocumentRepository {
 			boolean majorVersion, File file, ServiceContext serviceContext)
 		throws PortalException {
 
-		_checkDocumentRepository();
-
-		return _documentRepository.updateFileEntry(
-			userId, fileEntryId, sourceFileName, mimeType, title, description,
-			changeLog, majorVersion, file, serviceContext);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -281,11 +218,16 @@ public class InitializedDocumentRepository extends BaseDocumentRepository {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		_checkDocumentRepository();
+		throw new UnsupportedOperationException();
+	}
 
-		return _documentRepository.updateFileEntry(
-			userId, fileEntryId, sourceFileName, mimeType, title, description,
-			changeLog, majorVersion, is, size, serviceContext);
+	@Override
+	public FileShortcut updateFileShortcut(
+			long userId, long fileShortcutId, long folderId, long toFileEntryId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -294,19 +236,7 @@ public class InitializedDocumentRepository extends BaseDocumentRepository {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		_checkDocumentRepository();
-
-		return _documentRepository.updateFolder(
-			folderId, parentFolderId, name, description, serviceContext);
+		throw new UnsupportedOperationException();
 	}
-
-	private void _checkDocumentRepository() {
-		if (_documentRepository == null) {
-			throw new IllegalStateException(
-				"Document repositry is not initialized");
-		}
-	}
-
-	private DocumentRepository _documentRepository;
 
 }
