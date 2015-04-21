@@ -26,7 +26,7 @@ import com.liferay.portal.struts.PortletAction;
 import com.liferay.portlet.documentlibrary.FileShortcutPermissionException;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
-import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
+import com.liferay.portlet.documentlibrary.model.DLFileShortcutConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
 
@@ -148,7 +148,7 @@ public class EditFileShortcutAction extends PortletAction {
 		long toFileEntryId = ParamUtil.getLong(actionRequest, "toFileEntryId");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			DLFileShortcut.class.getName(), actionRequest);
+			DLFileShortcutConstants.getClassName(), actionRequest);
 
 		if (fileShortcutId <= 0) {
 

@@ -24,6 +24,7 @@ import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
+import com.liferay.portlet.documentlibrary.model.DLFileShortcutConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 
@@ -83,7 +84,7 @@ public class RepositoryModelUtil {
 						Arrays.asList(
 							DLFileEntry.class.getName(),
 							DLFolder.class.getName(),
-							DLFileShortcut.class.getName()),
+							DLFileShortcutConstants.getClassName()),
 						object));
 			}
 		}
