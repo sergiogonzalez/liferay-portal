@@ -17,6 +17,7 @@ package com.liferay.portal.repository.liferayrepository;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -24,6 +25,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.SortedArrayList;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
+import com.liferay.portal.repository.liferayrepository.model.LiferayFileShortcut;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
 import com.liferay.portal.service.RepositoryLocalService;
@@ -31,6 +33,7 @@ import com.liferay.portal.service.RepositoryService;
 import com.liferay.portal.service.ResourceLocalService;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalService;
@@ -140,6 +143,20 @@ public class LiferayLocalRepository
 	}
 
 	@Override
+	public FileShortcut addFileShortcut(
+			long userId, long folderId, long toFileEntryId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		DLFileShortcut dlFileShortcut =
+			dlFileShortcutLocalService.addFileShortcut(
+				userId, getGroupId(), toFolderId(folderId), toFileEntryId,
+				serviceContext);
+
+		return new LiferayFileShortcut(dlFileShortcut);
+	}
+
+	@Override
 	public Folder addFolder(
 			long userId, long parentFolderId, String name, String description,
 			ServiceContext serviceContext)
@@ -228,6 +245,16 @@ public class LiferayLocalRepository
 				uuid, getGroupId());
 
 		return new LiferayFileEntry(dlFileEntry);
+	}
+
+	@Override
+	public FileShortcut getFileShortcut(long fileShortcutId)
+		throws PortalException {
+
+		DLFileShortcut dlFileShortcut =
+			dlFileShortcutLocalService.getDLFileShortcut(fileShortcutId);
+
+		return new LiferayFileShortcut(dlFileShortcut);
 	}
 
 	@Override
@@ -368,6 +395,20 @@ public class LiferayLocalRepository
 			is, size, serviceContext);
 
 		return new LiferayFileEntry(dlFileEntry);
+	}
+
+	@Override
+	public FileShortcut updateFileShortcut(
+			long userId, long fileShortcutId, long folderId, long toFileEntryId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		DLFileShortcut dlFileShortcut =
+			dlFileShortcutLocalService.updateFileShortcut(
+				userId, fileShortcutId, toFolderId(folderId), toFileEntryId,
+				serviceContext);
+
+		return new LiferayFileShortcut(dlFileShortcut);
 	}
 
 	@Override

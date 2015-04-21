@@ -20,7 +20,9 @@ import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.repository.model.RepositoryModelOperation;
+import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
+import com.liferay.portlet.documentlibrary.service.permission.DLFileShortcutPermission;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.trash.model.TrashEntry;
 
@@ -51,6 +53,15 @@ public class LiferayFileShortcut extends LiferayModel implements FileShortcut {
 	public Object clone() {
 		return new LiferayFileShortcut(
 			(DLFileShortcut)_dlFileShortcut.clone(), _escapedModel);
+	}
+
+	@Override
+	public boolean containsPermission(
+			PermissionChecker permissionChecker, String actionId)
+		throws PortalException {
+
+		return DLFileShortcutPermission.contains(
+			permissionChecker, _dlFileShortcut, actionId);
 	}
 
 	@Override
