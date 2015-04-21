@@ -28,6 +28,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
+import com.liferay.portlet.documentlibrary.model.DLFileShortcutConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.base.DLFileShortcutLocalServiceBaseImpl;
@@ -121,7 +122,7 @@ public class DLFileShortcutLocalServiceImpl
 
 		resourceLocalService.addResources(
 			fileShortcut.getCompanyId(), fileShortcut.getGroupId(),
-			fileShortcut.getUserId(), DLFileShortcut.class.getName(),
+			fileShortcut.getUserId(), DLFileShortcutConstants.getClassName(),
 			fileShortcut.getFileShortcutId(), false, addGroupPermissions,
 			addGuestPermissions);
 	}
@@ -134,7 +135,7 @@ public class DLFileShortcutLocalServiceImpl
 
 		resourceLocalService.addModelResources(
 			fileShortcut.getCompanyId(), fileShortcut.getGroupId(),
-			fileShortcut.getUserId(), DLFileShortcut.class.getName(),
+			fileShortcut.getUserId(), DLFileShortcutConstants.getClassName(),
 			fileShortcut.getFileShortcutId(), groupPermissions,
 			guestPermissions);
 	}
@@ -177,25 +178,25 @@ public class DLFileShortcutLocalServiceImpl
 		// Resources
 
 		resourceLocalService.deleteResource(
-			fileShortcut.getCompanyId(), DLFileShortcut.class.getName(),
+			fileShortcut.getCompanyId(), DLFileShortcutConstants.getClassName(),
 			ResourceConstants.SCOPE_INDIVIDUAL,
 			fileShortcut.getFileShortcutId());
 
 		// Asset
 
 		assetEntryLocalService.deleteEntry(
-			DLFileShortcut.class.getName(), fileShortcut.getFileShortcutId());
+			DLFileShortcutConstants.getClassName(), fileShortcut.getFileShortcutId());
 
 		// Trash
 
 		if (fileShortcut.isInTrashExplicitly()) {
 			trashEntryLocalService.deleteEntry(
-				DLFileShortcut.class.getName(),
+				DLFileShortcutConstants.getClassName(),
 				fileShortcut.getFileShortcutId());
 		}
 		else {
 			trashVersionLocalService.deleteTrashVersion(
-				DLFileShortcut.class.getName(),
+				DLFileShortcutConstants.getClassName(),
 				fileShortcut.getFileShortcutId());
 		}
 	}
@@ -346,7 +347,7 @@ public class DLFileShortcutLocalServiceImpl
 
 		assetEntryLocalService.updateEntry(
 			userId, fileShortcut.getGroupId(), fileShortcut.getCreateDate(),
-			fileShortcut.getModifiedDate(), DLFileShortcut.class.getName(),
+			fileShortcut.getModifiedDate(), DLFileShortcutConstants.getClassName(),
 			fileShortcut.getFileShortcutId(), fileShortcut.getUuid(), 0,
 			assetCategoryIds, assetTagNames, false, null, null, null,
 			fileEntry.getMimeType(), fileEntry.getTitle(),

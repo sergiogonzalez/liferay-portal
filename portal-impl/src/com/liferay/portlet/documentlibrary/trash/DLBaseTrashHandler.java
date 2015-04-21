@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.service.RepositoryServiceUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
-import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
+import com.liferay.portlet.documentlibrary.model.DLFileShortcutConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 
@@ -170,7 +170,7 @@ public abstract class DLBaseTrashHandler extends BaseTrashHandler {
 			if (repositoryEntry instanceof FileShortcut) {
 				FileShortcut fileShortcut = (FileShortcut)repositoryEntry;
 
-				curClassName = DLFileShortcut.class.getName();
+				curClassName = DLFileShortcutConstants.getClassName();
 				curClassPK = fileShortcut.getPrimaryKey();
 			}
 			else if (repositoryEntry instanceof FileEntry) {
