@@ -116,6 +116,11 @@ public class LiferayFileShortcut extends LiferayModel implements FileShortcut {
 	}
 
 	@Override
+	public String getToTitle() {
+		return _dlFileShortcut.getToTitle();
+	}
+
+	@Override
 	public long getUserId() {
 		return _dlFileShortcut.getUserId();
 	}
