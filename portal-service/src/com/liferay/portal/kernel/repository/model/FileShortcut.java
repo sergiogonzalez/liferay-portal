@@ -22,4 +22,6 @@ public interface FileShortcut
 
 	public long getToFileEntryId();
 
+	public String getToTitle();
+
 }
