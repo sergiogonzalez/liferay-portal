@@ -1473,6 +1473,8 @@
 			<forward name="portlet.layouts_admin.error" path="portlet.layouts_admin.error" />
 		</action>
 
+		<action path="/staging_bar/delete_background_task" type="com.liferay.portlet.backgroundtask.action.DeleteBackgroundTaskAction" />
+
 		<action path="/staging_bar/edit_layout_branch" type="com.liferay.portlet.stagingbar.action.EditLayoutBranchAction">
 			<forward name="portlet.staging_bar.edit_layout_branch" path="portlet.staging_bar.edit_layout_branch" />
 			<forward name="portlet.staging_bar.error" path="portlet.staging_bar.error" />
@@ -1497,6 +1499,11 @@
 		<action path="/staging_bar/publish_layouts" type="com.liferay.portlet.layoutsadmin.action.PublishLayoutsAction">
 			<forward name="portlet.layouts_admin.error" path="portlet.layouts_admin.error" />
 			<forward name="portlet.layouts_admin.publish_layouts" path="portlet.layouts_admin.publish_layouts" />
+		</action>
+
+		<action path="/staging_bar/publish_layouts_simple" type="com.liferay.portlet.layoutsadmin.action.ConfirmationExportImportConfigurationAction">
+			<forward name="portlet.layouts_admin.confirmation" path="portlet.layouts_admin.publish_layouts_simple" />
+			<forward name="portlet.layouts_admin.error" path="portlet.layouts_admin.error" />
 		</action>
 
 		<action path="/staging_bar/view" forward="portlet.staging_bar.view" />
@@ -1628,24 +1635,12 @@
 
 		<action path="/users_admin/view_users" forward="portlet.users_admin.view" />
 
-		<!-- Workflow Definition Links -->
-
-		<action path="/workflow_definition_links/edit_workflow_definition_link" type="com.liferay.portlet.workflowdefinitionlinks.action.EditWorkflowDefinitionLinkAction">
-			<forward name="portlet.workflow_definition_links.error" path="portlet.workflow_definition_links.error" />
-		</action>
-
-		<action path="/workflow_definition_links/view" forward="portlet.workflow_definition_links.view" />
-
 		<!-- Workflow Definitions -->
 
 		<action path="/workflow_definitions/edit_workflow_definition" type="com.liferay.portlet.workflowdefinitions.action.EditWorkflowDefinitionAction">
 			<forward name="portlet.workflow_definitions.edit_workflow_definition" path="portlet.workflow_definitions.edit_workflow_definition" />
 			<forward name="portlet.workflow_definitions.error" path="portlet.workflow_definitions.error" />
 			<forward name="portlet.workflow_definitions.view" path="portlet.workflow_definitions.view" />
-		</action>
-
-		<action path="/workflow_definitions/edit_workflow_definition_link" type="com.liferay.portlet.workflowdefinitionlinks.action.EditWorkflowDefinitionLinkAction">
-			<forward name="portlet.workflow_definition_links.error" path="portlet.workflow_definitions.error" />
 		</action>
 
 		<action path="/workflow_definitions/edit_workflow_instance" type="com.liferay.portlet.workflowinstances.action.EditWorkflowInstanceAction">

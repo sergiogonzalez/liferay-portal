@@ -14,7 +14,7 @@
 
 package com.liferay.javadoc.formatter.gradle;
 
-import com.liferay.javadoc.formatter.JavadocFormatterBean;
+import com.liferay.javadoc.formatter.JavadocFormatterArgs;
 
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
@@ -44,13 +44,13 @@ public class JavadocFormatterPlugin implements Plugin<Project> {
 	}
 
 	protected void addJavadocFormatterExtension(Project project) {
-		JavadocFormatterBean javadocFormatterBean = new JavadocFormatterBean();
+		JavadocFormatterArgs javadocFormatterArgs = new JavadocFormatterArgs();
 
-		javadocFormatterBean.setInputDir(project.getProjectDir());
+		javadocFormatterArgs.setInputDir(project.getProjectDir());
 
 		ExtensionContainer extensionContainer = project.getExtensions();
 
-		extensionContainer.add("javadocFormatter", javadocFormatterBean);
+		extensionContainer.add("javadocFormatter", javadocFormatterArgs);
 	}
 
 }

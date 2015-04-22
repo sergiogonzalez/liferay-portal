@@ -139,6 +139,12 @@ public class WebServerServlet extends HttpServlet {
 
 			User user = _getUser(request);
 
+			if (!user.isDefaultUser()) {
+				PrincipalThreadLocal.setName(user.getUserId());
+				PrincipalThreadLocal.setPassword(
+					PortalUtil.getUserPassword(request));
+			}
+
 			String path = HttpUtil.fixPath(request.getPathInfo());
 
 			String[] pathArray = StringUtil.split(path, CharPool.SLASH);

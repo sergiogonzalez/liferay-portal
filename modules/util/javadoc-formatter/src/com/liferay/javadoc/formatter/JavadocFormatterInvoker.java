@@ -28,31 +28,31 @@ import java.util.Map;
 public class JavadocFormatterInvoker {
 
 	public static JavadocFormatter invoke(
-			JavadocFormatterBean javadocFormatterBean)
+			JavadocFormatterArgs javadocFormatterArgs)
 		throws Exception {
 
 		Map<String, String> arguments = new HashMap<>();
 
-		arguments.put("javadoc.author", javadocFormatterBean.getAuthor());
+		arguments.put("javadoc.author", javadocFormatterArgs.getAuthor());
 		arguments.put(
 			"javadoc.init",
-			String.valueOf(javadocFormatterBean.isInitializeMissingJavadocs()));
+			String.valueOf(javadocFormatterArgs.isInitializeMissingJavadocs()));
 		arguments.put(
 			"javadoc.input.dir",
-			_getAbsolutePath(javadocFormatterBean.getInputDir()));
+			_getAbsolutePath(javadocFormatterArgs.getInputDir()));
 		arguments.put(
 			"javadoc.limit",
-			StringUtil.merge(javadocFormatterBean.getLimits()));
+			StringUtil.merge(javadocFormatterArgs.getLimits()));
 		arguments.put(
 			"javadoc.lowest.supported.java.version",
 			String.valueOf(
-				javadocFormatterBean.getLowestSupportedJavaVersion()));
+				javadocFormatterArgs.getLowestSupportedJavaVersion()));
 		arguments.put(
 			"javadoc.output.file.prefix",
-			javadocFormatterBean.getOutputFilePrefix());
+			javadocFormatterArgs.getOutputFilePrefix());
 		arguments.put(
 			"javadoc.update",
-			String.valueOf(javadocFormatterBean.isUpdateJavadocs()));
+			String.valueOf(javadocFormatterArgs.isUpdateJavadocs()));
 
 		return new JavadocFormatter(arguments);
 	}
