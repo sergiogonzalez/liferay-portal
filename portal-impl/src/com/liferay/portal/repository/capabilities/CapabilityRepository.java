@@ -132,8 +132,8 @@ public class CapabilityRepository
 
 	@Override
 	public FileShortcut addFileShortcut(
-		long userId, long folderId, long toFileEntryId,
-		ServiceContext serviceContext)
+			long userId, long folderId, long toFileEntryId,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		Repository repository = getRepository();
@@ -979,8 +979,8 @@ public class CapabilityRepository
 
 	@Override
 	public FileShortcut updateFileShortcut(
-		long userId, long fileShortcutId, long folderId, long toFileEntryId,
-		ServiceContext serviceContext)
+			long userId, long fileShortcutId, long folderId, long toFileEntryId,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		Repository repository = getRepository();
