@@ -139,10 +139,15 @@ public class UserTrackerPathPersistenceTest {
 	}
 
 	@Test
-	public void testCountByUserTrackerId() throws Exception {
-		_persistence.countByUserTrackerId(RandomTestUtil.nextLong());
+	public void testCountByUserTrackerId() {
+		try {
+			_persistence.countByUserTrackerId(RandomTestUtil.nextLong());
 
-		_persistence.countByUserTrackerId(0L);
+			_persistence.countByUserTrackerId(0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
@@ -170,8 +175,13 @@ public class UserTrackerPathPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			getOrderByComparator());
+		try {
+			_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				getOrderByComparator());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	protected OrderByComparator<UserTrackerPath> getOrderByComparator() {
