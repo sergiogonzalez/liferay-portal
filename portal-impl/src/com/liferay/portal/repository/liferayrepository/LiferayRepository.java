@@ -520,7 +520,9 @@ public class LiferayRepository
 	}
 
 	@Override
-	public FileShortcut getFileShortcut(long fileShortcutId) throws PortalException {
+	public FileShortcut getFileShortcut(long fileShortcutId)
+		throws PortalException {
+
 		DLFileShortcut dlFileShortcut = dlFileShortcutService.getFileShortcut(
 			fileShortcutId);
 
