@@ -18,8 +18,9 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.wiki.engine.BaseWikiEngine;
+import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
 import com.liferay.wiki.engine.WikiEngine;
+import com.liferay.wiki.engine.input.editor.common.InputEditorWikiEngine;
 import com.liferay.wiki.engine.mediawiki.matchers.DirectTagMatcher;
 import com.liferay.wiki.engine.mediawiki.matchers.DirectURLMatcher;
 import com.liferay.wiki.engine.mediawiki.matchers.EditURLMatcher;
@@ -43,12 +44,19 @@ import org.jamwiki.parser.ParserUtil;
 import org.jamwiki.parser.TableOfContents;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jonathan Potter
  */
 @Component(service = WikiEngine.class)
-public class MediaWikiEngine extends BaseWikiEngine {
+public class MediaWikiEngine extends InputEditorWikiEngine {
+
+	public MediaWikiEngine() {
+		super(
+			null, "/help_page.jsp",
+			"http://www.mediawiki.org/wiki/Help:Formatting");
+	}
 
 	@Override
 	public String convert(
@@ -59,6 +67,11 @@ public class MediaWikiEngine extends BaseWikiEngine {
 		return parsePage(
 			page, new ParserOutput(), viewPageURL, editPageURL,
 			attachmentURLPrefix);
+	}
+
+	@Override
+	public String getEditorName() {
+		return _wikiGroupServiceConfiguration.getMediaWikiEditor();
 	}
 
 	@Override
@@ -237,5 +250,20 @@ public class MediaWikiEngine extends BaseWikiEngine {
 
 		return content;
 	}
+
+	@Reference
+	protected void setWikiGroupServiceConfiguration(
+		WikiGroupServiceConfiguration wikiGroupServiceConfiguration) {
+
+		_wikiGroupServiceConfiguration = wikiGroupServiceConfiguration;
+	}
+
+	protected void unsetWikiGroupServiceConfiguration(
+		WikiGroupServiceConfiguration wikiGroupServiceConfiguration) {
+
+		_wikiGroupServiceConfiguration = null;
+	}
+
+	private WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;
 
 }
