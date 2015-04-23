@@ -14,8 +14,6 @@
 
 package com.liferay.portal.model;
 
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -41,7 +39,10 @@ public class PortletConstants {
 
 	/**
 	 * Instance separator.
+	 *
+	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
+	@Deprecated
 	public static final String INSTANCE_SEPARATOR = "_INSTANCE_";
 
 	/**
@@ -62,7 +63,10 @@ public class PortletConstants {
 
 	/**
 	 * User separator.
+	 *
+	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
+	@Deprecated
 	public static final String USER_SEPARATOR = "_USER_";
 
 	/**
@@ -81,7 +85,15 @@ public class PortletConstants {
 	 * @return the properly assembled portlet ID
 	 */
 	public static String assemblePortletId(String portletId, long userId) {
-		return assemblePortletId(portletId, userId, null);
+		PortletInstance portletInstance = null;
+
+		String rootPortletId = getRootPortletId(portletId);
+		String instanceId = getInstanceId(portletId);
+
+		portletInstance = new PortletInstance(
+			rootPortletId, userId, instanceId);
+
+		return portletInstance.getPortletInstanceKey();
 	}
 
 	/**
@@ -100,29 +112,14 @@ public class PortletConstants {
 
 		String rootPortletId = getRootPortletId(portletId);
 
-		StringBundler sb = new StringBundler(5);
-
-		sb.append(rootPortletId);
-
-		if (userId <= 0) {
-			userId = getUserId(portletId);
-		}
-
-		if (userId > 0) {
-			sb.append(USER_SEPARATOR);
-			sb.append(userId);
-		}
-
 		if (Validator.isNull(instanceId)) {
 			instanceId = getInstanceId(portletId);
 		}
 
-		if (Validator.isNotNull(instanceId)) {
-			sb.append(INSTANCE_SEPARATOR);
-			sb.append(instanceId);
-		}
+		PortletInstance portletInstance = new PortletInstance(
+			rootPortletId, userId, instanceId);
 
-		return sb.toString();
+		return portletInstance.getPortletInstanceKey();
 	}
 
 	/**
@@ -138,7 +135,10 @@ public class PortletConstants {
 	public static String assemblePortletId(
 		String portletId, String instanceId) {
 
-		return assemblePortletId(portletId, 0, instanceId);
+		PortletInstance portletInstance = new PortletInstance(
+			portletId, instanceId);
+
+		return portletInstance.getPortletInstanceKey();
 	}
 
 	public static String generateInstanceId() {
@@ -152,13 +152,10 @@ public class PortletConstants {
 	 * @return the instance ID of the portlet
 	 */
 	public static String getInstanceId(String portletId) {
-		int pos = portletId.indexOf(INSTANCE_SEPARATOR);
+		PortletInstance portletInstance =
+			PortletInstance.fromPortletInstanceKey(portletId);
 
-		if (pos == -1) {
-			return null;
-		}
-
-		return portletId.substring(pos + INSTANCE_SEPARATOR.length());
+		return portletInstance.getInstanceId();
 	}
 
 	/**
@@ -168,17 +165,10 @@ public class PortletConstants {
 	 * @return the root portlet ID of the portlet
 	 */
 	public static String getRootPortletId(String portletId) {
-		int x = portletId.indexOf(USER_SEPARATOR);
-		int y = portletId.indexOf(INSTANCE_SEPARATOR);
+		PortletInstance portletInstance =
+			PortletInstance.fromPortletInstanceKey(portletId);
 
-		if ((x == -1) && (y == -1)) {
-			return portletId;
-		}
-		else if (x != -1) {
-			return portletId.substring(0, x);
-		}
-
-		return portletId.substring(0, y);
+		return portletInstance.getPortletName();
 	}
 
 	/**
@@ -189,29 +179,21 @@ public class PortletConstants {
 	 * @return the user ID of the portlet
 	 */
 	public static long getUserId(String portletId) {
-		int x = portletId.indexOf(USER_SEPARATOR);
-		int y = portletId.indexOf(INSTANCE_SEPARATOR);
+		PortletInstance portletInstance =
+			PortletInstance.fromPortletInstanceKey(portletId);
 
-		if (x == -1) {
-			return 0;
-		}
-
-		if (y != -1) {
-			return GetterUtil.getLong(
-				portletId.substring(x + USER_SEPARATOR.length(), y));
-		}
-
-		return GetterUtil.getLong(
-			portletId.substring(x + USER_SEPARATOR.length()));
+		return portletInstance.getUserId();
 	}
 
 	public static boolean hasIdenticalRootPortletId(
 		String portletId1, String portletId2) {
 
-		String rootPortletId1 = getRootPortletId(portletId1);
-		String rootPortletId2 = getRootPortletId(portletId2);
+		PortletInstance portletInstance1 =
+			PortletInstance.fromPortletInstanceKey(portletId1);
+		PortletInstance portletInstance2 =
+			PortletInstance.fromPortletInstanceKey(portletId2);
 
-		return rootPortletId1.equals(rootPortletId2);
+		return portletInstance1.hasIdenticalPortletName(portletInstance2);
 	}
 
 	/**
@@ -222,7 +204,10 @@ public class PortletConstants {
 	 *         <code>false</code> otherwise
 	 */
 	public static boolean hasInstanceId(String portletId) {
-		return portletId.contains(INSTANCE_SEPARATOR);
+		PortletInstance portletInstance =
+			PortletInstance.fromPortletInstanceKey(portletId);
+
+		return portletInstance.hasInstanceId();
 	}
 
 	/**
@@ -233,7 +218,10 @@ public class PortletConstants {
 	 *         <code>false</code> otherwise
 	 */
 	public static boolean hasUserId(String portletId) {
-		return portletId.contains(USER_SEPARATOR);
+		PortletInstance portletInstance =
+			PortletInstance.fromPortletInstanceKey(portletId);
+
+		return portletInstance.hasUserId();
 	}
 
 }

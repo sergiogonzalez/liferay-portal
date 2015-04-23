@@ -38,8 +38,8 @@ import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.EventDefinition;
 import com.liferay.portal.model.PortletApp;
 import com.liferay.portal.model.PortletCategory;
-import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.PortletInfo;
+import com.liferay.portal.model.PortletInstance;
 import com.liferay.portal.model.PublicRenderParameter;
 import com.liferay.portal.security.permission.ResourceActions;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
@@ -125,10 +125,13 @@ public class PortletTracker
 		String portletId = StringUtil.replace(
 			portletName, new String[] {".", "$"}, new String[] {"_", "_"});
 
-		if (portletId.length() > _PORTLET_ID_MAX_LENGTH) {
+		if (portletId.length() >
+				PortletInstance.PORTLET_INSTANCE_KEY_MAX_LENGTH) {
+
 			_log.error(
-				"Portlet id " + portletId + " has more than " +
-					_PORTLET_ID_MAX_LENGTH + " characters");
+				"Portlet ID " + portletId + " has more than " +
+					PortletInstance.PORTLET_INSTANCE_KEY_MAX_LENGTH +
+						" characters");
 
 			bundleContext.ungetService(serviceReference);
 
@@ -1199,10 +1202,6 @@ public class PortletTracker
 	}
 
 	private static final String _NAMESPACE = "com.liferay.portlet.";
-
-	private static final int _PORTLET_ID_MAX_LENGTH =
-		255 - PortletConstants.INSTANCE_SEPARATOR.length() +
-			PortletConstants.USER_SEPARATOR.length() + 39;
 
 	private static final Log _log = LogFactoryUtil.getLog(PortletTracker.class);
 

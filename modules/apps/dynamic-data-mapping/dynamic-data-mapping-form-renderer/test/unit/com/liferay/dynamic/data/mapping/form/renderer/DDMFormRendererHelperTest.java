@@ -390,6 +390,10 @@ public class DDMFormRendererHelperTest extends PowerMockito {
 		String ddmFormFieldParameterName, String value,
 		String childElementsHTML) {
 
+		StringBundler sb = new StringBundler(3);
+
+		sb.append("<div class=\"lfr-ddm-form-field-container\">");
+
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
 			new DDMFormFieldRenderingContext();
 
@@ -400,7 +404,11 @@ public class DDMFormRendererHelperTest extends PowerMockito {
 		ddmFormFieldRenderingContext.setName(name);
 		ddmFormFieldRenderingContext.setValue(value);
 
-		return renderTextField(ddmFormFieldRenderingContext);
+		sb.append(renderTextField(ddmFormFieldRenderingContext));
+
+		sb.append("</div>");
+
+		return sb.toString();
 	}
 
 	protected void setUpDDMFormFieldRenderer() throws Exception {

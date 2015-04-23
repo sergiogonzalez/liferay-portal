@@ -14,7 +14,7 @@
 
 package com.liferay.javadoc.formatter.gradle;
 
-import com.liferay.javadoc.formatter.JavadocFormatterBean;
+import com.liferay.javadoc.formatter.JavadocFormatterArgs;
 import com.liferay.javadoc.formatter.JavadocFormatterInvoker;
 
 import org.gradle.api.DefaultTask;
@@ -34,11 +34,11 @@ public class JavadocFormatterTask extends DefaultTask {
 
 		ExtensionContainer extensionContainer = project.getExtensions();
 
-		JavadocFormatterBean javadocFormatterBean =
-			extensionContainer.getByType(JavadocFormatterBean.class);
+		JavadocFormatterArgs javadocFormatterArgs =
+			extensionContainer.getByType(JavadocFormatterArgs.class);
 
 		try {
-			JavadocFormatterInvoker.invoke(javadocFormatterBean);
+			JavadocFormatterInvoker.invoke(javadocFormatterArgs);
 		}
 		catch (Exception e) {
 			throw new GradleException(e.getMessage(), e);

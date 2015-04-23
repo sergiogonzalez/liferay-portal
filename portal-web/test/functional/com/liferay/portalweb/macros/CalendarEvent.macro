@@ -281,12 +281,11 @@
 
 		<execute function="AssertClick" locator1="PGCalendar#ADD_EVENT_BUTTON" value1="Add Event" />
 
-		<execute function="SelectFrame" locator1="PGCalendarAddevent#ADD_EVENT_IFRAME" />
+		<execute macro="CalendarEvent#selectEventIframeCmd" />
+
 		<execute function="Type" locator1="PGCalendarAddevent#TITLE_FIELD" value1="${eventTitle}" />
-		<execute function="AssertElementPresent#assertVisible" locator1="PGCalendarAddevent#START_DATE" />
-		<execute function="AssertElementPresent#assertVisible" locator1="PGCalendarAddevent#START_DATE_TIME" />
-		<execute function="AssertElementPresent#assertVisible" locator1="PGCalendarAddevent#END_DATE" />
-		<execute function="AssertElementPresent#assertVisible" locator1="PGCalendarAddevent#END_DATE_TIME" />
+
+		<execute macro="CalendarEvent#viewNewEventIframeCmd" />
 
 		<if>
 			<equals arg1="${eventType}" arg2="Regular" />
@@ -494,7 +493,7 @@
 				<if>
 					<condition function="IsElementNotPresent" locator1="PGCalendarAgendaView#SCHEDULER_EVENT_DIALOG_BOX_DELETE_BUTTON" />
 					<then>
-						<var method="MathUtil#sum(${i}, 1)" name="i" />
+						<var method="MathUtil#sum('${i}', '1')" name="i" />
 
 						<execute function="Click" locator1="xpath=(//div[contains(@class,'scheduler-view-agenda-event') and contains(@data-clientid,'scheduler-event')])[${i}]" />
 					</then>
@@ -953,12 +952,9 @@
 
 		<execute function="AssertClick" locator1="PGCalendar#ADD_EVENT_BUTTON" value1="Add Event" />
 
-		<execute macro="CalendarEvent#selectEventIframe" />
+		<execute macro="CalendarEvent#selectEventIframeCmd" />
 
-		<execute function="AssertElementPresent#assertVisible" locator1="PGCalendarAddevent#START_DATE" />
-		<execute function="AssertElementPresent#assertVisible" locator1="PGCalendarAddevent#START_DATE_TIME" />
-		<execute function="AssertElementPresent#assertVisible" locator1="PGCalendarAddevent#END_DATE" />
-		<execute function="AssertElementPresent#assertVisible" locator1="PGCalendarAddevent#END_DATE_TIME" />
+		<execute macro="CalendarEvent#viewNewEventIframeCmd" />
 	</command>
 
 	<command name="goToAddOnSpecifcDayOfWeekViaWeekView">
@@ -981,7 +977,7 @@
 
 		<execute function="AssertClick#assertTextClickAtAndWait" locator1="PGCalendar#SCHEDULER_EVENT_DIALOG_BOX_EDIT_BUTTON" value1="Edit" />
 
-		<execute macro="CalendarEvent#selectEventIframe" />
+		<execute macro="CalendarEvent#selectEventIframeCmd" />
 	</command>
 
 	<command name="gotoEdit">
@@ -1139,7 +1135,7 @@
 		</if>
 	</command>
 
-	<command name="selectEventIframe">
+	<command name="selectEventIframeCmd">
 		<execute function="SelectFrame" locator1="PGCalendarAddevent#ADD_EVENT_IFRAME" />
 	</command>
 
@@ -1316,7 +1312,7 @@
 			<then>
 				<execute function="AssertElementPresent" locator1="xpath=(//div[contains(@class,'scheduler-view-agenda-event') and contains(@data-clientid,'scheduler-event')]//div[contains(.,'${key_eventTitle}')])[${i}]" />
 				<execute function="AssertTextEquals" locator1="xpath=(//div[contains(@class,'scheduler-view-agenda-event') and contains(@data-clientid,'scheduler-event')]//div[contains(.,'${key_eventTitle}')])[${i}]" value1="${eventTitle}" />
-				<var method="MathUtil#sum(${i}, 1)" name="i" />
+				<var method="MathUtil#sum('${i}', '1')" name="i" />
 			</then>
 		</while>
 
@@ -1408,7 +1404,7 @@
 					<then>
 						<execute function="AssertTextEquals" locator1="xpath=(//td[contains(@class,'scheduler-view-day-table-col scheduler-view-day-table-colday scheduler-today')]//div[@class='scheduler-event-content' and contains(.,'${key_eventTitle}')])[${i}]" value1="${eventTitle}" />
 
-						<var method="MathUtil#sum(${i}, 1)" name="i" />
+						<var method="MathUtil#sum('${i}', '1')" name="i" />
 					</then>
 				</if>
 			</then>
@@ -1560,7 +1556,7 @@
 					<then>
 						<execute function="AssertTextEquals" locator1="xpath=(//div[contains(@class,'scheduler-view-table scheduler-view-month')]//div[contains(@class,'calendar-portlet-event')]/div[contains(.,'${key_eventTitle}')])[${i}]" value1="${eventTitle}" />
 
-						<var method="MathUtil#sum(${i}, 1)" name="i" />
+						<var method="MathUtil#sum('${i}', '1')" name="i" />
 					</then>
 					<elseif>
 						<condition function="IsElementNotPresent#isNotVisible" locator1="xpath=(//div[contains(@class,'scheduler-view-table scheduler-view-month')]//div[contains(@class,'calendar-portlet-event')]/div[contains(.,'${key_eventTitle}')])[2]" />
@@ -1590,7 +1586,7 @@
 							<then>
 								<execute function="AssertElementPresent" locator1="xpath=(//div[contains(@class,'scheduler-view-table scheduler-view-month')]//div[contains(@class,'calendar-portlet-event')]/div[contains(.,'${key_eventTitle}')])[${i}]" />
 								<execute function="AssertTextEquals" locator1="xpath=(//div[contains(@class,'scheduler-view-table scheduler-view-month')]//div[contains(@class,'calendar-portlet-event')]/div[contains(.,'${key_eventTitle}')])[${i}]" value1="${eventTitle}" />
-								<var method="MathUtil#sum(${i}, 1)" name="i" />
+								<var method="MathUtil#sum('${i}', '1')" name="i" />
 							</then>
 						</while>
 
@@ -1599,6 +1595,15 @@
 				</if>
 			</then>
 		</if>
+	</command>
+
+	<command name="viewNewEventIframeCmd">
+		<execute function="AssertElementPresent#assertVisible" locator1="PGCalendarAddevent#START_DATE" />
+		<execute function="AssertElementPresent#assertVisible" locator1="PGCalendarAddevent#START_DATE_TIME" />
+		<execute function="AssertElementPresent#assertVisible" locator1="PGCalendarAddevent#END_DATE" />
+		<execute function="AssertElementPresent#assertVisible" locator1="PGCalendarAddevent#END_DATE_TIME" />
+
+		<execute function="SelectFrameTop" value1="relative=top" />
 	</command>
 
 	<command name="viewPG">
@@ -1757,7 +1762,10 @@
 
 	<command name="viewUsersViaSchedulerDialogBoxCmd">
 		<execute function="AssertTextEquals" locator1="PGCalendar#SCHEDULER_EVENT_DIALOG_BOX_USERS_LABEL" value1="Users:" />
-		<execute function="AssertTextEquals" locator1="PGCalendar#SCHEDULER_EVENT_DIALOG_BOX_USERS_FIELD" value1="${usersList}" />
+
+		<for list="${usersList}" param="user">
+			<execute function="AssertTextEquals#assertPartialText" locator1="PGCalendar#SCHEDULER_EVENT_DIALOG_BOX_USERS_FIELD" value1="${user}" />
+		</for>
 	</command>
 
 	<command name="viewWeekPG">
@@ -1773,7 +1781,7 @@
 			<then>
 				<execute function="AssertElementPresent" locator1="xpath=(//div[contains(@class,'calendar-portlet-event')]/div[contains(.,'${key_eventTitle}')])[${i}]" />
 				<execute function="AssertTextEquals" locator1="xpath=(//div[contains(@class,'calendar-portlet-event')]/div[contains(.,'${key_eventTitle}')])[${i}]" value1="${eventTitle}" />
-				<var method="MathUtil#sum(${i}, 1)" name="i" />
+				<var method="MathUtil#sum('${i}', '1')" name="i" />
 			</then>
 		</while>
 	</command>
