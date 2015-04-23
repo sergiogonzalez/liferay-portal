@@ -215,7 +215,7 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 	found, or if the file shortcut's information was invalid
 	*/
 	@Override
-	public com.liferay.portlet.documentlibrary.model.DLFileShortcut addFileShortcut(
+	public com.liferay.portal.kernel.repository.model.FileShortcut addFileShortcut(
 		long userId, long repositoryId, long folderId, long toFileEntryId,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -433,7 +433,7 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 	* @throws PortalException if the file shortcut could not be found
 	*/
 	@Override
-	public com.liferay.portlet.documentlibrary.model.DLFileShortcut getFileShortcut(
+	public com.liferay.portal.kernel.repository.model.FileShortcut getFileShortcut(
 		long fileShortcutId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlAppLocalService.getFileShortcut(fileShortcutId);
@@ -845,7 +845,7 @@ public class DLAppLocalServiceWrapper implements DLAppLocalService,
 	not be found
 	*/
 	@Override
-	public com.liferay.portlet.documentlibrary.model.DLFileShortcut updateFileShortcut(
+	public com.liferay.portal.kernel.repository.model.FileShortcut updateFileShortcut(
 		long userId, long fileShortcutId, long folderId, long toFileEntryId,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
