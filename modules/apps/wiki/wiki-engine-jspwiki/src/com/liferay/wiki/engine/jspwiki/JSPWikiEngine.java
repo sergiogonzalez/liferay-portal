@@ -27,7 +27,9 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.wiki.engine.BaseWikiEngine;
+import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
+import com.liferay.wiki.engine.WikiEngine;
+import com.liferay.wiki.engine.input.editor.common.InputEditorWikiEngine;
 import com.liferay.wiki.exception.PageContentException;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 
@@ -46,6 +48,8 @@ import java.util.regex.Pattern;
 import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jorge Ferrer
@@ -54,11 +58,16 @@ import org.osgi.service.component.annotations.Activate;
 	property = {"service.ranking:Integer=-1000"},
 	service = WikiEngine.class
 )
-public class JSPWikiEngine extends BaseWikiEngine {
+public class JSPWikiEngine extends InputEditorWikiEngine {
 
 	public static String decodeJSPWikiName(String jspWikiName) {
 		return StringUtil.replace(
 			jspWikiName, _JSP_WIKI_NAME_2, _JSP_WIKI_NAME_1);
+	}
+
+	public JSPWikiEngine() {
+		super(
+			null, "/help_page.jsp", "http://www.wikicreole.org/wiki/Creole1.0");
 	}
 
 	@Override
@@ -73,6 +82,11 @@ public class JSPWikiEngine extends BaseWikiEngine {
 		catch (WikiException we) {
 			throw new PageContentException(we);
 		}
+	}
+
+	@Override
+	public String getEditorName() {
+		return _wikiGroupServiceConfiguration.getCreoleEditor();
 	}
 
 	@Override
@@ -223,6 +237,19 @@ public class JSPWikiEngine extends BaseWikiEngine {
 		}
 	}
 
+	@Reference
+	protected void setWikiGroupServiceConfiguration(
+		WikiGroupServiceConfiguration wikiGroupServiceConfiguration) {
+
+		_wikiGroupServiceConfiguration = wikiGroupServiceConfiguration;
+	}
+
+	protected void unsetWikiGroupServiceConfiguration(
+		WikiGroupServiceConfiguration wikiGroupServiceConfiguration) {
+
+		_wikiGroupServiceConfiguration = null;
+	}
+
 	private static String _decodeJSPWikiContent(String jspWikiContent) {
 		return StringUtil.replace(
 			jspWikiContent, _JSP_WIKI_NAME_2, _JSP_WIKI_NAME_1);
@@ -317,5 +344,6 @@ public class JSPWikiEngine extends BaseWikiEngine {
 	private final Map<Long, LiferayJSPWikiEngine> _engines =
 		new ConcurrentHashMap<>();
 	private Properties _properties = new Properties();
+	private WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;
 
 }
