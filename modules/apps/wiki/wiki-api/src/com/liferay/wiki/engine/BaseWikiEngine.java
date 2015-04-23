@@ -14,6 +14,10 @@
 
 package com.liferay.wiki.engine;
 
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.util.Portal;
 import com.liferay.wiki.exception.PageContentException;
 import com.liferay.wiki.model.WikiPage;
 
@@ -41,7 +45,27 @@ import org.osgi.framework.FrameworkUtil;
  */
 public abstract class BaseWikiEngine implements WikiEngine {
 
-	public static final String ATTR_WIKI_PAGE = "wikiPage";
+	public static final String WIKI_PAGE = "wikiPage";
+
+	public BaseWikiEngine(String editPage) {
+		_editPage = editPage;
+
+		Bundle bundle = FrameworkUtil.getBundle(getClass());
+
+		Dictionary<String, String> headers = bundle.getHeaders();
+
+		String webContextPath = headers.get("Web-ContextPath");
+
+		if (Validator.isNull(webContextPath)) {
+			Class<?> clazz = getClass();
+
+			throw new SystemException(
+				"Unable to find a valid Web-ContextPath for wiki engine " +
+					clazz.getName() );
+		}
+
+		_pagePrefix = Portal.PATH_MODULE + webContextPath + StringPool.SLASH;
+	}
 
 	@Override
 	public String convert(
@@ -79,16 +103,10 @@ public abstract class BaseWikiEngine implements WikiEngine {
 			ServletRequest request, ServletResponse response, WikiPage wikiPage)
 		throws IOException, ServletException {
 
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-		Dictionary<String, String> headers = bundle.getHeaders();
-
-		String webContextPath = headers.get("Web-ContextPath");
-
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher(
-			"/o" + webContextPath + "/edit_page.jsp");
+			_pagePrefix + _editPage);
 
-		request.setAttribute(ATTR_WIKI_PAGE, wikiPage);
+		request.setAttribute(WIKI_PAGE, wikiPage);
 
 		requestDispatcher.include(request, response);
 	}
@@ -97,5 +115,12 @@ public abstract class BaseWikiEngine implements WikiEngine {
 	public boolean validate(long nodeId, String newContent) {
 		return true;
 	}
+
+	protected BaseWikiEngine() {
+		this("/edit_page.jsp");
+	}
+
+	private final String _editPage;
+	private final String _pagePrefix;
 
 }
