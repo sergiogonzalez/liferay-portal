@@ -14,7 +14,7 @@
 
 package com.liferay.portal.repository.capabilities;
 
-import com.liferay.portal.kernel.repository.DocumentRepository;
+import com.liferay.portal.kernel.repository.BaseDocumentRepository;
 import com.liferay.portal.kernel.repository.capabilities.Capability;
 import com.liferay.portal.kernel.repository.capabilities.CapabilityProvider;
 
@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.repository.capabilities.CapabilityProvider;
  * @author Adolfo Pérez
  */
 public abstract class BaseCapabilityRepository<R>
-	implements DocumentRepository {
+	extends BaseDocumentRepository {
 
 	public BaseCapabilityRepository(
 		R repository, CapabilityProvider capabilityProvider) {

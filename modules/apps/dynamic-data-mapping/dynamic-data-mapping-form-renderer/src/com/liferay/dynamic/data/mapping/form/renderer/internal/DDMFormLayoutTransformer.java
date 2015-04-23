@@ -50,10 +50,9 @@ public class DDMFormLayoutTransformer {
 		Map<String, Object> column = new HashMap<>();
 
 		column.put(
-			"renderedDDMFormField",
+			"field",
 			_renderedDDMFormFieldsMap.get(
 				ddmFormLayoutColumn.getDDMFormFieldName()));
-
 		column.put("size", ddmFormLayoutColumn.getSize());
 
 		return column;

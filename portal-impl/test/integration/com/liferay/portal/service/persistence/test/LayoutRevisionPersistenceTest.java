@@ -247,89 +247,144 @@ public class LayoutRevisionPersistenceTest {
 	}
 
 	@Test
-	public void testCountByLayoutSetBranchId() throws Exception {
-		_persistence.countByLayoutSetBranchId(RandomTestUtil.nextLong());
+	public void testCountByLayoutSetBranchId() {
+		try {
+			_persistence.countByLayoutSetBranchId(RandomTestUtil.nextLong());
 
-		_persistence.countByLayoutSetBranchId(0L);
+			_persistence.countByLayoutSetBranchId(0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
-	public void testCountByPlid() throws Exception {
-		_persistence.countByPlid(RandomTestUtil.nextLong());
+	public void testCountByPlid() {
+		try {
+			_persistence.countByPlid(RandomTestUtil.nextLong());
 
-		_persistence.countByPlid(0L);
+			_persistence.countByPlid(0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
-	public void testCountByL_H() throws Exception {
-		_persistence.countByL_H(RandomTestUtil.nextLong(),
-			RandomTestUtil.randomBoolean());
+	public void testCountByL_H() {
+		try {
+			_persistence.countByL_H(RandomTestUtil.nextLong(),
+				RandomTestUtil.randomBoolean());
 
-		_persistence.countByL_H(0L, RandomTestUtil.randomBoolean());
+			_persistence.countByL_H(0L, RandomTestUtil.randomBoolean());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
-	public void testCountByL_P() throws Exception {
-		_persistence.countByL_P(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong());
+	public void testCountByL_P() {
+		try {
+			_persistence.countByL_P(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong());
 
-		_persistence.countByL_P(0L, 0L);
+			_persistence.countByL_P(0L, 0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
-	public void testCountByL_S() throws Exception {
-		_persistence.countByL_S(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt());
+	public void testCountByL_S() {
+		try {
+			_persistence.countByL_S(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextInt());
 
-		_persistence.countByL_S(0L, 0);
+			_persistence.countByL_S(0L, 0);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
-	public void testCountByH_P() throws Exception {
-		_persistence.countByH_P(RandomTestUtil.randomBoolean(),
-			RandomTestUtil.nextLong());
+	public void testCountByH_P() {
+		try {
+			_persistence.countByH_P(RandomTestUtil.randomBoolean(),
+				RandomTestUtil.nextLong());
 
-		_persistence.countByH_P(RandomTestUtil.randomBoolean(), 0L);
+			_persistence.countByH_P(RandomTestUtil.randomBoolean(), 0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
-	public void testCountByP_NotS() throws Exception {
-		_persistence.countByP_NotS(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextInt());
+	public void testCountByP_NotS() {
+		try {
+			_persistence.countByP_NotS(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextInt());
 
-		_persistence.countByP_NotS(0L, 0);
+			_persistence.countByP_NotS(0L, 0);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
-	public void testCountByL_L_P() throws Exception {
-		_persistence.countByL_L_P(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+	public void testCountByL_L_P() {
+		try {
+			_persistence.countByL_L_P(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
-		_persistence.countByL_L_P(0L, 0L, 0L);
+			_persistence.countByL_L_P(0L, 0L, 0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
-	public void testCountByL_P_P() throws Exception {
-		_persistence.countByL_P_P(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+	public void testCountByL_P_P() {
+		try {
+			_persistence.countByL_P_P(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
-		_persistence.countByL_P_P(0L, 0L, 0L);
+			_persistence.countByL_P_P(0L, 0L, 0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
-	public void testCountByL_H_P() throws Exception {
-		_persistence.countByL_H_P(RandomTestUtil.nextLong(),
-			RandomTestUtil.randomBoolean(), RandomTestUtil.nextLong());
+	public void testCountByL_H_P() {
+		try {
+			_persistence.countByL_H_P(RandomTestUtil.nextLong(),
+				RandomTestUtil.randomBoolean(), RandomTestUtil.nextLong());
 
-		_persistence.countByL_H_P(0L, RandomTestUtil.randomBoolean(), 0L);
+			_persistence.countByL_H_P(0L, RandomTestUtil.randomBoolean(), 0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
-	public void testCountByL_P_S() throws Exception {
-		_persistence.countByL_P_S(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
+	public void testCountByL_P_S() {
+		try {
+			_persistence.countByL_P_S(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
 
-		_persistence.countByL_P_S(0L, 0L, 0);
+			_persistence.countByL_P_S(0L, 0L, 0);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
@@ -357,8 +412,13 @@ public class LayoutRevisionPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			getOrderByComparator());
+		try {
+			_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				getOrderByComparator());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	protected OrderByComparator<LayoutRevision> getOrderByComparator() {

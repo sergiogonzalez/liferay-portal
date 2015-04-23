@@ -17,15 +17,19 @@ package com.liferay.portlet.documentlibrary.util;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.repository.model.RepositoryEntry;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
+import com.liferay.portlet.documentlibrary.model.DLFileShortcutConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -57,37 +61,42 @@ public class RepositoryModelUtil {
 		}
 	}
 
-	public static List<Object> toFileEntriesAndFolders(
-		List<Object> dlFileEntriesAndDLFolders) {
+	public static List<RepositoryEntry> toFileEntriesFileShortcutsAndFolders(
+		List<Object> dlFileEntriesDLFileShortcutsAndDLFolders) {
 
-		List<Object> fileEntriesAndFolders = new ArrayList<>(
-			dlFileEntriesAndDLFolders.size());
+		List<RepositoryEntry> fileEntriesFileShortcutsAndFolders =
+			new ArrayList<>(dlFileEntriesDLFileShortcutsAndDLFolders.size());
 
-		for (Object object : dlFileEntriesAndDLFolders) {
-			if (object instanceof DLFileEntry) {
-				DLFileEntry dlFileEntry = (DLFileEntry)object;
-
-				FileEntry fileEntry = new LiferayFileEntry(dlFileEntry);
-
-				fileEntriesAndFolders.add(fileEntry);
+		for (Object object : dlFileEntriesDLFileShortcutsAndDLFolders) {
+			if (object instanceof FileEntry) {
+				fileEntriesFileShortcutsAndFolders.add((FileEntry)object);
 			}
 			else if (object instanceof DLFolder) {
-				DLFolder dlFolder = (DLFolder)object;
-
-				Folder folder = new LiferayFolder(dlFolder);
-
-				fileEntriesAndFolders.add(folder);
+				fileEntriesFileShortcutsAndFolders.add((Folder)object);
+			}
+			else if (object instanceof DLFileShortcut) {
+				fileEntriesFileShortcutsAndFolders.add((RepositoryEntry)object);
 			}
 			else {
-				fileEntriesAndFolders.add(object);
+				throw new IllegalArgumentException(
+					String.format(
+						"Expected an instance of one of: %s; got %s",
+						Arrays.asList(
+							DLFileEntry.class.getName(),
+							DLFolder.class.getName(),
+							DLFileShortcutConstants.getClassName()),
+						object));
 			}
 		}
 
-		if (ListUtil.isUnmodifiableList(dlFileEntriesAndDLFolders)) {
-			return Collections.unmodifiableList(fileEntriesAndFolders);
+		if (ListUtil.isUnmodifiableList(
+				dlFileEntriesDLFileShortcutsAndDLFolders)) {
+
+			return Collections.unmodifiableList(
+				fileEntriesFileShortcutsAndFolders);
 		}
 		else {
-			return fileEntriesAndFolders;
+			return fileEntriesFileShortcutsAndFolders;
 		}
 	}
 

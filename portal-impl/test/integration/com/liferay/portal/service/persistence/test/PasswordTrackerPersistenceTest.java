@@ -139,10 +139,15 @@ public class PasswordTrackerPersistenceTest {
 	}
 
 	@Test
-	public void testCountByUserId() throws Exception {
-		_persistence.countByUserId(RandomTestUtil.nextLong());
+	public void testCountByUserId() {
+		try {
+			_persistence.countByUserId(RandomTestUtil.nextLong());
 
-		_persistence.countByUserId(0L);
+			_persistence.countByUserId(0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
@@ -170,8 +175,13 @@ public class PasswordTrackerPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			getOrderByComparator());
+		try {
+			_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				getOrderByComparator());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	protected OrderByComparator<PasswordTracker> getOrderByComparator() {

@@ -560,6 +560,10 @@
 		<put name="portlet_content" value="/portlet/layouts_admin/publish_layouts.jsp" />
 	</definition>
 
+	<definition name="portlet.layouts_admin.publish_layouts_simple" extends="portlet.layouts_admin">
+		<put name="portlet_content" value="/portlet/layouts_admin/publish_layouts_simple.jsp" />
+	</definition>
+
 	<!-- Login -->
 
 	<definition name="portlet.login" extends="portlet" />
@@ -1182,18 +1186,6 @@
 
 	<definition name="portlet.users_admin.view" extends="portlet.users_admin">
 		<put name="portlet_content" value="/portlet/users_admin/view.jsp" />
-	</definition>
-
-	<!-- Workflow Definition Links -->
-
-	<definition name="portlet.workflow_definition_links" extends="portlet" />
-
-	<definition name="portlet.workflow_definition_links.error" extends="portlet.workflow_definition_links">
-		<put name="portlet_content" value="/portlet/workflow_definition_links/error.jsp" />
-	</definition>
-
-	<definition name="portlet.workflow_definition_links.view" extends="portlet.workflow_definition_links">
-		<put name="portlet_content" value="/portlet/workflow_definition_links/view.jsp" />
 	</definition>
 
 	<!-- Workflow Definitions -->

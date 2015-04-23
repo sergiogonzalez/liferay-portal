@@ -14,7 +14,6 @@
 
 package com.liferay.dynamic.data.mapping.form.renderer;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
 
@@ -26,6 +25,10 @@ public interface DDMFormRenderer {
 	public String render(
 			DDMForm ddmForm, DDMFormLayout ddmFormLayout,
 			DDMFormRenderingContext ddmFormRenderingContext)
-		throws PortalException;
+		throws DDMFormRenderingException;
+
+	public String render(
+			DDMForm ddmForm, DDMFormRenderingContext ddmFormRenderingContext)
+		throws DDMFormRenderingException;
 
 }

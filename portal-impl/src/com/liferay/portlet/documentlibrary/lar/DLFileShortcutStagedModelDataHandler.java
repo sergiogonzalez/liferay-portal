@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
+import com.liferay.portlet.documentlibrary.model.DLFileShortcutConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileShortcutLocalServiceUtil;
@@ -43,7 +44,8 @@ import java.util.Map;
 public class DLFileShortcutStagedModelDataHandler
 	extends BaseStagedModelDataHandler<DLFileShortcut> {
 
-	public static final String[] CLASS_NAMES = {DLFileShortcut.class.getName()};
+	public static final String[] CLASS_NAMES =
+		{DLFileShortcutConstants.getClassName()};
 
 	@Override
 	public void deleteStagedModel(
@@ -172,20 +174,24 @@ public class DLFileShortcutStagedModelDataHandler
 			if (existingFileShortcut == null) {
 				serviceContext.setUuid(fileShortcut.getUuid());
 
-				importedFileShortcut = DLAppLocalServiceUtil.addFileShortcut(
-					userId, groupId, folderId,
-					importedFileEntry.getFileEntryId(), serviceContext);
+				importedFileShortcut =
+					DLFileShortcutLocalServiceUtil.addFileShortcut(
+						userId, groupId, folderId,
+						importedFileEntry.getFileEntryId(), serviceContext);
 			}
 			else {
-				importedFileShortcut = DLAppLocalServiceUtil.updateFileShortcut(
-					userId, existingFileShortcut.getFileShortcutId(), folderId,
-					importedFileEntry.getFileEntryId(), serviceContext);
+				importedFileShortcut =
+					DLFileShortcutLocalServiceUtil.updateFileShortcut(
+						userId, existingFileShortcut.getFileShortcutId(),
+						folderId, importedFileEntry.getFileEntryId(),
+						serviceContext);
 			}
 		}
 		else {
-			importedFileShortcut = DLAppLocalServiceUtil.addFileShortcut(
-				userId, groupId, folderId, importedFileEntry.getFileEntryId(),
-				serviceContext);
+			importedFileShortcut =
+				DLFileShortcutLocalServiceUtil.addFileShortcut(
+					userId, groupId, folderId,
+					importedFileEntry.getFileEntryId(), serviceContext);
 		}
 
 		portletDataContext.importClassedModel(
