@@ -15,6 +15,7 @@
 package com.liferay.portal.repository;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.repository.BaseDocumentRepository;
 import com.liferay.portal.kernel.repository.DocumentRepository;
 import com.liferay.portal.kernel.repository.capabilities.Capability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -31,7 +32,7 @@ import java.util.List;
 /**
  * @author Adolfo Pérez
  */
-public class InitializedDocumentRepository implements DocumentRepository {
+public class InitializedDocumentRepository extends BaseDocumentRepository {
 
 	@Override
 	public FileEntry addFileEntry(

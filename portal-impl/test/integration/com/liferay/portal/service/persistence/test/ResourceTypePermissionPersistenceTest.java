@@ -150,31 +150,46 @@ public class ResourceTypePermissionPersistenceTest {
 	}
 
 	@Test
-	public void testCountByRoleId() throws Exception {
-		_persistence.countByRoleId(RandomTestUtil.nextLong());
+	public void testCountByRoleId() {
+		try {
+			_persistence.countByRoleId(RandomTestUtil.nextLong());
 
-		_persistence.countByRoleId(0L);
+			_persistence.countByRoleId(0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
-	public void testCountByC_N_R() throws Exception {
-		_persistence.countByC_N_R(RandomTestUtil.nextLong(), StringPool.BLANK,
-			RandomTestUtil.nextLong());
+	public void testCountByC_N_R() {
+		try {
+			_persistence.countByC_N_R(RandomTestUtil.nextLong(),
+				StringPool.BLANK, RandomTestUtil.nextLong());
 
-		_persistence.countByC_N_R(0L, StringPool.NULL, 0L);
+			_persistence.countByC_N_R(0L, StringPool.NULL, 0L);
 
-		_persistence.countByC_N_R(0L, (String)null, 0L);
+			_persistence.countByC_N_R(0L, (String)null, 0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
-	public void testCountByC_G_N_R() throws Exception {
-		_persistence.countByC_G_N_R(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), StringPool.BLANK,
-			RandomTestUtil.nextLong());
+	public void testCountByC_G_N_R() {
+		try {
+			_persistence.countByC_G_N_R(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), StringPool.BLANK,
+				RandomTestUtil.nextLong());
 
-		_persistence.countByC_G_N_R(0L, 0L, StringPool.NULL, 0L);
+			_persistence.countByC_G_N_R(0L, 0L, StringPool.NULL, 0L);
 
-		_persistence.countByC_G_N_R(0L, 0L, (String)null, 0L);
+			_persistence.countByC_G_N_R(0L, 0L, (String)null, 0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
@@ -203,8 +218,13 @@ public class ResourceTypePermissionPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			getOrderByComparator());
+		try {
+			_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				getOrderByComparator());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	protected OrderByComparator<ResourceTypePermission> getOrderByComparator() {

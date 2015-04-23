@@ -37,6 +37,7 @@ import com.liferay.portal.service.base.RepositoryLocalServiceBaseImpl;
 import com.liferay.portal.util.RepositoryUtil;
 import com.liferay.portlet.documentlibrary.RepositoryNameException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 
@@ -257,6 +258,22 @@ public class RepositoryLocalServiceImpl
 	}
 
 	@Override
+	public LocalRepository getLocalRepositoryImpl(
+			long folderId, long fileEntryId, long fileVersionId,
+			long fileShortcutId)
+		throws PortalException {
+
+		if (fileShortcutId > 0 && fileEntryId == 0) {
+			DLFileShortcut dlFileShortcut =
+				dlFileShortcutLocalService.getDLFileShortcut(fileShortcutId);
+
+			fileEntryId = dlFileShortcut.getToFileEntryId();
+		}
+
+		return getLocalRepositoryImpl(folderId, fileEntryId, fileVersionId);
+	}
+
+	@Override
 	public String getRegistryName() {
 		return RepositoryLocalServiceImpl.class.getName();
 	}
@@ -300,6 +317,25 @@ public class RepositoryLocalServiceImpl
 	public com.liferay.portal.kernel.repository.Repository getRepositoryImpl(
 			long folderId, long fileEntryId, long fileVersionId)
 		throws PortalException {
+
+		long repositoryId = getRepositoryId(
+			folderId, fileEntryId, fileVersionId);
+
+		return getRepositoryImpl(repositoryId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.repository.Repository getRepositoryImpl(
+			long folderId, long fileEntryId, long fileVersionId,
+			long fileShortcutId)
+		throws PortalException {
+
+		if (fileShortcutId > 0 && fileEntryId == 0) {
+			DLFileShortcut dlFileShortcut =
+				dlFileShortcutLocalService.getDLFileShortcut(fileShortcutId);
+
+			fileEntryId = dlFileShortcut.getToFileEntryId();
+		}
 
 		long repositoryId = getRepositoryId(
 			folderId, fileEntryId, fileVersionId);

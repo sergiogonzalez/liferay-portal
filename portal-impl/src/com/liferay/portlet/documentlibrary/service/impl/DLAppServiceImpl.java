@@ -27,8 +27,10 @@ import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryException;
 import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.repository.model.RepositoryEntry;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -49,6 +51,7 @@ import com.liferay.portal.model.Lock;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
+import com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
 import com.liferay.portlet.documentlibrary.NoSuchFileVersionException;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
@@ -320,13 +323,15 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	 *         found, or if the file shortcut's information was invalid
 	 */
 	@Override
-	public DLFileShortcut addFileShortcut(
+	public FileShortcut addFileShortcut(
 			long repositoryId, long folderId, long toFileEntryId,
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		return dlFileShortcutService.addFileShortcut(
-			repositoryId, folderId, toFileEntryId, serviceContext);
+		Repository repository = getRepository(repositoryId);
+
+		return repository.addFileShortcut(
+			getUserId(), folderId, toFileEntryId, serviceContext);
 	}
 
 	/**
@@ -1032,7 +1037,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		Repository repository = getRepository(repositoryId);
 
-		return repository.getFileEntriesAndFileShortcuts(
+		return (List)repository.getFileEntriesAndFileShortcuts(
 			folderId, status, start, end);
 	}
 
@@ -1219,10 +1224,12 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	 * @throws PortalException if the file shortcut could not be found
 	 */
 	@Override
-	public DLFileShortcut getFileShortcut(long fileShortcutId)
+	public FileShortcut getFileShortcut(long fileShortcutId)
 		throws PortalException {
 
-		return dlFileShortcutService.getFileShortcut(fileShortcutId);
+		Repository repository = getFileShortcutRepository(fileShortcutId);
+
+		return repository.getFileShortcut(fileShortcutId);
 	}
 
 	/**
@@ -1571,7 +1578,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		Repository repository = getRepository(repositoryId);
 
-		return repository.getFoldersAndFileEntriesAndFileShortcuts(
+		return (List)repository.getFoldersAndFileEntriesAndFileShortcuts(
 			folderId, status, mimeTypes, includeMountFolders, start, end, obc);
 	}
 
@@ -2286,12 +2293,12 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	 *         found
 	 */
 	@Override
-	public DLFileShortcut moveFileShortcutFromTrash(
+	public FileShortcut moveFileShortcutFromTrash(
 			long fileShortcutId, long newFolderId,
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		DLFileShortcut fileShortcut = getFileShortcut(fileShortcutId);
+		FileShortcut fileShortcut = getFileShortcut(fileShortcutId);
 
 		DLFileShortcutPermission.check(
 			getPermissionChecker(), fileShortcut, ActionKeys.UPDATE);
@@ -2308,13 +2315,14 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	 * @throws PortalException if the file shortcut could not be found
 	 */
 	@Override
-	public DLFileShortcut moveFileShortcutToTrash(long fileShortcutId)
+	public FileShortcut moveFileShortcutToTrash(long fileShortcutId)
 		throws PortalException {
 
-		DLFileShortcut fileShortcut = getFileShortcut(fileShortcutId);
+		FileShortcut fileShortcut = getFileShortcut(fileShortcutId);
 
 		DLFileShortcutPermission.check(
-			getPermissionChecker(), fileShortcut, ActionKeys.DELETE);
+			getPermissionChecker(), (DLFileShortcut)fileShortcut.getModel(),
+			ActionKeys.DELETE);
 
 		return dlAppHelperLocalService.moveFileShortcutToTrash(
 			getUserId(), fileShortcut);
@@ -2526,7 +2534,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	public void restoreFileShortcutFromTrash(long fileShortcutId)
 		throws PortalException {
 
-		DLFileShortcut fileShortcut = getFileShortcut(fileShortcutId);
+		FileShortcut fileShortcut = getFileShortcut(fileShortcutId);
 
 		DLFileShortcutPermission.check(
 			getPermissionChecker(), fileShortcut, ActionKeys.DELETE);
@@ -3054,13 +3062,16 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	 *         not be found
 	 */
 	@Override
-	public DLFileShortcut updateFileShortcut(
+	public FileShortcut updateFileShortcut(
 			long fileShortcutId, long folderId, long toFileEntryId,
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		return dlFileShortcutService.updateFileShortcut(
-			fileShortcutId, folderId, toFileEntryId, serviceContext);
+		Repository repository = getFileShortcutRepository(fileShortcutId);
+
+		return repository.updateFileShortcut(
+			getUserId(), fileShortcutId, folderId, toFileEntryId,
+			serviceContext);
 	}
 
 	/**
@@ -3343,6 +3354,23 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		}
 	}
 
+	protected Repository getFileShortcutRepository(long fileShortcutId)
+		throws PortalException {
+
+		try {
+			return repositoryService.getRepositoryImpl(0, 0, 0, fileShortcutId);
+		}
+		catch (InvalidRepositoryIdException irie) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append("No FileShortcut exists with the key {fileShortcutId=");
+			sb.append(fileShortcutId);
+			sb.append("}");
+
+			throw new NoSuchFileShortcutException(sb.toString(), irie);
+		}
+	}
+
 	protected Repository getFileVersionRepository(long fileVersionId)
 		throws PortalException {
 
@@ -3435,42 +3463,35 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		dlAppHelperLocalService.addFolder(
 			getUserId(), newFolder, serviceContext);
 
-		List<Object> foldersAndFileEntriesAndFileShortcuts =
-			getFoldersAndFileEntriesAndFileShortcuts(
-				fromRepository.getRepositoryId(), folderId,
-				WorkflowConstants.STATUS_ANY, true, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
+		List<RepositoryEntry> repositoryEntries =
+			fromRepository.getFoldersAndFileEntriesAndFileShortcuts(
+				folderId, WorkflowConstants.STATUS_ANY, true, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null);
 
 		try {
-			for (Object folderAndFileEntryAndFileShortcut :
-					foldersAndFileEntriesAndFileShortcuts) {
-
-				if (folderAndFileEntryAndFileShortcut instanceof FileEntry) {
-					FileEntry fileEntry =
-						(FileEntry)folderAndFileEntryAndFileShortcut;
+			for (RepositoryEntry repositoryEntry : repositoryEntries) {
+				if (repositoryEntry instanceof FileEntry) {
+					FileEntry fileEntry = (FileEntry)repositoryEntry;
 
 					copyFileEntry(
 						toRepository, fileEntry, newFolder.getFolderId(),
 						serviceContext);
 				}
-				else if (folderAndFileEntryAndFileShortcut instanceof Folder) {
-					Folder currentFolder =
-						(Folder)folderAndFileEntryAndFileShortcut;
+				else if (repositoryEntry instanceof Folder) {
+					Folder currentFolder = (Folder)repositoryEntry;
 
 					moveFolders(
 						currentFolder.getFolderId(), newFolder.getFolderId(),
 						fromRepository, toRepository, serviceContext);
 				}
-				else if (folderAndFileEntryAndFileShortcut
-							instanceof DLFileShortcut) {
-
+				else if (repositoryEntry instanceof FileShortcut) {
 					if (newFolder.isSupportsShortcuts()) {
-						DLFileShortcut dlFileShorcut =
-							(DLFileShortcut)folderAndFileEntryAndFileShortcut;
+						FileShortcut fileShortcut =
+							(FileShortcut)repositoryEntry;
 
 						dlFileShortcutService.addFileShortcut(
-							dlFileShorcut.getGroupId(), newFolder.getFolderId(),
-							dlFileShorcut.getToFileEntryId(), serviceContext);
+							fileShortcut.getGroupId(), newFolder.getFolderId(),
+							fileShortcut.getToFileEntryId(), serviceContext);
 					}
 				}
 			}

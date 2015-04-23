@@ -166,50 +166,80 @@ public class SubscriptionPersistenceTest {
 	}
 
 	@Test
-	public void testCountByUserId() throws Exception {
-		_persistence.countByUserId(RandomTestUtil.nextLong());
+	public void testCountByUserId() {
+		try {
+			_persistence.countByUserId(RandomTestUtil.nextLong());
 
-		_persistence.countByUserId(0L);
+			_persistence.countByUserId(0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
-	public void testCountByG_U() throws Exception {
-		_persistence.countByG_U(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong());
+	public void testCountByG_U() {
+		try {
+			_persistence.countByG_U(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong());
 
-		_persistence.countByG_U(0L, 0L);
+			_persistence.countByG_U(0L, 0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
-	public void testCountByU_C() throws Exception {
-		_persistence.countByU_C(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong());
+	public void testCountByU_C() {
+		try {
+			_persistence.countByU_C(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong());
 
-		_persistence.countByU_C(0L, 0L);
+			_persistence.countByU_C(0L, 0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
-	public void testCountByC_C_C() throws Exception {
-		_persistence.countByC_C_C(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+	public void testCountByC_C_C() {
+		try {
+			_persistence.countByC_C_C(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
-		_persistence.countByC_C_C(0L, 0L, 0L);
+			_persistence.countByC_C_C(0L, 0L, 0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
-	public void testCountByC_U_C_C() throws Exception {
-		_persistence.countByC_U_C_C(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong());
+	public void testCountByC_U_C_C() {
+		try {
+			_persistence.countByC_U_C_C(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong());
 
-		_persistence.countByC_U_C_C(0L, 0L, 0L, 0L);
+			_persistence.countByC_U_C_C(0L, 0L, 0L, 0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
-	public void testCountByC_U_C_CArrayable() throws Exception {
-		_persistence.countByC_U_C_C(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			new long[] { RandomTestUtil.nextLong(), 0L });
+	public void testCountByC_U_C_CArrayable() {
+		try {
+			_persistence.countByC_U_C_C(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+				new long[] { RandomTestUtil.nextLong(), 0L });
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
@@ -237,8 +267,13 @@ public class SubscriptionPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			getOrderByComparator());
+		try {
+			_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				getOrderByComparator());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	protected OrderByComparator<Subscription> getOrderByComparator() {
