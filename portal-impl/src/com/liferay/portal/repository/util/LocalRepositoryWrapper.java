@@ -274,8 +274,8 @@ public class LocalRepositoryWrapper extends BaseDocumentRepository
 	public FileShortcut updateFileShortcut(
 			long userId, long fileShortcutId, long folderId, long toFileEntryId,
 			ServiceContext serviceContext)
-
 		throws PortalException {
+
 		return _localRepository.updateFileShortcut(
 			userId, fileShortcutId, folderId, toFileEntryId, serviceContext);
 	}

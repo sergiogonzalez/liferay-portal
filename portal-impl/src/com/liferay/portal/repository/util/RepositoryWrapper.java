@@ -15,10 +15,10 @@
 package com.liferay.portal.repository.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.repository.BaseDocumentRepository;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.capabilities.Capability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.repository.model.RepositoryEntry;
@@ -105,6 +105,16 @@ public class RepositoryWrapper implements Repository {
 				getUserId(),
 			folderId, sourceFileName, mimeType, title, description, changeLog,
 			is, size, serviceContext);
+	}
+
+	@Override
+	public FileShortcut addFileShortcut(
+			long userId, long folderId, long toFileEntryId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return _repository.addFileShortcut(
+			userId, folderId, toFileEntryId, serviceContext);
 	}
 
 	@Override
@@ -376,6 +386,13 @@ public class RepositoryWrapper implements Repository {
 	@Override
 	public FileEntry getFileEntryByUuid(String uuid) throws PortalException {
 		return _repository.getFileEntryByUuid(uuid);
+	}
+
+	@Override
+	public FileShortcut getFileShortcut(long fileShortcutId)
+		throws PortalException {
+
+		return _repository.getFileShortcut(fileShortcutId);
 	}
 
 	@Override
@@ -792,6 +809,16 @@ public class RepositoryWrapper implements Repository {
 				getUserId(),
 			fileEntryId, sourceFileName, mimeType, title, description,
 			changeLog, majorVersion, is, size, serviceContext);
+	}
+
+	@Override
+	public FileShortcut updateFileShortcut(
+			long userId, long fileShortcutId, long folderId, long toFileEntryId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return _repository.updateFileShortcut(
+			userId, fileShortcutId, folderId, toFileEntryId, serviceContext);
 	}
 
 	@Override
