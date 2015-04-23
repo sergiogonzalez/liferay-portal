@@ -647,7 +647,8 @@ public class DLAppHelperLocalServiceImpl
 			"title", TrashUtil.getOriginalTitle(dlFileShortcut.getToTitle()));
 
 		socialActivityLocalService.addActivity(
-			userId, dlFileShortcut.getGroupId(), DLFileShortcutConstants.getClassName(),
+			userId, dlFileShortcut.getGroupId(),
+			DLFileShortcutConstants.getClassName(),
 			dlFileShortcut.getFileShortcutId(),
 			SocialActivityConstants.TYPE_MOVE_TO_TRASH,
 			extraDataJSONObject.toString(), 0);
@@ -655,7 +656,8 @@ public class DLAppHelperLocalServiceImpl
 		// Trash
 
 		trashEntryLocalService.addTrashEntry(
-			userId, dlFileShortcut.getGroupId(), DLFileShortcutConstants.getClassName(),
+			userId, dlFileShortcut.getGroupId(),
+			DLFileShortcutConstants.getClassName(),
 			dlFileShortcut.getFileShortcutId(), dlFileShortcut.getUuid(), null,
 			oldStatus, null, null);
 
@@ -983,7 +985,8 @@ public class DLAppHelperLocalServiceImpl
 		// File shortcut
 
 		TrashEntry trashEntry = trashEntryLocalService.getEntry(
-			DLFileShortcutConstants.getClassName(), dlFileShortcut.getFileShortcutId());
+			DLFileShortcutConstants.getClassName(),
+			dlFileShortcut.getFileShortcutId());
 
 		dlFileShortcutLocalService.updateStatus(
 			userId, dlFileShortcut.getFileShortcutId(), trashEntry.getStatus(),
@@ -996,7 +999,8 @@ public class DLAppHelperLocalServiceImpl
 		extraDataJSONObject.put("title", dlFileShortcut.getToTitle());
 
 		socialActivityLocalService.addActivity(
-			userId, dlFileShortcut.getGroupId(), DLFileShortcutConstants.getClassName(),
+			userId, dlFileShortcut.getGroupId(),
+			DLFileShortcutConstants.getClassName(),
 			dlFileShortcut.getFileShortcutId(),
 			SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
 			extraDataJSONObject.toString(), 0);

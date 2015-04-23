@@ -185,7 +185,8 @@ public class DLFileShortcutLocalServiceImpl
 		// Asset
 
 		assetEntryLocalService.deleteEntry(
-			DLFileShortcutConstants.getClassName(), fileShortcut.getFileShortcutId());
+			DLFileShortcutConstants.getClassName(),
+			fileShortcut.getFileShortcutId());
 
 		// Trash
 
@@ -347,7 +348,8 @@ public class DLFileShortcutLocalServiceImpl
 
 		assetEntryLocalService.updateEntry(
 			userId, fileShortcut.getGroupId(), fileShortcut.getCreateDate(),
-			fileShortcut.getModifiedDate(), DLFileShortcutConstants.getClassName(),
+			fileShortcut.getModifiedDate(),
+			DLFileShortcutConstants.getClassName(),
 			fileShortcut.getFileShortcutId(), fileShortcut.getUuid(), 0,
 			assetCategoryIds, assetTagNames, false, null, null, null,
 			fileEntry.getMimeType(), fileEntry.getTitle(),
