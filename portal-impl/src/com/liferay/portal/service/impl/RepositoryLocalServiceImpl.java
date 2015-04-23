@@ -263,7 +263,7 @@ public class RepositoryLocalServiceImpl
 			long fileShortcutId)
 		throws PortalException {
 
-		if (fileShortcutId > 0 && fileEntryId == 0) {
+		if ((fileShortcutId > 0) && (fileEntryId == 0)) {
 			DLFileShortcut dlFileShortcut =
 				dlFileShortcutLocalService.getDLFileShortcut(fileShortcutId);
 
@@ -330,7 +330,7 @@ public class RepositoryLocalServiceImpl
 			long fileShortcutId)
 		throws PortalException {
 
-		if (fileShortcutId > 0 && fileEntryId == 0) {
+		if ((fileShortcutId > 0) && (fileEntryId == 0)) {
 			DLFileShortcut dlFileShortcut =
 				dlFileShortcutLocalService.getDLFileShortcut(fileShortcutId);
 
