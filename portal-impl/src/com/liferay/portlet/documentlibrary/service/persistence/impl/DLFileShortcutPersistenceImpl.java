@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -691,11 +690,11 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 					finderArgs, this);
 		}
 
-		if (result instanceof FileShortcut) {
-			FileShortcut fileShortcut = (FileShortcut)result;
+		if (result instanceof DLFileShortcut) {
+			DLFileShortcut dlFileShortcut = (DLFileShortcut)result;
 
-			if (!Validator.equals(uuid, fileShortcut.getUuid()) ||
-					(groupId != fileShortcut.getGroupId())) {
+			if (!Validator.equals(uuid, dlFileShortcut.getUuid()) ||
+					(groupId != dlFileShortcut.getGroupId())) {
 				result = null;
 			}
 		}

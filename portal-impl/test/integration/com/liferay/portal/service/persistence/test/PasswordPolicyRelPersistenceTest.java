@@ -139,18 +139,28 @@ public class PasswordPolicyRelPersistenceTest {
 	}
 
 	@Test
-	public void testCountByPasswordPolicyId() throws Exception {
-		_persistence.countByPasswordPolicyId(RandomTestUtil.nextLong());
+	public void testCountByPasswordPolicyId() {
+		try {
+			_persistence.countByPasswordPolicyId(RandomTestUtil.nextLong());
 
-		_persistence.countByPasswordPolicyId(0L);
+			_persistence.countByPasswordPolicyId(0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
-	public void testCountByC_C() throws Exception {
-		_persistence.countByC_C(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong());
+	public void testCountByC_C() {
+		try {
+			_persistence.countByC_C(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong());
 
-		_persistence.countByC_C(0L, 0L);
+			_persistence.countByC_C(0L, 0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
@@ -178,8 +188,13 @@ public class PasswordPolicyRelPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			getOrderByComparator());
+		try {
+			_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				getOrderByComparator());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	protected OrderByComparator<PasswordPolicyRel> getOrderByComparator() {
