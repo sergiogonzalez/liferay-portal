@@ -55,7 +55,7 @@ import java.util.List;
  *
  * @author Alexander Chow
  */
-public abstract class BaseRepositoryImpl extends BaseDocumentRepository
+public abstract class BaseRepositoryImpl
 	implements BaseRepository, CapabilityProvider {
 
 	@Override
