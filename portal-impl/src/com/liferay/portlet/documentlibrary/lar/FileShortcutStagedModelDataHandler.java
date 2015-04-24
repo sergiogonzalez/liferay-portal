@@ -70,8 +70,8 @@ public class FileShortcutStagedModelDataHandler
 
 		try {
 			DLFileShortcut dlFileShortcut =
-				DLFileShortcutLocalServiceUtil.getDLFileShortcutByUuidAndGroupId(
-					uuid, groupId);
+				DLFileShortcutLocalServiceUtil.
+					getDLFileShortcutByUuidAndGroupId(uuid, groupId);
 
 			return new LiferayFileShortcut(dlFileShortcut);
 		}
