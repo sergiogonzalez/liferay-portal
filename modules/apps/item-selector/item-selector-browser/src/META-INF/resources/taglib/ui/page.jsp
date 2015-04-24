@@ -109,7 +109,7 @@ String tabName = GetterUtil.getString(request.getAttribute("item-selector:view-e
 <div class="lfr-item-viewer" id="<%= idPrefix %>ItemViewerPreview"></div>
 <div class="lfr-item-viewer" id="<%= idPrefix %>UploadImagePreview"></div>
 
-<aui:script use="liferay-item-viewer,liferay-item-browser">
+<aui:script use="aui-component,liferay-item-viewer,liferay-item-browser">
 	var viewer = new A.LiferayItemViewer(
 		{
 			btnCloseCaption:'<%= tabName %>',
