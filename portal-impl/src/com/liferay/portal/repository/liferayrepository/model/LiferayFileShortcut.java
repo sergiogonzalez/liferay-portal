@@ -15,14 +15,17 @@
 package com.liferay.portal.repository.liferayrepository.model;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.repository.model.RepositoryModelOperation;
 import com.liferay.portal.kernel.trash.TrashHandler;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
+import com.liferay.portlet.documentlibrary.model.DLFileShortcutConstants;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileShortcutPermission;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.trash.model.TrashEntry;
@@ -39,8 +42,7 @@ import java.util.Map;
 public class LiferayFileShortcut extends LiferayModel implements FileShortcut {
 
 	public LiferayFileShortcut(DLFileShortcut dlFileShortcut) {
-		_dlFileShortcut = dlFileShortcut;
-		_escapedModel = false;
+		this (dlFileShortcut, false);
 	}
 
 	public LiferayFileShortcut(
@@ -52,8 +54,26 @@ public class LiferayFileShortcut extends LiferayModel implements FileShortcut {
 
 	@Override
 	public Object clone() {
-		return new LiferayFileShortcut(
-			(DLFileShortcut)_dlFileShortcut.clone(), _escapedModel);
+		LiferayFileShortcut liferayFileShortcut = new LiferayFileShortcut(
+			_dlFileShortcut, _escapedModel);
+
+		liferayFileShortcut.setCompanyId(getCompanyId());
+		liferayFileShortcut.setCreateDate(getCreateDate());
+		liferayFileShortcut.setGroupId(getGroupId());
+		liferayFileShortcut.setModifiedDate(getModifiedDate());
+		liferayFileShortcut.setPrimaryKey(getPrimaryKey());
+		liferayFileShortcut.setUserId(getUserId());
+		liferayFileShortcut.setUserName(getUserName());
+
+		try {
+			liferayFileShortcut.setUserUuid(getUserUuid());
+		}
+		catch (SystemException se) {
+		}
+
+		liferayFileShortcut.setUuid(getUuid());
+
+		return liferayFileShortcut;
 	}
 
 	@Override
@@ -66,6 +86,31 @@ public class LiferayFileShortcut extends LiferayModel implements FileShortcut {
 	}
 
 	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof LiferayFileShortcut)) {
+			return false;
+		}
+
+		LiferayFileShortcut liferayFileShortcut = (LiferayFileShortcut)obj;
+
+		if (Validator.equals(
+				_dlFileShortcut, liferayFileShortcut._dlFileShortcut)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	public void setPrimaryKey(long primaryKey) {
+		_dlFileShortcut.setPrimaryKey(primaryKey);
+	}
+
+	@Override
 	public void execute(RepositoryModelOperation repositoryModelOperation)
 		throws PortalException {
 
@@ -74,7 +119,7 @@ public class LiferayFileShortcut extends LiferayModel implements FileShortcut {
 
 	@Override
 	public Map<String, Serializable> getAttributes() {
-		ExpandoBridge expandoBridge = _dlFileShortcut.getExpandoBridge();
+		ExpandoBridge expandoBridge = getExpandoBridge();
 
 		return expandoBridge.getAttributes();
 	}
@@ -131,7 +176,7 @@ public class LiferayFileShortcut extends LiferayModel implements FileShortcut {
 
 	@Override
 	public String getModelClassName() {
-		return getModelClass().getName();
+		return LiferayFileShortcut.class.getName();
 	}
 
 	@Override
@@ -146,12 +191,12 @@ public class LiferayFileShortcut extends LiferayModel implements FileShortcut {
 
 	@Override
 	public Serializable getPrimaryKeyObj() {
-		return _dlFileShortcut.getPrimaryKeyObj();
+		return getPrimaryKey();
 	}
 
 	@Override
 	public StagedModelType getStagedModelType() {
-		return _dlFileShortcut.getStagedModelType();
+		return new StagedModelType(DLFileShortcutConstants.getClassName());
 	}
 
 	@Override
