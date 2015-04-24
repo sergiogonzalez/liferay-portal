@@ -15,7 +15,6 @@
 package com.liferay.portal.repository.liferayrepository;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.repository.BaseDocumentRepository;
 import com.liferay.portal.kernel.repository.capabilities.Capability;
 import com.liferay.portal.kernel.repository.capabilities.CapabilityProvider;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -53,8 +52,7 @@ import java.util.List;
 /**
  * @author Alexander Chow
  */
-public abstract class LiferayRepositoryBase extends BaseDocumentRepository
-	implements CapabilityProvider {
+public abstract class LiferayRepositoryBase implements CapabilityProvider {
 
 	public LiferayRepositoryBase(
 		RepositoryLocalService repositoryLocalService,
