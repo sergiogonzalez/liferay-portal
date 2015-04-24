@@ -103,6 +103,7 @@ for (DLFileShortcut curFileShortcut : fileShortcuts) {
 		title="move-files"
 	/>
 
+	<liferay-ui:error exception="<%= DuplicateFileEntryException.class %>" message="the-storage-for-the-folder-you-selected-already-has-an-entry-with-this-name.-please-select-a-different-folder" />
 	<liferay-ui:error exception="<%= DuplicateFileException.class %>" message="the-folder-you-selected-already-has-an-entry-with-this-name.-please-select-a-different-folder" />
 	<liferay-ui:error exception="<%= DuplicateFolderNameException.class %>" message="the-folder-you-selected-already-has-an-entry-with-this-name.-please-select-a-different-folder" />
 

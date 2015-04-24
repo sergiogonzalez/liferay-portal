@@ -113,24 +113,15 @@ public class EditFolderAction extends PortletAction {
 
 			sendRedirect(actionRequest, actionResponse);
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchFolderException ||
-				e instanceof PrincipalException) {
+		catch (NoSuchFolderException | PrincipalException e) {
+			SessionErrors.add(actionRequest, e.getClass());
+
+			setForward(actionRequest, "portlet.document_library.error");
+		}
+		catch (DuplicateFileException | DuplicateFolderNameException |
+			FolderNameException | RequiredFileEntryTypeException e) {
 
 				SessionErrors.add(actionRequest, e.getClass());
-
-				setForward(actionRequest, "portlet.document_library.error");
-			}
-			else if (e instanceof DuplicateFileException ||
-					 e instanceof DuplicateFolderNameException ||
-					 e instanceof FolderNameException ||
-					 e instanceof RequiredFileEntryTypeException) {
-
-				SessionErrors.add(actionRequest, e.getClass());
-			}
-			else {
-				throw e;
-			}
 		}
 	}
 

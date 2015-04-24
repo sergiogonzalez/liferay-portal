@@ -51,6 +51,7 @@ import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetLinkLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.DuplicateFileEntryException;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.DuplicateFolderNameException;
 import com.liferay.portlet.documentlibrary.FileSizeException;
@@ -208,7 +209,7 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 
 			return status;
 		}
-		catch (DuplicateFileException dfe) {
+		catch (DuplicateFileException | DuplicateFileEntryException dfe) {
 			return HttpServletResponse.SC_PRECONDITION_FAILED;
 		}
 		catch (DuplicateFolderNameException dfne) {
@@ -499,7 +500,7 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 		catch (DuplicateFolderNameException dfne) {
 			return new Status(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
 		}
-		catch (DuplicateFileException dfe) {
+		catch (DuplicateFileException | DuplicateFileEntryException dfe) {
 			return new Status(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
 		}
 		catch (NoSuchFolderException nsfe) {
@@ -659,7 +660,7 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 		catch (PrincipalException pe) {
 			return HttpServletResponse.SC_FORBIDDEN;
 		}
-		catch (DuplicateFileException dfe) {
+		catch (DuplicateFileException | DuplicateFileEntryException dfe) {
 			return HttpServletResponse.SC_PRECONDITION_FAILED;
 		}
 		catch (DuplicateFolderNameException dfne) {

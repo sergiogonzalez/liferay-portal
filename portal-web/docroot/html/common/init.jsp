@@ -237,6 +237,7 @@ page import="com.liferay.portlet.asset.service.AssetVocabularyServiceUtil" %><%@
 page import="com.liferay.portlet.asset.service.persistence.AssetEntryQuery" %><%@
 page import="com.liferay.portlet.asset.util.AssetUtil" %><%@
 page import="com.liferay.portlet.blogs.model.BlogsEntry" %><%@
+page import="com.liferay.portlet.documentlibrary.DuplicateFileEntryException" %><%@
 page import="com.liferay.portlet.documentlibrary.DuplicateFileException" %><%@
 page import="com.liferay.portlet.documentlibrary.FileExtensionException" %><%@
 page import="com.liferay.portlet.documentlibrary.FileNameException" %><%@

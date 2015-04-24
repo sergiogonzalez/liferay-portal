@@ -58,7 +58,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.test.PrefsPropsTemporarySwapper;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.DuplicateFileException;
+import com.liferay.portlet.documentlibrary.DuplicateFileEntryException;
 import com.liferay.portlet.documentlibrary.FileExtensionException;
 import com.liferay.portlet.documentlibrary.FileNameException;
 import com.liferay.portlet.documentlibrary.FileSizeException;
@@ -134,7 +134,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 			}
 		}
 
-		@Test(expected = DuplicateFileException.class)
+		@Test(expected = DuplicateFileEntryException.class)
 		public void shouldFailIfDuplicateNameAndExtensionInFolder1()
 			throws Exception {
 
@@ -146,7 +146,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 				_FILE_NAME, null);
 		}
 
-		@Test(expected = DuplicateFileException.class)
+		@Test(expected = DuplicateFileEntryException.class)
 		public void shouldFailIfDuplicateNameAndExtensionInFolder2()
 			throws Exception {
 
@@ -158,7 +158,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 				_STRIPPED_FILE_NAME, null);
 		}
 
-		@Test(expected = DuplicateFileException.class)
+		@Test(expected = DuplicateFileEntryException.class)
 		public void shouldFailIfDuplicateNameAndExtensionInFolder3()
 			throws Exception {
 
@@ -170,7 +170,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 				_STRIPPED_FILE_NAME, _FILE_NAME, null);
 		}
 
-		@Test(expected = DuplicateFileException.class)
+		@Test(expected = DuplicateFileEntryException.class)
 		public void shouldFailIfDuplicateNameInFolder() throws Exception {
 			addFileEntry(group.getGroupId(), parentFolder.getFolderId());
 			addFileEntry(group.getGroupId(), parentFolder.getFolderId());
