@@ -17,12 +17,16 @@ package com.liferay.wiki.engine.creole.util;
 import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
 
 import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Iván Zaera
  */
+@Component(
+	immediate = true
+)
 public class WikiEngineCreoleComponentProvider {
 
 	public static WikiEngineCreoleComponentProvider
