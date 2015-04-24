@@ -43,7 +43,7 @@ import java.util.Map;
 /**
  * @author Mate Thurzo
  */
-public class DLFileShortcutStagedModelDataHandler
+public class FileShortcutStagedModelDataHandler
 	extends BaseStagedModelDataHandler<FileShortcut> {
 
 	public static final String[] CLASS_NAMES = {DLFileShortcut.class.getName()};
@@ -239,6 +239,6 @@ public class DLFileShortcutStagedModelDataHandler
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DLFileShortcutStagedModelDataHandler.class);
+		FileShortcutStagedModelDataHandler.class);
 
 }
