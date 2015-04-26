@@ -241,166 +241,268 @@ public class DLFileEntryPersistenceTest {
 	}
 
 	@Test
-	public void testCountByUuid() throws Exception {
-		_persistence.countByUuid(StringPool.BLANK);
+	public void testCountByUuid() {
+		try {
+			_persistence.countByUuid(StringPool.BLANK);
 
-		_persistence.countByUuid(StringPool.NULL);
+			_persistence.countByUuid(StringPool.NULL);
 
-		_persistence.countByUuid((String)null);
+			_persistence.countByUuid((String)null);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
-	public void testCountByUUID_G() throws Exception {
-		_persistence.countByUUID_G(StringPool.BLANK, RandomTestUtil.nextLong());
+	public void testCountByUUID_G() {
+		try {
+			_persistence.countByUUID_G(StringPool.BLANK,
+				RandomTestUtil.nextLong());
 
-		_persistence.countByUUID_G(StringPool.NULL, 0L);
+			_persistence.countByUUID_G(StringPool.NULL, 0L);
 
-		_persistence.countByUUID_G((String)null, 0L);
+			_persistence.countByUUID_G((String)null, 0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
-	public void testCountByUuid_C() throws Exception {
-		_persistence.countByUuid_C(StringPool.BLANK, RandomTestUtil.nextLong());
+	public void testCountByUuid_C() {
+		try {
+			_persistence.countByUuid_C(StringPool.BLANK,
+				RandomTestUtil.nextLong());
 
-		_persistence.countByUuid_C(StringPool.NULL, 0L);
+			_persistence.countByUuid_C(StringPool.NULL, 0L);
 
-		_persistence.countByUuid_C((String)null, 0L);
+			_persistence.countByUuid_C((String)null, 0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
-	public void testCountByGroupId() throws Exception {
-		_persistence.countByGroupId(RandomTestUtil.nextLong());
+	public void testCountByGroupId() {
+		try {
+			_persistence.countByGroupId(RandomTestUtil.nextLong());
 
-		_persistence.countByGroupId(0L);
+			_persistence.countByGroupId(0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
-	public void testCountByCompanyId() throws Exception {
-		_persistence.countByCompanyId(RandomTestUtil.nextLong());
+	public void testCountByCompanyId() {
+		try {
+			_persistence.countByCompanyId(RandomTestUtil.nextLong());
 
-		_persistence.countByCompanyId(0L);
+			_persistence.countByCompanyId(0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
-	public void testCountByRepositoryId() throws Exception {
-		_persistence.countByRepositoryId(RandomTestUtil.nextLong());
+	public void testCountByRepositoryId() {
+		try {
+			_persistence.countByRepositoryId(RandomTestUtil.nextLong());
 
-		_persistence.countByRepositoryId(0L);
+			_persistence.countByRepositoryId(0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
-	public void testCountByMimeType() throws Exception {
-		_persistence.countByMimeType(StringPool.BLANK);
+	public void testCountByMimeType() {
+		try {
+			_persistence.countByMimeType(StringPool.BLANK);
 
-		_persistence.countByMimeType(StringPool.NULL);
+			_persistence.countByMimeType(StringPool.NULL);
 
-		_persistence.countByMimeType((String)null);
+			_persistence.countByMimeType((String)null);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
-	public void testCountByFileEntryTypeId() throws Exception {
-		_persistence.countByFileEntryTypeId(RandomTestUtil.nextLong());
+	public void testCountByFileEntryTypeId() {
+		try {
+			_persistence.countByFileEntryTypeId(RandomTestUtil.nextLong());
 
-		_persistence.countByFileEntryTypeId(0L);
+			_persistence.countByFileEntryTypeId(0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
-	public void testCountByG_U() throws Exception {
-		_persistence.countByG_U(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong());
+	public void testCountByG_U() {
+		try {
+			_persistence.countByG_U(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong());
 
-		_persistence.countByG_U(0L, 0L);
+			_persistence.countByG_U(0L, 0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
-	public void testCountByG_F() throws Exception {
-		_persistence.countByG_F(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong());
+	public void testCountByG_F() {
+		try {
+			_persistence.countByG_F(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong());
 
-		_persistence.countByG_F(0L, 0L);
+			_persistence.countByG_F(0L, 0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
-	public void testCountByG_FArrayable() throws Exception {
-		_persistence.countByG_F(RandomTestUtil.nextLong(),
-			new long[] { RandomTestUtil.nextLong(), 0L });
+	public void testCountByG_FArrayable() {
+		try {
+			_persistence.countByG_F(RandomTestUtil.nextLong(),
+				new long[] { RandomTestUtil.nextLong(), 0L });
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
-	public void testCountByR_F() throws Exception {
-		_persistence.countByR_F(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong());
+	public void testCountByR_F() {
+		try {
+			_persistence.countByR_F(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong());
 
-		_persistence.countByR_F(0L, 0L);
+			_persistence.countByR_F(0L, 0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
-	public void testCountByF_N() throws Exception {
-		_persistence.countByF_N(RandomTestUtil.nextLong(), StringPool.BLANK);
+	public void testCountByF_N() {
+		try {
+			_persistence.countByF_N(RandomTestUtil.nextLong(), StringPool.BLANK);
 
-		_persistence.countByF_N(0L, StringPool.NULL);
+			_persistence.countByF_N(0L, StringPool.NULL);
 
-		_persistence.countByF_N(0L, (String)null);
+			_persistence.countByF_N(0L, (String)null);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
-	public void testCountByG_U_F() throws Exception {
-		_persistence.countByG_U_F(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+	public void testCountByG_U_F() {
+		try {
+			_persistence.countByG_U_F(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
-		_persistence.countByG_U_F(0L, 0L, 0L);
+			_persistence.countByG_U_F(0L, 0L, 0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
-	public void testCountByG_U_FArrayable() throws Exception {
-		_persistence.countByG_U_F(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(),
-			new long[] { RandomTestUtil.nextLong(), 0L });
+	public void testCountByG_U_FArrayable() {
+		try {
+			_persistence.countByG_U_F(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(),
+				new long[] { RandomTestUtil.nextLong(), 0L });
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
-	public void testCountByG_F_N() throws Exception {
-		_persistence.countByG_F_N(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), StringPool.BLANK);
+	public void testCountByG_F_N() {
+		try {
+			_persistence.countByG_F_N(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), StringPool.BLANK);
 
-		_persistence.countByG_F_N(0L, 0L, StringPool.NULL);
+			_persistence.countByG_F_N(0L, 0L, StringPool.NULL);
 
-		_persistence.countByG_F_N(0L, 0L, (String)null);
+			_persistence.countByG_F_N(0L, 0L, (String)null);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
-	public void testCountByG_F_FN() throws Exception {
-		_persistence.countByG_F_FN(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), StringPool.BLANK);
+	public void testCountByG_F_FN() {
+		try {
+			_persistence.countByG_F_FN(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), StringPool.BLANK);
 
-		_persistence.countByG_F_FN(0L, 0L, StringPool.NULL);
+			_persistence.countByG_F_FN(0L, 0L, StringPool.NULL);
 
-		_persistence.countByG_F_FN(0L, 0L, (String)null);
+			_persistence.countByG_F_FN(0L, 0L, (String)null);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
-	public void testCountByG_F_T() throws Exception {
-		_persistence.countByG_F_T(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), StringPool.BLANK);
+	public void testCountByG_F_T() {
+		try {
+			_persistence.countByG_F_T(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), StringPool.BLANK);
 
-		_persistence.countByG_F_T(0L, 0L, StringPool.NULL);
+			_persistence.countByG_F_T(0L, 0L, StringPool.NULL);
 
-		_persistence.countByG_F_T(0L, 0L, (String)null);
+			_persistence.countByG_F_T(0L, 0L, (String)null);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
-	public void testCountByG_F_F() throws Exception {
-		_persistence.countByG_F_F(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+	public void testCountByG_F_F() {
+		try {
+			_persistence.countByG_F_F(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
-		_persistence.countByG_F_F(0L, 0L, 0L);
+			_persistence.countByG_F_F(0L, 0L, 0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
-	public void testCountByG_F_FArrayable() throws Exception {
-		_persistence.countByG_F_F(RandomTestUtil.nextLong(),
-			new long[] { RandomTestUtil.nextLong(), 0L },
-			RandomTestUtil.nextLong());
+	public void testCountByG_F_FArrayable() {
+		try {
+			_persistence.countByG_F_F(RandomTestUtil.nextLong(),
+				new long[] { RandomTestUtil.nextLong(), 0L },
+				RandomTestUtil.nextLong());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
@@ -427,14 +529,24 @@ public class DLFileEntryPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			getOrderByComparator());
+		try {
+			_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				getOrderByComparator());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
 	public void testFilterFindByGroupId() throws Exception {
-		_persistence.filterFindByGroupId(0, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, getOrderByComparator());
+		try {
+			_persistence.filterFindByGroupId(0, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, getOrderByComparator());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	protected OrderByComparator<DLFileEntry> getOrderByComparator() {

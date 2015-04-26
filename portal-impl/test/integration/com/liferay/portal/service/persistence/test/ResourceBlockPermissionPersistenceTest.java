@@ -140,25 +140,40 @@ public class ResourceBlockPermissionPersistenceTest {
 	}
 
 	@Test
-	public void testCountByResourceBlockId() throws Exception {
-		_persistence.countByResourceBlockId(RandomTestUtil.nextLong());
+	public void testCountByResourceBlockId() {
+		try {
+			_persistence.countByResourceBlockId(RandomTestUtil.nextLong());
 
-		_persistence.countByResourceBlockId(0L);
+			_persistence.countByResourceBlockId(0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
-	public void testCountByRoleId() throws Exception {
-		_persistence.countByRoleId(RandomTestUtil.nextLong());
+	public void testCountByRoleId() {
+		try {
+			_persistence.countByRoleId(RandomTestUtil.nextLong());
 
-		_persistence.countByRoleId(0L);
+			_persistence.countByRoleId(0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
-	public void testCountByR_R() throws Exception {
-		_persistence.countByR_R(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong());
+	public void testCountByR_R() {
+		try {
+			_persistence.countByR_R(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong());
 
-		_persistence.countByR_R(0L, 0L);
+			_persistence.countByR_R(0L, 0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
@@ -187,8 +202,13 @@ public class ResourceBlockPermissionPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			getOrderByComparator());
+		try {
+			_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				getOrderByComparator());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	protected OrderByComparator<ResourceBlockPermission> getOrderByComparator() {

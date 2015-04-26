@@ -128,5 +128,18 @@ public class DLFileShortcutServiceSoap {
 		}
 	}
 
+	public static void updateFileShortcuts(long oldToFileEntryId,
+		long newToFileEntryId) throws RemoteException {
+		try {
+			DLFileShortcutServiceUtil.updateFileShortcuts(oldToFileEntryId,
+				newToFileEntryId);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(DLFileShortcutServiceSoap.class);
 }

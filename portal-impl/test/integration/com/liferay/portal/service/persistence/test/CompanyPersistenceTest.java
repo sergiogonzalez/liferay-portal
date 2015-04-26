@@ -159,35 +159,55 @@ public class CompanyPersistenceTest {
 	}
 
 	@Test
-	public void testCountByWebId() throws Exception {
-		_persistence.countByWebId(StringPool.BLANK);
+	public void testCountByWebId() {
+		try {
+			_persistence.countByWebId(StringPool.BLANK);
 
-		_persistence.countByWebId(StringPool.NULL);
+			_persistence.countByWebId(StringPool.NULL);
 
-		_persistence.countByWebId((String)null);
+			_persistence.countByWebId((String)null);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
-	public void testCountByMx() throws Exception {
-		_persistence.countByMx(StringPool.BLANK);
+	public void testCountByMx() {
+		try {
+			_persistence.countByMx(StringPool.BLANK);
 
-		_persistence.countByMx(StringPool.NULL);
+			_persistence.countByMx(StringPool.NULL);
 
-		_persistence.countByMx((String)null);
+			_persistence.countByMx((String)null);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
-	public void testCountByLogoId() throws Exception {
-		_persistence.countByLogoId(RandomTestUtil.nextLong());
+	public void testCountByLogoId() {
+		try {
+			_persistence.countByLogoId(RandomTestUtil.nextLong());
 
-		_persistence.countByLogoId(0L);
+			_persistence.countByLogoId(0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
-	public void testCountBySystem() throws Exception {
-		_persistence.countBySystem(RandomTestUtil.randomBoolean());
+	public void testCountBySystem() {
+		try {
+			_persistence.countBySystem(RandomTestUtil.randomBoolean());
 
-		_persistence.countBySystem(RandomTestUtil.randomBoolean());
+			_persistence.countBySystem(RandomTestUtil.randomBoolean());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
@@ -214,8 +234,13 @@ public class CompanyPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			getOrderByComparator());
+		try {
+			_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				getOrderByComparator());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	protected OrderByComparator<Company> getOrderByComparator() {

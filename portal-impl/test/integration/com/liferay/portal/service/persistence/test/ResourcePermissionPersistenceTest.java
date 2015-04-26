@@ -157,71 +157,112 @@ public class ResourcePermissionPersistenceTest {
 	}
 
 	@Test
-	public void testCountByScope() throws Exception {
-		_persistence.countByScope(RandomTestUtil.nextInt());
+	public void testCountByScope() {
+		try {
+			_persistence.countByScope(RandomTestUtil.nextInt());
 
-		_persistence.countByScope(0);
+			_persistence.countByScope(0);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
-	public void testCountByScopeArrayable() throws Exception {
-		_persistence.countByScope(new int[] { RandomTestUtil.nextInt(), 0 });
+	public void testCountByScopeArrayable() {
+		try {
+			_persistence.countByScope(new int[] { RandomTestUtil.nextInt(), 0 });
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
-	public void testCountByRoleId() throws Exception {
-		_persistence.countByRoleId(RandomTestUtil.nextLong());
+	public void testCountByRoleId() {
+		try {
+			_persistence.countByRoleId(RandomTestUtil.nextLong());
 
-		_persistence.countByRoleId(0L);
+			_persistence.countByRoleId(0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
-	public void testCountByC_LikeP() throws Exception {
-		_persistence.countByC_LikeP(RandomTestUtil.nextLong(), StringPool.BLANK);
+	public void testCountByC_LikeP() {
+		try {
+			_persistence.countByC_LikeP(RandomTestUtil.nextLong(),
+				StringPool.BLANK);
 
-		_persistence.countByC_LikeP(0L, StringPool.NULL);
+			_persistence.countByC_LikeP(0L, StringPool.NULL);
 
-		_persistence.countByC_LikeP(0L, (String)null);
+			_persistence.countByC_LikeP(0L, (String)null);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
-	public void testCountByC_N_S() throws Exception {
-		_persistence.countByC_N_S(RandomTestUtil.nextLong(), StringPool.BLANK,
-			RandomTestUtil.nextInt());
+	public void testCountByC_N_S() {
+		try {
+			_persistence.countByC_N_S(RandomTestUtil.nextLong(),
+				StringPool.BLANK, RandomTestUtil.nextInt());
 
-		_persistence.countByC_N_S(0L, StringPool.NULL, 0);
+			_persistence.countByC_N_S(0L, StringPool.NULL, 0);
 
-		_persistence.countByC_N_S(0L, (String)null, 0);
+			_persistence.countByC_N_S(0L, (String)null, 0);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
-	public void testCountByC_N_S_P() throws Exception {
-		_persistence.countByC_N_S_P(RandomTestUtil.nextLong(),
-			StringPool.BLANK, RandomTestUtil.nextInt(), StringPool.BLANK);
+	public void testCountByC_N_S_P() {
+		try {
+			_persistence.countByC_N_S_P(RandomTestUtil.nextLong(),
+				StringPool.BLANK, RandomTestUtil.nextInt(), StringPool.BLANK);
 
-		_persistence.countByC_N_S_P(0L, StringPool.NULL, 0, StringPool.NULL);
+			_persistence.countByC_N_S_P(0L, StringPool.NULL, 0, StringPool.NULL);
 
-		_persistence.countByC_N_S_P(0L, (String)null, 0, (String)null);
+			_persistence.countByC_N_S_P(0L, (String)null, 0, (String)null);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
-	public void testCountByC_N_S_P_R() throws Exception {
-		_persistence.countByC_N_S_P_R(RandomTestUtil.nextLong(),
-			StringPool.BLANK, RandomTestUtil.nextInt(), StringPool.BLANK,
-			RandomTestUtil.nextLong());
+	public void testCountByC_N_S_P_R() {
+		try {
+			_persistence.countByC_N_S_P_R(RandomTestUtil.nextLong(),
+				StringPool.BLANK, RandomTestUtil.nextInt(), StringPool.BLANK,
+				RandomTestUtil.nextLong());
 
-		_persistence.countByC_N_S_P_R(0L, StringPool.NULL, 0, StringPool.NULL,
-			0L);
+			_persistence.countByC_N_S_P_R(0L, StringPool.NULL, 0,
+				StringPool.NULL, 0L);
 
-		_persistence.countByC_N_S_P_R(0L, (String)null, 0, (String)null, 0L);
+			_persistence.countByC_N_S_P_R(0L, (String)null, 0, (String)null, 0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
-	public void testCountByC_N_S_P_RArrayable() throws Exception {
-		_persistence.countByC_N_S_P_R(RandomTestUtil.nextLong(),
-			RandomTestUtil.randomString(), RandomTestUtil.nextInt(),
-			RandomTestUtil.randomString(),
-			new long[] { RandomTestUtil.nextLong(), 0L });
+	public void testCountByC_N_S_P_RArrayable() {
+		try {
+			_persistence.countByC_N_S_P_R(RandomTestUtil.nextLong(),
+				RandomTestUtil.randomString(), RandomTestUtil.nextInt(),
+				RandomTestUtil.randomString(),
+				new long[] { RandomTestUtil.nextLong(), 0L });
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
@@ -249,8 +290,13 @@ public class ResourcePermissionPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			getOrderByComparator());
+		try {
+			_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				getOrderByComparator());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	protected OrderByComparator<ResourcePermission> getOrderByComparator() {

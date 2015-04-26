@@ -87,6 +87,12 @@ public class DLFileShortcutServiceUtil {
 			serviceContext);
 	}
 
+	public static void updateFileShortcuts(long oldToFileEntryId,
+		long newToFileEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().updateFileShortcuts(oldToFileEntryId, newToFileEntryId);
+	}
+
 	public static DLFileShortcutService getService() {
 		if (_service == null) {
 			_service = (DLFileShortcutService)PortalBeanLocatorUtil.locate(DLFileShortcutService.class.getName());
