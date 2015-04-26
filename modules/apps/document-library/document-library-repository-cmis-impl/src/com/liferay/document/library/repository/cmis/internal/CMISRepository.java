@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.RepositoryException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.search.DocumentHelper;
@@ -193,6 +194,15 @@ public class CMISRepository extends BaseCmisRepository {
 
 			throw new RepositoryException(e);
 		}
+	}
+
+	@Override
+	public FileShortcut addFileShortcut(
+			long userId, long folderId, long toFileEntryId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -592,6 +602,13 @@ public class CMISRepository extends BaseCmisRepository {
 
 			throw new RepositoryException(e);
 		}
+	}
+
+	@Override
+	public FileShortcut getFileShortcut(long dlFileShortcutId)
+		throws PortalException {
+
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -1382,6 +1399,15 @@ public class CMISRepository extends BaseCmisRepository {
 
 			throw new RepositoryException(e);
 		}
+	}
+
+	@Override
+	public FileShortcut updateFileShortcut(
+			long userId, long fileShortcutId, long folderId, long toFileEntryId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
