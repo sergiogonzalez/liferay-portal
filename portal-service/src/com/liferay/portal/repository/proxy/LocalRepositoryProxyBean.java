@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.capabilities.Capability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -68,6 +69,18 @@ public class LocalRepositoryProxyBean
 			changeLog, is, size, serviceContext);
 
 		return newFileEntryProxyBean(fileEntry);
+	}
+
+	@Override
+	public FileShortcut addFileShortcut(
+			long userId, long folderId, long toFileEntryId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		FileShortcut fileShortcut = _localRepository.addFileShortcut(
+			userId, folderId, toFileEntryId, serviceContext);
+
+		return newFileShortcutProxyBean(fileShortcut);
 	}
 
 	@Override
@@ -155,6 +168,16 @@ public class LocalRepositoryProxyBean
 		FileEntry fileEntry = _localRepository.getFileEntryByUuid(uuid);
 
 		return newFileEntryProxyBean(fileEntry);
+	}
+
+	@Override
+	public FileShortcut getFileShortcut(long dlFileShortcutId)
+		throws PortalException {
+
+		FileShortcut fileShortcut = _localRepository.getFileShortcut(
+			dlFileShortcutId);
+
+		return newFileShortcutProxyBean(fileShortcut);
 	}
 
 	@Override
@@ -280,6 +303,18 @@ public class LocalRepositoryProxyBean
 			changeLog, majorVersion, is, size, serviceContext);
 
 		return newFileEntryProxyBean(fileEntry);
+	}
+
+	@Override
+	public FileShortcut updateFileShortcut(
+			long userId, long fileShortcutId, long folderId, long toFileEntryId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		FileShortcut fileShortcut = _localRepository.updateFileShortcut(
+			userId, fileShortcutId, folderId, toFileEntryId, serviceContext);
+
+		return newFileShortcutProxyBean(fileShortcut);
 	}
 
 	@Override

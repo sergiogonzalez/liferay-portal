@@ -21,14 +21,12 @@ import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.repository.model.RepositoryModelOperation;
-import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcutConstants;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileShortcutPermission;
 import com.liferay.portlet.expando.model.ExpandoBridge;
-import com.liferay.portlet.trash.model.TrashEntry;
 
 import java.io.Serializable;
 
@@ -104,10 +102,6 @@ public class LiferayFileShortcut extends LiferayModel implements FileShortcut {
 		}
 
 		return false;
-	}
-
-	public void setPrimaryKey(long primaryKey) {
-		_dlFileShortcut.setPrimaryKey(primaryKey);
 	}
 
 	@Override
@@ -200,11 +194,6 @@ public class LiferayFileShortcut extends LiferayModel implements FileShortcut {
 	}
 
 	@Override
-	public int getStatus() {
-		return _dlFileShortcut.getStatus();
-	}
-
-	@Override
 	public long getToFileEntryId() {
 		return _dlFileShortcut.getToFileEntryId();
 	}
@@ -212,16 +201,6 @@ public class LiferayFileShortcut extends LiferayModel implements FileShortcut {
 	@Override
 	public String getToTitle() {
 		return _dlFileShortcut.getToTitle();
-	}
-
-	@Override
-	public TrashEntry getTrashEntry() throws PortalException {
-		return _dlFileShortcut.getTrashEntry();
-	}
-
-	@Override
-	public TrashHandler getTrashHandler() {
-		return _dlFileShortcut.getTrashHandler();
 	}
 
 	@Override
@@ -255,21 +234,6 @@ public class LiferayFileShortcut extends LiferayModel implements FileShortcut {
 	}
 
 	@Override
-	public boolean isInTrash() {
-		return _dlFileShortcut.isInTrash();
-	}
-
-	@Override
-	public boolean isInTrashContainer() {
-		return _dlFileShortcut.isInTrashContainer();
-	}
-
-	@Override
-	public boolean isInTrashExplicitly() {
-		return _dlFileShortcut.isInTrashExplicitly();
-	}
-
-	@Override
 	public void setCompanyId(long companyId) {
 		_dlFileShortcut.setCompanyId(companyId);
 	}
@@ -287,6 +251,10 @@ public class LiferayFileShortcut extends LiferayModel implements FileShortcut {
 	@Override
 	public void setModifiedDate(Date date) {
 		_dlFileShortcut.setModifiedDate(date);
+	}
+
+	public void setPrimaryKey(long primaryKey) {
+		_dlFileShortcut.setPrimaryKey(primaryKey);
 	}
 
 	@Override
