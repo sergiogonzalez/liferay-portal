@@ -17,6 +17,7 @@ package com.liferay.portal.repository.proxy;
 import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.repository.model.RepositoryEntry;
@@ -45,6 +46,19 @@ public abstract class RepositoryModelProxyBean {
 			fileEntry, FileEntry.class);
 
 		return new FileEntryProxyBean(fileEntryProxy, _classLoader);
+	}
+
+	protected FileShortcutProxyBean newFileShortcutProxyBean(
+		FileShortcut fileShortcut) {
+
+		if (fileShortcut == null) {
+			return null;
+		}
+
+		FileShortcut fileShortcutProxy = (FileShortcut)newProxyInstance(
+			fileShortcut, FileShortcut.class);
+
+		return new FileShortcutProxyBean(fileShortcutProxy, _classLoader);
 	}
 
 	protected FileVersionProxyBean newFileVersionProxyBean(

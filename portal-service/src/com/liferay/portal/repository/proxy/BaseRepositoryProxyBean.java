@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.repository.BaseRepository;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.capabilities.Capability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.repository.model.RepositoryEntry;
@@ -124,6 +125,18 @@ public class BaseRepositoryProxyBean
 				getUserId(),
 			folderId, sourceFileName, mimeType, title, description, changeLog,
 			is, size, serviceContext);
+	}
+
+	@Override
+	public FileShortcut addFileShortcut(
+			long userId, long folderId, long toFileEntryId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		FileShortcut fileShortcut = _baseRepository.addFileShortcut(
+			userId, folderId, toFileEntryId, serviceContext);
+
+		return newFileShortcutProxyBean(fileShortcut);
 	}
 
 	@Override
@@ -415,6 +428,16 @@ public class BaseRepositoryProxyBean
 		FileEntry fileEntry = _baseRepository.getFileEntryByUuid(uuid);
 
 		return newFileEntryProxyBean(fileEntry);
+	}
+
+	@Override
+	public FileShortcut getFileShortcut(long dlFileShortcutId)
+		throws PortalException {
+
+		FileShortcut fileShortcut = _baseRepository.getFileShortcut(
+			dlFileShortcutId);
+
+		return newFileShortcutProxyBean(fileShortcut);
 	}
 
 	@Override
@@ -974,6 +997,18 @@ public class BaseRepositoryProxyBean
 			changeLog, majorVersion, is, size, serviceContext);
 
 		return newFileEntryProxyBean(fileEntry);
+	}
+
+	@Override
+	public FileShortcut updateFileShortcut(
+			long userId, long fileShortcutId, long folderId, long toFileEntryId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		FileShortcut fileShortcut = _baseRepository.updateFileShortcut(
+			userId, fileShortcutId, folderId, toFileEntryId, serviceContext);
+
+		return newFileShortcutProxyBean(fileShortcut);
 	}
 
 	@Override
