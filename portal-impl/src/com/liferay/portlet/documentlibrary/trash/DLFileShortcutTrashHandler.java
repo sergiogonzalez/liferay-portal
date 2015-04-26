@@ -19,8 +19,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.trash.TrashActionKeys;
-import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -30,7 +30,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcutConstants;
-import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileShortcutPermission;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
@@ -60,9 +60,9 @@ public class DLFileShortcutTrashHandler extends DLBaseTrashHandler {
 	public ContainerModel getParentContainerModel(long classPK)
 		throws PortalException {
 
-		FileShortcut fileShortcut = getFileShortcut(classPK);
+		DLFileShortcut dlFileShortcut = getDLFileShortcut(classPK);
 
-		long parentFolderId = fileShortcut.getFolderId();
+		long parentFolderId = dlFileShortcut.getFolderId();
 
 		if (parentFolderId <= 0) {
 			return null;
@@ -85,10 +85,10 @@ public class DLFileShortcutTrashHandler extends DLBaseTrashHandler {
 			PortletRequest portletRequest, long classPK)
 		throws PortalException {
 
-		FileShortcut fileShortcut = getFileShortcut(classPK);
+		DLFileShortcut dlFileShortcut = getDLFileShortcut(classPK);
 
 		return DLUtil.getDLFileEntryControlPanelLink(
-			portletRequest, fileShortcut.getToFileEntryId());
+			portletRequest, dlFileShortcut.getToFileEntryId());
 	}
 
 	@Override
@@ -96,34 +96,27 @@ public class DLFileShortcutTrashHandler extends DLBaseTrashHandler {
 			PortletRequest portletRequest, long classPK)
 		throws PortalException {
 
-		FileShortcut fileShortcut = getFileShortcut(classPK);
+		DLFileShortcut dlFileShortcut = getDLFileShortcut(classPK);
 
 		return DLUtil.getDLFolderControlPanelLink(
-			portletRequest, fileShortcut.getFolderId());
+			portletRequest, dlFileShortcut.getFolderId());
 	}
 
 	@Override
 	public String getRestoreMessage(PortletRequest portletRequest, long classPK)
 		throws PortalException {
 
-		FileShortcut fileShortcut = getFileShortcut(classPK);
+		DLFileShortcut dlFileShortcut = getDLFileShortcut(classPK);
 
 		return DLUtil.getAbsolutePath(
-			portletRequest, fileShortcut.getFolderId());
+			portletRequest, dlFileShortcut.getFolderId());
 	}
 
 	@Override
 	public TrashEntry getTrashEntry(long classPK) throws PortalException {
-		FileShortcut fileShortcut = getFileShortcut(classPK);
+		DLFileShortcut dlFileShortcut = getDLFileShortcut(classPK);
 
-		return fileShortcut.getTrashEntry();
-	}
-
-	@Override
-	public TrashRenderer getTrashRenderer(long classPK) throws PortalException {
-		FileShortcut fileShortcut = getFileShortcut(classPK);
-
-		return new DLFileShortcutTrashRenderer(fileShortcut);
+		return dlFileShortcut.getTrashEntry();
 	}
 
 	@Override
@@ -143,30 +136,40 @@ public class DLFileShortcutTrashHandler extends DLBaseTrashHandler {
 
 	@Override
 	public boolean isInTrash(long classPK) throws PortalException {
-		FileShortcut fileShortcut = getFileShortcut(classPK);
+		try {
+			DLFileShortcut dlFileShortcut = getDLFileShortcut(classPK);
 
-		return fileShortcut.isInTrash();
+			return dlFileShortcut.isInTrash();
+		}
+		catch (InvalidRepositoryException ire) {
+			return false;
+		}
 	}
 
 	@Override
 	public boolean isInTrashContainer(long classPK) throws PortalException {
-		FileShortcut fileShortcut = getFileShortcut(classPK);
+		try {
+			DLFileShortcut dlFileShortcut = getDLFileShortcut(classPK);
 
-		return fileShortcut.isInTrashContainer();
+			return dlFileShortcut.isInTrashContainer();
+		}
+		catch (InvalidRepositoryException ire) {
+			return false;
+		}
 	}
 
 	@Override
 	public boolean isRestorable(long classPK) throws PortalException {
-		FileShortcut fileShortcut = getFileShortcut(classPK);
+		DLFileShortcut dlFileShortcut = getDLFileShortcut(classPK);
 
 		try {
-			fileShortcut.getFolder();
+			dlFileShortcut.getFolder();
 		}
 		catch (NoSuchFolderException nsfe) {
 			return false;
 		}
 
-		return !fileShortcut.isInTrashContainer();
+		return !dlFileShortcut.isInTrashContainer();
 	}
 
 	@Override
@@ -175,11 +178,11 @@ public class DLFileShortcutTrashHandler extends DLBaseTrashHandler {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		FileShortcut fileShortcut = getFileShortcut(classPK);
+		DLFileShortcut dlFileShortcut = getDLFileShortcut(classPK);
 
 		DLAppLocalServiceUtil.updateFileShortcut(
-			userId, classPK, containerModelId, fileShortcut.getToFileEntryId(),
-			serviceContext);
+			userId, classPK, containerModelId,
+			dlFileShortcut.getToFileEntryId(), serviceContext);
 	}
 
 	@Override
@@ -188,30 +191,58 @@ public class DLFileShortcutTrashHandler extends DLBaseTrashHandler {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		DLAppHelperLocalServiceUtil.moveFileShortcutFromTrash(
-			userId, getFileShortcut(classPK), containerModelId, serviceContext);
+		Repository repository = getRepository(classPK);
+
+		TrashCapability trashCapability = repository.getCapability(
+			TrashCapability.class);
+
+		Folder newFolder = null;
+
+		if (containerModelId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			newFolder = repository.getFolder(containerModelId);
+		}
+
+		FileShortcut fileShortcut = repository.getFileShortcut(classPK);
+
+		trashCapability.moveFileShortcutFromTrash(
+			userId, fileShortcut, newFolder, serviceContext);
 	}
 
 	@Override
 	public void restoreTrashEntry(long userId, long classPK)
 		throws PortalException {
 
-		DLAppHelperLocalServiceUtil.restoreFileShortcutFromTrash(
-			userId, getFileShortcut(classPK));
+		Repository repository = getRepository(classPK);
+
+		TrashCapability trashCapability = repository.getCapability(
+			TrashCapability.class);
+
+		FileShortcut fileShortcut = repository.getFileShortcut(classPK);
+
+		trashCapability.restoreFileShortcutFromTrash(userId, fileShortcut);
 	}
 
-	protected FileShortcut getFileShortcut(long classPK)
+	protected DLFileShortcut getDLFileShortcut(long classPK)
 		throws PortalException {
 
-		return DLAppLocalServiceUtil.getFileShortcut(classPK);
+		Repository repository = RepositoryServiceUtil.getRepositoryImpl(
+			0, 0, 0, classPK);
+
+		if (!repository.isCapabilityProvided(TrashCapability.class)) {
+			throw new InvalidRepositoryException(
+				"Repository " + repository.getRepositoryId() +
+					" does not support trash operations");
+		}
+
+		FileShortcut fileShortcut = repository.getFileShortcut(classPK);
+
+		return (DLFileShortcut)fileShortcut.getModel();
 	}
 
 	@Override
 	protected Repository getRepository(long classPK) throws PortalException {
-		FileShortcut fileShortcut = getFileShortcut(classPK);
-
 		Repository repository = RepositoryServiceUtil.getRepositoryImpl(
-			0, fileShortcut.getToFileEntryId(), 0);
+			0, 0, 0, classPK);
 
 		if (!repository.isCapabilityProvided(TrashCapability.class)) {
 			throw new InvalidRepositoryException(
@@ -227,9 +258,9 @@ public class DLFileShortcutTrashHandler extends DLBaseTrashHandler {
 			PermissionChecker permissionChecker, long classPK, String actionId)
 		throws PortalException {
 
-		FileShortcut fileShortcut = getFileShortcut(classPK);
+		DLFileShortcut dlFileShortcut = getDLFileShortcut(classPK);
 
-		if (fileShortcut.isInHiddenFolder() &&
+		if (dlFileShortcut.isInHiddenFolder() &&
 			actionId.equals(ActionKeys.VIEW)) {
 
 			return false;

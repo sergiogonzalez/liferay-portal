@@ -12,11 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.kernel.repository.model;
+package com.liferay.portal.repository.proxy;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.StagedModelType;
-import com.liferay.portal.model.ModelWrapper;
+import com.liferay.portal.kernel.repository.model.FileShortcut;
+import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.repository.model.RepositoryModelOperation;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 
@@ -26,19 +30,41 @@ import java.util.Date;
 import java.util.Map;
 
 /**
- * @author Adolfo Pérez
  * @author Roberto Díaz
  */
-public class FileShortcutWrapper
-	implements FileShortcut, ModelWrapper<FileShortcut> {
+public class FileShortcutProxyBean extends RepositoryModelProxyBean
+	implements FileShortcut {
 
-	public FileShortcutWrapper(FileShortcut fileShortcut) {
+	public FileShortcutProxyBean(
+		FileShortcut fileShortcut, ClassLoader classLoader) {
+
+		super(classLoader);
+
 		_fileShortcut = fileShortcut;
 	}
 
 	@Override
 	public Object clone() {
-		return new FileShortcutWrapper((FileShortcut)_fileShortcut.clone());
+		FileShortcutProxyBean newFileShortcutProxyBean =
+			newFileShortcutProxyBean(_fileShortcut);
+
+		newFileShortcutProxyBean.setCompanyId(getCompanyId());
+		newFileShortcutProxyBean.setCreateDate(getCreateDate());
+		newFileShortcutProxyBean.setGroupId(getGroupId());
+		newFileShortcutProxyBean.setModifiedDate(getModifiedDate());
+		newFileShortcutProxyBean.setPrimaryKeyObj(getPrimaryKeyObj());
+		newFileShortcutProxyBean.setUserId(getUserId());
+		newFileShortcutProxyBean.setUserName(getUserName());
+
+		try {
+			newFileShortcutProxyBean.setUserUuid(getUserUuid());
+		}
+		catch (SystemException se) {
+		}
+
+		newFileShortcutProxyBean.setUuid(getUuid());
+
+		return newFileShortcutProxyBean;
 	}
 
 	@Override
@@ -53,7 +79,7 @@ public class FileShortcutWrapper
 	public void execute(RepositoryModelOperation repositoryModelOperation)
 		throws PortalException {
 
-		repositoryModelOperation.execute(this);
+		repositoryModelOperation.execute(_fileShortcut);
 	}
 
 	@Override
@@ -151,6 +177,7 @@ public class FileShortcutWrapper
 		return _fileShortcut.getUserId();
 	}
 
+	@Override
 	public String getUserName() {
 		return _fileShortcut.getUserName();
 	}
@@ -163,11 +190,6 @@ public class FileShortcutWrapper
 	@Override
 	public String getUuid() {
 		return _fileShortcut.getUuid();
-	}
-
-	@Override
-	public FileShortcut getWrappedModel() {
-		return _fileShortcut;
 	}
 
 	@Override
@@ -227,12 +249,16 @@ public class FileShortcutWrapper
 
 	@Override
 	public FileShortcut toEscapedModel() {
-		return _fileShortcut.toEscapedModel();
+		FileShortcut fileShortcut = _fileShortcut.toEscapedModel();
+
+		return newFileShortcutProxyBean(fileShortcut);
 	}
 
 	@Override
 	public FileShortcut toUnescapedModel() {
-		return _fileShortcut.toUnescapedModel();
+		FileShortcut fileShortcut = _fileShortcut.toUnescapedModel();
+
+		return newFileShortcutProxyBean(fileShortcut);
 	}
 
 	private final FileShortcut _fileShortcut;
