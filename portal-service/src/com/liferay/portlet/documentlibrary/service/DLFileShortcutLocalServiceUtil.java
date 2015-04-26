@@ -384,6 +384,11 @@ public class DLFileShortcutLocalServiceUtil {
 			end);
 	}
 
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> getFileShortcuts(
+		long toFileEntryId) {
+		return getService().getFileShortcuts(toFileEntryId);
+	}
+
 	public static int getFileShortcutsCount(long groupId, long folderId,
 		boolean active, int status) {
 		return getService()

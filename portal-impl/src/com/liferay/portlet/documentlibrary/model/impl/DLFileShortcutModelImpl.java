@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.lar.StagedModelType;
-import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -967,20 +966,11 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 			return true;
 		}
 
-		if (!(obj instanceof DLFileShortcut || obj instanceof FileShortcut)) {
+		if (!(obj instanceof DLFileShortcut)) {
 			return false;
 		}
 
-		DLFileShortcut dlFileShortcut = null;
-
-		if (obj instanceof FileShortcut) {
-			FileShortcut fileShortcut = (FileShortcut)obj;
-
-			dlFileShortcut = (DLFileShortcut)fileShortcut.getModel();
-		}
-		else {
-			dlFileShortcut = (DLFileShortcut)obj;
-		}
+		DLFileShortcut dlFileShortcut = (DLFileShortcut)obj;
 
 		long primaryKey = dlFileShortcut.getPrimaryKey();
 

@@ -149,41 +149,66 @@ public class DLFileEntryMetadataPersistenceTest {
 	}
 
 	@Test
-	public void testCountByUuid() throws Exception {
-		_persistence.countByUuid(StringPool.BLANK);
+	public void testCountByUuid() {
+		try {
+			_persistence.countByUuid(StringPool.BLANK);
 
-		_persistence.countByUuid(StringPool.NULL);
+			_persistence.countByUuid(StringPool.NULL);
 
-		_persistence.countByUuid((String)null);
+			_persistence.countByUuid((String)null);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
-	public void testCountByFileEntryTypeId() throws Exception {
-		_persistence.countByFileEntryTypeId(RandomTestUtil.nextLong());
+	public void testCountByFileEntryTypeId() {
+		try {
+			_persistence.countByFileEntryTypeId(RandomTestUtil.nextLong());
 
-		_persistence.countByFileEntryTypeId(0L);
+			_persistence.countByFileEntryTypeId(0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
-	public void testCountByFileEntryId() throws Exception {
-		_persistence.countByFileEntryId(RandomTestUtil.nextLong());
+	public void testCountByFileEntryId() {
+		try {
+			_persistence.countByFileEntryId(RandomTestUtil.nextLong());
 
-		_persistence.countByFileEntryId(0L);
+			_persistence.countByFileEntryId(0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
-	public void testCountByFileVersionId() throws Exception {
-		_persistence.countByFileVersionId(RandomTestUtil.nextLong());
+	public void testCountByFileVersionId() {
+		try {
+			_persistence.countByFileVersionId(RandomTestUtil.nextLong());
 
-		_persistence.countByFileVersionId(0L);
+			_persistence.countByFileVersionId(0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
-	public void testCountByD_F() throws Exception {
-		_persistence.countByD_F(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong());
+	public void testCountByD_F() {
+		try {
+			_persistence.countByD_F(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong());
 
-		_persistence.countByD_F(0L, 0L);
+			_persistence.countByD_F(0L, 0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
@@ -211,8 +236,13 @@ public class DLFileEntryMetadataPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			getOrderByComparator());
+		try {
+			_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				getOrderByComparator());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	protected OrderByComparator<DLFileEntryMetadata> getOrderByComparator() {

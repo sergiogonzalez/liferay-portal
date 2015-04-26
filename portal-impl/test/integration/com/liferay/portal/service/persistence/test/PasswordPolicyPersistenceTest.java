@@ -264,45 +264,71 @@ public class PasswordPolicyPersistenceTest {
 	}
 
 	@Test
-	public void testCountByUuid() throws Exception {
-		_persistence.countByUuid(StringPool.BLANK);
+	public void testCountByUuid() {
+		try {
+			_persistence.countByUuid(StringPool.BLANK);
 
-		_persistence.countByUuid(StringPool.NULL);
+			_persistence.countByUuid(StringPool.NULL);
 
-		_persistence.countByUuid((String)null);
+			_persistence.countByUuid((String)null);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
-	public void testCountByUuid_C() throws Exception {
-		_persistence.countByUuid_C(StringPool.BLANK, RandomTestUtil.nextLong());
+	public void testCountByUuid_C() {
+		try {
+			_persistence.countByUuid_C(StringPool.BLANK,
+				RandomTestUtil.nextLong());
 
-		_persistence.countByUuid_C(StringPool.NULL, 0L);
+			_persistence.countByUuid_C(StringPool.NULL, 0L);
 
-		_persistence.countByUuid_C((String)null, 0L);
+			_persistence.countByUuid_C((String)null, 0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
-	public void testCountByCompanyId() throws Exception {
-		_persistence.countByCompanyId(RandomTestUtil.nextLong());
+	public void testCountByCompanyId() {
+		try {
+			_persistence.countByCompanyId(RandomTestUtil.nextLong());
 
-		_persistence.countByCompanyId(0L);
+			_persistence.countByCompanyId(0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
-	public void testCountByC_DP() throws Exception {
-		_persistence.countByC_DP(RandomTestUtil.nextLong(),
-			RandomTestUtil.randomBoolean());
+	public void testCountByC_DP() {
+		try {
+			_persistence.countByC_DP(RandomTestUtil.nextLong(),
+				RandomTestUtil.randomBoolean());
 
-		_persistence.countByC_DP(0L, RandomTestUtil.randomBoolean());
+			_persistence.countByC_DP(0L, RandomTestUtil.randomBoolean());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
-	public void testCountByC_N() throws Exception {
-		_persistence.countByC_N(RandomTestUtil.nextLong(), StringPool.BLANK);
+	public void testCountByC_N() {
+		try {
+			_persistence.countByC_N(RandomTestUtil.nextLong(), StringPool.BLANK);
 
-		_persistence.countByC_N(0L, StringPool.NULL);
+			_persistence.countByC_N(0L, StringPool.NULL);
 
-		_persistence.countByC_N(0L, (String)null);
+			_persistence.countByC_N(0L, (String)null);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
@@ -330,8 +356,13 @@ public class PasswordPolicyPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			getOrderByComparator());
+		try {
+			_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				getOrderByComparator());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	protected OrderByComparator<PasswordPolicy> getOrderByComparator() {

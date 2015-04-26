@@ -140,17 +140,27 @@ public class DLSyncEventPersistenceTest {
 	}
 
 	@Test
-	public void testCountByModifiedTime() throws Exception {
-		_persistence.countByModifiedTime(RandomTestUtil.nextLong());
+	public void testCountByModifiedTime() {
+		try {
+			_persistence.countByModifiedTime(RandomTestUtil.nextLong());
 
-		_persistence.countByModifiedTime(0L);
+			_persistence.countByModifiedTime(0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
-	public void testCountByTypePK() throws Exception {
-		_persistence.countByTypePK(RandomTestUtil.nextLong());
+	public void testCountByTypePK() {
+		try {
+			_persistence.countByTypePK(RandomTestUtil.nextLong());
 
-		_persistence.countByTypePK(0L);
+			_persistence.countByTypePK(0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
@@ -177,8 +187,13 @@ public class DLSyncEventPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			getOrderByComparator());
+		try {
+			_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				getOrderByComparator());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	protected OrderByComparator<DLSyncEvent> getOrderByComparator() {

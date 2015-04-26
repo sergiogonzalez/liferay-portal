@@ -176,37 +176,57 @@ public class WorkflowDefinitionLinkPersistenceTest {
 	}
 
 	@Test
-	public void testCountByCompanyId() throws Exception {
-		_persistence.countByCompanyId(RandomTestUtil.nextLong());
+	public void testCountByCompanyId() {
+		try {
+			_persistence.countByCompanyId(RandomTestUtil.nextLong());
 
-		_persistence.countByCompanyId(0L);
+			_persistence.countByCompanyId(0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
-	public void testCountByG_C_C() throws Exception {
-		_persistence.countByG_C_C(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+	public void testCountByG_C_C() {
+		try {
+			_persistence.countByG_C_C(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
-		_persistence.countByG_C_C(0L, 0L, 0L);
+			_persistence.countByG_C_C(0L, 0L, 0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
-	public void testCountByC_W_W() throws Exception {
-		_persistence.countByC_W_W(RandomTestUtil.nextLong(), StringPool.BLANK,
-			RandomTestUtil.nextInt());
+	public void testCountByC_W_W() {
+		try {
+			_persistence.countByC_W_W(RandomTestUtil.nextLong(),
+				StringPool.BLANK, RandomTestUtil.nextInt());
 
-		_persistence.countByC_W_W(0L, StringPool.NULL, 0);
+			_persistence.countByC_W_W(0L, StringPool.NULL, 0);
 
-		_persistence.countByC_W_W(0L, (String)null, 0);
+			_persistence.countByC_W_W(0L, (String)null, 0);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
-	public void testCountByG_C_C_C_T() throws Exception {
-		_persistence.countByG_C_C_C_T(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
+	public void testCountByG_C_C_C_T() {
+		try {
+			_persistence.countByG_C_C_C_T(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
-		_persistence.countByG_C_C_C_T(0L, 0L, 0L, 0L, 0L);
+			_persistence.countByG_C_C_C_T(0L, 0L, 0L, 0L, 0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
@@ -235,8 +255,13 @@ public class WorkflowDefinitionLinkPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			getOrderByComparator());
+		try {
+			_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				getOrderByComparator());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	protected OrderByComparator<WorkflowDefinitionLink> getOrderByComparator() {
