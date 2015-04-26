@@ -566,7 +566,9 @@ public class DLAppHelperLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		if (fileShortcut.isInTrashExplicitly()) {
+		DLFileShortcut dlFileShortcut = (DLFileShortcut)fileShortcut.getModel();
+
+		if (dlFileShortcut.isInTrashExplicitly()) {
 			restoreFileShortcutFromTrash(userId, fileShortcut);
 		}
 		else {
@@ -627,7 +629,9 @@ public class DLAppHelperLocalServiceImpl
 
 		// File shortcut
 
-		int oldStatus = fileShortcut.getStatus();
+		DLFileShortcut dlFileShortcut = (DLFileShortcut)fileShortcut.getModel();
+
+		int oldStatus = dlFileShortcut.getStatus();
 
 		dlFileShortcutLocalService.updateStatus(
 			userId, fileShortcut.getFileShortcutId(),

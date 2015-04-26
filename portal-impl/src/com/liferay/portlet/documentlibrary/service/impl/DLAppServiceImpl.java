@@ -54,7 +54,6 @@ import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
 import com.liferay.portlet.documentlibrary.NoSuchFileVersionException;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
-import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.base.DLAppServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
@@ -2318,13 +2317,23 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	public FileShortcut moveFileShortcutToTrash(long fileShortcutId)
 		throws PortalException {
 
-		FileShortcut fileShortcut = getFileShortcut(fileShortcutId);
+		Repository repository = getFileShortcutRepository(fileShortcutId);
+
+		if (!repository.isCapabilityProvided(TrashCapability.class)) {
+			throw new InvalidRepositoryException(
+				"Repository " + repository.getRepositoryId() +
+					" does not support trash operations");
+		}
+
+		FileShortcut fileShortcut = repository.getFileShortcut(fileShortcutId);
 
 		DLFileShortcutPermission.check(
-			getPermissionChecker(), (DLFileShortcut)fileShortcut.getModel(),
-			ActionKeys.DELETE);
+			getPermissionChecker(), fileShortcut, ActionKeys.DELETE);
 
-		return dlAppHelperLocalService.moveFileShortcutToTrash(
+		TrashCapability trashCapability = repository.getCapability(
+			TrashCapability.class);
+
+		return trashCapability.moveFileShortcutToTrash(
 			getUserId(), fileShortcut);
 	}
 
