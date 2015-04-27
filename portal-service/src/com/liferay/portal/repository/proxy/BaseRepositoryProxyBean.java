@@ -301,6 +301,16 @@ public class BaseRepositoryProxyBean
 	}
 
 	@Override
+	public void deleteFileShortcut(long fileShortcutId) throws PortalException {
+		_baseRepository.deleteFileShortcut(fileShortcutId);
+	}
+
+	@Override
+	public void deleteFileShortcuts(long toFileEntryId) throws PortalException {
+		_baseRepository.deleteFileShortcuts(toFileEntryId);
+	}
+
+	@Override
 	public void deleteFileVersion(long fileEntryId, String version)
 		throws PortalException {
 
@@ -1009,6 +1019,12 @@ public class BaseRepositoryProxyBean
 			userId, fileShortcutId, folderId, toFileEntryId, serviceContext);
 
 		return newFileShortcutProxyBean(fileShortcut);
+	}
+
+	@Override
+	public void updateFileShortcuts(
+			long oldToFileEntryId, long newToFileEntryId)
+		throws PortalException {
 	}
 
 	@Override
