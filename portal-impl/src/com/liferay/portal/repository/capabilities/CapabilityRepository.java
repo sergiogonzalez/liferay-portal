@@ -539,10 +539,10 @@ public class CapabilityRepository
 	}
 
 	@Override
-	public FileShortcut getFileShortcut(long dlFileShortcutId)
+	public FileShortcut getFileShortcut(long fileShortcutId)
 		throws PortalException {
 
-		return getRepository().getFileShortcut(dlFileShortcutId);
+		return getRepository().getFileShortcut(fileShortcutId);
 	}
 
 	@Override

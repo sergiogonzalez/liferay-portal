@@ -615,7 +615,7 @@ public class CMISRepository extends BaseCmisRepository {
 	}
 
 	@Override
-	public FileShortcut getFileShortcut(long dlFileShortcutId)
+	public FileShortcut getFileShortcut(long fileShortcutId)
 		throws PortalException {
 
 		throw new UnsupportedOperationException();

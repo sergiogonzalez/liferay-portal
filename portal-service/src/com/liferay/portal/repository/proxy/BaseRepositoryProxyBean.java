@@ -441,11 +441,11 @@ public class BaseRepositoryProxyBean
 	}
 
 	@Override
-	public FileShortcut getFileShortcut(long dlFileShortcutId)
+	public FileShortcut getFileShortcut(long fileShortcutId)
 		throws PortalException {
 
 		FileShortcut fileShortcut = _baseRepository.getFileShortcut(
-			dlFileShortcutId);
+			fileShortcutId);
 
 		return newFileShortcutProxyBean(fileShortcut);
 	}

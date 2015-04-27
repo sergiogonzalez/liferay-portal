@@ -87,7 +87,7 @@ public interface DocumentRepository extends CapabilityProvider {
 
 	public FileEntry getFileEntryByUuid(String uuid) throws PortalException;
 
-	public FileShortcut getFileShortcut(long dlFileShortcutId)
+	public FileShortcut getFileShortcut(long fileShortcutId)
 		throws PortalException;
 
 	public FileVersion getFileVersion(long fileVersionId)

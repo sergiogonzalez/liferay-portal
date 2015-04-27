@@ -1234,10 +1234,10 @@ public class WebServerServlet extends HttpServlet {
 
 	private static void _checkFileEntry(String[] pathArray) throws Exception {
 		if (pathArray.length == 1) {
-			long dlFileShortcutId = GetterUtil.getLong(pathArray[0]);
+			long fileShortcutId = GetterUtil.getLong(pathArray[0]);
 
 			FileShortcut fileShortcut = DLAppLocalServiceUtil.getFileShortcut(
-				dlFileShortcutId);
+				fileShortcutId);
 
 			DLAppLocalServiceUtil.getFileEntry(fileShortcut.getToFileEntryId());
 		}
