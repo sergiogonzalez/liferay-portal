@@ -425,6 +425,16 @@ public class CMISRepository extends BaseCmisRepository {
 	}
 
 	@Override
+	public void deleteFileShortcut(long fileShortcutId) throws PortalException {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void deleteFileShortcuts(long toFileEntryId) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public void deleteFolder(long folderId) throws PortalException {
 		try {
 			Session session = getSession();
@@ -1405,6 +1415,14 @@ public class CMISRepository extends BaseCmisRepository {
 	public FileShortcut updateFileShortcut(
 			long userId, long fileShortcutId, long folderId, long toFileEntryId,
 			ServiceContext serviceContext)
+		throws PortalException {
+
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void updateFileShortcuts(
+			long oldToFileEntryId, long newToFileEntryId)
 		throws PortalException {
 
 		throw new UnsupportedOperationException();

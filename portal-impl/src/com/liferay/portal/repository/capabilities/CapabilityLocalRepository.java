@@ -195,6 +195,36 @@ public class CapabilityLocalRepository
 	}
 
 	@Override
+	public void deleteFileShortcut(long fileShortcutId) throws PortalException {
+		LocalRepository localRepository = getRepository();
+
+		FileShortcut fileShortcut = localRepository.getFileShortcut(
+			fileShortcutId);
+
+		_repositoryEventTrigger.trigger(
+			RepositoryEventType.Delete.class, FileShortcut.class, fileShortcut);
+
+		localRepository.deleteFileShortcut(fileShortcutId);
+	}
+
+	@Override
+	public void deleteFileShortcuts(long toFileEntryId) throws PortalException {
+		LocalRepository localRepository = getRepository();
+
+		FileEntry fileEntry = localRepository.getFileEntry(toFileEntryId);
+
+		List<FileShortcut> fileShortcuts = fileEntry.getFileShortcuts();
+
+		for (FileShortcut fileShortcut : fileShortcuts) {
+			_repositoryEventTrigger.trigger(
+				RepositoryEventType.Delete.class, FileShortcut.class,
+				fileShortcut);
+		}
+
+		localRepository.deleteFileShortcuts(toFileEntryId);
+	}
+
+	@Override
 	public void deleteFolder(long folderId) throws PortalException {
 		LocalRepository localRepository = getRepository();
 
@@ -224,10 +254,10 @@ public class CapabilityLocalRepository
 	}
 
 	@Override
-	public FileShortcut getFileShortcut(long fileShortcutId)
+	public FileShortcut getFileShortcut(long dlFileShortcutId)
 		throws PortalException {
 
-		return getRepository().getFileShortcut(fileShortcutId);
+		return getRepository().getFileShortcut(dlFileShortcutId);
 	}
 
 	@Override
@@ -385,6 +415,20 @@ public class CapabilityLocalRepository
 			RepositoryEventType.Update.class, FileShortcut.class, fileShortcut);
 
 		return fileShortcut;
+	}
+
+	@Override
+	public void updateFileShortcuts(
+			long oldToFileEntryId, long newToFileEntryId)
+		throws PortalException {
+
+		LocalRepository localRepository = getRepository();
+
+		FileEntry fileEntry = localRepository.getFileEntry(oldToFileEntryId);
+
+		fileEntry.getFileShortcuts();
+
+		localRepository.updateFileShortcuts(oldToFileEntryId, newToFileEntryId);
 	}
 
 	@Override

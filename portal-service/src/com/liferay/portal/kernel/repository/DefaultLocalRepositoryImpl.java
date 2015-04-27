@@ -125,6 +125,16 @@ public class DefaultLocalRepositoryImpl implements LocalRepository {
 	}
 
 	@Override
+	public void deleteFileShortcut(long fileShortcutId) throws PortalException {
+		_repository.deleteFileShortcut(fileShortcutId);
+	}
+
+	@Override
+	public void deleteFileShortcuts(long toFileEntryId) throws PortalException {
+		_repository.deleteFileShortcuts(toFileEntryId);
+	}
+
+	@Override
 	public void deleteFolder(long folderId) throws PortalException {
 		_repository.deleteFolder(folderId);
 	}
@@ -264,6 +274,12 @@ public class DefaultLocalRepositoryImpl implements LocalRepository {
 		throws PortalException {
 
 		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void updateFileShortcuts(
+			long oldToFileEntryId, long newToFileEntryId)
+		throws PortalException {
 	}
 
 	@Override
