@@ -91,4 +91,24 @@ public class DLFileShortcutServiceImpl extends DLFileShortcutServiceBaseImpl {
 			serviceContext);
 	}
 
+	@Override
+	public void updateFileShortcuts(
+			long oldToFileEntryId, long newToFileEntryId)
+		throws PortalException {
+
+		try {
+			DLFileEntryPermission.check(
+				getPermissionChecker(), oldToFileEntryId, ActionKeys.VIEW);
+
+			DLFileEntryPermission.check(
+				getPermissionChecker(), newToFileEntryId, ActionKeys.VIEW);
+		}
+		catch (PrincipalException pe) {
+			throw new FileShortcutPermissionException();
+		}
+
+		dlFileShortcutLocalService.updateFileShortcuts(
+			oldToFileEntryId, newToFileEntryId);
+	}
+
 }
