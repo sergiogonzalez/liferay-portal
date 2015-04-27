@@ -188,10 +188,10 @@ public class InitializedDocumentRepository implements DocumentRepository {
 	}
 
 	@Override
-	public FileShortcut getFileShortcut(long dlFileShortcutId)
+	public FileShortcut getFileShortcut(long fileShortcutId)
 		throws PortalException {
 
-		return _documentRepository.getFileShortcut(dlFileShortcutId);
+		return _documentRepository.getFileShortcut(fileShortcutId);
 	}
 
 	@Override

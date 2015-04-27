@@ -399,10 +399,10 @@ public class RepositoryWrapper implements Repository {
 	}
 
 	@Override
-	public FileShortcut getFileShortcut(long dlFileShortcutId)
+	public FileShortcut getFileShortcut(long fileShortcutId)
 		throws PortalException {
 
-		return _repository.getFileShortcut(dlFileShortcutId);
+		return _repository.getFileShortcut(fileShortcutId);
 	}
 
 	@Override
