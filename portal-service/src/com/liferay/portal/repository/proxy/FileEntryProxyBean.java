@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.repository.model.RepositoryModelOperation;
@@ -140,6 +141,11 @@ public class FileEntryProxyBean
 	@Override
 	public String getFileName() {
 		return _fileEntry.getFileName();
+	}
+
+	@Override
+	public List<FileShortcut> getFileShortcuts() {
+		return _fileEntry.getFileShortcuts();
 	}
 
 	@Override

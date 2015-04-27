@@ -66,6 +66,8 @@ public interface DLFileEntry extends DLFileEntryModel, PersistedModel, TreeModel
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileVersion> getFileVersions(
 		int status);
 
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileShortcut> getFileShortcuts();
+
 	public int getFileVersionsCount(int status);
 
 	public com.liferay.portlet.documentlibrary.model.DLFolder getFolder()
