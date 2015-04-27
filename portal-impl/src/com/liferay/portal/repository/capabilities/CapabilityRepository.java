@@ -380,6 +380,35 @@ public class CapabilityRepository
 	}
 
 	@Override
+	public void deleteFileShortcut(long fileShortcutId) throws PortalException {
+		Repository repository = getRepository();
+
+		FileShortcut fileShortcut = repository.getFileShortcut(fileShortcutId);
+
+		_repositoryEventTrigger.trigger(
+			RepositoryEventType.Delete.class, FileShortcut.class, fileShortcut);
+
+		repository.deleteFileShortcut(fileShortcutId);
+	}
+
+	@Override
+	public void deleteFileShortcuts(long toFileEntryId) throws PortalException {
+		Repository repository = getRepository();
+
+		FileEntry fileEntry = repository.getFileEntry(toFileEntryId);
+
+		List<FileShortcut> fileShortcuts = fileEntry.getFileShortcuts();
+
+		for (FileShortcut fileShortcut : fileShortcuts) {
+			_repositoryEventTrigger.trigger(
+				RepositoryEventType.Delete.class, FileShortcut.class,
+				fileShortcut);
+		}
+
+		repository.deleteFileShortcuts(toFileEntryId);
+	}
+
+	@Override
 	public void deleteFileVersion(long fileEntryId, String version)
 		throws PortalException {
 
@@ -510,10 +539,10 @@ public class CapabilityRepository
 	}
 
 	@Override
-	public FileShortcut getFileShortcut(long fileShortcutId)
+	public FileShortcut getFileShortcut(long dlFileShortcutId)
 		throws PortalException {
 
-		return getRepository().getFileShortcut(fileShortcutId);
+		return getRepository().getFileShortcut(dlFileShortcutId);
 	}
 
 	@Override
@@ -992,6 +1021,26 @@ public class CapabilityRepository
 			RepositoryEventType.Update.class, FileShortcut.class, fileShortcut);
 
 		return fileShortcut;
+	}
+
+	@Override
+	public void updateFileShortcuts(
+			long oldToFileEntryId, long newToFileEntryId)
+		throws PortalException {
+
+		Repository repository = getRepository();
+
+		FileEntry oldToFileEntry = repository.getFileEntry(oldToFileEntryId);
+
+		List<FileShortcut> fileShortcuts = oldToFileEntry.getFileShortcuts();
+
+		for (FileShortcut fileShortcut : fileShortcuts) {
+			_repositoryEventTrigger.trigger(
+				RepositoryEventType.Update.class, FileShortcut.class,
+				fileShortcut);
+		}
+
+		repository.updateFileShortcuts(oldToFileEntryId, newToFileEntryId);
 	}
 
 	@Override

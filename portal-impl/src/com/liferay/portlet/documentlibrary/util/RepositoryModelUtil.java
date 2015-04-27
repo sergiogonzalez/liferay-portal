@@ -15,11 +15,13 @@
 package com.liferay.portlet.documentlibrary.util;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.repository.model.RepositoryEntry;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
+import com.liferay.portal.repository.liferayrepository.model.LiferayFileShortcut;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
@@ -110,6 +112,26 @@ public class RepositoryModelUtil {
 		}
 		else {
 			return fileEntriesFileShortcutsAndFolders;
+		}
+	}
+
+	public static List<FileShortcut> toFileShortcuts(
+		List<DLFileShortcut> dlFileShortcuts) {
+
+		List<FileShortcut> fileShortcuts = new ArrayList<>(
+			dlFileShortcuts.size());
+
+		for (DLFileShortcut dlFileShortcut : dlFileShortcuts) {
+			FileShortcut fileShortcut = new LiferayFileShortcut(dlFileShortcut);
+
+			fileShortcuts.add(fileShortcut);
+		}
+
+		if (ListUtil.isUnmodifiableList(dlFileShortcuts)) {
+			return Collections.unmodifiableList(fileShortcuts);
+		}
+		else {
+			return fileShortcuts;
 		}
 	}
 
