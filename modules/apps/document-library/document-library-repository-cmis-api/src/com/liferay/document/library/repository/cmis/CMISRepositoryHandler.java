@@ -225,10 +225,10 @@ public abstract class CMISRepositoryHandler
 	}
 
 	@Override
-	public FileShortcut getFileShortcut(long dlFileShortcutId)
+	public FileShortcut getFileShortcut(long fileShortcutId)
 		throws PortalException {
 
-		return _baseCmisRepository.getFileShortcut(dlFileShortcutId);
+		return _baseCmisRepository.getFileShortcut(fileShortcutId);
 	}
 
 	@Override
