@@ -68,14 +68,27 @@ public class RepositoryModelUtil {
 			new ArrayList<>(dlFileEntriesDLFileShortcutsAndDLFolders.size());
 
 		for (Object object : dlFileEntriesDLFileShortcutsAndDLFolders) {
-			if (object instanceof FileEntry) {
-				fileEntriesFileShortcutsAndFolders.add((FileEntry)object);
+			if (object instanceof DLFileEntry) {
+				DLFileEntry dlFileEntry = (DLFileEntry)object;
+
+				FileEntry fileEntry = new LiferayFileEntry(dlFileEntry);
+
+				fileEntriesFileShortcutsAndFolders.add(fileEntry);
 			}
 			else if (object instanceof DLFolder) {
-				fileEntriesFileShortcutsAndFolders.add((Folder)object);
+				DLFolder dlFolder = (DLFolder)object;
+
+				Folder folder = new LiferayFolder(dlFolder);
+
+				fileEntriesFileShortcutsAndFolders.add(folder);
 			}
 			else if (object instanceof DLFileShortcut) {
-				fileEntriesFileShortcutsAndFolders.add((RepositoryEntry)object);
+				DLFileShortcut dlFileShortcut = (DLFileShortcut)object;
+
+				FileShortcut fileShortcut = new LiferayFileShortcut(
+					dlFileShortcut);
+
+				fileEntriesFileShortcutsAndFolders.add(fileShortcut);
 			}
 			else {
 				throw new IllegalArgumentException(
