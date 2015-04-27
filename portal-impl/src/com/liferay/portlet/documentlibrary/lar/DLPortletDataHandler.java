@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.lar.xstream.XStreamConverterRegistryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -441,14 +442,14 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 			final PortletDataContext portletDataContext)
 		throws Exception {
 
-		ActionableDynamicQuery actionableDynamicQuery =
+		final ExportActionableDynamicQuery exportActionableDynamicQuery =
 			DLFileShortcutLocalServiceUtil.getExportActionableDynamicQuery(
 				portletDataContext);
 
 		final ActionableDynamicQuery.AddCriteriaMethod addCriteriaMethod =
-			actionableDynamicQuery.getAddCriteriaMethod();
+			exportActionableDynamicQuery.getAddCriteriaMethod();
 
-		actionableDynamicQuery.setAddCriteriaMethod(
+		exportActionableDynamicQuery.setAddCriteriaMethod(
 			new ActionableDynamicQuery.AddCriteriaMethod() {
 
 				@Override
@@ -461,8 +462,26 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 				}
 
 			});
+		exportActionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod() {
+				@Override
+				public void performAction(Object object)
+					throws PortalException {
 
-		return actionableDynamicQuery;
+					DLFileShortcut dlFileShortcut = (DLFileShortcut)object;
+
+					FileShortcut fileShortcut =
+						DLAppLocalServiceUtil.getFileShortcut(
+							dlFileShortcut.getFileShortcutId());
+
+					StagedModelDataHandlerUtil.exportStagedModel(
+						portletDataContext, fileShortcut);
+				}
+			});
+		exportActionableDynamicQuery.setStagedModelType(
+			new StagedModelType(DLFileShortcutConstants.getClassName()));
+
+		return exportActionableDynamicQuery;
 	}
 
 	protected ActionableDynamicQuery getFileEntryActionableDynamicQuery(

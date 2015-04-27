@@ -141,6 +141,16 @@ public abstract class CMISRepositoryHandler
 	}
 
 	@Override
+	public void deleteFileShortcut(long fileShortcutId) throws PortalException {
+		_baseCmisRepository.deleteFileShortcut(fileShortcutId);
+	}
+
+	@Override
+	public void deleteFileShortcuts(long toFileEntryId) throws PortalException {
+		_baseCmisRepository.deleteFileShortcuts(toFileEntryId);
+	}
+
+	@Override
 	public void deleteFolder(long folderId) throws PortalException {
 		_baseCmisRepository.deleteFolder(folderId);
 	}
@@ -556,6 +566,12 @@ public abstract class CMISRepositoryHandler
 
 		return _baseCmisRepository.updateFileShortcut(
 			userId, fileShortcutId, folderId, toFileEntryId, serviceContext);
+	}
+
+	@Override
+	public void updateFileShortcuts(
+			long oldToFileEntryId, long newToFileEntryId)
+		throws PortalException {
 	}
 
 	@Override

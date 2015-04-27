@@ -276,6 +276,16 @@ public class RepositoryWrapper implements Repository {
 	}
 
 	@Override
+	public void deleteFileShortcut(long fileShortcutId) throws PortalException {
+		_repository.deleteFileShortcut(fileShortcutId);
+	}
+
+	@Override
+	public void deleteFileShortcuts(long toFileEntryId) throws PortalException {
+		_repository.deleteFileShortcuts(toFileEntryId);
+	}
+
+	@Override
 	public void deleteFileVersion(long fileEntryId, String version)
 		throws PortalException {
 
@@ -389,10 +399,10 @@ public class RepositoryWrapper implements Repository {
 	}
 
 	@Override
-	public FileShortcut getFileShortcut(long fileShortcutId)
+	public FileShortcut getFileShortcut(long dlFileShortcutId)
 		throws PortalException {
 
-		return _repository.getFileShortcut(fileShortcutId);
+		return _repository.getFileShortcut(dlFileShortcutId);
 	}
 
 	@Override
@@ -819,6 +829,14 @@ public class RepositoryWrapper implements Repository {
 
 		return _repository.updateFileShortcut(
 			userId, fileShortcutId, folderId, toFileEntryId, serviceContext);
+	}
+
+	@Override
+	public void updateFileShortcuts(
+			long oldToFileEntryId, long newToFileEntryId)
+		throws PortalException {
+
+		_repository.updateFileShortcuts(oldToFileEntryId, newToFileEntryId);
 	}
 
 	@Override

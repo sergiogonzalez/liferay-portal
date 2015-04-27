@@ -74,6 +74,10 @@ public interface DocumentRepository extends CapabilityProvider {
 
 	public void deleteFileEntry(long fileEntryId) throws PortalException;
 
+	public void deleteFileShortcut(long fileShortcutId) throws PortalException;
+
+	public void deleteFileShortcuts(long toFileEntryId) throws PortalException;
+
 	public void deleteFolder(long folderId) throws PortalException;
 
 	public FileEntry getFileEntry(long fileEntryId) throws PortalException;
@@ -132,6 +136,10 @@ public interface DocumentRepository extends CapabilityProvider {
 	public FileShortcut updateFileShortcut(
 			long userId, long fileShortcutId, long folderId, long toFileEntryId,
 			ServiceContext serviceContext)
+		throws PortalException;
+
+	public void updateFileShortcuts(
+			long oldToFileEntryId, long newToFileEntryId)
 		throws PortalException;
 
 	public Folder updateFolder(

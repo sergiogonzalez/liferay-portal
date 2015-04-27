@@ -385,6 +385,16 @@ public class LiferayRepository
 	}
 
 	@Override
+	public void deleteFileShortcut(long fileShortcutId) throws PortalException {
+		dlFileShortcutService.deleteFileShortcut(fileShortcutId);
+	}
+
+	@Override
+	public void deleteFileShortcuts(long toFileEntryId) throws PortalException {
+		dlFileShortcutService.deleteFileShortcut(toFileEntryId);
+	}
+
+	@Override
 	public void deleteFileVersion(long fileEntryId, String version)
 		throws PortalException {
 
@@ -520,11 +530,11 @@ public class LiferayRepository
 	}
 
 	@Override
-	public FileShortcut getFileShortcut(long fileShortcutId)
+	public FileShortcut getFileShortcut(long dlFileShortcutId)
 		throws PortalException {
 
 		DLFileShortcut dlFileShortcut = dlFileShortcutService.getFileShortcut(
-			fileShortcutId);
+			dlFileShortcutId);
 
 		return new LiferayFileShortcut(dlFileShortcut);
 	}
@@ -1042,6 +1052,15 @@ public class LiferayRepository
 				fileShortcutId, folderId, toFileEntryId, serviceContext);
 
 		return new LiferayFileShortcut(dlFileShortcut);
+	}
+
+	@Override
+	public void updateFileShortcuts(
+			long oldToFileEntryId, long newToFileEntryId)
+		throws PortalException {
+
+		dlFileShortcutService.updateFileShortcuts(
+			oldToFileEntryId, newToFileEntryId);
 	}
 
 	@Override
