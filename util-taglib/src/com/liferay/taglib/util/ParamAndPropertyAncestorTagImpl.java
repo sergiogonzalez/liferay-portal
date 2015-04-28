@@ -146,6 +146,10 @@ public class ParamAndPropertyAncestorTagImpl
 		return _allowEmptyParam;
 	}
 
+	public boolean isCustomServletContext() {
+		return false;
+	}
+
 	@Override
 	public void release() {
 		super.release();
@@ -168,10 +172,12 @@ public class ParamAndPropertyAncestorTagImpl
 
 		request = (HttpServletRequest)pageContext.getRequest();
 
-		servletContext = (ServletContext)request.getAttribute(WebKeys.CTX);
+		if (!isCustomServletContext()) {
+			servletContext = (ServletContext)request.getAttribute(WebKeys.CTX);
 
-		if (servletContext == null) {
-			servletContext = pageContext.getServletContext();
+			if (servletContext == null) {
+				servletContext = pageContext.getServletContext();
+			}
 		}
 	}
 
