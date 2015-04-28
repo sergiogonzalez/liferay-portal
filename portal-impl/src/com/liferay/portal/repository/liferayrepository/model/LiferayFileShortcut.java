@@ -224,6 +224,11 @@ public class LiferayFileShortcut extends LiferayModel implements FileShortcut {
 	}
 
 	@Override
+	public int hashCode() {
+		return _dlFileShortcut.hashCode();
+	}
+
+	@Override
 	public boolean isEscapedModel() {
 		return _escapedModel;
 	}
