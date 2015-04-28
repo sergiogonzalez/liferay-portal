@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.documentlibrary.util.test;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -23,9 +24,11 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
+import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileShortcutLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 
 import java.io.ByteArrayInputStream;
@@ -53,6 +56,16 @@ public class DLTestUtil {
 			RandomTestUtil.randomString(), StringPool.BLANK, StringPool.BLANK,
 			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT, null,
 			null, is, bytes.length, serviceContext);
+	}
+
+	public static DLFileShortcut addDLFileShortcuts(
+			long groupId, long folderId, long toFileEntryId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return DLFileShortcutLocalServiceUtil.addFileShortcut(
+			TestPropsValues.getUserId(), groupId, folderId, toFileEntryId,
+			serviceContext);
 	}
 
 	public static DLFolder addDLFolder(long groupId) throws Exception {
