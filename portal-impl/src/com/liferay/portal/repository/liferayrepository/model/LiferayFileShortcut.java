@@ -185,7 +185,7 @@ public class LiferayFileShortcut extends LiferayModel implements FileShortcut {
 
 	@Override
 	public Serializable getPrimaryKeyObj() {
-		return getPrimaryKeyObj();
+		return getPrimaryKey();
 	}
 
 	@Override
