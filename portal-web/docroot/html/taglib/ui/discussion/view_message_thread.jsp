@@ -200,14 +200,14 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 										label="<%= true %>"
 										message="reply"
 										url="<%= taglibPostReplyURL %>"
-										/>
+									/>
 								</c:when>
 								<c:otherwise>
 									<liferay-ui:icon
 										label="<%= true %>"
 										message="please-sign-in-to-reply"
 										url="<%= themeDisplay.getURLSignIn() %>"
-										/>
+									/>
 								</c:otherwise>
 							</c:choose>
 						</c:if>
