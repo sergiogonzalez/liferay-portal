@@ -208,39 +208,59 @@ public class LayoutSetBranchPersistenceTest {
 	}
 
 	@Test
-	public void testCountByGroupId() throws Exception {
-		_persistence.countByGroupId(RandomTestUtil.nextLong());
+	public void testCountByGroupId() {
+		try {
+			_persistence.countByGroupId(RandomTestUtil.nextLong());
 
-		_persistence.countByGroupId(0L);
+			_persistence.countByGroupId(0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
-	public void testCountByG_P() throws Exception {
-		_persistence.countByG_P(RandomTestUtil.nextLong(),
-			RandomTestUtil.randomBoolean());
+	public void testCountByG_P() {
+		try {
+			_persistence.countByG_P(RandomTestUtil.nextLong(),
+				RandomTestUtil.randomBoolean());
 
-		_persistence.countByG_P(0L, RandomTestUtil.randomBoolean());
+			_persistence.countByG_P(0L, RandomTestUtil.randomBoolean());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
-	public void testCountByG_P_N() throws Exception {
-		_persistence.countByG_P_N(RandomTestUtil.nextLong(),
-			RandomTestUtil.randomBoolean(), StringPool.BLANK);
+	public void testCountByG_P_N() {
+		try {
+			_persistence.countByG_P_N(RandomTestUtil.nextLong(),
+				RandomTestUtil.randomBoolean(), StringPool.BLANK);
 
-		_persistence.countByG_P_N(0L, RandomTestUtil.randomBoolean(),
-			StringPool.NULL);
+			_persistence.countByG_P_N(0L, RandomTestUtil.randomBoolean(),
+				StringPool.NULL);
 
-		_persistence.countByG_P_N(0L, RandomTestUtil.randomBoolean(),
-			(String)null);
+			_persistence.countByG_P_N(0L, RandomTestUtil.randomBoolean(),
+				(String)null);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
-	public void testCountByG_P_M() throws Exception {
-		_persistence.countByG_P_M(RandomTestUtil.nextLong(),
-			RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean());
+	public void testCountByG_P_M() {
+		try {
+			_persistence.countByG_P_M(RandomTestUtil.nextLong(),
+				RandomTestUtil.randomBoolean(), RandomTestUtil.randomBoolean());
 
-		_persistence.countByG_P_M(0L, RandomTestUtil.randomBoolean(),
-			RandomTestUtil.randomBoolean());
+			_persistence.countByG_P_M(0L, RandomTestUtil.randomBoolean(),
+				RandomTestUtil.randomBoolean());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
@@ -268,14 +288,24 @@ public class LayoutSetBranchPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			getOrderByComparator());
+		try {
+			_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				getOrderByComparator());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
 	public void testFilterFindByGroupId() throws Exception {
-		_persistence.filterFindByGroupId(0, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, getOrderByComparator());
+		try {
+			_persistence.filterFindByGroupId(0, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, getOrderByComparator());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	protected OrderByComparator<LayoutSetBranch> getOrderByComparator() {

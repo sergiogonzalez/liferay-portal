@@ -165,36 +165,56 @@ public class LayoutBranchPersistenceTest {
 	}
 
 	@Test
-	public void testCountByLayoutSetBranchId() throws Exception {
-		_persistence.countByLayoutSetBranchId(RandomTestUtil.nextLong());
+	public void testCountByLayoutSetBranchId() {
+		try {
+			_persistence.countByLayoutSetBranchId(RandomTestUtil.nextLong());
 
-		_persistence.countByLayoutSetBranchId(0L);
+			_persistence.countByLayoutSetBranchId(0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
-	public void testCountByL_P() throws Exception {
-		_persistence.countByL_P(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong());
+	public void testCountByL_P() {
+		try {
+			_persistence.countByL_P(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong());
 
-		_persistence.countByL_P(0L, 0L);
+			_persistence.countByL_P(0L, 0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
-	public void testCountByL_P_N() throws Exception {
-		_persistence.countByL_P_N(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), StringPool.BLANK);
+	public void testCountByL_P_N() {
+		try {
+			_persistence.countByL_P_N(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), StringPool.BLANK);
 
-		_persistence.countByL_P_N(0L, 0L, StringPool.NULL);
+			_persistence.countByL_P_N(0L, 0L, StringPool.NULL);
 
-		_persistence.countByL_P_N(0L, 0L, (String)null);
+			_persistence.countByL_P_N(0L, 0L, (String)null);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
-	public void testCountByL_P_M() throws Exception {
-		_persistence.countByL_P_M(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
+	public void testCountByL_P_M() {
+		try {
+			_persistence.countByL_P_M(RandomTestUtil.nextLong(),
+				RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
 
-		_persistence.countByL_P_M(0L, 0L, RandomTestUtil.randomBoolean());
+			_persistence.countByL_P_M(0L, 0L, RandomTestUtil.randomBoolean());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
@@ -222,8 +242,13 @@ public class LayoutBranchPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			getOrderByComparator());
+		try {
+			_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				getOrderByComparator());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	protected OrderByComparator<LayoutBranch> getOrderByComparator() {

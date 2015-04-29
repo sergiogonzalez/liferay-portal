@@ -77,4 +77,7 @@ public interface DLFileShortcutService extends BaseService {
 		long fileShortcutId, long folderId, long toFileEntryId,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
+
+	public void updateFileShortcuts(long oldToFileEntryId, long newToFileEntryId)
+		throws PortalException;
 }

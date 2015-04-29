@@ -148,37 +148,57 @@ public class CountryPersistenceTest {
 	}
 
 	@Test
-	public void testCountByName() throws Exception {
-		_persistence.countByName(StringPool.BLANK);
+	public void testCountByName() {
+		try {
+			_persistence.countByName(StringPool.BLANK);
 
-		_persistence.countByName(StringPool.NULL);
+			_persistence.countByName(StringPool.NULL);
 
-		_persistence.countByName((String)null);
+			_persistence.countByName((String)null);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
-	public void testCountByA2() throws Exception {
-		_persistence.countByA2(StringPool.BLANK);
+	public void testCountByA2() {
+		try {
+			_persistence.countByA2(StringPool.BLANK);
 
-		_persistence.countByA2(StringPool.NULL);
+			_persistence.countByA2(StringPool.NULL);
 
-		_persistence.countByA2((String)null);
+			_persistence.countByA2((String)null);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
-	public void testCountByA3() throws Exception {
-		_persistence.countByA3(StringPool.BLANK);
+	public void testCountByA3() {
+		try {
+			_persistence.countByA3(StringPool.BLANK);
 
-		_persistence.countByA3(StringPool.NULL);
+			_persistence.countByA3(StringPool.NULL);
 
-		_persistence.countByA3((String)null);
+			_persistence.countByA3((String)null);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
-	public void testCountByActive() throws Exception {
-		_persistence.countByActive(RandomTestUtil.randomBoolean());
+	public void testCountByActive() {
+		try {
+			_persistence.countByActive(RandomTestUtil.randomBoolean());
 
-		_persistence.countByActive(RandomTestUtil.randomBoolean());
+			_persistence.countByActive(RandomTestUtil.randomBoolean());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
@@ -205,8 +225,13 @@ public class CountryPersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			getOrderByComparator());
+		try {
+			_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				getOrderByComparator());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	protected OrderByComparator<Country> getOrderByComparator() {
