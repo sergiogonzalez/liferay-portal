@@ -17,18 +17,10 @@ package com.liferay.portal.kernel.comment;
 /**
  * @author Adolfo Pérez
  */
-public interface WorkflowableComment extends Comment {
+public interface Discussion {
 
-	public long getCompanyId();
+	public Comment getRootComment();
 
-	public long getGroupId();
-
-	public long getPrimaryKey();
-
-	public int getStatus();
-
-	public boolean isApproved();
-
-	public boolean isPending();
+	public boolean isMaxCommentsLimitExceeded();
 
 }

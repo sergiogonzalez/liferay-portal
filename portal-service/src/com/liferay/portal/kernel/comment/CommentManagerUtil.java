@@ -14,21 +14,25 @@
 
 package com.liferay.portal.kernel.comment;
 
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+
 /**
  * @author Adolfo Pérez
  */
-public interface WorkflowableComment extends Comment {
+public class CommentManagerUtil {
 
-	public long getCompanyId();
+	public static CommentManager getCommentManager() {
+		PortalRuntimePermission.checkGetBeanProperty(CommentManagerUtil.class);
 
-	public long getGroupId();
+		return _commentManager;
+	}
 
-	public long getPrimaryKey();
+	public void setCommentManager(CommentManager commentManager) {
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
-	public int getStatus();
+		_commentManager = commentManager;
+	}
 
-	public boolean isApproved();
-
-	public boolean isPending();
+	private static CommentManager _commentManager;
 
 }

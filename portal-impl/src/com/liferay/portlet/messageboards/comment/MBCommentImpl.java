@@ -84,6 +84,11 @@ public class MBCommentImpl implements Comment, WorkflowableComment {
 	}
 
 	@Override
+	public String getModelClassName() {
+		return MBMessage.class.getName();
+	}
+
+	@Override
 	public Date getModifiedDate() {
 		return _message.getModifiedDate();
 	}
@@ -186,6 +191,11 @@ public class MBCommentImpl implements Comment, WorkflowableComment {
 	}
 
 	@Override
+	public long getThreadId() {
+		return _message.getThreadId();
+	}
+
+	@Override
 	public String getTranslatedBody() {
 		if (_message.isFormatBBCode()) {
 			return MBUtil.getBBCodeHTML(getBody(), _pathThemeImages);
@@ -207,6 +217,16 @@ public class MBCommentImpl implements Comment, WorkflowableComment {
 	@Override
 	public String getUserName() {
 		return _message.getUserName();
+	}
+
+	@Override
+	public boolean isApproved() {
+		return _message.isApproved();
+	}
+
+	@Override
+	public boolean isPending() {
+		return _message.isPending();
 	}
 
 	@Override

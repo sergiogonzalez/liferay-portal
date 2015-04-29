@@ -33,6 +33,10 @@ public interface Comment {
 
 	public Date getCreateDate();
 
+	public Class<?> getModelClass();
+
+	public String getModelClassName();
+
 	public Date getModifiedDate();
 
 	public Comment getParentComment() throws PortalException;
@@ -50,6 +54,8 @@ public interface Comment {
 	public CommentIterator getThreadCommentsIterator();
 
 	public CommentIterator getThreadCommentsIterator(int from);
+
+	public long getThreadId();
 
 	public String getTranslatedBody();
 
