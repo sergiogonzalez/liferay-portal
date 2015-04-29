@@ -2612,18 +2612,18 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			String oldParentPageTitle)
 		throws PortalException {
 
-		List<WikiPage> dependentPages = getChildren(
+		List<WikiPage> childPages = getChildren(
 			oldParentPageNodeId, true, oldParentPageTitle,
 			WorkflowConstants.STATUS_IN_TRASH);
 
-		for (WikiPage dependentPage : dependentPages) {
-			dependentPage.setParentTitle(newParentPage.getTitle());
+		for (WikiPage childPage : childPages) {
+			childPage.setParentTitle(newParentPage.getTitle());
 
-			wikiPagePersistence.update(dependentPage);
+			wikiPagePersistence.update(childPage);
 
-			if (dependentPage.isInTrashImplicitly()) {
+			if (childPage.isInTrashImplicitly()) {
 				moveDependentFromTrash(
-					dependentPage, newParentPage.getNodeId(),
+					childPage, newParentPage.getNodeId(),
 					newParentPage.getTitle());
 			}
 		}
@@ -2634,17 +2634,17 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			long trashEntryId, boolean createTrashVersion)
 		throws PortalException {
 
-		List<WikiPage> dependentPages = wikiPagePersistence.findByN_H_P(
+		List<WikiPage> childPages = wikiPagePersistence.findByN_H_P(
 			parentNodeId, true, parentTitle);
 
-		for (WikiPage dependentPage : dependentPages) {
-			dependentPage.setParentTitle(parentTrashTitle);
+		for (WikiPage childPage : childPages) {
+			childPage.setParentTitle(parentTrashTitle);
 
-			wikiPagePersistence.update(dependentPage);
+			wikiPagePersistence.update(childPage);
 
-			if (!dependentPage.isInTrash()) {
+			if (!childPage.isInTrash()) {
 				moveDependentToTrash(
-					dependentPage, trashEntryId, createTrashVersion);
+					childPage, trashEntryId, createTrashVersion);
 			}
 		}
 	}
@@ -2751,44 +2751,44 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	}
 
 	protected void moveDependentRedirectPagesFromTrash(
-			WikiPage newRedirectPage, long oldRedirectPageNodeId,
-			String oldRedirectPageTrashTitle)
+			WikiPage newRedirectedPage, long oldRedirectedPageNodeId,
+			String oldRedirectedPageTrashTitle)
 		throws PortalException {
 
-		List<WikiPage> dependentPages = getRedirectPages(
-			oldRedirectPageNodeId, true, oldRedirectPageTrashTitle,
+		List<WikiPage> redirectPages = getRedirectPages(
+			oldRedirectedPageNodeId, true, oldRedirectedPageTrashTitle,
 			WorkflowConstants.STATUS_IN_TRASH);
 
-		for (WikiPage dependentPage : dependentPages) {
-			dependentPage.setRedirectTitle(newRedirectPage.getTitle());
+		for (WikiPage redirectPage : redirectPages) {
+			redirectPage.setRedirectTitle(newRedirectedPage.getTitle());
 
-			wikiPagePersistence.update(dependentPage);
+			wikiPagePersistence.update(redirectPage);
 
-			if (dependentPage.isInTrashImplicitly()) {
+			if (redirectPage.isInTrashImplicitly()) {
 				moveDependentFromTrash(
-					dependentPage, newRedirectPage.getNodeId(),
-					dependentPage.getParentTitle());
+					redirectPage, newRedirectedPage.getNodeId(),
+					redirectPage.getParentTitle());
 			}
 		}
 	}
 
 	protected void moveDependentRedirectPagesToTrash(
-			long redirectPageNodeId, String redirectPageTitle,
-			String redirectPageTrashTitle, long trashEntryId,
+			long redirectedPageNodeId, String redirectedPageTitle,
+			String redirectedPageTrashTitle, long trashEntryId,
 			boolean createTrashVersion)
 		throws PortalException {
 
-		List<WikiPage> dependentPages = wikiPagePersistence.findByN_H_R(
-			redirectPageNodeId, true, redirectPageTitle);
+		List<WikiPage> redirectPages = wikiPagePersistence.findByN_H_R(
+			redirectedPageNodeId, true, redirectedPageTitle);
 
-		for (WikiPage dependentPage : dependentPages) {
-			dependentPage.setRedirectTitle(redirectPageTrashTitle);
+		for (WikiPage redirectPage : redirectPages) {
+			redirectPage.setRedirectTitle(redirectedPageTrashTitle);
 
-			wikiPagePersistence.update(dependentPage);
+			wikiPagePersistence.update(redirectPage);
 
-			if (!dependentPage.isInTrash()) {
+			if (!redirectPage.isInTrash()) {
 				moveDependentToTrash(
-					dependentPage, trashEntryId, createTrashVersion);
+					redirectPage, trashEntryId, createTrashVersion);
 			}
 		}
 	}
