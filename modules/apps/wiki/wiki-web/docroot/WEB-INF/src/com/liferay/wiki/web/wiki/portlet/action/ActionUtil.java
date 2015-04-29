@@ -307,7 +307,15 @@ public class ActionUtil {
 			if (redirectPage == null) {
 				request.setAttribute(WikiWebKeys.WIKI_PAGE, page);
 
-				throw new NoSuchPageException();
+				StringBundler sb = new StringBundler(5);
+
+				sb.append("{nodeId=");
+				sb.append(page.getNodeId());
+				sb.append(", title=");
+				sb.append(page.getRedirectTitle());
+				sb.append("}");
+
+				throw new NoSuchPageException(sb.toString());
 			}
 		}
 
