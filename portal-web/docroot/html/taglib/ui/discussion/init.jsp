@@ -27,8 +27,8 @@ page import="com.liferay.portal.kernel.comment.WorkflowableComment" %><%@
 page import="com.liferay.portal.kernel.comment.context.CommentSectionDisplayContext" %><%@
 page import="com.liferay.portal.kernel.comment.context.CommentTreeDisplayContext" %><%@
 page import="com.liferay.portlet.messageboards.comment.MBDiscussionPermissionImpl" %><%@
-page import="com.liferay.portlet.messageboards.comment.context.MBCommentSectionDisplayContext" %><%@
-page import="com.liferay.portlet.messageboards.comment.context.MBCommentTreeDisplayContext" %><%@
+page import="com.liferay.portlet.messageboards.comment.context.DefaultCommentSectionDisplayContext" %><%@
+page import="com.liferay.portlet.messageboards.comment.context.DefaultCommentTreeDisplayContext" %><%@
 page import="com.liferay.portlet.messageboards.comment.context.util.DiscussionRequestHelper" %><%@
 page import="com.liferay.portlet.messageboards.comment.context.util.DiscussionTaglibHelper" %>
 

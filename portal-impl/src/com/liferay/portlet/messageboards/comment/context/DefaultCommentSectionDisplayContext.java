@@ -25,10 +25,10 @@ import com.liferay.portlet.messageboards.comment.context.util.DiscussionTaglibHe
 /**
  * @author Adolfo Pérez
  */
-public class MBCommentSectionDisplayContext
+public class DefaultCommentSectionDisplayContext
 	implements CommentSectionDisplayContext {
 
-	public MBCommentSectionDisplayContext(
+	public DefaultCommentSectionDisplayContext(
 		DiscussionTaglibHelper discussionTaglibHelper,
 		DiscussionRequestHelper discussionRequestHelper,
 		DiscussionPermission discussionPermission, Discussion discussion) {

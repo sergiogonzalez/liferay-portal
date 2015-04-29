@@ -35,9 +35,10 @@ import java.util.Locale;
 /**
  * @author Adolfo Pérez
  */
-public class MBCommentTreeDisplayContext implements CommentTreeDisplayContext {
+public class DefaultCommentTreeDisplayContext
+	implements CommentTreeDisplayContext {
 
-	public MBCommentTreeDisplayContext(
+	public DefaultCommentTreeDisplayContext(
 		DiscussionTaglibHelper discussionTaglibHelper,
 		DiscussionRequestHelper discussionRequestHelper,
 		DiscussionPermission discussionPermission, Comment comment) {
