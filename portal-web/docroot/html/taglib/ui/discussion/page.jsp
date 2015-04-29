@@ -29,7 +29,7 @@ Discussion discussion = commentManager.getDiscussion(discussionTaglibHelper.getU
 
 Comment rootComment = discussion.getRootComment();
 
-CommentSectionDisplayContext commentSectionDisplayContext = new DefaultCommentSectionDisplayContext(discussionTaglibHelper, discussionRequestHelper, discussionPermission, discussion);
+CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContextProviderUtil.getCommentSectionDisplayContext(request, response, discussionPermission, discussion);
 %>
 
 <section>

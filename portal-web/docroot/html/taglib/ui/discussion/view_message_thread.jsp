@@ -33,7 +33,7 @@ DiscussionRequestHelper discussionRequestHelper = new DiscussionRequestHelper(re
 
 DiscussionPermission discussionPermission = new MBDiscussionPermissionImpl(discussionRequestHelper.getPermissionChecker());
 
-CommentTreeDisplayContext commentTreeDisplayContext = new DefaultCommentTreeDisplayContext(discussionTaglibHelper, discussionRequestHelper, discussionPermission, comment);
+CommentTreeDisplayContext commentTreeDisplayContext = CommentDisplayContextProviderUtil.getCommentTreeDisplayContext(request, response, discussionPermission, comment);
 
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>

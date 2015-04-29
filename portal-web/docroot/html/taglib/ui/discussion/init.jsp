@@ -16,8 +16,7 @@
 
 <%@ include file="/html/taglib/init.jsp" %>
 
-<%@ page import="com.liferay.portal.comment.context.DefaultCommentSectionDisplayContext" %><%@
-page import="com.liferay.portal.comment.context.DefaultCommentTreeDisplayContext" %><%@
+<%@ page import="com.liferay.portal.comment.context.CommentDisplayContextProviderUtil" %><%@
 page import="com.liferay.portal.comment.context.util.DiscussionRequestHelper" %><%@
 page import="com.liferay.portal.comment.context.util.DiscussionTaglibHelper" %><%@
 page import="com.liferay.portal.kernel.comment.Comment" %><%@
