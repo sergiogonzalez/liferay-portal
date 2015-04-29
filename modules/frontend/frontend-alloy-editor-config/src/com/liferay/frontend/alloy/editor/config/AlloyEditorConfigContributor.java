@@ -142,7 +142,7 @@ public class AlloyEditorConfigContributor extends BaseEditorConfigContributor {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		jsonObject.put(
-			"buttons", toJSONArray("['imageselector', 'table', 'hline']"));
+			"buttons", toJSONArray("['image', 'table', 'hline']"));
 		jsonObject.put("tabIndex", 2);
 
 		return jsonObject;
@@ -171,7 +171,7 @@ public class AlloyEditorConfigContributor extends BaseEditorConfigContributor {
 
 		jsonNObject.put("buttons", toJSONArray("['imageLeft', 'imageRight']"));
 		jsonNObject.put("name", "image");
-		jsonNObject.put("test", "image");
+		jsonNObject.put("test", "AlloyEditor.SelectionTest.image");
 
 		return jsonNObject;
 	}
@@ -192,7 +192,7 @@ public class AlloyEditorConfigContributor extends BaseEditorConfigContributor {
 
 		jsonObject.put("buttons", toJSONArray("['linkEdit']"));
 		jsonObject.put("name", "link");
-		jsonObject.put("test", "link");
+		jsonObject.put("test", "AlloyEditor.SelectionTest.link");
 
 		return jsonObject;
 	}
@@ -204,10 +204,12 @@ public class AlloyEditorConfigContributor extends BaseEditorConfigContributor {
 			"buttons",
 			toJSONArray(
 				"['tableRow', 'tableColumn', 'tableCell', 'tableRemove']"));
-		jsonObject.put("getArrowBoxClasses", "table");
+		jsonObject.put(
+			"getArrowBoxClasses",
+			"AlloyEditor.SelectionGetArrowBoxClasses.table");
 		jsonObject.put("name", "table");
-		jsonObject.put("setPosition", "table");
-		jsonObject.put("test", "table");
+		jsonObject.put("setPosition", "AlloyEditor.SelectionSetPosition.table");
+		jsonObject.put("test", "AlloyEditor.SelectionTest.table");
 
 		return jsonObject;
 	}
@@ -221,7 +223,7 @@ public class AlloyEditorConfigContributor extends BaseEditorConfigContributor {
 				"['styles', 'bold', 'italic', 'underline', 'link', " +
 					"'twitter']"));
 		jsonObject.put("name", "text");
-		jsonObject.put("test", "text");
+		jsonObject.put("test", "AlloyEditor.SelectionTest.text");
 
 		return jsonObject;
 	}

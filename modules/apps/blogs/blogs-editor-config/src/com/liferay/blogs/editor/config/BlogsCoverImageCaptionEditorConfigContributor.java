@@ -89,7 +89,7 @@ public class BlogsCoverImageCaptionEditorConfigContributor
 
 		jsonObject.put("buttons", toJSONArray("['linkEdit']"));
 		jsonObject.put("name", "link");
-		jsonObject.put("test", "link");
+		jsonObject.put("test", "AlloyEditor.SelectionTest.link");
 
 		return jsonObject;
 	}
@@ -99,7 +99,7 @@ public class BlogsCoverImageCaptionEditorConfigContributor
 
 		jsonObject.put("buttons", toJSONArray("['link']"));
 		jsonObject.put("name", "text");
-		jsonObject.put("test", "text");
+		jsonObject.put("test", "AlloyEditor.SelectionTest.text");
 
 		return jsonObject;
 	}
