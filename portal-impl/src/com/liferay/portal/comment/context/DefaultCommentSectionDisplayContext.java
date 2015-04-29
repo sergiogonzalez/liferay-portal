@@ -12,15 +12,15 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.comment.context;
+package com.liferay.portal.comment.context;
 
+import com.liferay.portal.comment.context.util.DiscussionRequestHelper;
+import com.liferay.portal.comment.context.util.DiscussionTaglibHelper;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.Discussion;
 import com.liferay.portal.kernel.comment.DiscussionPermission;
 import com.liferay.portal.kernel.comment.context.CommentSectionDisplayContext;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portlet.messageboards.comment.context.util.DiscussionRequestHelper;
-import com.liferay.portlet.messageboards.comment.context.util.DiscussionTaglibHelper;
 
 /**
  * @author Adolfo Pérez
