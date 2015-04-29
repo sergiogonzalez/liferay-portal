@@ -16,9 +16,11 @@ package com.liferay.portal.comment;
 
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.comment.Discussion;
+import com.liferay.portal.kernel.comment.DiscussionPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.Function;
+import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;
@@ -118,6 +120,15 @@ public class CommentManagerImpl implements CommentManager {
 
 		return commentManager.getDiscussion(
 			userId, groupId, className, classPK, serviceContext);
+	}
+
+	@Override
+	public DiscussionPermission getDiscussionPermission(
+		PermissionChecker permissionChecker) {
+
+		CommentManager commentManager = getCommentManager();
+
+		return commentManager.getDiscussionPermission(permissionChecker);
 	}
 
 	protected CommentManager getCommentManager() {

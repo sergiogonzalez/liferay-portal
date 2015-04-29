@@ -31,7 +31,9 @@ String randomNamespace = (String)request.getAttribute("liferay-ui:discussion:ran
 DiscussionTaglibHelper discussionTaglibHelper = new DiscussionTaglibHelper(request);
 DiscussionRequestHelper discussionRequestHelper = new DiscussionRequestHelper(request);
 
-DiscussionPermission discussionPermission = new MBDiscussionPermissionImpl(discussionRequestHelper.getPermissionChecker());
+CommentManager commentManager = CommentManagerUtil.getCommentManager();
+
+DiscussionPermission discussionPermission = commentManager.getDiscussionPermission(discussionRequestHelper.getPermissionChecker());
 
 CommentTreeDisplayContext commentTreeDisplayContext = CommentDisplayContextProviderUtil.getCommentTreeDisplayContext(request, response, discussionPermission, comment);
 

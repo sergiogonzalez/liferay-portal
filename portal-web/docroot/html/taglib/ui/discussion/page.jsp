@@ -24,7 +24,7 @@ CommentManager commentManager = CommentManagerUtil.getCommentManager();
 DiscussionTaglibHelper discussionTaglibHelper = new DiscussionTaglibHelper(request);
 DiscussionRequestHelper discussionRequestHelper = new DiscussionRequestHelper(request);
 
-DiscussionPermission discussionPermission = new MBDiscussionPermissionImpl(discussionRequestHelper.getPermissionChecker());
+DiscussionPermission discussionPermission = commentManager.getDiscussionPermission(discussionRequestHelper.getPermissionChecker());
 Discussion discussion = commentManager.getDiscussion(discussionTaglibHelper.getUserId(), discussionRequestHelper.getScopeGroupId(), discussionTaglibHelper.getClassName(), discussionTaglibHelper.getClassPK(), ServiceContextFactory.getInstance(request));
 
 Comment rootComment = discussion.getRootComment();
