@@ -195,7 +195,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 
 						<c:if test="<%= !discussion.isMaxCommentsLimitExceeded() %>">
 							<c:choose>
-								<c:when test="<%= themeDisplay.isSignedIn() || !SSOUtil.isLoginRedirectRequired(themeDisplay.getCompanyId()) %>">
+								<c:when test="<%= commentTreeDisplayContext.isReplyButtonVisible() %>">
 									<liferay-ui:icon
 										label="<%= true %>"
 										message="reply"

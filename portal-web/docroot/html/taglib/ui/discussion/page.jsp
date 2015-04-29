@@ -106,7 +106,7 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 							<aui:input name="emailAddress" type="hidden" />
 
 							<c:choose>
-								<c:when test="<%= themeDisplay.isSignedIn() || !SSOUtil.isLoginRedirectRequired(discussionRequestHelper.getCompanyId()) %>">
+								<c:when test="<%= commentSectionDisplayContext.isReplyButtonVisible() %>">
 									<aui:row fluid="<%= true %>">
 										<div class="lfr-discussion-details">
 											<liferay-ui:user-display

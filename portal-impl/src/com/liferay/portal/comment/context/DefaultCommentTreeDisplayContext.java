@@ -36,7 +36,7 @@ import java.util.Locale;
  * @author Adolfo Pérez
  */
 public class DefaultCommentTreeDisplayContext
-	implements CommentTreeDisplayContext {
+	extends BaseCommentDisplayContext implements CommentTreeDisplayContext {
 
 	public DefaultCommentTreeDisplayContext(
 		DiscussionTaglibHelper discussionTaglibHelper,
@@ -147,6 +147,11 @@ public class DefaultCommentTreeDisplayContext
 		}
 
 		return false;
+	}
+
+	@Override
+	protected ThemeDisplay getThemeDisplay() {
+		return _discussionRequestHelper.getThemeDisplay();
 	}
 
 	protected User getUser() {
