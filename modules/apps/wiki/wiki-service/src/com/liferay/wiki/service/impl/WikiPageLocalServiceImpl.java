@@ -2217,34 +2217,19 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			nodeId, title);
 
 		for (WikiPage childPage : childPages) {
-			childPage = doChangeNode(
-				userId, nodeId, childPage.getTitle(), newNodeId,
-				serviceContext);
+			if (Validator.isNull(childPage.getRedirectTitle())) {
+				childPage = doChangeNode(
+					userId, nodeId, childPage.getTitle(), newNodeId,
+					serviceContext);
+			}
+			else {
+				childPage = setAsOrphan(childPage);
+			}
 
 			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 				WikiPage.class);
 
 			indexer.reindex(childPage);
-		}
-	}
-
-	protected void changeRedirectPagesNode(
-			long userId, long nodeId, String title, long newNodeId,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		List<WikiPage> redirectPages = wikiPagePersistence.findByN_R(
-			nodeId, title);
-
-		for (WikiPage redirectPage : redirectPages) {
-			redirectPage = doChangeNode(
-				userId, nodeId, redirectPage.getTitle(), newNodeId,
-				serviceContext);
-
-			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-				WikiPage.class);
-
-			indexer.reindex(redirectPage);
 		}
 	}
 
@@ -2268,14 +2253,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		for (WikiPage childPage : childPages) {
 			checkDuplicationOnNodeChange(
 				nodeId, childPage.getTitle(), newNodeId);
-		}
-
-		List<WikiPage> redirectPages = wikiPagePersistence.findByN_R(
-			nodeId, title);
-
-		for (WikiPage redirectPage : redirectPages) {
-			checkDuplicationOnNodeChange(
-				nodeId, redirectPage.getTitle(), newNodeId);
 		}
 	}
 
@@ -2349,11 +2326,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		// Child pages
 
 		changeChildPagesNode(userId, nodeId, title, newNodeId, serviceContext);
-
-		// Redirect pages
-
-		changeRedirectPagesNode(
-			userId, nodeId, title, newNodeId, serviceContext);
 
 		// Asset
 
@@ -3189,6 +3161,24 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		serviceContext.setExpandoBridgeAttributes(
 			expandoBridge.getAttributes());
+	}
+
+	protected WikiPage setAsOrphan(WikiPage page) {
+		page.setParentTitle(StringPool.BLANK);
+
+		wikiPagePersistence.update(page);
+
+		List<WikiPage> versionPages = wikiPagePersistence.findByN_T(
+			page.getNodeId(), page.getTitle(), QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, new PageVersionComparator());
+
+		for (WikiPage versionPage : versionPages) {
+			versionPage.setParentTitle(StringPool.BLANK);
+
+			wikiPagePersistence.update(versionPage);
+		}
+
+		return page;
 	}
 
 	protected void startWorkflowInstance(
