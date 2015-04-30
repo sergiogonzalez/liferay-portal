@@ -28,6 +28,7 @@ page import="com.liferay.portal.repository.registry.RepositoryClassDefinition" %
 page import="com.liferay.portal.repository.registry.RepositoryClassDefinitionCatalogUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.DLGroupServiceSettings" %><%@
 page import="com.liferay.portlet.documentlibrary.DLPortletInstanceSettings" %><%@
+page import="com.liferay.portlet.documentlibrary.DuplicateFileEntryException" %><%@
 page import="com.liferay.portlet.documentlibrary.DuplicateFileEntryTypeException" %><%@
 page import="com.liferay.portlet.documentlibrary.DuplicateFolderNameException" %><%@
 page import="com.liferay.portlet.documentlibrary.DuplicateRepositoryNameException" %><%@
