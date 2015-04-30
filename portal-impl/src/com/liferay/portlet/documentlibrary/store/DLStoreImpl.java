@@ -337,6 +337,10 @@ public class DLStoreImpl implements DLStore {
 		store.move(srcDir, destDir);
 	}
 
+	public void setStore(Store store) {
+		this.store = store;
+	}
+
 	@Override
 	public void updateFile(
 			long companyId, long repositoryId, long newRepositoryId,
@@ -531,6 +535,17 @@ public class DLStoreImpl implements DLStore {
 		DLValidatorUtil.validateFileSize(fileName, is);
 	}
 
+	public void validate(
+			String fileName, String fileExtension, String sourceFileName,
+			boolean validateFileExtension, InputStream is, String versionLabel)
+		throws PortalException {
+
+		validate(
+			fileName, fileExtension, sourceFileName, validateFileExtension, is);
+
+		DLValidatorUtil.validateVersionLabel(versionLabel);
+	}
+
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
 	 *             DLValidatorUtil#validateDirectoryName(String)}
@@ -564,21 +579,9 @@ public class DLStoreImpl implements DLStore {
 		DLValidatorUtil.validateVersionLabel(versionLabel);
 	}
 
-	protected void validate(
-			String fileName, String fileExtension, String sourceFileName,
-			boolean validateFileExtension, InputStream is, String versionLabel)
-		throws PortalException {
-
-		validate(
-			fileName, fileExtension, sourceFileName, validateFileExtension, is);
-
-		DLValidatorUtil.validateVersionLabel(versionLabel);
-	}
-
 	@BeanReference(type = GroupLocalService.class)
 	protected GroupLocalService groupLocalService;
 
-	@BeanReference(type = Store.class)
 	protected Store store;
 
 }
