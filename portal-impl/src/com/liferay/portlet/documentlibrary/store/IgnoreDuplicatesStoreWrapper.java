@@ -23,17 +23,10 @@ import java.io.InputStream;
 /**
  * @author Adolfo Pérez
  */
-public class IgnoreDuplicatesStoreWrapper implements Store {
+public class IgnoreDuplicatesStoreWrapper extends BaseStoreWrapper {
 
 	public IgnoreDuplicatesStoreWrapper(Store store) {
-		_store = store;
-	}
-
-	@Override
-	public void addDirectory(long companyId, long repositoryId, String dirName)
-		throws PortalException {
-
-		_store.addDirectory(companyId, repositoryId, dirName);
+		super(store);
 	}
 
 	@Override
@@ -49,7 +42,8 @@ public class IgnoreDuplicatesStoreWrapper implements Store {
 
 				@Override
 				public void execute() throws PortalException {
-					_store.addFile(companyId, repositoryId, fileName, bytes);
+					getStore().addFile(
+						companyId, repositoryId, fileName, bytes);
 				}
 
 			});
@@ -68,7 +62,7 @@ public class IgnoreDuplicatesStoreWrapper implements Store {
 
 				@Override
 				public void execute() throws PortalException {
-					_store.addFile(companyId, repositoryId, fileName, file);
+					getStore().addFile(companyId, repositoryId, fileName, file);
 				}
 
 			}
@@ -89,15 +83,10 @@ public class IgnoreDuplicatesStoreWrapper implements Store {
 
 				@Override
 				public void execute() throws PortalException {
-					_store.addFile(companyId, repositoryId, fileName, is);
+					getStore().addFile(companyId, repositoryId, fileName, is);
 				}
 
 		});
-	}
-
-	@Override
-	public void checkRoot(long companyId) {
-		_store.checkRoot(companyId);
 	}
 
 	@Override
@@ -114,7 +103,7 @@ public class IgnoreDuplicatesStoreWrapper implements Store {
 
 				@Override
 				public void execute() throws PortalException {
-					_store.copyFileVersion(
+					getStore().copyFileVersion(
 						companyId, repositoryId, fileName, fromVersionLabel,
 						toVersionLabel);
 				}
@@ -122,131 +111,6 @@ public class IgnoreDuplicatesStoreWrapper implements Store {
 			}
 		);
 
-	}
-
-	@Override
-	public void deleteDirectory(
-			long companyId, long repositoryId, String dirName)
-		throws PortalException {
-
-		_store.deleteDirectory(companyId, repositoryId, dirName);
-	}
-
-	@Override
-	public void deleteFile(long companyId, long repositoryId, String fileName)
-		throws PortalException {
-
-		_store.deleteFile(companyId, repositoryId, fileName);
-	}
-
-	@Override
-	public void deleteFile(
-			long companyId, long repositoryId, String fileName,
-			String versionLabel)
-		throws PortalException {
-
-		_store.deleteFile(companyId, repositoryId, fileName, versionLabel);
-	}
-
-	@Override
-	public File getFile(long companyId, long repositoryId, String fileName)
-		throws PortalException {
-
-		return _store.getFile(companyId, repositoryId, fileName);
-	}
-
-	@Override
-	public File getFile(
-			long companyId, long repositoryId, String fileName,
-			String versionLabel)
-		throws PortalException {
-
-		return _store.getFile(companyId, repositoryId, fileName, versionLabel);
-	}
-
-	@Override
-	public byte[] getFileAsBytes(
-			long companyId, long repositoryId, String fileName)
-		throws PortalException {
-
-		return _store.getFileAsBytes(companyId, repositoryId, fileName);
-	}
-
-	@Override
-	public byte[] getFileAsBytes(
-			long companyId, long repositoryId, String fileName,
-			String versionLabel)
-		throws PortalException {
-
-		return _store.getFileAsBytes(
-			companyId, repositoryId, fileName, versionLabel);
-	}
-
-	@Override
-	public InputStream getFileAsStream(
-			long companyId, long repositoryId, String fileName)
-		throws PortalException {
-
-		return _store.getFileAsStream(companyId, repositoryId, fileName);
-	}
-
-	@Override
-	public InputStream getFileAsStream(
-			long companyId, long repositoryId, String fileName,
-			String versionLabel)
-		throws PortalException {
-
-		return _store.getFileAsStream(
-			companyId, repositoryId, fileName, versionLabel);
-	}
-
-	@Override
-	public String[] getFileNames(long companyId, long repositoryId) {
-		return _store.getFileNames(companyId, repositoryId);
-	}
-
-	@Override
-	public String[] getFileNames(
-			long companyId, long repositoryId, String dirName)
-		throws PortalException {
-
-		return _store.getFileNames(companyId, repositoryId, dirName);
-	}
-
-	@Override
-	public long getFileSize(long companyId, long repositoryId, String fileName)
-		throws PortalException {
-
-		return _store.getFileSize(companyId, repositoryId, fileName);
-	}
-
-	@Override
-	public boolean hasDirectory(
-			long companyId, long repositoryId, String dirName)
-		throws PortalException {
-
-		return _store.hasDirectory(companyId, repositoryId, dirName);
-	}
-
-	@Override
-	public boolean hasFile(long companyId, long repositoryId, String fileName)
-		throws PortalException {
-
-		return _store.hasFile(companyId, repositoryId, fileName);
-	}
-
-	@Override
-	public boolean hasFile(
-			long companyId, long repositoryId, String fileName,
-			String versionLabel)
-		throws PortalException {
-
-		return _store.hasFile(companyId, repositoryId, fileName, versionLabel);
-	}
-
-	@Override
-	public void move(String srcDir, String destDir) {
-		_store.move(srcDir, destDir);
 	}
 
 	@Override
@@ -261,7 +125,7 @@ public class IgnoreDuplicatesStoreWrapper implements Store {
 
 				@Override
 				public void execute() throws PortalException {
-					_store.updateFile(
+					getStore().updateFile(
 						companyId, repositoryId, newRepositoryId, fileName);
 				}
 
@@ -281,7 +145,7 @@ public class IgnoreDuplicatesStoreWrapper implements Store {
 
 				@Override
 				public void execute() throws PortalException {
-					_store.updateFile(
+					getStore().updateFile(
 						companyId, repositoryId, fileName, newFileName);
 				}
 
@@ -303,7 +167,7 @@ public class IgnoreDuplicatesStoreWrapper implements Store {
 
 				@Override
 				public void execute() throws PortalException {
-					_store.updateFile(
+					getStore().updateFile(
 						companyId, repositoryId, fileName, versionLabel, bytes);
 				}
 			}
@@ -324,7 +188,7 @@ public class IgnoreDuplicatesStoreWrapper implements Store {
 
 				@Override
 				public void execute() throws PortalException {
-					_store.updateFile(
+					getStore().updateFile(
 						companyId, repositoryId, fileName, versionLabel, file);
 				}
 
@@ -347,7 +211,7 @@ public class IgnoreDuplicatesStoreWrapper implements Store {
 
 				@Override
 				public void execute() throws PortalException {
-					_store.updateFile(
+					getStore().updateFile(
 						companyId, repositoryId, fileName, versionLabel, is);
 				}
 
@@ -369,7 +233,7 @@ public class IgnoreDuplicatesStoreWrapper implements Store {
 
 				@Override
 				public void execute() throws PortalException {
-					_store.updateFileVersion(
+					getStore().updateFileVersion(
 						companyId, repositoryId, fileName, fromVersionLabel,
 						toVersionLabel);
 				}
@@ -400,7 +264,7 @@ public class IgnoreDuplicatesStoreWrapper implements Store {
 
 			@Override
 			public void execute() throws PortalException {
-				_store.deleteFile(companyId, repositoryId, fileName);
+				getStore().deleteFile(companyId, repositoryId, fileName);
 			}
 
 		};
@@ -414,14 +278,12 @@ public class IgnoreDuplicatesStoreWrapper implements Store {
 
 			@Override
 			public void execute() throws PortalException {
-				_store.deleteFile(
+				getStore().deleteFile(
 					companyId, repositoryId, fileName, versionLabel);
 			}
 
 		};
 	}
-
-	private final Store _store;
 
 	private interface StoreAction<E extends Throwable> {
 
