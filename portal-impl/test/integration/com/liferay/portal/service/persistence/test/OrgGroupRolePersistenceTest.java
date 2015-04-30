@@ -126,17 +126,27 @@ public class OrgGroupRolePersistenceTest {
 	}
 
 	@Test
-	public void testCountByGroupId() throws Exception {
-		_persistence.countByGroupId(RandomTestUtil.nextLong());
+	public void testCountByGroupId() {
+		try {
+			_persistence.countByGroupId(RandomTestUtil.nextLong());
 
-		_persistence.countByGroupId(0L);
+			_persistence.countByGroupId(0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
-	public void testCountByRoleId() throws Exception {
-		_persistence.countByRoleId(RandomTestUtil.nextLong());
+	public void testCountByRoleId() {
+		try {
+			_persistence.countByRoleId(RandomTestUtil.nextLong());
 
-		_persistence.countByRoleId(0L);
+			_persistence.countByRoleId(0L);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test

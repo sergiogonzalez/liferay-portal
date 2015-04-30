@@ -135,21 +135,31 @@ public class ListTypePersistenceTest {
 	}
 
 	@Test
-	public void testCountByType() throws Exception {
-		_persistence.countByType(StringPool.BLANK);
+	public void testCountByType() {
+		try {
+			_persistence.countByType(StringPool.BLANK);
 
-		_persistence.countByType(StringPool.NULL);
+			_persistence.countByType(StringPool.NULL);
 
-		_persistence.countByType((String)null);
+			_persistence.countByType((String)null);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
-	public void testCountByN_T() throws Exception {
-		_persistence.countByN_T(StringPool.BLANK, StringPool.BLANK);
+	public void testCountByN_T() {
+		try {
+			_persistence.countByN_T(StringPool.BLANK, StringPool.BLANK);
 
-		_persistence.countByN_T(StringPool.NULL, StringPool.NULL);
+			_persistence.countByN_T(StringPool.NULL, StringPool.NULL);
 
-		_persistence.countByN_T((String)null, (String)null);
+			_persistence.countByN_T((String)null, (String)null);
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	@Test
@@ -176,8 +186,13 @@ public class ListTypePersistenceTest {
 
 	@Test
 	public void testFindAll() throws Exception {
-		_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			getOrderByComparator());
+		try {
+			_persistence.findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				getOrderByComparator());
+		}
+		catch (Exception e) {
+			Assert.fail(e.getMessage());
+		}
 	}
 
 	protected OrderByComparator<ListType> getOrderByComparator() {

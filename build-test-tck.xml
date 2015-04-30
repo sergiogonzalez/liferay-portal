@@ -114,6 +114,7 @@ work.dir=${basedir.unix}/tools/tck/work</echo>
 					<path>
 						<fileset
 							dir="tools/tck/dist/@{test.directory}"
+							excludes="**/portlet_jp_PortletSession_secondapp_web.war"
 							includes="**/*.war"
 						/>
 					</path>

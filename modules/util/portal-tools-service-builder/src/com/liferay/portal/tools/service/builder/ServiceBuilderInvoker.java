@@ -34,7 +34,7 @@ public class ServiceBuilderInvoker {
 
 		Set<String> resourceActionModels =
 			ServiceBuilder.readResourceActionModels(
-				serviceBuilderArgs.getApiDir(),
+				serviceBuilderArgs.getApiDirName(),
 				serviceBuilderArgs.getResourceActionsConfigs());
 
 		ModelHintsImpl modelHintsImpl = new ModelHintsImpl();
@@ -49,14 +49,14 @@ public class ServiceBuilderInvoker {
 		modelHintsUtil.setModelHints(modelHintsImpl);
 
 		return new ServiceBuilder(
-			_getAbsolutePath(baseDir, serviceBuilderArgs.getApiDir()),
+			_getAbsolutePath(baseDir, serviceBuilderArgs.getApiDirName()),
 			serviceBuilderArgs.isAutoImportDefaultReferences(),
 			serviceBuilderArgs.isAutoNamespaceTables(),
 			serviceBuilderArgs.getBeanLocatorUtil(),
 			serviceBuilderArgs.getBuildNumber(),
 			serviceBuilderArgs.isBuildNumberIncrement(),
 			_getAbsolutePath(baseDir, serviceBuilderArgs.getHbmFileName()),
-			_getAbsolutePath(baseDir, serviceBuilderArgs.getImplDir()),
+			_getAbsolutePath(baseDir, serviceBuilderArgs.getImplDirName()),
 			_getAbsolutePath(baseDir, serviceBuilderArgs.getInputFileName()),
 			_getAbsolutePath(
 				baseDir, serviceBuilderArgs.getModelHintsFileName()),
@@ -66,15 +66,16 @@ public class ServiceBuilderInvoker {
 			serviceBuilderArgs.getReadOnlyPrefixes(),
 			_getAbsolutePath(baseDir, serviceBuilderArgs.getRemotingFileName()),
 			resourceActionModels,
-			_getAbsolutePath(baseDir, serviceBuilderArgs.getResourcesDir()),
+			_getAbsolutePath(baseDir, serviceBuilderArgs.getResourcesDirName()),
 			_getAbsolutePath(baseDir, serviceBuilderArgs.getSpringFileName()),
 			serviceBuilderArgs.getSpringNamespaces(),
-			_getAbsolutePath(baseDir, serviceBuilderArgs.getSqlDir()),
+			_getAbsolutePath(baseDir, serviceBuilderArgs.getSqlDirName()),
 			serviceBuilderArgs.getSqlFileName(),
 			serviceBuilderArgs.getSqlIndexesFileName(),
 			serviceBuilderArgs.getSqlSequencesFileName(),
 			serviceBuilderArgs.getTargetEntityName(),
-			_getAbsolutePath(baseDir, serviceBuilderArgs.getTestDir()), true);
+			_getAbsolutePath(baseDir, serviceBuilderArgs.getTestDirName()),
+			true);
 	}
 
 	private static String _getAbsolutePath(File baseDir, String fileName) {

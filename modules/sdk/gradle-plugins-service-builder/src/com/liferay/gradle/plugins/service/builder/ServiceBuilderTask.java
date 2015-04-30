@@ -68,7 +68,7 @@ public class ServiceBuilderTask extends JavaExec {
 		ServiceBuilderArgs serviceBuilderArgs = extensionContainer.getByType(
 			ServiceBuilderArgs.class);
 
-		args.add("service.api.dir=" + serviceBuilderArgs.getApiDir());
+		args.add("service.api.dir=" + serviceBuilderArgs.getApiDirName());
 		args.add(
 			"service.auto.import.default.references=" +
 				serviceBuilderArgs.isAutoImportDefaultReferences());
@@ -83,7 +83,7 @@ public class ServiceBuilderTask extends JavaExec {
 				serviceBuilderArgs.isBuildNumberIncrement());
 		args.add("service.build.number=" + serviceBuilderArgs.getBuildNumber());
 		args.add("service.hbm.file=" + serviceBuilderArgs.getHbmFileName());
-		args.add("service.impl.dir=" + serviceBuilderArgs.getImplDir());
+		args.add("service.impl.dir=" + serviceBuilderArgs.getImplDirName());
 		args.add("service.input.file=" + serviceBuilderArgs.getInputFileName());
 		args.add(
 			"service.model.hints.configs=" +
@@ -104,13 +104,14 @@ public class ServiceBuilderTask extends JavaExec {
 			"service.resource.actions.configs=" +
 				_merge(serviceBuilderArgs.getResourceActionsConfigs()));
 		args.add(
-			"service.resources.dir=" + serviceBuilderArgs.getResourcesDir());
+			"service.resources.dir=" +
+				serviceBuilderArgs.getResourcesDirName());
 		args.add(
 			"service.spring.file=" + serviceBuilderArgs.getSpringFileName());
 		args.add(
 			"service.spring.namespaces=" +
 				_merge(serviceBuilderArgs.getSpringNamespaces()));
-		args.add("service.sql.dir=" + serviceBuilderArgs.getSqlDir());
+		args.add("service.sql.dir=" + serviceBuilderArgs.getSqlDirName());
 		args.add("service.sql.file=" + serviceBuilderArgs.getSqlFileName());
 		args.add(
 			"service.sql.indexes.file=" +
@@ -121,7 +122,7 @@ public class ServiceBuilderTask extends JavaExec {
 		args.add(
 			"service.target.entity.name=" +
 				serviceBuilderArgs.getTargetEntityName());
-		args.add("service.test.dir=" + serviceBuilderArgs.getTestDir());
+		args.add("service.test.dir=" + serviceBuilderArgs.getTestDirName());
 
 		return args;
 	}

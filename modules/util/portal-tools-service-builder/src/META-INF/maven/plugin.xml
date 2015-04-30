@@ -25,14 +25,14 @@
 			<executionStrategy>once-per-session</executionStrategy>
 			<parameters>
 				<parameter>
-					<name>apiDir</name>
+					<name>apiDirName</name>
 					<type>java.lang.String</type>
 					<required>false</required>
 					<editable>true</editable>
 					<description/>
 				</parameter>
 				<parameter>
-					<name>baseDir</name>
+					<name>baseDirName</name>
 					<type>java.io.File</type>
 					<required>false</required>
 					<editable>false</editable>
@@ -74,7 +74,7 @@
 					<description/>
 				</parameter>
 				<parameter>
-					<name>implDir</name>
+					<name>implDirName</name>
 					<type>java.lang.String</type>
 					<required>false</required>
 					<editable>true</editable>
@@ -165,7 +165,7 @@
 					<description/>
 				</parameter>
 				<parameter>
-					<name>resourcesDir</name>
+					<name>resourcesDirName</name>
 					<type>java.lang.String</type>
 					<required>false</required>
 					<editable>true</editable>
@@ -186,7 +186,7 @@
 					<description/>
 				</parameter>
 				<parameter>
-					<name>sqlDir</name>
+					<name>sqlDirName</name>
 					<type>java.lang.String</type>
 					<required>false</required>
 					<editable>true</editable>
@@ -221,7 +221,7 @@
 					<description/>
 				</parameter>
 				<parameter>
-					<name>testDir</name>
+					<name>testDirName</name>
 					<type>java.lang.String</type>
 					<required>false</required>
 					<editable>true</editable>

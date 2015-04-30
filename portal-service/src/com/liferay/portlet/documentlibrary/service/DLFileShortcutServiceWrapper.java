@@ -84,6 +84,13 @@ public class DLFileShortcutServiceWrapper implements DLFileShortcutService,
 			folderId, toFileEntryId, serviceContext);
 	}
 
+	@Override
+	public void updateFileShortcuts(long oldToFileEntryId, long newToFileEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_dlFileShortcutService.updateFileShortcuts(oldToFileEntryId,
+			newToFileEntryId);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

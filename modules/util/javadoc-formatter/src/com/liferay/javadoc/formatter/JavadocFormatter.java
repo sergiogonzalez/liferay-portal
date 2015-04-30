@@ -87,12 +87,6 @@ import org.dom4j.io.XMLWriter;
  */
 public class JavadocFormatter {
 
-	public static final String AUTHOR = "Brian Wing Shun Chan";
-
-	public static final double LOWEST_SUPPORTED_JAVA_VERSION = 1.7;
-
-	public static final String OUTPUT_FILE_PREFIX = "javadocs";
-
 	public static void main(String[] args) throws Exception {
 		Map<String, String> arguments = ArgumentsUtil.parseArguments(args);
 
@@ -108,7 +102,7 @@ public class JavadocFormatter {
 		String author = GetterUtil.getString(arguments.get("javadoc.author"));
 
 		if (Validator.isNull(author) || author.startsWith("$")) {
-			author = AUTHOR;
+			author = JavadocFormatterArgs.AUTHOR;
 		}
 
 		_author = author;
@@ -117,20 +111,20 @@ public class JavadocFormatter {
 
 		_initializeMissingJavadocs = GetterUtil.getBoolean(init);
 
-		String inputDir = GetterUtil.getString(
+		String inputDirName = GetterUtil.getString(
 			arguments.get("javadoc.input.dir"));
 
-		if (Validator.isNull(inputDir) || inputDir.startsWith("$")) {
-			inputDir = "./";
+		if (Validator.isNull(inputDirName) || inputDirName.startsWith("$")) {
+			inputDirName = "./";
 		}
 
-		if (!inputDir.endsWith("/")) {
-			inputDir += "/";
+		if (!inputDirName.endsWith("/")) {
+			inputDirName += "/";
 		}
 
-		_inputDir = inputDir;
+		_inputDirName = inputDirName;
 
-		System.out.println("Input directory is " + _inputDir);
+		System.out.println("Input directory is " + _inputDirName);
 
 		String[] limits = StringUtil.split(arguments.get("javadoc.limit"), ",");
 
@@ -149,7 +143,7 @@ public class JavadocFormatter {
 
 		_lowestSupportedJavaVersion = GetterUtil.getDouble(
 			arguments.get("javadoc.lowest.supported.java.version"),
-			LOWEST_SUPPORTED_JAVA_VERSION);
+			JavadocFormatterArgs.LOWEST_SUPPORTED_JAVA_VERSION);
 
 		String outputFilePrefix = GetterUtil.getString(
 			arguments.get("javadoc.output.file.prefix"));
@@ -157,7 +151,7 @@ public class JavadocFormatter {
 		if (Validator.isNull(outputFilePrefix) ||
 			outputFilePrefix.startsWith("$")) {
 
-			outputFilePrefix = OUTPUT_FILE_PREFIX;
+			outputFilePrefix = JavadocFormatterArgs.OUTPUT_FILE_PREFIX;
 		}
 
 		_outputFilePrefix = outputFilePrefix;
@@ -167,7 +161,7 @@ public class JavadocFormatter {
 
 		DirectoryScanner directoryScanner = new DirectoryScanner();
 
-		directoryScanner.setBasedir(_inputDir);
+		directoryScanner.setBasedir(_inputDirName);
 		directoryScanner.setExcludes(
 			new String[] {"**\\classes\\**", "**\\portal-client\\**"});
 
@@ -251,6 +245,8 @@ public class JavadocFormatter {
 			if (!oldJavadocsXmlContent.equals(newJavadocsXmlContent)) {
 				FileUtils.writeStringToFile(
 					javadocsXmlFile, newJavadocsXmlContent);
+
+				_modifiedFileNames.add(javadocsXmlFile.getAbsolutePath());
 			}
 
 			_detachUnnecessaryTypes(javadocsXmlRootElement);
@@ -274,8 +270,15 @@ public class JavadocFormatter {
 
 				FileUtils.writeStringToFile(
 					javadocsRuntimeXmlFile, newJavadocsRuntimeXmlContent);
+
+				_modifiedFileNames.add(
+					javadocsRuntimeXmlFile.getAbsolutePath());
 			}
 		}
+	}
+
+	public Set<String> getModifiedFileNames() {
+		return _modifiedFileNames;
 	}
 
 	private List<Tuple> _addAncestorJavaClassTuples(
@@ -823,7 +826,7 @@ public class JavadocFormatter {
 
 	private void _format(String fileName) throws Exception {
 		String originalContent = new String(
-			Files.readAllBytes(Paths.get(_inputDir + fileName)),
+			Files.readAllBytes(Paths.get(_inputDirName + fileName)),
 			StringPool.UTF8);
 
 		if (fileName.contains("modules/third-party") ||
@@ -1191,7 +1194,7 @@ public class JavadocFormatter {
 	}
 
 	private Tuple _getJavadocsXmlTuple(String fileName) throws Exception {
-		File file = new File(_inputDir + fileName);
+		File file = new File(_inputDirName + fileName);
 
 		String absolutePath = file.getAbsolutePath();
 
@@ -1256,6 +1259,8 @@ public class JavadocFormatter {
 			FileUtils.writeStringToFile(
 				javadocsXmlFile,
 				"<?xml version=\"1.0\"?>\n\n<javadocs>\n</javadocs>");
+
+			_modifiedFileNames.add(javadocsXmlFile.getAbsolutePath());
 		}
 
 		String javadocsXmlContent = FileUtils.readFileToString(javadocsXmlFile);
@@ -1959,10 +1964,12 @@ public class JavadocFormatter {
 		formattedContent = formattedContent.trim();
 
 		if (!originalContent.equals(formattedContent)) {
-			File file = new File(_inputDir + fileName);
+			File file = new File(_inputDirName + fileName);
 
 			FileUtils.writeByteArrayToFile(
 				file, formattedContent.getBytes(StringPool.UTF8));
+
+			_modifiedFileNames.add(file.getAbsolutePath());
 
 			System.out.println("Writing " + file);
 		}
@@ -2129,11 +2136,12 @@ public class JavadocFormatter {
 
 	private final String _author;
 	private final boolean _initializeMissingJavadocs;
-	private final String _inputDir;
+	private final String _inputDirName;
 	private final Map<String, Tuple> _javadocxXmlTuples = new HashMap<>();
 	private Properties _languageProperties;
 	private final File _languagePropertiesFile;
 	private final double _lowestSupportedJavaVersion;
+	private final Set<String> _modifiedFileNames = new HashSet<>();
 	private final String _outputFilePrefix;
 	private final Pattern _paragraphTagPattern = Pattern.compile(
 		"(^.*?(?=\n\n|$)+|(?<=<p>\n).*?(?=\n</p>))", Pattern.DOTALL);

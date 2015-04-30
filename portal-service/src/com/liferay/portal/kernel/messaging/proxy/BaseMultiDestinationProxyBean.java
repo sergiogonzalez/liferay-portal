@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.messaging.proxy;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
+import com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSenderFactoryUtil;
 import com.liferay.portal.kernel.messaging.sender.SynchronousMessageSender;
 
 /**
@@ -24,6 +25,12 @@ import com.liferay.portal.kernel.messaging.sender.SynchronousMessageSender;
  * @author Shuyang Zhou
  */
 public abstract class BaseMultiDestinationProxyBean {
+
+	public void afterPropertiesSet() {
+		_synchronousMessageSender =
+			SingleDestinationMessageSenderFactoryUtil.
+				getSynchronousMessageSender(_mode);
+	}
 
 	public abstract String getDestinationName(ProxyRequest proxyRequest);
 
@@ -39,10 +46,19 @@ public abstract class BaseMultiDestinationProxyBean {
 	public void setMessageBus(MessageBus messageBus) {
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by
+	 * {@link #setSynchronousMessageSenderMode(SynchronousMessageSender.Mode)}
+	 */
+	@Deprecated
 	public void setSynchronousMessageSender(
 		SynchronousMessageSender synchronousMessageSender) {
+	}
 
-		_synchronousMessageSender = synchronousMessageSender;
+	public void setSynchronousMessageSenderMode(
+		SynchronousMessageSender.Mode mode) {
+
+		_mode = mode;
 	}
 
 	public Object synchronousSend(ProxyRequest proxyRequest) throws Exception {
@@ -71,6 +87,7 @@ public abstract class BaseMultiDestinationProxyBean {
 		return message;
 	}
 
+	private SynchronousMessageSender.Mode _mode;
 	private SynchronousMessageSender _synchronousMessageSender;
 
 }

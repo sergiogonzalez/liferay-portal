@@ -117,7 +117,7 @@ public class DLFileShortcutLocalServiceTreeTest {
 			ServiceContextTestUtil.getServiceContext(
 				groupId, TestPropsValues.getUserId());
 
-		return DLAppLocalServiceUtil.addFileShortcut(
+		return DLFileShortcutLocalServiceUtil.addFileShortcut(
 			TestPropsValues.getUserId(), groupId, folderId,
 			fileEntry.getFileEntryId(), serviceContext);
 	}

@@ -16,8 +16,9 @@ package com.liferay.portal.scheduler.quartz;
 
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.messaging.DefaultMessageBus;
+import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.messaging.SynchronousDestination;
@@ -40,6 +41,7 @@ import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Tuple;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletApp;
@@ -52,6 +54,7 @@ import com.liferay.portal.test.rule.AspectJNewEnvTestRule;
 import com.liferay.portal.util.PropsImpl;
 import com.liferay.portal.uuid.PortalUUIDImpl;
 import com.liferay.registry.BasicRegistryImpl;
+import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 
 import java.util.ArrayList;
@@ -74,6 +77,11 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+
+import org.mockito.Matchers;
+import org.mockito.Mockito;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 
 import org.quartz.Calendar;
 import org.quartz.JobBuilder;
@@ -119,16 +127,81 @@ public class QuartzSchedulerEngineTest {
 
 		RegistryUtil.setRegistry(new BasicRegistryImpl());
 
-		MessageBusUtil messageBusUtil = new MessageBusUtil();
+		Registry registry = RegistryUtil.getRegistry();
 
-		messageBusUtil.setMessageBus(new DefaultMessageBus());
-		messageBusUtil.setSynchronousMessageSender(null);
+		MessageBus messageBus = Mockito.mock(MessageBus.class);
 
-		_testDestination = new SynchronousDestination();
+		registry.registerService(MessageBus.class, messageBus);
 
-		_testDestination.setName(_TEST_DESTINATION_NAME);
+		Mockito.when(
+			messageBus.getDestination(Matchers.anyString())
+		).then(
+			new Answer<Destination>() {
 
-		MessageBusUtil.addDestination(_testDestination);
+				@Override
+				public Destination answer(InvocationOnMock invocationOnMock)
+					throws Throwable {
+
+					String destinationName =
+						(String)invocationOnMock.getArguments()[0];
+
+					if (!Validator.equals(
+							_synchronousDestination.getName(),
+							destinationName)) {
+
+						throw new IllegalArgumentException(
+							"Invalid destination: " + destinationName);
+					}
+
+					return _synchronousDestination;
+				}
+
+			}
+		);
+
+		Mockito.when(
+			messageBus.registerMessageListener(
+				Matchers.anyString(), Matchers.any(MessageListener.class))
+		).then(
+			new Answer<Boolean>() {
+
+				@Override
+				public Boolean answer(InvocationOnMock invocationOnMock)
+					throws Throwable {
+
+					_synchronousDestination.register(
+						(MessageListener)invocationOnMock.getArguments()[1]);
+
+					return true;
+				}
+
+			}
+		);
+
+		Mockito.when(
+			messageBus.unregisterMessageListener(
+				Matchers.anyString(), Matchers.any(MessageListener.class))
+		).then(
+			new Answer<Boolean>() {
+
+				@Override
+				public Boolean answer(InvocationOnMock invocationOnMock)
+					throws Throwable {
+
+					_synchronousDestination.unregister(
+						(MessageListener)invocationOnMock.getArguments()[1]);
+
+					return true;
+				}
+
+			}
+		);
+
+		_synchronousDestination = new SynchronousDestination();
+
+		_synchronousDestination.setName(_TEST_DESTINATION_NAME);
+
+		MessageBusUtil.addDestination(_synchronousDestination);
 
 		_quartzSchedulerEngine = new QuartzSchedulerEngine();
 
@@ -200,7 +273,8 @@ public class QuartzSchedulerEngineTest {
 		String testJobName = _TEST_JOB_NAME_PREFIX + "memory";
 
 		Assert.assertEquals(2 * _DEFAULT_JOB_NUMBER, schedulerResponses.size());
-		Assert.assertEquals(0, _testDestination.getMessageListenerCount());
+		Assert.assertEquals(
+			0, _synchronousDestination.getMessageListenerCount());
 
 		Trigger trigger = new IntervalTrigger(
 			testJobName, _MEMORY_TEST_GROUP_NAME, _DEFAULT_INTERVAL);
@@ -219,7 +293,8 @@ public class QuartzSchedulerEngineTest {
 
 		Assert.assertEquals(
 			2 * _DEFAULT_JOB_NUMBER + 1, schedulerResponses.size());
-		Assert.assertEquals(1, _testDestination.getMessageListenerCount());
+		Assert.assertEquals(
+			1, _synchronousDestination.getMessageListenerCount());
 
 		_quartzSchedulerEngine.delete(
 			testJobName, _MEMORY_TEST_GROUP_NAME, StorageType.MEMORY);
@@ -227,7 +302,8 @@ public class QuartzSchedulerEngineTest {
 		schedulerResponses = _quartzSchedulerEngine.getScheduledJobs();
 
 		Assert.assertEquals(2 * _DEFAULT_JOB_NUMBER, schedulerResponses.size());
-		Assert.assertEquals(0, _testDestination.getMessageListenerCount());
+		Assert.assertEquals(
+			0, _synchronousDestination.getMessageListenerCount());
 	}
 
 	@AdviseWith(adviceClasses = {EnableSchedulerAdvice.class})
@@ -436,7 +512,8 @@ public class QuartzSchedulerEngineTest {
 				_MEMORY_TEST_GROUP_NAME, StorageType.MEMORY);
 
 		Assert.assertEquals(_DEFAULT_JOB_NUMBER, schedulerResponses.size());
-		Assert.assertEquals(0, _testDestination.getMessageListenerCount());
+		Assert.assertEquals(
+			0, _synchronousDestination.getMessageListenerCount());
 
 		Trigger trigger = new IntervalTrigger(
 			_TEST_JOB_NAME_PREFIX + "memory", _MEMORY_TEST_GROUP_NAME,
@@ -457,7 +534,8 @@ public class QuartzSchedulerEngineTest {
 			_MEMORY_TEST_GROUP_NAME, StorageType.MEMORY);
 
 		Assert.assertEquals(_DEFAULT_JOB_NUMBER + 1, schedulerResponses.size());
-		Assert.assertEquals(1, _testDestination.getMessageListenerCount());
+		Assert.assertEquals(
+			1, _synchronousDestination.getMessageListenerCount());
 	}
 
 	@AdviseWith(adviceClasses = {EnableSchedulerAdvice.class})
@@ -468,7 +546,8 @@ public class QuartzSchedulerEngineTest {
 				_MEMORY_TEST_GROUP_NAME, StorageType.MEMORY);
 
 		Assert.assertEquals(_DEFAULT_JOB_NUMBER, schedulerResponses.size());
-		Assert.assertEquals(0, _testDestination.getMessageListenerCount());
+		Assert.assertEquals(
+			0, _synchronousDestination.getMessageListenerCount());
 
 		Trigger trigger = new IntervalTrigger(
 			_TEST_JOB_NAME_PREFIX + "memory", _MEMORY_TEST_GROUP_NAME,
@@ -482,7 +561,8 @@ public class QuartzSchedulerEngineTest {
 			_MEMORY_TEST_GROUP_NAME, StorageType.MEMORY);
 
 		Assert.assertEquals(_DEFAULT_JOB_NUMBER + 1, schedulerResponses.size());
-		Assert.assertEquals(0, _testDestination.getMessageListenerCount());
+		Assert.assertEquals(
+			0, _synchronousDestination.getMessageListenerCount());
 	}
 
 	@AdviseWith(adviceClasses = {EnableSchedulerAdvice.class})
@@ -617,7 +697,8 @@ public class QuartzSchedulerEngineTest {
 	@AdviseWith(adviceClasses = {EnableSchedulerAdvice.class})
 	@Test
 	public void testUnschedule3() throws Exception {
-		Assert.assertEquals(0, _testDestination.getMessageListenerCount());
+		Assert.assertEquals(
+			0, _synchronousDestination.getMessageListenerCount());
 
 		String testJobName = _TEST_JOB_NAME_PREFIX + "memory";
 
@@ -639,7 +720,8 @@ public class QuartzSchedulerEngineTest {
 				testJobName, _MEMORY_TEST_GROUP_NAME, StorageType.MEMORY);
 
 		_assertTriggerState(schedulerResponse, TriggerState.NORMAL);
-		Assert.assertEquals(1, _testDestination.getMessageListenerCount());
+		Assert.assertEquals(
+			1, _synchronousDestination.getMessageListenerCount());
 
 		_quartzSchedulerEngine.unschedule(
 			testJobName, _MEMORY_TEST_GROUP_NAME, StorageType.MEMORY);
@@ -648,7 +730,8 @@ public class QuartzSchedulerEngineTest {
 			testJobName, _MEMORY_TEST_GROUP_NAME, StorageType.MEMORY);
 
 		_assertTriggerState(schedulerResponse, TriggerState.UNSCHEDULED);
-		Assert.assertEquals(0, _testDestination.getMessageListenerCount());
+		Assert.assertEquals(
+			0, _synchronousDestination.getMessageListenerCount());
 	}
 
 	@AdviseWith(adviceClasses = {EnableSchedulerAdvice.class})
@@ -818,7 +901,7 @@ public class QuartzSchedulerEngineTest {
 	private static final String _TEST_PORTLET_ID = "testPortletId";
 
 	private QuartzSchedulerEngine _quartzSchedulerEngine;
-	private SynchronousDestination _testDestination;
+	private SynchronousDestination _synchronousDestination;
 
 	private class MockScheduler implements Scheduler {
 

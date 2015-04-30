@@ -23,13 +23,13 @@ repositories {
 apply plugin: "com.liferay.portal.tools.service.builder"
 
 serviceBuilder {
-	apiDir="../tmp/api"
+	apiDirName="../tmp/api"
 	hbmFileName="../tmp/src/META-INF/portal-hbm.xml"
-	implDir="../tmp/src"
+	implDirName="../tmp/src"
 	inputFileName="service.xml"
 	modelHintsFileName="../tmp/src/META-INF/portal-model-hints.xml"
-	resourcesDir="../tmp/src"
+	resourcesDirName="../tmp/src"
 	springFileName="../tmp/src/META-INF/portal-spring.xml"
-	sqlDir="../tmp/sql"
-	testDir="../tmp/test/integration"
+	sqlDirName="../tmp/sql"
+	testDirName="../tmp/test/integration"
 }

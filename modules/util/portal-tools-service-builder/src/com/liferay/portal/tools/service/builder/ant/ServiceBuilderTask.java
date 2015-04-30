@@ -49,8 +49,8 @@ public class ServiceBuilderTask extends Task {
 		}
 	}
 
-	public void setApiDir(String apiDir) {
-		_serviceBuilderArgs.setApiDir(apiDir);
+	public void setApiDirName(String apiDirName) {
+		_serviceBuilderArgs.setApiDirName(apiDirName);
 	}
 
 	public void setAutoImportDefaultReferences(
@@ -80,8 +80,8 @@ public class ServiceBuilderTask extends Task {
 		_serviceBuilderArgs.setHbmFileName(hbmFileName);
 	}
 
-	public void setImplDir(String implDir) {
-		_serviceBuilderArgs.setImplDir(implDir);
+	public void setImplDirName(String implDirName) {
+		_serviceBuilderArgs.setImplDirName(implDirName);
 	}
 
 	public void setInputFileName(String inputFileName) {
@@ -135,8 +135,8 @@ public class ServiceBuilderTask extends Task {
 		_serviceBuilderArgs.setResourceActionsConfigs(resourceActionsConfigs);
 	}
 
-	public void setResourcesDir(String resourcesDir) {
-		_serviceBuilderArgs.setResourcesDir(resourcesDir);
+	public void setResourcesDirName(String resourcesDirName) {
+		_serviceBuilderArgs.setResourcesDirName(resourcesDirName);
 	}
 
 	public void setSpringFileName(String springFileName) {
@@ -147,8 +147,8 @@ public class ServiceBuilderTask extends Task {
 		_serviceBuilderArgs.setSpringNamespaces(springNamespaces);
 	}
 
-	public void setSqlDir(String sqlDir) {
-		_serviceBuilderArgs.setSqlDir(sqlDir);
+	public void setSqlDirName(String sqlDirName) {
+		_serviceBuilderArgs.setSqlDirName(sqlDirName);
 	}
 
 	public void setSqlFileName(String sqlFileName) {
@@ -167,8 +167,8 @@ public class ServiceBuilderTask extends Task {
 		_serviceBuilderArgs.setTargetEntityName(targetEntityName);
 	}
 
-	public void setTestDir(String testDir) {
-		_serviceBuilderArgs.setTestDir(testDir);
+	public void setTestDirName(String testDirName) {
+		_serviceBuilderArgs.setTestDirName(testDirName);
 	}
 
 	private final ServiceBuilderArgs _serviceBuilderArgs =
