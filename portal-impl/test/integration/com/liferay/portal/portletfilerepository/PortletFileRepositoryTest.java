@@ -29,7 +29,7 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
-import com.liferay.portlet.documentlibrary.DuplicateFileException;
+import com.liferay.portlet.documentlibrary.DuplicateFileEntryException;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
@@ -79,7 +79,7 @@ public class PortletFileRepositoryTest {
 			WorkflowConstants.STATUS_APPROVED, dlFileEntry.getStatus());
 	}
 
-	@Test(expected = DuplicateFileException.class)
+	@Test(expected = DuplicateFileEntryException.class)
 	public void testFileEntryAddShouldFailIfDuplicateName() throws Exception {
 		String name = RandomTestUtil.randomString();
 
