@@ -95,7 +95,6 @@ import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryImpl;
 import com.liferay.portlet.documentlibrary.service.base.DLFileEntryLocalServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.store.DLStore;
-import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 import com.liferay.portlet.documentlibrary.util.DL;
 import com.liferay.portlet.documentlibrary.util.DLAppUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
@@ -258,12 +257,12 @@ public class DLFileEntryLocalServiceImpl
 		// File
 
 		if (file != null) {
-			DLStoreUtil.addFile(
+			_dlStore.addFile(
 				user.getCompanyId(), dlFileEntry.getDataRepositoryId(), name,
 				false, file);
 		}
 		else {
-			DLStoreUtil.addFile(
+			_dlStore.addFile(
 				user.getCompanyId(), dlFileEntry.getDataRepositoryId(), name,
 				false, is);
 		}
@@ -351,14 +350,14 @@ public class DLFileEntryLocalServiceImpl
 				// File
 
 				try {
-					DLStoreUtil.deleteFile(
+					_dlStore.deleteFile(
 						user.getCompanyId(), dlFileEntry.getDataRepositoryId(),
 						dlFileEntry.getName(), lastDLFileVersion.getVersion());
 				}
 				catch (NoSuchModelException nsme) {
 				}
 
-				DLStoreUtil.copyFileVersion(
+				_dlStore.copyFileVersion(
 					user.getCompanyId(), dlFileEntry.getDataRepositoryId(),
 					dlFileEntry.getName(),
 					DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION,
@@ -393,7 +392,7 @@ public class DLFileEntryLocalServiceImpl
 
 			// File
 
-			DLStoreUtil.updateFileVersion(
+			_dlStore.updateFileVersion(
 				user.getCompanyId(), dlFileEntry.getDataRepositoryId(),
 				dlFileEntry.getName(),
 				DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION, version);
@@ -582,7 +581,7 @@ public class DLFileEntryLocalServiceImpl
 			}
 
 			try {
-				DLStoreUtil.deleteFile(
+				_dlStore.deleteFile(
 					dlFileEntry.getCompanyId(),
 					dlFileEntry.getDataRepositoryId(), dlFileEntry.getName(),
 					DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION);
@@ -590,7 +589,7 @@ public class DLFileEntryLocalServiceImpl
 			catch (NoSuchModelException nsme) {
 			}
 
-			DLStoreUtil.copyFileVersion(
+			_dlStore.copyFileVersion(
 				user.getCompanyId(), dlFileEntry.getDataRepositoryId(),
 				dlFileEntry.getName(), version,
 				DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION);
@@ -742,7 +741,7 @@ public class DLFileEntryLocalServiceImpl
 		// File
 
 		try {
-			DLStoreUtil.deleteFile(
+			_dlStore.deleteFile(
 				dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
 				dlFileEntry.getName());
 		}
@@ -865,7 +864,7 @@ public class DLFileEntryLocalServiceImpl
 			}
 
 			try {
-				DLStoreUtil.deleteFile(
+				_dlStore.deleteFile(
 					dlFileEntry.getCompanyId(),
 					dlFileEntry.getDataRepositoryId(), dlFileEntry.getName(),
 					version);
@@ -1020,7 +1019,7 @@ public class DLFileEntryLocalServiceImpl
 				dlFileEntry, increment);
 		}
 
-		return DLStoreUtil.getFile(
+		return _dlStore.getFile(
 			dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
 			dlFileEntry.getName(), version);
 	}
@@ -1096,7 +1095,7 @@ public class DLFileEntryLocalServiceImpl
 				dlFileEntry, increment);
 		}
 
-		return DLStoreUtil.getFileAsStream(
+		return _dlStore.getFileAsStream(
 			dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
 			dlFileEntry.getName(), version);
 	}
@@ -2336,7 +2335,7 @@ public class DLFileEntryLocalServiceImpl
 			String lastChecksum = lastDLFileVersion.getChecksum();
 
 			if (Validator.isNull(lastChecksum)) {
-				lastInputStream = DLStoreUtil.getFileAsStream(
+				lastInputStream = _dlStore.getFileAsStream(
 					dlFileEntry.getCompanyId(),
 					dlFileEntry.getDataRepositoryId(), dlFileEntry.getName(),
 					lastDLFileVersion.getVersion());
@@ -2348,7 +2347,7 @@ public class DLFileEntryLocalServiceImpl
 				dlFileVersionPersistence.update(lastDLFileVersion);
 			}
 
-			latestInputStream = DLStoreUtil.getFileAsStream(
+			latestInputStream = _dlStore.getFileAsStream(
 				dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
 				dlFileEntry.getName(), latestDLFileVersion.getVersion());
 
@@ -2393,7 +2392,7 @@ public class DLFileEntryLocalServiceImpl
 			dlFileEntry.getGroupId(), newFolderId, dlFileEntry.getFileEntryId(),
 			dlFileEntry.getFileName(), dlFileEntry.getTitle());
 
-		if (DLStoreUtil.hasFile(
+		if (_dlStore.hasFile(
 				user.getCompanyId(),
 				DLFolderConstants.getDataRepositoryId(
 					dlFileEntry.getGroupId(), newFolderId),
@@ -2433,7 +2432,7 @@ public class DLFileEntryLocalServiceImpl
 
 		// File
 
-		DLStoreUtil.updateFile(
+		_dlStore.updateFile(
 			user.getCompanyId(), oldDataRepositoryId,
 			dlFileEntry.getDataRepositoryId(), dlFileEntry.getName());
 
@@ -2459,7 +2458,7 @@ public class DLFileEntryLocalServiceImpl
 			dlFileVersion.getFileVersionId());
 
 		try {
-			DLStoreUtil.deleteFile(
+			_dlStore.deleteFile(
 				dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
 				dlFileEntry.getName(),
 				DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION);
@@ -2570,7 +2569,7 @@ public class DLFileEntryLocalServiceImpl
 
 			if ((file != null) || (is != null)) {
 				try {
-					DLStoreUtil.deleteFile(
+					_dlStore.deleteFile(
 						user.getCompanyId(), dlFileEntry.getDataRepositoryId(),
 						dlFileEntry.getName(), version);
 				}
@@ -2578,13 +2577,13 @@ public class DLFileEntryLocalServiceImpl
 				}
 
 				if (file != null) {
-					DLStoreUtil.updateFile(
+					_dlStore.updateFile(
 						user.getCompanyId(), dlFileEntry.getDataRepositoryId(),
 						dlFileEntry.getName(), dlFileEntry.getExtension(),
 						false, version, sourceFileName, file);
 				}
 				else {
-					DLStoreUtil.updateFile(
+					_dlStore.updateFile(
 						user.getCompanyId(), dlFileEntry.getDataRepositoryId(),
 						dlFileEntry.getName(), dlFileEntry.getExtension(),
 						false, version, sourceFileName, is);
