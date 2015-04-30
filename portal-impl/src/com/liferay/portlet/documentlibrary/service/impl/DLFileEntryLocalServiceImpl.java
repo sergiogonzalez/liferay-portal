@@ -75,7 +75,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.documentlibrary.DuplicateFileException;
+import com.liferay.portlet.documentlibrary.DuplicateFileEntryException;
 import com.liferay.portlet.documentlibrary.DuplicateFolderNameException;
 import com.liferay.portlet.documentlibrary.FileExtensionException;
 import com.liferay.portlet.documentlibrary.FileNameException;
@@ -1932,7 +1932,7 @@ public class DLFileEntryLocalServiceImpl
 		if ((dlFileEntry != null) &&
 			(dlFileEntry.getFileEntryId() != fileEntryId)) {
 
-			throw new DuplicateFileException(title);
+			throw new DuplicateFileEntryException(title);
 		}
 
 		dlFileEntry = dlFileEntryPersistence.fetchByG_F_FN(
@@ -1941,7 +1941,7 @@ public class DLFileEntryLocalServiceImpl
 		if ((dlFileEntry != null) &&
 			(dlFileEntry.getFileEntryId() != fileEntryId)) {
 
-			throw new DuplicateFileException(title);
+			throw new DuplicateFileEntryException(title);
 		}
 	}
 
@@ -2398,7 +2398,7 @@ public class DLFileEntryLocalServiceImpl
 					dlFileEntry.getGroupId(), newFolderId),
 				dlFileEntry.getName(), StringPool.BLANK)) {
 
-			throw new DuplicateFileException(dlFileEntry.getName());
+			throw new DuplicateFileEntryException(dlFileEntry.getName());
 		}
 
 		dlFileEntry.setModifiedDate(serviceContext.getModifiedDate(null));
