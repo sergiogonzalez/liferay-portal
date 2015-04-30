@@ -60,7 +60,7 @@ import com.liferay.portlet.asset.AssetCategoryException;
 import com.liferay.portlet.asset.AssetTagException;
 import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.documentlibrary.DLPortletInstanceSettings;
-import com.liferay.portlet.documentlibrary.DuplicateFileException;
+import com.liferay.portlet.documentlibrary.DuplicateFileEntryException;
 import com.liferay.portlet.documentlibrary.DuplicateFolderNameException;
 import com.liferay.portlet.documentlibrary.FileExtensionException;
 import com.liferay.portlet.documentlibrary.FileMimeTypeException;
@@ -650,7 +650,7 @@ public class EditFileEntryAction extends PortletAction {
 					vocabularyTitle);
 			}
 		}
-		else if (e instanceof DuplicateFileException) {
+		else if (e instanceof DuplicateFileEntryException) {
 			errorMessage = themeDisplay.translate(
 				"the-folder-you-selected-already-has-an-entry-with-this-name." +
 					"-please-select-a-different-folder");
@@ -770,7 +770,7 @@ public class EditFileEntryAction extends PortletAction {
 			SessionErrors.add(actionRequest, e.getClass(), e);
 		}
 		else if (e instanceof AntivirusScannerException ||
-				 e instanceof DuplicateFileException ||
+				 e instanceof DuplicateFileEntryException ||
 				 e instanceof DuplicateFolderNameException ||
 				 e instanceof FileExtensionException ||
 				 e instanceof FileMimeTypeException ||
@@ -813,7 +813,7 @@ public class EditFileEntryAction extends PortletAction {
 			}
 
 			if (e instanceof AntivirusScannerException ||
-				e instanceof DuplicateFileException ||
+				e instanceof DuplicateFileEntryException ||
 				e instanceof FileExtensionException ||
 				e instanceof FileNameException ||
 				e instanceof FileSizeException) {
@@ -840,7 +840,7 @@ public class EditFileEntryAction extends PortletAction {
 						ServletResponseConstants.SC_FILE_ANTIVIRUS_EXCEPTION;
 				}
 
-				if (e instanceof DuplicateFileException) {
+				if (e instanceof DuplicateFileEntryException) {
 					errorMessage = themeDisplay.translate(
 						"please-enter-a-unique-document-name");
 					errorType =
@@ -912,8 +912,9 @@ public class EditFileEntryAction extends PortletAction {
 		else {
 			Throwable cause = e.getCause();
 
-			if (cause instanceof DuplicateFileException) {
-				SessionErrors.add(actionRequest, DuplicateFileException.class);
+			if (cause instanceof DuplicateFileEntryException) {
+				SessionErrors.add(
+					actionRequest, DuplicateFileEntryException.class);
 			}
 			else {
 				throw e;

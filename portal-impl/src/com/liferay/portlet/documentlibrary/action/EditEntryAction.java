@@ -33,7 +33,7 @@ import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.AssetCategoryException;
 import com.liferay.portlet.asset.AssetTagException;
-import com.liferay.portlet.documentlibrary.DuplicateFileException;
+import com.liferay.portlet.documentlibrary.DuplicateFileEntryException;
 import com.liferay.portlet.documentlibrary.DuplicateFolderNameException;
 import com.liferay.portlet.documentlibrary.InvalidFolderException;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
@@ -134,11 +134,11 @@ public class EditEntryAction extends PortletAction {
 
 				setForward(actionRequest, "portlet.document_library.error");
 			}
-			else if (e instanceof DuplicateFileException ||
+			else if (e instanceof DuplicateFileEntryException ||
 					 e instanceof DuplicateFolderNameException ||
 					 e instanceof SourceFileNameException) {
 
-				if (e instanceof DuplicateFileException) {
+				if (e instanceof DuplicateFileEntryException) {
 					HttpServletResponse response =
 						PortalUtil.getHttpServletResponse(actionResponse);
 
