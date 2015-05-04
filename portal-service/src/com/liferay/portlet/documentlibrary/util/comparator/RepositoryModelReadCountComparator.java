@@ -110,7 +110,9 @@ public class RepositoryModelReadCountComparator<T>
 
 			return dlFileEntry.getReadCount();
 		}
-		else if (obj instanceof FileShortcut || obj instanceof DLFileShortcut) {
+		else if ((obj instanceof FileShortcut) ||
+				 (obj instanceof DLFileShortcut)) {
+
 			return getFileShortcutReadCount(obj);
 		}
 		else if ((obj instanceof DLFolder) || (obj instanceof Folder)) {
