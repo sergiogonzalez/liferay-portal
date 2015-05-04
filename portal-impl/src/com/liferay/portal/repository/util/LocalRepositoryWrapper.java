@@ -128,7 +128,8 @@ public class LocalRepositoryWrapper implements LocalRepository {
 	}
 
 	@Override
-	public void deleteFileShortcuts(long toFileEntryId) {
+	public void deleteFileShortcuts(long toFileEntryId) throws PortalException {
+		_localRepository.deleteFileShortcuts(toFileEntryId);
 	}
 
 	@Override
