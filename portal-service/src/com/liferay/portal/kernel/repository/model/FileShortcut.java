@@ -20,7 +20,6 @@ import com.liferay.portal.security.permission.PermissionChecker;
 /**
  * @author Adolfo Pérez
  * @author Roberto Díaz
- * @
  */
 public interface FileShortcut
 	extends RepositoryEntry, RepositoryModel<FileShortcut> {
