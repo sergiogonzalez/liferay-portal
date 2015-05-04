@@ -259,7 +259,7 @@ public class LiferayFileShortcut extends LiferayModel implements FileShortcut {
 
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		_dlFileShortcut.setPrimaryKeyObj(primaryKeyObj);
+		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
 	@Override
@@ -288,14 +288,16 @@ public class LiferayFileShortcut extends LiferayModel implements FileShortcut {
 			return this;
 		}
 		else {
-			return new LiferayFileShortcut(_dlFileShortcut.toEscapedModel());
+			return new LiferayFileShortcut(
+				_dlFileShortcut.toEscapedModel(), true);
 		}
 	}
 
 	@Override
 	public FileShortcut toUnescapedModel() {
 		if (isEscapedModel()) {
-			return new LiferayFileShortcut(_dlFileShortcut.toUnescapedModel());
+			return new LiferayFileShortcut(
+				_dlFileShortcut.toUnescapedModel(), true);
 		}
 		else {
 			return this;
