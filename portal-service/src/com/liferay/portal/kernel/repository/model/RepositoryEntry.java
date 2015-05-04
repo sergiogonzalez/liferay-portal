@@ -18,11 +18,22 @@ import java.util.Date;
 
 /**
  * @author Adolfo Pérez
+ * @author Sergio González
  */
 public interface RepositoryEntry {
 
+	public long getCompanyId();
+
 	public Date getCreateDate();
 
+	public long getGroupId();
+
 	public Date getModifiedDate();
+
+	public long getUserId();
+
+	public String getUserName();
+
+	public String getUserUuid();
 
 }
