@@ -40,6 +40,4 @@ public interface FileShortcut
 
 	public String getToTitle();
 
-	public boolean isInHiddenFolder();
-
 }

@@ -198,11 +198,6 @@ public class FileShortcutProxyBean extends RepositoryModelProxyBean
 	}
 
 	@Override
-	public boolean isInHiddenFolder() {
-		return _fileShortcut.isInHiddenFolder();
-	}
-
-	@Override
 	public void setCompanyId(long companyId) {
 		_fileShortcut.setCompanyId(companyId);
 	}
