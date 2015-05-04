@@ -191,6 +191,8 @@ public class InitializedDocumentRepository implements DocumentRepository {
 	public FileShortcut getFileShortcut(long fileShortcutId)
 		throws PortalException {
 
+		_checkDocumentRepository();
+
 		return _documentRepository.getFileShortcut(fileShortcutId);
 	}
 
@@ -326,6 +328,8 @@ public class InitializedDocumentRepository implements DocumentRepository {
 			long userId, long fileShortcutId, long folderId, long toFileEntryId,
 			ServiceContext serviceContext)
 		throws PortalException {
+
+		_checkDocumentRepository();
 
 		return _documentRepository.updateFileShortcut(
 			userId, fileShortcutId, folderId, toFileEntryId, serviceContext);
