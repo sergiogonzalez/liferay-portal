@@ -234,11 +234,6 @@ public class LiferayFileShortcut extends LiferayModel implements FileShortcut {
 	}
 
 	@Override
-	public boolean isInHiddenFolder() {
-		return _dlFileShortcut.isInHiddenFolder();
-	}
-
-	@Override
 	public void setCompanyId(long companyId) {
 		_dlFileShortcut.setCompanyId(companyId);
 	}
