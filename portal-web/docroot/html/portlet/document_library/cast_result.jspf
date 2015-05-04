@@ -48,10 +48,6 @@ else if (result instanceof FileEntry) {
 	fileEntry = fileEntry.toEscapedModel();
 }
 else if (result instanceof FileShortcut) {
-	if (result instanceof FileShortcut) {
-		result = ((FileShortcut) result).getModel();
-	}
-
 	fileShortcut = (FileShortcut)result;
 
 	fileShortcut = fileShortcut.toEscapedModel();
