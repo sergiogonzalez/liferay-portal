@@ -50,13 +50,7 @@ if (row != null) {
 			fileShortcut = DLAppLocalServiceUtil.getFileShortcut(trashEntry.getClassPK());
 		}
 	}
-	else if (result instanceof FileShortcut ||
-				result instanceof FileShortcut) {
-
-		if (result instanceof FileShortcut) {
-			result = ((FileShortcut) result).getModel();
-		}
-
+	else if (result instanceof FileShortcut) {
 		fileShortcut = (FileShortcut)result;
 	}
 }
