@@ -41,6 +41,7 @@ import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.SourceFileNameException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.trash.service.TrashEntryServiceUtil;
@@ -269,7 +270,9 @@ public class EditEntryAction extends PortletAction {
 					DLAppServiceUtil.moveFileShortcutToTrash(
 						deleteFileShortcutId);
 
-				trashedModels.add((TrashedModel)fileShortcut.getModel());
+				if (fileShortcut.getModel() instanceof DLFileShortcut) {
+					trashedModels.add((DLFileShortcut)fileShortcut.getModel());
+				}
 			}
 			else {
 				DLAppServiceUtil.deleteFileShortcut(deleteFileShortcutId);
