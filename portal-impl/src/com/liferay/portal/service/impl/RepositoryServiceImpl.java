@@ -88,20 +88,6 @@ public class RepositoryServiceImpl extends RepositoryServiceBaseImpl {
 
 	@Override
 	public LocalRepository getLocalRepositoryImpl(
-			long folderId, long fileEntryId, long fileVersionId)
-		throws PortalException {
-
-		LocalRepository localRepositoryImpl =
-			repositoryLocalService.getLocalRepositoryImpl(
-				folderId, fileEntryId, fileVersionId);
-
-		checkRepository(localRepositoryImpl.getRepositoryId());
-
-		return localRepositoryImpl;
-	}
-
-	@Override
-	public LocalRepository getLocalRepositoryImpl(
 			long folderId, long fileEntryId, long fileVersionId,
 			long fileShortcutId)
 		throws PortalException {
@@ -128,22 +114,6 @@ public class RepositoryServiceImpl extends RepositoryServiceBaseImpl {
 		checkRepository(repositoryId);
 
 		return repositoryLocalService.getRepositoryImpl(repositoryId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.repository.Repository getRepositoryImpl(
-			long folderId, long fileEntryId, long fileVersionId)
-		throws PortalException {
-
-		com.liferay.portal.kernel.repository.Repository repositoryImpl =
-			repositoryLocalService.getRepositoryImpl(
-				folderId, fileEntryId, fileVersionId);
-
-		checkRepository(
-			repositoryImpl.getRepositoryId(), folderId, fileEntryId,
-			fileVersionId);
-
-		return repositoryImpl;
 	}
 
 	@Override

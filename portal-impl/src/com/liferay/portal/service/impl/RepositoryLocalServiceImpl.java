@@ -248,29 +248,14 @@ public class RepositoryLocalServiceImpl
 
 	@Override
 	public LocalRepository getLocalRepositoryImpl(
-			long folderId, long fileEntryId, long fileVersionId)
-		throws PortalException {
-
-		long repositoryId = getRepositoryId(
-			folderId, fileEntryId, fileVersionId);
-
-		return getLocalRepositoryImpl(repositoryId);
-	}
-
-	@Override
-	public LocalRepository getLocalRepositoryImpl(
 			long folderId, long fileEntryId, long fileVersionId,
 			long fileShortcutId)
 		throws PortalException {
 
-		if ((fileShortcutId > 0) && (fileEntryId == 0)) {
-			DLFileShortcut dlFileShortcut =
-				dlFileShortcutLocalService.getDLFileShortcut(fileShortcutId);
+		long repositoryId = getRepositoryId(
+			folderId, fileEntryId, fileVersionId, fileShortcutId);
 
-			fileEntryId = dlFileShortcut.getToFileEntryId();
-		}
-
-		return getLocalRepositoryImpl(folderId, fileEntryId, fileVersionId);
+		return getLocalRepositoryImpl(repositoryId);
 	}
 
 	@Override
@@ -315,30 +300,12 @@ public class RepositoryLocalServiceImpl
 
 	@Override
 	public com.liferay.portal.kernel.repository.Repository getRepositoryImpl(
-			long folderId, long fileEntryId, long fileVersionId)
-		throws PortalException {
-
-		long repositoryId = getRepositoryId(
-			folderId, fileEntryId, fileVersionId);
-
-		return getRepositoryImpl(repositoryId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.repository.Repository getRepositoryImpl(
 			long folderId, long fileEntryId, long fileVersionId,
 			long fileShortcutId)
 		throws PortalException {
 
-		if ((fileShortcutId > 0) && (fileEntryId == 0)) {
-			DLFileShortcut dlFileShortcut =
-				dlFileShortcutLocalService.getDLFileShortcut(fileShortcutId);
-
-			fileEntryId = dlFileShortcut.getToFileEntryId();
-		}
-
 		long repositoryId = getRepositoryId(
-			folderId, fileEntryId, fileVersionId);
+			folderId, fileEntryId, fileVersionId, fileShortcutId);
 
 		return getRepositoryImpl(repositoryId);
 	}
@@ -432,7 +399,8 @@ public class RepositoryLocalServiceImpl
 	}
 
 	protected long getInternalRepositoryId(
-		long folderId, long fileEntryId, long fileVersionId) {
+		long folderId, long fileEntryId, long fileVersionId,
+		long fileShortcutId) {
 
 		long repositoryId = 0;
 
@@ -464,6 +432,14 @@ public class RepositoryLocalServiceImpl
 				repositoryId = dlFileVersion.getRepositoryId();
 			}
 		}
+		else if (fileShortcutId != 0) {
+			DLFileShortcut dlFileShortcut =
+				dlFileShortcutLocalService.fetchDLFileShortcut(fileShortcutId);
+
+			if (dlFileShortcut != null) {
+				repositoryId = dlFileShortcut.getRepositoryId();
+			}
+		}
 		else {
 			throw new InvalidRepositoryIdException(
 				"Missing a valid ID for folder, file entry, or file " +
@@ -474,13 +450,18 @@ public class RepositoryLocalServiceImpl
 	}
 
 	protected long getRepositoryId(
-		long folderId, long fileEntryId, long fileVersionId) {
+		long folderId, long fileEntryId, long fileVersionId,
+		long fileShortcutId) {
 
 		long repositoryId = getInternalRepositoryId(
-			folderId, fileEntryId, fileVersionId);
+			folderId, fileEntryId, fileVersionId, fileShortcutId);
 
 		if (repositoryId != 0) {
 			return repositoryId;
+		}
+
+		if (fileShortcutId != 0) {
+			throw new IllegalArgumentException();
 		}
 
 		repositoryId = getExternalRepositoryId(
