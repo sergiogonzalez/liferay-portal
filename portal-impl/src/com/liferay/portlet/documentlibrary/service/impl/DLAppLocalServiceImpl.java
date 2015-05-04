@@ -1393,7 +1393,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 
 		try {
 			return repositoryLocalService.getLocalRepositoryImpl(
-				0, fileEntryId, 0);
+				0, fileEntryId, 0, 0);
 		}
 		catch (InvalidRepositoryIdException irie) {
 			StringBundler sb = new StringBundler(3);
@@ -1430,7 +1430,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 
 		try {
 			return repositoryLocalService.getLocalRepositoryImpl(
-				0, 0, fileVersionId);
+				0, 0, fileVersionId, 0);
 		}
 		catch (InvalidRepositoryIdException irie) {
 			StringBundler sb = new StringBundler(3);
@@ -1448,7 +1448,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 
 		try {
 			return repositoryLocalService.getLocalRepositoryImpl(
-				folderId, 0, 0);
+				folderId, 0, 0, 0);
 		}
 		catch (InvalidRepositoryIdException irie) {
 			StringBundler sb = new StringBundler(3);

@@ -3350,7 +3350,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		throws PortalException {
 
 		try {
-			return repositoryService.getRepositoryImpl(0, fileEntryId, 0);
+			return repositoryService.getRepositoryImpl(0, fileEntryId, 0, 0);
 		}
 		catch (InvalidRepositoryIdException irie) {
 			StringBundler sb = new StringBundler(3);
@@ -3384,7 +3384,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		throws PortalException {
 
 		try {
-			return repositoryService.getRepositoryImpl(0, 0, fileVersionId);
+			return repositoryService.getRepositoryImpl(0, 0, fileVersionId, 0);
 		}
 		catch (InvalidRepositoryIdException irie) {
 			StringBundler sb = new StringBundler(3);
@@ -3401,7 +3401,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		throws PortalException {
 
 		try {
-			return repositoryService.getRepositoryImpl(folderId, 0, 0);
+			return repositoryService.getRepositoryImpl(folderId, 0, 0, 0);
 		}
 		catch (InvalidRepositoryIdException irie) {
 			StringBundler sb = new StringBundler(3);
