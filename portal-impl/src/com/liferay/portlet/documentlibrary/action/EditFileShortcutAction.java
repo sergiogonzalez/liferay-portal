@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
@@ -26,6 +25,7 @@ import com.liferay.portal.struts.PortletAction;
 import com.liferay.portlet.documentlibrary.FileShortcutPermissionException;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
+import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcutConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
@@ -127,8 +127,10 @@ public class EditFileShortcutAction extends PortletAction {
 			FileShortcut fileShortcut =
 				DLAppServiceUtil.moveFileShortcutToTrash(fileShortcutId);
 
-			TrashUtil.addTrashSessionMessages(
-				actionRequest, (TrashedModel)fileShortcut.getModel());
+			if (fileShortcut.getModel() instanceof DLFileShortcut) {
+				TrashUtil.addTrashSessionMessages(
+					actionRequest, (DLFileShortcut)fileShortcut.getModel());
+			}
 
 			hideDefaultSuccessMessage(actionRequest);
 		}
