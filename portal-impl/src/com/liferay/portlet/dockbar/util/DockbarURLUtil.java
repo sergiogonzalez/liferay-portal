@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,15 +11,23 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/html/portlet/init.jsp" %>
+package com.liferay.portlet.dockbar.util;
 
-<%@ page import="com.liferay.portal.util.PortletCategoryUtil" %><%@
-page import="com.liferay.portlet.dockbar.util.DockbarURLUtil" %><%@
-page import="com.liferay.taglib.aui.AUIUtil" %>
+import com.liferay.portal.model.GroupConstants;
+import com.liferay.portal.theme.ThemeDisplay;
 
-<%@ page import="java.util.regex.Matcher" %><%@
-page import="java.util.regex.Pattern" %>
+/**
+ * @author Adolfo Pérez
+ */
+public class DockbarURLUtil {
 
-<%@ include file="/html/portlet/dockbar/init-ext.jsp" %>
+	public static String getURLMyAccount(ThemeDisplay themeDisplay) {
+		String urlMyAccout =
+			themeDisplay.getPathFriendlyURLPrivateGroup() +
+				GroupConstants.USER_PERSONAL_PANEL_FRIENDLY_URL;
+
+		return urlMyAccout;
+	}
+
+}
