@@ -115,12 +115,10 @@
 				%>
 
 				<%
-				String myAccountURL = themeDisplay.getURLMyAccount().toString();
-
-				myAccountURL = HttpUtil.setParameter(myAccountURL, "controlPanelCategory", PortletCategoryKeys.MY);
+				String myAccountURL = DockbarURLUtil.getURLMyAccount(request);
 				%>
 
-				<aui:nav-item href="<%= myAccountURL %>" iconCssClass="icon-user" label="my-account" title="my-account" useDialog="<%= PropsValues.DOCKBAR_ADMINISTRATIVE_LINKS_SHOW_IN_POP_UP %>" />
+				<aui:nav-item href="<%= myAccountURL %>" iconCssClass="icon-user" label="my-account" title="my-account" />
 			</c:if>
 
 			<c:if test="<%= themeDisplay.isShowSignOutIcon() %>">
