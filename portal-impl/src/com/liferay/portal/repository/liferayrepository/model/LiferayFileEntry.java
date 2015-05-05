@@ -52,7 +52,7 @@ import java.util.Map;
 public class LiferayFileEntry extends LiferayModel implements FileEntry {
 
 	public LiferayFileEntry(DLFileEntry dlFileEntry) {
-		this(dlFileEntry, false);
+		this(dlFileEntry, dlFileEntry.isEscapedModel());
 	}
 
 	public LiferayFileEntry(DLFileEntry fileEntry, boolean escapedModel) {
