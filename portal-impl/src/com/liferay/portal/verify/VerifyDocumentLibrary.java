@@ -40,7 +40,7 @@ import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
 import com.liferay.portal.util.PortalInstances;
-import com.liferay.portlet.documentlibrary.DuplicateFileException;
+import com.liferay.portlet.documentlibrary.DuplicateFileEntryException;
 import com.liferay.portlet.documentlibrary.DuplicateFolderNameException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
@@ -370,7 +370,7 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 							dlFileEntry.getFileName(), dlFileEntry.getTitle());
 					}
 					catch (PortalException pe) {
-						if (!(pe instanceof DuplicateFileException) &&
+						if (!(pe instanceof DuplicateFileEntryException) &&
 							!(pe instanceof DuplicateFolderNameException)) {
 
 							return;
@@ -549,7 +549,7 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 			}
 			catch (PortalException pe) {
 				if (!(pe instanceof DuplicateFolderNameException) &&
-					 !(pe instanceof DuplicateFileException)) {
+					 !(pe instanceof DuplicateFileEntryException)) {
 
 					throw pe;
 				}

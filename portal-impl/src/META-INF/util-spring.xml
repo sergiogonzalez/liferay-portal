@@ -900,7 +900,16 @@
 	<bean id="com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission" class="com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission" />
 	<bean id="com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission" class="com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission" />
 	<bean id="com.liferay.portlet.documentlibrary.service.permission.DLPermission" class="com.liferay.portlet.documentlibrary.service.permission.DLPermission" />
-	<bean id="com.liferay.portlet.documentlibrary.store.DLStore" class="com.liferay.portlet.documentlibrary.store.DLStoreImpl" />
+	<bean id="com.liferay.portlet.documentlibrary.store.IgnoreDuplicatesDLStore" class="com.liferay.portlet.documentlibrary.store.DLStoreImpl">
+		<property name="store">
+			<bean class="com.liferay.portlet.documentlibrary.store.IgnoreDuplicatesStoreWrapper">
+				<constructor-arg ref="com.liferay.portlet.documentlibrary.store.Store" />
+			</bean>
+		</property>
+	</bean>
+	<bean id="com.liferay.portlet.documentlibrary.store.DLStore" class="com.liferay.portlet.documentlibrary.store.DLStoreImpl">
+		<property name="store" ref="com.liferay.portlet.documentlibrary.store.Store" />
+	</bean>
 	<bean id="com.liferay.portlet.documentlibrary.store.Store" class="com.liferay.portlet.documentlibrary.store.SafeFileNameStoreWrapper">
 		<constructor-arg>
 			<bean class="com.liferay.portlet.documentlibrary.store.StoreProxyImpl" />

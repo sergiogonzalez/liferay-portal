@@ -18,6 +18,7 @@ import com.liferay.portal.ExpiredLockException;
 import com.liferay.portal.InvalidLockException;
 import com.liferay.portal.NoSuchLockException;
 import com.liferay.portal.NoSuchModelException;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
@@ -74,7 +75,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.documentlibrary.DuplicateFileException;
+import com.liferay.portlet.documentlibrary.DuplicateFileEntryException;
 import com.liferay.portlet.documentlibrary.DuplicateFolderNameException;
 import com.liferay.portlet.documentlibrary.FileExtensionException;
 import com.liferay.portlet.documentlibrary.FileNameException;
@@ -93,7 +94,7 @@ import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.model.impl.DLFileEntryImpl;
 import com.liferay.portlet.documentlibrary.service.base.DLFileEntryLocalServiceBaseImpl;
-import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
+import com.liferay.portlet.documentlibrary.store.DLStore;
 import com.liferay.portlet.documentlibrary.util.DL;
 import com.liferay.portlet.documentlibrary.util.DLAppUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
@@ -256,12 +257,12 @@ public class DLFileEntryLocalServiceImpl
 		// File
 
 		if (file != null) {
-			DLStoreUtil.addFile(
+			_dlStore.addFile(
 				user.getCompanyId(), dlFileEntry.getDataRepositoryId(), name,
 				false, file);
 		}
 		else {
-			DLStoreUtil.addFile(
+			_dlStore.addFile(
 				user.getCompanyId(), dlFileEntry.getDataRepositoryId(), name,
 				false, is);
 		}
@@ -349,14 +350,14 @@ public class DLFileEntryLocalServiceImpl
 				// File
 
 				try {
-					DLStoreUtil.deleteFile(
+					_dlStore.deleteFile(
 						user.getCompanyId(), dlFileEntry.getDataRepositoryId(),
 						dlFileEntry.getName(), lastDLFileVersion.getVersion());
 				}
 				catch (NoSuchModelException nsme) {
 				}
 
-				DLStoreUtil.copyFileVersion(
+				_dlStore.copyFileVersion(
 					user.getCompanyId(), dlFileEntry.getDataRepositoryId(),
 					dlFileEntry.getName(),
 					DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION,
@@ -391,7 +392,7 @@ public class DLFileEntryLocalServiceImpl
 
 			// File
 
-			DLStoreUtil.updateFileVersion(
+			_dlStore.updateFileVersion(
 				user.getCompanyId(), dlFileEntry.getDataRepositoryId(),
 				dlFileEntry.getName(),
 				DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION, version);
@@ -580,7 +581,7 @@ public class DLFileEntryLocalServiceImpl
 			}
 
 			try {
-				DLStoreUtil.deleteFile(
+				_dlStore.deleteFile(
 					dlFileEntry.getCompanyId(),
 					dlFileEntry.getDataRepositoryId(), dlFileEntry.getName(),
 					DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION);
@@ -588,7 +589,7 @@ public class DLFileEntryLocalServiceImpl
 			catch (NoSuchModelException nsme) {
 			}
 
-			DLStoreUtil.copyFileVersion(
+			_dlStore.copyFileVersion(
 				user.getCompanyId(), dlFileEntry.getDataRepositoryId(),
 				dlFileEntry.getName(), version,
 				DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION);
@@ -740,7 +741,7 @@ public class DLFileEntryLocalServiceImpl
 		// File
 
 		try {
-			DLStoreUtil.deleteFile(
+			_dlStore.deleteFile(
 				dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
 				dlFileEntry.getName());
 		}
@@ -863,7 +864,7 @@ public class DLFileEntryLocalServiceImpl
 			}
 
 			try {
-				DLStoreUtil.deleteFile(
+				_dlStore.deleteFile(
 					dlFileEntry.getCompanyId(),
 					dlFileEntry.getDataRepositoryId(), dlFileEntry.getName(),
 					version);
@@ -1018,7 +1019,7 @@ public class DLFileEntryLocalServiceImpl
 				dlFileEntry, increment);
 		}
 
-		return DLStoreUtil.getFile(
+		return _dlStore.getFile(
 			dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
 			dlFileEntry.getName(), version);
 	}
@@ -1094,7 +1095,7 @@ public class DLFileEntryLocalServiceImpl
 				dlFileEntry, increment);
 		}
 
-		return DLStoreUtil.getFileAsStream(
+		return _dlStore.getFileAsStream(
 			dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
 			dlFileEntry.getName(), version);
 	}
@@ -1931,7 +1932,7 @@ public class DLFileEntryLocalServiceImpl
 		if ((dlFileEntry != null) &&
 			(dlFileEntry.getFileEntryId() != fileEntryId)) {
 
-			throw new DuplicateFileException(title);
+			throw new DuplicateFileEntryException(title);
 		}
 
 		dlFileEntry = dlFileEntryPersistence.fetchByG_F_FN(
@@ -1940,7 +1941,7 @@ public class DLFileEntryLocalServiceImpl
 		if ((dlFileEntry != null) &&
 			(dlFileEntry.getFileEntryId() != fileEntryId)) {
 
-			throw new DuplicateFileException(title);
+			throw new DuplicateFileEntryException(title);
 		}
 	}
 
@@ -2334,7 +2335,7 @@ public class DLFileEntryLocalServiceImpl
 			String lastChecksum = lastDLFileVersion.getChecksum();
 
 			if (Validator.isNull(lastChecksum)) {
-				lastInputStream = DLStoreUtil.getFileAsStream(
+				lastInputStream = _dlStore.getFileAsStream(
 					dlFileEntry.getCompanyId(),
 					dlFileEntry.getDataRepositoryId(), dlFileEntry.getName(),
 					lastDLFileVersion.getVersion());
@@ -2346,7 +2347,7 @@ public class DLFileEntryLocalServiceImpl
 				dlFileVersionPersistence.update(lastDLFileVersion);
 			}
 
-			latestInputStream = DLStoreUtil.getFileAsStream(
+			latestInputStream = _dlStore.getFileAsStream(
 				dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
 				dlFileEntry.getName(), latestDLFileVersion.getVersion());
 
@@ -2391,13 +2392,13 @@ public class DLFileEntryLocalServiceImpl
 			dlFileEntry.getGroupId(), newFolderId, dlFileEntry.getFileEntryId(),
 			dlFileEntry.getFileName(), dlFileEntry.getTitle());
 
-		if (DLStoreUtil.hasFile(
+		if (_dlStore.hasFile(
 				user.getCompanyId(),
 				DLFolderConstants.getDataRepositoryId(
 					dlFileEntry.getGroupId(), newFolderId),
 				dlFileEntry.getName(), StringPool.BLANK)) {
 
-			throw new DuplicateFileException(dlFileEntry.getName());
+			throw new DuplicateFileEntryException(dlFileEntry.getName());
 		}
 
 		dlFileEntry.setModifiedDate(serviceContext.getModifiedDate(null));
@@ -2431,7 +2432,7 @@ public class DLFileEntryLocalServiceImpl
 
 		// File
 
-		DLStoreUtil.updateFile(
+		_dlStore.updateFile(
 			user.getCompanyId(), oldDataRepositoryId,
 			dlFileEntry.getDataRepositoryId(), dlFileEntry.getName());
 
@@ -2457,7 +2458,7 @@ public class DLFileEntryLocalServiceImpl
 			dlFileVersion.getFileVersionId());
 
 		try {
-			DLStoreUtil.deleteFile(
+			_dlStore.deleteFile(
 				dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
 				dlFileEntry.getName(),
 				DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION);
@@ -2568,7 +2569,7 @@ public class DLFileEntryLocalServiceImpl
 
 			if ((file != null) || (is != null)) {
 				try {
-					DLStoreUtil.deleteFile(
+					_dlStore.deleteFile(
 						user.getCompanyId(), dlFileEntry.getDataRepositoryId(),
 						dlFileEntry.getName(), version);
 				}
@@ -2576,13 +2577,13 @@ public class DLFileEntryLocalServiceImpl
 				}
 
 				if (file != null) {
-					DLStoreUtil.updateFile(
+					_dlStore.updateFile(
 						user.getCompanyId(), dlFileEntry.getDataRepositoryId(),
 						dlFileEntry.getName(), dlFileEntry.getExtension(),
 						false, version, sourceFileName, file);
 				}
 				else {
-					DLStoreUtil.updateFile(
+					_dlStore.updateFile(
 						user.getCompanyId(), dlFileEntry.getDataRepositoryId(),
 						dlFileEntry.getName(), dlFileEntry.getExtension(),
 						false, version, sourceFileName, is);
@@ -2737,5 +2738,10 @@ public class DLFileEntryLocalServiceImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLFileEntryLocalServiceImpl.class);
+
+	@BeanReference(
+		name = "com.liferay.portlet.documentlibrary.store.IgnoreDuplicatesDLStore"
+	)
+	private DLStore _dlStore;
 
 }

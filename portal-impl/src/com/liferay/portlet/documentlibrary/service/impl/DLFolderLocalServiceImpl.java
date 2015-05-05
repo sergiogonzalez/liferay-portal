@@ -48,7 +48,7 @@ import com.liferay.portal.model.TreeModel;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.WorkflowDefinitionLink;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.documentlibrary.DuplicateFileException;
+import com.liferay.portlet.documentlibrary.DuplicateFileEntryException;
 import com.liferay.portlet.documentlibrary.DuplicateFolderNameException;
 import com.liferay.portlet.documentlibrary.FolderNameException;
 import com.liferay.portlet.documentlibrary.InvalidFolderException;
@@ -1469,7 +1469,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		try {
 			dlFileEntryLocalService.getFileEntry(groupId, parentFolderId, name);
 
-			throw new DuplicateFileException(name);
+			throw new DuplicateFileEntryException(name);
 		}
 		catch (NoSuchFileEntryException nsfee) {
 		}

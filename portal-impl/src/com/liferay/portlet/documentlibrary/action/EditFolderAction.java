@@ -41,7 +41,7 @@ import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.documentlibrary.DuplicateFileException;
+import com.liferay.portlet.documentlibrary.DuplicateFileEntryException;
 import com.liferay.portlet.documentlibrary.DuplicateFolderNameException;
 import com.liferay.portlet.documentlibrary.FolderNameException;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
@@ -121,7 +121,7 @@ public class EditFolderAction extends PortletAction {
 
 				setForward(actionRequest, "portlet.document_library.error");
 			}
-			else if (e instanceof DuplicateFileException ||
+			else if (e instanceof DuplicateFileEntryException ||
 					 e instanceof DuplicateFolderNameException ||
 					 e instanceof FolderNameException ||
 					 e instanceof RequiredFileEntryTypeException) {
