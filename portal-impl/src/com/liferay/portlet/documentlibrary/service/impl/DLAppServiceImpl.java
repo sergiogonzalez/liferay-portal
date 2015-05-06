@@ -3498,8 +3498,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 						FileShortcut fileShortcut =
 							(FileShortcut)repositoryEntry;
 
-						dlFileShortcutService.addFileShortcut(
-							fileShortcut.getGroupId(), newFolder.getFolderId(),
+						toRepository.addFileShortcut(
+							getUserId(), newFolder.getFolderId(),
 							fileShortcut.getToFileEntryId(), serviceContext);
 					}
 				}
