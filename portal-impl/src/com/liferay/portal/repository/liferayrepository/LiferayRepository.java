@@ -199,7 +199,8 @@ public class LiferayRepository
 		throws PortalException {
 
 		DLFileShortcut dlFileShortcut = dlFileShortcutService.addFileShortcut(
-			getGroupId(), folderId, toFileEntryId, serviceContext);
+			getGroupId(), getRepositoryId(), folderId, toFileEntryId,
+			serviceContext);
 
 		return new LiferayFileShortcut(dlFileShortcut);
 	}
@@ -1049,7 +1050,8 @@ public class LiferayRepository
 
 		DLFileShortcut dlFileShortcut =
 			dlFileShortcutService.updateFileShortcut(
-				fileShortcutId, folderId, toFileEntryId, serviceContext);
+				fileShortcutId, getRepositoryId(), folderId, toFileEntryId,
+				serviceContext);
 
 		return new LiferayFileShortcut(dlFileShortcut);
 	}

@@ -150,8 +150,8 @@ public class LiferayLocalRepository
 
 		DLFileShortcut dlFileShortcut =
 			dlFileShortcutLocalService.addFileShortcut(
-				userId, getGroupId(), toFolderId(folderId), toFileEntryId,
-				serviceContext);
+				userId, getGroupId(), getRepositoryId(), toFolderId(folderId),
+				toFileEntryId, serviceContext);
 
 		return new LiferayFileShortcut(dlFileShortcut);
 	}
@@ -415,8 +415,8 @@ public class LiferayLocalRepository
 
 		DLFileShortcut dlFileShortcut =
 			dlFileShortcutLocalService.updateFileShortcut(
-				userId, fileShortcutId, toFolderId(folderId), toFileEntryId,
-				serviceContext);
+				userId, fileShortcutId, getRepositoryId(), toFolderId(folderId),
+				toFileEntryId, serviceContext);
 
 		return new LiferayFileShortcut(dlFileShortcut);
 	}
