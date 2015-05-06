@@ -1558,9 +1558,8 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 						FileShortcut fileShortcut =
 							(FileShortcut)folderAndFileEntryAndFileShortcut;
 
-						dlFileShortcutLocalService.addFileShortcut(
-							userId, fileShortcut.getGroupId(),
-							destinationFolder.getFolderId(),
+						destinationLocalRepository.addFileShortcut(
+							userId, destinationFolder.getFolderId(),
 							fileShortcut.getToFileEntryId(), serviceContext);
 					}
 				}
