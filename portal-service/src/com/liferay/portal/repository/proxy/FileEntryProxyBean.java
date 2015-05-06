@@ -53,26 +53,7 @@ public class FileEntryProxyBean
 
 	@Override
 	public Object clone() {
-		FileEntryProxyBean fileEntryProxyBean = newFileEntryProxyBean(
-			_fileEntry);
-
-		fileEntryProxyBean.setCompanyId(getCompanyId());
-		fileEntryProxyBean.setCreateDate(getCreateDate());
-		fileEntryProxyBean.setGroupId(getGroupId());
-		fileEntryProxyBean.setModifiedDate(getModifiedDate());
-		fileEntryProxyBean.setPrimaryKeyObj(getPrimaryKeyObj());
-		fileEntryProxyBean.setUserId(getUserId());
-		fileEntryProxyBean.setUserName(getUserName());
-
-		try {
-			fileEntryProxyBean.setUserUuid(getUserUuid());
-		}
-		catch (SystemException se) {
-		}
-
-		fileEntryProxyBean.setUuid(getUuid());
-
-		return fileEntryProxyBean;
+		return newFileEntryProxyBean(_fileEntry);
 	}
 
 	@Override
