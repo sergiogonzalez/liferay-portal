@@ -729,7 +729,9 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	 */
 	@Override
 	public void deleteFileShortcut(long fileShortcutId) throws PortalException {
-		dlFileShortcutService.deleteFileShortcut(fileShortcutId);
+		Repository repository = getFileShortcutRepository(fileShortcutId);
+
+		repository.deleteFileShortcut(fileShortcutId);
 	}
 
 	/**
