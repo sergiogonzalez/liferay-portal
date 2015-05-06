@@ -44,8 +44,8 @@ public class DLFileShortcutLocalServiceImpl
 
 	@Override
 	public DLFileShortcut addFileShortcut(
-			long userId, long groupId, long folderId, long toFileEntryId,
-			ServiceContext serviceContext)
+			long userId, long groupId, long repositoryId,
+			long folderId, long toFileEntryId, ServiceContext serviceContext)
 		throws PortalException {
 
 		// File shortcut
@@ -68,6 +68,7 @@ public class DLFileShortcutLocalServiceImpl
 		fileShortcut.setUserName(user.getFullName());
 		fileShortcut.setCreateDate(serviceContext.getCreateDate(now));
 		fileShortcut.setModifiedDate(serviceContext.getModifiedDate(now));
+		fileShortcut.setRepositoryId(repositoryId);
 		fileShortcut.setFolderId(folderId);
 		fileShortcut.setToFileEntryId(toFileEntryId);
 		fileShortcut.setTreePath(fileShortcut.buildTreePath());
@@ -363,8 +364,8 @@ public class DLFileShortcutLocalServiceImpl
 
 	@Override
 	public DLFileShortcut updateFileShortcut(
-			long userId, long fileShortcutId, long folderId, long toFileEntryId,
-			ServiceContext serviceContext)
+			long userId, long fileShortcutId, long repositoryId, long folderId,
+			long toFileEntryId, ServiceContext serviceContext)
 		throws PortalException {
 
 		// File shortcut
