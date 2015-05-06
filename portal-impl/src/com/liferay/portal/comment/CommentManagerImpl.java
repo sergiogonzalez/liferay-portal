@@ -15,9 +15,12 @@
 package com.liferay.portal.comment;
 
 import com.liferay.portal.kernel.comment.CommentManager;
+import com.liferay.portal.kernel.comment.Discussion;
+import com.liferay.portal.kernel.comment.DiscussionPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.Function;
+import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;
@@ -33,6 +36,10 @@ import com.liferay.registry.ServiceTracker;
 public class CommentManagerImpl implements CommentManager {
 
 	public CommentManagerImpl() {
+		this(new DummyCommentManagerImpl());
+	}
+
+	public CommentManagerImpl(CommentManager defaultCommentManager) {
 		Registry registry = RegistryUtil.getRegistry();
 
 		Class<?> clazz = getClass();
@@ -44,6 +51,8 @@ public class CommentManagerImpl implements CommentManager {
 		_serviceTracker = registry.trackServices(filter);
 
 		_serviceTracker.open();
+
+		_defaultCommentManager = defaultCommentManager;
 	}
 
 	@Override
@@ -107,6 +116,27 @@ public class CommentManagerImpl implements CommentManager {
 		return commentManager.getCommentsCount(className, classPK);
 	}
 
+	@Override
+	public Discussion getDiscussion(
+			long userId, long groupId, String className, long classPK,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		CommentManager commentManager = getCommentManager();
+
+		return commentManager.getDiscussion(
+			userId, groupId, className, classPK, serviceContext);
+	}
+
+	@Override
+	public DiscussionPermission getDiscussionPermission(
+		PermissionChecker permissionChecker) {
+
+		CommentManager commentManager = getCommentManager();
+
+		return commentManager.getDiscussionPermission(permissionChecker);
+	}
+
 	protected CommentManager getCommentManager() {
 		if (_serviceTracker.isEmpty()) {
 			return _defaultCommentManager;
@@ -115,14 +145,7 @@ public class CommentManagerImpl implements CommentManager {
 		return _serviceTracker.getService();
 	}
 
-	protected void setDefaultCommentManager(
-		CommentManager defaultCommentManager) {
-
-		_defaultCommentManager = defaultCommentManager;
-	}
-
-	private CommentManager _defaultCommentManager =
-		new DummyCommentManagerImpl();
+	private final CommentManager _defaultCommentManager;
 	private final ServiceTracker<CommentManager, CommentManager>
 		_serviceTracker;
 

@@ -14,8 +14,13 @@
 
 package com.liferay.portal.comment;
 
+import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentManager;
+import com.liferay.portal.kernel.comment.Discussion;
+import com.liferay.portal.kernel.comment.DiscussionPermission;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.Function;
+import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
 
 /**
@@ -56,5 +61,75 @@ public class DummyCommentManagerImpl implements CommentManager {
 	public int getCommentsCount(String className, long classPK) {
 		return 0;
 	}
+
+	@Override
+	public Discussion getDiscussion(
+		long userId, long groupId, String className, long classPK,
+		ServiceContext serviceContext) {
+
+		return _discussion;
+	}
+
+	@Override
+	public DiscussionPermission getDiscussionPermission(
+		PermissionChecker permissionChecker) {
+
+		return _discussionPermission;
+	}
+
+	private static final DiscussionPermission _discussionPermission =
+		new DiscussionPermission() {
+
+			@Override
+			public boolean hasAddPermission(
+					long companyId, long groupId, String className,
+					long classPK, long userId)
+				throws PortalException {
+
+				return false;
+			}
+
+			@Override
+			public boolean hasDeletePermission(
+					long companyId, long groupId, String className,
+					long classPK, long commentId, long userId)
+				throws PortalException {
+
+				return false;
+			}
+
+			@Override
+			public boolean hasUpdatePermission(
+					long companyId, long groupId, String className,
+					long classPK, long commentId, long userId)
+				throws PortalException {
+
+				return false;
+			}
+
+			@Override
+			public boolean hasViewPermission(
+					long companyId, long groupId, String className,
+					long classPK, long userId)
+				throws PortalException {
+
+				return false;
+			}
+
+		};
+
+	private static final Discussion _discussion = new Discussion() {
+
+		@Override
+		public boolean isMaxCommentsLimitExceeded() {
+			return true;
+		}
+
+		@Override
+		public Comment getRootComment() {
+			return null;
+		}
+
+	};
 
 }

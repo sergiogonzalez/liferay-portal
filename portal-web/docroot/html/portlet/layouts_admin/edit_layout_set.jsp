@@ -52,7 +52,7 @@ boolean hasExportImportLayoutsPermission = GroupPermissionUtil.contains(permissi
 
 boolean hasAddPageLayoutsPermission = GroupPermissionUtil.contains(permissionChecker, group, ActionKeys.ADD_LAYOUT);
 
-boolean hasViewPagesPermission = (pagesCount > 0) && (liveGroup.isStaged() || selGroup.isLayoutSetPrototype() || selGroup.isStagingGroup() || portletName.equals(PortletKeys.GROUP_PAGES) || portletName.equals(PortletKeys.SITES_ADMIN) || portletName.equals(PortletKeys.USERS_ADMIN));
+boolean hasViewPagesPermission = (pagesCount > 0) && (liveGroup.isStaged() || selGroup.isLayoutSetPrototype() || selGroup.isStagingGroup() || portletName.equals(PortletKeys.GROUP_PAGES) || portletName.equals(PortletKeys.USERS_ADMIN));
 %>
 
 <aui:nav-bar>
@@ -109,7 +109,7 @@ boolean hasViewPagesPermission = (pagesCount > 0) && (liveGroup.isStaged() || se
 	<portlet:param name="struts_action" value="/layouts_admin/edit_layout_set" />
 </portlet:actionURL>
 
-<aui:form action="<%= editLayoutSetURL %>" cssClass="edit-layoutset-form" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "saveLayoutset();" %>'>
+<aui:form action="<%= editLayoutSetURL %>" cssClass="edit-layoutset-form" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "saveLayoutset();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="redirect" type="hidden" value="<%= redirectURL.toString() %>" />
 	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
@@ -130,8 +130,6 @@ boolean hasViewPagesPermission = (pagesCount > 0) && (liveGroup.isStaged() || se
 <aui:script>
 	function <portlet:namespace />saveLayoutset(action) {
 		var form = AUI.$(document.<portlet:namespace />fm);
-
-		form.prop('encoding', 'multipart/form-data');
 
 		form.fm('<%= Constants.CMD %>').val(action ? action : 'update');
 

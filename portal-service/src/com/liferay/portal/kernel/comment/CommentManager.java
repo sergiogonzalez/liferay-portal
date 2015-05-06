@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.comment;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.Function;
+import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
 
 /**
@@ -45,5 +46,13 @@ public interface CommentManager {
 		throws PortalException;
 
 	public int getCommentsCount(String className, long classPK);
+
+	public Discussion getDiscussion(
+			long userId, long groupId, String className, long classPK,
+			ServiceContext serviceContext)
+		throws PortalException;
+
+	public DiscussionPermission getDiscussionPermission(
+		PermissionChecker permissionChecker);
 
 }

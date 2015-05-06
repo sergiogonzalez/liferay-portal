@@ -17,8 +17,8 @@
 <%@ include file="/html/taglib/ui/discussion/init.jsp" %>
 
 <%
-CommentSectionDisplayContext commentSectionDisplayContext = (CommentSectionDisplayContext)request.getAttribute("liferay-ui:discussion:commentSectionDisplayContext");
 Comment comment = (Comment)request.getAttribute("liferay-ui:discussion:currentComment");
+Discussion discussion = (Discussion)request.getAttribute("liferay-ui:discussion:discussion");
 
 int index = GetterUtil.getInteger(request.getAttribute("liferay-ui:discussion:index"));
 
@@ -27,12 +27,15 @@ index++;
 request.setAttribute("liferay-ui:discussion:index", new Integer(index));
 
 String randomNamespace = (String)request.getAttribute("liferay-ui:discussion:randomNamespace");
-Comment rootComment = (Comment)request.getAttribute("liferay-ui:discussion:rootComment");
 
 DiscussionTaglibHelper discussionTaglibHelper = new DiscussionTaglibHelper(request);
 DiscussionRequestHelper discussionRequestHelper = new DiscussionRequestHelper(request);
 
-CommentTreeDisplayContext commentTreeDisplayContext = new MBCommentTreeDisplayContext(discussionTaglibHelper, discussionRequestHelper, comment);
+CommentManager commentManager = CommentManagerUtil.getCommentManager();
+
+DiscussionPermission discussionPermission = commentManager.getDiscussionPermission(discussionRequestHelper.getPermissionChecker());
+
+CommentTreeDisplayContext commentTreeDisplayContext = CommentDisplayContextProviderUtil.getCommentTreeDisplayContext(request, response, discussionPermission, comment);
 
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>
@@ -85,6 +88,8 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 					</aui:a>
 
 					<%
+					Comment rootComment = discussion.getRootComment();
+
 					Date createDate = comment.getCreateDate();
 
 					String createDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true);
@@ -188,21 +193,21 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 							+ randomNamespace + "hideEditor('" + namespace + randomNamespace + "editReplyBody" + index + "','" + namespace + randomNamespace + "editForm" + index + "');" + randomNamespace + "showEl('" + namespace + randomNamespace + "discussionMessage" + index + "')";
 						%>
 
-						<c:if test="<%= !commentSectionDisplayContext.isDiscussionMaxComments() %>">
+						<c:if test="<%= !discussion.isMaxCommentsLimitExceeded() %>">
 							<c:choose>
-								<c:when test="<%= themeDisplay.isSignedIn() || !SSOUtil.isLoginRedirectRequired(themeDisplay.getCompanyId()) %>">
+								<c:when test="<%= commentTreeDisplayContext.isReplyButtonVisible() %>">
 									<liferay-ui:icon
 										label="<%= true %>"
 										message="reply"
 										url="<%= taglibPostReplyURL %>"
-										/>
+									/>
 								</c:when>
 								<c:otherwise>
 									<liferay-ui:icon
 										label="<%= true %>"
 										message="please-sign-in-to-reply"
 										url="<%= themeDisplay.getURLSignIn() %>"
-										/>
+									/>
 								</c:otherwise>
 							</c:choose>
 						</c:if>

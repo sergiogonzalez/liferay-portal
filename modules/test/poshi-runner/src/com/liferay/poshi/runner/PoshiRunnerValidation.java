@@ -41,8 +41,6 @@ public class PoshiRunnerValidation {
 	}
 
 	public static void validate() throws Exception {
-		_validateTestName();
-
 		String[] filePathsArray = PoshiRunnerContext.getFilePathsArray();
 
 		for (String filePath : filePathsArray) {
@@ -75,13 +73,19 @@ public class PoshiRunnerValidation {
 
 				_validatePathFile(element, filePath);
 			}
-			else if (classType.equals("testcase")) {
+			else if (classType.equals("test-case")) {
 				Element element = PoshiRunnerContext.getTestCaseRootElement(
 					className);
 
 				_validateTestCaseFile(element, filePath);
 			}
 		}
+	}
+
+	public static void validate(String testName) throws Exception {
+		_validateTestName(testName);
+
+		validate();
 	}
 
 	private static void _parseElements(Element element, String filePath)
@@ -124,6 +128,9 @@ public class PoshiRunnerValidation {
 			}
 			else if (elementName.equals("var")) {
 				_validateVarElement(childElement, filePath);
+			}
+			else if (elementName.equals("while")) {
+				_validateWhileElement(childElement, filePath);
 			}
 		}
 	}
@@ -296,6 +303,18 @@ public class PoshiRunnerValidation {
 				element, possibleAttributeNames, filePath);
 			_validateRequiredAttributeNames(
 				element, Arrays.asList("component-name"), filePath);
+		}
+	}
+
+	private static void _validateElseElement(Element element, String filePath)
+		throws Exception {
+
+		List<Element> elseElements = element.elements("else");
+
+		if (elseElements.size() > 1) {
+			throw new Exception(
+				"Too many else elements\n" + filePath + ":" +
+					element.attributeValue("line-number"));
 		}
 	}
 
@@ -535,30 +554,15 @@ public class PoshiRunnerValidation {
 			}
 		}
 
-		List<Element> thenElements = element.elements("then");
-
-		if (thenElements.size() > 1) {
-			throw new Exception(
-				"Too many then elements\n" + filePath + ":" +
-					element.attributeValue("line-number"));
-		}
-
-		_validateHasChildElements(thenElements.get(0), filePath);
-
-		List<Element> elseElements = element.elements("else");
-
-		if (elseElements.size() > 1) {
-			throw new Exception(
-				"Too many else elements\n" + filePath + ":" +
-					element.attributeValue("line-number"));
-		}
+		_validateElseElement(element, filePath);
+		_validateThenElement(element, filePath);
 
 		List<String> conditionTags = Arrays.asList(
 			"and", "condition", "contains", "equals", "isset", "not", "or");
 
-		int i = 0;
+		for (int i = 0; i < childElements.size(); i++) {
+			Element childElement = childElements.get(i);
 
-		for (Element childElement : childElements) {
 			String childElementName = childElement.getName();
 
 			if (conditionTags.contains(childElementName) && (i == 0)) {
@@ -587,8 +591,6 @@ public class PoshiRunnerValidation {
 					"Invalid " + childElementName + " element\n" + filePath +
 						":" + childElement.attributeValue("line-number"));
 			}
-
-			i++;
 		}
 	}
 
@@ -799,9 +801,7 @@ public class PoshiRunnerValidation {
 		}
 	}
 
-	private static void _validateTestName() throws Exception {
-		String testName = PropsValues.TEST_NAME;
-
+	private static void _validateTestName(String testName) throws Exception {
 		String className =
 			PoshiRunnerGetterUtil.getClassNameFromClassCommandName(testName);
 
@@ -819,6 +819,23 @@ public class PoshiRunnerValidation {
 
 				throw new Exception("Invalid test case command " + commandName);
 			}
+		}
+	}
+
+	private static void _validateThenElement(Element element, String filePath)
+		throws Exception {
+
+		List<Element> thenElements = element.elements("then");
+
+		if (thenElements.isEmpty()) {
+			throw new Exception(
+				"Missing then elements\n" + filePath + ":" +
+					element.attributeValue("line-number"));
+		}
+		else if (thenElements.size() > 1) {
+			throw new Exception(
+				"Too many then elements\n" + filePath + ":" +
+					element.attributeValue("line-number"));
 		}
 	}
 
@@ -844,6 +861,41 @@ public class PoshiRunnerValidation {
 
 		_validatePossibleAttributeNames(
 			element, possibleAttributeNames, filePath);
+	}
+
+	private static void _validateWhileElement(Element element, String filePath)
+		throws Exception {
+
+		_validateHasNoAttributes(element, filePath);
+		_validateThenElement(element, filePath);
+
+		List<String> conditionTags = Arrays.asList(
+			"and", "condition", "contains", "equals", "isset", "not", "or");
+
+		int i = 0;
+
+		List<Element> childElements = element.elements();
+
+		for (Element childElement : childElements) {
+			String childElementName = childElement.getName();
+
+			if (conditionTags.contains(childElementName) && (i == 0)) {
+				_validateConditionElement(childElement, filePath);
+			}
+			else if (childElementName.equals("then")) {
+				_validateHasChildElements(childElement, filePath);
+				_validateHasNoAttributes(childElement, filePath);
+
+				_parseElements(childElement, filePath);
+			}
+			else {
+				throw new Exception(
+					"Invalid " + childElementName + " element\n" + filePath +
+						":" + childElement.attributeValue("line-number"));
+			}
+
+			i++;
+		}
 	}
 
 	private static final String _BASE_DIR =
