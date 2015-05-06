@@ -172,11 +172,6 @@ public class LiferayLocalRepository
 		return new LiferayFolder(dlFolder);
 	}
 
-	public void addRepository(
-		long groupId, String name, String description, String portletKey,
-		UnicodeProperties typeSettingsProperties) {
-	}
-
 	@Override
 	public void checkInFileEntry(
 		long userId, long fileEntryId, boolean major, String changeLog,
