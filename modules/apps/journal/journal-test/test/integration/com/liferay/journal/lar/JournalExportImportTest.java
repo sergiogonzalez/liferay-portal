@@ -103,6 +103,34 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 	}
 
 	@Test
+	public void testExportImportJournalArticleVersions() throws Exception {
+		JournalArticle article = (JournalArticle)addStagedModel(
+			group.getGroupId());
+
+		exportImportPortlet(PortletKeys.JOURNAL);
+
+		JournalArticle liveArticle =
+			JournalArticleLocalServiceUtil.fetchJournalArticleByUuidAndGroupId(
+				article.getUuid(), importedGroup.getGroupId());
+
+		Assert.assertNotNull(liveArticle);
+
+		JournalTestUtil.updateArticle(article, RandomTestUtil.randomString());
+
+		int articlesCount = JournalArticleLocalServiceUtil.getArticlesCount(
+			group.getGroupId(), article.getArticleId());
+
+		Assert.assertEquals(2, articlesCount);
+
+		exportImportPortlet(PortletKeys.JOURNAL);
+
+		articlesCount = JournalArticleLocalServiceUtil.getArticlesCount(
+			importedGroup.getGroupId(), liveArticle.getArticleId());
+
+		Assert.assertEquals(2, articlesCount);
+	}
+
+	@Test
 	public void testExportImportStructuredJournalArticle() throws Exception {
 		exportImportJournalArticle(false);
 	}
