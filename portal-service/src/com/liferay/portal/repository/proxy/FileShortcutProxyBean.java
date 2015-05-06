@@ -45,26 +45,7 @@ public class FileShortcutProxyBean extends RepositoryModelProxyBean
 
 	@Override
 	public Object clone() {
-		FileShortcutProxyBean newFileShortcutProxyBean =
-			newFileShortcutProxyBean(_fileShortcut);
-
-		newFileShortcutProxyBean.setCompanyId(getCompanyId());
-		newFileShortcutProxyBean.setCreateDate(getCreateDate());
-		newFileShortcutProxyBean.setGroupId(getGroupId());
-		newFileShortcutProxyBean.setModifiedDate(getModifiedDate());
-		newFileShortcutProxyBean.setPrimaryKeyObj(getPrimaryKeyObj());
-		newFileShortcutProxyBean.setUserId(getUserId());
-		newFileShortcutProxyBean.setUserName(getUserName());
-
-		try {
-			newFileShortcutProxyBean.setUserUuid(getUserUuid());
-		}
-		catch (SystemException se) {
-		}
-
-		newFileShortcutProxyBean.setUuid(getUuid());
-
-		return newFileShortcutProxyBean;
+		return newFileShortcutProxyBean(_fileShortcut);
 	}
 
 	@Override
