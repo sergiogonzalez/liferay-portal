@@ -36,6 +36,10 @@ import com.liferay.registry.ServiceTracker;
 public class CommentManagerImpl implements CommentManager {
 
 	public CommentManagerImpl() {
+		this(new DummyCommentManagerImpl());
+	}
+
+	public CommentManagerImpl(CommentManager defaultCommentManager) {
 		Registry registry = RegistryUtil.getRegistry();
 
 		Class<?> clazz = getClass();
@@ -47,6 +51,8 @@ public class CommentManagerImpl implements CommentManager {
 		_serviceTracker = registry.trackServices(filter);
 
 		_serviceTracker.open();
+
+		_defaultCommentManager = defaultCommentManager;
 	}
 
 	@Override
@@ -139,14 +145,7 @@ public class CommentManagerImpl implements CommentManager {
 		return _serviceTracker.getService();
 	}
 
-	protected void setDefaultCommentManager(
-		CommentManager defaultCommentManager) {
-
-		_defaultCommentManager = defaultCommentManager;
-	}
-
-	private CommentManager _defaultCommentManager =
-		new DummyCommentManagerImpl();
+	private final CommentManager _defaultCommentManager;
 	private final ServiceTracker<CommentManager, CommentManager>
 		_serviceTracker;
 
