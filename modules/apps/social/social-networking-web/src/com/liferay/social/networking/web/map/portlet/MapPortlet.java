@@ -38,6 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"com.liferay.portlet.css-class-wrapper=social-networking-portlet-map",
 		"com.liferay.portlet.display-category=category.social",
+		"com.liferay.portlet.header-portlet-css=/map/css/main.css", "javax.portlet.display-name=Map",
 		"javax.portlet.display-name=Map", "javax.portlet.expiration-cache=0",
 		"javax.portlet.info.keywords=Map", "javax.portlet.info.short-title=Map",
 		"javax.portlet.info.title=Map",
