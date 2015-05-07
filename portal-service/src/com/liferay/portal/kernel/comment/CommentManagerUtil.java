@@ -14,17 +14,79 @@
 
 package com.liferay.portal.kernel.comment;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.portal.kernel.util.Function;
+import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.service.ServiceContext;
 
 /**
  * @author Adolfo Pérez
  */
 public class CommentManagerUtil {
 
+	public static void addComment(
+			long userId, long groupId, String className, long classPK,
+			String body, ServiceContext serviceContext)
+		throws PortalException {
+
+		getCommentManager().addComment(
+			userId, groupId, className, classPK, body, serviceContext);
+	}
+
+	public static long addComment(
+			long userId, long groupId, String className, long classPK,
+			String userName, String subject, String body,
+			Function<String, ServiceContext> serviceContextFunction)
+		throws PortalException {
+
+		return getCommentManager().addComment(
+			userId, groupId, className, classPK, userName, subject, body,
+			serviceContextFunction);
+	}
+
+	public static void addDiscussion(
+			long userId, long groupId, String className, long classPK,
+			String userName)
+		throws PortalException {
+
+		getCommentManager().addDiscussion(
+			userId, groupId, className, classPK, userName);
+	}
+
+	public static void deleteComment(long commentId) throws PortalException {
+		getCommentManager().deleteComment(commentId);
+	}
+
+	public static void deleteDiscussion(String className, long classPK)
+		throws PortalException {
+
+		getCommentManager().deleteDiscussion(className, classPK);
+	}
+
 	public static CommentManager getCommentManager() {
 		PortalRuntimePermission.checkGetBeanProperty(CommentManagerUtil.class);
 
 		return _commentManager;
+	}
+
+	public static int getCommentsCount(String className, long classPK) {
+		return getCommentManager().getCommentsCount(className, classPK);
+	}
+
+	public static Discussion getDiscussion(
+			long userId, long groupId, String className, long classPK,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		return getCommentManager().getDiscussion(
+			userId, groupId, className, classPK, serviceContext);
+	}
+
+	public static DiscussionPermission getDiscussionPermission(
+		PermissionChecker permissionChecker) {
+
+		return getCommentManager().getDiscussionPermission(permissionChecker);
 	}
 
 	public void setCommentManager(CommentManager commentManager) {

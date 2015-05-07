@@ -540,6 +540,13 @@ create table DDMTemplate (
 	smallImageURL VARCHAR(75) null
 );
 
+create table DDMTemplateLink (
+	templateLinkId LONG not null primary key,
+	classNameId LONG,
+	classPK LONG,
+	templateId LONG
+);
+
 create table DDMTemplateVersion (
 	templateVersionId LONG not null primary key,
 	groupId LONG,
@@ -603,7 +610,6 @@ create table DLFileEntryMetadata (
 	fileEntryMetadataId LONG not null primary key,
 	DDMStorageId LONG,
 	DDMStructureId LONG,
-	fileEntryTypeId LONG,
 	fileEntryId LONG,
 	fileVersionId LONG
 );

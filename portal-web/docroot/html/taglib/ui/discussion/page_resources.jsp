@@ -21,12 +21,10 @@ int index = GetterUtil.getInteger(request.getAttribute("liferay-ui:discussion:in
 int initialIndex = GetterUtil.getInteger(request.getAttribute("liferay-ui:discussion:index"));
 int rootIndexPage = GetterUtil.getInteger(request.getAttribute("liferay-ui:discussion:rootIndexPage"));
 
-CommentManager commentManager = CommentManagerUtil.getCommentManager();
-
-DiscussionTaglibHelper discussionTaglibHelper = new DiscussionTaglibHelper(request);
 DiscussionRequestHelper discussionRequestHelper = new DiscussionRequestHelper(request);
+DiscussionTaglibHelper discussionTaglibHelper = new DiscussionTaglibHelper(request);
 
-Discussion discussion = commentManager.getDiscussion(discussionTaglibHelper.getUserId(), discussionRequestHelper.getScopeGroupId(), discussionTaglibHelper.getClassName(), discussionTaglibHelper.getClassPK(), ServiceContextFactory.getInstance(request));
+Discussion discussion = CommentManagerUtil.getDiscussion(discussionTaglibHelper.getUserId(), discussionRequestHelper.getScopeGroupId(), discussionTaglibHelper.getClassName(), discussionTaglibHelper.getClassPK(), ServiceContextFactory.getInstance(request));
 
 Comment rootComment = discussion.getRootComment();
 

@@ -701,6 +701,10 @@ public interface Portal {
 			ThemeDisplay themeDisplay)
 		throws PortalException;
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public Portlet getFirstMyAccountPortlet(ThemeDisplay themeDisplay);
 
 	public String getFirstPageLayoutTypes(HttpServletRequest request);

@@ -1534,7 +1534,6 @@
 		<field name="fileEntryMetadataId" type="long" />
 		<field name="DDMStorageId" type="long" />
 		<field name="DDMStructureId" type="long" />
-		<field name="fileEntryTypeId" type="long" />
 		<field name="fileEntryId" type="long" />
 		<field name="fileVersionId" type="long" />
 	</model>
@@ -1848,6 +1847,12 @@
 		<field name="smallImage" type="boolean" />
 		<field name="smallImageId" type="long" />
 		<field name="smallImageURL" type="String" />
+	</model>
+	<model name="com.liferay.portlet.dynamicdatamapping.model.DDMTemplateLink">
+		<field name="templateLinkId" type="long" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field name="templateId" type="long" />
 	</model>
 	<model name="com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion">
 		<field name="templateVersionId" type="long" />

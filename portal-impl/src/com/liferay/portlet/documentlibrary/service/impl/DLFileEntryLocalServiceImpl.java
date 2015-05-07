@@ -647,8 +647,8 @@ public class DLFileEntryLocalServiceImpl
 		}
 
 		copyFileEntryMetadata(
-			companyId, fileEntryTypeId, fileEntryId, fromFileVersionId,
-			toFileVersionId, serviceContext, ddmFormValuesMap, ddmStructures);
+			companyId, fileEntryId, fromFileVersionId, toFileVersionId,
+			serviceContext, ddmFormValuesMap, ddmStructures);
 	}
 
 	@Override
@@ -2154,9 +2154,8 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	protected void copyFileEntryMetadata(
-			long companyId, long fileEntryTypeId, long fileEntryId,
-			long fromFileVersionId, long toFileVersionId,
-			ServiceContext serviceContext,
+			long companyId, long fileEntryId, long fromFileVersionId,
+			long toFileVersionId, ServiceContext serviceContext,
 			Map<String, DDMFormValues> ddmFormValuesMap,
 			List<DDMStructure> ddmStructures)
 		throws PortalException {
@@ -2178,8 +2177,8 @@ public class DLFileEntryLocalServiceImpl
 
 		if (!ddmFormValuesMap.isEmpty()) {
 			dlFileEntryMetadataLocalService.updateFileEntryMetadata(
-				companyId, ddmStructures, fileEntryTypeId, fileEntryId,
-				toFileVersionId, ddmFormValuesMap, serviceContext);
+				companyId, ddmStructures, fileEntryId, toFileVersionId,
+				ddmFormValuesMap, serviceContext);
 		}
 	}
 

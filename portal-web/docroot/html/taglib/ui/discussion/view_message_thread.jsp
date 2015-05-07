@@ -28,12 +28,12 @@ request.setAttribute("liferay-ui:discussion:index", new Integer(index));
 
 String randomNamespace = (String)request.getAttribute("liferay-ui:discussion:randomNamespace");
 
-DiscussionTaglibHelper discussionTaglibHelper = new DiscussionTaglibHelper(request);
 DiscussionRequestHelper discussionRequestHelper = new DiscussionRequestHelper(request);
+DiscussionTaglibHelper discussionTaglibHelper = new DiscussionTaglibHelper(request);
 
-DiscussionPermission discussionPermission = new MBDiscussionPermissionImpl(discussionRequestHelper.getPermissionChecker());
+DiscussionPermission discussionPermission = CommentManagerUtil.getDiscussionPermission(discussionRequestHelper.getPermissionChecker());
 
-CommentTreeDisplayContext commentTreeDisplayContext = new MBCommentTreeDisplayContext(discussionTaglibHelper, discussionRequestHelper, discussionPermission, comment);
+CommentTreeDisplayContext commentTreeDisplayContext = CommentDisplayContextProviderUtil.getCommentTreeDisplayContext(request, response, discussionPermission, comment);
 
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>
@@ -193,19 +193,19 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 
 						<c:if test="<%= !discussion.isMaxCommentsLimitExceeded() %>">
 							<c:choose>
-								<c:when test="<%= themeDisplay.isSignedIn() || !SSOUtil.isLoginRedirectRequired(themeDisplay.getCompanyId()) %>">
+								<c:when test="<%= commentTreeDisplayContext.isReplyButtonVisible() %>">
 									<liferay-ui:icon
 										label="<%= true %>"
 										message="reply"
 										url="<%= taglibPostReplyURL %>"
-										/>
+									/>
 								</c:when>
 								<c:otherwise>
 									<liferay-ui:icon
 										label="<%= true %>"
 										message="please-sign-in-to-reply"
 										url="<%= themeDisplay.getURLSignIn() %>"
-										/>
+									/>
 								</c:otherwise>
 							</c:choose>
 						</c:if>

@@ -12,19 +12,28 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.comment.context.util;
+package com.liferay.portal.kernel.repository.model;
 
-import com.liferay.portal.kernel.display.context.util.BaseRequestHelper;
-
-import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 
 /**
  * @author Adolfo Pérez
+ * @author Sergio González
  */
-public class DiscussionRequestHelper extends BaseRequestHelper {
+public interface RepositoryEntry {
 
-	public DiscussionRequestHelper(HttpServletRequest request) {
-		super(request);
-	}
+	public long getCompanyId();
+
+	public Date getCreateDate();
+
+	public long getGroupId();
+
+	public Date getModifiedDate();
+
+	public long getUserId();
+
+	public String getUserName();
+
+	public String getUserUuid();
 
 }

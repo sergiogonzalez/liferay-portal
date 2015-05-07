@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 /**
  * @author Adolfo Pérez
  */
-public interface CommentSectionDisplayContext {
+public interface CommentSectionDisplayContext extends CommentDisplayContext {
 
 	public boolean isControlsVisible() throws PortalException;
 
