@@ -15,7 +15,6 @@
 package com.liferay.portal.repository.liferayrepository.model;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.repository.model.RepositoryModelOperation;
@@ -56,26 +55,7 @@ public class LiferayFolder extends LiferayModel implements Folder {
 
 	@Override
 	public Object clone() {
-		LiferayFolder liferayFolder = new LiferayFolder(
-			_dlFolder, _escapedModel);
-
-		liferayFolder.setCompanyId(getCompanyId());
-		liferayFolder.setCreateDate(getCreateDate());
-		liferayFolder.setGroupId(getGroupId());
-		liferayFolder.setModifiedDate(getModifiedDate());
-		liferayFolder.setPrimaryKey(getPrimaryKey());
-		liferayFolder.setUserId(getUserId());
-		liferayFolder.setUserName(getUserName());
-
-		try {
-			liferayFolder.setUserUuid(getUserUuid());
-		}
-		catch (SystemException se) {
-		}
-
-		liferayFolder.setUuid(getUuid());
-
-		return liferayFolder;
+		return new LiferayFolder(_dlFolder);
 	}
 
 	@Override

@@ -15,7 +15,6 @@
 package com.liferay.portal.repository.liferayrepository.model;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
@@ -52,26 +51,7 @@ public class LiferayFileShortcut extends LiferayModel implements FileShortcut {
 
 	@Override
 	public Object clone() {
-		LiferayFileShortcut liferayFileShortcut = new LiferayFileShortcut(
-			_dlFileShortcut, _escapedModel);
-
-		liferayFileShortcut.setCompanyId(getCompanyId());
-		liferayFileShortcut.setCreateDate(getCreateDate());
-		liferayFileShortcut.setGroupId(getGroupId());
-		liferayFileShortcut.setModifiedDate(getModifiedDate());
-		liferayFileShortcut.setPrimaryKey(getPrimaryKey());
-		liferayFileShortcut.setUserId(getUserId());
-		liferayFileShortcut.setUserName(getUserName());
-
-		try {
-			liferayFileShortcut.setUserUuid(getUserUuid());
-		}
-		catch (SystemException se) {
-		}
-
-		liferayFileShortcut.setUuid(getUuid());
-
-		return liferayFileShortcut;
+		return new LiferayFileShortcut(_dlFileShortcut);
 	}
 
 	@Override

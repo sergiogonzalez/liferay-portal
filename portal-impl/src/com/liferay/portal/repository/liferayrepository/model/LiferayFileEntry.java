@@ -15,7 +15,6 @@
 package com.liferay.portal.repository.liferayrepository.model;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -62,32 +61,7 @@ public class LiferayFileEntry extends LiferayModel implements FileEntry {
 
 	@Override
 	public Object clone() {
-		LiferayFileEntry liferayFileEntry = new LiferayFileEntry(
-			_dlFileEntry, _escapedModel);
-
-		FileVersion cachedFileVersion = getCachedFileVersion();
-
-		if (cachedFileVersion != null) {
-			liferayFileEntry.setCachedFileVersion(cachedFileVersion);
-		}
-
-		liferayFileEntry.setCompanyId(getCompanyId());
-		liferayFileEntry.setCreateDate(getCreateDate());
-		liferayFileEntry.setGroupId(getGroupId());
-		liferayFileEntry.setModifiedDate(getModifiedDate());
-		liferayFileEntry.setPrimaryKey(getPrimaryKey());
-		liferayFileEntry.setUserId(getUserId());
-		liferayFileEntry.setUserName(getUserName());
-
-		try {
-			liferayFileEntry.setUserUuid(getUserUuid());
-		}
-		catch (SystemException se) {
-		}
-
-		liferayFileEntry.setUuid(getUuid());
-
-		return liferayFileEntry;
+		return new LiferayFileEntry(_dlFileEntry);
 	}
 
 	@Override

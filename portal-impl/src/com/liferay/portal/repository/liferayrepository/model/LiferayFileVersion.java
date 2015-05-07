@@ -53,25 +53,7 @@ public class LiferayFileVersion extends LiferayModel implements FileVersion {
 
 	@Override
 	public Object clone() {
-		LiferayFileVersion liferayFileVersion = new LiferayFileVersion(
-			_dlFileVersion, _escapedModel);
-
-		liferayFileVersion.setCompanyId(getCompanyId());
-		liferayFileVersion.setCreateDate(getCreateDate());
-		liferayFileVersion.setGroupId(getGroupId());
-		liferayFileVersion.setPrimaryKey(getPrimaryKey());
-		liferayFileVersion.setUserId(getUserId());
-		liferayFileVersion.setUserName(getUserName());
-
-		try {
-			liferayFileVersion.setUserUuid(getUserUuid());
-		}
-		catch (Exception e) {
-		}
-
-		liferayFileVersion.setUuid(getUuid());
-
-		return liferayFileVersion;
+		return new LiferayFileVersion(_dlFileVersion);
 	}
 
 	@Override
