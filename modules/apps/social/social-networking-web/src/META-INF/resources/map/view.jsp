@@ -45,6 +45,11 @@ else {
 	renderResponse.setTitle(LanguageUtil.format(request, "where-is-x", user2.getFirstName(), false));
 }
 
+JSONArray controlsJSONArray = JSONFactoryUtil.createJSONArray();
+
+controlsJSONArray.put(MapControls.HOME);
+controlsJSONArray.put(MapControls.ZOOM);
+
 IPGeocoder ipGeocoder = (IPGeocoder)request.getAttribute(SocialNetworkingWebKeys.IP_GEOCODER);
 
 List<User> users = null;
@@ -151,7 +156,7 @@ if (maximized) {
 <div class="<%= maximized ? "maximized-map" : "default-map" %>">
 	<c:choose>
 		<c:when test="<%= hasPoints %>">
-			<liferay-ui:map controlsJSONArray="<%= "[type, zoom]" %>" latitude="<%= (ipInfo != null) ? ipInfo.getLatitude() : 0 %>" longitude="<%= (ipInfo != null) ? ipInfo.getLongitude() : 0 %>" name="map" pointsJSONObject="<%= featureCollectionJSONObject %>" zoom="<%= zoom %>" />
+			<liferay-ui:map controlsJSONArray="<%= controlsJSONArray %>" latitude="<%= (ipInfo != null) ? ipInfo.getLatitude() : 0 %>" longitude="<%= (ipInfo != null) ? ipInfo.getLongitude() : 0 %>" name="map" pointsJSONObject="<%= featureCollectionJSONObject %>" zoom="<%= zoom %>" />
 
 			<c:if test="<%= maximized %>">
 				<aui:script use="liferay-map-base">
@@ -178,7 +183,7 @@ if (maximized) {
 			</c:if>
 		</c:when>
 		<c:otherwise>
-			<liferay-ui:map controlsJSONArray="<%= "[type, zoom]" %>" latitude="<%= (ipInfo != null) ? ipInfo.getLatitude() : 0 %>" longitude="<%= (ipInfo != null) ? ipInfo.getLongitude() : 0 %>" name="map" zoom="<%= zoom %>" />
+			<liferay-ui:map controlsJSONArray="<%= controlsJSONArray %>" latitude="<%= (ipInfo != null) ? ipInfo.getLatitude() : 0 %>" longitude="<%= (ipInfo != null) ? ipInfo.getLongitude() : 0 %>" name="map" zoom="<%= zoom %>" />
 		</c:otherwise>
 	</c:choose>
 </div>

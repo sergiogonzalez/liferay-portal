@@ -14,6 +14,7 @@
 
 package com.liferay.taglib.ui;
 
+import com.liferay.portal.kernel.geolocation.MapControls;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -41,19 +42,19 @@ public class MapTag extends IncludeTag {
 		if (BrowserSnifferUtil.isMobile(request)) {
 			JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-			jsonArray.put("home");
-			jsonArray.put("search");
+			jsonArray.put(MapControls.HOME);
+			jsonArray.put(MapControls.SEARCH);
 
 			return jsonArray;
 		}
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		jsonArray.put("home");
-		jsonArray.put("pan");
-		jsonArray.put("search");
-		jsonArray.put("type");
-		jsonArray.put("zoom");
+		jsonArray.put(MapControls.HOME);
+		jsonArray.put(MapControls.PAN);
+		jsonArray.put(MapControls.SEARCH);
+		jsonArray.put(MapControls.TYPE);
+		jsonArray.put(MapControls.ZOOM);
 
 		return jsonArray;
 	}
