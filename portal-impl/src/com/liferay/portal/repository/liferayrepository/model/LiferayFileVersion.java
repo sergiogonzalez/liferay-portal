@@ -41,7 +41,7 @@ import java.util.Map;
 public class LiferayFileVersion extends LiferayModel implements FileVersion {
 
 	public LiferayFileVersion(DLFileVersion dlFileVersion) {
-		this(dlFileVersion, false);
+		this(dlFileVersion, dlFileVersion.isEscapedModel());
 	}
 
 	public LiferayFileVersion(
