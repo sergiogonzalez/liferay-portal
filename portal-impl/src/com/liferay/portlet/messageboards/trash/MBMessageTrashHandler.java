@@ -21,7 +21,7 @@ import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
@@ -98,7 +98,7 @@ public class MBMessageTrashHandler extends BaseTrashHandler {
 	public void restoreRelatedTrashEntry(String className, long classPK)
 		throws PortalException {
 
-		if (!className.equals(DLFileEntry.class.getName())) {
+		if (!className.equals(DLFileEntryConstants.getClassName())) {
 			return;
 		}
 

@@ -148,7 +148,7 @@ portletURL.setParameter("type", type);
 						</liferay-portlet:renderURL>
 
 						<%
-						AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFileEntry.class.getName());
+						AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFileEntryConstants.getClassName());
 						%>
 
 						<aui:nav-item
@@ -173,7 +173,7 @@ portletURL.setParameter("type", type);
 						</liferay-portlet:renderURL>
 
 						<%
-						AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFileEntry.class.getName());
+						AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFileEntryConstants.getClassName());
 						%>
 
 						<aui:nav-item

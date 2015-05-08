@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalService;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 
@@ -339,7 +339,7 @@ public class SearchResultUtilDLFileEntryTest
 	}
 
 	private static final String _DL_FILE_ENTRY_CLASS_NAME =
-		DLFileEntry.class.getName();
+		DLFileEntryConstants.getClassName();
 
 	@Mock
 	private DLAppLocalService _dlAppLocalService;

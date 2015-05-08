@@ -28,7 +28,7 @@ MBMessage message = MBMessageAttachmentsUtil.getMessage(fileEntry.getFileEntryId
 	<c:if test="<%= MBCategoryPermission.contains(permissionChecker, scopeGroupId, message.getCategoryId(), ActionKeys.ADD_FILE) %>">
 
 		<%
-		TrashEntry trashEntry = TrashEntryLocalServiceUtil.getEntry(DLFileEntry.class.getName(), fileEntry.getFileEntryId());
+		TrashEntry trashEntry = TrashEntryLocalServiceUtil.getEntry(DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId());
 		%>
 
 		<portlet:actionURL var="restoreEntryURL">

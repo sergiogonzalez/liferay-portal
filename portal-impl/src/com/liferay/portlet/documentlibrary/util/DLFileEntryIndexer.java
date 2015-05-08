@@ -57,6 +57,7 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
@@ -98,7 +99,7 @@ import javax.portlet.PortletResponse;
 @OSGiBeanProperties
 public class DLFileEntryIndexer extends BaseIndexer {
 
-	public static final String CLASS_NAME = DLFileEntry.class.getName();
+	public static final String CLASS_NAME = DLFileEntryConstants.getClassName();
 
 	public DLFileEntryIndexer() {
 		setDefaultSelectedFieldNames(
