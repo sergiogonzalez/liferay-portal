@@ -57,7 +57,7 @@ public abstract class BaseFormNavigatorEntry<T>
 		throws IOException {
 
 		ServletContext servletContext = request.getServletContext();
-		
+
 		if (getJspPath().contains("/html/portlet")) {
 			servletContext = servletContext.getContext(request.getRequestURI());
 		}
