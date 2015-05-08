@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.blogs.model.BlogsEntry;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
@@ -189,7 +189,8 @@ public class UpgradeSubscription extends UpgradeProcess {
 		_getGroupIdSQLPartsMap.put(
 			DDMStructure.class.getName(), "DDMStructure,groupId,structureId");
 		_getGroupIdSQLPartsMap.put(
-			DLFileEntry.class.getName(), "DLFileEntry,groupId,fileEntryId");
+			DLFileEntryConstants.getClassName(),
+			"DLFileEntry,groupId,fileEntryId");
 		_getGroupIdSQLPartsMap.put(
 			DLFileEntryType.class.getName(),
 			"DLFileEntryType,groupId,fileEntryTypeId");

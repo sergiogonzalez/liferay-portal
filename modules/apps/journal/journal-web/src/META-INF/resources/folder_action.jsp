@@ -103,7 +103,7 @@ else {
 				<%
 				boolean workflowEnabled = false;
 
-				if (WorkflowEngineManagerUtil.isDeployed() && (WorkflowHandlerRegistryUtil.getWorkflowHandler(DLFileEntry.class.getName()) != null)) {
+				if (WorkflowEngineManagerUtil.isDeployed() && (WorkflowHandlerRegistryUtil.getWorkflowHandler(JournalArticle.class.getName()) != null)) {
 					workflowEnabled = true;
 				}
 				%>

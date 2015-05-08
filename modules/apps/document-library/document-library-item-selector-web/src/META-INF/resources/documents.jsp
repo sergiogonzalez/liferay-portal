@@ -119,7 +119,7 @@ if (folderId > 0) {
 						</liferay-portlet:renderURL>
 
 						<%
-						AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFileEntry.class.getName());
+						AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFileEntryConstants.getClassName());
 						%>
 
 						<aui:nav-item
@@ -144,7 +144,7 @@ if (folderId > 0) {
 						</liferay-portlet:renderURL>
 
 						<%
-						AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFileEntry.class.getName());
+						AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFileEntryConstants.getClassName());
 						%>
 
 						<aui:nav-item

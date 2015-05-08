@@ -346,7 +346,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 										sb.append(TextFormatter.formatStorageSize(fileEntry.getSize(), locale));
 										sb.append(StringPool.CLOSE_PARENTHESIS);
 
-										AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFileEntry.class.getName());
+										AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFileEntryConstants.getClassName());
 
 										AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(fileEntry.getFileEntryId());
 										%>

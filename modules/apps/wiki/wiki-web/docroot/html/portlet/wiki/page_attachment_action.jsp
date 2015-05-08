@@ -32,7 +32,7 @@ WikiPage wikiPage = WikiPageAttachmentsUtil.getPage(attachmentsFileEntry.getFile
 			<c:if test="<%= WikiNodePermissionChecker.contains(permissionChecker, wikiPage.getNodeId(), ActionKeys.ADD_ATTACHMENT) %>">
 
 				<%
-				TrashEntry trashEntry = TrashEntryLocalServiceUtil.getEntry(DLFileEntry.class.getName(), attachmentsFileEntry.getFileEntryId());
+				TrashEntry trashEntry = TrashEntryLocalServiceUtil.getEntry(DLFileEntryConstants.getClassName(), attachmentsFileEntry.getFileEntryId());
 				%>
 
 				<portlet:actionURL var="restoreEntryURL">

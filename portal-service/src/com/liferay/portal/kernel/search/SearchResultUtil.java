@@ -24,7 +24,7 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
@@ -66,7 +66,8 @@ public class SearchResultUtil {
 				FileEntry fileEntry = null;
 				MBMessage mbMessage = null;
 
-				if (entryClassName.equals(DLFileEntry.class.getName()) ||
+				if (entryClassName.equals(
+						DLFileEntryConstants.getClassName()) ||
 					entryClassName.equals(MBMessage.class.getName())) {
 
 					classPK = GetterUtil.getLong(document.get(Field.CLASS_PK));
@@ -77,7 +78,7 @@ public class SearchResultUtil {
 						className = PortalUtil.getClassName(classNameId);
 
 						if (entryClassName.equals(
-								DLFileEntry.class.getName())) {
+								DLFileEntryConstants.getClassName())) {
 
 							fileEntry = DLAppLocalServiceUtil.getFileEntry(
 								entryClassPK);
@@ -109,7 +110,7 @@ public class SearchResultUtil {
 
 				if (fileEntry != null) {
 					Summary summary = getSummary(
-						document, DLFileEntry.class.getName(),
+						document, DLFileEntryConstants.getClassName(),
 						fileEntry.getFileEntryId(), locale, portletRequest,
 						portletResponse);
 

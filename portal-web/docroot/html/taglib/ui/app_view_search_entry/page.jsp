@@ -104,7 +104,7 @@ summary.setQueryTerms(queryTerms);
 		for (Tuple fileEntryTuple : fileEntryTuples) {
 			FileEntry fileEntry = (FileEntry)fileEntryTuple.getObject(0);
 
-			AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFileEntry.class.getName());
+			AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFileEntryConstants.getClassName());
 
 			AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(fileEntry.getFileEntryId());
 
