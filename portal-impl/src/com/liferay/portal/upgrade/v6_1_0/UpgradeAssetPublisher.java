@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 
 import java.sql.Connection;
@@ -94,7 +94,7 @@ public class UpgradeAssetPublisher extends BaseUpgradePortletPreferences {
 		}
 
 		long dlFileEntryClassNameId = PortalUtil.getClassNameId(
-			DLFileEntry.class.getName());
+			DLFileEntryConstants.getClassName());
 		long igImageClassNameId = PortalUtil.getClassNameId(
 			"com.liferay.portlet.imagegallery.model.IGImage");
 

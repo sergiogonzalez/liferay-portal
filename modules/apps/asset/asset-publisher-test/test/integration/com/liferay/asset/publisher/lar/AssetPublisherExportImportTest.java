@@ -51,7 +51,7 @@ import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.portlet.asset.util.test.AssetTestUtil;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
@@ -109,7 +109,7 @@ public class AssetPublisherExportImportTest
 		Map<String, String[]> preferenceMap = new HashMap<>();
 
 		long dlFileEntryClassNameId = PortalUtil.getClassNameId(
-			DLFileEntry.class);
+			DLFileEntryConstants.getClassName());
 
 		preferenceMap.put(
 			"anyAssetType",
@@ -353,7 +353,7 @@ public class AssetPublisherExportImportTest
 		Map<String, String[]> preferenceMap = new HashMap<>();
 
 		long dlFileEntryClassNameId = PortalUtil.getClassNameId(
-			DLFileEntry.class);
+			DLFileEntryConstants.getClassName());
 
 		preferenceMap.put(
 			"anyAssetType",

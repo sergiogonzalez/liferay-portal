@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.util.DLFileEntryIndexer;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.util.MBMessageIndexer;
@@ -71,7 +71,7 @@ public class BaseIndexerGetFullQueryTest extends PowerMockito {
 
 		_indexer.getFullQuery(_searchContext);
 
-		assertEntryClassNames(_CLASS_NAME, DLFileEntry.class.getName());
+		assertEntryClassNames(_CLASS_NAME, DLFileEntryConstants.getClassName());
 
 		Assert.assertNull(_searchContext.getAttribute("discussion"));
 		Assert.assertArrayEquals(
@@ -89,7 +89,7 @@ public class BaseIndexerGetFullQueryTest extends PowerMockito {
 		_indexer.getFullQuery(_searchContext);
 
 		assertEntryClassNames(
-			_CLASS_NAME, DLFileEntry.class.getName(),
+			_CLASS_NAME, DLFileEntryConstants.getClassName(),
 			MBMessage.class.getName());
 
 		Assert.assertEquals(

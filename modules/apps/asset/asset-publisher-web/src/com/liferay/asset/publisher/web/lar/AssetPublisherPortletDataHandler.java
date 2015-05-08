@@ -48,7 +48,7 @@ import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.journal.model.JournalArticle;
@@ -232,7 +232,7 @@ public class AssetPublisherPortletDataHandler
 						"anyClassTypeDLFileEntryAssetRendererFactory") ||
 					 (name.equals("classTypeIds") &&
 					  anyAssetTypeClassName.equals(
-						  DLFileEntry.class.getName())) ||
+						  DLFileEntryConstants.getClassName())) ||
 					 name.equals(
 						 "classTypeIdsDLFileEntryAssetRendererFactory")) {
 
@@ -426,7 +426,7 @@ public class AssetPublisherPortletDataHandler
 						"anyClassTypeDLFileEntryAssetRendererFactory") ||
 					 (name.equals("classTypeIds") &&
 					  anyAssetTypeClassName.equals(
-						  DLFileEntry.class.getName())) ||
+						  DLFileEntryConstants.getClassName())) ||
 					 name.equals(
 						 "classTypeIdsDLFileEntryAssetRendererFactory")) {
 

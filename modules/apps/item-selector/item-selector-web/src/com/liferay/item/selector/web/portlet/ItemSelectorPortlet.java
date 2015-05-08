@@ -49,7 +49,7 @@ import com.liferay.portlet.documentlibrary.FileSizeException;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.SourceFileNameException;
 import com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerException;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.StorageFieldRequiredException;
 
@@ -203,7 +203,7 @@ public class ItemSelectorPortlet extends MVCPortlet {
 			inputStream = uploadPortletRequest.getFileAsStream("file");
 
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				DLFileEntry.class.getName(), uploadPortletRequest);
+				DLFileEntryConstants.getClassName(), uploadPortletRequest);
 
 			FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
 				repositoryId, folderId, sourceFileName, contentType, title,

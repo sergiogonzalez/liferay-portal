@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.upgrade.v6_1_0.util.AssetEntryTable;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.journal.model.JournalArticle;
 
@@ -114,7 +114,7 @@ public class UpgradeAsset extends UpgradeProcess {
 
 	protected void updateIGImageClassName() throws Exception {
 		long dlFileEntryClassNameId = PortalUtil.getClassNameId(
-			DLFileEntry.class.getName());
+			DLFileEntryConstants.getClassName());
 		long igImageClassNameId = PortalUtil.getClassNameId(
 			"com.liferay.portlet.imagegallery.model.IGImage");
 
