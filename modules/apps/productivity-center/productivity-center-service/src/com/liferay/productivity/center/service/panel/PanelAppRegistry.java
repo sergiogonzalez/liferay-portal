@@ -16,15 +16,18 @@ package com.liferay.productivity.center.service.panel;
 
 import com.liferay.osgi.service.tracker.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.map.ServiceTrackerMapFactory;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.productivity.center.panel.PanelApp;
 import com.liferay.productivity.center.panel.PanelCategory;
 import com.liferay.productivity.center.service.util.PanelCategoryServiceReferenceMapper;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.InvalidSyntaxException;
+import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -52,7 +55,8 @@ public class PanelAppRegistry {
 
 		_serviceTrackerMap = ServiceTrackerMapFactory.multiValueMap(
 			bundleContext, PanelApp.class, "(panel.category.key=*)",
-			new PanelCategoryServiceReferenceMapper());
+			new PanelCategoryServiceReferenceMapper(),
+			_panelEntryWeightComparator);
 
 		_serviceTrackerMap.open();
 	}
@@ -61,6 +65,29 @@ public class PanelAppRegistry {
 	protected void deactivate() {
 		_serviceTrackerMap.close();
 	}
+
+	private static final double _DEFAULT_PANEL_ENTRY_WEIGHT = 100;
+
+	private static final Comparator<ServiceReference<PanelApp>>
+		_panelEntryWeightComparator =
+			new Comparator<ServiceReference<PanelApp>>() {
+
+				@Override
+				public int compare(
+					ServiceReference<PanelApp> serviceReference1,
+					ServiceReference<PanelApp> serviceReference2) {
+
+					double weight1 = GetterUtil.getDouble(
+						serviceReference1.getProperty("panel.entry.weight"),
+						_DEFAULT_PANEL_ENTRY_WEIGHT);
+					double weight2 = GetterUtil.getDouble(
+						serviceReference2.getProperty("panel.entry.weight"),
+						_DEFAULT_PANEL_ENTRY_WEIGHT);
+
+					return Double.compare(weight1, weight2);
+				}
+
+			};
 
 	private ServiceTrackerMap<String, List<PanelApp>> _serviceTrackerMap;
 

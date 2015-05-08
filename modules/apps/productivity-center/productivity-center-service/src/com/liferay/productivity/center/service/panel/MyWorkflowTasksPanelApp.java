@@ -14,6 +14,7 @@
 
 package com.liferay.productivity.center.service.panel;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.StringPool;
@@ -33,15 +34,15 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"panel.category.key=" + PanelCategoryKeys.MY, "panel.entry.weight=1.0"
+		"panel.category.key=" + PanelCategoryKeys.MY, "panel.entry.weight=3.0"
 	},
 	service = PanelApp.class
 )
-public class MyAccountPanelApp implements PanelApp {
+public class MyWorkflowTasksPanelApp implements PanelApp {
 
 	@Override
 	public String getKey() {
-		return MyAccountPanelApp.class.getName();
+		return MyWorkflowTasksPanelApp.class.getName();
 	}
 
 	@Override
@@ -54,12 +55,13 @@ public class MyAccountPanelApp implements PanelApp {
 
 	@Override
 	public String getPortletId() {
-		return PortletKeys.MY_ACCOUNT;
+		return PortletKeys.MY_WORKFLOW_TASKS;
 	}
 
 	@Override
 	public boolean hasAccessPermission(
-		PermissionChecker permissionChecker, Group group) {
+			PermissionChecker permissionChecker, Group group)
+		throws PortalException {
 
 		return true;
 	}
