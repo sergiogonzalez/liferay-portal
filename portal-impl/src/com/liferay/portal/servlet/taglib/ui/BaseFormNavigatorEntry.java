@@ -16,8 +16,10 @@ package com.liferay.portal.servlet.taglib.ui;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 import com.liferay.portal.model.User;
+import com.liferay.portal.spring.context.PortalContextLoaderListener;
 
 import java.io.IOException;
 
@@ -56,7 +58,8 @@ public abstract class BaseFormNavigatorEntry<T>
 	public void render(HttpServletRequest request, HttpServletResponse response)
 		throws IOException {
 
-		ServletContext servletContext = request.getServletContext();
+		ServletContext servletContext = ServletContextPool.get(
+			PortalContextLoaderListener.getPortalServletContextName());
 
 		RequestDispatcher requestDispatcher =
 			servletContext.getRequestDispatcher(getJspPath());
