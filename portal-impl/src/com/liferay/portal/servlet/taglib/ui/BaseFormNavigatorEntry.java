@@ -58,8 +58,7 @@ public abstract class BaseFormNavigatorEntry<T>
 	public void render(HttpServletRequest request, HttpServletResponse response)
 		throws IOException {
 
-		ServletContext servletContext = ServletContextPool.get(
-			PortalContextLoaderListener.getPortalServletContextName());
+		ServletContext servletContext = getServletContext(request);
 
 		RequestDispatcher requestDispatcher =
 			servletContext.getRequestDispatcher(getJspPath());
@@ -77,6 +76,11 @@ public abstract class BaseFormNavigatorEntry<T>
 	}
 
 	protected abstract String getJspPath();
+
+	protected ServletContext getServletContext(HttpServletRequest request) {
+		return ServletContextPool.get(
+			PortalContextLoaderListener.getPortalServletContextName());
+	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseFormNavigatorEntry.class);
