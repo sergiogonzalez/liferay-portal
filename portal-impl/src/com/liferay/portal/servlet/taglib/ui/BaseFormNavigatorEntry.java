@@ -60,6 +60,10 @@ public abstract class BaseFormNavigatorEntry<T>
 
 		ServletContext servletContext = getServletContext(request);
 
+		if (getJspPath().contains("/html/portlet")) {
+			servletContext = servletContext.getContext(request.getRequestURI());
+		}
+
 		RequestDispatcher requestDispatcher =
 			servletContext.getRequestDispatcher(getJspPath());
 
