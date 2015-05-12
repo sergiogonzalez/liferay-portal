@@ -17,7 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String itemSelectedCallback = (String)request.getAttribute(LayoutItemSelectorView.ITEM_SELECTED_CALLBACK);
 LayoutItemSelectorCriterion layoutItemSelectorCriterion = (LayoutItemSelectorCriterion)request.getAttribute(LayoutItemSelectorView.LAYOUT_ITEM_SELECTOR_CRITERION);
 
 long groupId = layoutItemSelectorCriterion.getGroupId();
@@ -149,9 +148,7 @@ if (group.getPrivateLayoutsPageCount() > 0) {
 	button.on(
 		'click',
 		function() {
-			var url = event.target.getAttribute('data-url');
-
-			<%= itemSelectedCallback %>('<%= URL.class.getName() %>', url);
+			//TODO
 		}
 	);
 

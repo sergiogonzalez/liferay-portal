@@ -17,15 +17,11 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String itemSelectedCallback = liferayPortletResponse.getNamespace() + "itemSelectedCallback";
-
 LocalizedItemSelectorRendering localizedItemSelectorRendering = LocalizedItemSelectorRendering.get(liferayPortletRequest);
 %>
 
 <aui:script>
-	function <%= itemSelectedCallback %>(type, item) {
-		<%= localizedItemSelectorRendering.getItemSelectedCallback() %>(type, item);
-	}
+	//TODO
 </aui:script>
 
 <liferay-ui:tabs names="<%= StringUtil.merge(localizedItemSelectorRendering.getTitles()) %>" refresh="<%= false %>" type="pills" value="<%= localizedItemSelectorRendering.getSelectedTab() %>">

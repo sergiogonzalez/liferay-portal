@@ -35,8 +35,7 @@ public interface ItemSelectorView<T extends ItemSelectorCriterion> {
 
 	public void renderHTML(
 			ServletRequest servletRequest, ServletResponse servletResponse,
-			T itemSelectorCriterion, PortletURL portletURL,
-			String itemSelectedCallback)
+			T itemSelectorCriterion, PortletURL portletURL)
 		throws IOException, ServletException;
 
 }

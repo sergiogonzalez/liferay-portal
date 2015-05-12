@@ -37,9 +37,6 @@ public class DLItemSelectorView
 	public static final String DL_ITEM_SELECTOR_CRITERION =
 		DLItemSelectorView.class.getName() + "#DL_ITEM_SELECTOR_CRITERION";
 
-	public static final String ITEM_SELECTED_CALLBACK =
-		DLItemSelectorView.class.getName() + "#ITEM_SELECTED_CALLBACK";
-
 	public static final String PORTLET_URL =
 		DLItemSelectorView.class.getName() + "#PORTLET_URL";
 
@@ -60,12 +57,11 @@ public class DLItemSelectorView
 	public void renderHTML(
 			ServletRequest request, ServletResponse response,
 			DLItemSelectorCriterion dlItemSelectorCriterion,
-			PortletURL portletURL, String itemSelectedCallback)
+			PortletURL portletURL)
 		throws IOException, ServletException {
 
 		request.setAttribute(
 			DL_ITEM_SELECTOR_CRITERION, dlItemSelectorCriterion);
-		request.setAttribute(ITEM_SELECTED_CALLBACK, itemSelectedCallback);
 		request.setAttribute(PORTLET_URL, portletURL);
 
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher(

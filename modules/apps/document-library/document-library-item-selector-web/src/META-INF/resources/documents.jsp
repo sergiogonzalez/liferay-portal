@@ -18,7 +18,6 @@
 
 <%
 DLItemSelectorCriterion dlItemSelectorCriterion = (DLItemSelectorCriterion)request.getAttribute(DLItemSelectorView.DL_ITEM_SELECTOR_CRITERION);
-String itemSelectedCallback = (String)request.getAttribute(DLItemSelectorView.ITEM_SELECTED_CALLBACK);
 PortletURL portletURL = (PortletURL)request.getAttribute(DLItemSelectorView.PORTLET_URL);
 
 long groupId = ParamUtil.getLong(request, "groupId", scopeGroupId);
@@ -370,7 +369,7 @@ if (folderId > 0) {
 		function(event) {
 			var fileEntryId = event.target.getAttribute('data-fileEntryId');
 
-			<%= itemSelectedCallback %>('<%= FileEntry.class.getName() %>', fileEntryId);
+			//TODO
 		}
 	);
 </aui:script>
