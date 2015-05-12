@@ -18,7 +18,7 @@ import com.liferay.item.selector.BaseItemSelectorCriterion;
 
 import java.net.URL;
 
-import java.util.Set;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -44,8 +44,8 @@ public class LayoutItemSelectorCriterion extends BaseItemSelectorCriterion {
 		_groupId = groupId;
 	}
 
-	private static final Set<Class<?>> _AVAILABLE_RETURN_TYPES =
-		getInmutableSet(URL.class, UUID.class);
+	private static final List<Class<?>> _AVAILABLE_RETURN_TYPES =
+		getInmutableList(URL.class, UUID.class);
 
 	private long _groupId;
 

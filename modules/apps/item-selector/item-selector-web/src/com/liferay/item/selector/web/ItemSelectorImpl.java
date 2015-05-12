@@ -309,10 +309,10 @@ public class ItemSelectorImpl implements ItemSelector {
 		Map<String, String[]> parameters, String prefix,
 		ItemSelectorCriterion itemSelectorCriterion) {
 
-		Set<Class<?>> desiredReturnTypes =
+		List<Class<?>> desiredReturnTypes =
 			itemSelectorCriterion.getDesiredReturnTypes();
 
-		Set<Class<?>> availableReturnTypes =
+		List<Class<?>> availableReturnTypes =
 			itemSelectorCriterion.getAvailableReturnTypes();
 
 		if (desiredReturnTypes.size() == availableReturnTypes.size()) {

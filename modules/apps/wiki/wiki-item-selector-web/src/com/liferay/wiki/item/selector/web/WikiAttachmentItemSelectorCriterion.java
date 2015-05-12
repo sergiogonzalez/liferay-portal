@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 
 import java.net.URL;
 
-import java.util.Set;
+import java.util.List;
 
 /**
  * @author Iván Zaera
@@ -45,8 +45,8 @@ public class WikiAttachmentItemSelectorCriterion
 		_wikiPageResourceId = wikiPageResourceId;
 	}
 
-	private static final Set<Class<?>> _AVAILABLE_RETURN_TYPES =
-		getInmutableSet(FileEntry.class, URL.class);
+	private static final List<Class<?>> _AVAILABLE_RETURN_TYPES =
+		getInmutableList(FileEntry.class, URL.class);
 
 	private long _wikiPageResourceId;
 

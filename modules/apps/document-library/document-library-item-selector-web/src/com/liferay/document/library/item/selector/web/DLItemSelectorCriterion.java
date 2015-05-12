@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 
 import java.net.URL;
 
-import java.util.Set;
+import java.util.List;
 
 /**
  * @author Roberto Díaz
@@ -83,8 +83,8 @@ public class DLItemSelectorCriterion extends BaseItemSelectorCriterion {
 		_type = type;
 	}
 
-	private static final Set<Class<?>> _AVAILABLE_RETURN_TYPES =
-		getInmutableSet(FileEntry.class, URL.class);
+	private static final List<Class<?>> _AVAILABLE_RETURN_TYPES =
+		getInmutableList(FileEntry.class, URL.class);
 
 	private long _folderId;
 	private String[] _mimeTypes;
