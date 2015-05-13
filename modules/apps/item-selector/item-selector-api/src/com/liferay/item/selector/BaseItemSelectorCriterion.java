@@ -35,10 +35,10 @@ public abstract class BaseItemSelectorCriterion
 	}
 
 	@Override
-	public void setDesiredReturnTypes(Class<?>... desiredReturnTypes) {
+	public void setDesiredReturnTypes(Class<?> ... desiredReturnType) {
 		List<Class<?>> desiredReturnTypesList = new ArrayList<>();
 
-		Collections.addAll(desiredReturnTypesList, desiredReturnTypes);
+		Collections.addAll(desiredReturnTypesList, desiredReturnType);
 
 		if (!_availableReturnTypes.containsAll(desiredReturnTypesList)) {
 			throw new IllegalArgumentException(
@@ -47,6 +47,11 @@ public abstract class BaseItemSelectorCriterion
 		}
 
 		_desiredReturnTypes = desiredReturnTypesList;
+	}
+
+	@Override
+	public void setDesiredReturnTypes(List<Class<?>> desiredReturnTypes) {
+		_desiredReturnTypes = desiredReturnTypes;
 	}
 
 	protected static List<Class<?>> getInmutableList(Class<?>... classes) {
