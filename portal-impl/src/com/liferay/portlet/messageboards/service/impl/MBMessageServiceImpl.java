@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
@@ -42,7 +41,6 @@ import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.model.MBThreadConstants;
 import com.liferay.portlet.messageboards.service.base.MBMessageServiceBaseImpl;
 import com.liferay.portlet.messageboards.service.permission.MBCategoryPermission;
-import com.liferay.portlet.messageboards.service.permission.MBDiscussionPermission;
 import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
 import com.liferay.portlet.messageboards.util.MBUtil;
 import com.liferay.portlet.messageboards.util.comparator.MessageCreateDateComparator;
@@ -74,26 +72,6 @@ import java.util.List;
  * @author Shuyang Zhou
  */
 public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
-
-	@Override
-	public MBMessage addDiscussionMessage(
-			long groupId, String className, long classPK,
-			String permissionClassName, long permissionClassPK,
-			long permissionOwnerId, long threadId, long parentMessageId,
-			String subject, String body, ServiceContext serviceContext)
-		throws PortalException {
-
-		User user = getGuestOrUser();
-
-		MBDiscussionPermission.check(
-			getPermissionChecker(), user.getCompanyId(),
-			serviceContext.getScopeGroupId(), permissionClassName,
-			permissionClassPK, permissionOwnerId, ActionKeys.ADD_DISCUSSION);
-
-		return mbMessageLocalService.addDiscussionMessage(
-			user.getUserId(), null, groupId, className, classPK, threadId,
-			parentMessageId, subject, body, serviceContext);
-	}
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #addMessage(long, String,
@@ -240,23 +218,6 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			parentMessage.getCategoryId(), parentMessage.getThreadId(),
 			parentMessageId, subject, body, format, inputStreamOVPs, anonymous,
 			priority, allowPingbacks, serviceContext);
-	}
-
-	@Override
-	public void deleteDiscussionMessage(
-			long groupId, String className, long classPK,
-			String permissionClassName, long permissionClassPK,
-			long permissionOwnerId, long messageId)
-		throws PortalException {
-
-		User user = getUser();
-
-		MBDiscussionPermission.check(
-			getPermissionChecker(), user.getCompanyId(), groupId,
-			permissionClassName, permissionClassPK, messageId,
-			permissionOwnerId, ActionKeys.DELETE_DISCUSSION);
-
-		mbMessageLocalService.deleteDiscussionMessage(messageId);
 	}
 
 	@Override
@@ -679,26 +640,6 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 		throws PortalException {
 
 		mbMessageLocalService.updateAnswer(messageId, answer, cascade);
-	}
-
-	@Override
-	public MBMessage updateDiscussionMessage(
-			String className, long classPK, String permissionClassName,
-			long permissionClassPK, long permissionOwnerId, long messageId,
-			String subject, String body, ServiceContext serviceContext)
-		throws PortalException {
-
-		User user = getUser();
-
-		MBDiscussionPermission.check(
-			getPermissionChecker(), user.getCompanyId(),
-			serviceContext.getScopeGroupId(), permissionClassName,
-			permissionClassPK, messageId, permissionOwnerId,
-			ActionKeys.UPDATE_DISCUSSION);
-
-		return mbMessageLocalService.updateDiscussionMessage(
-			getUserId(), messageId, className, classPK, subject, body,
-			serviceContext);
 	}
 
 	@Override
