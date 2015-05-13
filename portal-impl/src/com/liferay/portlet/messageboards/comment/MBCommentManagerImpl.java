@@ -252,6 +252,18 @@ public class MBCommentManagerImpl implements CommentManager {
 		return message.getMessageId();
 	}
 
+	protected MBCommentManagerImpl(
+		MBDiscussionLocalService mbDiscussionLocalService,
+		MBMessageLocalService mbMessageLocalService,
+		RatingsEntryLocalService ratingsEntryLocalService,
+		RatingsStatsLocalService ratingsStatsLocalService) {
+
+		_mbDiscussionLocalService = mbDiscussionLocalService;
+		_mbMessageLocalService = mbMessageLocalService;
+		_ratingsEntryLocalService = ratingsEntryLocalService;
+		_ratingsStatsLocalService = ratingsStatsLocalService;
+	}
+
 	@BeanReference(type = MBDiscussionLocalService.class)
 	private MBDiscussionLocalService _mbDiscussionLocalService;
 

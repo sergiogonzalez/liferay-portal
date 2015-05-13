@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Function;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextFunction;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceTracker;
@@ -122,15 +123,16 @@ public class CommentManagerImplTest extends Mockito {
 		String body = RandomTestUtil.randomString();
 		long commentId = RandomTestUtil.randomLong();
 
-		ServiceContext serviceContext = new ServiceContext();
+		ServiceContextFunction serviceContextFunction =
+			new ServiceContextFunction(null);
 
 		_commentManagerImpl.addComment(
-			userId, groupId, className, classPK, body, serviceContext);
+			userId, groupId, className, classPK, body, serviceContextFunction);
 
 		Mockito.verify(
 			commentManager
 		).addComment(
-			userId, groupId, className, classPK, body, serviceContext
+			userId, groupId, className, classPK, body, serviceContextFunction
 		);
 
 		when(
