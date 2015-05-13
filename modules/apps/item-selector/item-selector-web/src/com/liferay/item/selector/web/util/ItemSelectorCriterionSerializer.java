@@ -19,14 +19,19 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONSerializer;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.beanutils.PropertyUtils;
 
@@ -68,6 +73,8 @@ public class ItemSelectorCriterionSerializer<T extends ItemSelectorCriterion> {
 				JSONFactoryUtil.createJSONDeserializer();
 
 			Map<String, ?> map = jsonDeserializer.deserialize(json);
+
+			_setDesiredReturnTypes(map);
 
 			for (String serializableField : _serializableFields) {
 				Class<?> serializableFieldClass = PropertyUtils.getPropertyType(
@@ -124,14 +131,42 @@ public class ItemSelectorCriterionSerializer<T extends ItemSelectorCriterion> {
 	}
 
 	private boolean _isInternalProperty(String name) {
-		if (name.equals("availableReturnTypes") || name.equals("class") ||
-			name.equals("desiredReturnTypes")) {
-
+		if (name.equals("availableReturnTypes") || name.equals("class")) {
 			return true;
 		}
 
 		return false;
 	}
+
+	private void _setDesiredReturnTypes(Map<String, ?> map) {
+		Set<Class<?>> desiredReturnTypes = new HashSet<>();
+
+		List<String> desiredReturnTypesNames = (List<String>)map.get(
+			"desiredReturnTypes");
+
+		for (String desiredReturnTypeName : desiredReturnTypesNames) {
+			try {
+				Class<?> clazz = Class.forName(desiredReturnTypeName);
+
+				desiredReturnTypes.add(clazz);
+			}
+			catch (ClassNotFoundException cnfe) {
+				if (_log.isWarnEnabled()) {
+					_log.warn("Unable to load class " + desiredReturnTypeName);
+				}
+			}
+		}
+
+		_itemSelectorCriterion.setDesiredReturnTypes(desiredReturnTypes);
+
+		map.remove("desiredReturnTypes");
+
+		_serializableFields = ArrayUtil.remove(
+			_serializableFields, "desiredReturnTypes");
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ItemSelectorCriterionSerializer.class);
 
 	private final T _itemSelectorCriterion;
 	private final String _prefix;
