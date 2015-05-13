@@ -25,7 +25,10 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBMessageDisplay;
 import com.liferay.portlet.messageboards.model.MBThread;
+import com.liferay.portlet.messageboards.service.MBDiscussionLocalService;
 import com.liferay.portlet.messageboards.service.MBMessageLocalService;
+import com.liferay.portlet.ratings.service.RatingsEntryLocalService;
+import com.liferay.portlet.ratings.service.RatingsStatsLocalService;
 
 import java.util.Collections;
 import java.util.List;
@@ -57,7 +60,7 @@ public class MBCommentManagerImplTest extends Mockito {
 	public void testAddComment() throws Exception {
 		_mbCommentManagerImpl.addComment(
 			_USER_ID, _GROUP_ID, _CLASS_NAME, _ENTRY_ID, _BODY,
-			_serviceContext);
+			_serviceContextFunction);
 
 		Mockito.verify(
 			_mbMessageLocalService
@@ -121,7 +124,7 @@ public class MBCommentManagerImplTest extends Mockito {
 
 		_mbCommentManagerImpl.addComment(
 			_USER_ID, _GROUP_ID, _CLASS_NAME, _ENTRY_ID, _BODY,
-			_serviceContext);
+			_serviceContextFunction);
 	}
 
 	@Test
@@ -130,7 +133,7 @@ public class MBCommentManagerImplTest extends Mockito {
 
 		_mbCommentManagerImpl.addComment(
 			_USER_ID, _GROUP_ID, _CLASS_NAME, _ENTRY_ID, _BODY,
-			_serviceContext);
+			_serviceContextFunction);
 
 		Mockito.verify(
 			_mbMessageLocalService
@@ -207,7 +210,9 @@ public class MBCommentManagerImplTest extends Mockito {
 	}
 
 	protected void setUpMBCommentManagerImpl() throws Exception {
-		_mbCommentManagerImpl.setMBMessageLocalService(_mbMessageLocalService);
+		_mbCommentManagerImpl = new MBCommentManagerImpl(
+			_mbDiscussionLocalService, _mbMessageLocalService,
+			_ratingsEntryLocalService, _ratingsStatsLocalService);
 
 		when(
 			_mbMessageDisplay.getThread()
@@ -282,8 +287,10 @@ public class MBCommentManagerImplTest extends Mockito {
 
 	private static final String _USER_NAME = RandomTestUtil.randomString();
 
-	private final MBCommentManagerImpl _mbCommentManagerImpl =
-		new MBCommentManagerImpl();
+	private MBCommentManagerImpl _mbCommentManagerImpl;
+
+	@Mock
+	private MBDiscussionLocalService _mbDiscussionLocalService;
 
 	@Mock
 	private MBMessage _mbMessage;
@@ -299,6 +306,12 @@ public class MBCommentManagerImplTest extends Mockito {
 
 	@Mock
 	private Portal _portal;
+
+	@Mock
+	private RatingsEntryLocalService _ratingsEntryLocalService;
+
+	@Mock
+	private RatingsStatsLocalService _ratingsStatsLocalService;
 
 	private final ServiceContext _serviceContext = new ServiceContext();
 

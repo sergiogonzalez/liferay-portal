@@ -40,19 +40,6 @@ public class MBMessageServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.messageboards.service.impl.MBMessageServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.portlet.messageboards.model.MBMessage addDiscussionMessage(
-		long groupId, java.lang.String className, long classPK,
-		java.lang.String permissionClassName, long permissionClassPK,
-		long permissionOwnerId, long threadId, long parentMessageId,
-		java.lang.String subject, java.lang.String body,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .addDiscussionMessage(groupId, className, classPK,
-			permissionClassName, permissionClassPK, permissionOwnerId,
-			threadId, parentMessageId, subject, body, serviceContext);
-	}
-
 	public static com.liferay.portlet.messageboards.model.MBMessage addMessage(
 		long categoryId, java.lang.String subject, java.lang.String body,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -113,16 +100,6 @@ public class MBMessageServiceUtil {
 		return getService()
 				   .addMessage(parentMessageId, subject, body, format,
 			inputStreamOVPs, anonymous, priority, allowPingbacks, serviceContext);
-	}
-
-	public static void deleteDiscussionMessage(long groupId,
-		java.lang.String className, long classPK,
-		java.lang.String permissionClassName, long permissionClassPK,
-		long permissionOwnerId, long messageId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.deleteDiscussionMessage(groupId, className, classPK,
-			permissionClassName, permissionClassPK, permissionOwnerId, messageId);
 	}
 
 	public static void deleteMessage(long messageId)
@@ -283,19 +260,6 @@ public class MBMessageServiceUtil {
 		boolean cascade)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().updateAnswer(messageId, answer, cascade);
-	}
-
-	public static com.liferay.portlet.messageboards.model.MBMessage updateDiscussionMessage(
-		java.lang.String className, long classPK,
-		java.lang.String permissionClassName, long permissionClassPK,
-		long permissionOwnerId, long messageId, java.lang.String subject,
-		java.lang.String body,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateDiscussionMessage(className, classPK,
-			permissionClassName, permissionClassPK, permissionOwnerId,
-			messageId, subject, body, serviceContext);
 	}
 
 	public static com.liferay.portlet.messageboards.model.MBMessage updateMessage(

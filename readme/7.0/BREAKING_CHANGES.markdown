@@ -1571,3 +1571,34 @@ If you need to require the last name, list it on the `lang.user.name.required.fi
 This change was made to account for different languages allowing for different user name fields, along with which of those fields are required (introduced as part of LPS-48406). That change was in conflict with the current USERS_LAST_NAME_REQUIRED property, so all control has been relegated to the language.properties files (with the exception of first-name, which is still always present and always required).
 
 ---------------------------------------
+### Removed methods from MBMessageService that posed a security risk
+- **Date:** 2015-May-13
+- **JIRA Ticket:** LPS-55525
+
+#### What changed?
+
+The `addDiscussionMessage`, `deleteDiscussionMessage` and
+`updateDiscussionMessage` in `MBMessageService` have been removed.
+
+#### Who is affected?
+
+All consumers of `MBMessageService` that make use of the removed methods.
+
+#### How should I update my code?
+
+When using the service for managing discussions, you should use the
+new `CommentManager` service, and check permissions explicityly using
+the `DiscussionPermission` interface.
+
+For other usages, use the equivalent methods available in the local
+service and check permission explicitly using the `MBPermission` util
+class.
+
+#### Why was this change made?
+
+Those methods posed a servere security risk on the portal. By
+tampering with the request, user with add/update/delete permissions
+over any element could add, update or delete any discussion in the
+portal.
+
+---------------------------------------

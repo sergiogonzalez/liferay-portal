@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.messageboards.comment;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentConstants;
 import com.liferay.portal.kernel.comment.CommentManager;
@@ -32,13 +33,13 @@ import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBMessageDisplay;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.model.MBTreeWalker;
+import com.liferay.portlet.messageboards.service.MBDiscussionLocalService;
 import com.liferay.portlet.messageboards.service.MBMessageLocalService;
-import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.util.comparator.MessageThreadComparator;
 import com.liferay.portlet.ratings.model.RatingsEntry;
 import com.liferay.portlet.ratings.model.RatingsStats;
-import com.liferay.portlet.ratings.service.RatingsEntryLocalServiceUtil;
-import com.liferay.portlet.ratings.service.RatingsStatsLocalServiceUtil;
+import com.liferay.portlet.ratings.service.RatingsEntryLocalService;
+import com.liferay.portlet.ratings.service.RatingsStatsLocalService;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -54,7 +55,8 @@ public class MBCommentManagerImpl implements CommentManager {
 	@Override
 	public void addComment(
 			long userId, long groupId, String className, long classPK,
-			String body, ServiceContext serviceContext)
+			String body,
+			Function<String, ServiceContext> serviceContextFunction)
 		throws PortalException {
 
 		MBMessageDisplay messageDisplay =
@@ -75,10 +77,35 @@ public class MBCommentManagerImpl implements CommentManager {
 			}
 		}
 
+		ServiceContext serviceContext = serviceContextFunction.apply(
+			MBMessage.class.getName());
+
 		_mbMessageLocalService.addDiscussionMessage(
 			userId, StringPool.BLANK, groupId, className, classPK,
 			thread.getThreadId(), thread.getRootMessageId(), StringPool.BLANK,
 			body, serviceContext);
+	}
+
+	@Override
+	public long addComment(
+			long userId, long groupId, String className, long classPK,
+			String userName, long parentCommentId, String subject, String body,
+			Function<String, ServiceContext> serviceContextFunction)
+		throws PortalException {
+
+		MBMessage parentMessage = _mbMessageLocalService.getMessage(
+			parentCommentId);
+
+		long threadId = parentMessage.getThreadId();
+
+		ServiceContext serviceContext = serviceContextFunction.apply(
+			MBMessage.class.getName());
+
+		MBMessage message = _mbMessageLocalService.addDiscussionMessage(
+			userId, userName, groupId, className, classPK, threadId,
+			parentCommentId, subject, body, serviceContext);
+
+		return message.getMessageId();
 	}
 
 	@Override
@@ -140,11 +167,11 @@ public class MBCommentManagerImpl implements CommentManager {
 	@Override
 	public Discussion getDiscussion(
 			long userId, long groupId, String className, long classPK,
-			ServiceContext serviceContext)
+			Function<String, ServiceContext> serviceContextFunction)
 		throws PortalException {
 
 		MBMessageDisplay messageDisplay =
-			MBMessageLocalServiceUtil.getDiscussionMessageDisplay(
+			_mbMessageLocalService.getDiscussionMessageDisplay(
 				userId, groupId, className, classPK,
 				WorkflowConstants.STATUS_ANY, new MessageThreadComparator());
 
@@ -164,11 +191,14 @@ public class MBCommentManagerImpl implements CommentManager {
 				}
 			}
 
-			ratingsEntries = RatingsEntryLocalServiceUtil.getEntries(
+			ratingsEntries = _ratingsEntryLocalService.getEntries(
 				userId, CommentConstants.getDiscussionClassName(), classPKs);
-			ratingsStats = RatingsStatsLocalServiceUtil.getStats(
+			ratingsStats = _ratingsStatsLocalService.getStats(
 				CommentConstants.getDiscussionClassName(), classPKs);
 		}
+
+		ServiceContext serviceContext = serviceContextFunction.apply(
+			MBMessage.class.getName());
 
 		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
@@ -187,12 +217,63 @@ public class MBCommentManagerImpl implements CommentManager {
 		return new MBDiscussionPermissionImpl(permissionChecker);
 	}
 
-	public void setMBMessageLocalService(
-		MBMessageLocalService mbMessageLocalService) {
+	@Override
+	public void subscribeDiscussion(
+			long userId, long groupId, String className, long classPK)
+		throws PortalException {
 
-		_mbMessageLocalService = mbMessageLocalService;
+		_mbDiscussionLocalService.subscribeDiscussion(
+			userId, groupId, className, classPK);
 	}
 
+	@Override
+	public void unsubscribeDiscussion(
+			long userId, String className, long classPK)
+		throws PortalException {
+
+		_mbDiscussionLocalService.unsubscribeDiscussion(
+			userId, className, classPK);
+	}
+
+	@Override
+	public long updateComment(
+			long userId, String className, long classPK, long commentId,
+			String subject, String body,
+			Function<String, ServiceContext> serviceContextFunction)
+		throws PortalException {
+
+		ServiceContext serviceContext = serviceContextFunction.apply(
+			MBMessage.class.getName());
+
+		MBMessage message = _mbMessageLocalService.updateDiscussionMessage(
+			userId, commentId, className, classPK, subject, body,
+			serviceContext);
+
+		return message.getMessageId();
+	}
+
+	protected MBCommentManagerImpl(
+		MBDiscussionLocalService mbDiscussionLocalService,
+		MBMessageLocalService mbMessageLocalService,
+		RatingsEntryLocalService ratingsEntryLocalService,
+		RatingsStatsLocalService ratingsStatsLocalService) {
+
+		_mbDiscussionLocalService = mbDiscussionLocalService;
+		_mbMessageLocalService = mbMessageLocalService;
+		_ratingsEntryLocalService = ratingsEntryLocalService;
+		_ratingsStatsLocalService = ratingsStatsLocalService;
+	}
+
+	@BeanReference(type = MBDiscussionLocalService.class)
+	private MBDiscussionLocalService _mbDiscussionLocalService;
+
+	@BeanReference(type = MBMessageLocalService.class)
 	private MBMessageLocalService _mbMessageLocalService;
+
+	@BeanReference(type = RatingsEntryLocalService.class)
+	private RatingsEntryLocalService _ratingsEntryLocalService;
+
+	@BeanReference(type = RatingsStatsLocalService.class)
+	private RatingsStatsLocalService _ratingsStatsLocalService;
 
 }

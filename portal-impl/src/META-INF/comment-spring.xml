@@ -11,7 +11,5 @@
 	<bean id="com.liferay.portal.kernel.comment.CommentManagerUtil" class="com.liferay.portal.kernel.comment.CommentManagerUtil">
 		<property name="commentManager" ref="com.liferay.portal.kernel.comment.CommentManager" />
 	</bean>
-	<bean id="com.liferay.portlet.messageboards.comment.MBCommentManagerImpl" class="com.liferay.portlet.messageboards.comment.MBCommentManagerImpl">
-		<property name="MBMessageLocalService" ref="com.liferay.portlet.messageboards.service.MBMessageLocalService" />
-	</bean>
+	<bean id="com.liferay.portlet.messageboards.comment.MBCommentManagerImpl" class="com.liferay.portlet.messageboards.comment.MBCommentManagerImpl" />
 </beans>

@@ -47,14 +47,6 @@ public interface MBMessageService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link MBMessageServiceUtil} to access the message-boards message remote service. Add custom service methods to {@link com.liferay.portlet.messageboards.service.impl.MBMessageServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.portlet.messageboards.model.MBMessage addDiscussionMessage(
-		long groupId, java.lang.String className, long classPK,
-		java.lang.String permissionClassName, long permissionClassPK,
-		long permissionOwnerId, long threadId, long parentMessageId,
-		java.lang.String subject, java.lang.String body,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
-
 	public com.liferay.portlet.messageboards.model.MBMessage addMessage(
 		long categoryId, java.lang.String subject, java.lang.String body,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -96,11 +88,6 @@ public interface MBMessageService extends BaseService {
 		boolean anonymous, double priority, boolean allowPingbacks,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
-
-	public void deleteDiscussionMessage(long groupId,
-		java.lang.String className, long classPK,
-		java.lang.String permissionClassName, long permissionClassPK,
-		long permissionOwnerId, long messageId) throws PortalException;
 
 	public void deleteMessage(long messageId) throws PortalException;
 
@@ -206,14 +193,6 @@ public interface MBMessageService extends BaseService {
 	public void unsubscribeMessage(long messageId) throws PortalException;
 
 	public void updateAnswer(long messageId, boolean answer, boolean cascade)
-		throws PortalException;
-
-	public com.liferay.portlet.messageboards.model.MBMessage updateDiscussionMessage(
-		java.lang.String className, long classPK,
-		java.lang.String permissionClassName, long permissionClassPK,
-		long permissionOwnerId, long messageId, java.lang.String subject,
-		java.lang.String body,
-		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
 	public com.liferay.portlet.messageboards.model.MBMessage updateMessage(
