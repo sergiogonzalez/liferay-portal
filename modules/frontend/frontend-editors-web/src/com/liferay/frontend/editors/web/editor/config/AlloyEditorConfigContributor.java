@@ -14,6 +14,10 @@
 
 package com.liferay.frontend.editors.web.editor.config;
 
+import com.liferay.document.library.item.selector.web.DLItemSelectorCriterion;
+import com.liferay.item.selector.ItemSelector;
+import com.liferay.item.selector.ItemSelectorCriterion;
+import com.liferay.layout.item.selector.web.LayoutItemSelectorCriterion;
 import com.liferay.portal.kernel.editor.config.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.editor.config.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -21,23 +25,26 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.portlet.LiferayPortletURL;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+
+import java.net.URL;
 
 import java.util.Locale;
 import java.util.Map;
 
-import javax.portlet.WindowStateException;
+import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Sergio González
+ * @author Roberto Díaz
  */
 @Component(
 	property = {"editor.name=alloyeditor"},
@@ -77,53 +84,29 @@ public class AlloyEditorConfigContributor extends BaseEditorConfigContributor {
 			"removePlugins", "elementspath,link,liststyle,resize,toolbar");
 
 		if (liferayPortletResponse != null) {
-			LiferayPortletURL itemSelectorURL =
-				liferayPortletResponse.createRenderURL(
-					PortletKeys.ITEM_SELECTOR);
-
-			itemSelectorURL.setParameter("mvcPath", "/view.jsp");
-			itemSelectorURL.setParameter(
-				"groupId", String.valueOf(themeDisplay.getScopeGroupId()));
-
 			String name =
 				liferayPortletResponse.getNamespace() +
 					GetterUtil.getString(
 						(String)inputEditorTaglibAttributes.get(
 							"liferay-ui:input-editor:name"));
 
-			itemSelectorURL.setParameter("eventName", name + "selectDocument");
-			itemSelectorURL.setParameter(
-				"showGroupsSelector", Boolean.TRUE.toString());
+			String eventName = name + "selectDocument";
 
-			Map<String, String> fileBrowserParamsMap =
-				(Map<String, String>)inputEditorTaglibAttributes.get(
-					"liferay-ui:input-editor:fileBrowserParams");
+			PortletURL imageItemSelectorURL = getImageItemSelectorURL(
+					liferayPortletResponse, themeDisplay.getScopeGroupId(),
+					eventName);
 
-			if (fileBrowserParamsMap != null) {
-				for (Map.Entry<String, String> entry :
-						fileBrowserParamsMap.entrySet()) {
+			PortletURL layoutItemSelectorURL = getLayoutItemSelectorURL(
+					liferayPortletResponse, themeDisplay.getScopeGroupId(),
+					eventName);
 
-					itemSelectorURL.setParameter(
-						entry.getKey(), entry.getValue());
-				}
-			}
-
-			try {
-				itemSelectorURL.setWindowState(LiferayWindowState.POP_UP);
-			}
-			catch (WindowStateException wse) {
-			}
-
-			jsonObject.put("filebrowserBrowseUrl", itemSelectorURL.toString());
 			jsonObject.put(
-				"filebrowserFlashBrowseUrl",
-				itemSelectorURL.toString() + "&Type=flash");
+				"filebrowserBrowseUrl", layoutItemSelectorURL.toString());
 			jsonObject.put(
 				"filebrowserImageBrowseLinkUrl",
-				itemSelectorURL.toString() + "&Type=image");
+				imageItemSelectorURL.toString());
 			jsonObject.put(
-				"filebrowserImageBrowseUrl",
-				itemSelectorURL.toString() + "&Type=image");
+				"filebrowserImageBrowseUrl", imageItemSelectorURL.toString());
 
 			jsonObject.put("srcNode", name);
 		}
@@ -136,6 +119,39 @@ public class AlloyEditorConfigContributor extends BaseEditorConfigContributor {
 		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
 		ThemeDisplay themeDisplay,
 		LiferayPortletResponse liferayPortletResponse) {
+	}
+
+	@Reference
+	public void setItemSelector(ItemSelector itemSelector) {
+		_itemSelector = itemSelector;
+	}
+
+	protected PortletURL getImageItemSelectorURL(
+		LiferayPortletResponse liferayPortletResponse, long groupId,
+		String eventName) {
+
+		ItemSelectorCriterion itemSelectorCriterion =
+			new DLItemSelectorCriterion(
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, groupId, "images",
+				PropsValues.DL_FILE_ENTRY_PREVIEW_IMAGE_MIME_TYPES);
+
+		itemSelectorCriterion.setDesiredReturnTypes(URL.class);
+
+		return _itemSelector.getItemSelectorURL(
+			liferayPortletResponse, eventName, itemSelectorCriterion);
+	}
+
+	protected PortletURL getLayoutItemSelectorURL(
+		LiferayPortletResponse liferayPortletResponse, long groupId,
+		String eventName) {
+
+		ItemSelectorCriterion itemSelectorCriterion =
+			new LayoutItemSelectorCriterion(groupId);
+
+		itemSelectorCriterion.setDesiredReturnTypes(URL.class);
+
+		return _itemSelector.getItemSelectorURL(
+			liferayPortletResponse, eventName, itemSelectorCriterion);
 	}
 
 	protected JSONObject getToolbarsAddJSONObject() {
@@ -226,5 +242,7 @@ public class AlloyEditorConfigContributor extends BaseEditorConfigContributor {
 
 		return jsonObject;
 	}
+
+	private ItemSelector _itemSelector;
 
 }

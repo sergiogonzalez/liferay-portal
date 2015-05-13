@@ -76,7 +76,7 @@
 						var image = CKEDITOR.dom.element.createFromHtml(
 							instance.props.imageTPL.output(
 								{
-									src: event.url
+									src: event.value
 								}
 							)
 						);
