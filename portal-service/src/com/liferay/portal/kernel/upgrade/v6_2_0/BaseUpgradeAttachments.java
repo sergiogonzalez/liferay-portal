@@ -35,7 +35,7 @@ import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.NoSuchDirectoryException;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
@@ -116,7 +116,7 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 			ps.executeUpdate();
 
 			Map<String, Long> bitwiseValues = getBitwiseValues(
-				DLFileEntry.class.getName());
+				DLFileEntryConstants.getClassName());
 
 			List<String> actionIds = new ArrayList<>();
 
@@ -125,10 +125,10 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 			long bitwiseValue = getBitwiseValue(bitwiseValues, actionIds);
 
 			addResourcePermission(
-				companyId, DLFileEntry.class.getName(), fileEntryId,
+				companyId, DLFileEntryConstants.getClassName(), fileEntryId,
 				getRoleId(companyId, RoleConstants.GUEST), bitwiseValue);
 			addResourcePermission(
-				companyId, DLFileEntry.class.getName(), fileEntryId,
+				companyId, DLFileEntryConstants.getClassName(), fileEntryId,
 				getRoleId(companyId, RoleConstants.SITE_MEMBER), bitwiseValue);
 
 			return fileEntryId;
@@ -676,7 +676,7 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 
 		for (String attachment : attachments) {
 			String name = String.valueOf(
-				increment(DLFileEntry.class.getName()));
+				increment(DLFileEntryConstants.getClassName()));
 
 			String title = FileUtil.getShortFileName(attachment);
 

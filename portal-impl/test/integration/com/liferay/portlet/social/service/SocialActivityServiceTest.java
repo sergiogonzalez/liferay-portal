@@ -41,7 +41,7 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
@@ -192,16 +192,16 @@ public class SocialActivityServiceTest {
 			_group.getCompanyId(), RoleConstants.GUEST);
 
 		if (ResourceBlockLocalServiceUtil.isSupported(
-				DLFileEntry.class.getName())) {
+				DLFileEntryConstants.getClassName())) {
 
 			ResourceBlockLocalServiceUtil.setIndividualScopePermissions(
 				_group.getCompanyId(), _group.getGroupId(),
-				DLFileEntry.class.getName(), fileEntry.getFileEntryId(),
+				DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId(),
 				role.getRoleId(), new ArrayList<String>());
 		}
 		else {
 			ResourcePermissionLocalServiceUtil.setResourcePermissions(
-				_group.getCompanyId(), DLFileEntry.class.getName(),
+				_group.getCompanyId(), DLFileEntryConstants.getClassName(),
 				ResourceConstants.SCOPE_INDIVIDUAL,
 				String.valueOf(fileEntry.getFileEntryId()), role.getRoleId(),
 				new String[0]);

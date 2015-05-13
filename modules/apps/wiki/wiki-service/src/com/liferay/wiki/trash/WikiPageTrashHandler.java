@@ -32,7 +32,7 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.PortletURLFactoryUtil;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.trash.RestoreEntryException;
 import com.liferay.portlet.trash.TrashEntryConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
@@ -322,7 +322,7 @@ public class WikiPageTrashHandler extends BaseWikiTrashHandler {
 	public void restoreRelatedTrashEntry(String className, long classPK)
 		throws PortalException {
 
-		if (!className.equals(DLFileEntry.class.getName())) {
+		if (!className.equals(DLFileEntryConstants.getClassName())) {
 			return;
 		}
 

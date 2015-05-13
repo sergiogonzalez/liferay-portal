@@ -23,9 +23,6 @@ import com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
-import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackRegistryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
@@ -67,8 +64,6 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.messageboards.MBGroupServiceSettings;
 import com.liferay.portlet.messageboards.model.MBBan;
 import com.liferay.portlet.messageboards.model.MBCategory;
@@ -84,7 +79,6 @@ import com.liferay.util.mail.JavaMailUtil;
 
 import java.io.InputStream;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -515,78 +509,6 @@ public class MBUtil {
 				"the-site-name-associated-with-the-message-board"));
 
 		return definitionTerms;
-	}
-
-	public static List<Object> getEntries(Hits hits) {
-		List<Object> entries = new ArrayList<>();
-
-		for (Document document : hits.getDocs()) {
-			long categoryId = GetterUtil.getLong(
-				document.get(Field.CATEGORY_ID));
-
-			try {
-				MBCategoryLocalServiceUtil.getCategory(categoryId);
-			}
-			catch (Exception e) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Message boards search index is stale and contains " +
-							"category " + categoryId);
-				}
-
-				continue;
-			}
-
-			long threadId = GetterUtil.getLong(document.get("threadId"));
-
-			try {
-				MBThreadLocalServiceUtil.getThread(threadId);
-			}
-			catch (Exception e) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Message boards search index is stale and contains " +
-							"thread " + threadId);
-				}
-
-				continue;
-			}
-
-			String entryClassName = document.get(Field.ENTRY_CLASS_NAME);
-			long entryClassPK = GetterUtil.getLong(
-				document.get(Field.ENTRY_CLASS_PK));
-
-			Object obj = null;
-
-			try {
-				if (entryClassName.equals(DLFileEntry.class.getName())) {
-					long classPK = GetterUtil.getLong(
-						document.get(Field.CLASS_PK));
-
-					MBMessageLocalServiceUtil.getMessage(classPK);
-
-					obj = DLFileEntryLocalServiceUtil.getDLFileEntry(
-						entryClassPK);
-				}
-				else if (entryClassName.equals(MBMessage.class.getName())) {
-					obj = MBMessageLocalServiceUtil.getMessage(entryClassPK);
-				}
-
-				entries.add(obj);
-			}
-			catch (Exception e) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Message boards search index is stale and contains " +
-							"entry {className=" + entryClassName + ", " +
-								"classPK=" + entryClassPK + "}");
-				}
-
-				continue;
-			}
-		}
-
-		return entries;
 	}
 
 	public static long getMessageId(String messageIdString) {

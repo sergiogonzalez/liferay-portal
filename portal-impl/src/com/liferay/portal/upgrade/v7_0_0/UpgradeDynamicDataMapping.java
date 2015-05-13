@@ -43,7 +43,6 @@ import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.upgrade.v7_0_0.util.DDMContentTable;
 import com.liferay.portal.upgrade.v7_0_0.util.DDMStructureTable;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
@@ -1686,7 +1685,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 				ps = con.prepareStatement(sql);
 
-				ps.setString(1, DLFileEntry.class.getName());
+				ps.setString(1, DLFileEntryConstants.getClassName());
 				ps.setString(2, action);
 
 				rs = ps.executeQuery();
@@ -1812,7 +1811,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 					valueString);
 
 				String name = String.valueOf(
-					increment(DLFileEntry.class.getName()));
+					increment(DLFileEntryConstants.getClassName()));
 
 				String fileName = jsonObject.getString("name");
 				String filePath = jsonObject.getString("path");
@@ -1839,21 +1838,24 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				// Resource permissions
 
 				addResourcePermissions(
-					0, increment(), _companyId, DLFileEntry.class.getName(),
+					0, increment(), _companyId,
+					DLFileEntryConstants.getClassName(),
 					ResourceConstants.SCOPE_INDIVIDUAL, fileEntryId,
 					getRoleId(RoleConstants.OWNER), _userId,
 					getActionIdsLong(_ownerPermissions));
 
 				if (_groupId > 0) {
 					addResourcePermissions(
-						0, increment(), _companyId, DLFileEntry.class.getName(),
+						0, increment(), _companyId,
+						DLFileEntryConstants.getClassName(),
 						ResourceConstants.SCOPE_INDIVIDUAL, fileEntryId,
 						getRoleId(RoleConstants.SITE_MEMBER), 0,
 						getActionIdsLong(_groupPermissions));
 				}
 
 				addResourcePermissions(
-					0, increment(), _companyId, DLFileEntry.class.getName(),
+					0, increment(), _companyId,
+					DLFileEntryConstants.getClassName(),
 					ResourceConstants.SCOPE_INDIVIDUAL, fileEntryId,
 					getRoleId(RoleConstants.GUEST), 0,
 					getActionIdsLong(_guestPermissions));
@@ -1876,8 +1878,9 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				addAssetEntry(
 					increment(), _groupId, _companyId, _userId, _userName,
 					_createDate, _createDate,
-					PortalUtil.getClassNameId(DLFileEntry.class), fileEntryId,
-					fileEntryUuid,
+					PortalUtil.getClassNameId(
+						DLFileEntryConstants.getClassName()),
+					fileEntryId, fileEntryUuid,
 					DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
 					false, null, null, null, null,
 					MimeTypesUtil.getContentType(fileName), fileName,
