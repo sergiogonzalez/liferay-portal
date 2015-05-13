@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.messageboards.comment;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentConstants;
 import com.liferay.portal.kernel.comment.CommentManager;
@@ -216,30 +217,6 @@ public class MBCommentManagerImpl implements CommentManager {
 		return new MBDiscussionPermissionImpl(permissionChecker);
 	}
 
-	public void setMBDiscussionLocalService(
-		MBDiscussionLocalService mbDiscussionLocalService) {
-
-		_mbDiscussionLocalService = mbDiscussionLocalService;
-	}
-
-	public void setMBMessageLocalService(
-		MBMessageLocalService mbMessageLocalService) {
-
-		_mbMessageLocalService = mbMessageLocalService;
-	}
-
-	public void setRatingsEntryLocalService(
-		RatingsEntryLocalService ratingsEntryLocalService) {
-
-		_ratingsEntryLocalService = ratingsEntryLocalService;
-	}
-
-	public void setRatingsStatsLocalService(
-		RatingsStatsLocalService ratingsStatsLocalService) {
-
-		_ratingsStatsLocalService = ratingsStatsLocalService;
-	}
-
 	@Override
 	public void subscribeDiscussion(
 			long userId, long groupId, String className, long classPK)
@@ -275,9 +252,16 @@ public class MBCommentManagerImpl implements CommentManager {
 		return message.getMessageId();
 	}
 
+	@BeanReference(type = MBDiscussionLocalService.class)
 	private MBDiscussionLocalService _mbDiscussionLocalService;
+
+	@BeanReference(type = MBMessageLocalService.class)
 	private MBMessageLocalService _mbMessageLocalService;
+
+	@BeanReference(type = RatingsEntryLocalService.class)
 	private RatingsEntryLocalService _ratingsEntryLocalService;
+
+	@BeanReference(type = RatingsStatsLocalService.class)
 	private RatingsStatsLocalService _ratingsStatsLocalService;
 
 }
