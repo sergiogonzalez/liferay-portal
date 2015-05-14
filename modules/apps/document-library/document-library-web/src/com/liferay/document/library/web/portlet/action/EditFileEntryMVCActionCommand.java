@@ -397,8 +397,13 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			return;
 		}
 
-		FileEntry fileEntry = DLAppServiceUtil.moveFileEntryToTrash(
-			fileEntryId);
+		FileEntry fileEntry = DLAppServiceUtil.getFileEntry(fileEntryId);
+
+		if (fileEntry.isCheckedOut()) {
+			DLAppServiceUtil.cancelCheckOut(fileEntryId);
+		}
+
+		DLAppServiceUtil.moveFileEntryToTrash(fileEntryId);
 
 		if (fileEntry.getModel() instanceof DLFileEntry) {
 			TrashUtil.addTrashSessionMessages(
