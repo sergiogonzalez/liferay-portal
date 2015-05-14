@@ -244,6 +244,10 @@ public interface RepositoryLocalService extends BaseLocalService,
 	public java.util.List<com.liferay.portal.model.Repository> getRepositories(
 		int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.Repository> getRepositoriesByGroupId(
+		long groupId);
+
 	/**
 	* Returns all the repositories matching the UUID and company.
 	*

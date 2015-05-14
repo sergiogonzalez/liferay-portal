@@ -280,6 +280,11 @@ public class RepositoryLocalServiceUtil {
 		return getService().getRepositories(start, end);
 	}
 
+	public static java.util.List<com.liferay.portal.model.Repository> getRepositoriesByGroupId(
+		long groupId) {
+		return getService().getRepositoriesByGroupId(groupId);
+	}
+
 	/**
 	* Returns all the repositories matching the UUID and company.
 	*

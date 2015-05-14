@@ -295,6 +295,12 @@ public class RepositoryLocalServiceWrapper implements RepositoryLocalService,
 		return _repositoryLocalService.getRepositories(start, end);
 	}
 
+	@Override
+	public java.util.List<com.liferay.portal.model.Repository> getRepositoriesByGroupId(
+		long groupId) {
+		return _repositoryLocalService.getRepositoriesByGroupId(groupId);
+	}
+
 	/**
 	* Returns all the repositories matching the UUID and company.
 	*
