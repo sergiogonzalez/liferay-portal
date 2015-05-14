@@ -272,37 +272,10 @@ public class RepositoryLocalServiceWrapper implements RepositoryLocalService,
 	}
 
 	@Override
-	public java.util.List<com.liferay.portal.kernel.repository.LocalRepository> getGroupLocalRepositoryImpl(
-		long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _repositoryLocalService.getGroupLocalRepositoryImpl(groupId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.repository.LocalRepository getLocalRepositoryImpl(
-		long folderId, long fileEntryId, long fileVersionId, long fileShortcutId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _repositoryLocalService.getLocalRepositoryImpl(folderId,
-			fileEntryId, fileVersionId, fileShortcutId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.repository.LocalRepository getLocalRepositoryImpl(
-		long repositoryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _repositoryLocalService.getLocalRepositoryImpl(repositoryId);
-	}
-
-	@Override
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _repositoryLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	@Override
-	public java.lang.String getRegistryName() {
-		return _repositoryLocalService.getRegistryName();
 	}
 
 	/**
@@ -320,6 +293,12 @@ public class RepositoryLocalServiceWrapper implements RepositoryLocalService,
 	public java.util.List<com.liferay.portal.model.Repository> getRepositories(
 		int start, int end) {
 		return _repositoryLocalService.getRepositories(start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.model.Repository> getRepositoriesByGroupId(
+		long groupId) {
+		return _repositoryLocalService.getRepositoriesByGroupId(groupId);
 	}
 
 	/**
@@ -405,21 +384,6 @@ public class RepositoryLocalServiceWrapper implements RepositoryLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _repositoryLocalService.getRepositoryByUuidAndGroupId(uuid,
 			groupId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.repository.Repository getRepositoryImpl(
-		long folderId, long fileEntryId, long fileVersionId, long fileShortcutId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _repositoryLocalService.getRepositoryImpl(folderId, fileEntryId,
-			fileVersionId, fileShortcutId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.repository.Repository getRepositoryImpl(
-		long repositoryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _repositoryLocalService.getRepositoryImpl(repositoryId);
 	}
 
 	@Override
