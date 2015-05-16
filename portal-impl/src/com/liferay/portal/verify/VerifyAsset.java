@@ -15,6 +15,7 @@
 package com.liferay.portal.verify;
 
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
@@ -34,7 +35,7 @@ public class VerifyAsset extends VerifyProcess {
 	@Override
 	protected void doVerify() throws Exception {
 		rebuildTree();
-		removeOrphanedEntries();
+		removeOrphanedAssetEntries();
 	}
 
 	protected void rebuildTree() throws Exception {
@@ -62,7 +63,7 @@ public class VerifyAsset extends VerifyProcess {
 		}
 	}
 
-	protected void removeOrphanedEntries() throws Exception {
+	protected void removeOrphanedAssetEntries() throws Exception {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -73,10 +74,15 @@ public class VerifyAsset extends VerifyProcess {
 
 			con = DataAccess.getUpgradeOptimizedConnection();
 
-			ps = con.prepareStatement(
-				"select entryId, classPK from AssetEntry where " +
-					"classNameId =" + classNameId + " and classPK not in" +
-					"(select fileVersionId from DLFileVersion);");
+			StringBundler sb = new StringBundler(5);
+
+			sb.append("select classPK, entryId from AssetEntry where ");
+			sb.append("classNameId = ");
+			sb.append(classNameId);
+			sb.append(" and classPK not in (select fileVersionId from ");
+			sb.append("DLFileVersion)");
+
+			ps = con.prepareStatement(sb.toString());
 
 			rs = ps.executeQuery();
 
@@ -87,14 +93,11 @@ public class VerifyAsset extends VerifyProcess {
 				DLFileEntry dlFileEntry =
 					DLFileEntryLocalServiceUtil.fetchDLFileEntry(classPK);
 
-				if (dlFileEntry != null) {
-					continue;
+				if (dlFileEntry == null) {
+					AssetEntryLocalServiceUtil.deleteAssetEntry(entryId);
 				}
-
-				AssetEntryLocalServiceUtil.deleteAssetEntry(entryId);
 			}
 		}
-
 		finally {
 			DataAccess.cleanUp(con, ps, rs);
 		}
