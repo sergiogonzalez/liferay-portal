@@ -602,9 +602,14 @@ public class BookmarksFolderLocalServiceImpl
 
 		validate(name);
 
+		long oldParentFolderId = folder.getParentFolderId();
+
+		if (oldParentFolderId != parentFolderId) {
+			folder.setParentFolderId(parentFolderId);
+			folder.setTreePath(folder.buildTreePath());
+		}
+
 		folder.setModifiedDate(serviceContext.getModifiedDate(null));
-		folder.setParentFolderId(parentFolderId);
-		folder.setTreePath(folder.buildTreePath());
 		folder.setName(name);
 		folder.setDescription(description);
 		folder.setExpandoBridgeAttributes(serviceContext);
@@ -618,8 +623,10 @@ public class BookmarksFolderLocalServiceImpl
 			serviceContext.getAssetTagNames(),
 			serviceContext.getAssetLinkEntryIds());
 
-		rebuildTree(
-			folder.getCompanyId(), folderId, folder.getTreePath(), true);
+		if (oldParentFolderId != parentFolderId) {
+			rebuildTree(
+				folder.getCompanyId(), folderId, folder.getTreePath(), true);
+		}
 
 		return folder;
 	}

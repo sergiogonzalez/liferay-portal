@@ -1233,9 +1233,14 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			validateFolder(
 				folderId, dlFolder.getGroupId(), parentFolderId, name);
 
+			long oldParentFolderId = dlFolder.getParentFolderId();
+
+			if (oldParentFolderId != parentFolderId) {
+				dlFolder.setParentFolderId(parentFolderId);
+				dlFolder.setTreePath(dlFolder.buildTreePath());
+			}
+
 			dlFolder.setModifiedDate(serviceContext.getModifiedDate(null));
-			dlFolder.setParentFolderId(parentFolderId);
-			dlFolder.setTreePath(dlFolder.buildTreePath());
 			dlFolder.setName(name);
 			dlFolder.setDescription(description);
 			dlFolder.setExpandoBridgeAttributes(serviceContext);
@@ -1252,9 +1257,11 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 					serviceContext);
 			}
 
-			rebuildTree(
-				dlFolder.getCompanyId(), folderId, dlFolder.getTreePath(),
-				true);
+			if (oldParentFolderId != parentFolderId) {
+				rebuildTree(
+					dlFolder.getCompanyId(), folderId, dlFolder.getTreePath(),
+					true);
+			}
 
 			return dlFolder;
 		}
