@@ -32,8 +32,7 @@ public class DLItemSelectorCriterion extends BaseItemSelectorCriterion {
 	}
 
 	public DLItemSelectorCriterion(
-		long folderId, long repositoryId, String type, String[] mimeTypes,
-		boolean showGroupsSelector) {
+		long folderId, long repositoryId, String type, String[] mimeTypes) {
 
 		super(_AVAILABLE_RETURN_TYPES);
 
@@ -41,7 +40,6 @@ public class DLItemSelectorCriterion extends BaseItemSelectorCriterion {
 		_repositoryId = repositoryId;
 		_type = type;
 		_mimeTypes = mimeTypes;
-		_showGroupsSelector = showGroupsSelector;
 	}
 
 	public long getFolderId() {
@@ -60,10 +58,6 @@ public class DLItemSelectorCriterion extends BaseItemSelectorCriterion {
 		return _type;
 	}
 
-	public boolean isShowGroupsSelector() {
-		return _showGroupsSelector;
-	}
-
 	public void setFolderId(long folderId) {
 		_folderId = folderId;
 	}
@@ -76,10 +70,6 @@ public class DLItemSelectorCriterion extends BaseItemSelectorCriterion {
 		_repositoryId = repositoryId;
 	}
 
-	public void setShowGroupsSelector(boolean showGroupsSelector) {
-		_showGroupsSelector = showGroupsSelector;
-	}
-
 	public void setType(String type) {
 		_type = type;
 	}
@@ -90,7 +80,6 @@ public class DLItemSelectorCriterion extends BaseItemSelectorCriterion {
 	private long _folderId;
 	private String[] _mimeTypes;
 	private long _repositoryId;
-	private boolean _showGroupsSelector;
 	private String _type;
 
 }
