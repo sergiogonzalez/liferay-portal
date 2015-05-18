@@ -69,8 +69,6 @@ AUI.add(
 					_bindUI: function() {
 						var instance = this;
 
-						var inputFileNode = instance.one('input[type="file"]');
-
 						var itemViewer = instance._itemViewer;
 
 						var uploadItemViewer = instance._uploadItemViewer;
@@ -78,7 +76,6 @@ AUI.add(
 						var rootNode = instance.rootNode;
 
 						instance._eventHandles = [
-							inputFileNode.on('change', A.bind(instance._onInputFileChanged, instance)),
 							itemViewer.get('links').on('click', instance._itemPicked, itemViewer),
 							itemViewer.after('currentIndexChange', instance._itemPicked, itemViewer),
 							itemViewer.after('visibleChange', instance._afterVisibleChange, itemViewer),
@@ -88,6 +85,14 @@ AUI.add(
 							rootNode.on('dragleave', instance._ddEventHandler, instance),
 							rootNode.on('drop', instance._ddEventHandler, instance)
 						];
+
+						var inputFileNode = instance.one('input[type="file"]');
+
+						if (inputFileNode) {
+							instance._eventHandles.push(
+								inputFileNode.on('change', A.bind(instance._onInputFileChanged, instance))
+							)
+						}
 					},
 
 					_ddEventHandler: function(event) {

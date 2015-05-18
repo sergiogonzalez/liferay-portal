@@ -26,15 +26,17 @@ String uploadMessage = GetterUtil.getString(request.getAttribute("liferay-ui:ite
 %>
 
 <div class="lfr-item-viewer" id="<%= idPrefix %>ItemSelectorContainer">
-	<div class="drop-zone">
-		<label class="btn btn-primary" for="<%= idPrefix %>InputFile"><liferay-ui:message key="select-file" /></label>
+	<c:if test="<%= desiredReturnTypes.contains(Base64.class) %>">
+		<div class="drop-zone">
+			<label class="btn btn-primary" for="<%= idPrefix %>InputFile"><liferay-ui:message key="select-file" /></label>
 
-		<input class="hide" id="<%= idPrefix %>InputFile" type="file" />
+			<input class="hide" id="<%= idPrefix %>InputFile" type="file" />
 
-		<p>
-			<%= uploadMessage %>
-		</p>
-	</div>
+			<p>
+				<%= uploadMessage %>
+			</p>
+		</div>
+	</c:if>
 
 	<c:choose>
 		<c:when test='<%= displayStyle.equals("list") %>'>
@@ -153,7 +155,7 @@ String uploadMessage = GetterUtil.getString(request.getAttribute("liferay-ui:ite
 <aui:script use="liferay-item-selector-browser">
 
 	<%
-		String eventName = HtmlUtil.escape(ParamUtil.getString(request, "itemSelectedEventName"));
+	String eventName = HtmlUtil.escape(ParamUtil.getString(request, "itemSelectedEventName"));
 	%>
 
 	var itemBrowser = new Liferay.ItemSelectorBrowser(
@@ -174,7 +176,10 @@ private ObjectValuePair<String, String> _getReturnTypeAndValue(List<Class<?>> de
 	ObjectValuePair<String, String> ovp = null;
 
 	for (Class<?> desiredReturnType : desiredReturnTypes) {
-		if (desiredReturnType == FileEntry.class) {
+		if (desiredReturnType == Base64.class) {
+			ovp = new ObjectValuePair<String, String>(Base64.class.getName(), "");
+		}
+		else if (desiredReturnType == FileEntry.class) {
 			ovp = new ObjectValuePair<String, String>(FileEntry.class.getName(), String.valueOf(fileEntry.getFileEntryId()));
 		}
 		else if (desiredReturnType == URL.class) {
