@@ -1,3 +1,4 @@
+<%@ page import="java.net.URL" %>
 <%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
@@ -19,6 +20,7 @@
 <%
 String displayStyle = GetterUtil.getString(request.getAttribute("liferay-ui:item-selector-browser:displayStyle"), "descriptive");
 String idPrefix = GetterUtil.getString(request.getAttribute("liferay-ui:item-selector-browser:idPrefix"));
+List<Class<?>> desiredReturnTypes = (List<Class<?>>)request.getAttribute("liferay-ui:item-selector-browser:returnType");
 SearchContainer searchContainer = (SearchContainer)request.getAttribute("liferay-ui:item-selector-browser:searchContainer");
 String tabName = GetterUtil.getString(request.getAttribute("liferay-ui:item-selector-browser:tabName"));
 String uploadMessage = GetterUtil.getString(request.getAttribute("liferay-ui:item-selector-browser:uploadMessage"));
@@ -60,7 +62,31 @@ String uploadMessage = GetterUtil.getString(request.getAttribute("liferay-ui:ite
 						%>
 
 						<liferay-ui:search-container-column-text name="title">
-							<a class="item-preview" data-url="<%= HtmlUtil.escapeAttribute(DLUtil.getPreviewURL(fileEntry, latestFileVersion, themeDisplay, StringPool.BLANK)) %>" href="<%= HtmlUtil.escapeHREF(DLUtil.getImagePreviewURL(fileEntry, themeDisplay)) %>" title="<%= HtmlUtil.escapeAttribute(title) %>">
+
+							<%
+							String returnType = StringPool.BLANK;
+							String value = StringPool.BLANK;
+
+							for (Class<?> desiredReturnType : desiredReturnTypes) {
+								if (desiredReturnType == FileEntry.class) {
+									returnType = FileEntry.class.getName();
+									value = fileEntry.getFileEntryId();
+								}
+								else if (desiredReturnType == URL.class) {
+									returnType = URL.class.getName();
+									value = HtmlUtil.escapeAttribute(DLUtil.getImagePreviewURL(fileEntry, themeDisplay));
+								}
+								else {
+									continue;
+								}
+							}
+
+							if (Validator.isNull(value)) {
+								throw new RuntimeException();
+							}
+							%>
+
+							<a class="item-preview" data-returnType="<%= returnType %>" data-value="<%= value %>" data-url="<%= HtmlUtil.escapeAttribute(DLUtil.getPreviewURL(fileEntry, latestFileVersion, themeDisplay, StringPool.BLANK)) %>" href="<%= HtmlUtil.escapeHREF(DLUtil.getImagePreviewURL(fileEntry, themeDisplay)) %>" title="<%= HtmlUtil.escapeAttribute(title) %>">
 
 								<%
 								String iconCssClass = DLUtil.getFileIconCssClass(fileEntry.getExtension());
@@ -116,7 +142,7 @@ String uploadMessage = GetterUtil.getString(request.getAttribute("liferay-ui:ite
 						</div>
 
 						<div class="text-primary">
-							<a class="item-preview" data-url="<%= HtmlUtil.escapeAttribute(DLUtil.getPreviewURL(fileEntry, latestFileVersion, themeDisplay, StringPool.BLANK)) %>" href="<%= HtmlUtil.escapeHREF(DLUtil.getImagePreviewURL(fileEntry, themeDisplay)) %>" title="<%= HtmlUtil.escapeAttribute(title) %>">
+							<a class="item-preview" data-returnType="<%= returnType %>" data-value="<%= value %>" data-url="<%= HtmlUtil.escapeAttribute(DLUtil.getPreviewURL(fileEntry, latestFileVersion, themeDisplay, StringPool.BLANK)) %>" href="<%= HtmlUtil.escapeHREF(DLUtil.getImagePreviewURL(fileEntry, themeDisplay)) %>" title="<%= HtmlUtil.escapeAttribute(title) %>">
 								<%= HtmlUtil.escape(title) %>
 							</a>
 
@@ -142,11 +168,20 @@ String uploadMessage = GetterUtil.getString(request.getAttribute("liferay-ui:ite
 	<liferay-ui:drop-here-info message="drop-files-here" />
 </div>
 
+
+
 <aui:script use="liferay-item-selector-browser">
-	new Liferay.ItemSelectorBrowser(
+	<% String eventName = ParamUtil.getString(request, "itemSelectedEventName"); %>
+
+	var itemBrowser = new Liferay.ItemSelectorBrowser(
 		{
 			closeCaption: '<%= UnicodeLanguageUtil.get(request, tabName) %>',
 			rootNode: '#<%= idPrefix %>ItemSelectorContainer'
 		}
 	);
+
+	itemBrowser.on('selectedItem', function(event) {
+		Liferay.Util.getOpener().Liferay.fire('<%= eventName %>', event);
+	});
+
 </aui:script>
