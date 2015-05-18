@@ -618,6 +618,9 @@ public class BookmarksFolderLocalServiceImpl
 			serviceContext.getAssetTagNames(),
 			serviceContext.getAssetLinkEntryIds());
 
+		rebuildTree(
+			folder.getCompanyId(), folderId, folder.getTreePath(), true);
+
 		return folder;
 	}
 
