@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.notifications;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.UserNotificationEvent;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserNotificationEventLocalServiceUtil;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
@@ -105,7 +107,7 @@ public abstract class BaseModelUserNotificationHandler
 
 	protected String getTitle(
 		JSONObject jsonObject, AssetRenderer assetRenderer,
-		ServiceContext serviceContext) {
+		ServiceContext serviceContext) throws PortalException {
 
 		String message = StringPool.BLANK;
 
@@ -130,10 +132,13 @@ public abstract class BaseModelUserNotificationHandler
 			message = "x-updated-a-x";
 		}
 
+		long userId = jsonObject.getLong("userId");
+
 		return LanguageUtil.format(
 			serviceContext.getLocale(), message,
 			new String[] {
-				HtmlUtil.escape(assetRenderer.getUserName()),
+				HtmlUtil.escape(
+					PortalUtil.getUserName(userId, StringPool.BLANK)),
 				StringUtil.toLowerCase(HtmlUtil.escape(typeName))
 			},
 			false);
