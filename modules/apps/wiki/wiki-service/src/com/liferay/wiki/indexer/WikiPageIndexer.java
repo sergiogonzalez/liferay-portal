@@ -87,9 +87,9 @@ public class WikiPageIndexer extends BaseIndexer {
 			classPK = dlFileEntry.getClassPK();
 		}
 		else if (obj instanceof DetachedComment) {
-			DetachedComment message = (DetachedComment)obj;
+			DetachedComment detachedComment = (DetachedComment)obj;
 
-			classPK = message.getModelClassPK();
+			classPK = detachedComment.getModelClassPK();
 		}
 
 		WikiPage page = null;
