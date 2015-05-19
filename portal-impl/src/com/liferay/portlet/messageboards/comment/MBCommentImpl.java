@@ -89,6 +89,11 @@ public class MBCommentImpl implements Comment, WorkflowableComment {
 	}
 
 	@Override
+	public long getModelClassPK() {
+		return _message.getClassPK();
+	}
+
+	@Override
 	public Date getModifiedDate() {
 		return _message.getModifiedDate();
 	}
