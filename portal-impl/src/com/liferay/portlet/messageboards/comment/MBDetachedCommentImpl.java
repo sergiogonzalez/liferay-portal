@@ -17,6 +17,8 @@ package com.liferay.portlet.messageboards.comment;
 import com.liferay.portal.kernel.comment.DetachedComment;
 import com.liferay.portlet.messageboards.model.MBMessage;
 
+import java.util.Date;
+
 /**
  * @author Adolfo Pérez
  */
@@ -27,8 +29,52 @@ public class MBDetachedCommentImpl implements DetachedComment {
 	}
 
 	@Override
+	public String getBody() {
+		return _message.getBody();
+	}
+
+	@Override
+	public long getCommentId() {
+		return _message.getMessageId();
+	}
+
+	@Override
+	public Date getCreateDate() {
+		return _message.getCreateDate();
+	}
+
+	@Override
+	public Class<?> getModelClass() {
+		return MBMessage.class;
+	}
+
+	@Override
+	public String getModelClassName() {
+		return MBMessage.class.getName();
+	}
+
+	@Override
 	public long getModelClassPK() {
 		return _message.getClassPK();
+	}
+
+	@Override
+	public Date getModifiedDate() {
+		return _message.getModifiedDate();
+	}
+
+	@Override
+	public long getUserId() {
+		return _message.getUserId();
+	}
+
+	@Override
+	public String getUserName() {
+		return _message.getUserName();
+	}
+
+	protected MBMessage getMessage() {
+		return _message;
 	}
 
 	private final MBMessage _message;
