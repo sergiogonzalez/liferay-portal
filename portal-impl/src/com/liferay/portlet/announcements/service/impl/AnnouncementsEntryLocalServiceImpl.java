@@ -557,15 +557,15 @@ public class AnnouncementsEntryLocalServiceImpl
 		throws PortalException {
 
 		if (Validator.isNull(title)) {
-			throw new EntryTitleException();
+			throw new EntryTitleException("Title is null");
 		}
 
 		if (Validator.isNull(content)) {
-			throw new EntryContentException();
+			throw new EntryContentException("Content is null");
 		}
 
 		if (Validator.isNotNull(url) && !Validator.isUrl(url)) {
-			throw new EntryURLException();
+			throw new EntryURLException("URL " + url + " is invalid.");
 		}
 	}
 
