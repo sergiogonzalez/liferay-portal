@@ -569,8 +569,13 @@ public class EditFileEntryAction extends PortletAction {
 			return;
 		}
 
-		FileEntry fileEntry = DLAppServiceUtil.moveFileEntryToTrash(
-			fileEntryId);
+		FileEntry fileEntry = DLAppServiceUtil.getFileEntry(fileEntryId);
+
+		if (fileEntry.isCheckedOut()) {
+			DLAppServiceUtil.cancelCheckOut(fileEntryId);
+		}
+
+		DLAppServiceUtil.moveFileEntryToTrash(fileEntryId);
 
 		if (fileEntry.getModel() instanceof DLFileEntry) {
 			TrashUtil.addTrashSessionMessages(
