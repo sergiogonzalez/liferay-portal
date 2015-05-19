@@ -14,11 +14,29 @@
 
 package com.liferay.portal.kernel.comment;
 
+import java.util.Date;
+
 /**
  * @author Adolfo Pérez
  */
 public interface DetachedComment {
 
+	public String getBody();
+
+	public long getCommentId();
+
+	public Date getCreateDate();
+
+	public Class<?> getModelClass();
+
+	public String getModelClassName();
+
 	public long getModelClassPK();
+
+	public Date getModifiedDate();
+
+	public long getUserId();
+
+	public String getUserName();
 
 }

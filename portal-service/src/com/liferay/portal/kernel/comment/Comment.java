@@ -19,25 +19,12 @@ import com.liferay.portal.model.User;
 import com.liferay.portlet.ratings.model.RatingsEntry;
 import com.liferay.portlet.ratings.model.RatingsStats;
 
-import java.util.Date;
 import java.util.List;
 
 /**
  * @author Adolfo Pérez
  */
 public interface Comment extends DetachedComment {
-
-	public String getBody();
-
-	public long getCommentId();
-
-	public Date getCreateDate();
-
-	public Class<?> getModelClass();
-
-	public String getModelClassName();
-
-	public Date getModifiedDate();
 
 	public Comment getParentComment() throws PortalException;
 
@@ -58,10 +45,6 @@ public interface Comment extends DetachedComment {
 	public String getTranslatedBody();
 
 	public User getUser() throws PortalException;
-
-	public long getUserId();
-
-	public String getUserName();
 
 	public boolean isRoot();
 
