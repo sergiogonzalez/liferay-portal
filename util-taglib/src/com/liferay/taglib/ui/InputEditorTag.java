@@ -46,8 +46,6 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class InputEditorTag extends IncludeTag {
 
-	private Editor _editor;
-
 	public void setAllowBrowseDocuments(boolean allowBrowseDocuments) {
 		_allowBrowseDocuments = allowBrowseDocuments;
 	}
@@ -263,6 +261,14 @@ public class InputEditorTag extends IncludeTag {
 		return data;
 	}
 
+	protected Editor getEditor(String editorName) {
+		if (_editor == null) {
+			_editor = _serviceTrackerMap.getService(editorName);
+		}
+
+		return _editor;
+	}
+
 	protected String getEditorName(HttpServletRequest request) {
 		String editorName = _editorName;
 
@@ -283,7 +289,7 @@ public class InputEditorTag extends IncludeTag {
 
 	@Override
 	protected String getPage() {
-		Editor editor = getEditor(getEditorName(request)) ;
+		Editor editor = getEditor(getEditorName(request));
 
 		return editor.getEditorJSPPath(request);
 	}
@@ -314,8 +320,7 @@ public class InputEditorTag extends IncludeTag {
 		request.setAttribute("liferay-ui:input-editor:cssClass", _cssClass);
 		request.setAttribute(
 			"liferay-ui:input-editor:cssClasses", getCssClasses());
-		request.setAttribute(
-			"liferay-ui:input-editor:editorName", editorName);
+		request.setAttribute("liferay-ui:input-editor:editorName", editorName);
 		request.setAttribute(
 			"liferay-ui:input-editor:fileBrowserParams", _fileBrowserParams);
 		request.setAttribute("liferay-ui:input-editor:height", _height);
@@ -354,16 +359,16 @@ public class InputEditorTag extends IncludeTag {
 		request.setAttribute("liferay-ui:input-editor:data", getData());
 	}
 
-	protected Editor getEditor(String editorName) {
-		if (_editor == null) {
-			_editor = _serviceTrackerMap.getService(editorName);
-		}
-
-		return _editor;
-	}
-
 	private static final String _EDITOR_WYSIWYG_DEFAULT = PropsUtil.get(
 		PropsKeys.EDITOR_WYSIWYG_DEFAULT);
+
+	private static final ServiceTrackerMap<String, Editor>
+		_serviceTrackerMap = ServiceTrackerCollections.singleValueMap(
+			Editor.class, "editor.name");
+
+	static {
+		_serviceTrackerMap.open();
+	}
 
 	private boolean _allowBrowseDocuments = true;
 	private boolean _autoCreate = true;
@@ -373,6 +378,7 @@ public class InputEditorTag extends IncludeTag {
 	private String _contentsLanguageId;
 	private String _cssClass;
 	private Map<String, Object> _data = null;
+	private Editor _editor;
 	private String _editorName;
 	private Map<String, String> _fileBrowserParams;
 	private String _height;
@@ -390,13 +396,5 @@ public class InputEditorTag extends IncludeTag {
 	private boolean _skipEditorLoading;
 	private String _toolbarSet = "liferay";
 	private String _width;
-
-	private static final ServiceTrackerMap<String, Editor>
-		_serviceTrackerMap = ServiceTrackerCollections.singleValueMap(
-			Editor.class, "editor.name");
-
-	static {
-		_serviceTrackerMap.open();
-	}
 
 }

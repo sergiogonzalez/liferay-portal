@@ -19,12 +19,18 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.util.IncludeTag;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Roberto Díaz
  */
 public class ItemSelectorBrowserTag extends IncludeTag {
+
+	public void setDesiredReturnTypes(List<Class<?>> desiredReturnTypes) {
+		_desiredReturnTypes = desiredReturnTypes;
+	}
 
 	public void setDisplayStyle(String displayStyle) {
 		_displayStyle = displayStyle;
@@ -80,6 +86,9 @@ public class ItemSelectorBrowserTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:item-selector-browser:idPrefix", _idPrefix);
 		request.setAttribute(
+			"liferay-ui:item-selector-browser:desiredReturnTypes",
+			_desiredReturnTypes);
+		request.setAttribute(
 			"liferay-ui:item-selector-browser:searchContainer",
 			_searchContainer);
 		request.setAttribute(
@@ -92,6 +101,7 @@ public class ItemSelectorBrowserTag extends IncludeTag {
 	private static final String _PAGE =
 		"/html/taglib/ui/item_selector_browser/page.jsp";
 
+	private List<Class<?>> _desiredReturnTypes;
 	private String _displayStyle;
 	private String _idPrefix;
 	private SearchContainer<?> _searchContainer;

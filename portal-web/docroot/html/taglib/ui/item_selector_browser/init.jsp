@@ -16,4 +16,8 @@
 
 <%@ include file="/html/taglib/init.jsp" %>
 
+<%@ page import="com.liferay.portal.kernel.util.ObjectValuePair" %>
+
+<%@ page import="java.net.URL" %>
+
 <portlet:defineObjects />

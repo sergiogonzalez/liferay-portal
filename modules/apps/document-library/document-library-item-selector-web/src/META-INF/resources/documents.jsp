@@ -34,6 +34,7 @@ documentsSearchContainer.setResults(DLAppServiceUtil.getFileEntries(repositoryId
 %>
 
 <liferay-ui:item-selector-browser
+	desiredReturnTypes="<%= dlItemSelectorCriterion.getDesiredReturnTypes() %>"
 	displayStyle="<%= displayStyle %>"
 	idPrefix="<%= dlItemSelectorCriterion.getType() %>"
 	searchContainer="<%= documentsSearchContainer %>"
