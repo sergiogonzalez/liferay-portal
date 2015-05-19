@@ -24,6 +24,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.NoSuchFileException;
 import com.liferay.portlet.documentlibrary.store.BaseStore;
+import com.liferay.portlet.documentlibrary.store.Store;
 
 import java.io.InputStream;
 
@@ -50,11 +51,19 @@ import javax.jcr.version.VersionManager;
 
 import org.apache.commons.lang.StringUtils;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Michael Young
  * @author Brian Wing Shun Chan
  * @author Edward Han
+ * @author Manuel de la Peña
  */
+@Component(
+	immediate = true,
+	property = "store.type=com.liferay.portal.store.jcr.JCRStore",
+	service = Store.class
+)
 public class JCRStore extends BaseStore {
 
 	@Override
