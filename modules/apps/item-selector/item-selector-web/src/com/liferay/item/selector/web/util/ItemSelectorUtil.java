@@ -32,13 +32,6 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class ItemSelectorUtil {
 
-	public static String getCKEditorFuncNum(HttpServletRequest request) {
-		String ckEditorFuncNum = ParamUtil.getString(
-			request, "ckEditorFuncNum");
-
-		return ParamUtil.getString(request, "CKEditorFuncNum", ckEditorFuncNum);
-	}
-
 	public static String[] getMimeTypes(HttpServletRequest request) {
 		Set<String> mimeTypes = _getMimeTypes(getType(request));
 
