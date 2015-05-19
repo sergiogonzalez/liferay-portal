@@ -97,12 +97,13 @@ public class CommentsUserNotificationHandler
 			}
 		}
 
+		long userId = jsonObject.getLong("userId");
+
 		if (assetRenderer != null) {
 			title = serviceContext.translate(
 				title,
 				HtmlUtil.escape(
-					PortalUtil.getUserName(
-						mbDiscussion.getUserId(), StringPool.BLANK)),
+					PortalUtil.getUserName(userId, StringPool.BLANK)),
 				HtmlUtil.escape(
 					assetRenderer.getTitle(serviceContext.getLocale())));
 		}
@@ -110,8 +111,7 @@ public class CommentsUserNotificationHandler
 			title = serviceContext.translate(
 				title,
 				HtmlUtil.escape(
-					PortalUtil.getUserName(
-						mbDiscussion.getUserId(), StringPool.BLANK)));
+					PortalUtil.getUserName(userId, StringPool.BLANK)));
 		}
 
 		return title;
