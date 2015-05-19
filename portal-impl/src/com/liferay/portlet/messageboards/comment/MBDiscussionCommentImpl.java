@@ -35,7 +35,7 @@ import java.util.List;
  * @author Adolfo Pérez
  */
 public class MBDiscussionCommentImpl
-	extends MBDetachedCommentImpl implements WorkflowableComment {
+	extends MBCommentImpl implements WorkflowableComment {
 
 	public MBDiscussionCommentImpl(
 		MBMessage message, MBTreeWalker treeWalker,
