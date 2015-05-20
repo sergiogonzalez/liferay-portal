@@ -125,6 +125,11 @@
 			<bean class="com.liferay.portal.diff.DiffImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.kernel.editor.config.EditorConfigFactory" class="com.liferay.portal.kernel.editor.configuration.EditorConfigFactoryUtil">
+		<property name="editorConfigFactory">
+			<bean class="com.liferay.portal.editor.configuration.EditorConfigFactoryImpl" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portal.kernel.editor.config.EditorConfigurationFactory" class="com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactoryUtil">
 		<property name="editorConfigurationFactory">
 			<bean class="com.liferay.portal.editor.configuration.EditorConfigurationFactoryImpl" />
