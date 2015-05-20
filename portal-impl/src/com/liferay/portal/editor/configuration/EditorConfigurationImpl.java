@@ -14,9 +14,9 @@
 
 package com.liferay.portal.editor.configuration;
 
-import com.liferay.portal.kernel.editor.configuration.EditorConfig;
-import com.liferay.portal.kernel.editor.configuration.EditorOptions;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigTransformer;
+import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
+import com.liferay.portal.kernel.editor.configuration.EditorOptions;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -27,9 +27,9 @@ import java.util.Map;
 /**
  * @author Sergio González
  */
-public class EditorConfigImpl implements EditorConfig {
+public class EditorConfigurationImpl implements EditorConfiguration {
 
-	public EditorConfigImpl(
+	public EditorConfigurationImpl(
 		JSONObject configJSONObject, EditorOptions editorOptions,
 		EditorConfigTransformer editorConfigTransformer,
 		Map<String, Object> inputEditorTaglibAttributes,

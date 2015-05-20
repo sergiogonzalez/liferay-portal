@@ -21,7 +21,7 @@ import java.util.Map;
 /**
  * @author Sergio González
  */
-public interface EditorConfig {
+public interface EditorConfiguration {
 
 	public JSONObject getConfigJSONObject();
 

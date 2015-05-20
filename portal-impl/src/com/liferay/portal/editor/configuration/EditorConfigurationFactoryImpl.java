@@ -14,12 +14,12 @@
 
 package com.liferay.portal.editor.configuration;
 
-import com.liferay.portal.kernel.editor.configuration.EditorConfig;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
-import com.liferay.portal.kernel.editor.configuration.EditorConfigFactory;
+import com.liferay.portal.kernel.editor.configuration.EditorConfigTransformer;
+import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
+import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactory;
 import com.liferay.portal.kernel.editor.configuration.EditorOptions;
 import com.liferay.portal.kernel.editor.configuration.EditorOptionsFactoryUtil;
-import com.liferay.portal.kernel.editor.configuration.EditorConfigTransformer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -36,12 +36,12 @@ import java.util.Map;
 /**
  * @author Sergio González
  */
-public class EditorConfigFactoryImpl
+public class EditorConfigurationFactoryImpl
 	extends BaseEditorConfigurationFactoryImpl<EditorConfigContributor>
-		implements EditorConfigFactory {
+		implements EditorConfigurationFactory {
 
 	@Override
-	public EditorConfig getEditorConfig(
+	public EditorConfiguration getEditorConfiguration(
 		String portletName, String editorConfigKey, String editorName,
 		Map<String, Object> inputEditorTaglibAttributes,
 		ThemeDisplay themeDisplay,
@@ -58,7 +58,7 @@ public class EditorConfigFactoryImpl
 		EditorConfigTransformer editorConfigTransformer =
 			_editorConfigTransformerServiceTrackerMap.getService(editorName);
 
-		return new EditorConfigImpl(
+		return new EditorConfigurationImpl(
 			configJSONObject, editorOptions, editorConfigTransformer,
 			inputEditorTaglibAttributes, themeDisplay, liferayPortletResponse);
 	}

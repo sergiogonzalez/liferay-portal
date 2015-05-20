@@ -14,9 +14,9 @@
 
 package com.liferay.portal.editor.configuration;
 
-import com.liferay.portal.kernel.editor.configuration.EditorConfig;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
-import com.liferay.portal.kernel.editor.configuration.EditorConfigFactoryUtil;
+import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
+import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactoryUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -40,7 +40,7 @@ import org.junit.Test;
 /**
  * @author Sergio González
  */
-public class EditorConfigFactoryTest {
+public class EditorConfigurationFactoryTest {
 
 	@ClassRule
 	@Rule
@@ -91,11 +91,12 @@ public class EditorConfigFactoryTest {
 			EditorConfigContributor.class, textFormatEditorConfigContributor,
 			properties);
 
-		EditorConfig editorConfig = EditorConfigFactoryUtil.getEditorConfig(
-			_PORTLET_NAME, _CONFIG_KEY, _EDITOR_NAME,
-			new HashMap<String, Object>(), null, null);
+		EditorConfiguration editorConfiguration =
+			EditorConfigurationFactoryUtil.getEditorConfiguration(
+				_PORTLET_NAME, _CONFIG_KEY, _EDITOR_NAME,
+				new HashMap<String, Object>(), null, null);
 
-		JSONObject configJSONObject = editorConfig.getConfigJSONObject();
+		JSONObject configJSONObject = editorConfiguration.getConfigJSONObject();
 
 		Assert.assertEquals(
 			EmoticonsEditorConfigContributor.class.getName(),
@@ -140,11 +141,12 @@ public class EditorConfigFactoryTest {
 			EditorConfigContributor.class, tablesEditorConfigContributor,
 			properties);
 
-		EditorConfig editorConfig = EditorConfigFactoryUtil.getEditorConfig(
-			_PORTLET_NAME, _CONFIG_KEY, _EDITOR_NAME,
-			new HashMap<String, Object>(), null, null);
+		EditorConfiguration editorConfiguration =
+			EditorConfigurationFactoryUtil.getEditorConfiguration(
+				_PORTLET_NAME, _CONFIG_KEY, _EDITOR_NAME,
+				new HashMap<String, Object>(), null, null);
 
-		JSONObject configJSONObject = editorConfig.getConfigJSONObject();
+		JSONObject configJSONObject = editorConfiguration.getConfigJSONObject();
 
 		Assert.assertEquals(
 			EmoticonsEditorConfigContributor.class.getName(),
@@ -158,7 +160,7 @@ public class EditorConfigFactoryTest {
 	}
 
 	@Test
-	public void testGetEditorConfigByEditorName() throws Exception {
+	public void testGetEditorConfigurationByEditorName() throws Exception {
 		Registry registry = RegistryUtil.getRegistry();
 
 		Map<String, Object> properties = new HashMap<>();
@@ -185,21 +187,23 @@ public class EditorConfigFactoryTest {
 			EditorConfigContributor.class, ImageEditorConfigContributor,
 			properties);
 
-		EditorConfig editorConfig = EditorConfigFactoryUtil.getEditorConfig(
-			_PORTLET_NAME, _CONFIG_KEY, _EDITOR_NAME,
-			new HashMap<String, Object>(), null, null);
+		EditorConfiguration editorConfiguration =
+			EditorConfigurationFactoryUtil.getEditorConfiguration(
+				_PORTLET_NAME, _CONFIG_KEY, _EDITOR_NAME,
+				new HashMap<String, Object>(), null, null);
 
-		JSONObject configJSONObject = editorConfig.getConfigJSONObject();
+		JSONObject configJSONObject = editorConfiguration.getConfigJSONObject();
 
 		Assert.assertEquals(
 			TextFormatEditorConfigContributor.class.getName(),
 			configJSONObject.getString("className"));
 
-		editorConfig = EditorConfigFactoryUtil.getEditorConfig(
-			_PORTLET_NAME, _CONFIG_KEY, _EDITOR_NAME_2,
-			new HashMap<String, Object>(), null, null);
+		editorConfiguration =
+			EditorConfigurationFactoryUtil.getEditorConfiguration(
+				_PORTLET_NAME, _CONFIG_KEY, _EDITOR_NAME_2,
+				new HashMap<String, Object>(), null, null);
 
-		configJSONObject = editorConfig.getConfigJSONObject();
+		configJSONObject = editorConfiguration.getConfigJSONObject();
 
 		Assert.assertEquals(
 			ImageEditorConfigContributor.class.getName(),
@@ -207,7 +211,7 @@ public class EditorConfigFactoryTest {
 	}
 
 	@Test
-	public void testGetEditorConfigByEditorNameAndServiceRanking()
+	public void testGetEditorConfigurationByEditorNameAndServiceRanking()
 		throws Exception {
 
 		Registry registry = RegistryUtil.getRegistry();
@@ -236,11 +240,12 @@ public class EditorConfigFactoryTest {
 			EditorConfigContributor.class, videoEditorVideoConfigContributor,
 			properties);
 
-		EditorConfig editorConfig = EditorConfigFactoryUtil.getEditorConfig(
-			_PORTLET_NAME, _CONFIG_KEY, _EDITOR_NAME,
-			new HashMap<String, Object>(), null, null);
+		EditorConfiguration editorConfiguration =
+			EditorConfigurationFactoryUtil.getEditorConfiguration(
+				_PORTLET_NAME, _CONFIG_KEY, _EDITOR_NAME,
+				new HashMap<String, Object>(), null, null);
 
-		JSONObject configJSONObject = editorConfig.getConfigJSONObject();
+		JSONObject configJSONObject = editorConfiguration.getConfigJSONObject();
 
 		Assert.assertEquals(
 			TextFormatEditorConfigContributor.class.getName(),
@@ -287,11 +292,12 @@ public class EditorConfigFactoryTest {
 			EditorConfigContributor.class, emoticonsEditorConfigContributor,
 			properties);
 
-		EditorConfig editorConfig = EditorConfigFactoryUtil.getEditorConfig(
-			_PORTLET_NAME, _CONFIG_KEY, _EDITOR_NAME,
-			new HashMap<String, Object>(), null, null);
+		EditorConfiguration editorConfiguration =
+			EditorConfigurationFactoryUtil.getEditorConfiguration(
+				_PORTLET_NAME, _CONFIG_KEY, _EDITOR_NAME,
+				new HashMap<String, Object>(), null, null);
 
-		JSONObject configJSONObject = editorConfig.getConfigJSONObject();
+		JSONObject configJSONObject = editorConfiguration.getConfigJSONObject();
 
 		Assert.assertEquals(
 			TextFormatEditorConfigContributor.class.getName(),
@@ -338,11 +344,12 @@ public class EditorConfigFactoryTest {
 			EditorConfigContributor.class, textFormatEditorConfigContributor,
 			properties);
 
-		EditorConfig editorConfig = EditorConfigFactoryUtil.getEditorConfig(
-			_PORTLET_NAME, _CONFIG_KEY, _EDITOR_NAME,
-			new HashMap<String, Object>(), null, null);
+		EditorConfiguration editorConfiguration =
+			EditorConfigurationFactoryUtil.getEditorConfiguration(
+				_PORTLET_NAME, _CONFIG_KEY, _EDITOR_NAME,
+				new HashMap<String, Object>(), null, null);
 
-		JSONObject configJSONObject = editorConfig.getConfigJSONObject();
+		JSONObject configJSONObject = editorConfiguration.getConfigJSONObject();
 
 		Assert.assertEquals(
 			EmoticonsEditorConfigContributor.class.getName(),
@@ -388,11 +395,12 @@ public class EditorConfigFactoryTest {
 			EditorConfigContributor.class, emoticonsEditorConfigContributor,
 			properties);
 
-		EditorConfig editorConfig = EditorConfigFactoryUtil.getEditorConfig(
-			_PORTLET_NAME, _CONFIG_KEY, _EDITOR_NAME,
-			new HashMap<String, Object>(), null, null);
+		EditorConfiguration editorConfiguration =
+			EditorConfigurationFactoryUtil.getEditorConfiguration(
+				_PORTLET_NAME, _CONFIG_KEY, _EDITOR_NAME,
+				new HashMap<String, Object>(), null, null);
 
-		JSONObject configJSONObject = editorConfig.getConfigJSONObject();
+		JSONObject configJSONObject = editorConfiguration.getConfigJSONObject();
 
 		Assert.assertEquals(
 			TextFormatEditorConfigContributor.class.getName(),
@@ -437,11 +445,12 @@ public class EditorConfigFactoryTest {
 			EditorConfigContributor.class, textFormatEditorConfigContributor,
 			properties);
 
-		EditorConfig editorConfig = EditorConfigFactoryUtil.getEditorConfig(
-			_PORTLET_NAME, _CONFIG_KEY, _EDITOR_NAME,
-			new HashMap<String, Object>(), null, null);
+		EditorConfiguration editorConfiguration =
+			EditorConfigurationFactoryUtil.getEditorConfiguration(
+				_PORTLET_NAME, _CONFIG_KEY, _EDITOR_NAME,
+				new HashMap<String, Object>(), null, null);
 
-		JSONObject configJSONObject = editorConfig.getConfigJSONObject();
+		JSONObject configJSONObject = editorConfiguration.getConfigJSONObject();
 
 		Assert.assertEquals(
 			TablesEditorConfigContributor.class.getName(),
