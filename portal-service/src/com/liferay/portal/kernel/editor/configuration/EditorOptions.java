@@ -14,19 +14,19 @@
 
 package com.liferay.portal.kernel.editor.configuration;
 
-import com.liferay.portal.kernel.json.JSONObject;
-
-import java.util.Map;
-
 /**
  * @author Sergio González
  */
-public interface EditorOptions {
+public class EditorOptions {
 
-	public JSONObject getConfigJSONObject();
+	public boolean isTextMode() {
+		return _textMode;
+	}
 
-	public Map<String, Object> getData();
+	public void setTextMode(boolean textMode) {
+		_textMode = textMode;
+	}
 
-	public JSONObject getOptionsJSONObject();
+	private boolean _textMode;
 
 }
