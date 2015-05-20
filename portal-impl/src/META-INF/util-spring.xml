@@ -130,6 +130,11 @@
 			<bean class="com.liferay.portal.editor.configuration.EditorConfigFactoryImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.kernel.editor.config.EditorOptionsFactory" class="com.liferay.portal.kernel.editor.configuration.EditorOptionsFactoryUtil">
+		<property name="editorOptionsFactory">
+			<bean class="com.liferay.portal.editor.configuration.EditorOptionsFactoryImpl" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portal.kernel.image.GhostscriptUtil" class="com.liferay.portal.kernel.image.GhostscriptUtil">
 		<property name="ghostscript">
 			<bean class="com.liferay.portal.image.GhostscriptImpl" />
