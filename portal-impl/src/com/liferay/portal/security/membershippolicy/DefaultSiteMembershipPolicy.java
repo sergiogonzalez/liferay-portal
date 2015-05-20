@@ -234,7 +234,7 @@ public class DefaultSiteMembershipPolicy extends BaseSiteMembershipPolicy {
 
 							UserLocalServiceUtil.unsetGroupUsers(
 								group.getGroupId(),
-								new long[]{user.getUserId()}, null);
+								new long[] {user.getUserId()}, null);
 						}
 						else {
 							intervalActionProcessor.incrementStart();
