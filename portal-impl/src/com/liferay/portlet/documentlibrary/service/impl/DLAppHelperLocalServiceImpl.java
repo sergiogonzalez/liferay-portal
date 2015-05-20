@@ -50,7 +50,6 @@ import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.GroupSubscriptionCheckSubscriptionSender;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.SubscriptionSender;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLink;
@@ -91,24 +90,6 @@ import java.util.Map;
  */
 public class DLAppHelperLocalServiceImpl
 	extends DLAppHelperLocalServiceBaseImpl {
-
-	@Override
-	public void addFileEntry(
-			long userId, FileEntry fileEntry, FileVersion fileVersion,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		if (!DLAppHelperThreadLocal.isEnabled()) {
-			return;
-		}
-
-		if (PropsValues.DL_FILE_ENTRY_COMMENTS_ENABLED) {
-			mbMessageLocalService.addDiscussionMessage(
-				fileEntry.getUserId(), fileEntry.getUserName(),
-				fileEntry.getGroupId(), DLFileEntryConstants.getClassName(),
-				fileEntry.getFileEntryId(), WorkflowConstants.ACTION_PUBLISH);
-		}
-	}
 
 	@Override
 	public void addFolder(
@@ -230,11 +211,6 @@ public class DLAppHelperLocalServiceImpl
 		// Asset
 
 		assetEntryLocalService.deleteEntry(
-			DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId());
-
-		// Message boards
-
-		mbMessageLocalService.deleteDiscussionMessages(
 			DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId());
 
 		// Ratings
