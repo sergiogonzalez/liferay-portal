@@ -212,9 +212,6 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			userId, folderId, sourceFileName, mimeType, title, description,
 			changeLog, file, serviceContext);
 
-		dlAppHelperLocalService.addFileEntry(
-			userId, fileEntry, null, serviceContext);
-
 		return fileEntry;
 	}
 
@@ -299,9 +296,6 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		FileEntry fileEntry = localRepository.addFileEntry(
 			userId, folderId, sourceFileName, mimeType, title, description,
 			changeLog, is, size, serviceContext);
-
-		dlAppHelperLocalService.addFileEntry(
-			userId, fileEntry, null, serviceContext);
 
 		return fileEntry;
 	}
@@ -1343,9 +1337,6 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 				throw pe;
 			}
 		}
-
-		dlAppHelperLocalService.addFileEntry(
-			userId, destinationFileEntry, null, serviceContext);
 
 		return destinationFileEntry;
 	}
