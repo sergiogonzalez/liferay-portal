@@ -14,13 +14,7 @@
 
 package com.liferay.portal.kernel.comment;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.model.User;
-import com.liferay.portlet.ratings.model.RatingsEntry;
-import com.liferay.portlet.ratings.model.RatingsStats;
-
 import java.util.Date;
-import java.util.List;
 
 /**
  * @author Adolfo Pérez
@@ -37,32 +31,12 @@ public interface Comment {
 
 	public String getModelClassName();
 
+	public long getModelClassPK();
+
 	public Date getModifiedDate();
-
-	public Comment getParentComment() throws PortalException;
-
-	public long getParentCommentId();
-
-	public RatingsEntry getRatingsEntry();
-
-	public RatingsStats getRatingsStats();
-
-	public List<Comment> getThreadComments();
-
-	public int getThreadCommentsCount();
-
-	public CommentIterator getThreadCommentsIterator();
-
-	public CommentIterator getThreadCommentsIterator(int from);
-
-	public String getTranslatedBody();
-
-	public User getUser() throws PortalException;
 
 	public long getUserId();
 
 	public String getUserName();
-
-	public boolean isRoot();
 
 }
