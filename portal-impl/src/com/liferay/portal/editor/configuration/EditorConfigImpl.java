@@ -15,16 +15,13 @@
 package com.liferay.portal.editor.configuration;
 
 import com.liferay.portal.kernel.editor.configuration.EditorConfig;
-import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.editor.configuration.EditorOptions;
+import com.liferay.portal.kernel.editor.configuration.EditorConfigTransformer;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -33,17 +30,20 @@ import java.util.Map;
 public class EditorConfigImpl implements EditorConfig {
 
 	public EditorConfigImpl(
-		List<EditorConfigContributor> editorConfigContributors,
+		JSONObject configJSONObject, EditorOptions editorOptions,
+		EditorConfigTransformer editorConfigTransformer,
 		Map<String, Object> inputEditorTaglibAttributes,
 		ThemeDisplay themeDisplay,
 		LiferayPortletResponse liferayPortletResponse) {
 
-		_editorConfigContributors = editorConfigContributors;
+		if (editorConfigTransformer != null) {
+			editorConfigTransformer.transform(
+				editorOptions, inputEditorTaglibAttributes, themeDisplay,
+				liferayPortletResponse, configJSONObject);
+		}
 
-		_populateConfigJSONObject(
-			inputEditorTaglibAttributes, themeDisplay, liferayPortletResponse);
-		_populateOptionsJSONObject(
-			inputEditorTaglibAttributes, themeDisplay, liferayPortletResponse);
+		_configJSONObject = configJSONObject;
+		_editorOptions = editorOptions;
 	}
 
 	@Override
@@ -56,58 +56,17 @@ public class EditorConfigImpl implements EditorConfig {
 		Map<String, Object> data = new HashMap<>();
 
 		data.put("editorConfig", _configJSONObject);
-		data.put("editorOptions", _optionsJSONObject);
+		data.put("editorOptions", _editorOptions);
 
 		return data;
 	}
 
 	@Override
-	public JSONObject getOptionsJSONObject() {
-		return _optionsJSONObject;
+	public EditorOptions getEditorOptions() {
+		return _editorOptions;
 	}
 
-	private JSONObject _populateConfigJSONObject(
-		Map<String, Object> inputEditorTaglibAttributes,
-		ThemeDisplay themeDisplay,
-		LiferayPortletResponse liferayPortletResponse) {
-
-		Iterator<EditorConfigContributor> iterator = ListUtil.reverseIterator(
-			_editorConfigContributors);
-
-		while (iterator.hasNext()) {
-			EditorConfigContributor editorConfigContributor = iterator.next();
-
-			editorConfigContributor.populateConfigJSONObject(
-				_configJSONObject, inputEditorTaglibAttributes, themeDisplay,
-				liferayPortletResponse);
-		}
-
-		return _configJSONObject;
-	}
-
-	private JSONObject _populateOptionsJSONObject(
-		Map<String, Object> inputEditorTaglibAttributes,
-		ThemeDisplay themeDisplay,
-		LiferayPortletResponse liferayPortletResponse) {
-
-		Iterator<EditorConfigContributor> iterator = ListUtil.reverseIterator(
-			_editorConfigContributors);
-
-		while (iterator.hasNext()) {
-			EditorConfigContributor editorConfigContributor = iterator.next();
-
-			editorConfigContributor.populateOptionsJSONObject(
-				_optionsJSONObject, inputEditorTaglibAttributes, themeDisplay,
-				liferayPortletResponse);
-		}
-
-		return _optionsJSONObject;
-	}
-
-	private final JSONObject _configJSONObject =
-		JSONFactoryUtil.createJSONObject();
-	private final List<EditorConfigContributor> _editorConfigContributors;
-	private final JSONObject _optionsJSONObject =
-		JSONFactoryUtil.createJSONObject();
+	private final JSONObject _configJSONObject;
+	private final EditorOptions _editorOptions;
 
 }

@@ -14,15 +14,17 @@
 
 package com.liferay.portal.editor.configuration;
 
-import com.liferay.portal.kernel.editor.configuration.EditorConfig;
-import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
-import com.liferay.portal.kernel.editor.configuration.EditorConfigFactory;
+import com.liferay.portal.kernel.editor.configuration.EditorOptions;
+import com.liferay.portal.kernel.editor.configuration.EditorOptionsContributor;
+import com.liferay.portal.kernel.editor.configuration.EditorOptionsFactory;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.registry.collections.ServiceReferenceMapper;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerMap;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -30,44 +32,48 @@ import java.util.Map;
  * @author Sergio González
  */
 public class EditorOptionsFactoryImpl
-	extends BaseEditorConfigurationFactoryImpl<EditorConfigContributor>
-		implements EditorConfigFactory {
+	extends BaseEditorConfigurationFactoryImpl<EditorOptionsContributor>
+		implements EditorOptionsFactory {
 
 	@Override
-	public EditorConfig getEditorConfig(
+	public EditorOptions getEditorOptions(
 		String portletName, String editorConfigKey, String editorName,
 		Map<String, Object> inputEditorTaglibAttributes,
 		ThemeDisplay themeDisplay,
 		LiferayPortletResponse liferayPortletResponse) {
 
-		List<EditorConfigContributor> editorConfigContributors =
-			getEditorConfigContributors(
-				portletName, editorConfigKey, editorName);
+		EditorOptions editorOptions = new EditorOptions();
 
-		return new EditorConfigImpl(
-			editorConfigContributors, inputEditorTaglibAttributes, themeDisplay,
-			liferayPortletResponse);
-	}
+		Iterator<EditorOptionsContributor> iterator = ListUtil.reverseIterator(
+			getContributors(portletName, editorConfigKey, editorName));
 
-	protected List<EditorConfigContributor> getEditorConfigContributors(
-		String portletName, String editorConfigKey, String editorName) {
+		while (iterator.hasNext()) {
+			EditorOptionsContributor editorOptionsContributor = iterator.next();
 
-		return super.getContributors(portletName, editorConfigKey, editorName);
+			editorOptionsContributor.populateEditorOptions(
+				editorOptions, inputEditorTaglibAttributes, themeDisplay,
+				liferayPortletResponse);
+		}
+
+		return editorOptions;
 	}
 
 	@Override
-	protected ServiceTrackerMap<String, List<EditorConfigContributor>>
+	protected ServiceTrackerMap<String, List<EditorOptionsContributor>>
 		getServiceTrackerMap() {
 
 		return _serviceTrackerMap;
 	}
 
-	private static final ServiceReferenceMapper<String, EditorConfigContributor>
-		_serviceReferenceMapper = new EditorServiceReferenceMapper();
+	private static final ServiceReferenceMapper
+		<String, EditorOptionsContributor>
+			_serviceReferenceMapper =
+				new BaseEditorConfigurationFactoryImpl.
+					EditorServiceReferenceMapper();
 	private static final ServiceTrackerMap
-		<String, List<EditorConfigContributor>> _serviceTrackerMap =
+		<String, List<EditorOptionsContributor>> _serviceTrackerMap =
 			ServiceTrackerCollections.multiValueMap(
-				EditorConfigContributor.class,
+				EditorOptionsContributor.class,
 				"(|(editor.config.key=*)(editor.name=*)(javax.portlet.name=*))",
 				_serviceReferenceMapper);
 

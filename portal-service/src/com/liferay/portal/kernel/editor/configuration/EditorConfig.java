@@ -27,6 +27,6 @@ public interface EditorConfig {
 
 	public Map<String, Object> getData();
 
-	public JSONObject getOptionsJSONObject();
+	public EditorOptions getEditorOptions();
 
 }

@@ -24,7 +24,7 @@ import java.util.Map;
  */
 public interface EditorOptionsFactory {
 
-	public EditorConfig getEditorConfig(
+	public EditorOptions getEditorOptions(
 		String portletName, String editorConfigKey, String editorName,
 		Map<String, Object> inputEditorTaglibAttributes,
 		ThemeDisplay themeDisplay,

@@ -25,32 +25,32 @@ import java.util.Map;
  */
 public class EditorOptionsFactoryUtil {
 
-	public static EditorConfig getEditorConfig(
+	public static EditorOptions getEditorOptions(
 		String portletName, String editorConfigKey, String editorName,
 		Map<String, Object> inputEditorTaglibAttributes,
 		ThemeDisplay themeDisplay,
 		LiferayPortletResponse liferayPortletResponse) {
 
-		return getEditorConfigFactory().getEditorConfig(
+		return getEditorOptionsFactory().getEditorOptions(
 			portletName, editorConfigKey, editorName,
 			inputEditorTaglibAttributes, themeDisplay, liferayPortletResponse);
 	}
 
-	public static EditorConfigFactory getEditorConfigFactory() {
+	public static EditorOptionsFactory getEditorOptionsFactory() {
 		PortalRuntimePermission.checkGetBeanProperty(
 			EditorOptionsFactoryUtil.class);
 
-		return _editorConfigFactory;
+		return _editorOptionsFactory;
 	}
 
-	public void setEditorConfigFactory(
-		EditorConfigFactory editorConfigFactory) {
+	public void setEditorOptionsFactory(
+		EditorOptionsFactory editorOptionsFactory) {
 
 		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
-		_editorConfigFactory = editorConfigFactory;
+		_editorOptionsFactory = editorOptionsFactory;
 	}
 
-	private static EditorConfigFactory _editorConfigFactory;
+	private static EditorOptionsFactory _editorOptionsFactory;
 
 }
