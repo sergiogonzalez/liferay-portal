@@ -19,7 +19,6 @@
 <%
 String protocol = HttpUtil.getProtocol(request);
 
-String apiKey = GetterUtil.getString(request.getAttribute("liferay-ui:map:apiKey"));
 boolean geolocation = GetterUtil.getBoolean(request.getAttribute("liferay-ui:map:geolocation"));
 double latitude = (Double)request.getAttribute("liferay-ui:map:latitude");
 double longitude = (Double)request.getAttribute("liferay-ui:map:longitude");
@@ -28,6 +27,7 @@ String points = GetterUtil.getString(request.getAttribute("liferay-ui:map:points
 
 PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(company.getCompanyId());
 
+String googleMapsAPIKey = PrefsParamUtil.getString(companyPortletPreferences, request, "googleMapsAPIKey", "");
 String mapsAPIProvider = PrefsParamUtil.getString(companyPortletPreferences, request, "mapsAPIProvider", "Google");
 
 Group group = themeDisplay.getSiteGroup();
@@ -42,6 +42,7 @@ if (group != null) {
 	groupTypeSettings = group.getTypeSettingsProperties();
 }
 
+googleMapsAPIKey = PropertiesParamUtil.getString(groupTypeSettings, request, "googleMapsAPIKey", googleMapsAPIKey);
 mapsAPIProvider = PropertiesParamUtil.getString(groupTypeSettings, request, "mapsAPIProvider", mapsAPIProvider);
 
 name = namespace + name;
@@ -61,8 +62,8 @@ name = namespace + name;
 			<%
 				String apiURL = protocol + "://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&callback=Liferay.Maps.onGMapsReady";
 
-				if (Validator.isNotNull(apiKey)) {
-					apiURL += "&key=" + apiKey;
+				if (Validator.isNotNull(googleMapsAPIKey)) {
+					apiURL += "&key=" + googleMapsAPIKey;
 				}
 			%>
 
