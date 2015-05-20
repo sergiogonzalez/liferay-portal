@@ -12,31 +12,30 @@
  * details.
  */
 
-package com.liferay.blogs.editor.config;
+package com.liferay.comments.editor.configuration;
 
-import com.liferay.portal.kernel.editor.config.BaseEditorConfigContributor;
-import com.liferay.portal.kernel.editor.config.EditorConfigContributor;
+import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
+import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PropsValues;
 
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Sergio González
+ * @author Ambrin Chaudhary
  */
 @Component(
 	property = {
-		"editor.config.key=descriptionEditor",
-		"editor.config.key=subtitleEditor", "editor.config.key=titleEditor",
-		"javax.portlet.name=33", "javax.portlet.name=161"
+		"editor.config.key=commentsEditor", "service.ranking:Integer=0"
 	},
 	service = EditorConfigContributor.class
 )
-public class BlogsTextEditorConfigContributor
+public class CommentsEditorConfigContributor
 	extends BaseEditorConfigContributor {
 
 	@Override
@@ -45,9 +44,8 @@ public class BlogsTextEditorConfigContributor
 		ThemeDisplay themeDisplay,
 		LiferayPortletResponse liferayPortletResponse) {
 
-		jsonObject.put("allowedContent", "p");
-		jsonObject.put("disallowedContent", "br");
-		jsonObject.put("extraPlugins", "placeholder,selectionregion,uicore");
+		jsonObject.put(
+			"allowedContent", PropsValues.DISCUSSION_COMMENTS_ALLOWED_CONTENT);
 		jsonObject.put("toolbars", JSONFactoryUtil.createJSONObject());
 	}
 
@@ -57,7 +55,7 @@ public class BlogsTextEditorConfigContributor
 		ThemeDisplay themeDisplay,
 		LiferayPortletResponse liferayPortletResponse) {
 
-		jsonObject.put("textMode", Boolean.TRUE);
+		jsonObject.put("textMode", Boolean.FALSE);
 	}
 
 }

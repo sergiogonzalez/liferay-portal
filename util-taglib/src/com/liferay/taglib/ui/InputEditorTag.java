@@ -14,8 +14,8 @@
 
 package com.liferay.taglib.ui;
 
-import com.liferay.portal.kernel.editor.config.EditorConfig;
-import com.liferay.portal.kernel.editor.config.EditorConfigFactoryUtil;
+import com.liferay.portal.kernel.editor.configuration.EditorConfig;
+import com.liferay.portal.kernel.editor.configuration.EditorConfigFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil;

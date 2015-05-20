@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.editor.config;
+package com.liferay.portal.editor.configuration;
 
-import com.liferay.portal.kernel.editor.config.EditorConfig;
-import com.liferay.portal.kernel.editor.config.EditorConfigContributor;
+import com.liferay.portal.kernel.editor.configuration.EditorConfig;
+import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;

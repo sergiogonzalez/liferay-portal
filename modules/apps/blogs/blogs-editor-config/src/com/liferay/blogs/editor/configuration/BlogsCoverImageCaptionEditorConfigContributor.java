@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.blogs.editor.config;
+package com.liferay.blogs.editor.configuration;
 
-import com.liferay.portal.kernel.editor.config.BaseEditorConfigContributor;
-import com.liferay.portal.kernel.editor.config.EditorConfigContributor;
+import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
+import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;

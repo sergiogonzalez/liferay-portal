@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.frontend.editors.web.editor.config;
+package com.liferay.frontend.editors.web.editor.configuration;
 
-import com.liferay.portal.kernel.editor.config.BaseEditorConfigContributor;
+import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.GetterUtil;
