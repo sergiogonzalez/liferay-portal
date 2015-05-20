@@ -51,13 +51,4 @@ public class BlogsTextEditorConfigContributor
 		jsonObject.put("toolbars", JSONFactoryUtil.createJSONObject());
 	}
 
-	@Override
-	public void populateOptionsJSONObject(
-		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
-		ThemeDisplay themeDisplay,
-		LiferayPortletResponse liferayPortletResponse) {
-
-		jsonObject.put("textMode", Boolean.TRUE);
-	}
-
 }

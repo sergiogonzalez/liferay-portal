@@ -131,13 +131,6 @@ public class AlloyEditorConfigContributor extends BaseEditorConfigContributor {
 		jsonObject.put("toolbars", getToolbarsJSONObject());
 	}
 
-	@Override
-	public void populateOptionsJSONObject(
-		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
-		ThemeDisplay themeDisplay,
-		LiferayPortletResponse liferayPortletResponse) {
-	}
-
 	protected JSONObject getToolbarsAddJSONObject() {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 

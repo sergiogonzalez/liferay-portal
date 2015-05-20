@@ -98,11 +98,4 @@ public class BaseMentionsEditorConfigContributor
 		jsonObject.put("extraPlugins", extraPlugins);
 	}
 
-	@Override
-	public void populateOptionsJSONObject(
-		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
-		ThemeDisplay themeDisplay,
-		LiferayPortletResponse liferayPortletResponse) {
-	}
-
 }

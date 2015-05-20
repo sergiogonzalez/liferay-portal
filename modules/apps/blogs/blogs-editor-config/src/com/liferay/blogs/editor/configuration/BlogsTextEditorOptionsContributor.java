@@ -12,41 +12,39 @@
  * details.
  */
 
-package com.liferay.comments.editor.configuration;
+package com.liferay.blogs.editor.configuration;
 
-import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
-import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.editor.configuration.EditorOptions;
+import com.liferay.portal.kernel.editor.configuration.EditorOptionsContributor;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PropsValues;
 
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Ambrin Chaudhary
+ * @author Sergio González
  */
 @Component(
 	property = {
-		"editor.config.key=commentsEditor", "service.ranking:Integer=0"
+		"editor.config.key=descriptionEditor",
+		"editor.config.key=subtitleEditor", "editor.config.key=titleEditor",
+		"javax.portlet.name=33", "javax.portlet.name=161"
 	},
-	service = EditorConfigContributor.class
+	service = EditorOptionsContributor.class
 )
-public class CommentsEditorConfigContributor
-	extends BaseEditorConfigContributor {
+public class BlogsTextEditorOptionsContributor
+	implements EditorOptionsContributor {
 
 	@Override
-	public void populateConfigJSONObject(
-		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
+	public void populateEditorOptions(
+		EditorOptions editorOptions,
+		Map<String, Object> inputEditorTaglibAttributes,
 		ThemeDisplay themeDisplay,
 		LiferayPortletResponse liferayPortletResponse) {
 
-		jsonObject.put(
-			"allowedContent", PropsValues.DISCUSSION_COMMENTS_ALLOWED_CONTENT);
-		jsonObject.put("toolbars", JSONFactoryUtil.createJSONObject());
+		editorOptions.setTextMode(true);
 	}
 
 }

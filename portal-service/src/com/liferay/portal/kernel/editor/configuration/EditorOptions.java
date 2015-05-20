@@ -19,6 +19,10 @@ package com.liferay.portal.kernel.editor.configuration;
  */
 public class EditorOptions {
 
+	public String getUploadURL() {
+		return _uploadURL;
+	}
+
 	public boolean isTextMode() {
 		return _textMode;
 	}
@@ -27,6 +31,11 @@ public class EditorOptions {
 		_textMode = textMode;
 	}
 
+	public void setUploadURL(String uploadURL) {
+		_uploadURL = uploadURL;
+	}
+
 	private boolean _textMode;
+	private String _uploadURL;
 
 }

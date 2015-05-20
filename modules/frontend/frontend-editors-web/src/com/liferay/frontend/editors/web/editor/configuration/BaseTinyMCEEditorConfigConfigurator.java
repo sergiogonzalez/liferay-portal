@@ -82,13 +82,6 @@ public class BaseTinyMCEEditorConfigConfigurator
 		jsonObject.put("toolbar_items_size", "small");
 	}
 
-	@Override
-	public void populateOptionsJSONObject(
-		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
-		ThemeDisplay themeDisplay,
-		LiferayPortletResponse liferayPortletResponse) {
-	}
-
 	protected String getTinyMCELanguage(String contentsLanguageId) {
 		Locale contentsLocale = LocaleUtil.fromLanguageId(contentsLanguageId);
 

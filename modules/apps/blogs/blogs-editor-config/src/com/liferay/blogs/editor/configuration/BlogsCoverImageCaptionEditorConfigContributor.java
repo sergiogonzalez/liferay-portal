@@ -51,13 +51,6 @@ public class BlogsCoverImageCaptionEditorConfigContributor
 		jsonObject.put("toolbars", getToolbarsJSONObject());
 	}
 
-	@Override
-	public void populateOptionsJSONObject(
-		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
-		ThemeDisplay themeDisplay,
-		LiferayPortletResponse liferayPortletResponse) {
-	}
-
 	protected JSONObject getToolbarsJSONObject() {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 

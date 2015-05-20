@@ -14,9 +14,8 @@
 
 package com.liferay.blogs.editor.configuration;
 
-import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
-import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
-import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.editor.configuration.EditorOptions;
+import com.liferay.portal.kernel.editor.configuration.EditorOptionsContributor;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.theme.ThemeDisplay;
 
@@ -34,21 +33,15 @@ import org.osgi.service.component.annotations.Component;
 		"editor.config.key=contentEditor", "javax.portlet.name=33",
 		"javax.portlet.name=161"
 	},
-	service = EditorConfigContributor.class
+	service = EditorOptionsContributor.class
 )
-public class BlogsContentEditorConfigContributor
-	extends BaseEditorConfigContributor {
+public class BlogsContentEditorOptionsContributor
+	implements EditorOptionsContributor {
 
 	@Override
-	public void populateConfigJSONObject(
-		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
-		ThemeDisplay themeDisplay,
-		LiferayPortletResponse liferayPortletResponse) {
-	}
-
-	@Override
-	public void populateOptionsJSONObject(
-		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
+	public void populateEditorOptions(
+		EditorOptions editorOptions,
+		Map<String, Object> inputEditorTaglibAttributes,
 		ThemeDisplay themeDisplay,
 		LiferayPortletResponse liferayPortletResponse) {
 
@@ -60,7 +53,7 @@ public class BlogsContentEditorConfigContributor
 
 		portletURL.setParameter("struts_action", "/blogs/upload_editor_image");
 
-		jsonObject.put("uploadURL", portletURL.toString());
+		editorOptions.setUploadURL(portletURL.toString());
 	}
 
 }
