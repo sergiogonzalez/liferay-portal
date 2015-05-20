@@ -19,61 +19,68 @@
 <%
 String protocol = HttpUtil.getProtocol(request);
 
-String apiKey = GetterUtil.getString(request.getAttribute("liferay-ui:map:apiKey"));
 boolean geolocation = GetterUtil.getBoolean(request.getAttribute("liferay-ui:map:geolocation"));
 double latitude = (Double)request.getAttribute("liferay-ui:map:latitude");
 double longitude = (Double)request.getAttribute("liferay-ui:map:longitude");
 String name = GetterUtil.getString((String)request.getAttribute("liferay-ui:map:name"));
 String points = GetterUtil.getString(request.getAttribute("liferay-ui:map:points"));
-String provider = GetterUtil.getString((String)request.getAttribute("liferay-ui:map:provider"));
 
-if (Validator.isNull(provider)) {
-	Group group = layout.getGroup();
+PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(company.getCompanyId());
 
-	provider = group.getLiveParentTypeSettingsProperty("provider");
+String googleMapsAPIKey = PrefsParamUtil.getString(companyPortletPreferences, request, "googleMapsAPIKey", "");
+String mapsAPIProvider = PrefsParamUtil.getString(companyPortletPreferences, request, "mapsAPIProvider", "Google");
 
-	if (Validator.isNull(provider)) {
-		PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(company.getCompanyId(), true);
+Group group = themeDisplay.getSiteGroup();
 
-		provider = companyPortletPreferences.getValue("provider", "Google");
-	}
+if (group.isStagingGroup()) {
+	group = group.getLiveGroup();
 }
+
+UnicodeProperties groupTypeSettings = new UnicodeProperties();
+
+if (group != null) {
+	groupTypeSettings = group.getTypeSettingsProperties();
+}
+
+googleMapsAPIKey = PropertiesParamUtil.getString(groupTypeSettings, request, "googleMapsAPIKey", googleMapsAPIKey);
+mapsAPIProvider = PropertiesParamUtil.getString(groupTypeSettings, request, "mapsAPIProvider", mapsAPIProvider);
 
 name = namespace + name;
 %>
 
-<c:if test='<%= provider.equals("Google") %>'>
-	<liferay-util:html-bottom outputKey="js_maps_google_skip_map_loading">
-		<script>
-			Liferay.namespace('Maps').onGMapsReady = function(event) {
-				Liferay.Maps.gmapsReady = true;
+<c:choose>
+	<c:when test='<%= mapsAPIProvider.equals("Google") %>'>
+		<liferay-util:html-bottom outputKey="js_maps_google_skip_map_loading">
+			<script>
+				Liferay.namespace('Maps').onGMapsReady = function(event) {
+					Liferay.Maps.gmapsReady = true;
 
-				Liferay.fire('gmapsReady');
-			};
-		</script>
+					Liferay.fire('gmapsReady');
+				};
+			</script>
 
-		<%
-		String apiURL = protocol + "://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&callback=Liferay.Maps.onGMapsReady";
+			<%
+				String apiURL = protocol + "://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&callback=Liferay.Maps.onGMapsReady";
 
-		if (Validator.isNotNull(apiKey)) {
-			apiURL += "&key=" + apiKey;
-		}
-		%>
+				if (Validator.isNotNull(googleMapsAPIKey)) {
+					apiURL += "&key=" + googleMapsAPIKey;
+				}
+			%>
 
-		<script src="<%= apiURL %>" type="text/javascript"></script>
-	</liferay-util:html-bottom>
-</c:if>
-
-<c:if test='<%= provider.equals("OpenStreet") %>'>
-	<liferay-util:html-top outputKey="js_maps_openstreet_skip_loading">
-		<link href="<%= protocol %>://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" rel="stylesheet" />
-		<script src="<%= protocol %>://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
-	</liferay-util:html-top>
-</c:if>
+			<script src="<%= apiURL %>" type="text/javascript"></script>
+		</liferay-util:html-bottom>
+	</c:when>
+	<c:when test='<%= mapsAPIProvider.equals("OpenStreet") %>'>
+		<liferay-util:html-top outputKey="js_maps_openstreet_skip_loading">
+			<link href="<%= protocol %>://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" rel="stylesheet" />
+			<script src="<%= protocol %>://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+		</liferay-util:html-top>
+	</c:when>
+</c:choose>
 
 <div class="lfr-map" id="<%= name %>Map"></div>
 
-<aui:script use='<%= "liferay-map-" + StringUtil.toLowerCase(provider) %>'>
+<aui:script use='<%= "liferay-map-" + StringUtil.toLowerCase(mapsAPIProvider) %>'>
 	var MapControls = Liferay.MapBase.CONTROLS;
 
 	var mapConfig = {
@@ -115,7 +122,7 @@ name = namespace + name;
 	};
 
 	var createMap = function() {
-		var map = new Liferay['<%= provider %>Map'](mapConfig).render();
+		var map = new Liferay['<%= mapsAPIProvider %>Map'](mapConfig).render();
 
 		Liferay.MapBase.register('<%= name %>', map);
 
@@ -123,7 +130,7 @@ name = namespace + name;
 	};
 
 	<c:choose>
-		<c:when test='<%= provider.equals("Google") %>'>
+		<c:when test='<%= mapsAPIProvider.equals("Google") %>'>
 			if (Liferay.Maps.gmapsReady) {
 				createMap();
 			}
