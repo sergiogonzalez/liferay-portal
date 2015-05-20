@@ -28,48 +28,63 @@ String points = GetterUtil.getString(request.getAttribute("liferay-ui:map:points
 String provider = GetterUtil.getString((String)request.getAttribute("liferay-ui:map:provider"));
 
 if (Validator.isNull(provider)) {
-	Group group = layout.getGroup();
+	PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(company.getCompanyId());
 
-	provider = group.getLiveParentTypeSettingsProperty("provider");
+	String mapsAPIProvider = null;
 
 	if (Validator.isNull(provider)) {
-		PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(company.getCompanyId(), true);
+		mapsAPIProvider = companyPortletPreferences.getValue("mapsAPIProvider", "Google");
+	}
 
-		provider = companyPortletPreferences.getValue("provider", "Google");
+	Group group = themeDisplay.getSiteGroup();
+
+	if (group.isStagingGroup()) {
+		group = group.getLiveGroup();
+	}
+
+	UnicodeProperties groupTypeSettings = new UnicodeProperties();
+
+	if (group != null) {
+		groupTypeSettings = group.getTypeSettingsProperties();
+	}
+
+	if (Validator.isNull(provider)) {
+		provider = groupTypeSettings.getProperty("mapsAPIProvider", mapsAPIProvider);
 	}
 }
 
 name = namespace + name;
 %>
 
-<c:if test='<%= provider.equals("Google") %>'>
-	<liferay-util:html-bottom outputKey="js_maps_google_skip_map_loading">
-		<script>
-			Liferay.namespace('Maps').onGMapsReady = function(event) {
-				Liferay.Maps.gmapsReady = true;
+<c:choose>
+	<c:when test='<%= provider.equals("Google") %>'>
+		<liferay-util:html-bottom outputKey="js_maps_google_skip_map_loading">
+			<script>
+				Liferay.namespace('Maps').onGMapsReady = function(event) {
+					Liferay.Maps.gmapsReady = true;
 
-				Liferay.fire('gmapsReady');
-			};
-		</script>
+					Liferay.fire('gmapsReady');
+				};
+			</script>
 
-		<%
-		String apiURL = protocol + "://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&callback=Liferay.Maps.onGMapsReady";
+			<%
+				String apiURL = protocol + "://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&callback=Liferay.Maps.onGMapsReady";
 
-		if (Validator.isNotNull(apiKey)) {
-			apiURL += "&key=" + apiKey;
-		}
-		%>
+				if (Validator.isNotNull(apiKey)) {
+					apiURL += "&key=" + apiKey;
+				}
+			%>
 
-		<script src="<%= apiURL %>" type="text/javascript"></script>
-	</liferay-util:html-bottom>
-</c:if>
-
-<c:if test='<%= provider.equals("OpenStreet") %>'>
-	<liferay-util:html-top outputKey="js_maps_openstreet_skip_loading">
-		<link href="<%= protocol %>://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" rel="stylesheet" />
-		<script src="<%= protocol %>://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
-	</liferay-util:html-top>
-</c:if>
+			<script src="<%= apiURL %>" type="text/javascript"></script>
+		</liferay-util:html-bottom>
+	</c:when>
+	<c:when test='<%= provider.equals("OpenStreet") %>'>
+		<liferay-util:html-top outputKey="js_maps_openstreet_skip_loading">
+			<link href="<%= protocol %>://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" rel="stylesheet" />
+			<script src="<%= protocol %>://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+		</liferay-util:html-top>
+	</c:when>
+</c:choose>
 
 <div class="lfr-map" id="<%= name %>Map"></div>
 
