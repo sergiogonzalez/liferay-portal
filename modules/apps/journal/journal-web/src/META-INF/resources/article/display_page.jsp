@@ -110,6 +110,7 @@ ItemSelector itemSelector = (ItemSelector)request.getAttribute("itemSelector");
 
 		<%
 		LayoutItemSelectorCriterion layoutItemSelectorCriterion = new LayoutItemSelectorCriterion(scopeGroupId);
+		layoutItemSelectorCriterion.setDesiredReturnTypes(UUID.class);
 
 		String eventName = liferayPortletResponse.getNamespace() + "selectDisplayPage";
 
@@ -131,13 +132,13 @@ ItemSelector itemSelector = (ItemSelector)request.getAttribute("itemSelector");
 								destroyOnHide: true,
 								modal: true
 							},
-							eventName: '<portlet:namespace />selectDisplayPage',
+							eventName: '<%= eventName %>',
 							id: '<portlet:namespace />selectDisplayPage',
 							title: '<liferay-ui:message key="select-page" />',
 							uri: '<%= itemSelectorURL.toString() %>'
 						},
 						function(event) {
-							pagesContainerInput.val(event.uuid);
+							pagesContainerInput.val(event.value);
 
 							displayPageNameInput.html(event.layoutpath);
 

@@ -26,6 +26,16 @@ Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 request.setAttribute(WebKeys.GROUP, group);
 
 boolean showGroupsSelector = ParamUtil.getBoolean(request, "showGroupsSelector");
+
+String eventName = HtmlUtil.escape(ParamUtil.getString(request, "itemSelectedEventName"));
+
+String ckeditorfuncnum = null;
+
+Map<String, String[]> parameterMap = request.getParameterMap();
+
+if (parameterMap.containsKey("CKEditorFuncNum")) {
+	ckeditorfuncnum = parameterMap.get("CKEditorFuncNum")[0];
+}
 %>
 
 <c:if test="<%= showGroupsSelector %>">
@@ -147,8 +157,18 @@ if (group.getPrivateLayoutsPageCount() > 0) {
 
 	button.on(
 		'click',
-		function() {
-			//TODO
+		function(event) {
+			Util.getOpener().Liferay.fire(
+				'<%= eventName %>',
+				{
+					ckeditorfuncnum: <%= ckeditorfuncnum %>,
+					layoutpath: event.target.getAttribute('data-layoutpath'),
+					returnType : event.target.getAttribute('data-returnType'),
+					value : event.target.getAttribute('data-value')
+				}
+			);
+
+			Util.getWindow().destroy();
 		}
 	);
 
@@ -176,12 +196,43 @@ if (group.getPrivateLayoutsPageCount() > 0) {
 
 			messageType = 'info';
 
-			button.attr('data-url', url);
+			<%
+			List<Class<?>> desiredReturnTypes = layoutItemSelectorCriterion.getDesiredReturnTypes();
 
-			button.attr('data-uuid', uuid);
+			String returnType = StringPool.BLANK;
 
-			button.attr('data-layoutpath', messageText);
-		}
+			for (Class<?> desiredReturnType : desiredReturnTypes) {
+				if (desiredReturnType == URL.class) {
+					returnType = URL.class.getName();
+				}
+				else if (desiredReturnType == UUID.class) {
+					returnType = UUID.class.getName();
+				}
+				else {
+					continue;
+				}
+
+				break;
+			}
+
+			if (Validator.isNull(returnType)) {
+				throw new RuntimeException();
+			}
+			%>
+
+			button.attr('data-returnType', '<%= returnType %>' );
+
+			<c:choose>
+				<c:when test="<%= returnType.equals(URL.class.getName()) %>">
+					button.attr('data-value', url);
+				</c:when>
+				<c:when test="<%= returnType.equals(UUID.class.getName()) %>">
+					button.attr('data-value', uuid);
+				</c:when>
+			</c:choose>
+
+		button.attr('data-layoutpath', messageText);
+	}
 
 		Liferay.Util.toggleDisabled(button, disabled);
 
