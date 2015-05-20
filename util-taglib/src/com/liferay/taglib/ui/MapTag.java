@@ -47,10 +47,6 @@ public class MapTag extends IncludeTag {
 		_points = points;
 	}
 
-	public void setProvider(String provider) {
-		_provider = provider;
-	}
-
 	@Override
 	protected void cleanUp() {
 		_apiKey = null;
@@ -59,7 +55,6 @@ public class MapTag extends IncludeTag {
 		_longitude = 0;
 		_name = null;
 		_points = null;
-		_provider = null;
 	}
 
 	@Override
@@ -75,7 +70,6 @@ public class MapTag extends IncludeTag {
 		request.setAttribute("liferay-ui:map:longitude", _longitude);
 		request.setAttribute("liferay-ui:map:name", _name);
 		request.setAttribute("liferay-ui:map:points", _points);
-		request.setAttribute("liferay-ui:map:provider", _provider);
 	}
 
 	private static final String _PAGE = "/html/taglib/ui/map/page.jsp";
@@ -86,6 +80,5 @@ public class MapTag extends IncludeTag {
 	private double _longitude;
 	private String _name;
 	private String _points;
-	private String _provider;
 
 }
