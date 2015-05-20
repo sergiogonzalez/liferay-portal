@@ -28,15 +28,23 @@ String points = GetterUtil.getString(request.getAttribute("liferay-ui:map:points
 String provider = GetterUtil.getString((String)request.getAttribute("liferay-ui:map:provider"));
 
 if (Validator.isNull(provider)) {
-	Group group = layout.getGroup();
+	PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(company.getCompanyId());
 
-	provider = group.getLiveParentTypeSettingsProperty("provider");
+	provider = PrefsParamUtil.getString(companyPortletPreferences, request, "mapsAPIProvider", "Google");
 
-	if (Validator.isNull(provider)) {
-		PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(company.getCompanyId(), true);
+	Group group = themeDisplay.getSiteGroup();
 
-		provider = companyPortletPreferences.getValue("provider", "Google");
+	if (group.isStagingGroup()) {
+		group = group.getLiveGroup();
 	}
+
+	UnicodeProperties groupTypeSettings = new UnicodeProperties();
+
+	if (group != null) {
+		groupTypeSettings = group.getTypeSettingsProperties();
+	}
+
+	provider = PropertiesParamUtil.getString(groupTypeSettings, request, "mapsAPIProvider", provider);
 }
 
 name = namespace + name;
