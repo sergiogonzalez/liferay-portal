@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -697,24 +698,31 @@ public class DLFileEntryLocalServiceImpl
 			long groupId, long folderId, boolean includeTrashedEntries)
 		throws PortalException {
 
-		int count = dlFileEntryPersistence.countByG_F(groupId, folderId);
+		int start = 0;
+		int end = _DELETE_INTERVAL;
 
-		int pages = count / _DELETE_INTERVAL;
-
-		for (int i = 0; i <= pages; i++) {
-			int start = (i * _DELETE_INTERVAL);
-			int end = start + _DELETE_INTERVAL;
+		while (true) {
+			int deleteCount = 0;
 
 			List<DLFileEntry> dlFileEntries = dlFileEntryPersistence.findByG_F(
 				groupId, folderId, start, end);
+
+			if (ListUtil.isEmpty(dlFileEntries)) {
+				return;
+			}
 
 			for (DLFileEntry dlFileEntry : dlFileEntries) {
 				if (includeTrashedEntries ||
 					!dlFileEntry.isInTrashExplicitly()) {
 
 					dlFileEntryLocalService.deleteFileEntry(dlFileEntry);
+
+					deleteCount++;
 				}
 			}
+
+			start = start + _DELETE_INTERVAL - deleteCount;
+			end = start + _DELETE_INTERVAL;
 		}
 	}
 
@@ -928,24 +936,31 @@ public class DLFileEntryLocalServiceImpl
 			long repositoryId, long folderId, boolean includeTrashedEntries)
 		throws PortalException {
 
-		int count = dlFileEntryPersistence.countByR_F(repositoryId, folderId);
+		int start = 0;
+		int end = _DELETE_INTERVAL;
 
-		int pages = count / _DELETE_INTERVAL;
-
-		for (int i = 0; i <= pages; i++) {
-			int start = (i * _DELETE_INTERVAL);
-			int end = start + _DELETE_INTERVAL;
+		while (true) {
+			int deleteCount = 0;
 
 			List<DLFileEntry> dlFileEntries = dlFileEntryPersistence.findByR_F(
 				repositoryId, folderId, start, end);
+
+			if (ListUtil.isEmpty(dlFileEntries)) {
+				return;
+			}
 
 			for (DLFileEntry dlFileEntry : dlFileEntries) {
 				if (includeTrashedEntries ||
 					!dlFileEntry.isInTrashExplicitly()) {
 
 					dlFileEntryLocalService.deleteFileEntry(dlFileEntry);
+
+					deleteCount++;
 				}
 			}
+
+			start = start + _DELETE_INTERVAL - deleteCount;
+			end = start + _DELETE_INTERVAL;
 		}
 	}
 
