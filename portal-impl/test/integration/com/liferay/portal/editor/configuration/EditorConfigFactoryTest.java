@@ -40,7 +40,7 @@ import org.junit.Test;
 /**
  * @author Sergio González
  */
-public class EditorConfigurationFactoryTest {
+public class EditorConfigFactoryTest {
 
 	@ClassRule
 	@Rule
@@ -503,14 +503,6 @@ public class EditorConfigurationFactoryTest {
 			toolbarsJSONObject.put("button3", "emoticons");
 		}
 
-		@Override
-		public void populateOptionsJSONObject(
-			JSONObject jsonObject,
-			Map<String, Object> inputEditorTaglibAttributes,
-			ThemeDisplay themeDisplay,
-			LiferayPortletResponse liferayPortletResponse) {
-		}
-
 	}
 
 	private class ImageEditorConfigContributor
@@ -532,14 +524,6 @@ public class EditorConfigurationFactoryTest {
 			toolbarsJSONObject.put("button2", "gif");
 
 			jsonObject.put("toolbars", toolbarsJSONObject);
-		}
-
-		@Override
-		public void populateOptionsJSONObject(
-			JSONObject jsonObject,
-			Map<String, Object> inputEditorTaglibAttributes,
-			ThemeDisplay themeDisplay,
-			LiferayPortletResponse liferayPortletResponse) {
 		}
 
 	}
@@ -567,14 +551,6 @@ public class EditorConfigurationFactoryTest {
 			}
 
 			toolbarsJSONObject.put("button3", "tablesButton");
-		}
-
-		@Override
-		public void populateOptionsJSONObject(
-			JSONObject jsonObject,
-			Map<String, Object> inputEditorTaglibAttributes,
-			ThemeDisplay themeDisplay,
-			LiferayPortletResponse liferayPortletResponse) {
 		}
 
 	}
@@ -607,14 +583,6 @@ public class EditorConfigurationFactoryTest {
 			jsonObject.put("toolbars", toolbarsJSONObject);
 		}
 
-		@Override
-		public void populateOptionsJSONObject(
-			JSONObject jsonObject,
-			Map<String, Object> inputEditorTaglibAttributes,
-			ThemeDisplay themeDisplay,
-			LiferayPortletResponse liferayPortletResponse) {
-		}
-
 	}
 
 	private class VideoEditorConfigContributor
@@ -638,14 +606,6 @@ public class EditorConfigurationFactoryTest {
 
 			toolbarsJSONObject.put("button2", "play");
 			toolbarsJSONObject.put("button3", "stop");
-		}
-
-		@Override
-		public void populateOptionsJSONObject(
-			JSONObject jsonObject,
-			Map<String, Object> inputEditorTaglibAttributes,
-			ThemeDisplay themeDisplay,
-			LiferayPortletResponse liferayPortletResponse) {
 		}
 
 	}
