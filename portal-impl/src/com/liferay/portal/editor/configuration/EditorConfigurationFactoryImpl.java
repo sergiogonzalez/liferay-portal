@@ -14,14 +14,13 @@
 
 package com.liferay.portal.editor.configuration;
 
-import com.liferay.portal.kernel.editor.configuration.EditorConfigFactoryUtil;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigTransformer;
 import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactory;
 import com.liferay.portal.kernel.editor.configuration.EditorOptions;
-import com.liferay.portal.kernel.editor.configuration.EditorOptionsFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerMap;
@@ -41,13 +40,11 @@ public class EditorConfigurationFactoryImpl
 		ThemeDisplay themeDisplay,
 		LiferayPortletResponse liferayPortletResponse) {
 
-		JSONObject configJSONObject =
-			EditorConfigFactoryUtil.getConfigJSONObject(
-				portletName, editorConfigKey, editorName,
-				inputEditorTaglibAttributes, themeDisplay,
-				liferayPortletResponse);
+		JSONObject configJSONObject = _editorConfigProvider.getConfigJSONObject(
+			portletName, editorConfigKey, editorName,
+			inputEditorTaglibAttributes, themeDisplay, liferayPortletResponse);
 
-		EditorOptions editorOptions = EditorOptionsFactoryUtil.getEditorOptions(
+		EditorOptions editorOptions = _editorOptionsProvider.getEditorOptions(
 			portletName, editorConfigKey, editorName,
 			inputEditorTaglibAttributes, themeDisplay, liferayPortletResponse);
 
@@ -59,10 +56,28 @@ public class EditorConfigurationFactoryImpl
 			inputEditorTaglibAttributes, themeDisplay, liferayPortletResponse);
 	}
 
+	public void setEditorConfigProvider(
+		EditorConfigProvider editorConfigProvider) {
+
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
+
+		_editorConfigProvider = editorConfigProvider;
+	}
+
+	public void setEditorOptionsProvider(
+		EditorOptionsProvider editorOptionsProvider) {
+
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
+
+		_editorOptionsProvider = editorOptionsProvider;
+	}
+
+	private static EditorConfigProvider _editorConfigProvider;
 	private static final ServiceTrackerMap<String, EditorConfigTransformer>
 		_editorConfigTransformerServiceTrackerMap =
 			ServiceTrackerCollections.singleValueMap(
 				EditorConfigTransformer.class, "editor.name");
+	private static EditorOptionsProvider _editorOptionsProvider;
 
 	static {
 		_editorConfigTransformerServiceTrackerMap.open();

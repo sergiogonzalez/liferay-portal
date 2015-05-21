@@ -29,47 +29,7 @@ import java.util.List;
 /**
  * @author Sergio González
  */
-public abstract class BaseEditorConfigurationFactoryImpl<T> {
-
-	protected static class EditorServiceReferenceMapper<T>
-		implements ServiceReferenceMapper<String, T> {
-
-			@Override
-			public void map(
-				ServiceReference<T> serviceReference, Emitter<String> emitter) {
-
-				List<String> portletNames = StringPlus.asList(
-					serviceReference.getProperty("javax.portlet.name"));
-
-				if (portletNames.isEmpty()) {
-					portletNames.add(StringPool.BLANK);
-				}
-
-				for (String portletName : portletNames) {
-					List<String> editorConfigKeys = StringPlus.asList(
-						serviceReference.getProperty("editor.config.key"));
-
-					if (editorConfigKeys.isEmpty()) {
-						editorConfigKeys.add(StringPool.BLANK);
-					}
-
-					for (String editorConfigKey : editorConfigKeys) {
-						List<String> editorNames = StringPlus.asList(
-							serviceReference.getProperty("editor.name"));
-
-						if (editorNames.isEmpty()) {
-							editorNames.add(StringPool.BLANK);
-						}
-
-						for (String editorName : editorNames) {
-							emitter.emit(
-								getKey(
-									portletName, editorConfigKey, editorName));
-						}
-					}
-				}
-			}
-		}
+public abstract class BaseEditorConfigurationProvider<T> {
 
 	protected static String getKey(
 		String portletName, String editorConfigKey, String editorName) {
@@ -132,6 +92,46 @@ public abstract class BaseEditorConfigurationFactoryImpl<T> {
 		if (ListUtil.isNotEmpty(curContributors)) {
 			contributors.addAll(curContributors);
 		}
+	}
+
+	protected static class EditorServiceReferenceMapper<T>
+		implements ServiceReferenceMapper<String, T> {
+
+		@Override
+		public void map(
+			ServiceReference<T> serviceReference, Emitter<String> emitter) {
+
+			List<String> portletNames = StringPlus.asList(
+				serviceReference.getProperty("javax.portlet.name"));
+
+			if (portletNames.isEmpty()) {
+				portletNames.add(StringPool.BLANK);
+			}
+
+			for (String portletName : portletNames) {
+				List<String> editorConfigKeys = StringPlus.asList(
+					serviceReference.getProperty("editor.config.key"));
+
+				if (editorConfigKeys.isEmpty()) {
+					editorConfigKeys.add(StringPool.BLANK);
+				}
+
+				for (String editorConfigKey : editorConfigKeys) {
+					List<String> editorNames = StringPlus.asList(
+						serviceReference.getProperty("editor.name"));
+
+					if (editorNames.isEmpty()) {
+						editorNames.add(StringPool.BLANK);
+					}
+
+					for (String editorName : editorNames) {
+						emitter.emit(
+							getKey(portletName, editorConfigKey, editorName));
+					}
+				}
+			}
+		}
+
 	}
 
 }

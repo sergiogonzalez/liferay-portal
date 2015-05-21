@@ -14,10 +14,8 @@
 
 package com.liferay.portal.editor.configuration;
 
-import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
-import com.liferay.portal.kernel.editor.configuration.EditorConfigFactory;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.editor.configuration.EditorOptions;
+import com.liferay.portal.kernel.editor.configuration.EditorOptionsContributor;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -32,56 +30,50 @@ import java.util.Map;
 /**
  * @author Sergio González
  */
-public class EditorConfigFactoryImpl
-	extends BaseEditorConfigurationFactoryImpl<EditorConfigContributor>
-		implements EditorConfigFactory {
+public class EditorOptionsProvider
+	extends BaseEditorConfigurationProvider<EditorOptionsContributor> {
 
-	@Override
-	public JSONObject getConfigJSONObject(
+	public EditorOptions getEditorOptions(
 		String portletName, String editorConfigKey, String editorName,
 		Map<String, Object> inputEditorTaglibAttributes,
 		ThemeDisplay themeDisplay,
 		LiferayPortletResponse liferayPortletResponse) {
 
-		JSONObject configJSONObject = JSONFactoryUtil.createJSONObject();
+		EditorOptions editorOptions = new EditorOptions();
 
-		List<EditorConfigContributor> editorConfigContributors =
-			getContributors(portletName, editorConfigKey, editorName);
-
-		Iterator<EditorConfigContributor> iterator = ListUtil.reverseIterator(
-			editorConfigContributors);
+		Iterator<EditorOptionsContributor> iterator = ListUtil.reverseIterator(
+			getContributors(portletName, editorConfigKey, editorName));
 
 		while (iterator.hasNext()) {
-			EditorConfigContributor editorConfigContributor = iterator.next();
+			EditorOptionsContributor editorOptionsContributor = iterator.next();
 
-			editorConfigContributor.populateConfigJSONObject(
-				configJSONObject, inputEditorTaglibAttributes, themeDisplay,
+			editorOptionsContributor.populateEditorOptions(
+				editorOptions, inputEditorTaglibAttributes, themeDisplay,
 				liferayPortletResponse);
 		}
 
-		return configJSONObject;
+		return editorOptions;
 	}
 
 	@Override
-	protected ServiceTrackerMap<String, List<EditorConfigContributor>>
+	protected ServiceTrackerMap<String, List<EditorOptionsContributor>>
 		getServiceTrackerMap() {
 
-		return _editorConfigContributorServiceTrackerMap;
+		return _serviceTrackerMap;
 	}
 
-	private static final ServiceReferenceMapper<String, EditorConfigContributor>
-		_editorConfigContributorServiceReferenceMapper =
-			new EditorServiceReferenceMapper();
+	private static final ServiceReferenceMapper
+		<String, EditorOptionsContributor>
+			_serviceReferenceMapper = new EditorServiceReferenceMapper();
 	private static final ServiceTrackerMap
-		<String, List<EditorConfigContributor>>
-		_editorConfigContributorServiceTrackerMap =
+		<String, List<EditorOptionsContributor>> _serviceTrackerMap =
 			ServiceTrackerCollections.multiValueMap(
-				EditorConfigContributor.class,
+				EditorOptionsContributor.class,
 				"(|(editor.config.key=*)(editor.name=*)(javax.portlet.name=*))",
-				_editorConfigContributorServiceReferenceMapper);
+				_serviceReferenceMapper);
 
 	static {
-		_editorConfigContributorServiceTrackerMap.open();
+		_serviceTrackerMap.open();
 	}
 
 }
