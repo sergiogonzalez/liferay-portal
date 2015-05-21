@@ -40,7 +40,7 @@ import org.junit.Test;
 /**
  * @author Sergio González
  */
-public class EditorConfigFactoryTest {
+public class EditorConfigContributorTest {
 
 	@ClassRule
 	@Rule
