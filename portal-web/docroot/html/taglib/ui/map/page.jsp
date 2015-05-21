@@ -27,10 +27,15 @@ String name = GetterUtil.getString((String)request.getAttribute("liferay-ui:map:
 String points = GetterUtil.getString(request.getAttribute("liferay-ui:map:points"));
 String provider = GetterUtil.getString((String)request.getAttribute("liferay-ui:map:provider"));
 
-if (Validator.isNull(provider)) {
+if (Validator.isNull(apiKey) || Validator.isNull(provider)) {
 	PortletPreferences companyPortletPreferences = PrefsPropsUtil.getPreferences(company.getCompanyId());
 
+	String googleMapsAPIKey = null;
 	String mapsAPIProvider = null;
+
+	if (Validator.isNull(apiKey)) {
+		googleMapsAPIKey = companyPortletPreferences.getValue("googleMapsAPIKey", null);
+	}
 
 	if (Validator.isNull(provider)) {
 		mapsAPIProvider = companyPortletPreferences.getValue("mapsAPIProvider", "Google");
@@ -46,6 +51,10 @@ if (Validator.isNull(provider)) {
 
 	if (group != null) {
 		groupTypeSettings = group.getTypeSettingsProperties();
+	}
+
+	if (Validator.isNull(apiKey)) {
+		apiKey = groupTypeSettings.getProperty("googleMapsAPIKey", googleMapsAPIKey);
 	}
 
 	if (Validator.isNull(provider)) {
