@@ -16,6 +16,7 @@ package com.liferay.portlet.documentlibrary.service;
 
 import com.liferay.portal.kernel.interval.IntervalActionProcessor;
 import com.liferay.portal.kernel.repository.LocalRepository;
+import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.repository.util.RepositoryTrashUtil;
@@ -31,7 +32,6 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
@@ -41,7 +41,6 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
-import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
 import com.liferay.portlet.documentlibrary.util.test.DLTestUtil;
 
 import java.io.ByteArrayInputStream;
@@ -76,16 +75,25 @@ public class DLFileEntryLocalServiceTest {
 
 	@Test
 	public void testDeleteFileEntriesIteration() throws Exception {
-		Folder folder = DLAppTestUtil.addFolder(
-			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		Folder folder = DLAppServiceUtil.addFolder(
+			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			serviceContext);
 
 		for (int i = 0; i < 20; i++) {
-			FileEntry fileEntry = DLAppTestUtil.addFileEntry(
-				_group.getGroupId(), _group.getGroupId(), folder.getFolderId());
+			FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				folder.getFolderId(), RandomTestUtil.randomString(),
+				ContentTypes.TEXT_PLAIN, RandomTestUtil.randomBytes(),
+				serviceContext);
 
 			LocalRepository localRepository =
-				RepositoryLocalServiceUtil.getLocalRepositoryImpl(
-					0, fileEntry.getFileEntryId(), 0);
+				RepositoryProviderUtil.getFileEntryLocalRepository(
+					fileEntry.getFileEntryId());
 
 			RepositoryTrashUtil.moveFileEntryToTrash(
 				TestPropsValues.getUserId(), localRepository.getRepositoryId(),
@@ -93,8 +101,11 @@ public class DLFileEntryLocalServiceTest {
 		}
 
 		for (int i = 0; i < IntervalActionProcessor.INTERVAL_DEFAULT; i++) {
-			DLAppTestUtil.addFileEntry(
-				_group.getGroupId(), _group.getGroupId(), folder.getFolderId());
+			DLAppLocalServiceUtil.addFileEntry(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				folder.getFolderId(), RandomTestUtil.randomString(),
+				ContentTypes.TEXT_PLAIN, RandomTestUtil.randomBytes(),
+				serviceContext);
 		}
 
 		DLFileEntryLocalServiceUtil.deleteFileEntries(
