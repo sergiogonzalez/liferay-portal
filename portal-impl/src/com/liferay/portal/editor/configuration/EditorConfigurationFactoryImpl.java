@@ -51,9 +51,13 @@ public class EditorConfigurationFactoryImpl
 		EditorConfigTransformer editorConfigTransformer =
 			_editorConfigTransformerServiceTrackerMap.getService(editorName);
 
-		return new EditorConfigurationImpl(
-			configJSONObject, editorOptions, editorConfigTransformer,
-			inputEditorTaglibAttributes, themeDisplay, liferayPortletResponse);
+		if (editorConfigTransformer != null) {
+			editorConfigTransformer.transform(
+				editorOptions, inputEditorTaglibAttributes, themeDisplay,
+				liferayPortletResponse, configJSONObject);
+		}
+
+		return new EditorConfigurationImpl(configJSONObject, editorOptions);
 	}
 
 	public void setEditorConfigProvider(
