@@ -242,6 +242,27 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			priority, allowPingbacks, serviceContext);
 	}
 
+	@Override
+	public void addMessageAttachment(
+			long messageId, String fileName, File file, boolean indexingEnabled)
+		throws PortalException {
+
+		MBMessage message = mbMessageLocalService.getMBMessage(messageId);
+
+		if (lockLocalService.isLocked(
+				MBThread.class.getName(), message.getThreadId())) {
+
+			throw new LockedThreadException();
+		}
+
+		MBCategoryPermission.contains(
+			getPermissionChecker(), message.getGroupId(),
+			message.getCategoryId(), ActionKeys.ADD_FILE);
+
+		mbMessageLocalService.addMessageAttachment(
+			messageId, fileName, file, indexingEnabled);
+	}
+
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #deleteDiscussionMessage(
 	 *             String, long, long, long)}
