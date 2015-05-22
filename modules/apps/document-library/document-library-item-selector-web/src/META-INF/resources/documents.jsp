@@ -302,6 +302,8 @@ if (folderId > 0) {
 		else {
 			searchContainer.setTotal(DLAppServiceUtil.getFileEntriesCount(repositoryId, folderId, mimeTypes));
 
+			searchContainer.setOrderByComparator(DLUtil.getRepositoryModelOrderByComparator("title","asc"));
+
 			searchContainer.setResults(DLAppServiceUtil.getFileEntries(repositoryId, folderId, mimeTypes, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()));
 		}
 		%>
