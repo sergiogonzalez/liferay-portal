@@ -108,22 +108,22 @@ public abstract class BaseEditorConfigurationProvider<T> {
 				portletNames.add(StringPool.BLANK);
 			}
 
+			List<String> editorConfigKeys = StringPlus.asList(
+				serviceReference.getProperty("editor.config.key"));
+
+			if (editorConfigKeys.isEmpty()) {
+				editorConfigKeys.add(StringPool.BLANK);
+			}
+
+			List<String> editorNames = StringPlus.asList(
+				serviceReference.getProperty("editor.name"));
+
+			if (editorNames.isEmpty()) {
+				editorNames.add(StringPool.BLANK);
+			}
+
 			for (String portletName : portletNames) {
-				List<String> editorConfigKeys = StringPlus.asList(
-					serviceReference.getProperty("editor.config.key"));
-
-				if (editorConfigKeys.isEmpty()) {
-					editorConfigKeys.add(StringPool.BLANK);
-				}
-
 				for (String editorConfigKey : editorConfigKeys) {
-					List<String> editorNames = StringPlus.asList(
-						serviceReference.getProperty("editor.name"));
-
-					if (editorNames.isEmpty()) {
-						editorNames.add(StringPool.BLANK);
-					}
-
 					for (String editorName : editorNames) {
 						emitter.emit(
 							getKey(portletName, editorConfigKey, editorName));
