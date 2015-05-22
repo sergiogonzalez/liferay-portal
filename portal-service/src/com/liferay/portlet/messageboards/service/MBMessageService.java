@@ -97,6 +97,9 @@ public interface MBMessageService extends BaseService {
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
+	public void addMessageAttachment(long messageId, java.lang.String fileName,
+		java.io.File file, boolean indexingEnabled) throws PortalException;
+
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #deleteDiscussionMessage(
 	String, long, long, long)}
