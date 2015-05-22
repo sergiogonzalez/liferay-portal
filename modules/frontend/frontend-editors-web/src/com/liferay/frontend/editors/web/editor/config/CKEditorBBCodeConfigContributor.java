@@ -14,201 +14,199 @@
 
 package com.liferay.frontend.editors.web.editor.config;
 
-import com.liferay.portal.kernel.editor.config.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.editor.config.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.*;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.messageboards.model.MBThreadConstants;
-import org.osgi.service.component.annotations.Component;
 
-import java.util.Locale;
 import java.util.Map;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Ambrin Chaudhary
  */
 @Component(
-        property = {"editor.name=ckeditor_bbcode"},
-        service = EditorConfigContributor.class
+		property = {"editor.name=ckeditor_bbcode"},
+		service = EditorConfigContributor.class
 )
 
 public class CKEditorBBCodeConfigContributor
-    extends BaseCKEditorConfigContributor {
+	extends BaseCKEditorConfigContributor {
 
-    @Override
-    public void populateConfigJSONObject(
-            JSONObject jsonObject,
-            Map<String, Object> inputEditorTaglibAttributes,
-            ThemeDisplay themeDisplay,
-            LiferayPortletResponse liferayPortletResponse) {
+	@Override
+	public void populateConfigJSONObject(
+		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
+		ThemeDisplay themeDisplay,
+		LiferayPortletResponse liferayPortletResponse) {
 
-        super.populateConfigJSONObject(
-                jsonObject, inputEditorTaglibAttributes, themeDisplay,
-                liferayPortletResponse);
+		super.populateConfigJSONObject(
+				jsonObject, inputEditorTaglibAttributes, themeDisplay,
+				liferayPortletResponse);
 
-        jsonObject.put("allowedContent", Boolean.TRUE);
+		jsonObject.put("allowedContent", Boolean.TRUE);
 
-        jsonObject.put("enterMode", _CKEDITOR_ENTER_BR);
+		jsonObject.put("enterMode", _CKEDITOR_ENTER_BR);
 
-        jsonObject.put("extraPlugins", "a11yhelpbtn,bbcode,wikilink");
+		jsonObject.put("extraPlugins", "a11yhelpbtn,bbcode,wikilink");
 
-        jsonObject.put("filebrowserBrowseUrl", "");
+		jsonObject.put("filebrowserBrowseUrl", "");
 
-        jsonObject.put("filebrowserImageBrowseLinkUrl", "");
+		jsonObject.put("filebrowserImageBrowseLinkUrl", "");
 
-        jsonObject.put("filebrowserImageBrowseUrl", "");
+		jsonObject.put("filebrowserImageBrowseUrl", "");
 
-        jsonObject.put("filebrowserImageUploadUrl", "");
+		jsonObject.put("filebrowserImageUploadUrl", "");
 
-        jsonObject.put("filebrowserUploadUrl", "");
+		jsonObject.put("filebrowserUploadUrl", "");
 
-        jsonObject.put("fontSize_sizes",
-            "10/10px;12/12px;16/16px;18/18px;24/24px;32/32px;48/48px");
+		jsonObject.put("fontSize_sizes",
+			"10/10px;12/12px;16/16px;18/18px;24/24px;32/32px;48/48px");
 
-        jsonObject.put("format_tags", "p;pre");
+		jsonObject.put("format_tags", "p;pre");
 
-        jsonObject.put("imagesPath",
-            HtmlUtil.escape(themeDisplay.getPathThemeImages()) +
-            "/message_boards/");
+		jsonObject.put("imagesPath",
+			HtmlUtil.escape(themeDisplay.getPathThemeImages()) +
+			"/message_boards/");
 
-        jsonObject.put("newThreadURL", MBThreadConstants.NEW_THREAD_URL);
+		jsonObject.put("newThreadURL", MBThreadConstants.NEW_THREAD_URL);
 
-        String removePlugins ="bidi,div,elementspath,flash,forms,indentblock," +
-            "keystrokes,link,maximize,newpage,pagebreak,preview,print," +
-            "save,showblocks,templates,video";
+		String removePlugins ="bidi,div,elementspath,flash,forms,indentblock," +
+			"keystrokes,link,maximize,newpage,pagebreak,preview,print," +
+			"save,showblocks,templates,video";
 
-        jsonObject.put("removePlugins", removePlugins);
+		jsonObject.put("removePlugins", removePlugins);
 
-        String smileyEmoticons = StringUtil.merge(
-            BBCodeTranslatorUtil.getEmoticonDescriptions(), "','");
+		String smileyEmoticons = StringUtil.merge(
+			BBCodeTranslatorUtil.getEmoticonDescriptions(), "','");
 
-        jsonObject.put("smiley_descriptions",
-            toJSONArray("['" + smileyEmoticons + "']"));
+		jsonObject.put("smiley_descriptions",
+			toJSONArray("['" + smileyEmoticons + "']"));
 
-        String smileyImages = StringUtil.merge(
-            BBCodeTranslatorUtil.getEmoticonFiles(), "','");
+		String smileyImages = StringUtil.merge(
+			BBCodeTranslatorUtil.getEmoticonFiles(), "','");
 
-        jsonObject.put("smiley_images",
-            toJSONArray("['" + smileyImages + "']"));
+		jsonObject.put("smiley_images",
+			toJSONArray("['" + smileyImages + "']"));
 
-        jsonObject.put("smiley_path",
-                HtmlUtil.escape(themeDisplay.getPathThemeImages()) +
-                "/emoticons/");
+		jsonObject.put("smiley_path",
+				HtmlUtil.escape(themeDisplay.getPathThemeImages()) +
+				"/emoticons/");
 
-        String smileySymbols = StringUtil.merge(
-            BBCodeTranslatorUtil.getEmoticonSymbols(), "','");
+		String smileySymbols = StringUtil.merge(
+			BBCodeTranslatorUtil.getEmoticonSymbols(), "','");
 
-        jsonObject.put("smiley_symbols",
-            toJSONArray("['" + smileySymbols + "']"));
+		jsonObject.put("smiley_symbols",
+			toJSONArray("['" + smileySymbols + "']"));
 
-        jsonObject.put("toolbar_bbcode",
-            getToolbarsBBCodeJSONArray(inputEditorTaglibAttributes));
+		jsonObject.put("toolbar_bbcode",
+			getToolbarsBBCodeJSONArray(inputEditorTaglibAttributes));
 
-        jsonObject.put("toolbar_phone",
-            getToolbarsPhoneJSONArray(inputEditorTaglibAttributes));
+		jsonObject.put("toolbar_phone",
+			getToolbarsPhoneJSONArray(inputEditorTaglibAttributes));
 
-        jsonObject.put("toolbar_tablet",
-            getToolbarsTabletJSONArray(inputEditorTaglibAttributes));
-    }
+		jsonObject.put("toolbar_tablet",
+			getToolbarsTabletJSONArray(inputEditorTaglibAttributes));
+	}
 
-    @Override
-    public void populateOptionsJSONObject(
-            JSONObject jsonObject,
-            Map<String, Object> inputEditorTaglibAttributes,
-            ThemeDisplay themeDisplay,
-            LiferayPortletResponse liferayPortletResponse) {
+	@Override
+	public void populateOptionsJSONObject(
+		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
+		ThemeDisplay themeDisplay,
+		LiferayPortletResponse liferayPortletResponse) {
 
-        jsonObject.put("useCustomDataProcessor", Boolean.TRUE);
-    }
+		jsonObject.put("useCustomDataProcessor", Boolean.TRUE);
+	}
 
-    protected JSONArray getToolbarsBBCodeJSONArray(
-            Map<String, Object> inputEditorTaglibAttributes) {
-        JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+	protected JSONArray getToolbarsBBCodeJSONArray(
+		Map<String, Object> inputEditorTaglibAttributes) {
 
-        jsonArray.put(toJSONArray(
-            "['Bold', 'Italic', 'Underline', 'Strike']"));
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-        jsonArray.put(toJSONArray("['TextColor']"));
+		jsonArray.put(toJSONArray("['Bold', 'Italic', 'Underline', 'Strike']"));
 
-        jsonArray.put(toJSONArray(
-            "['JustifyLeft', 'JustifyCenter'," +
-            "'JustifyRight', 'JustifyBlock']"));
+		jsonArray.put(toJSONArray("['TextColor']"));
 
-        jsonArray.put(toJSONArray(
-            "['NumberedList', 'BulletedList', '-', 'Outdent', " +
-            " 'Indent', '-', 'Blockquote', '-', 'Code']"));
+		jsonArray.put(toJSONArray(
+			"['JustifyLeft', 'JustifyCenter'," +
+			"'JustifyRight', 'JustifyBlock']"));
 
-        jsonArray.put("/");
+		jsonArray.put(toJSONArray(
+			"['NumberedList', 'BulletedList', '-', 'Outdent', " +
+			" 'Indent', '-', 'Blockquote', '-', 'Code']"));
 
-        jsonArray.put(toJSONArray("['Format', 'Font', 'FontSize']"));
+		jsonArray.put("/");
 
-        jsonArray.put(toJSONArray("['Link', 'Unlink']"));
+		jsonArray.put(toJSONArray("['Format', 'Font', 'FontSize']"));
 
-        jsonArray.put(toJSONArray("['Image', '-', 'Smiley']"));
+		jsonArray.put(toJSONArray("['Link', 'Unlink']"));
 
-        jsonArray.put("/");
+		jsonArray.put(toJSONArray("['Image', '-', 'Smiley']"));
 
-        jsonArray.put(toJSONArray("['Cut', 'Copy', 'Paste', '-', " +
-            "'SelectAll', '-', 'Undo', 'Redo']"));
+		jsonArray.put("/");
 
-        if (isShowSource(inputEditorTaglibAttributes)) {
-            jsonArray.put(toJSONArray("['Source']"));
-        }
+		jsonArray.put(toJSONArray("['Cut', 'Copy', 'Paste', '-', " +
+			"'SelectAll', '-', 'Undo', 'Redo']"));
 
-        jsonArray.put(toJSONArray("['A11YBtn']"));
+		if (isShowSource(inputEditorTaglibAttributes)) {
+			jsonArray.put(toJSONArray("['Source']"));
+		}
 
+		jsonArray.put(toJSONArray("['A11YBtn']"));
 
-        return jsonArray;
-    }
+		return jsonArray;
+	}
 
-    protected JSONArray getToolbarsPhoneJSONArray(
-            Map<String, Object> inputEditorTaglibAttributes) {
-        JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+	protected JSONArray getToolbarsPhoneJSONArray(
+		Map<String, Object> inputEditorTaglibAttributes) {
 
-        jsonArray.put(toJSONArray("['Bold', 'Italic', 'Underline']"));
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-        jsonArray.put(toJSONArray("['NumberedList', 'BulletedList']"));
+		jsonArray.put(toJSONArray("['Bold', 'Italic', 'Underline']"));
 
-        jsonArray.put(toJSONArray("['Link', 'Unlink']"));
+		jsonArray.put(toJSONArray("['NumberedList', 'BulletedList']"));
 
-        jsonArray.put(toJSONArray("['Image']"));
+		jsonArray.put(toJSONArray("['Link', 'Unlink']"));
 
-        if (isShowSource(inputEditorTaglibAttributes)) {
-            jsonArray.put(toJSONArray("['Source']"));
-        }
+		jsonArray.put(toJSONArray("['Image']"));
 
-        return jsonArray;
-    }
+		if (isShowSource(inputEditorTaglibAttributes)) {
+			jsonArray.put(toJSONArray("['Source']"));
+		}
 
-    protected JSONArray getToolbarsTabletJSONArray(
-            Map<String, Object> inputEditorTaglibAttributes) {
-        JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+		return jsonArray;
+	}
 
-        jsonArray.put(toJSONArray("['Bold', 'Italic', 'Underline', 'Strike']"));
+	protected JSONArray getToolbarsTabletJSONArray(
+		Map<String, Object> inputEditorTaglibAttributes) {
 
-        jsonArray.put(toJSONArray("['JustifyLeft', 'JustifyCenter', " +
-            "'JustifyRight', 'JustifyBlock']"));
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-        jsonArray.put(toJSONArray("['NumberedList', 'BulletedList']"));
+		jsonArray.put(toJSONArray("['Bold', 'Italic', 'Underline', 'Strike']"));
 
-        jsonArray.put(toJSONArray("['Styles', 'FontSize']"));
+		jsonArray.put(toJSONArray("['JustifyLeft', 'JustifyCenter', " +
+			"'JustifyRight', 'JustifyBlock']"));
 
-        jsonArray.put(toJSONArray("['Link', 'Unlink']"));
+		jsonArray.put(toJSONArray("['NumberedList', 'BulletedList']"));
 
-        jsonArray.put(toJSONArray("['Image']"));
+		jsonArray.put(toJSONArray("['Styles', 'FontSize']"));
 
-        if (isShowSource(inputEditorTaglibAttributes)) {
-            jsonArray.put(toJSONArray("['Source']"));
-        }
+		jsonArray.put(toJSONArray("['Link', 'Unlink']"));
 
-        return jsonArray;
-    }
+		jsonArray.put(toJSONArray("['Image']"));
 
-    private static Integer _CKEDITOR_ENTER_BR = 2;
+		if (isShowSource(inputEditorTaglibAttributes)) {
+			jsonArray.put(toJSONArray("['Source']"));
+		}
+
+		return jsonArray;
+	}
+
+	private static final Integer _CKEDITOR_ENTER_BR = 2;
+
 }

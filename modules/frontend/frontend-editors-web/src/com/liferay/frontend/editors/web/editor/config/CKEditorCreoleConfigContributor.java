@@ -22,186 +22,188 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.*;
 import com.liferay.portal.theme.ThemeDisplay;
-import org.osgi.service.component.annotations.Component;
 
 import java.util.Locale;
 import java.util.Map;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Ambrin Chaudhary
  */
 @Component(
-        property = {"editor.name=ckeditor_creole"},
-        service = EditorConfigContributor.class
+		property = {"editor.name=ckeditor_creole"},
+		service = EditorConfigContributor.class
 )
 
 public class CKEditorCreoleConfigContributor
-        extends BaseCKEditorConfigContributor {
+		extends BaseCKEditorConfigContributor {
 
-    @Override
-    public void populateConfigJSONObject(
-            JSONObject jsonObject,
-            Map<String, Object> inputEditorTaglibAttributes,
-            ThemeDisplay themeDisplay,
-            LiferayPortletResponse liferayPortletResponse) {
+	@Override
+	public void populateConfigJSONObject(
+		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
+		ThemeDisplay themeDisplay,
+		LiferayPortletResponse liferayPortletResponse) {
 
-        super.populateConfigJSONObject(
-                jsonObject, inputEditorTaglibAttributes, themeDisplay,
-                liferayPortletResponse);
+		super.populateConfigJSONObject(
+				jsonObject, inputEditorTaglibAttributes, themeDisplay,
+				liferayPortletResponse);
 
-        jsonObject.put("allowedContent", "b strong i hr h1 h2 h3 h4 h5 h6" +
-                " em ul ol li pre table tr th; img a[*]");
+		jsonObject.put("allowedContent", "b strong i hr h1 h2 h3 h4 h5 h6" +
+			" em ul ol li pre table tr th; img a[*]");
 
-        Map<String, String> fileBrowserParams =
-                (Map<String, String>) inputEditorTaglibAttributes.get(
-                        "liferay-ui:input-editor:fileBrowserParams");
+		Map<String, String> fileBrowserParams =
+				(Map<String, String>)inputEditorTaglibAttributes.get(
+					"liferay-ui:input-editor:fileBrowserParams");
 
-        String attachmentURLPrefix = fileBrowserParams.get(
-                "attachmentURLPrefix");
+		String attachmentURLPrefix = fileBrowserParams.get(
+			"attachmentURLPrefix");
 
-        jsonObject.put("attachmentURLPrefix", attachmentURLPrefix);
+		jsonObject.put("attachmentURLPrefix", attachmentURLPrefix);
 
-        jsonObject.put("decodeLinks", Boolean.TRUE);
+		jsonObject.put("decodeLinks", Boolean.TRUE);
 
-        jsonObject.put("disableObjectResizing", Boolean.TRUE);
+		jsonObject.put("disableObjectResizing", Boolean.TRUE);
 
-        jsonObject.put("extraPlugins", "a11yhelpbtn,creole,lfrpopup,wikilink");
+		jsonObject.put("extraPlugins", "a11yhelpbtn,creole,lfrpopup,wikilink");
 
-        String languageId = LocaleUtil.toLanguageId(themeDisplay.getLocale());
+		String languageId = LocaleUtil.toLanguageId(themeDisplay.getLocale());
 
-        Locale locale = LocaleUtil.fromLanguageId(languageId);
+		Locale locale = LocaleUtil.fromLanguageId(languageId);
 
-        jsonObject.put("filebrowserWindowFeatures", "title=" +
-                LanguageUtil.get(locale, "browse"));
+		jsonObject.put("filebrowserWindowFeatures", "title=" +
+			LanguageUtil.get(locale, "browse"));
 
-        jsonObject.put("format_tags", "p;h1;h2;h3;h4;h5;h6;pre");
+		jsonObject.put("format_tags", "p;h1;h2;h3;h4;h5;h6;pre");
 
-        String removePlugins ="bidi,colorbutton,colordialog,div,elementspath," +
-            "flash,font,forms,indentblock,justify,keystrokes,link,maximize," +
-            "newpage,pagebreak,preview,print,save,showblocks,smiley," +
-            "stylescombo,templates,video";
+		String removePlugins ="bidi,colorbutton,colordialog,div,elementspath," +
+			"flash,font,forms,indentblock,justify,keystrokes,link,maximize," +
+			"newpage,pagebreak,preview,print,save,showblocks,smiley," +
+			"stylescombo,templates,video";
 
-        jsonObject.put("removePlugins", removePlugins);
+		jsonObject.put("removePlugins", removePlugins);
 
-        jsonObject.put("toolbar_creole", getToolbarsCreoleJSONArray(
-                inputEditorTaglibAttributes));
+		jsonObject.put("toolbar_creole", getToolbarsCreoleJSONArray(
+			inputEditorTaglibAttributes));
 
-        jsonObject.put("toolbar_phone", getToolbarsPhoneJSONArray(
-                inputEditorTaglibAttributes));
+		jsonObject.put("toolbar_phone", getToolbarsPhoneJSONArray(
+			inputEditorTaglibAttributes));
 
-        jsonObject.put("toolbar_tablet", getToolbarsTabletJSONArray(
-                inputEditorTaglibAttributes));
-    }
+		jsonObject.put("toolbar_tablet", getToolbarsTabletJSONArray(
+			inputEditorTaglibAttributes));
+	}
 
-    @Override
-    public void populateOptionsJSONObject(
-            JSONObject jsonObject,
-            Map<String, Object> inputEditorTaglibAttributes,
-            ThemeDisplay themeDisplay,
-            LiferayPortletResponse liferayPortletResponse) {
+	@Override
+	public void populateOptionsJSONObject(
+		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
+		ThemeDisplay themeDisplay,
+		LiferayPortletResponse liferayPortletResponse) {
 
-        jsonObject.put("customDialogDefinition", Boolean.TRUE);
+		jsonObject.put("customDialogDefinition", Boolean.TRUE);
 
-        jsonObject.put("customCellDialog", Boolean.TRUE);
+		jsonObject.put("customCellDialog", Boolean.TRUE);
 
-        jsonObject.put("customTableDialog", Boolean.TRUE);
+		jsonObject.put("customTableDialog", Boolean.TRUE);
 
-        jsonObject.put("useCustomDataProcessor", Boolean.TRUE);
-    }
+		jsonObject.put("useCustomDataProcessor", Boolean.TRUE);
+	}
 
-    protected JSONArray getToolbarsCreoleJSONArray(
-            Map<String, Object> inputEditorTaglibAttributes) {
+	protected JSONArray getToolbarsCreoleJSONArray(
+		Map<String, Object> inputEditorTaglibAttributes) {
 
-        JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-        jsonArray.put(toJSONArray("['Bold', 'Italic', '-' ,'RemoveFormat']"));
+		jsonArray.put(toJSONArray("['Bold', 'Italic', '-' ,'RemoveFormat']"));
 
-        jsonArray.put(toJSONArray("['NumberedList', 'BulletedList', '-', " +
-                "'Outdent', 'Indent']"));
+		jsonArray.put(toJSONArray("['NumberedList', 'BulletedList', '-', " +
+			"'Outdent', 'Indent']"));
 
-        jsonArray.put(toJSONArray("['Format']"));
+		jsonArray.put(toJSONArray("['Format']"));
 
-        jsonArray.put(toJSONArray("['Link', 'Unlink']"));
+		jsonArray.put(toJSONArray("['Link', 'Unlink']"));
 
-        String buttons = "['Table', '-',";
+		String buttons = "['Table', '-',";
 
-        if (includeButtonImage(inputEditorTaglibAttributes)) {
-            buttons += "'Image', '-', ";
-        }
+		if (includeButtonImage(inputEditorTaglibAttributes)) {
+			buttons += "'Image', '-', ";
+		}
 
-        buttons+= "'HorizontalRule', '-', 'SpecialChar' ]";
+		buttons+= "'HorizontalRule', '-', 'SpecialChar' ]";
 
-        jsonArray.put(toJSONArray(buttons));
+		jsonArray.put(toJSONArray(buttons));
 
-        jsonArray.put("/");
+		jsonArray.put("/");
 
-        jsonArray.put(toJSONArray("['Cut', 'Copy', 'Paste', '-', 'PasteText'," +
-                " 'PasteFromWord', '-', 'SelectAll', '-', 'Undo', 'Redo']"));
+		jsonArray.put(toJSONArray("['Cut', 'Copy', 'Paste', '-', 'PasteText'," +
+			" 'PasteFromWord', '-', 'SelectAll', '-', 'Undo', 'Redo']"));
 
-        jsonArray.put(toJSONArray("['Find','Replace']"));
+		jsonArray.put(toJSONArray("['Find','Replace']"));
 
-        if (isShowSource(inputEditorTaglibAttributes)) {
-            jsonArray.put(toJSONArray("['Source']"));
-        }
+		if (isShowSource(inputEditorTaglibAttributes)) {
+			jsonArray.put(toJSONArray("['Source']"));
+		}
 
-        jsonArray.put(toJSONArray("['A11YBtn']"));
+		jsonArray.put(toJSONArray("['A11YBtn']"));
 
-        return jsonArray;
-    }
+		return jsonArray;
+	}
 
-    protected JSONArray getToolbarsPhoneJSONArray(
-            Map<String, Object> inputEditorTaglibAttributes) {
-        JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+	protected JSONArray getToolbarsPhoneJSONArray(
+		Map<String, Object> inputEditorTaglibAttributes) {
 
-        jsonArray.put(toJSONArray("['Bold', 'Italic']"));
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-        jsonArray.put(toJSONArray("['NumberedList', 'BulletedList']"));
+		jsonArray.put(toJSONArray("['Bold', 'Italic']"));
 
-        jsonArray.put(toJSONArray("['Link', 'Unlink']"));
+		jsonArray.put(toJSONArray("['NumberedList', 'BulletedList']"));
 
-        if (includeButtonImage(inputEditorTaglibAttributes)) {
-            jsonArray.put(toJSONArray("['Image']"));
-        }
+		jsonArray.put(toJSONArray("['Link', 'Unlink']"));
 
-        if (isShowSource(inputEditorTaglibAttributes)) {
-            jsonArray.put(toJSONArray("['Source']"));
-        }
+		if (includeButtonImage(inputEditorTaglibAttributes)) {
+			jsonArray.put(toJSONArray("['Image']"));
+		}
 
-        return jsonArray;
-    }
+		if (isShowSource(inputEditorTaglibAttributes)) {
+			jsonArray.put(toJSONArray("['Source']"));
+		}
 
-    protected JSONArray getToolbarsTabletJSONArray(
-             Map<String, Object> inputEditorTaglibAttributes) {
-        JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+		return jsonArray;
+	}
 
-        jsonArray.put(toJSONArray("['Bold', 'Italic']"));
+	protected JSONArray getToolbarsTabletJSONArray(
+		Map<String, Object> inputEditorTaglibAttributes) {
 
-        jsonArray.put(toJSONArray("['NumberedList', 'BulletedList', '-', " +
-                "'Outdent', 'Indent']"));
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-        jsonArray.put(toJSONArray("['Format']"));
+		jsonArray.put(toJSONArray("['Bold', 'Italic']"));
 
-        jsonArray.put(toJSONArray("['Link', 'Unlink']"));
+		jsonArray.put(toJSONArray("['NumberedList', 'BulletedList', '-', " +
+			"'Outdent', 'Indent']"));
 
-        if (includeButtonImage(inputEditorTaglibAttributes)) {
-            jsonArray.put(toJSONArray("['Image']"));
-        }
+		jsonArray.put(toJSONArray("['Format']"));
 
-        if (isShowSource(inputEditorTaglibAttributes)) {
-            jsonArray.put(toJSONArray("['Source']"));
-        }
+		jsonArray.put(toJSONArray("['Link', 'Unlink']"));
 
-        return jsonArray;
-    }
+		if (includeButtonImage(inputEditorTaglibAttributes)) {
+			jsonArray.put(toJSONArray("['Image']"));
+		}
 
-    protected boolean includeButtonImage(
-            Map<String, Object> inputEditorTaglibAttributes) {
+		if (isShowSource(inputEditorTaglibAttributes)) {
+			jsonArray.put(toJSONArray("['Source']"));
+		}
 
-        Map<String, String> fileBrowserParams =
-                (Map<String, String>) inputEditorTaglibAttributes.get(
-                        "liferay-ui:input-editor:fileBrowserParams");
+		return jsonArray;
+	}
 
-        return GetterUtil.getLong(fileBrowserParams.get(
-                "wikiPageResourcePrimKey")) > 0;
-    }
+	protected boolean includeButtonImage(
+		Map<String, Object> inputEditorTaglibAttributes) {
+
+		Map<String, String> fileBrowserParams =
+				(Map<String, String>)inputEditorTaglibAttributes.get(
+					"liferay-ui:input-editor:fileBrowserParams");
+
+		return GetterUtil.getLong(
+			fileBrowserParams.get("wikiPageResourcePrimKey")) > 0;
+	}
+
 }

@@ -34,84 +34,82 @@ import java.util.Map;
  */
 
 public class BaseCKEditorConfigContributor extends BaseEditorConfigContributor {
-    @Override
-    public void populateConfigJSONObject(
-            JSONObject jsonObject,
-            Map<String, Object> inputEditorTaglibAttributes,
-            ThemeDisplay themeDisplay,
-            LiferayPortletResponse liferayPortletResponse) {
+	@Override
+	public void populateConfigJSONObject(
+		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
+		ThemeDisplay themeDisplay,
+		LiferayPortletResponse liferayPortletResponse) {
 
-        jsonObject.put("allowedContent", Boolean.TRUE);
+		jsonObject.put("allowedContent", Boolean.TRUE);
 
-        String cssClasses = (String)inputEditorTaglibAttributes.get(
-                "liferay-ui:input-editor:cssClasses");
+		String cssClasses = (String)inputEditorTaglibAttributes.get(
+			"liferay-ui:input-editor:cssClasses");
 
-        jsonObject.put("bodyClass", "html-editor " +
-                HtmlUtil.escape(cssClasses));
+		jsonObject.put("bodyClass", "html-editor " +
+			HtmlUtil.escape(cssClasses));
 
-        JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-        String cssPath = HtmlUtil.escape(themeDisplay.getPathThemeCss());
+		String cssPath = HtmlUtil.escape(themeDisplay.getPathThemeCss());
 
-        jsonArray.put(cssPath + "/aui.css");
-        jsonArray.put(cssPath + "/main.css");
+		jsonArray.put(cssPath + "/aui.css");
+		jsonArray.put(cssPath + "/main.css");
 
-        jsonObject.put("contentsCss", jsonArray);
+		jsonObject.put("contentsCss", jsonArray);
 
-        String contentsLanguageId = (String)inputEditorTaglibAttributes.get(
-                "liferay-ui:input-editor:contentsLanguageId");
+		String contentsLanguageId = (String)inputEditorTaglibAttributes.get(
+			"liferay-ui:input-editor:contentsLanguageId");
 
-        Locale contentsLocale = LocaleUtil.fromLanguageId(contentsLanguageId);
+		Locale contentsLocale = LocaleUtil.fromLanguageId(contentsLanguageId);
 
-        String contentsLanguageDir = LanguageUtil.get(
-                contentsLocale, "lang.dir");
+		String contentsLanguageDir = LanguageUtil.get(
+			contentsLocale, "lang.dir");
 
-        contentsLanguageId = LocaleUtil.toLanguageId(contentsLocale);
+		contentsLanguageId = LocaleUtil.toLanguageId(contentsLocale);
 
-        jsonObject.put("contentsLangDirection",
-                HtmlUtil.escapeJS(contentsLanguageDir));
+		jsonObject.put("contentsLangDirection",
+			HtmlUtil.escapeJS(contentsLanguageDir));
 
-        jsonObject.put("contentsLanguage",
-                contentsLanguageId.replace("iw_", "he_"));
+		jsonObject.put("contentsLanguage",
+			contentsLanguageId.replace("iw_", "he_"));
 
-        jsonObject.put("height", 265);
+		jsonObject.put("height", 265);
 
-        String languageId = LocaleUtil.toLanguageId(themeDisplay.getLocale());
+		String languageId = LocaleUtil.toLanguageId(themeDisplay.getLocale());
 
-        Locale locale = LocaleUtil.fromLanguageId(languageId);
+		Locale locale = LocaleUtil.fromLanguageId(languageId);
 
-        languageId = LocaleUtil.toLanguageId(locale);
+		languageId = LocaleUtil.toLanguageId(locale);
 
-        jsonObject.put("language", languageId.replace("iw_", "he_"));
+		jsonObject.put("language", languageId.replace("iw_", "he_"));
 
-        boolean resizable = GetterUtil.getBoolean(
-                (String) inputEditorTaglibAttributes.get(
-                        "liferay-ui:input-editor:resizable"));
+		boolean resizable = GetterUtil.getBoolean(
+				(String)inputEditorTaglibAttributes.get(
+					"liferay-ui:input-editor:resizable"));
 
-        if (resizable) {
-            jsonObject.put("resize_dir", "vertical");
-        }
+		if (resizable) {
+			jsonObject.put("resize_dir", "vertical");
+		}
 
-        jsonObject.put("resize_enabled", resizable);
+		jsonObject.put("resize_enabled", resizable);
 
-        liferayPortletResponse.getHttpServletResponse()
-                .setContentType(ContentTypes.TEXT_JAVASCRIPT);
-    }
+		liferayPortletResponse.getHttpServletResponse()
+			.setContentType(ContentTypes.TEXT_JAVASCRIPT);
+	}
 
-    @Override
-    public void populateOptionsJSONObject(
-            JSONObject jsonObject,
-            Map<String, Object> inputEditorTaglibAttributes,
-            ThemeDisplay themeDisplay,
-            LiferayPortletResponse liferayPortletResponse) {
+	@Override
+	public void populateOptionsJSONObject(
+		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
+		ThemeDisplay themeDisplay,
+		LiferayPortletResponse liferayPortletResponse) {
+	}
 
-    }
+	protected boolean isShowSource(
+		Map<String, Object> inputEditorTaglibAttributes) {
 
-    protected boolean isShowSource(
-            Map<String, Object> inputEditorTaglibAttributes) {
+		return GetterUtil.getBoolean(
+				inputEditorTaglibAttributes.get(
+					"liferay-ui:input-editor:showSource"));
+	}
 
-        return GetterUtil.getBoolean(
-                inputEditorTaglibAttributes.get(
-                        "liferay-ui:input-editor:showSource"));
-    }
 }
