@@ -16,10 +16,11 @@ package com.liferay.document.library.item.selector.web;
 
 import com.liferay.item.selector.BaseItemSelectorCriterion;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.util.Base64;
 
 import java.net.URL;
 
-import java.util.Set;
+import java.util.List;
 
 /**
  * @author Roberto Díaz
@@ -31,8 +32,7 @@ public class DLItemSelectorCriterion extends BaseItemSelectorCriterion {
 	}
 
 	public DLItemSelectorCriterion(
-		long folderId, long repositoryId, String type, String[] mimeTypes,
-		boolean showGroupsSelector) {
+		long folderId, long repositoryId, String type, String[] mimeTypes) {
 
 		super(_AVAILABLE_RETURN_TYPES);
 
@@ -40,7 +40,6 @@ public class DLItemSelectorCriterion extends BaseItemSelectorCriterion {
 		_repositoryId = repositoryId;
 		_type = type;
 		_mimeTypes = mimeTypes;
-		_showGroupsSelector = showGroupsSelector;
 	}
 
 	public long getFolderId() {
@@ -59,10 +58,6 @@ public class DLItemSelectorCriterion extends BaseItemSelectorCriterion {
 		return _type;
 	}
 
-	public boolean isShowGroupsSelector() {
-		return _showGroupsSelector;
-	}
-
 	public void setFolderId(long folderId) {
 		_folderId = folderId;
 	}
@@ -75,21 +70,16 @@ public class DLItemSelectorCriterion extends BaseItemSelectorCriterion {
 		_repositoryId = repositoryId;
 	}
 
-	public void setShowGroupsSelector(boolean showGroupsSelector) {
-		_showGroupsSelector = showGroupsSelector;
-	}
-
 	public void setType(String type) {
 		_type = type;
 	}
 
-	private static final Set<Class<?>> _AVAILABLE_RETURN_TYPES =
-		getInmutableSet(FileEntry.class, URL.class);
+	private static final List<Class<?>> _AVAILABLE_RETURN_TYPES =
+		getInmutableList(Base64.class, FileEntry.class, URL.class);
 
 	private long _folderId;
 	private String[] _mimeTypes;
 	private long _repositoryId;
-	private boolean _showGroupsSelector;
 	private String _type;
 
 }

@@ -12,30 +12,18 @@
  * details.
  */
 
-package com.liferay.item.selector;
+package com.liferay.portal.kernel.editor;
 
-import java.io.IOException;
-
-import java.util.Locale;
-
-import javax.portlet.PortletURL;
-
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 
 /**
- * @author Iván Zaera
+ * @author Roberto Díaz
  */
-public interface ItemSelectorView<T extends ItemSelectorCriterion> {
 
-	public Class<T> getItemSelectorCriterionClass();
+public interface Editor {
 
-	public String getTitle(Locale locale);
+	public void addItemSelectorAttribute(HttpServletRequest request);
 
-	public void renderHTML(
-			ServletRequest servletRequest, ServletResponse servletResponse,
-			T itemSelectorCriterion, PortletURL portletURL)
-		throws IOException, ServletException;
+	public String getEditorJSPPath(HttpServletRequest request);
 
 }

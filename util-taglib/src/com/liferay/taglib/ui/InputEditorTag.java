@@ -14,6 +14,7 @@
 
 package com.liferay.taglib.ui;
 
+import com.liferay.portal.kernel.editor.Editor;
 import com.liferay.portal.kernel.editor.config.EditorConfig;
 import com.liferay.portal.kernel.editor.config.EditorConfigFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -21,7 +22,6 @@ import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil;
 import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
 import com.liferay.portal.kernel.servlet.PortalWebResourcesUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -30,19 +30,13 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.registry.Filter;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceTracker;
-import com.liferay.registry.ServiceTrackerCustomizer;
+import com.liferay.registry.collections.ServiceTrackerCollections;
+import com.liferay.registry.collections.ServiceTrackerMap;
 import com.liferay.taglib.util.IncludeTag;
 
-import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
@@ -174,6 +168,7 @@ public class InputEditorTag extends IncludeTag {
 		_contentsLanguageId = null;
 		_cssClass = null;
 		_data = null;
+		_editor = null;
 		_editorName = null;
 		_fileBrowserParams = null;
 		_height = null;
@@ -266,6 +261,14 @@ public class InputEditorTag extends IncludeTag {
 		return data;
 	}
 
+	protected Editor getEditor(String editorName) {
+		if (_editor == null) {
+			_editor = _serviceTrackerMap.getService(editorName);
+		}
+
+		return _editor;
+	}
+
 	protected String getEditorName(HttpServletRequest request) {
 		String editorName = _editorName;
 
@@ -277,7 +280,7 @@ public class InputEditorTag extends IncludeTag {
 			editorName = _EDITOR_WYSIWYG_DEFAULT;
 		}
 
-		if (!_editorServiceTrackerCustomizer.hasEditor(editorName)) {
+		if (!_serviceTrackerMap.containsKey(editorName)) {
 			editorName = _EDITOR_WYSIWYG_DEFAULT;
 		}
 
@@ -286,17 +289,9 @@ public class InputEditorTag extends IncludeTag {
 
 	@Override
 	protected String getPage() {
-		String editorName = getEditorName(request);
+		Editor editor = getEditor(getEditorName(request));
 
-		return getPage(editorName);
-	}
-
-	protected String getPage(String editorName) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		return themeDisplay.getPathEditors() +
-			"/editors/" + editorName + ".jsp";
+		return editor.getEditorJSPPath(request);
 	}
 
 	@Override
@@ -309,6 +304,8 @@ public class InputEditorTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
+		String editorName = getEditorName(request);
+
 		request.setAttribute(
 			"liferay-ui:input-editor:allowBrowseDocuments",
 			String.valueOf(_allowBrowseDocuments));
@@ -323,8 +320,7 @@ public class InputEditorTag extends IncludeTag {
 		request.setAttribute("liferay-ui:input-editor:cssClass", _cssClass);
 		request.setAttribute(
 			"liferay-ui:input-editor:cssClasses", getCssClasses());
-		request.setAttribute(
-			"liferay-ui:input-editor:editorName", getEditorName(request));
+		request.setAttribute("liferay-ui:input-editor:editorName", editorName);
 		request.setAttribute(
 			"liferay-ui:input-editor:fileBrowserParams", _fileBrowserParams);
 		request.setAttribute("liferay-ui:input-editor:height", _height);
@@ -354,14 +350,25 @@ public class InputEditorTag extends IncludeTag {
 		request.setAttribute("liferay-ui:input-editor:toolbarSet", _toolbarSet);
 		request.setAttribute("liferay-ui:input-editor:width", _width);
 
+		Editor editor = getEditor(editorName);
+
+		if (editor != null) {
+			editor.addItemSelectorAttribute(request);
+		}
+
 		request.setAttribute("liferay-ui:input-editor:data", getData());
 	}
 
 	private static final String _EDITOR_WYSIWYG_DEFAULT = PropsUtil.get(
 		PropsKeys.EDITOR_WYSIWYG_DEFAULT);
 
-	private static final EditorServiceTrackerCustomizer
-		_editorServiceTrackerCustomizer = new EditorServiceTrackerCustomizer();
+	private static final ServiceTrackerMap<String, Editor>
+		_serviceTrackerMap = ServiceTrackerCollections.singleValueMap(
+			Editor.class, "editor.name");
+
+	static {
+		_serviceTrackerMap.open();
+	}
 
 	private boolean _allowBrowseDocuments = true;
 	private boolean _autoCreate = true;
@@ -371,6 +378,7 @@ public class InputEditorTag extends IncludeTag {
 	private String _contentsLanguageId;
 	private String _cssClass;
 	private Map<String, Object> _data = null;
+	private Editor _editor;
 	private String _editorName;
 	private Map<String, String> _fileBrowserParams;
 	private String _height;
@@ -388,58 +396,5 @@ public class InputEditorTag extends IncludeTag {
 	private boolean _skipEditorLoading;
 	private String _toolbarSet = "liferay";
 	private String _width;
-
-	private static class EditorServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer<Object, Object> {
-
-		public EditorServiceTrackerCustomizer() {
-			Registry registry = RegistryUtil.getRegistry();
-
-			Filter filter = registry.getFilter("(editor.name=*)");
-
-			_serviceTracker = registry.trackServices(filter, this);
-
-			_serviceTracker.open();
-		}
-
-		@Override
-		public Object addingService(ServiceReference<Object> serviceReference) {
-			Registry registry = RegistryUtil.getRegistry();
-
-			String editorName = GetterUtil.getString(
-				serviceReference.getProperty("editor.name"));
-
-			_editorNames.put(serviceReference, editorName);
-
-			return registry.getService(serviceReference);
-		}
-
-		public boolean hasEditor(String editorName) {
-			Collection<String> values = _editorNames.values();
-
-			return values.contains(editorName);
-		}
-
-		@Override
-		public void modifiedService(
-			ServiceReference<Object> serviceReference, Object service) {
-		}
-
-		@Override
-		public void removedService(
-			ServiceReference<Object> serviceReference, Object service) {
-
-			_editorNames.remove(serviceReference);
-
-			Registry registry = RegistryUtil.getRegistry();
-
-			registry.ungetService(serviceReference);
-		}
-
-		private final Map<ServiceReference<Object>, String> _editorNames =
-			new ConcurrentHashMap<>();
-		private final ServiceTracker<Object, Object> _serviceTracker;
-
-	}
 
 }

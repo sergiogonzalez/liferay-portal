@@ -18,7 +18,7 @@ import com.liferay.item.selector.BaseItemSelectorCriterion;
 
 import java.net.URL;
 
-import java.util.Set;
+import java.util.List;
 
 /**
  * @author Iván Zaera
@@ -45,8 +45,8 @@ public class FlickrItemSelectorCriterion extends BaseItemSelectorCriterion {
 		_user = user;
 	}
 
-	private static final Set<Class<?>> _AVAILABLE_RETURN_TYPES =
-		getInmutableSet(URL.class, String.class);
+	private static final List<Class<?>> _AVAILABLE_RETURN_TYPES =
+		getInmutableList(URL.class, String.class);
 
 	private String[] _tags = {"me", "photo", "picture"};
 	private String _user = "anonymous";

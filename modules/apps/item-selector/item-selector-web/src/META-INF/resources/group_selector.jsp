@@ -23,7 +23,6 @@ long groupId = ParamUtil.getLong(request, "groupId");
 
 Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 
-String ckEditorFuncNum = ItemSelectorUtil.getCKEditorFuncNum(request);
 String eventName = ParamUtil.getString(request, "eventName");
 boolean showGroupsSelector = ParamUtil.getBoolean(request, "showGroupsSelector");
 String type = ItemSelectorUtil.getType(request);
@@ -39,7 +38,6 @@ String type = ItemSelectorUtil.getType(request);
 	selectGroupURL.setParameter("mvcPath", "/view.jsp");
 	selectGroupURL.setParameter("tabs1", tabs1);
 	selectGroupURL.setParameter("tabs1Names", StringUtil.merge(ItemSelectorUtil.getTabs1Names(request)));
-	selectGroupURL.setParameter("ckEditorFuncNum", ckEditorFuncNum);
 	selectGroupURL.setParameter("eventName", eventName);
 	selectGroupURL.setParameter("showGroupsSelector", String.valueOf(showGroupsSelector));
 	selectGroupURL.setParameter("type", type);

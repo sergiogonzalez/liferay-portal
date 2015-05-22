@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 
 import java.net.URL;
 
-import java.util.Set;
+import java.util.List;
 
 /**
  * @author Iván Zaera
@@ -46,8 +46,8 @@ public class MediaItemSelectorCriterion extends BaseItemSelectorCriterion {
 		_maxSize = maxSize;
 	}
 
-	private static final Set<Class<?>> _AVAILABLE_RETURN_TYPES =
-		getInmutableSet(FileEntry.class, URL.class);
+	private static final List<Class<?>> _AVAILABLE_RETURN_TYPES =
+		getInmutableList(FileEntry.class, URL.class);
 
 	private String _fileExtension = "*";
 	private long _maxSize = -1;

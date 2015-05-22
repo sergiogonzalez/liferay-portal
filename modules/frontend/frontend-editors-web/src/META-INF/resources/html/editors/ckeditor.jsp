@@ -91,6 +91,8 @@ boolean showSource = GetterUtil.getBoolean((String)request.getAttribute("liferay
 boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:skipEditorLoading"));
 String toolbarSet = (String)request.getAttribute("liferay-ui:input-editor:toolbarSet");
 
+ItemSelector itemSelector = (ItemSelector)request.getAttribute("itemSelector");
+
 if (!inlineEdit) {
 	name = namespace + name;
 }
@@ -433,44 +435,40 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 		currentToolbarSet = getToolbarSet(initialToolbarSet);
 
 		var filebrowserBrowseUrl = '';
+		var filebrowserFlashBrowseUrl = '';
 		var filebrowserImageBrowseUrl = '';
 		var filebrowserImageBrowseLinkUrl = '';
-		var filebrowserFlashBrowseUrl = '';
 
 		<c:if test="<%= allowBrowseDocuments %>">
-			<liferay-portlet:renderURL portletName="<%= PortletKeys.ITEM_SELECTOR %>" varImpl="itemSelectorURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-				<portlet:param name="mvcPath" value="/view.jsp" />
-				<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
-				<portlet:param name="eventName" value='<%= name + "selectDocument" %>' />
-				<portlet:param name="showGroupsSelector" value="true" />
-			</liferay-portlet:renderURL>
 
 			<%
+			String tabs1Names = null;
+
 			if (fileBrowserParamsMap != null) {
-				for (Map.Entry<String, String> entry : fileBrowserParamsMap.entrySet()) {
-					itemSelectorURL.setParameter(entry.getKey(), entry.getValue());
-				}
+				tabs1Names = fileBrowserParamsMap.get("tabs1Names");
 			}
+
+			ItemSelectorCriterion imageItemSelectorCriterion = null;
+
+			if (Validator.isNotNull(tabs1Names) && tabs1Names.equals("attachments")) {
+				imageItemSelectorCriterion = new WikiAttachmentItemSelectorCriterion(Long.valueOf(fileBrowserParamsMap.get("wikiPageResourcePrimKey")));
+			}
+			else {
+				imageItemSelectorCriterion = new DLItemSelectorCriterion(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, themeDisplay.getScopeGroupId(), "images", PropsValues.DL_FILE_ENTRY_PREVIEW_IMAGE_MIME_TYPES);
+			}
+
+			ItemSelectorCriterion layoutItemSelectorCriterion = new LayoutItemSelectorCriterion(themeDisplay.getScopeGroupId());
+
+			imageItemSelectorCriterion.setDesiredReturnTypes(URL.class);
+			layoutItemSelectorCriterion.setDesiredReturnTypes(URL.class);
+
+			PortletURL imageItemSelectorURL = itemSelector.getItemSelectorURL(liferayPortletResponse, name + "selectDocument", imageItemSelectorCriterion);
+			PortletURL layoutItemSelectorURL = itemSelector.getItemSelectorURL(liferayPortletResponse, name + "selectLayout", layoutItemSelectorCriterion);
 			%>
 
-			filebrowserBrowseUrl = '<%= itemSelectorURL %>';
-
-			<%
-			PortletURL imageItemSelectorURL = PortletURLUtil.clone(itemSelectorURL, liferayPortletResponse);
-
-			imageItemSelectorURL.setParameter("type", "image");
-			%>
-
+			filebrowserBrowseUrl = '<%= layoutItemSelectorURL %>';
 			filebrowserImageBrowseUrl = '<%= imageItemSelectorURL %>';
 			filebrowserImageBrowseLinkUrl = '<%= imageItemSelectorURL %>';
-
-			<%
-			PortletURL flashItemSelectorURL = PortletURLUtil.clone(itemSelectorURL, liferayPortletResponse);
-
-			flashItemSelectorURL.setParameter("type", "flash");
-			%>
-
-			filebrowserFlashBrowseUrl = '<%= flashItemSelectorURL %>';
 		</c:if>
 
 		CKEDITOR.<%= inlineEdit ? "inline" : "replace" %>(
@@ -487,9 +485,9 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 		);
 
 		Liferay.on(
-			'<%= name %>selectDocument',
+			'<%= name %>selectLayout',
 			function(event) {
-				CKEDITOR.tools.callFunction(event.ckeditorfuncnum, event.url);
+				CKEDITOR.tools.callFunction(event.ckeditorfuncnum, event.value);
 			}
 		);
 

@@ -2,7 +2,8 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="osgi.ide.dependencies" value="rome.jar" />
+    <property name="import.shared" value="../item-selector/item-selector-web" />
+    <property name="osgi.ide.dependencies" value="rome.jar" />
 
 	<import file="../../../../tools/sdk/build-common-osgi-plugin.xml" />
 

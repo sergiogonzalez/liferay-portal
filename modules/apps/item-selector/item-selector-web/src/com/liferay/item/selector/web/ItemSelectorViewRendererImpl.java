@@ -37,13 +37,11 @@ public class ItemSelectorViewRendererImpl implements ItemSelectorViewRenderer {
 
 	public ItemSelectorViewRendererImpl(
 		ItemSelectorView<ItemSelectorCriterion> itemSelectorView,
-		ItemSelectorCriterion itemSelectorCriterion, PortletURL portletURL,
-		String itemSelectedCallback) {
+		ItemSelectorCriterion itemSelectorCriterion, PortletURL portletURL) {
 
 		_itemSelectorView = itemSelectorView;
 		_itemSelectorCriterion = itemSelectorCriterion;
 		_portletURL = portletURL;
-		_itemSelectedCallback = itemSelectedCallback;
 	}
 
 	@Override
@@ -70,7 +68,7 @@ public class ItemSelectorViewRendererImpl implements ItemSelectorViewRenderer {
 
 		_itemSelectorView.renderHTML(
 			pageContext.getRequest(), pipingServletResponse,
-			_itemSelectorCriterion, _portletURL, _itemSelectedCallback);
+			_itemSelectorCriterion, _portletURL);
 
 		Writer writer = pageContext.getOut();
 
@@ -79,7 +77,6 @@ public class ItemSelectorViewRendererImpl implements ItemSelectorViewRenderer {
 		writer.write(sb.toString());
 	}
 
-	private final String _itemSelectedCallback;
 	private final ItemSelectorCriterion _itemSelectorCriterion;
 	private final ItemSelectorView<ItemSelectorCriterion> _itemSelectorView;
 	private final PortletURL _portletURL;

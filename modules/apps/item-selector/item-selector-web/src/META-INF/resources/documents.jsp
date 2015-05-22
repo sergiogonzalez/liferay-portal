@@ -49,7 +49,6 @@ if (folder != null) {
 	repositoryId = folder.getRepositoryId();
 }
 
-String ckEditorFuncNum = ItemSelectorUtil.getCKEditorFuncNum(request);
 String eventName = ParamUtil.getString(request, "eventName");
 boolean showGroupsSelector = ParamUtil.getBoolean(request, "showGroupsSelector");
 String type = ItemSelectorUtil.getType(request);
@@ -61,7 +60,6 @@ if (folder != null) {
 	breadcrumbURL.setParameter("tabs1Names", StringUtil.merge(tabs1Names));
 	breadcrumbURL.setParameter("groupId", String.valueOf(groupId));
 	breadcrumbURL.setParameter("folderId", String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID));
-	breadcrumbURL.setParameter("ckEditorFuncNum", ckEditorFuncNum);
 	breadcrumbURL.setParameter("eventName", eventName);
 	breadcrumbURL.setParameter("showGroupsSelector", String.valueOf(showGroupsSelector));
 	breadcrumbURL.setParameter("type", type);
@@ -79,7 +77,6 @@ portletURL.setParameter("mvcPath", "/view.jsp");
 portletURL.setParameter("tabs1Names", StringUtil.merge(tabs1Names));
 portletURL.setParameter("groupId", String.valueOf(groupId));
 portletURL.setParameter("folderId", String.valueOf(folderId));
-portletURL.setParameter("ckEditorFuncNum", ckEditorFuncNum);
 portletURL.setParameter("eventName", eventName);
 portletURL.setParameter("showGroupsSelector", String.valueOf(showGroupsSelector));
 portletURL.setParameter("type", type);
@@ -221,7 +218,6 @@ portletURL.setParameter("type", type);
 					<portlet:param name="tabs1Names" value="<%= StringUtil.merge(tabs1Names) %>" />
 					<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 					<portlet:param name="folderId" value="<%= String.valueOf(curFolder.getFolderId()) %>" />
-					<portlet:param name="ckEditorFuncNum" value="<%= ckEditorFuncNum %>" />
 					<portlet:param name="eventName" value="<%= eventName %>" />
 					<portlet:param name="showGroupsSelector" value="<%= String.valueOf(showGroupsSelector) %>" />
 					<portlet:param name="type" value="<%= type %>" />
@@ -284,7 +280,6 @@ portletURL.setParameter("type", type);
 	backURL.setParameter("mvcPath", "/view.jsp");
 	backURL.setParameter("tabs1Names", StringUtil.merge(tabs1Names));
 	backURL.setParameter("groupId", String.valueOf(groupId));
-	backURL.setParameter("ckEditorFuncNum", ckEditorFuncNum);
 	backURL.setParameter("eventName", eventName);
 	backURL.setParameter("showGroupsSelector", String.valueOf(showGroupsSelector));
 	backURL.setParameter("type", type);
@@ -303,7 +298,6 @@ portletURL.setParameter("type", type);
 	iteratorURL.setParameter("tabs1Names", StringUtil.merge(tabs1Names));
 	iteratorURL.setParameter("groupId", String.valueOf(groupId));
 	iteratorURL.setParameter("folderId", String.valueOf(folderId));
-	iteratorURL.setParameter("ckEditorFuncNum", ckEditorFuncNum);
 	iteratorURL.setParameter("eventName", eventName);
 	iteratorURL.setParameter("showGroupsSelector", String.valueOf(showGroupsSelector));
 	iteratorURL.setParameter("type", type);
@@ -389,7 +383,6 @@ portletURL.setParameter("type", type);
 				<%
 				Map<String, Object> data = new HashMap<String, Object>();
 
-				data.put("ckeditorfuncnum", ckEditorFuncNum);
 				data.put("fileentryid", fileEntry.getFileEntryId());
 				data.put("groupid", fileEntry.getGroupId());
 				data.put("title", fileEntry.getTitle());
