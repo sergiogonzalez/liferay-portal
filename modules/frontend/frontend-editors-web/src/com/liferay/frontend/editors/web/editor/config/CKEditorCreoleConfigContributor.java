@@ -105,6 +105,8 @@ public class CKEditorCreoleConfigContributor
         jsonObject.put("customCellDialog", Boolean.TRUE);
 
         jsonObject.put("customTableDialog", Boolean.TRUE);
+
+        jsonObject.put("useCustomDataProcessor", Boolean.TRUE);
     }
 
     protected JSONArray getToolbarsCreoleJSONArray(

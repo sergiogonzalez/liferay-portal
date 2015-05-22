@@ -21,18 +21,6 @@ LiferayPortletResponse liferayPortletResponse = (LiferayPortletResponse)portletR
 
 String portletId = portletDisplay.getRootPortletId();
 
-String ckEditorConfigFileName = ParamUtil.getString(request, "ckEditorConfigFileName");
-
-if (!_ckEditorConfigFileNames.contains(ckEditorConfigFileName)) {
-	ckEditorConfigFileName = "ckconfig.jsp";
-}
-
-boolean useCustomDataProcessor = false;
-
-if (!ckEditorConfigFileName.equals("ckconfig.jsp")) {
-	useCustomDataProcessor = true;
-}
-
 boolean hideImageResizing = ParamUtil.getBoolean(request, "hideImageResizing");
 
 boolean allowBrowseDocuments = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:allowBrowseDocuments"));
@@ -581,6 +569,10 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 
 		var customDataProcessorLoaded = false;
 
+		<%
+		boolean useCustomDataProcessor = Validator.isNotNull(editorOptionsJSONObject) && editorOptionsJSONObject.getBoolean("useCustomDataProcessor");
+		%>
+
 		<c:if test="<%= useCustomDataProcessor %>">
 			ckEditor.on(
 				'customDataProcessorLoaded',
@@ -800,6 +792,4 @@ public String marshallParams(Map<String, String> params) {
 
 	return sb.toString();
 }
-
-private static Set<String> _ckEditorConfigFileNames = SetUtil.fromArray(new String[] {"ckconfig.jsp", "ckconfig_bbcode.jsp", "ckconfig_creole.jsp"});
 %>

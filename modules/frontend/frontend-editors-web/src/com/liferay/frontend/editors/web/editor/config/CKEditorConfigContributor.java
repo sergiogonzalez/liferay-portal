@@ -139,6 +139,8 @@ public class CKEditorConfigContributor extends BaseCKEditorConfigContributor {
                 jsonObject.put("customDialogDefinition", Boolean.TRUE);
 
                 jsonObject.put("customOnShowFn", Boolean.TRUE);
+
+                jsonObject.put("useCustomDataProcessor", Boolean.FALSE);
         }
 
         protected JSONArray getStyleFormatsJSONArray() {

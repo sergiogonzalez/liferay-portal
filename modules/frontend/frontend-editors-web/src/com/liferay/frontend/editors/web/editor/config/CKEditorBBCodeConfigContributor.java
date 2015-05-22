@@ -124,6 +124,7 @@ public class CKEditorBBCodeConfigContributor
             ThemeDisplay themeDisplay,
             LiferayPortletResponse liferayPortletResponse) {
 
+        jsonObject.put("useCustomDataProcessor", Boolean.TRUE);
     }
 
     protected JSONArray getToolbarsBBCodeJSONArray(
