@@ -22,7 +22,7 @@
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
-<%@ page import="com.liferay.item.selector.taglib.servlet.taglib.ui.BrowserTag" %><%@
+<%@ page import="com.liferay.item.selector.taglib.ReturnType" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@

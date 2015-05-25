@@ -14,15 +14,12 @@
 
 package com.liferay.item.selector.taglib.servlet.taglib.ui;
 
+import com.liferay.item.selector.taglib.ReturnType;
 import com.liferay.item.selector.taglib.util.ServletContextUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.util.IncludeTag;
-
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
@@ -61,52 +58,6 @@ public class BrowserTag extends IncludeTag {
 
 	public void setUploadMessage(String uploadMessage) {
 		_uploadMessage = uploadMessage;
-	}
-
-	public enum ReturnType {
-
-		BASE_64(Base64.class), FILE_ENTRY(FileEntry.class),
-		URL (java.net.URL.class);
-
-		public static ReturnType parse(Class<?> value) {
-			if (BASE_64.getValue().equals(value)) {
-				return BASE_64;
-			}
-
-			if (FILE_ENTRY.getValue().equals(value)) {
-				return FILE_ENTRY;
-			}
-
-			if (URL.getValue().equals(value)) {
-				return URL;
-			}
-
-			throw new IllegalArgumentException(
-				"Invalid value " + value.getName());
-		}
-
-		public static ReturnType parseFirst(Set<Class<?>> value) {
-			for (Class<?> clazz : value) {
-				try {
-					return parse(clazz);
-				}
-				catch (IllegalArgumentException iae) {
-				}
-			}
-
-			throw new IllegalArgumentException("Invalid value " + value);
-		}
-
-		public Class<?> getValue() {
-			return _value;
-		}
-
-		private ReturnType(Class<?> value) {
-			_value = value;
-		}
-
-		private final Class<?> _value;
-
 	}
 
 	@Override

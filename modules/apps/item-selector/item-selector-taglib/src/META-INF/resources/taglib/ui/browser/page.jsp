@@ -19,14 +19,14 @@
 <%
 String displayStyle = GetterUtil.getString(request.getAttribute("liferay-ui:item-selector-browser:displayStyle"), "descriptive");
 String idPrefix = GetterUtil.getString(request.getAttribute("liferay-ui:item-selector-browser:idPrefix"));
-BrowserTag.ReturnType returnType = (BrowserTag.ReturnType)request.getAttribute("liferay-ui:item-selector-browser:returnType");
+ReturnType returnType = (ReturnType)request.getAttribute("liferay-ui:item-selector-browser:returnType");
 SearchContainer searchContainer = (SearchContainer)request.getAttribute("liferay-ui:item-selector-browser:searchContainer");
 String tabName = GetterUtil.getString(request.getAttribute("liferay-ui:item-selector-browser:tabName"));
 String uploadMessage = GetterUtil.getString(request.getAttribute("liferay-ui:item-selector-browser:uploadMessage"));
 %>
 
 <div class="lfr-item-viewer" id="<%= idPrefix %>ItemSelectorContainer">
-	<c:if test="<%= BrowserTag.ReturnType.BASE_64.equals(returnType) %>">
+	<c:if test="<%= ReturnType.BASE_64.equals(returnType) %>">
 		<div class="drop-zone">
 			<label class="btn btn-primary" for="<%= idPrefix %>InputFile"><liferay-ui:message key="select-file" /></label>
 
