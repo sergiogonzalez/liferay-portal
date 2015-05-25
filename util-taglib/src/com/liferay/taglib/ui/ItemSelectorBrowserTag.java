@@ -146,8 +146,7 @@ public class ItemSelectorBrowserTag extends IncludeTag {
 			getUploadMessage());
 	}
 
-	private static final String _PAGE =
-		"/html/taglib/ui/item_selector_browser/page.jsp";
+	private static final String _PAGE = "/taglib/ui/browser/page.jsp";
 
 	private String _displayStyle;
 	private String _idPrefix;

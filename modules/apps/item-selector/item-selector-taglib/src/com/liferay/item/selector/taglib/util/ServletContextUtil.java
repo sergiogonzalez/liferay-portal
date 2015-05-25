@@ -42,7 +42,7 @@ public class ServletContextUtil {
 	}
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.productivity.center.taglib)",
+		target = "(osgi.web.symbolicname=com.liferay.item.selector.taglib)",
 		unbind = "-"
 	)
 	protected void setServletContext(ServletContext servletContext) {
