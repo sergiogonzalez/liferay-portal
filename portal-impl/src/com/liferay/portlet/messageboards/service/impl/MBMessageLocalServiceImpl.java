@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -499,6 +500,34 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		return addMessage(
 			userId, userName, groupId, categoryId, subject, body,
 			serviceContext);
+	}
+
+	@Override
+	public void addMessageAttachment(
+			long messageId, String fileName, File file, boolean indexingEnabled)
+		throws PortalException {
+
+		MBMessage message = mbMessagePersistence.findByPrimaryKey(messageId);
+
+		Folder folder = message.addAttachmentsFolder();
+
+		List<FileEntry> messageAttachments =
+			PortletFileRepositoryUtil.getPortletFileEntries(
+				folder.getGroupId(), folder.getFolderId());
+
+		if (messageAttachments.size() >= 5) {
+			throw new PortalException(
+				"Cannot add more than five attachments to a Message Boards " +
+					"post");
+		}
+
+		String mimeType = MimeTypesUtil.getContentType(file);
+
+		PortletFileRepositoryUtil.addPortletFileEntry(
+			message.getGroupId(), message.getUserId(),
+			MBMessage.class.getName(), message.getMessageId(),
+			PortletKeys.MESSAGE_BOARDS, folder.getFolderId(), file, fileName,
+			mimeType, indexingEnabled);
 	}
 
 	@Override

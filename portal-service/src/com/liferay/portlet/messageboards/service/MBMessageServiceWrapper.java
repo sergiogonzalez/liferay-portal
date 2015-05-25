@@ -111,6 +111,14 @@ public class MBMessageServiceWrapper implements MBMessageService,
 			serviceContext);
 	}
 
+	@Override
+	public void addMessageAttachment(long messageId, java.lang.String fileName,
+		java.io.File file, boolean indexingEnabled)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_mbMessageService.addMessageAttachment(messageId, fileName, file,
+			indexingEnabled);
+	}
+
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #deleteDiscussionMessage(
 	String, long, long, long)}

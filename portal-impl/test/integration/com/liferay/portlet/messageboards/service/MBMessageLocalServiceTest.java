@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.messageboards.service;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -43,6 +44,7 @@ import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.util.test.MBTestUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
 
+import java.io.File;
 import java.io.InputStream;
 
 import java.text.DateFormat;
@@ -72,6 +74,34 @@ public class MBMessageLocalServiceTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+	}
+
+	@Test
+	public void testAddMessageAttachment() throws Exception {
+		MBMessage message = addMessage(null, false);
+
+		MBMessageLocalServiceUtil.addMessageAttachment(
+			message.getMessageId(), "test", _testAttachment, true);
+
+		Assert.assertEquals(1, message.getAttachmentsFileEntriesCount());
+	}
+
+	@Test(expected = PortalException.class)
+	public void testAddMoreThanFiveMessageAttachments() throws Exception {
+		MBMessage message = addMessage(null, false);
+
+		MBMessageLocalServiceUtil.addMessageAttachment(
+			message.getMessageId(), "test1", _testAttachment, true);
+		MBMessageLocalServiceUtil.addMessageAttachment(
+			message.getMessageId(), "test2", _testAttachment, true);
+		MBMessageLocalServiceUtil.addMessageAttachment(
+			message.getMessageId(), "test3", _testAttachment, true);
+		MBMessageLocalServiceUtil.addMessageAttachment(
+			message.getMessageId(), "test4", _testAttachment, true);
+		MBMessageLocalServiceUtil.addMessageAttachment(
+			message.getMessageId(), "test5", _testAttachment, true);
+		MBMessageLocalServiceUtil.addMessageAttachment(
+			message.getMessageId(), "test6", _testAttachment, true);
 	}
 
 	@Test
@@ -224,6 +254,10 @@ public class MBMessageLocalServiceTest {
 			MBMessageConstants.DEFAULT_FORMAT, inputStreamOVPs, false, 0.0,
 			false, serviceContext);
 	}
+
+	private static final File _testAttachment = new File(
+		"portal-impl/test/integration/com/liferay/portlet/messageboards" +
+			"/attachments/dependencies/company_logo.png");
 
 	@DeleteAfterTestRun
 	private Group _group;
