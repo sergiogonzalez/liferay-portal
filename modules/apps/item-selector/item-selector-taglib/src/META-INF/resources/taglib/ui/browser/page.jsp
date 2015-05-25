@@ -14,19 +14,19 @@
  */
 --%>
 
-<%@ include file="/html/taglib/ui/item_selector_browser/init.jsp" %>
+<%@ include file="/taglib/ui/browser/init.jsp" %>
 
 <%
 String displayStyle = GetterUtil.getString(request.getAttribute("liferay-ui:item-selector-browser:displayStyle"), "descriptive");
 String idPrefix = GetterUtil.getString(request.getAttribute("liferay-ui:item-selector-browser:idPrefix"));
-ReturnType returnType = (ReturnType)request.getAttribute("liferay-ui:item-selector-browser:returnType");
+BrowserTag.ReturnType returnType = (BrowserTag.ReturnType)request.getAttribute("liferay-ui:item-selector-browser:returnType");
 SearchContainer searchContainer = (SearchContainer)request.getAttribute("liferay-ui:item-selector-browser:searchContainer");
 String tabName = GetterUtil.getString(request.getAttribute("liferay-ui:item-selector-browser:tabName"));
 String uploadMessage = GetterUtil.getString(request.getAttribute("liferay-ui:item-selector-browser:uploadMessage"));
 %>
 
 <div class="lfr-item-viewer" id="<%= idPrefix %>ItemSelectorContainer">
-	<c:if test="<%= ReturnType.BASE_64.equals(returnType) %>">
+	<c:if test="<%= BrowserTag.ReturnType.BASE_64.equals(returnType) %>">
 		<div class="drop-zone">
 			<label class="btn btn-primary" for="<%= idPrefix %>InputFile"><liferay-ui:message key="select-file" /></label>
 
@@ -78,7 +78,7 @@ String uploadMessage = GetterUtil.getString(request.getAttribute("liferay-ui:ite
 								</span>
 							</a>
 
-							<%@ include file="/html/taglib/ui/item_selector_browser/metadata_view.jspf" %>
+							<%@ include file="/taglib/ui/browser/metadata_view.jspf" %>
 						</liferay-ui:search-container-column-text>
 
 						<liferay-ui:search-container-column-text name="size" value="<%= TextFormatter.formatStorageSize(fileEntry.getSize(), locale) %>" />
@@ -123,7 +123,7 @@ String uploadMessage = GetterUtil.getString(request.getAttribute("liferay-ui:ite
 								<%= HtmlUtil.escape(title) %>
 							</a>
 
-							<%@ include file="/html/taglib/ui/item_selector_browser/metadata_view.jspf" %>
+							<%@ include file="/taglib/ui/browser/metadata_view.jspf" %>
 						</div>
 
 						<div class="status text-default">

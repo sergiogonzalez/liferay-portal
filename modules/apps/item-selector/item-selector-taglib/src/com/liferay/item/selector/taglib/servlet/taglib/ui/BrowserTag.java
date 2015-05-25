@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.taglib.ui;
+package com.liferay.item.selector.taglib.servlet.taglib.ui;
 
+import com.liferay.item.selector.taglib.util.ServletContextUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -24,11 +25,12 @@ import com.liferay.taglib.util.IncludeTag;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.PageContext;
 
 /**
  * @author Roberto Díaz
  */
-public class ItemSelectorBrowserTag extends IncludeTag {
+public class BrowserTag extends IncludeTag {
 
 	public void setDisplayStyle(String displayStyle) {
 		_displayStyle = displayStyle;
@@ -36,6 +38,13 @@ public class ItemSelectorBrowserTag extends IncludeTag {
 
 	public void setIdPrefix(String idPrefix) {
 		_idPrefix = idPrefix;
+	}
+
+	@Override
+	public void setPageContext(PageContext pageContext) {
+		super.setPageContext(pageContext);
+
+		servletContext = ServletContextUtil.getServletContext();
 	}
 
 	public void setReturnType(ReturnType returnType) {
