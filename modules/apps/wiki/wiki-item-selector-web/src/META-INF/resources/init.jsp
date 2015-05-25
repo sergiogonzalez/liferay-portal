@@ -16,8 +16,8 @@
 
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
+<%@ taglib uri="http://liferay.com/tld/item-selector/ui" prefix="item-selector-ui" %>
 <%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
-<%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.item.selector.taglib.ReturnType" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
@@ -33,7 +33,6 @@ page import="com.liferay.wiki.service.WikiPageResourceLocalServiceUtil" %>
 <%@ page import="javax.portlet.PortletURL" %>
 
 <portlet:defineObjects />
-
 <liferay-theme:defineObjects />
 
 <%
