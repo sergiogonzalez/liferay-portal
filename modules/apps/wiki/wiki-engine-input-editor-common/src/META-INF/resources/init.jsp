@@ -33,4 +33,5 @@ page import="com.liferay.wiki.model.WikiPage" %>
 page import="java.util.Map" %>
 
 <portlet:defineObjects />
-<liferay-theme:defineObjects/>
+
+<liferay-theme:defineObjects />

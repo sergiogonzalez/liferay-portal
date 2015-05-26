@@ -31,8 +31,9 @@ page import="com.liferay.portlet.asset.model.AssetCategory" %>
 <%@ page import="java.util.HashMap" %><%@
 page import="java.util.Map" %>
 
-<liferay-theme:defineObjects />
 <portlet:defineObjects />
+
+<liferay-theme:defineObjects />
 
 <%
 AssetCategoriesNavigationDisplayContext assetCategoriesNavigationDisplayContext = new AssetCategoriesNavigationDisplayContext(request);

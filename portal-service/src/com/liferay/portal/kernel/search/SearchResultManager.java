@@ -12,24 +12,26 @@
  * details.
  */
 
-package com.liferay.workflow.instance.web.portlet.action;
+package com.liferay.portal.kernel.search;
 
-import com.liferay.portal.kernel.portlet.bridges.mvc.ActionCommand;
-import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.kernel.exception.PortalException;
 
-import org.osgi.service.component.annotations.Component;
+import java.util.Locale;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 /**
- * @author Leonardo Barros
+ * @author Adolfo Pérez
  */
-@Component(
-	immediate = true,
-	property = {
-		"action.command.name=deleteWorkflowInstance",
-		"javax.portlet.name=" + PortletKeys.MY_WORKFLOW_INSTANCE
-	},
-	service = ActionCommand.class
-)
-public class MyDeleteWorkflowInstanceActionCommand
-	extends DeleteWorkflowInstanceActionCommand {
+public interface SearchResultManager {
+
+	public SearchResult createSearchResult(Document document)
+		throws PortalException;
+
+	public void updateSearchResult(
+			SearchResult searchResult, Document document, Locale locale,
+			PortletRequest portletRequest, PortletResponse portletResponse)
+		throws PortalException;
+
 }

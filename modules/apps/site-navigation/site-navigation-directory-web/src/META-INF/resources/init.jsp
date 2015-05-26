@@ -27,8 +27,9 @@ page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.site.navigation.directory.web.display.context.SitesDirectoryDisplayContext" %><%@
 page import="com.liferay.taglib.ui.SitesDirectoryTag" %>
 
-<liferay-theme:defineObjects />
 <portlet:defineObjects />
+
+<liferay-theme:defineObjects />
 
 <%
 String portletResource = ParamUtil.getString(request, "portletResource");

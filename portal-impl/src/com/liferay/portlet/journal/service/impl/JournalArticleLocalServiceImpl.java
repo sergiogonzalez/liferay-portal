@@ -5453,6 +5453,7 @@ public class JournalArticleLocalServiceImpl
 			article.setUserId(oldArticle.getUserId());
 			article.setUserName(user.getFullName());
 			article.setCreateDate(oldArticle.getCreateDate());
+			article.setFolderId(oldArticle.getFolderId());
 			article.setClassNameId(oldArticle.getClassNameId());
 			article.setClassPK(oldArticle.getClassPK());
 			article.setArticleId(articleId);
