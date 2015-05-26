@@ -43,14 +43,14 @@ public class MBMessageServiceUtil {
 	public static com.liferay.portlet.messageboards.model.MBMessage addDiscussionMessage(
 		long groupId, java.lang.String className, long classPK,
 		java.lang.String permissionClassName, long permissionClassPK,
-		long permissionOwnerId, long threadId, long parentMessageId,
-		java.lang.String subject, java.lang.String body,
+		long threadId, long parentMessageId, java.lang.String subject,
+		java.lang.String body,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addDiscussionMessage(groupId, className, classPK,
-			permissionClassName, permissionClassPK, permissionOwnerId,
-			threadId, parentMessageId, subject, body, serviceContext);
+			permissionClassName, permissionClassPK, threadId, parentMessageId,
+			subject, body, serviceContext);
 	}
 
 	public static com.liferay.portlet.messageboards.model.MBMessage addMessage(
@@ -132,11 +132,11 @@ public class MBMessageServiceUtil {
 
 	public static void deleteDiscussionMessage(
 		java.lang.String permissionClassName, long permissionClassPK,
-		long permissionOwnerId, long messageId)
+		long messageId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.deleteDiscussionMessage(permissionClassName, permissionClassPK,
-			permissionOwnerId, messageId);
+			messageId);
 	}
 
 	public static void deleteMessage(long messageId)
@@ -302,14 +302,13 @@ public class MBMessageServiceUtil {
 	public static com.liferay.portlet.messageboards.model.MBMessage updateDiscussionMessage(
 		java.lang.String className, long classPK,
 		java.lang.String permissionClassName, long permissionClassPK,
-		long permissionOwnerId, long messageId, java.lang.String subject,
-		java.lang.String body,
+		long messageId, java.lang.String subject, java.lang.String body,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateDiscussionMessage(className, classPK,
-			permissionClassName, permissionClassPK, permissionOwnerId,
-			messageId, subject, body, serviceContext);
+			permissionClassName, permissionClassPK, messageId, subject, body,
+			serviceContext);
 	}
 
 	public static com.liferay.portlet.messageboards.model.MBMessage updateMessage(

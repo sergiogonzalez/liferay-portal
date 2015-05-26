@@ -58,8 +58,8 @@ public class MBMessageServiceHttp {
 	public static com.liferay.portlet.messageboards.model.MBMessage addDiscussionMessage(
 		HttpPrincipal httpPrincipal, long groupId, java.lang.String className,
 		long classPK, java.lang.String permissionClassName,
-		long permissionClassPK, long permissionOwnerId, long threadId,
-		long parentMessageId, java.lang.String subject, java.lang.String body,
+		long permissionClassPK, long threadId, long parentMessageId,
+		java.lang.String subject, java.lang.String body,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -68,8 +68,7 @@ public class MBMessageServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					className, classPK, permissionClassName, permissionClassPK,
-					permissionOwnerId, threadId, parentMessageId, subject,
-					body, serviceContext);
+					threadId, parentMessageId, subject, body, serviceContext);
 
 			Object returnObj = null;
 
@@ -316,7 +315,7 @@ public class MBMessageServiceHttp {
 
 	public static void deleteDiscussionMessage(HttpPrincipal httpPrincipal,
 		java.lang.String permissionClassName, long permissionClassPK,
-		long permissionOwnerId, long messageId)
+		long messageId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(MBMessageServiceUtil.class,
@@ -324,8 +323,7 @@ public class MBMessageServiceHttp {
 					_deleteDiscussionMessageParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					permissionClassName, permissionClassPK, permissionOwnerId,
-					messageId);
+					permissionClassName, permissionClassPK, messageId);
 
 			try {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);
@@ -963,8 +961,7 @@ public class MBMessageServiceHttp {
 	public static com.liferay.portlet.messageboards.model.MBMessage updateDiscussionMessage(
 		HttpPrincipal httpPrincipal, java.lang.String className, long classPK,
 		java.lang.String permissionClassName, long permissionClassPK,
-		long permissionOwnerId, long messageId, java.lang.String subject,
-		java.lang.String body,
+		long messageId, java.lang.String subject, java.lang.String body,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -974,7 +971,7 @@ public class MBMessageServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					className, classPK, permissionClassName, permissionClassPK,
-					permissionOwnerId, messageId, subject, body, serviceContext);
+					messageId, subject, body, serviceContext);
 
 			Object returnObj = null;
 
@@ -1040,7 +1037,7 @@ public class MBMessageServiceHttp {
 	private static final Class<?>[] _addDiscussionMessageParameterTypes0 = new Class[] {
 			long.class, java.lang.String.class, long.class,
 			java.lang.String.class, long.class, long.class, long.class,
-			long.class, java.lang.String.class, java.lang.String.class,
+			java.lang.String.class, java.lang.String.class,
 			com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addMessageParameterTypes1 = new Class[] {
@@ -1076,7 +1073,7 @@ public class MBMessageServiceHttp {
 			java.lang.String.class, long.class, long.class, long.class
 		};
 	private static final Class<?>[] _deleteDiscussionMessageParameterTypes7 = new Class[] {
-			java.lang.String.class, long.class, long.class, long.class
+			java.lang.String.class, long.class, long.class
 		};
 	private static final Class<?>[] _deleteMessageParameterTypes8 = new Class[] {
 			long.class
@@ -1149,7 +1146,7 @@ public class MBMessageServiceHttp {
 		};
 	private static final Class<?>[] _updateDiscussionMessageParameterTypes28 = new Class[] {
 			java.lang.String.class, long.class, java.lang.String.class,
-			long.class, long.class, long.class, java.lang.String.class,
+			long.class, long.class, java.lang.String.class,
 			java.lang.String.class,
 			com.liferay.portal.service.ServiceContext.class
 		};

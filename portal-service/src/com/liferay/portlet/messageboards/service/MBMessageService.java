@@ -50,8 +50,8 @@ public interface MBMessageService extends BaseService {
 	public com.liferay.portlet.messageboards.model.MBMessage addDiscussionMessage(
 		long groupId, java.lang.String className, long classPK,
 		java.lang.String permissionClassName, long permissionClassPK,
-		long permissionOwnerId, long threadId, long parentMessageId,
-		java.lang.String subject, java.lang.String body,
+		long threadId, long parentMessageId, java.lang.String subject,
+		java.lang.String body,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
@@ -108,8 +108,7 @@ public interface MBMessageService extends BaseService {
 		long permissionOwnerId, long messageId) throws PortalException;
 
 	public void deleteDiscussionMessage(java.lang.String permissionClassName,
-		long permissionClassPK, long permissionOwnerId, long messageId)
-		throws PortalException;
+		long permissionClassPK, long messageId) throws PortalException;
 
 	public void deleteMessage(long messageId) throws PortalException;
 
@@ -220,8 +219,7 @@ public interface MBMessageService extends BaseService {
 	public com.liferay.portlet.messageboards.model.MBMessage updateDiscussionMessage(
 		java.lang.String className, long classPK,
 		java.lang.String permissionClassName, long permissionClassPK,
-		long permissionOwnerId, long messageId, java.lang.String subject,
-		java.lang.String body,
+		long messageId, java.lang.String subject, java.lang.String body,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
