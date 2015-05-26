@@ -47,8 +47,9 @@ page import="java.util.Map" %>
 
 <%@ page import="javax.portlet.ValidatorException" %>
 
-<liferay-theme:defineObjects />
 <portlet:defineObjects />
+
+<liferay-theme:defineObjects />
 
 <%
 RSSWebConfiguration rssWebConfiguration = (RSSWebConfiguration)renderRequest.getAttribute(RSSWebConfiguration.class.getName());

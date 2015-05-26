@@ -53,7 +53,7 @@ public class DDLDisplayWebUpgrade {
 			protected String[][] getRenamePortletIdsArray() {
 				return new String[][] {
 					new String[] {
-						"169", DDLDisplayPortletKeys.DDL_DISPLAY
+						"169", DDLDisplayPortletKeys.DYNAMIC_DATA_LISTS_DISPLAY
 					}
 				};
 			}

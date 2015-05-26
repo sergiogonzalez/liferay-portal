@@ -49,6 +49,11 @@ public abstract class BaseItemSelectorCriterion
 		_desiredReturnTypes = desiredReturnTypesSet;
 	}
 
+	@Override
+	public void setDesiredReturnTypes(Set<Class<?>> desiredReturnTypes) {
+		_desiredReturnTypes = desiredReturnTypes;
+	}
+
 	protected static Set<Class<?>> getInmutableSet(Class<?>... classes) {
 		Set<Class<?>> set = new HashSet<>();
 

@@ -33,8 +33,9 @@ page import="com.liferay.site.navigation.menu.web.configuration.NavigationMenuWe
 page import="com.liferay.site.navigation.menu.web.configuration.NavigationMenuWebConfigurationUtil" %><%@
 page import="com.liferay.site.navigation.menu.web.display.context.NavigationMenuDisplayContext" %>
 
-<liferay-theme:defineObjects />
 <portlet:defineObjects />
+
+<liferay-theme:defineObjects />
 
 <%
 String portletResource = ParamUtil.getString(request, "portletResource");

@@ -19,6 +19,7 @@ import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewRenderer;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -31,6 +32,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -84,13 +86,13 @@ public class ItemSelectorImplTest extends PowerMockito {
 	public void testGetItemSelectorParameters() {
 		Map<String, String[]> parameters =
 			_itemSelectorImpl.getItemSelectorParameters(
-				"itemSelectedCallback", _mediaItemSelectorCriterion,
+				"itemSelectedEventName", _mediaItemSelectorCriterion,
 				_flickrItemSelectorCriterion);
 
 		Assert.assertEquals(
-			"itemSelectedCallback",
+			"itemSelectedEventName",
 			parameters.get(
-				ItemSelectorImpl.PARAMETER_ITEM_SELECTED_CALLBACK)[0]);
+				ItemSelectorImpl.PARAMETER_ITEM_SELECTED_EVENT_NAME)[0]);
 		Assert.assertEquals(
 			MediaItemSelectorCriterion.class.getName() + "," +
 				FlickrItemSelectorCriterion.class.getName(),
@@ -108,14 +110,15 @@ public class ItemSelectorImplTest extends PowerMockito {
 	public void testGetItemSelectorRendering() {
 		setUpItemSelectionCriterionHandlers();
 
-		PortletRequest portletRequest = getMockPortletRequest();
+		PortletRequest request = getMockPortletRequest();
+		PortletResponse response = getMockPortletResponse();
 
 		ItemSelectorRendering itemSelectorRendering =
-			_itemSelectorImpl.getItemSelectorRendering(portletRequest);
+			_itemSelectorImpl.getItemSelectorRendering(request, response);
 
 		Assert.assertEquals(
-			"itemSelectedCallback",
-			itemSelectorRendering.getItemSelectedCallback());
+			"itemSelectedEventName",
+			itemSelectorRendering.getItemSelectedEventName());
 
 		List<ItemSelectorViewRenderer> itemSelectorViewRenderers =
 			itemSelectorRendering.getItemSelectorViewRenderers();
@@ -158,7 +161,7 @@ public class ItemSelectorImplTest extends PowerMockito {
 	protected PortletRequest getMockPortletRequest() {
 		Map<String, String[]> parameters =
 			_itemSelectorImpl.getItemSelectorParameters(
-				"itemSelectedCallback", _mediaItemSelectorCriterion,
+				"itemSelectedEventName", _mediaItemSelectorCriterion,
 				_flickrItemSelectorCriterion);
 
 		PortletRequest portletRequest = mock(PortletRequest.class);
@@ -178,6 +181,21 @@ public class ItemSelectorImplTest extends PowerMockito {
 		);
 
 		return portletRequest;
+	}
+
+	protected PortletResponse getMockPortletResponse() {
+		LiferayPortletResponse liferayPortletResponse = mock(
+			LiferayPortletResponse.class);
+
+		LiferayPortletURL liferayPortletURL = mock(LiferayPortletURL.class);
+
+		when(
+			liferayPortletResponse.createActionURL(Mockito.anyString())
+		).thenReturn(
+			liferayPortletURL
+		);
+
+		return liferayPortletResponse;
 	}
 
 	protected void setUpItemSelectionCriterionHandlers() {

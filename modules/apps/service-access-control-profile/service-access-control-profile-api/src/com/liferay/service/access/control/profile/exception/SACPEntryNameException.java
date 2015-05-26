@@ -12,24 +12,31 @@
  * details.
  */
 
-package com.liferay.workflow.instance.web.portlet.action;
+package com.liferay.service.access.control.profile.exception;
 
-import com.liferay.portal.kernel.portlet.bridges.mvc.ActionCommand;
-import com.liferay.portal.util.PortletKeys;
+import aQute.bnd.annotation.ProviderType;
 
-import org.osgi.service.component.annotations.Component;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
- * @author Leonardo Barros
+ * @author Brian Wing Shun Chan
  */
-@Component(
-	immediate = true,
-	property = {
-		"action.command.name=deleteWorkflowInstance",
-		"javax.portlet.name=" + PortletKeys.MY_WORKFLOW_INSTANCE
-	},
-	service = ActionCommand.class
-)
-public class MyDeleteWorkflowInstanceActionCommand
-	extends DeleteWorkflowInstanceActionCommand {
+@ProviderType
+public class SACPEntryNameException extends PortalException {
+
+	public SACPEntryNameException() {
+	}
+
+	public SACPEntryNameException(String msg) {
+		super(msg);
+	}
+
+	public SACPEntryNameException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
+
+	public SACPEntryNameException(Throwable cause) {
+		super(cause);
+	}
+
 }

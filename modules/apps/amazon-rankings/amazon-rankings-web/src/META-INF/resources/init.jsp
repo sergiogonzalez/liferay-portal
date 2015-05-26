@@ -43,8 +43,9 @@ page import="java.util.TreeSet" %>
 <%@ page import="javax.portlet.ValidatorException" %><%@
 page import="javax.portlet.WindowState" %>
 
-<liferay-theme:defineObjects />
 <portlet:defineObjects />
+
+<liferay-theme:defineObjects />
 
 <%
 WindowState windowState = liferayPortletRequest.getWindowState();

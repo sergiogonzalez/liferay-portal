@@ -27,8 +27,9 @@ page import="com.liferay.portal.kernel.util.StringPool" %>
 
 <%@ page import="javax.portlet.WindowState" %>
 
-<liferay-theme:defineObjects />
 <portlet:defineObjects />
+
+<liferay-theme:defineObjects />
 
 <%
 WindowState windowState = liferayPortletRequest.getWindowState();
