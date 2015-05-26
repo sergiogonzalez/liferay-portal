@@ -45,7 +45,8 @@ page import="java.util.Locale" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
 
-<liferay-theme:defineObjects />
 <portlet:defineObjects />
+
+<liferay-theme:defineObjects />
 
 <%@ include file="/init-ext.jsp" %>

@@ -113,7 +113,8 @@ page import="javax.portlet.PortletURL" %><%@
 page import="javax.portlet.WindowState" %>
 
 <portlet:defineObjects />
-<liferay-theme:defineObjects/>
+
+<liferay-theme:defineObjects />
 
 <%
 WindowState windowState = liferayPortletRequest.getWindowState();

@@ -19,7 +19,7 @@ package com.liferay.dynamic.data.lists.web.constants;
  */
 public class DDLPortletKeys {
 
-	public static final String DDL =
+	public static final String DYNAMIC_DATA_LISTS =
 		"com_liferay_dynamic_data_lists_web_portlet_DDLPortlet";
 
 }

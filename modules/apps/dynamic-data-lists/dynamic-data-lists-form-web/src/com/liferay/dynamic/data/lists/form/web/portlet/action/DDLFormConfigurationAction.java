@@ -25,7 +25,9 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + DDLFormPortletKeys.DDL_FORM},
+	property = {
+		"javax.portlet.name=" + DDLFormPortletKeys.DYNAMIC_DATA_LISTS_FORM
+	},
 	service = ConfigurationAction.class
 )
 public class DDLFormConfigurationAction extends DefaultConfigurationAction {

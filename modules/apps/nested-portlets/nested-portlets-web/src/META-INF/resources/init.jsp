@@ -38,8 +38,9 @@ page import="com.liferay.portal.service.permission.LayoutPermissionUtil" %>
 
 <%@ page import="java.util.List" %>
 
-<liferay-theme:defineObjects />
 <portlet:defineObjects />
+
+<liferay-theme:defineObjects />
 
 <%
 NestedPortletsConfiguration nestedPortletsConfiguration = (NestedPortletsConfiguration)request.getAttribute(NestedPortletsConfiguration.class.getName());
