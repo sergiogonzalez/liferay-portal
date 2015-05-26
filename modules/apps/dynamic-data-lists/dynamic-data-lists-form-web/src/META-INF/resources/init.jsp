@@ -46,8 +46,9 @@ page import="com.liferay.portlet.dynamicdatamapping.NoSuchStructureLayoutExcepti
 
 <%@ page import="javax.portlet.PortletURL" %>
 
-<liferay-theme:defineObjects />
 <portlet:defineObjects />
+
+<liferay-theme:defineObjects />
 
 <%
 PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, liferayPortletResponse);

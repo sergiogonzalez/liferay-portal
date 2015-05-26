@@ -28,8 +28,9 @@ page import="com.liferay.portal.kernel.util.StringUtil" %>
 
 <%@ page import="javax.portlet.ActionRequest" %>
 
-<liferay-theme:defineObjects />
 <portlet:defineObjects />
+
+<liferay-theme:defineObjects />
 
 <%
 String color = portletPreferences.getValue("color", "#FFFFCC");

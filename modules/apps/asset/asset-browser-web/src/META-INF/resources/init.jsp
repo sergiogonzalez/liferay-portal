@@ -50,6 +50,7 @@ page import="java.util.Map" %>
 <%@ page import="javax.portlet.PortletURL" %>
 
 <portlet:defineObjects />
-<liferay-theme:defineObjects/>
+
+<liferay-theme:defineObjects />
 
 <%@ include file="/init-ext.jsp" %>

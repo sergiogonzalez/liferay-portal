@@ -34,8 +34,9 @@ page import="com.liferay.site.navigation.site.map.web.display.context.SiteMapDis
 page import="java.util.List" %><%@
 page import="java.util.Map" %>
 
-<liferay-theme:defineObjects />
 <portlet:defineObjects />
+
+<liferay-theme:defineObjects />
 
 <%
 SiteMapDisplayContext siteMapDisplayContext = new SiteMapDisplayContext(request);

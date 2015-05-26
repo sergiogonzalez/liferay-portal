@@ -41,8 +41,9 @@ page import="com.liferay.portlet.social.service.SocialActivityLocalServiceUtil" 
 <%@ page import="javax.portlet.ActionRequest" %><%@
 page import="javax.portlet.ResourceURL" %>
 
-<liferay-theme:defineObjects />
 <portlet:defineObjects />
+
+<liferay-theme:defineObjects />
 
 <%
 int max = GetterUtil.getInteger(portletPreferences.getValue("max", "10"));

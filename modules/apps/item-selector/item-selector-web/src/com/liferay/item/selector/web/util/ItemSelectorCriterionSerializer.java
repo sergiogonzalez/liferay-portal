@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONSerializer;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
@@ -28,6 +30,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
 import org.apache.commons.beanutils.PropertyUtils;
 
 /**
@@ -43,7 +46,7 @@ public class ItemSelectorCriterionSerializer<T extends ItemSelectorCriterion> {
 		_itemSelectorCriterion = itemSelectorCriterion;
 		_prefix = prefix;
 
-		_initSerializableFields();
+		_initInternalProperties();
 	}
 
 	public Map<String, String[]> getProperties() {
@@ -51,11 +54,14 @@ public class ItemSelectorCriterionSerializer<T extends ItemSelectorCriterion> {
 
 		JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 
-		jsonSerializer.include(_serializableFields);
+		String[] serializableFields = ArrayUtil.append(
+			_internalProperties, "desiredReturnTypes");
+
+		jsonSerializer.include(serializableFields);
 
 		properties.put(
 			_prefix + JSON,
-			new String[] {jsonSerializer.serialize(_itemSelectorCriterion)});
+			new String[]{jsonSerializer.serialize(_itemSelectorCriterion)});
 
 		return properties;
 	}
@@ -69,11 +75,11 @@ public class ItemSelectorCriterionSerializer<T extends ItemSelectorCriterion> {
 
 			Map<String, ?> map = jsonDeserializer.deserialize(json);
 
-			for (String serializableField : _serializableFields) {
+			for (String internalProperties : _internalProperties) {
 				Class<?> serializableFieldClass = PropertyUtils.getPropertyType(
-					_itemSelectorCriterion, serializableField);
+					_itemSelectorCriterion, internalProperties);
 
-				Object value = map.get(serializableField);
+				Object value = map.get(internalProperties);
 
 				if (serializableFieldClass.isArray() &&
 					List.class.isInstance(value)) {
@@ -87,8 +93,10 @@ public class ItemSelectorCriterionSerializer<T extends ItemSelectorCriterion> {
 				}
 
 				PropertyUtils.setProperty(
-					_itemSelectorCriterion, serializableField, value);
+					_itemSelectorCriterion, internalProperties, value);
 			}
+
+			_setDesiredReturnTypes(map);
 		}
 		catch (IllegalAccessException | InvocationTargetException |
 			NoSuchMethodException e) {
@@ -97,7 +105,7 @@ public class ItemSelectorCriterionSerializer<T extends ItemSelectorCriterion> {
 		}
 	}
 
-	private void _initSerializableFields() {
+	private void _initInternalProperties() {
 		List<String> list = new ArrayList<>();
 
 		try {
@@ -120,7 +128,7 @@ public class ItemSelectorCriterionSerializer<T extends ItemSelectorCriterion> {
 			throw new SystemException(e);
 		}
 
-		_serializableFields = list.toArray(new String[list.size()]);
+		_internalProperties = list.toArray(new String[list.size()]);
 	}
 
 	private boolean _isInternalProperty(String name) {
@@ -133,8 +141,34 @@ public class ItemSelectorCriterionSerializer<T extends ItemSelectorCriterion> {
 		return false;
 	}
 
+	private void _setDesiredReturnTypes(Map<String, ?> map) {
+		List<Class<?>> list = new ArrayList<>();
+
+		List<String> desiredReturnTypesNames = (List<String>)map.remove(
+			"desiredReturnTypes");
+
+		for (String desiredReturnTypeName : desiredReturnTypesNames) {
+			try {
+				Class<?> clazz = Class.forName(desiredReturnTypeName);
+
+				list.add(clazz);
+			}
+			catch (ClassNotFoundException cnfe) {
+				if (_log.isWarnEnabled()) {
+					_log.warn("Unable to load class " + desiredReturnTypeName);
+				}
+			}
+		}
+
+		_itemSelectorCriterion.setDesiredReturnTypes(
+			list.toArray(new Class<?>[list.size()]));
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ItemSelectorCriterionSerializer.class);
+
 	private final T _itemSelectorCriterion;
 	private final String _prefix;
-	private String[] _serializableFields;
+	private String[] _internalProperties;
 
 }

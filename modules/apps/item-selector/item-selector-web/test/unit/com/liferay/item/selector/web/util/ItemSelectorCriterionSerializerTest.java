@@ -18,6 +18,8 @@ import com.liferay.item.selector.web.FlickrItemSelectorCriterion;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 
+import java.net.URL;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -34,6 +36,8 @@ public class ItemSelectorCriterionSerializerTest {
 	@Before
 	public void setUp() {
 		_flickrItemSelectorCriterion = new FlickrItemSelectorCriterion();
+
+		_flickrItemSelectorCriterion.setDesiredReturnTypes(URL.class);
 
 		_itemSelectorCriterionSerializer =
 			new ItemSelectorCriterionSerializer<>(
@@ -54,8 +58,10 @@ public class ItemSelectorCriterionSerializerTest {
 
 		json = _assert("\"tags\":[\"me\",\"photo\",\"picture\"]", json);
 		json = _assert("\"user\":\"anonymous\"", json);
+		json = _assert(
+			"\"desiredReturnTypes\":[\"" + URL.class.getName() + "\"]", json);
 
-		Assert.assertEquals("{,}", json);
+		Assert.assertEquals("{,,}", json);
 	}
 
 	@Test
@@ -66,7 +72,8 @@ public class ItemSelectorCriterionSerializerTest {
 			_PREFIX + ItemSelectorCriterionSerializer.JSON,
 			new String[] {
 				"{\"tags\":[\"tag1\",\"tag2\",\"tag3\"],\"user\":" +
-					"\"Joe Bloggs\"}"
+					"\"Joe Bloggs\"," +
+					"\"desiredReturnTypes\":[\"" + URL.class.getName() + "\"]}"
 			});
 
 		_itemSelectorCriterionSerializer.setProperties(properties);
@@ -76,6 +83,14 @@ public class ItemSelectorCriterionSerializerTest {
 		Assert.assertArrayEquals(
 			new String[] {"tag1", "tag2", "tag3"},
 			_flickrItemSelectorCriterion.getTags());
+		Assert.assertEquals(
+			1, _flickrItemSelectorCriterion.getDesiredReturnTypes().size());
+
+		for (Class<?> desiredReturnType :
+				_flickrItemSelectorCriterion.getDesiredReturnTypes()) {
+
+			Assert.assertEquals(URL.class, desiredReturnType);
+		}
 	}
 
 	private String _assert(String expected, String json) {
