@@ -48,10 +48,8 @@ public interface MBMessageService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link MBMessageServiceUtil} to access the message-boards message remote service. Add custom service methods to {@link com.liferay.portlet.messageboards.service.impl.MBMessageServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public com.liferay.portlet.messageboards.model.MBMessage addDiscussionMessage(
-		long groupId, java.lang.String className, long classPK,
-		java.lang.String permissionClassName, long permissionClassPK,
-		long permissionOwnerId, long threadId, long parentMessageId,
-		java.lang.String subject, java.lang.String body,
+		long groupId, java.lang.String className, long classPK, long threadId,
+		long parentMessageId, java.lang.String subject, java.lang.String body,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
@@ -99,7 +97,7 @@ public interface MBMessageService extends BaseService {
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #deleteDiscussionMessage(
-	String, long, long, long)}
+	long)}
 	*/
 	@java.lang.Deprecated
 	public void deleteDiscussionMessage(long groupId,
@@ -107,8 +105,7 @@ public interface MBMessageService extends BaseService {
 		java.lang.String permissionClassName, long permissionClassPK,
 		long permissionOwnerId, long messageId) throws PortalException;
 
-	public void deleteDiscussionMessage(java.lang.String permissionClassName,
-		long permissionClassPK, long permissionOwnerId, long messageId)
+	public void deleteDiscussionMessage(long messageId)
 		throws PortalException;
 
 	public void deleteMessage(long messageId) throws PortalException;
@@ -218,10 +215,8 @@ public interface MBMessageService extends BaseService {
 		throws PortalException;
 
 	public com.liferay.portlet.messageboards.model.MBMessage updateDiscussionMessage(
-		java.lang.String className, long classPK,
-		java.lang.String permissionClassName, long permissionClassPK,
-		long permissionOwnerId, long messageId, java.lang.String subject,
-		java.lang.String body,
+		java.lang.String className, long classPK, long messageId,
+		java.lang.String subject, java.lang.String body,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
