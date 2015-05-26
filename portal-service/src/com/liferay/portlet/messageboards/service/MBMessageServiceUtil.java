@@ -41,16 +41,13 @@ public class MBMessageServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.messageboards.service.impl.MBMessageServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.portlet.messageboards.model.MBMessage addDiscussionMessage(
-		long groupId, java.lang.String className, long classPK,
-		java.lang.String permissionClassName, long permissionClassPK,
-		long threadId, long parentMessageId, java.lang.String subject,
-		java.lang.String body,
+		long groupId, java.lang.String className, long classPK, long threadId,
+		long parentMessageId, java.lang.String subject, java.lang.String body,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .addDiscussionMessage(groupId, className, classPK,
-			permissionClassName, permissionClassPK, threadId, parentMessageId,
-			subject, body, serviceContext);
+				   .addDiscussionMessage(groupId, className, classPK, threadId,
+			parentMessageId, subject, body, serviceContext);
 	}
 
 	public static com.liferay.portlet.messageboards.model.MBMessage addMessage(
@@ -117,7 +114,7 @@ public class MBMessageServiceUtil {
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #deleteDiscussionMessage(
-	String, long, long, long)}
+	long)}
 	*/
 	@Deprecated
 	public static void deleteDiscussionMessage(long groupId,
@@ -130,13 +127,9 @@ public class MBMessageServiceUtil {
 			permissionClassName, permissionClassPK, permissionOwnerId, messageId);
 	}
 
-	public static void deleteDiscussionMessage(
-		java.lang.String permissionClassName, long permissionClassPK,
-		long messageId)
+	public static void deleteDiscussionMessage(long messageId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		getService()
-			.deleteDiscussionMessage(permissionClassName, permissionClassPK,
-			messageId);
+		getService().deleteDiscussionMessage(messageId);
 	}
 
 	public static void deleteMessage(long messageId)
@@ -300,15 +293,13 @@ public class MBMessageServiceUtil {
 	}
 
 	public static com.liferay.portlet.messageboards.model.MBMessage updateDiscussionMessage(
-		java.lang.String className, long classPK,
-		java.lang.String permissionClassName, long permissionClassPK,
-		long messageId, java.lang.String subject, java.lang.String body,
+		java.lang.String className, long classPK, long messageId,
+		java.lang.String subject, java.lang.String body,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .updateDiscussionMessage(className, classPK,
-			permissionClassName, permissionClassPK, messageId, subject, body,
-			serviceContext);
+				   .updateDiscussionMessage(className, classPK, messageId,
+			subject, body, serviceContext);
 	}
 
 	public static com.liferay.portlet.messageboards.model.MBMessage updateMessage(

@@ -34,15 +34,12 @@ public class MBMessageServiceWrapper implements MBMessageService,
 
 	@Override
 	public com.liferay.portlet.messageboards.model.MBMessage addDiscussionMessage(
-		long groupId, java.lang.String className, long classPK,
-		java.lang.String permissionClassName, long permissionClassPK,
-		long threadId, long parentMessageId, java.lang.String subject,
-		java.lang.String body,
+		long groupId, java.lang.String className, long classPK, long threadId,
+		long parentMessageId, java.lang.String subject, java.lang.String body,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbMessageService.addDiscussionMessage(groupId, className,
-			classPK, permissionClassName, permissionClassPK, threadId,
-			parentMessageId, subject, body, serviceContext);
+			classPK, threadId, parentMessageId, subject, body, serviceContext);
 	}
 
 	@Override
@@ -113,7 +110,7 @@ public class MBMessageServiceWrapper implements MBMessageService,
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #deleteDiscussionMessage(
-	String, long, long, long)}
+	long)}
 	*/
 	@Deprecated
 	@Override
@@ -127,11 +124,9 @@ public class MBMessageServiceWrapper implements MBMessageService,
 	}
 
 	@Override
-	public void deleteDiscussionMessage(java.lang.String permissionClassName,
-		long permissionClassPK, long messageId)
+	public void deleteDiscussionMessage(long messageId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_mbMessageService.deleteDiscussionMessage(permissionClassName,
-			permissionClassPK, messageId);
+		_mbMessageService.deleteDiscussionMessage(messageId);
 	}
 
 	@Override
@@ -313,14 +308,12 @@ public class MBMessageServiceWrapper implements MBMessageService,
 
 	@Override
 	public com.liferay.portlet.messageboards.model.MBMessage updateDiscussionMessage(
-		java.lang.String className, long classPK,
-		java.lang.String permissionClassName, long permissionClassPK,
-		long messageId, java.lang.String subject, java.lang.String body,
+		java.lang.String className, long classPK, long messageId,
+		java.lang.String subject, java.lang.String body,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbMessageService.updateDiscussionMessage(className, classPK,
-			permissionClassName, permissionClassPK, messageId, subject, body,
-			serviceContext);
+			messageId, subject, body, serviceContext);
 	}
 
 	@Override

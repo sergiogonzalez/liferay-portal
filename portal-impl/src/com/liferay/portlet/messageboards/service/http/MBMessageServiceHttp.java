@@ -57,8 +57,7 @@ import com.liferay.portlet.messageboards.service.MBMessageServiceUtil;
 public class MBMessageServiceHttp {
 	public static com.liferay.portlet.messageboards.model.MBMessage addDiscussionMessage(
 		HttpPrincipal httpPrincipal, long groupId, java.lang.String className,
-		long classPK, java.lang.String permissionClassName,
-		long permissionClassPK, long threadId, long parentMessageId,
+		long classPK, long threadId, long parentMessageId,
 		java.lang.String subject, java.lang.String body,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -67,8 +66,8 @@ public class MBMessageServiceHttp {
 					"addDiscussionMessage", _addDiscussionMessageParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					className, classPK, permissionClassName, permissionClassPK,
-					threadId, parentMessageId, subject, body, serviceContext);
+					className, classPK, threadId, parentMessageId, subject,
+					body, serviceContext);
 
 			Object returnObj = null;
 
@@ -282,18 +281,14 @@ public class MBMessageServiceHttp {
 	}
 
 	public static void deleteDiscussionMessage(HttpPrincipal httpPrincipal,
-		long groupId, java.lang.String className, long classPK,
-		java.lang.String permissionClassName, long permissionClassPK,
-		long permissionOwnerId, long messageId)
+		long messageId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(MBMessageServiceUtil.class,
 					"deleteDiscussionMessage",
 					_deleteDiscussionMessageParameterTypes6);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					className, classPK, permissionClassName, permissionClassPK,
-					permissionOwnerId, messageId);
+			MethodHandler methodHandler = new MethodHandler(methodKey, messageId);
 
 			try {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);
@@ -314,16 +309,18 @@ public class MBMessageServiceHttp {
 	}
 
 	public static void deleteDiscussionMessage(HttpPrincipal httpPrincipal,
+		long groupId, java.lang.String className, long classPK,
 		java.lang.String permissionClassName, long permissionClassPK,
-		long messageId)
+		long permissionOwnerId, long messageId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(MBMessageServiceUtil.class,
 					"deleteDiscussionMessage",
 					_deleteDiscussionMessageParameterTypes7);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					permissionClassName, permissionClassPK, messageId);
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					className, classPK, permissionClassName, permissionClassPK,
+					permissionOwnerId, messageId);
 
 			try {
 				TunnelUtil.invoke(httpPrincipal, methodHandler);
@@ -960,7 +957,6 @@ public class MBMessageServiceHttp {
 
 	public static com.liferay.portlet.messageboards.model.MBMessage updateDiscussionMessage(
 		HttpPrincipal httpPrincipal, java.lang.String className, long classPK,
-		java.lang.String permissionClassName, long permissionClassPK,
 		long messageId, java.lang.String subject, java.lang.String body,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -970,8 +966,7 @@ public class MBMessageServiceHttp {
 					_updateDiscussionMessageParameterTypes28);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					className, classPK, permissionClassName, permissionClassPK,
-					messageId, subject, body, serviceContext);
+					className, classPK, messageId, subject, body, serviceContext);
 
 			Object returnObj = null;
 
@@ -1035,9 +1030,8 @@ public class MBMessageServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(MBMessageServiceHttp.class);
 	private static final Class<?>[] _addDiscussionMessageParameterTypes0 = new Class[] {
-			long.class, java.lang.String.class, long.class,
-			java.lang.String.class, long.class, long.class, long.class,
-			java.lang.String.class, java.lang.String.class,
+			long.class, java.lang.String.class, long.class, long.class,
+			long.class, java.lang.String.class, java.lang.String.class,
 			com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addMessageParameterTypes1 = new Class[] {
@@ -1069,11 +1063,11 @@ public class MBMessageServiceHttp {
 			com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteDiscussionMessageParameterTypes6 = new Class[] {
-			long.class, java.lang.String.class, long.class,
-			java.lang.String.class, long.class, long.class, long.class
+			long.class
 		};
 	private static final Class<?>[] _deleteDiscussionMessageParameterTypes7 = new Class[] {
-			java.lang.String.class, long.class, long.class
+			long.class, java.lang.String.class, long.class,
+			java.lang.String.class, long.class, long.class, long.class
 		};
 	private static final Class<?>[] _deleteMessageParameterTypes8 = new Class[] {
 			long.class
@@ -1145,9 +1139,8 @@ public class MBMessageServiceHttp {
 			long.class, boolean.class, boolean.class
 		};
 	private static final Class<?>[] _updateDiscussionMessageParameterTypes28 = new Class[] {
-			java.lang.String.class, long.class, java.lang.String.class,
-			long.class, long.class, java.lang.String.class,
-			java.lang.String.class,
+			java.lang.String.class, long.class, long.class,
+			java.lang.String.class, java.lang.String.class,
 			com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateMessageParameterTypes29 = new Class[] {
