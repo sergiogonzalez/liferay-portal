@@ -19,14 +19,17 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONSerializer;
+import com.liferay.portal.kernel.util.SetUtil;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.beanutils.PropertyUtils;
 
@@ -85,6 +88,24 @@ public class ItemSelectorCriterionSerializer<T extends ItemSelectorCriterion> {
 							serializableFieldClass.getComponentType(),
 							list.size()));
 				}
+				else if ((serializableFieldClass == Set.class) &&
+						 List.class.isInstance(value)) {
+
+					Set<Class<?>> classes = new HashSet<>();
+
+					try {
+						for (String className : (List<String>)value) {
+							Class<?> clazz = Class.forName(className);
+
+							classes.add(clazz);
+						}
+
+						value = classes;
+					}
+					catch (Exception e) {
+						value = SetUtil.fromCollection((List<?>)value);
+					}
+				}
 
 				PropertyUtils.setProperty(
 					_itemSelectorCriterion, serializableField, value);
@@ -124,9 +145,7 @@ public class ItemSelectorCriterionSerializer<T extends ItemSelectorCriterion> {
 	}
 
 	private boolean _isInternalProperty(String name) {
-		if (name.equals("availableReturnTypes") || name.equals("class") ||
-			name.equals("desiredReturnTypes")) {
-
+		if (name.equals("availableReturnTypes") || name.equals("class")) {
 			return true;
 		}
 
