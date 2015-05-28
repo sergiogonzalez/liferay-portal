@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.memory.FinalizeManager;
 import com.liferay.portal.kernel.upload.FileItem;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PropsUtil;
 
@@ -47,6 +48,11 @@ public class LiferayFileItem extends DiskFileItem implements FileItem {
 		_fileName = fileName;
 		_sizeThreshold = sizeThreshold;
 		_repository = repository;
+	}
+
+	@Override
+	public String getContentType() {
+		return MimeTypesUtil.getContentType(get());
 	}
 
 	@Override

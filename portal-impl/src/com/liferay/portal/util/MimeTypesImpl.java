@@ -39,6 +39,7 @@ import java.util.Set;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.apache.tika.Tika;
 import org.apache.tika.detect.DefaultDetector;
 import org.apache.tika.detect.Detector;
 import org.apache.tika.io.CloseShieldInputStream;
@@ -79,6 +80,11 @@ public class MimeTypesImpl implements MimeTypes, MimeTypesReaderMetKeys {
 		catch (Exception e) {
 			_log.error("Unable to populate extensions map", e);
 		}
+	}
+
+	@Override
+	public String getContentType(byte[] bytes) {
+		return new Tika().detect(bytes);
 	}
 
 	@Override
