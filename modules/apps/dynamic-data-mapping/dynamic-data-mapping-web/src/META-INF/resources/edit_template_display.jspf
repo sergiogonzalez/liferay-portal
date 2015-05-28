@@ -365,7 +365,7 @@ if (Validator.isNotNull(scriptContent)) {
 				{
 					boundingBox: editorNode,
 					height: 400,
-					mode: '<%= EditorUtil.getEditorMode(langType) %>',
+					mode: '<%= EditorModeUtil.getEditorMode(langType) %>',
 					width: '100%'
 				}
 			).render();

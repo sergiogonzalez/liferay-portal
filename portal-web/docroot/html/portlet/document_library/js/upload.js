@@ -172,7 +172,7 @@ AUI.add(
 
 							return val;
 						},
-						validator: Lang.isArray,
+						validator: Array.isArray,
 						value: []
 					},
 
@@ -977,7 +977,7 @@ AUI.add(
 							instance._uploadURL = Liferay.Util.addParams(
 								{
 									redirect: redirect,
-									ts: Lang.now()
+									ts: Date.now()
 								},
 								uploadURL
 							);

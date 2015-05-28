@@ -17,7 +17,7 @@ AUI.add(
 
 		var STR_EMPTY = '';
 
-		var isArray = Lang.isArray;
+		var isArray = Array.isArray;
 		var isNumber = Lang.isNumber;
 
 		var SpreadSheet = A.Component.create(
@@ -234,7 +234,7 @@ AUI.add(
 					_onRecordUpdate: function(event) {
 						var instance = this;
 
-						if (!A.Object.owns(event.changed, 'recordId')) {
+						if (!event.changed.hasOwnProperty('recordId')) {
 							var data = instance.get('data');
 							var recordsetId = instance.get('recordsetId');
 

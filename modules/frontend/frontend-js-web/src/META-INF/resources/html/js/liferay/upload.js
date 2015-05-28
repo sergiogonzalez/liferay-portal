@@ -411,7 +411,7 @@ AUI.add(
 					_formatTempFiles: function(fileNames) {
 						var instance = this;
 
-						if (Lang.isArray(fileNames) && fileNames.length) {
+						if (Array.isArray(fileNames) && fileNames.length) {
 							var fileListContent = instance._fileListContent;
 
 							instance._pendingFileInfo.show();
@@ -1016,7 +1016,7 @@ AUI.add(
 					_renderUploader: function() {
 						var instance = this;
 
-						var timestampParam = '_LFR_UPLOADER_TS=' + Lang.now();
+						var timestampParam = '_LFR_UPLOADER_TS=' + Date.now();
 
 						var uploader = new A.Uploader(
 							{
