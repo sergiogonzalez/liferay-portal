@@ -65,6 +65,7 @@ import com.liferay.portlet.documentlibrary.util.DLAppUtil;
 import com.liferay.portlet.documentlibrary.util.DLProcessorRegistryUtil;
 import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelModifiedDateComparator;
 import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelNameComparator;
+import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelTitleComparator;
 
 import java.io.File;
 import java.io.IOException;
@@ -882,7 +883,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		return getFileEntries(
 			repositoryId, folderId, start, end,
-			new RepositoryModelNameComparator<FileEntry>(true));
+			new RepositoryModelTitleComparator<FileEntry>(true));
 	}
 
 	/**
@@ -958,7 +959,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		return getFileEntries(
 			repositoryId, folderId, fileEntryTypeId, start, end,
-			new RepositoryModelNameComparator<FileEntry>(true));
+			new RepositoryModelTitleComparator<FileEntry>(true));
 	}
 
 	/**
@@ -996,7 +997,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		return getFileEntries(
 			repositoryId, folderId, mimeTypes, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS,
-			new RepositoryModelNameComparator<FileEntry>(true));
+			new RepositoryModelTitleComparator<FileEntry>(true));
 	}
 
 	@Override
@@ -1533,7 +1534,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		return getFoldersAndFileEntriesAndFileShortcuts(
 			repositoryId, folderId, status, includeMountFolders, start, end,
-			new RepositoryModelNameComparator<Object>(true));
+			new RepositoryModelTitleComparator<Object>(true));
 	}
 
 	/**
