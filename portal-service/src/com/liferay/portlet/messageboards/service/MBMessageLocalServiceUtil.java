@@ -138,6 +138,15 @@ public class MBMessageLocalServiceUtil {
 			priority, allowPingbacks, serviceContext);
 	}
 
+	public static void addMessageAttachment(long messageId,
+		java.lang.String fileName, java.io.File file,
+		java.lang.String mimeType, boolean indexingEnabled)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.addMessageAttachment(messageId, fileName, file, mimeType,
+			indexingEnabled);
+	}
+
 	public static void addMessageResources(
 		com.liferay.portlet.messageboards.model.MBMessage message,
 		boolean addGroupPermissions, boolean addGuestPermissions)
