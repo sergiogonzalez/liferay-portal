@@ -224,19 +224,7 @@ public class EditEntryAction extends PortletAction {
 				unsubscribe(actionRequest);
 			}
 
-			int workflowAction = ParamUtil.getInteger(
-				actionRequest, "workflowAction",
-				WorkflowConstants.ACTION_SAVE_DRAFT);
-
-			if ((entry != null) &&
-				(workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT)) {
-
-				redirect = getSaveAndContinueRedirect(
-					portletConfig, actionRequest, entry, redirect);
-
-				sendRedirect(actionRequest, actionResponse, redirect);
-			}
-			else {
+			if (entry == null) {
 				WindowState windowState = actionRequest.getWindowState();
 
 				if (!windowState.equals(LiferayWindowState.POP_UP)) {
@@ -246,7 +234,32 @@ public class EditEntryAction extends PortletAction {
 					redirect = PortalUtil.escapeRedirect(redirect);
 
 					if (Validator.isNotNull(redirect)) {
-						if (cmd.equals(Constants.ADD) && (entry != null)) {
+						actionResponse.sendRedirect(redirect);
+					}
+				}
+			}
+			else {
+				int workflowAction = ParamUtil.getInteger(
+					actionRequest, "workflowAction",
+					WorkflowConstants.ACTION_SAVE_DRAFT);
+
+				if (workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT) {
+					redirect = getSaveAndContinueRedirect(
+						portletConfig, actionRequest, entry, redirect);
+
+					sendRedirect(actionRequest, actionResponse, redirect);
+				}
+
+				WindowState windowState = actionRequest.getWindowState();
+
+				if (!windowState.equals(LiferayWindowState.POP_UP)) {
+					sendRedirect(actionRequest, actionResponse, redirect);
+				}
+				else {
+					redirect = PortalUtil.escapeRedirect(redirect);
+
+					if (Validator.isNotNull(redirect)) {
+						if (cmd.equals(Constants.ADD)) {
 							String namespace = PortalUtil.getPortletNamespace(
 								portletId);
 
