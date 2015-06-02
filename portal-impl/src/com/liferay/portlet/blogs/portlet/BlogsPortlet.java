@@ -158,7 +158,6 @@ public class BlogsPortlet extends MVCPortlet {
 		UpdateEntryResult updateEntryResult = TransactionHandlerUtil.invoke(
 			_transactionAttribute, updateEntryCallable);
 
-		BlogsEntry entry = updateEntryResult.getEntry();
 		String oldUrlTitle = updateEntryResult.getOldUrlTitle();
 
 		boolean updateRedirect = false;
@@ -171,6 +170,8 @@ public class BlogsPortlet extends MVCPortlet {
 				redirect, oldRedirectParam, false);
 
 			if (Validator.isNotNull(oldRedirect)) {
+				BlogsEntry entry = updateEntryResult.getEntry();
+
 				String newRedirect = HttpUtil.decodeURL(oldRedirect);
 
 				newRedirect = StringUtil.replace(
@@ -184,6 +185,8 @@ public class BlogsPortlet extends MVCPortlet {
 			else if (redirect.endsWith("/blogs/" + oldUrlTitle) ||
 					 redirect.contains("/blogs/" + oldUrlTitle + "?") ||
 					 redirect.contains("/blog/" + oldUrlTitle + "?")) {
+
+				BlogsEntry entry = updateEntryResult.getEntry();
 
 				redirect = StringUtil.replace(
 					redirect, oldUrlTitle, entry.getUrlTitle());
@@ -232,6 +235,8 @@ public class BlogsPortlet extends MVCPortlet {
 
 			jsonObject.put("blogsEntryAttachmentReferences", jsonArray);
 
+			BlogsEntry entry = updateEntryResult.getEntry();
+
 			jsonObject.put("entryId", entry.getEntryId());
 			jsonObject.put("redirect", redirect);
 			jsonObject.put("updateRedirect", updateRedirect);
@@ -240,6 +245,8 @@ public class BlogsPortlet extends MVCPortlet {
 
 			return;
 		}
+
+		BlogsEntry entry = updateEntryResult.getEntry();
 
 		int workflowAction = ParamUtil.getInteger(
 			actionRequest, "workflowAction",
