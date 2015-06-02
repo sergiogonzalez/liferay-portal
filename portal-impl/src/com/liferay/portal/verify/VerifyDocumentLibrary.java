@@ -358,7 +358,7 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 						catch (Exception e) {
 							if (_log.isWarnEnabled()) {
 								_log.warn(
-									"Unable to rename duplicate title for " +
+									"Unable to rename invalid title for " +
 										"file entry " +
 											dlFileEntry.getFileEntryId(),
 									e);
