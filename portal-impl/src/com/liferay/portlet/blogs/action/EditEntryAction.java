@@ -68,6 +68,8 @@ import com.liferay.portlet.documentlibrary.FileSizeException;
 import com.liferay.portlet.trash.service.TrashEntryServiceUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
 
+import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -225,18 +227,7 @@ public class EditEntryAction extends PortletAction {
 			}
 
 			if (entry == null) {
-				WindowState windowState = actionRequest.getWindowState();
-
-				if (!windowState.equals(LiferayWindowState.POP_UP)) {
-					sendRedirect(actionRequest, actionResponse, redirect);
-				}
-				else {
-					redirect = PortalUtil.escapeRedirect(redirect);
-
-					if (Validator.isNotNull(redirect)) {
-						actionResponse.sendRedirect(redirect);
-					}
-				}
+				doSendRedirect(actionRequest, actionResponse, redirect);
 			}
 			else {
 				int workflowAction = ParamUtil.getInteger(
@@ -402,6 +393,25 @@ public class EditEntryAction extends PortletAction {
 			TrashUtil.addTrashSessionMessages(actionRequest, trashedModels);
 
 			hideDefaultSuccessMessage(actionRequest);
+		}
+	}
+
+	protected void doSendRedirect(
+			ActionRequest actionRequest, ActionResponse actionResponse,
+			String redirect)
+		throws IOException {
+
+		WindowState windowState = actionRequest.getWindowState();
+
+		if (!windowState.equals(LiferayWindowState.POP_UP)) {
+			sendRedirect(actionRequest, actionResponse, redirect);
+		}
+		else {
+			redirect = PortalUtil.escapeRedirect(redirect);
+
+			if (Validator.isNotNull(redirect)) {
+				actionResponse.sendRedirect(redirect);
+			}
 		}
 	}
 
