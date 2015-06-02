@@ -251,13 +251,13 @@ public class BlogsPortlet extends MVCPortlet {
 			redirect = getSaveAndContinueRedirect(
 				getPortletConfig(), actionRequest, entry, redirect);
 
-			sendRedirect(actionRequest, actionResponse, redirect);
+			actionResponse.sendRedirect(redirect);
 		}
 
 		WindowState windowState = actionRequest.getWindowState();
 
 		if (!windowState.equals(LiferayWindowState.POP_UP)) {
-			sendRedirect(actionRequest, actionResponse, redirect);
+			actionResponse.sendRedirect(redirect);
 		}
 		else {
 			redirect = PortalUtil.escapeRedirect(redirect);
