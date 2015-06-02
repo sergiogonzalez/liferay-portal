@@ -41,7 +41,7 @@ public class SACPEntrySoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
-		soapModel.setAllowedServices(model.getAllowedServices());
+		soapModel.setAllowedServiceSignatures(model.getAllowedServiceSignatures());
 		soapModel.setName(model.getName());
 		soapModel.setTitle(model.getTitle());
 
@@ -152,12 +152,12 @@ public class SACPEntrySoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
-	public String getAllowedServices() {
-		return _allowedServices;
+	public String getAllowedServiceSignatures() {
+		return _allowedServiceSignatures;
 	}
 
-	public void setAllowedServices(String allowedServices) {
-		_allowedServices = allowedServices;
+	public void setAllowedServiceSignatures(String allowedServiceSignatures) {
+		_allowedServiceSignatures = allowedServiceSignatures;
 	}
 
 	public String getName() {
@@ -183,7 +183,7 @@ public class SACPEntrySoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
-	private String _allowedServices;
+	private String _allowedServiceSignatures;
 	private String _name;
 	private String _title;
 }

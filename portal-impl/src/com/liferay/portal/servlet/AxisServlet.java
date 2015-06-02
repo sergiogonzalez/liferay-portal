@@ -14,8 +14,8 @@
 
 package com.liferay.portal.servlet;
 
+import com.liferay.portal.kernel.security.access.control.AccessControlThreadLocal;
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
-import com.liferay.portal.security.ac.AccessControlThreadLocal;
 
 import java.io.IOException;
 

@@ -70,7 +70,7 @@ import java.util.Map;
 @ProviderType
 public class SACPEntryServiceSoap {
 	public static com.liferay.service.access.control.profile.model.SACPEntrySoap addSACPEntry(
-		java.lang.String allowedServices, java.lang.String name,
+		java.lang.String allowedServiceSignatures, java.lang.String name,
 		java.lang.String[] titleMapLanguageIds,
 		java.lang.String[] titleMapValues,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -80,8 +80,8 @@ public class SACPEntryServiceSoap {
 					titleMapValues);
 
 			com.liferay.service.access.control.profile.model.SACPEntry returnValue =
-				SACPEntryServiceUtil.addSACPEntry(allowedServices, name,
-					titleMap, serviceContext);
+				SACPEntryServiceUtil.addSACPEntry(allowedServiceSignatures,
+					name, titleMap, serviceContext);
 
 			return com.liferay.service.access.control.profile.model.SACPEntrySoap.toSoapModel(returnValue);
 		}
@@ -202,7 +202,7 @@ public class SACPEntryServiceSoap {
 	}
 
 	public static com.liferay.service.access.control.profile.model.SACPEntrySoap updateSACPEntry(
-		long sacpEntryId, java.lang.String allowedServices,
+		long sacpEntryId, java.lang.String allowedServiceSignatures,
 		java.lang.String name, java.lang.String[] titleMapLanguageIds,
 		java.lang.String[] titleMapValues,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -213,7 +213,7 @@ public class SACPEntryServiceSoap {
 
 			com.liferay.service.access.control.profile.model.SACPEntry returnValue =
 				SACPEntryServiceUtil.updateSACPEntry(sacpEntryId,
-					allowedServices, name, titleMap, serviceContext);
+					allowedServiceSignatures, name, titleMap, serviceContext);
 
 			return com.liferay.service.access.control.profile.model.SACPEntrySoap.toSoapModel(returnValue);
 		}

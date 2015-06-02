@@ -1,8 +1,12 @@
 Bundle-Name: Liferay Portal Tools WSDD Builder
 Bundle-SymbolicName: com.liferay.portal.tools.wsdd.builder
-Bundle-Version: 1.0.1
+Bundle-Version: 1.0.2
+Import-Package:\
+	!org.apache.maven.plugin.*,\
+	*
 Include-Resource:\
 	classes,\
+	{META-INF/maven/plugin.xml=src/META-INF/maven/plugin.xml},\
 	@../../../lib/portal/xercesImpl.jar!/org/apache/xerces/xni/XNIException.class,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/ArgumentsMap.class,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/ArgumentsUtil.class,\
@@ -22,7 +26,7 @@ Include-Resource:\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/memory/SoftReferenceThreadLocal.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/search/Document.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/search/Field.class,\
-	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/search/util/SearchUtil.class,\
+	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/search/highlight/HighlightUtil.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/security/RandomUtil.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/security/pacl/DoPrivileged.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/security/pacl/permission/PortalFilePermission.class,\

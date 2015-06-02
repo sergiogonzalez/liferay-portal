@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Source Formatter
 Bundle-SymbolicName: com.liferay.source.formatter
-Bundle-Version: 1.0.8
+Bundle-Version: 1.0.9
 Import-Package:\
 	!javax.portlet,\
 	!javax.servlet.http,\
@@ -36,7 +36,7 @@ Include-Resource:\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/memory/SoftReferenceThreadLocal.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/search/Document.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/search/Field.class,\
-	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/search/util/SearchUtil.class,\
+	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/search/highlight/HighlightUtil.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/security/RandomUtil.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/security/pacl/DoPrivileged.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/security/pacl/permission/PortalFilePermission.class,\

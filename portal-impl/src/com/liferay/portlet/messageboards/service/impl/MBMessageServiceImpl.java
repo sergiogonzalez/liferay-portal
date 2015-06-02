@@ -77,18 +77,17 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 
 	@Override
 	public MBMessage addDiscussionMessage(
-			long groupId, String className, long classPK,
-			String permissionClassName, long permissionClassPK,
-			long permissionOwnerId, long threadId, long parentMessageId,
-			String subject, String body, ServiceContext serviceContext)
+			long groupId, String className, long classPK, long threadId,
+			long parentMessageId, String subject, String body,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = getGuestOrUser();
 
 		MBDiscussionPermission.check(
 			getPermissionChecker(), user.getCompanyId(),
-			serviceContext.getScopeGroupId(), permissionClassName,
-			permissionClassPK, permissionOwnerId, ActionKeys.ADD_DISCUSSION);
+			serviceContext.getScopeGroupId(), className, classPK,
+			ActionKeys.ADD_DISCUSSION);
 
 		return mbMessageLocalService.addDiscussionMessage(
 			user.getUserId(), null, groupId, className, classPK, threadId,
@@ -243,9 +242,38 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			priority, allowPingbacks, serviceContext);
 	}
 
+	@Override
+	public void addMessageAttachment(
+			long messageId, String fileName, File file, String mimeType)
+		throws PortalException {
+
+		MBMessage message = mbMessageLocalService.getMBMessage(messageId);
+
+		if (lockLocalService.isLocked(
+				MBThread.class.getName(), message.getThreadId())) {
+
+			throw new LockedThreadException();
+		}
+
+		MBCategoryPermission.contains(
+			getPermissionChecker(), message.getGroupId(),
+			message.getCategoryId(), ActionKeys.ADD_FILE);
+
+		mbMessageLocalService.addMessageAttachment(
+			getUserId(), messageId, fileName, file, mimeType);
+	}
+
+	@Override
+	public void deleteDiscussionMessage(long messageId) throws PortalException {
+		MBDiscussionPermission.check(
+			getPermissionChecker(), messageId, ActionKeys.DELETE_DISCUSSION);
+
+		mbMessageLocalService.deleteDiscussionMessage(messageId);
+	}
+
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #deleteDiscussionMessage(
-	 *             String, long, long, long)}
+	 *             long)}
 	 */
 	@Deprecated
 	@Override
@@ -255,22 +283,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			long permissionOwnerId, long messageId)
 		throws PortalException {
 
-		deleteDiscussionMessage(
-			permissionClassName, permissionClassPK, permissionOwnerId,
-			messageId);
-	}
-
-	@Override
-	public void deleteDiscussionMessage(
-			String permissionClassName, long permissionClassPK,
-			long permissionOwnerId, long messageId)
-		throws PortalException {
-
-		MBDiscussionPermission.check(
-			getPermissionChecker(), permissionClassName, permissionClassPK,
-			messageId, permissionOwnerId, ActionKeys.DELETE_DISCUSSION);
-
-		mbMessageLocalService.deleteDiscussionMessage(messageId);
+		deleteDiscussionMessage(messageId);
 	}
 
 	@Override
@@ -279,6 +292,16 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			getPermissionChecker(), messageId, ActionKeys.DELETE);
 
 		mbMessageLocalService.deleteMessage(messageId);
+	}
+
+	@Override
+	public void deleteMessageAttachment(long messageId, String fileName)
+		throws PortalException {
+
+		MBMessagePermission.check(
+			getPermissionChecker(), messageId, ActionKeys.UPDATE);
+
+		mbMessageLocalService.deleteMessageAttachment(messageId, fileName);
 	}
 
 	@Override
@@ -697,14 +720,12 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 
 	@Override
 	public MBMessage updateDiscussionMessage(
-			String className, long classPK, String permissionClassName,
-			long permissionClassPK, long permissionOwnerId, long messageId,
-			String subject, String body, ServiceContext serviceContext)
+			String className, long classPK, long messageId, String subject,
+			String body, ServiceContext serviceContext)
 		throws PortalException {
 
 		MBDiscussionPermission.check(
-			getPermissionChecker(), permissionClassName, permissionClassPK,
-			messageId, permissionOwnerId, ActionKeys.UPDATE_DISCUSSION);
+			getPermissionChecker(), messageId, ActionKeys.UPDATE_DISCUSSION);
 
 		return mbMessageLocalService.updateDiscussionMessage(
 			getUserId(), messageId, className, classPK, subject, body,

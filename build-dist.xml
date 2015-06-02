@@ -21,7 +21,6 @@
 
 			<mirrors-get
 				dest="@{app.server.lib.portal.dir}/${portal.setup.liferay.pool.provider.jar.name[hikaricp]}"
-				skipexisting="true"
 				src="${portal.setup.liferay.pool.provider.jar.url[hikaricp]}"
 			/>
 		</sequential>

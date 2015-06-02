@@ -8,7 +8,7 @@ import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
-import com.liferay.portal.security.ac.AccessControlled;
+import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.service.Base${sessionTypeName}Service;
 import com.liferay.portal.service.Invokable${sessionTypeName}Service;
 import com.liferay.portal.service.PermissionedModelLocalService;

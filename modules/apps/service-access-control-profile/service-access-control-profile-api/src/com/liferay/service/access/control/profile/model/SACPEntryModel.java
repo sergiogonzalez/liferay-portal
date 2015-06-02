@@ -197,19 +197,19 @@ public interface SACPEntryModel extends BaseModel<SACPEntry>, LocalizedModel,
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
-	 * Returns the allowed services of this s a c p entry.
+	 * Returns the allowed service signatures of this s a c p entry.
 	 *
-	 * @return the allowed services of this s a c p entry
+	 * @return the allowed service signatures of this s a c p entry
 	 */
 	@AutoEscape
-	public String getAllowedServices();
+	public String getAllowedServiceSignatures();
 
 	/**
-	 * Sets the allowed services of this s a c p entry.
+	 * Sets the allowed service signatures of this s a c p entry.
 	 *
-	 * @param allowedServices the allowed services of this s a c p entry
+	 * @param allowedServiceSignatures the allowed service signatures of this s a c p entry
 	 */
-	public void setAllowedServices(String allowedServices);
+	public void setAllowedServiceSignatures(String allowedServiceSignatures);
 
 	/**
 	 * Returns the name of this s a c p entry.

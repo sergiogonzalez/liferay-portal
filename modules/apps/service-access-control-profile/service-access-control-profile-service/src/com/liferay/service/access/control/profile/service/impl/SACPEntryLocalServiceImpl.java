@@ -43,7 +43,7 @@ public class SACPEntryLocalServiceImpl extends SACPEntryLocalServiceBaseImpl {
 
 	@Override
 	public SACPEntry addSACPEntry(
-			long userId, String allowedServices, String name,
+			long userId, String allowedServiceSignatures, String name,
 			Map<Locale, String> titleMap, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -68,7 +68,7 @@ public class SACPEntryLocalServiceImpl extends SACPEntryLocalServiceBaseImpl {
 		sacpEntry.setCompanyId(user.getCompanyId());
 		sacpEntry.setUserId(userId);
 		sacpEntry.setUserName(user.getFullName());
-		sacpEntry.setAllowedServices(allowedServices);
+		sacpEntry.setAllowedServiceSignatures(allowedServiceSignatures);
 		sacpEntry.setName(name);
 		sacpEntry.setTitleMap(titleMap);
 
@@ -132,7 +132,7 @@ public class SACPEntryLocalServiceImpl extends SACPEntryLocalServiceBaseImpl {
 
 	@Override
 	public SACPEntry updateSACPEntry(
-			long sacpEntryId, String allowedServices, String name,
+			long sacpEntryId, String allowedServiceSignatures, String name,
 			Map<Locale, String> titleMap, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -154,7 +154,7 @@ public class SACPEntryLocalServiceImpl extends SACPEntryLocalServiceBaseImpl {
 			throw new DuplicateSACPEntryNameException();
 		}
 
-		sacpEntry.setAllowedServices(allowedServices);
+		sacpEntry.setAllowedServiceSignatures(allowedServiceSignatures);
 		sacpEntry.setName(name);
 		sacpEntry.setTitleMap(titleMap);
 

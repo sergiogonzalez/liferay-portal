@@ -18,17 +18,19 @@
 
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
-<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %>
-<%@ taglib uri="http://liferay.com/tld/ddm" prefix="liferay-ddm" %>
-<%@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %>
-<%@ taglib uri="http://liferay.com/tld/security" prefix="liferay-security" %>
-<%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
-<%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
-<%@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
+<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/ddm" prefix="liferay-ddm" %><%@
+taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
+taglib uri="http://liferay.com/tld/security" prefix="liferay-security" %><%@
+taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
+taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
+taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.journal.web.asset.JournalArticleAssetRenderer" %><%@
+<%@ page import="com.liferay.item.selector.ItemSelector" %><%@
+page import="com.liferay.journal.web.asset.JournalArticleAssetRenderer" %><%@
 page import="com.liferay.journal.web.configuration.JournalWebConfigurationValues" %><%@
 page import="com.liferay.journal.web.constants.JournalPortletKeys" %><%@
+page import="com.liferay.journal.web.constants.JournalWebKeys" %><%@
 page import="com.liferay.journal.web.context.JournalDisplayContext" %><%@
 page import="com.liferay.journal.web.portlet.JournalPortlet" %><%@
 page import="com.liferay.journal.web.portlet.action.ActionUtil" %><%@
@@ -41,6 +43,7 @@ page import="com.liferay.journal.web.search.FeedSearch" %><%@
 page import="com.liferay.journal.web.search.FeedSearchTerms" %><%@
 page import="com.liferay.journal.web.util.JournalPortletUtil" %><%@
 page import="com.liferay.journal.web.util.JournalSearcher" %><%@
+page import="com.liferay.layout.item.selector.web.LayoutItemSelectorCriterion" %><%@
 page import="com.liferay.portal.LocaleException" %><%@
 page import="com.liferay.portal.NoSuchWorkflowDefinitionLinkException" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@

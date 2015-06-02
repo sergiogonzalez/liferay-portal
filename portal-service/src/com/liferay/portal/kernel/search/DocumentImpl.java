@@ -458,24 +458,6 @@ public class DocumentImpl implements Document {
 		field.setTokenized(true);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0
-	 */
-	@Deprecated
-	@Override
-	public void addModifiedDate() {
-		addModifiedDate(new Date());
-	}
-
-	/**
-	 * @deprecated As of 6.1.0
-	 */
-	@Deprecated
-	@Override
-	public void addModifiedDate(Date modifiedDate) {
-		addDate(Field.MODIFIED, modifiedDate);
-	}
-
 	@Override
 	public void addNumber(String name, BigDecimal value) {
 		createNumberField(name, value);
@@ -967,13 +949,7 @@ public class DocumentImpl implements Document {
 			value = StringUtil.toLowerCase(value);
 		}
 
-		Field field = createField(name, value);
-
-		for (String fieldName : Field.UNSCORED_FIELD_NAMES) {
-			if (StringUtil.equalsIgnoreCase(name, fieldName)) {
-				field.setBoost(0);
-			}
-		}
+		createField(name, value);
 	}
 
 	protected void createNumberField(

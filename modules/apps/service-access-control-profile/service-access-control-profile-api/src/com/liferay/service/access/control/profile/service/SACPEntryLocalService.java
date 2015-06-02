@@ -59,7 +59,8 @@ public interface SACPEntryLocalService extends BaseLocalService,
 		com.liferay.service.access.control.profile.model.SACPEntry sacpEntry);
 
 	public com.liferay.service.access.control.profile.model.SACPEntry addSACPEntry(
-		long userId, java.lang.String allowedServices, java.lang.String name,
+		long userId, java.lang.String allowedServiceSignatures,
+		java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
@@ -283,7 +284,7 @@ public interface SACPEntryLocalService extends BaseLocalService,
 		com.liferay.service.access.control.profile.model.SACPEntry sacpEntry);
 
 	public com.liferay.service.access.control.profile.model.SACPEntry updateSACPEntry(
-		long sacpEntryId, java.lang.String allowedServices,
+		long sacpEntryId, java.lang.String allowedServiceSignatures,
 		java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		com.liferay.portal.service.ServiceContext serviceContext)

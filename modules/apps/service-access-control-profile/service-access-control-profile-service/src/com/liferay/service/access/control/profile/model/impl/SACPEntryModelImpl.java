@@ -86,11 +86,11 @@ public class SACPEntryModelImpl extends BaseModelImpl<SACPEntry>
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
-			{ "allowedServices", Types.VARCHAR },
+			{ "allowedServiceSignatures", Types.VARCHAR },
 			{ "name", Types.VARCHAR },
 			{ "title", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table SACPEntry (uuid_ VARCHAR(75) null,sacpEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,allowedServices STRING null,name VARCHAR(75) null,title STRING null)";
+	public static final String TABLE_SQL_CREATE = "create table SACPEntry (uuid_ VARCHAR(75) null,sacpEntryId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,allowedServiceSignatures STRING null,name VARCHAR(75) null,title STRING null)";
 	public static final String TABLE_SQL_DROP = "drop table SACPEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY sacpEntry.sacpEntryId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY SACPEntry.sacpEntryId ASC";
@@ -131,7 +131,7 @@ public class SACPEntryModelImpl extends BaseModelImpl<SACPEntry>
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setAllowedServices(soapModel.getAllowedServices());
+		model.setAllowedServiceSignatures(soapModel.getAllowedServiceSignatures());
 		model.setName(soapModel.getName());
 		model.setTitle(soapModel.getTitle());
 
@@ -205,7 +205,7 @@ public class SACPEntryModelImpl extends BaseModelImpl<SACPEntry>
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("allowedServices", getAllowedServices());
+		attributes.put("allowedServiceSignatures", getAllowedServiceSignatures());
 		attributes.put("name", getName());
 		attributes.put("title", getTitle());
 
@@ -259,10 +259,11 @@ public class SACPEntryModelImpl extends BaseModelImpl<SACPEntry>
 			setModifiedDate(modifiedDate);
 		}
 
-		String allowedServices = (String)attributes.get("allowedServices");
+		String allowedServiceSignatures = (String)attributes.get(
+				"allowedServiceSignatures");
 
-		if (allowedServices != null) {
-			setAllowedServices(allowedServices);
+		if (allowedServiceSignatures != null) {
+			setAllowedServiceSignatures(allowedServiceSignatures);
 		}
 
 		String name = (String)attributes.get("name");
@@ -409,18 +410,18 @@ public class SACPEntryModelImpl extends BaseModelImpl<SACPEntry>
 
 	@JSON
 	@Override
-	public String getAllowedServices() {
-		if (_allowedServices == null) {
+	public String getAllowedServiceSignatures() {
+		if (_allowedServiceSignatures == null) {
 			return StringPool.BLANK;
 		}
 		else {
-			return _allowedServices;
+			return _allowedServiceSignatures;
 		}
 	}
 
 	@Override
-	public void setAllowedServices(String allowedServices) {
-		_allowedServices = allowedServices;
+	public void setAllowedServiceSignatures(String allowedServiceSignatures) {
+		_allowedServiceSignatures = allowedServiceSignatures;
 	}
 
 	@JSON
@@ -653,7 +654,7 @@ public class SACPEntryModelImpl extends BaseModelImpl<SACPEntry>
 		sacpEntryImpl.setUserName(getUserName());
 		sacpEntryImpl.setCreateDate(getCreateDate());
 		sacpEntryImpl.setModifiedDate(getModifiedDate());
-		sacpEntryImpl.setAllowedServices(getAllowedServices());
+		sacpEntryImpl.setAllowedServiceSignatures(getAllowedServiceSignatures());
 		sacpEntryImpl.setName(getName());
 		sacpEntryImpl.setTitle(getTitle());
 
@@ -775,12 +776,13 @@ public class SACPEntryModelImpl extends BaseModelImpl<SACPEntry>
 			sacpEntryCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
-		sacpEntryCacheModel.allowedServices = getAllowedServices();
+		sacpEntryCacheModel.allowedServiceSignatures = getAllowedServiceSignatures();
 
-		String allowedServices = sacpEntryCacheModel.allowedServices;
+		String allowedServiceSignatures = sacpEntryCacheModel.allowedServiceSignatures;
 
-		if ((allowedServices != null) && (allowedServices.length() == 0)) {
-			sacpEntryCacheModel.allowedServices = null;
+		if ((allowedServiceSignatures != null) &&
+				(allowedServiceSignatures.length() == 0)) {
+			sacpEntryCacheModel.allowedServiceSignatures = null;
 		}
 
 		sacpEntryCacheModel.name = getName();
@@ -820,8 +822,8 @@ public class SACPEntryModelImpl extends BaseModelImpl<SACPEntry>
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
 		sb.append(getModifiedDate());
-		sb.append(", allowedServices=");
-		sb.append(getAllowedServices());
+		sb.append(", allowedServiceSignatures=");
+		sb.append(getAllowedServiceSignatures());
 		sb.append(", name=");
 		sb.append(getName());
 		sb.append(", title=");
@@ -868,8 +870,8 @@ public class SACPEntryModelImpl extends BaseModelImpl<SACPEntry>
 		sb.append(getModifiedDate());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>allowedServices</column-name><column-value><![CDATA[");
-		sb.append(getAllowedServices());
+			"<column><column-name>allowedServiceSignatures</column-name><column-value><![CDATA[");
+		sb.append(getAllowedServiceSignatures());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>name</column-name><column-value><![CDATA[");
@@ -900,7 +902,7 @@ public class SACPEntryModelImpl extends BaseModelImpl<SACPEntry>
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
-	private String _allowedServices;
+	private String _allowedServiceSignatures;
 	private String _name;
 	private String _originalName;
 	private String _title;

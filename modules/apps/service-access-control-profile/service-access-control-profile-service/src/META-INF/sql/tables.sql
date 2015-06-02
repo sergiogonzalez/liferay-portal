@@ -6,7 +6,7 @@ create table SACPEntry (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	allowedServices STRING null,
+	allowedServiceSignatures STRING null,
 	name VARCHAR(75) null,
 	title STRING null
 );

@@ -18,28 +18,18 @@
 
 <%
 long classNameId = GetterUtil.getLong((String)request.getAttribute("liferay-ui:ddm-template-select:classNameId"));
-String defaultDisplayStyle = (String)request.getAttribute("liferay-ui:ddm-template-select:defaultDisplayStyle");
 String displayStyle = (String)request.getAttribute("liferay-ui:ddm-template-select:displayStyle");
 long displayStyleGroupId = GetterUtil.getLong((String)request.getAttribute("liferay-ui:ddm-template-select:displayStyleGroupId"));
 List<String> displayStyles = (List<String>)request.getAttribute("liferay-ui:ddm-template-select:displayStyles");
 String icon = GetterUtil.getString((String)request.getAttribute("liferay-ui:ddm-template-select:icon"), "icon-cog");
 String label = (String)request.getAttribute("liferay-ui:ddm-template-select:label");
+DDMTemplate portletDisplayDDMTemplate = (DDMTemplate)request.getAttribute("liferay-ui:ddm-template-select:portletDisplayDDMTemplate");
 String refreshURL = (String)request.getAttribute("liferay-ui:ddm-template-select:refreshURL");
 boolean showEmptyOption = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:ddm-template-select:showEmptyOption"));
 
 long ddmTemplateGroupId = PortletDisplayTemplateUtil.getDDMTemplateGroupId(themeDisplay.getScopeGroupId());
 
 Group ddmTemplateGroup = GroupLocalServiceUtil.getGroup(ddmTemplateGroupId);
-
-DDMTemplate ddmTemplate = null;
-
-if (displayStyle.startsWith(PortletDisplayTemplate.DISPLAY_STYLE_PREFIX)) {
-	ddmTemplate = PortletDisplayTemplateUtil.getPortletDisplayTemplateDDMTemplate(displayStyleGroupId, classNameId, displayStyle);
-
-	if (ddmTemplate == null) {
-		displayStyle = defaultDisplayStyle;
-	}
-}
 %>
 
 <aui:input id="displayStyleGroupId" name="preferences--displayStyleGroupId--" type="hidden" value="<%= String.valueOf(displayStyleGroupId) %>" />
@@ -76,7 +66,7 @@ if (displayStyle.startsWith(PortletDisplayTemplate.DISPLAY_STYLE_PREFIX)) {
 		}
 	%>
 
-		<aui:option data="<%= data %>" label="<%= HtmlUtil.escape(curDDMTemplate.getName(locale)) %>" selected="<%= (ddmTemplate != null) && (curDDMTemplate.getTemplateId() == ddmTemplate.getTemplateId()) %>" value="<%= PortletDisplayTemplate.DISPLAY_STYLE_PREFIX + curDDMTemplate.getTemplateKey() %>" />
+		<aui:option data="<%= data %>" label="<%= HtmlUtil.escape(curDDMTemplate.getName(locale)) %>" selected="<%= (portletDisplayDDMTemplate != null) && (curDDMTemplate.getTemplateId() == portletDisplayDDMTemplate.getTemplateId()) %>" value="<%= PortletDisplayTemplate.DISPLAY_STYLE_PREFIX + curDDMTemplate.getTemplateKey() %>" />
 
 	<%
 	}

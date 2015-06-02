@@ -529,13 +529,13 @@
 	</bean>
 	<bean id="com.liferay.portal.sanitizer.DummySanitizerImpl" class="com.liferay.portal.sanitizer.DummySanitizerImpl" />
 	<bean id="com.liferay.portal.scripting.ruby.RubyExecutor" class="com.liferay.portal.scripting.ruby.RubyExecutor" depends-on="com.liferay.portal.kernel.util.FileUtil" />
-	<bean id="com.liferay.portal.security.ac.AccessControlUtil" class="com.liferay.portal.security.ac.AccessControlUtil">
+	<bean id="com.liferay.portal.security.access.control.AccessControlUtil" class="com.liferay.portal.security.access.control.AccessControlUtil">
 		<property name="accessControl">
-			<bean class="com.liferay.portal.security.ac.AccessControlImpl" />
+			<bean class="com.liferay.portal.security.access.control.AccessControlImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portal.security.ac.AllowedHostsAccessControlPolicy" class="com.liferay.portal.security.ac.AllowedHostsAccessControlPolicy" />
-	<bean id="com.liferay.portal.security.ac.AuthenticatedAccessControlPolicy" class="com.liferay.portal.security.ac.AuthenticatedAccessControlPolicy" />
+	<bean id="com.liferay.portal.security.access.control.AllowedHostsAccessControlPolicy" class="com.liferay.portal.security.access.control.AllowedHostsAccessControlPolicy" />
+	<bean id="com.liferay.portal.security.access.control.AuthenticatedAccessControlPolicy" class="com.liferay.portal.security.access.control.AuthenticatedAccessControlPolicy" />
 	<bean id="com.liferay.portal.security.auth.AuthenticatedUserUUIDStoreUtil" class="com.liferay.portal.security.auth.AuthenticatedUserUUIDStoreUtil">
 		<property name="authenticatedUserUUIDStore">
 			<bean class="com.liferay.portal.security.auth.DefaultAuthenticatedUserUUIDStoreImpl" />
@@ -547,7 +547,6 @@
 		</property>
 	</bean>
 	<bean id="com.liferay.portal.security.auth.AuthTokenUtil" class="com.liferay.portal.security.auth.AuthTokenUtil" />
-	<bean id="com.liferay.portal.security.auth.BasicAuthHeaderAutoLogin" class="com.liferay.portal.security.auth.BasicAuthHeaderAutoLogin" />
 	<bean id="com.liferay.portal.security.auth.DefaultEmailAddressGenerator" class="com.liferay.portal.security.auth.DefaultEmailAddressGenerator" />
 	<bean id="com.liferay.portal.security.auth.DefaultEmailAddressValidator" class="com.liferay.portal.security.auth.DefaultEmailAddressValidator" />
 	<bean id="com.liferay.portal.security.auth.DefaultFullNameGenerator" class="com.liferay.portal.security.auth.DefaultFullNameGenerator" />
@@ -568,14 +567,9 @@
 	<bean id="com.liferay.portal.security.auth.LiberalScreenNameValidator" class="com.liferay.portal.security.auth.LiberalScreenNameValidator" />
 	<bean id="com.liferay.portal.security.auth.LoginFailure" class="com.liferay.portal.security.auth.LoginFailure" />
 	<bean id="com.liferay.portal.security.auth.LoginMaxFailures" class="com.liferay.portal.security.auth.LoginMaxFailures" />
-	<bean id="com.liferay.portal.security.auth.ParameterAutoLogin" class="com.liferay.portal.security.auth.ParameterAutoLogin" />
-	<bean id="com.liferay.portal.security.auth.PortalSessionAuthVerifier" class="com.liferay.portal.security.auth.PortalSessionAuthVerifier" />
-	<bean id="com.liferay.portal.security.auth.RememberMeAutoLogin" class="com.liferay.portal.security.auth.RememberMeAutoLogin" />
-	<bean id="com.liferay.portal.security.auth.RequestHeaderAutoLogin" class="com.liferay.portal.security.auth.RequestHeaderAutoLogin" />
 	<bean id="com.liferay.portal.security.auth.ScreenNameGeneratorFactory" class="com.liferay.portal.security.auth.ScreenNameGeneratorFactory" />
 	<bean id="com.liferay.portal.security.auth.ScreenNameValidatorFactory" class="com.liferay.portal.security.auth.ScreenNameValidatorFactory" />
 	<bean id="com.liferay.portal.security.auth.SessionAuthToken" class="com.liferay.portal.security.auth.SessionAuthToken" />
-	<bean id="com.liferay.portal.security.auth.TunnelingServletAuthVerifier" class="com.liferay.portal.security.auth.TunnelingServletAuthVerifier" />
 	<bean id="com.liferay.portal.security.membershippolicy.DefaultSiteMembershipPolicy" class="com.liferay.portal.security.membershippolicy.DefaultSiteMembershipPolicy" />
 	<bean id="com.liferay.portal.security.membershippolicy.DummyOrganizationMembershipPolicy" class="com.liferay.portal.security.membershippolicy.DummyOrganizationMembershipPolicy" />
 	<bean id="com.liferay.portal.security.membershippolicy.DummyRoleMembershipPolicy" class="com.liferay.portal.security.membershippolicy.DummyRoleMembershipPolicy" />

@@ -5,7 +5,6 @@
 	<macrodef name="mirrors-get">
 		<attribute name="dest" />
 		<attribute default="false" name="ignoreerrors" />
-		<attribute default="false" name="skipexisting" />
 		<attribute name="src" />
 		<attribute default="true" name="trylocalnetwork" />
 		<attribute default="false" name="verbose" />
@@ -52,7 +51,6 @@
 									<get
 										dest="${mirrors.cache.artifact.dir}"
 										ignoreerrors="@{ignoreerrors}"
-										skipexisting="@{skipexisting}"
 										src="${mirrors.src}"
 										verbose="@{verbose}"
 									/>
@@ -61,7 +59,6 @@
 									<get
 										dest="${mirrors.cache.artifact.dir}"
 										ignoreerrors="@{ignoreerrors}"
-										skipexisting="@{skipexisting}"
 										src="@{src}"
 										verbose="@{verbose}"
 									/>
@@ -72,7 +69,6 @@
 							<get
 								dest="${mirrors.cache.artifact.dir}"
 								ignoreerrors="@{ignoreerrors}"
-								skipexisting="@{skipexisting}"
 								src="@{src}"
 								verbose="@{verbose}"
 							/>
@@ -86,16 +82,12 @@
 				<then>
 					<copy
 						file="${mirrors.cache.artifact.dir}/${mirrors.cache.artifact.file.name}"
-						overwrite="true"
 						tofile="@{dest}/${mirrors.cache.artifact.file.name}"
 					/>
-
-					<var name="mirrors.cache.artifact.file.name" unset="true" />
 				</then>
 				<else>
 					<copy
 						file="${mirrors.cache.artifact.dir}/${mirrors.cache.artifact.file.name}"
-						overwrite="true"
 						tofile="@{dest}"
 					/>
 				</else>
@@ -103,6 +95,7 @@
 
 			<var name="mirrors.cache.artifact.dir" unset="true" />
 			<var name="mirrors.cache.artifact.file.name" unset="true" />
+			<var name="mirrors.cache.artifact.subdir" unset="true" />
 		</sequential>
 	</macrodef>
 

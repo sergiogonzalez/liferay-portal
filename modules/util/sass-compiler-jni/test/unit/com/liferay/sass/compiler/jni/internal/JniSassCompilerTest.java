@@ -14,6 +14,7 @@
 
 package com.liferay.sass.compiler.jni.internal;
 
+import com.liferay.sass.compiler.SassCompiler;
 import com.liferay.sass.compiler.jni.internal.util.test.JniSassCompilerTestUtil;
 
 import java.io.File;
@@ -38,8 +39,23 @@ public class JniSassCompilerTest {
 	}
 
 	@Test
+	public void testBoxShadowTransparent() throws Exception {
+		SassCompiler sassCompiler = new JniSassCompiler();
+
+		Assert.assertNotNull(sassCompiler);
+
+		String expectedOutput =
+			"foo { box-shadow: 2px 4px 7px rgba(0, 0, 0, 0.5); }";
+		String actualOutput = sassCompiler.compileString(
+			"foo { box-shadow: 2px 4px 7px rgba(0, 0, 0, 0.5); }", "", "");
+
+		Assert.assertEquals(
+			stripNewLines(expectedOutput), stripNewLines(actualOutput));
+	}
+
+	@Test
 	public void testCompileFile() throws Exception {
-		JniSassCompiler sassCompiler = new JniSassCompiler();
+		SassCompiler sassCompiler = new JniSassCompiler();
 
 		Assert.assertNotNull(sassCompiler);
 
@@ -72,7 +88,7 @@ public class JniSassCompilerTest {
 
 	@Test
 	public void testCompileString() throws Exception {
-		JniSassCompiler sassCompiler = new JniSassCompiler();
+		SassCompiler sassCompiler = new JniSassCompiler();
 
 		Assert.assertNotNull(sassCompiler);
 

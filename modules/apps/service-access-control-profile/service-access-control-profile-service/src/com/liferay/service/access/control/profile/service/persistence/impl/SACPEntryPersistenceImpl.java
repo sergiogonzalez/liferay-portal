@@ -3467,7 +3467,7 @@ public class SACPEntryPersistenceImpl extends BasePersistenceImpl<SACPEntry>
 		sacpEntryImpl.setUserName(sacpEntry.getUserName());
 		sacpEntryImpl.setCreateDate(sacpEntry.getCreateDate());
 		sacpEntryImpl.setModifiedDate(sacpEntry.getModifiedDate());
-		sacpEntryImpl.setAllowedServices(sacpEntry.getAllowedServices());
+		sacpEntryImpl.setAllowedServiceSignatures(sacpEntry.getAllowedServiceSignatures());
 		sacpEntryImpl.setName(sacpEntry.getName());
 		sacpEntryImpl.setTitle(sacpEntry.getTitle());
 

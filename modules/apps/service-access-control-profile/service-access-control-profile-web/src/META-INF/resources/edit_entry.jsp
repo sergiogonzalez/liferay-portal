@@ -63,7 +63,7 @@ if (sacpEntryId > 0) {
 
 	<aui:input name="title" required="<%= true %>" />
 
-	<aui:input helpMessage="allowed-services-help" name="allowedServices" />
+	<aui:input helpMessage="allowed-service-signatures-help" name="allowedServiceSignatures" />
 
 	<aui:button-row>
 		<aui:button type="submit" value="save" />

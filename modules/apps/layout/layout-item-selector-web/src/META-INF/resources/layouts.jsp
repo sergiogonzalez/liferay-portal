@@ -26,16 +26,6 @@ Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 
 request.setAttribute(WebKeys.GROUP, group);
 
-boolean showGroupsSelector = ParamUtil.getBoolean(request, "showGroupsSelector");
-%>
-
-<c:if test="<%= showGroupsSelector %>">
-	<liferay-util:include page="/group_selector.jsp" servletContext="<%= application %>">
-		<liferay-util:param name="tabs1" value="pages" />
-	</liferay-util:include>
-</c:if>
-
-<%
 String tabs1Names = "";
 
 if (group.getPublicLayoutsPageCount() > 0) {
@@ -157,10 +147,13 @@ if (group.getPrivateLayoutsPageCount() > 0) {
 					String ckEditorFuncNum = ParamUtil.getString(request, "CKEditorFuncNum");
 					%>
 
-					ckeditorfuncnum: <%= ckEditorFuncNum %>,
+					<c:if test="<%= Validator.isNotNull(ckEditorFuncNum) %>">
+						ckeditorfuncnum: <%= ckEditorFuncNum %>,
+					</c:if>
+
 					layoutpath: event.target.getAttribute('data-layoutpath'),
 					returnType : event.target.getAttribute('data-returnType'),
-					value : event.target.getAttribute('data-value')
+					value : event.target.getAttribute('data-url')
 				}
 			);
 

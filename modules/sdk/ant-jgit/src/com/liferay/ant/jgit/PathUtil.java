@@ -19,10 +19,35 @@ import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import org.apache.tools.ant.BuildException;
+import org.apache.tools.ant.Location;
+import org.apache.tools.ant.Project;
+
 /**
  * @author Shuyang Zhou
  */
 public class PathUtil {
+
+	public static File getGitDir(
+		File gitDir, Project project, Location location) {
+
+		if (gitDir != null) {
+			return gitDir;
+		}
+
+		String projectDir = project.getProperty("project.dir");
+
+		if (projectDir == null) {
+			projectDir = project.getProperty("lp.portal.project.dir");
+		}
+
+		if (projectDir == null) {
+			throw new BuildException(
+				"Unable to locate .git directory", location);
+		}
+
+		return new File(projectDir, ".git");
+	}
 
 	public static String toRelativePath(File gitDir, String pathString) {
 		File projectDir = gitDir.getParentFile();

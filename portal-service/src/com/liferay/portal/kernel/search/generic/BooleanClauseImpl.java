@@ -16,17 +16,16 @@ package com.liferay.portal.kernel.search.generic;
 
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
-import com.liferay.portal.kernel.search.Query;
+import com.liferay.portal.kernel.util.StringBundler;
 
 /**
  * @author Michael C. Han
  */
-public class BooleanClauseImpl implements BooleanClause {
+public class BooleanClauseImpl<T> implements BooleanClause<T> {
 
-	public BooleanClauseImpl(
-		Query query, BooleanClauseOccur booleanClauseOccur) {
+	public BooleanClauseImpl(T t, BooleanClauseOccur booleanClauseOccur) {
+		_t = t;
 
-		_query = query;
 		_booleanClauseOccur = booleanClauseOccur;
 	}
 
@@ -36,11 +35,33 @@ public class BooleanClauseImpl implements BooleanClause {
 	}
 
 	@Override
-	public Query getQuery() {
-		return _query;
+	public T getClause() {
+		return _t;
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getClause}
+	 */
+	@Deprecated
+	@Override
+	public T getQuery() {
+		return getClause();
+	}
+
+	@Override
+	public String toString() {
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("{");
+		sb.append(_booleanClauseOccur);
+		sb.append("(");
+		sb.append(_t);
+		sb.append(")}");
+
+		return sb.toString();
 	}
 
 	private final BooleanClauseOccur _booleanClauseOccur;
-	private final Query _query;
+	private final T _t;
 
 }

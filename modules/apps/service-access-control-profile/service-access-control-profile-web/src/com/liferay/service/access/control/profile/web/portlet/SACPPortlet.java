@@ -72,8 +72,8 @@ public class SACPPortlet extends MVCPortlet {
 
 		long sacpEntryId = ParamUtil.getLong(actionRequest, "sacpEntryId");
 
-		String allowedServices = ParamUtil.getString(
-			actionRequest, "allowedServices");
+		String allowedServiceSignatures = ParamUtil.getString(
+			actionRequest, "allowedServiceSignatures");
 		String name = ParamUtil.getString(actionRequest, "name");
 		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "title");
@@ -83,11 +83,12 @@ public class SACPPortlet extends MVCPortlet {
 
 		if (sacpEntryId > 0) {
 			_sacpEntryService.updateSACPEntry(
-				sacpEntryId, allowedServices, name, titleMap, serviceContext);
+				sacpEntryId, allowedServiceSignatures, name, titleMap,
+				serviceContext);
 		}
 		else {
 			_sacpEntryService.addSACPEntry(
-				allowedServices, name, titleMap, serviceContext);
+				allowedServiceSignatures, name, titleMap, serviceContext);
 		}
 	}
 

@@ -55,13 +55,14 @@ public class SACPEntryLocalServiceUtil {
 	}
 
 	public static com.liferay.service.access.control.profile.model.SACPEntry addSACPEntry(
-		long userId, java.lang.String allowedServices, java.lang.String name,
+		long userId, java.lang.String allowedServiceSignatures,
+		java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .addSACPEntry(userId, allowedServices, name, titleMap,
-			serviceContext);
+				   .addSACPEntry(userId, allowedServiceSignatures, name,
+			titleMap, serviceContext);
 	}
 
 	/**
@@ -323,14 +324,14 @@ public class SACPEntryLocalServiceUtil {
 	}
 
 	public static com.liferay.service.access.control.profile.model.SACPEntry updateSACPEntry(
-		long sacpEntryId, java.lang.String allowedServices,
+		long sacpEntryId, java.lang.String allowedServiceSignatures,
 		java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .updateSACPEntry(sacpEntryId, allowedServices, name,
-			titleMap, serviceContext);
+				   .updateSACPEntry(sacpEntryId, allowedServiceSignatures,
+			name, titleMap, serviceContext);
 	}
 
 	public static SACPEntryLocalService getService() {

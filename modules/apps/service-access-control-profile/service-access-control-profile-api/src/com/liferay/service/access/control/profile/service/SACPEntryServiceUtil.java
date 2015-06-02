@@ -43,12 +43,13 @@ public class SACPEntryServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.service.access.control.profile.service.impl.SACPEntryServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.service.access.control.profile.model.SACPEntry addSACPEntry(
-		java.lang.String allowedServices, java.lang.String name,
+		java.lang.String allowedServiceSignatures, java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .addSACPEntry(allowedServices, name, titleMap, serviceContext);
+				   .addSACPEntry(allowedServiceSignatures, name, titleMap,
+			serviceContext);
 	}
 
 	public static com.liferay.service.access.control.profile.model.SACPEntry deleteSACPEntry(
@@ -109,14 +110,14 @@ public class SACPEntryServiceUtil {
 	}
 
 	public static com.liferay.service.access.control.profile.model.SACPEntry updateSACPEntry(
-		long sacpEntryId, java.lang.String allowedServices,
+		long sacpEntryId, java.lang.String allowedServiceSignatures,
 		java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .updateSACPEntry(sacpEntryId, allowedServices, name,
-			titleMap, serviceContext);
+				   .updateSACPEntry(sacpEntryId, allowedServiceSignatures,
+			name, titleMap, serviceContext);
 	}
 
 	public static SACPEntryService getService() {
