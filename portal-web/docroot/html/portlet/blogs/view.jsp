@@ -22,7 +22,7 @@ String assetTagName = ParamUtil.getString(request, "tag");
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/blogs/view");
+portletURL.setParameter("mvcPath", "/html/portlet/blogs/view.jsp");
 %>
 
 <portlet:actionURL var="restoreTrashEntriesURL">
@@ -35,7 +35,7 @@ portletURL.setParameter("struts_action", "/blogs/view");
 />
 
 <liferay-portlet:renderURL varImpl="searchURL">
-	<portlet:param name="struts_action" value="/blogs/search" />
+	<portlet:param name="mvcPath" value="/html/portlet/blogs/search.jsp" />
 </liferay-portlet:renderURL>
 
 <aui:form action="<%= searchURL %>" method="get" name="fm1">

@@ -42,12 +42,12 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 				</c:if>
 
 				<%
-				String strutsAction = ParamUtil.getString(request, "struts_action");
+				String mvcPath = ParamUtil.getString(request, "mvcPath");
 
 				long assetCategoryId = ParamUtil.getLong(request, "categoryId");
 				String assetTagName = ParamUtil.getString(request, "tag");
 
-				boolean viewSingleEntry = (strutsAction.equals("/blogs/view_entry") || strutsAction.equals("/blogs_admin/view_entry")) && (assetCategoryId == 0) && Validator.isNull(assetTagName);
+				boolean viewSingleEntry = (mvcPath.equals("/html/portlet/blogs/view_entry.jsp") || mvcPath.equals("/html/portlet/blogs_admin/view_entry.jsp")) && (assetCategoryId == 0) && Validator.isNull(assetTagName);
 				%>
 
 				<c:if test="<%= !entry.isApproved() %>">
@@ -57,7 +57,7 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 				</c:if>
 
 				<portlet:renderURL var="viewEntryURL">
-					<portlet:param name="struts_action" value="/blogs/view_entry" />
+					<portlet:param name="mvcPath" value="/html/portlet/blogs/view_entry.jsp" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="urlTitle" value="<%= entry.getUrlTitle() %>" />
 				</portlet:renderURL>
@@ -93,7 +93,7 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 			</div>
 
 			<portlet:renderURL var="bookmarkURL" windowState="<%= WindowState.NORMAL.toString() %>">
-				<portlet:param name="struts_action" value="/blogs/view_entry" />
+				<portlet:param name="mvcPath" value="/html/portlet/blogs/view_entry.jsp" />
 				<portlet:param name="urlTitle" value="<%= entry.getUrlTitle() %>" />
 			</portlet:renderURL>
 
@@ -112,7 +112,7 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 					<c:if test="<%= BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.UPDATE) %>">
 						<li class="edit-entry">
 							<portlet:renderURL var="editEntryURL">
-								<portlet:param name="struts_action" value="/blogs/edit_entry" />
+								<portlet:param name="mvcPath" value="/html/portlet/blogs/edit_entry.jsp" />
 								<portlet:param name="redirect" value="<%= currentURL %>" />
 								<portlet:param name="backURL" value="<%= currentURL %>" />
 								<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
@@ -152,7 +152,7 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 					<c:if test="<%= BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.DELETE) %>">
 						<li class="delete-entry">
 							<portlet:renderURL var="viewURL">
-								<portlet:param name="struts_action" value="/blogs/view" />
+								<portlet:param name="mvcPath" value="/html/portlet/blogs/view.jsp" />
 							</portlet:renderURL>
 
 							<portlet:actionURL var="deleteEntryURL">
