@@ -375,6 +375,30 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 						}
 					}
 
+					String nameWithoutExtension = newTitle;
+
+					String extension = StringPool.BLANK;
+
+					if (newTitle.contains(StringPool.PERIOD)) {
+						int index = newTitle.lastIndexOf(StringPool.PERIOD);
+
+						nameWithoutExtension = newTitle.substring(0, index);
+
+						extension = newTitle.substring(index);
+					}
+
+					for (String blacklistName : PropsValues.DL_NAME_BLACKLIST) {
+						if (StringUtil.equalsIgnoreCase(
+								nameWithoutExtension, blacklistName)) {
+
+							newTitle =
+								nameWithoutExtension + StringPool.UNDERLINE +
+									extension;
+
+							break;
+						}
+					}
+
 					if (!dlFileEntry.getTitle().equals(newTitle)) {
 						try {
 							dlFileEntry = renameTitle(dlFileEntry, newTitle);
