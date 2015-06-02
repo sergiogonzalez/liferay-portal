@@ -110,14 +110,10 @@ public class EditEntryAction extends PortletAction {
 
 		try {
 			BlogsEntry entry = null;
-			String oldUrlTitle = StringPool.BLANK;
-			List<BlogsEntryAttachmentFileEntryReference>
-				blogsEntryAttachmentFileEntryReferences = null;
 
 			handleUploadException(actionRequest);
 
 			String redirect = ParamUtil.getString(actionRequest, "redirect");
-			boolean updateRedirect = false;
 
 			String portletId = HttpUtil.getParameter(redirect, "p_p_id", false);
 
@@ -130,9 +126,9 @@ public class EditEntryAction extends PortletAction {
 						_transactionAttribute, updateEntryCallable);
 
 				entry = updateEntryResult.getEntry();
-				oldUrlTitle = updateEntryResult.getOldUrlTitle();
-				blogsEntryAttachmentFileEntryReferences =
-					updateEntryResult.getBlogsEntryAttachmentFileEntryReferences();
+				String oldUrlTitle = updateEntryResult.getOldUrlTitle();
+
+				boolean updateRedirect = false;
 
 				if (Validator.isNotNull(oldUrlTitle)) {
 					String oldRedirectParam =
@@ -169,6 +165,11 @@ public class EditEntryAction extends PortletAction {
 					JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 					JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+					List<BlogsEntryAttachmentFileEntryReference>
+						blogsEntryAttachmentFileEntryReferences =
+							updateEntryResult.
+								getBlogsEntryAttachmentFileEntryReferences();
 
 					for (BlogsEntryAttachmentFileEntryReference
 						blogsEntryAttachmentFileEntryReference :
