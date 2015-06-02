@@ -47,7 +47,6 @@ import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletURLImpl;
 import com.liferay.portlet.asset.AssetCategoryException;
@@ -79,14 +78,9 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletRequest;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
 import javax.portlet.WindowState;
 
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import org.springframework.transaction.interceptor.TransactionAttribute;
@@ -308,55 +302,6 @@ public class EditEntryAction extends PortletAction {
 
 			setForward(actionRequest, "portlet.blogs.error");
 		}
-	}
-
-	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
-
-		try {
-			ActionUtil.getEntry(renderRequest);
-
-			if (PropsValues.BLOGS_PINGBACK_ENABLED) {
-				BlogsEntry entry = (BlogsEntry)renderRequest.getAttribute(
-					WebKeys.BLOGS_ENTRY);
-
-				if ((entry != null) && entry.isAllowPingbacks()) {
-					HttpServletResponse response =
-						PortalUtil.getHttpServletResponse(renderResponse);
-
-					response.addHeader(
-						"X-Pingback",
-						PortalUtil.getPortalURL(renderRequest) +
-							"/xmlrpc/pingback");
-				}
-			}
-		}
-		catch (Exception e) {
-			if (e instanceof NoSuchEntryException ||
-				e instanceof PrincipalException) {
-
-				SessionErrors.add(renderRequest, e.getClass());
-
-				return actionMapping.findForward("portlet.blogs.error");
-			}
-			else {
-				throw e;
-			}
-		}
-
-		long assetCategoryId = ParamUtil.getLong(renderRequest, "categoryId");
-		String assetCategoryName = ParamUtil.getString(renderRequest, "tag");
-
-		if ((assetCategoryId > 0) || Validator.isNotNull(assetCategoryName)) {
-			return actionMapping.findForward("portlet.blogs.view");
-		}
-
-		return actionMapping.findForward(
-			getForward(renderRequest, "portlet.blogs.edit_entry"));
 	}
 
 	protected void deleteEntries(
