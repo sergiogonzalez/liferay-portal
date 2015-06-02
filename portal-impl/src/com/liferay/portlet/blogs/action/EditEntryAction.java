@@ -125,13 +125,14 @@ public class EditEntryAction extends PortletAction {
 				Callable<UpdateEntryResult> updateEntryCallable =
 					new UpdateEntryCallable(actionRequest);
 
-				UpdateEntryResult returnValue = TransactionHandlerUtil.invoke(
-					_transactionAttribute, updateEntryCallable);
+				UpdateEntryResult updateEntryResult =
+					TransactionHandlerUtil.invoke(
+						_transactionAttribute, updateEntryCallable);
 
-				entry = returnValue.getEntry();
-				oldUrlTitle = returnValue.getOldUrlTitle();
+				entry = updateEntryResult.getEntry();
+				oldUrlTitle = updateEntryResult.getOldUrlTitle();
 				blogsEntryAttachmentFileEntryReferences =
-					returnValue.getBlogsEntryAttachmentFileEntryReferences();
+					updateEntryResult.getBlogsEntryAttachmentFileEntryReferences();
 
 				if (Validator.isNotNull(oldUrlTitle)) {
 					String oldRedirectParam =
