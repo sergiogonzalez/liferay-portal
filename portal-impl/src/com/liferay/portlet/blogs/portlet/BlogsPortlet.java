@@ -163,34 +163,8 @@ public class BlogsPortlet extends MVCPortlet {
 		boolean updateRedirect = Validator.isNotNull(oldUrlTitle);
 
 		if (updateRedirect) {
-			String oldRedirectParam =
-				PortalUtil.getPortletNamespace(portletId) + "redirect";
-
-			String oldRedirect = HttpUtil.getParameter(
-				redirect, oldRedirectParam, false);
-
-			if (Validator.isNotNull(oldRedirect)) {
-				BlogsEntry entry = updateEntryResult.getEntry();
-
-				String newRedirect = HttpUtil.decodeURL(oldRedirect);
-
-				newRedirect = StringUtil.replace(
-					newRedirect, oldUrlTitle, entry.getUrlTitle());
-				newRedirect = StringUtil.replace(
-					newRedirect, oldRedirectParam, "redirect");
-
-				redirect = StringUtil.replace(
-					redirect, oldRedirect, newRedirect);
-			}
-			else if (redirect.endsWith("/blogs/" + oldUrlTitle) ||
-					 redirect.contains("/blogs/" + oldUrlTitle + "?") ||
-					 redirect.contains("/blog/" + oldUrlTitle + "?")) {
-
-				BlogsEntry entry = updateEntryResult.getEntry();
-
-				redirect = StringUtil.replace(
-					redirect, oldUrlTitle, entry.getUrlTitle());
-			}
+			redirect = updateRedirect(
+				portletId, oldUrlTitle, redirect, updateEntryResult);
 		}
 
 		boolean ajax = ParamUtil.getBoolean(actionRequest, "ajax");
@@ -529,6 +503,39 @@ public class BlogsPortlet extends MVCPortlet {
 
 		return new UpdateEntryResult(
 			entry, oldUrlTitle, blogsEntryAttachmentFileEntryReferences);
+	}
+
+	protected String updateRedirect(
+		String portletId, String oldUrlTitle, String redirect,
+		UpdateEntryResult updateEntryResult) {
+
+		BlogsEntry entry = updateEntryResult.getEntry();
+
+		String oldRedirectParam =
+			PortalUtil.getPortletNamespace(portletId) + "redirect";
+
+		String oldRedirect = HttpUtil.getParameter(
+			redirect, oldRedirectParam, false);
+
+		if (Validator.isNotNull(oldRedirect)) {
+			String newRedirect = HttpUtil.decodeURL(oldRedirect);
+
+			newRedirect = StringUtil.replace(
+				newRedirect, oldUrlTitle, entry.getUrlTitle());
+			newRedirect = StringUtil.replace(
+				newRedirect, oldRedirectParam, "redirect");
+
+			return StringUtil.replace(redirect, oldRedirect, newRedirect);
+		}
+		else if (redirect.endsWith("/blogs/" + oldUrlTitle) ||
+				 redirect.contains("/blogs/" + oldUrlTitle + "?") ||
+				 redirect.contains("/blog/" + oldUrlTitle + "?")) {
+
+			return StringUtil.replace(
+				redirect, oldUrlTitle, entry.getUrlTitle());
+		}
+
+		return redirect;
 	}
 
 	private final TransactionAttribute _transactionAttribute =
