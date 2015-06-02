@@ -14,30 +14,81 @@
 
 package com.liferay.portlet.blogs.portlet;
 
+import com.liferay.portal.kernel.editor.EditorConstants;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.upload.LiferayFileItemException;
+import com.liferay.portal.kernel.upload.UploadException;
+import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextFactory;
+import com.liferay.portal.spring.transaction.TransactionAttributeBuilder;
+import com.liferay.portal.spring.transaction.TransactionHandlerUtil;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.PortletURLImpl;
+import com.liferay.portlet.blogs.BlogsEntryAttachmentFileEntryHelper;
+import com.liferay.portlet.blogs.BlogsEntryAttachmentFileEntryReference;
+import com.liferay.portlet.blogs.EntryDescriptionException;
 import com.liferay.portlet.blogs.NoSuchEntryException;
 import com.liferay.portlet.blogs.action.ActionUtil;
 import com.liferay.portlet.blogs.model.BlogsEntry;
+import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
+import com.liferay.portlet.blogs.service.BlogsEntryServiceUtil;
+import com.liferay.portlet.documentlibrary.FileSizeException;
 
 import java.io.IOException;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.concurrent.Callable;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.WindowState;
 
 import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.transaction.interceptor.TransactionAttribute;
 
 /**
  * @author Adolfo Pérez
  */
 public class BlogsPortlet extends MVCPortlet {
+
+	public void editEntry(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Throwable {
+
+		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
+
+		doUpdateEntry(actionRequest, actionResponse, cmd);
+	}
 
 	@Override
 	public void render(
@@ -90,6 +141,198 @@ public class BlogsPortlet extends MVCPortlet {
 		}
 	}
 
+	protected void doUpdateEntry(
+			ActionRequest actionRequest, ActionResponse actionResponse,
+			String cmd)
+		throws Throwable {
+
+		BlogsEntry entry = null;
+
+		handleUploadException(actionRequest);
+
+		String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+		String portletId = HttpUtil.getParameter(redirect, "p_p_id", false);
+
+		Callable<UpdateEntryResult> updateEntryCallable =
+			new UpdateEntryCallable(actionRequest);
+
+		UpdateEntryResult updateEntryResult = TransactionHandlerUtil.invoke(
+			_transactionAttribute, updateEntryCallable);
+
+		entry = updateEntryResult.getEntry();
+		String oldUrlTitle = updateEntryResult.getOldUrlTitle();
+
+		boolean updateRedirect = false;
+
+		if (Validator.isNotNull(oldUrlTitle)) {
+			String oldRedirectParam =
+				PortalUtil.getPortletNamespace(portletId) + "redirect";
+
+			String oldRedirect = HttpUtil.getParameter(
+				redirect, oldRedirectParam, false);
+
+			if (Validator.isNotNull(oldRedirect)) {
+				String newRedirect = HttpUtil.decodeURL(oldRedirect);
+
+				newRedirect = StringUtil.replace(
+					newRedirect, oldUrlTitle, entry.getUrlTitle());
+				newRedirect = StringUtil.replace(
+					newRedirect, oldRedirectParam, "redirect");
+
+				redirect = StringUtil.replace(
+					redirect, oldRedirect, newRedirect);
+			}
+			else if (redirect.endsWith("/blogs/" + oldUrlTitle) ||
+					 redirect.contains("/blogs/" + oldUrlTitle + "?") ||
+					 redirect.contains("/blog/" + oldUrlTitle + "?")) {
+
+				redirect = StringUtil.replace(
+					redirect, oldUrlTitle, entry.getUrlTitle());
+			}
+
+			updateRedirect = true;
+		}
+
+		boolean ajax = ParamUtil.getBoolean(actionRequest, "ajax");
+
+		if (ajax) {
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+			JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+			List<BlogsEntryAttachmentFileEntryReference>
+				blogsEntryAttachmentFileEntryReferences =
+					updateEntryResult.
+						getBlogsEntryAttachmentFileEntryReferences();
+
+			for (BlogsEntryAttachmentFileEntryReference
+				blogsEntryAttachmentFileEntryReference :
+				blogsEntryAttachmentFileEntryReferences) {
+
+				JSONObject blogsEntryFileEntryReferencesJSONObject =
+					JSONFactoryUtil.createJSONObject();
+
+				blogsEntryFileEntryReferencesJSONObject.put(
+					"attributeDataImageId",
+					EditorConstants.ATTRIBUTE_DATA_IMAGE_ID);
+				blogsEntryFileEntryReferencesJSONObject.put(
+					"fileEntryId",
+					String.valueOf(
+						blogsEntryAttachmentFileEntryReference.
+							getTempBlogsEntryAttachmentFileEntryId()));
+				blogsEntryFileEntryReferencesJSONObject.put(
+					"fileEntryUrl",
+					PortletFileRepositoryUtil.getPortletFileEntryURL(
+						null,
+						blogsEntryAttachmentFileEntryReference.
+							getBlogsEntryAttachmentFileEntry(),
+						StringPool.BLANK));
+
+				jsonArray.put(blogsEntryFileEntryReferencesJSONObject);
+			}
+
+			jsonObject.put("blogsEntryAttachmentReferences", jsonArray);
+
+			jsonObject.put("entryId", entry.getEntryId());
+			jsonObject.put("redirect", redirect);
+			jsonObject.put("updateRedirect", updateRedirect);
+
+			writeJSON(actionRequest, actionResponse, jsonObject);
+
+			return;
+		}
+
+		int workflowAction = ParamUtil.getInteger(
+			actionRequest, "workflowAction",
+			WorkflowConstants.ACTION_SAVE_DRAFT);
+
+		if (workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT) {
+			redirect = getSaveAndContinueRedirect(
+				getPortletConfig(), actionRequest, entry, redirect);
+
+			sendRedirect(actionRequest, actionResponse, redirect);
+		}
+
+		WindowState windowState = actionRequest.getWindowState();
+
+		if (!windowState.equals(LiferayWindowState.POP_UP)) {
+			sendRedirect(actionRequest, actionResponse, redirect);
+		}
+		else {
+			redirect = PortalUtil.escapeRedirect(redirect);
+
+			if (Validator.isNotNull(redirect)) {
+				if (cmd.equals(Constants.ADD)) {
+					String namespace = PortalUtil.getPortletNamespace(
+						portletId);
+
+					redirect = HttpUtil.addParameter(
+						redirect, namespace + "className",
+						BlogsEntry.class.getName());
+					redirect = HttpUtil.addParameter(
+						redirect, namespace + "classPK", entry.getEntryId());
+				}
+
+				actionResponse.sendRedirect(redirect);
+			}
+		}
+	}
+
+	protected String getSaveAndContinueRedirect(
+			PortletConfig portletConfig, ActionRequest actionRequest,
+			BlogsEntry entry, String redirect)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String backURL = ParamUtil.getString(actionRequest, "backURL");
+
+		PortletURLImpl portletURL = new PortletURLImpl(
+			actionRequest, portletConfig.getPortletName(),
+			themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
+
+		String portletName = portletConfig.getPortletName();
+
+		if (portletName.equals(PortletKeys.BLOGS_ADMIN)) {
+			portletURL.setParameter("struts_action", "/blogs_admin/edit_entry");
+		}
+		else {
+			portletURL.setParameter("struts_action", "/blogs/edit_entry");
+		}
+
+		portletURL.setParameter(Constants.CMD, Constants.UPDATE, false);
+		portletURL.setParameter("redirect", redirect, false);
+		portletURL.setParameter("backURL", backURL, false);
+		portletURL.setParameter(
+			"groupId", String.valueOf(entry.getGroupId()), false);
+		portletURL.setParameter(
+			"entryId", String.valueOf(entry.getEntryId()), false);
+		portletURL.setWindowState(actionRequest.getWindowState());
+
+		return portletURL.toString();
+	}
+
+	protected void handleUploadException(PortletRequest portletRequest)
+		throws PortalException {
+
+		UploadException uploadException =
+			(UploadException)portletRequest.getAttribute(
+				WebKeys.UPLOAD_EXCEPTION);
+
+		if (uploadException != null) {
+			if (uploadException.isExceededLiferayFileItemSizeLimit()) {
+				throw new LiferayFileItemException();
+			}
+			else if (uploadException.isExceededSizeLimit()) {
+				throw new FileSizeException(uploadException.getCause());
+			}
+
+			throw new PortalException(uploadException.getCause());
+		}
+	}
+
 	@Override
 	protected boolean isSessionErrorException(Throwable cause) {
 		if (cause instanceof NoSuchEntryException ||
@@ -99,6 +342,243 @@ public class BlogsPortlet extends MVCPortlet {
 		}
 
 		return false;
+	}
+
+	protected UpdateEntryResult updateEntry(ActionRequest actionRequest)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long entryId = ParamUtil.getLong(actionRequest, "entryId");
+
+		String title = ParamUtil.getString(actionRequest, "title");
+		String subtitle = ParamUtil.getString(actionRequest, "subtitle");
+
+		String description = StringPool.BLANK;
+
+		boolean customAbstract = ParamUtil.getBoolean(
+			actionRequest, "customAbstract");
+
+		if (customAbstract) {
+			description = ParamUtil.getString(actionRequest, "description");
+
+			if (Validator.isNull(description)) {
+				throw new EntryDescriptionException();
+			}
+		}
+
+		String content = ParamUtil.getString(actionRequest, "content");
+
+		int displayDateMonth = ParamUtil.getInteger(
+			actionRequest, "displayDateMonth");
+		int displayDateDay = ParamUtil.getInteger(
+			actionRequest, "displayDateDay");
+		int displayDateYear = ParamUtil.getInteger(
+			actionRequest, "displayDateYear");
+		int displayDateHour = ParamUtil.getInteger(
+			actionRequest, "displayDateHour");
+		int displayDateMinute = ParamUtil.getInteger(
+			actionRequest, "displayDateMinute");
+		int displayDateAmPm = ParamUtil.getInteger(
+			actionRequest, "displayDateAmPm");
+
+		if (displayDateAmPm == Calendar.PM) {
+			displayDateHour += 12;
+		}
+
+		boolean allowPingbacks = ParamUtil.getBoolean(
+			actionRequest, "allowPingbacks");
+		boolean allowTrackbacks = ParamUtil.getBoolean(
+			actionRequest, "allowTrackbacks");
+		String[] trackbacks = StringUtil.split(
+			ParamUtil.getString(actionRequest, "trackbacks"));
+
+		long coverImageFileEntryId = ParamUtil.getLong(
+			actionRequest, "coverImageFileEntryId");
+		String coverImageURL = ParamUtil.getString(
+			actionRequest, "coverImageURL");
+		String coverImageFileEntryCropRegion = ParamUtil.getString(
+			actionRequest, "coverImageFileEntryCropRegion");
+
+		String coverImageCaption = ParamUtil.getString(
+			actionRequest, "coverImageCaption");
+
+		ImageSelector coverImageImageSelector = new ImageSelector(
+			coverImageFileEntryId, coverImageURL,
+			coverImageFileEntryCropRegion);
+
+		long smallImageFileEntryId = ParamUtil.getLong(
+			actionRequest, "smallImageFileEntryId");
+		String smallImageURL = ParamUtil.getString(
+			actionRequest, "smallImageURL");
+
+		ImageSelector smallImageImageSelector = new ImageSelector(
+			smallImageFileEntryId, smallImageURL, null);
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			BlogsEntry.class.getName(), actionRequest);
+
+		BlogsEntry entry = null;
+		String oldUrlTitle = StringPool.BLANK;
+		List<BlogsEntryAttachmentFileEntryReference>
+			blogsEntryAttachmentFileEntryReferences = new ArrayList<>();
+
+		if (entryId <= 0) {
+
+			// Add entry
+
+			entry = BlogsEntryServiceUtil.addEntry(
+				title, subtitle, description, content, displayDateMonth,
+				displayDateDay, displayDateYear, displayDateHour,
+				displayDateMinute, allowPingbacks, allowTrackbacks, trackbacks,
+				coverImageCaption, coverImageImageSelector,
+				smallImageImageSelector, serviceContext);
+
+			BlogsEntryAttachmentFileEntryHelper
+				blogsEntryAttachmentFileEntryHelper =
+					new BlogsEntryAttachmentFileEntryHelper();
+
+			List<FileEntry> tempBlogsEntryAttachments =
+				blogsEntryAttachmentFileEntryHelper.
+					getTempBlogsEntryAttachmentFileEntries(content);
+
+			if (!tempBlogsEntryAttachments.isEmpty()) {
+				blogsEntryAttachmentFileEntryReferences =
+					blogsEntryAttachmentFileEntryHelper.
+						addBlogsEntryAttachmentFileEntries(
+							entry.getGroupId(), themeDisplay.getUserId(),
+							entry.getEntryId(), tempBlogsEntryAttachments);
+
+				content = blogsEntryAttachmentFileEntryHelper.updateContent(
+					content, blogsEntryAttachmentFileEntryReferences);
+
+				entry.setContent(content);
+
+				BlogsEntryLocalServiceUtil.updateBlogsEntry(entry);
+			}
+
+			for (FileEntry tempBlogsEntryAttachment :
+					tempBlogsEntryAttachments) {
+
+				PortletFileRepositoryUtil.deletePortletFileEntry(
+					tempBlogsEntryAttachment.getFileEntryId());
+			}
+		}
+		else {
+
+			// Update entry
+
+			boolean sendEmailEntryUpdated = ParamUtil.getBoolean(
+				actionRequest, "sendEmailEntryUpdated");
+
+			serviceContext.setAttribute(
+				"sendEmailEntryUpdated", sendEmailEntryUpdated);
+
+			String emailEntryUpdatedComment = ParamUtil.getString(
+				actionRequest, "emailEntryUpdatedComment");
+
+			serviceContext.setAttribute(
+				"emailEntryUpdatedComment", emailEntryUpdatedComment);
+
+			entry = BlogsEntryLocalServiceUtil.getEntry(entryId);
+
+			String tempOldUrlTitle = entry.getUrlTitle();
+
+			BlogsEntryAttachmentFileEntryHelper blogsEntryAttachmentHelper =
+				new BlogsEntryAttachmentFileEntryHelper();
+
+			List<FileEntry> tempBlogsEntryAttachmentFileEntries =
+				blogsEntryAttachmentHelper.
+					getTempBlogsEntryAttachmentFileEntries(content);
+
+			if (!tempBlogsEntryAttachmentFileEntries.isEmpty()) {
+				blogsEntryAttachmentFileEntryReferences =
+					blogsEntryAttachmentHelper.
+						addBlogsEntryAttachmentFileEntries(
+							entry.getGroupId(), themeDisplay.getUserId(),
+							entry.getEntryId(),
+							tempBlogsEntryAttachmentFileEntries);
+
+				content = blogsEntryAttachmentHelper.updateContent(
+					content, blogsEntryAttachmentFileEntryReferences);
+			}
+
+			entry = BlogsEntryServiceUtil.updateEntry(
+				entryId, title, subtitle, description, content,
+				displayDateMonth, displayDateDay, displayDateYear,
+				displayDateHour, displayDateMinute, allowPingbacks,
+				allowTrackbacks, trackbacks, coverImageCaption,
+				coverImageImageSelector, smallImageImageSelector,
+				serviceContext);
+
+			for (FileEntry tempBlogsEntryAttachmentFileEntry :
+					tempBlogsEntryAttachmentFileEntries) {
+
+				PortletFileRepositoryUtil.deletePortletFileEntry(
+					tempBlogsEntryAttachmentFileEntry.getFileEntryId());
+			}
+
+			if (!tempOldUrlTitle.equals(entry.getUrlTitle())) {
+				oldUrlTitle = tempOldUrlTitle;
+			}
+		}
+
+		return new UpdateEntryResult(
+			entry, oldUrlTitle, blogsEntryAttachmentFileEntryReferences);
+	}
+
+	private final TransactionAttribute _transactionAttribute =
+		TransactionAttributeBuilder.build(
+			Propagation.REQUIRED, new Class<?>[] {Exception.class});
+
+	private static class UpdateEntryResult {
+
+		public List<BlogsEntryAttachmentFileEntryReference>
+			getBlogsEntryAttachmentFileEntryReferences() {
+
+			return _blogsEntryAttachmentFileEntryReferences;
+		}
+
+		public BlogsEntry getEntry() {
+			return _entry;
+		}
+
+		public String getOldUrlTitle() {
+			return _oldUrlTitle;
+		}
+
+		private UpdateEntryResult(
+			BlogsEntry entry, String oldUrlTitle,
+			List<BlogsEntryAttachmentFileEntryReference>
+				blogsEntryAttachmentFileEntryReferences) {
+
+			_entry = entry;
+			_oldUrlTitle = oldUrlTitle;
+			_blogsEntryAttachmentFileEntryReferences =
+				blogsEntryAttachmentFileEntryReferences;
+		}
+
+		private final List<BlogsEntryAttachmentFileEntryReference>
+			_blogsEntryAttachmentFileEntryReferences;
+		private final BlogsEntry _entry;
+		private final String _oldUrlTitle;
+
+	}
+
+	private class UpdateEntryCallable implements Callable<UpdateEntryResult> {
+
+		@Override
+		public UpdateEntryResult call() throws Exception {
+			return updateEntry(_actionRequest);
+		}
+
+		private UpdateEntryCallable(ActionRequest actionRequest) {
+			_actionRequest = actionRequest;
+		}
+
+		private final ActionRequest _actionRequest;
+
 	}
 
 }
