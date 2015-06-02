@@ -160,9 +160,9 @@ public class BlogsPortlet extends MVCPortlet {
 
 		String oldUrlTitle = updateEntryResult.getOldUrlTitle();
 
-		boolean updateRedirect = false;
+		boolean updateRedirect = Validator.isNotNull(oldUrlTitle);
 
-		if (Validator.isNotNull(oldUrlTitle)) {
+		if (updateRedirect) {
 			String oldRedirectParam =
 				PortalUtil.getPortletNamespace(portletId) + "redirect";
 
@@ -191,8 +191,6 @@ public class BlogsPortlet extends MVCPortlet {
 				redirect = StringUtil.replace(
 					redirect, oldUrlTitle, entry.getUrlTitle());
 			}
-
-			updateRedirect = true;
 		}
 
 		boolean ajax = ParamUtil.getBoolean(actionRequest, "ajax");
