@@ -146,8 +146,6 @@ public class BlogsPortlet extends MVCPortlet {
 			String cmd)
 		throws Throwable {
 
-		BlogsEntry entry = null;
-
 		handleUploadException(actionRequest);
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
@@ -160,7 +158,7 @@ public class BlogsPortlet extends MVCPortlet {
 		UpdateEntryResult updateEntryResult = TransactionHandlerUtil.invoke(
 			_transactionAttribute, updateEntryCallable);
 
-		entry = updateEntryResult.getEntry();
+		BlogsEntry entry = updateEntryResult.getEntry();
 		String oldUrlTitle = updateEntryResult.getOldUrlTitle();
 
 		boolean updateRedirect = false;
@@ -344,80 +342,80 @@ public class BlogsPortlet extends MVCPortlet {
 		return false;
 	}
 
-	protected UpdateEntryResult updateEntry(ActionRequest actionRequest)
+	protected UpdateEntryResult updateEntry(PortletRequest portletRequest)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long entryId = ParamUtil.getLong(actionRequest, "entryId");
+		long entryId = ParamUtil.getLong(portletRequest, "entryId");
 
-		String title = ParamUtil.getString(actionRequest, "title");
-		String subtitle = ParamUtil.getString(actionRequest, "subtitle");
+		String title = ParamUtil.getString(portletRequest, "title");
+		String subtitle = ParamUtil.getString(portletRequest, "subtitle");
 
 		String description = StringPool.BLANK;
 
 		boolean customAbstract = ParamUtil.getBoolean(
-			actionRequest, "customAbstract");
+			portletRequest, "customAbstract");
 
 		if (customAbstract) {
-			description = ParamUtil.getString(actionRequest, "description");
+			description = ParamUtil.getString(portletRequest, "description");
 
 			if (Validator.isNull(description)) {
 				throw new EntryDescriptionException();
 			}
 		}
 
-		String content = ParamUtil.getString(actionRequest, "content");
+		String content = ParamUtil.getString(portletRequest, "content");
 
 		int displayDateMonth = ParamUtil.getInteger(
-			actionRequest, "displayDateMonth");
+			portletRequest, "displayDateMonth");
 		int displayDateDay = ParamUtil.getInteger(
-			actionRequest, "displayDateDay");
+			portletRequest, "displayDateDay");
 		int displayDateYear = ParamUtil.getInteger(
-			actionRequest, "displayDateYear");
+			portletRequest, "displayDateYear");
 		int displayDateHour = ParamUtil.getInteger(
-			actionRequest, "displayDateHour");
+			portletRequest, "displayDateHour");
 		int displayDateMinute = ParamUtil.getInteger(
-			actionRequest, "displayDateMinute");
+			portletRequest, "displayDateMinute");
 		int displayDateAmPm = ParamUtil.getInteger(
-			actionRequest, "displayDateAmPm");
+			portletRequest, "displayDateAmPm");
 
 		if (displayDateAmPm == Calendar.PM) {
 			displayDateHour += 12;
 		}
 
 		boolean allowPingbacks = ParamUtil.getBoolean(
-			actionRequest, "allowPingbacks");
+			portletRequest, "allowPingbacks");
 		boolean allowTrackbacks = ParamUtil.getBoolean(
-			actionRequest, "allowTrackbacks");
+			portletRequest, "allowTrackbacks");
 		String[] trackbacks = StringUtil.split(
-			ParamUtil.getString(actionRequest, "trackbacks"));
+			ParamUtil.getString(portletRequest, "trackbacks"));
 
 		long coverImageFileEntryId = ParamUtil.getLong(
-			actionRequest, "coverImageFileEntryId");
+			portletRequest, "coverImageFileEntryId");
 		String coverImageURL = ParamUtil.getString(
-			actionRequest, "coverImageURL");
+			portletRequest, "coverImageURL");
 		String coverImageFileEntryCropRegion = ParamUtil.getString(
-			actionRequest, "coverImageFileEntryCropRegion");
+			portletRequest, "coverImageFileEntryCropRegion");
 
 		String coverImageCaption = ParamUtil.getString(
-			actionRequest, "coverImageCaption");
+			portletRequest, "coverImageCaption");
 
 		ImageSelector coverImageImageSelector = new ImageSelector(
 			coverImageFileEntryId, coverImageURL,
 			coverImageFileEntryCropRegion);
 
 		long smallImageFileEntryId = ParamUtil.getLong(
-			actionRequest, "smallImageFileEntryId");
+			portletRequest, "smallImageFileEntryId");
 		String smallImageURL = ParamUtil.getString(
-			actionRequest, "smallImageURL");
+			portletRequest, "smallImageURL");
 
 		ImageSelector smallImageImageSelector = new ImageSelector(
 			smallImageFileEntryId, smallImageURL, null);
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			BlogsEntry.class.getName(), actionRequest);
+			BlogsEntry.class.getName(), portletRequest);
 
 		BlogsEntry entry = null;
 		String oldUrlTitle = StringPool.BLANK;
@@ -470,13 +468,13 @@ public class BlogsPortlet extends MVCPortlet {
 			// Update entry
 
 			boolean sendEmailEntryUpdated = ParamUtil.getBoolean(
-				actionRequest, "sendEmailEntryUpdated");
+				portletRequest, "sendEmailEntryUpdated");
 
 			serviceContext.setAttribute(
 				"sendEmailEntryUpdated", sendEmailEntryUpdated);
 
 			String emailEntryUpdatedComment = ParamUtil.getString(
-				actionRequest, "emailEntryUpdatedComment");
+				portletRequest, "emailEntryUpdatedComment");
 
 			serviceContext.setAttribute(
 				"emailEntryUpdatedComment", emailEntryUpdatedComment);
@@ -570,14 +568,14 @@ public class BlogsPortlet extends MVCPortlet {
 
 		@Override
 		public UpdateEntryResult call() throws Exception {
-			return updateEntry(_actionRequest);
+			return updateEntry(_portletRequest);
 		}
 
-		private UpdateEntryCallable(ActionRequest actionRequest) {
-			_actionRequest = actionRequest;
+		private UpdateEntryCallable(PortletRequest portletRequest) {
+			_portletRequest = portletRequest;
 		}
 
-		private final ActionRequest _actionRequest;
+		private final PortletRequest _portletRequest;
 
 	}
 
