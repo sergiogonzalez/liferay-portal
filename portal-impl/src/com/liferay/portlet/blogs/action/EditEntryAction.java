@@ -116,6 +116,11 @@ public class EditEntryAction extends PortletAction {
 
 			handleUploadException(actionRequest);
 
+			String redirect = ParamUtil.getString(actionRequest, "redirect");
+			boolean updateRedirect = false;
+
+			String portletId = HttpUtil.getParameter(redirect, "p_p_id", false);
+
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
 				Callable<Object[]> updateEntryCallable =
 					new UpdateEntryCallable(actionRequest);
@@ -128,6 +133,79 @@ public class EditEntryAction extends PortletAction {
 				blogsEntryAttachmentFileEntryReferences =
 					((List<BlogsEntryAttachmentFileEntryReference>)
 						returnValue[2]);
+
+				if (Validator.isNotNull(oldUrlTitle)) {
+					String oldRedirectParam =
+						PortalUtil.getPortletNamespace(portletId) + "redirect";
+
+					String oldRedirect = HttpUtil.getParameter(
+						redirect, oldRedirectParam, false);
+
+					if (Validator.isNotNull(oldRedirect)) {
+						String newRedirect = HttpUtil.decodeURL(oldRedirect);
+
+						newRedirect = StringUtil.replace(
+							newRedirect, oldUrlTitle, entry.getUrlTitle());
+						newRedirect = StringUtil.replace(
+							newRedirect, oldRedirectParam, "redirect");
+
+						redirect = StringUtil.replace(
+							redirect, oldRedirect, newRedirect);
+					}
+					else if (redirect.endsWith("/blogs/" + oldUrlTitle) ||
+							 redirect.contains("/blogs/" + oldUrlTitle + "?") ||
+							 redirect.contains("/blog/" + oldUrlTitle + "?")) {
+
+						redirect = StringUtil.replace(
+							redirect, oldUrlTitle, entry.getUrlTitle());
+					}
+
+					updateRedirect = true;
+				}
+
+				boolean ajax = ParamUtil.getBoolean(actionRequest, "ajax");
+
+				if (ajax) {
+					JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+					JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+					for (BlogsEntryAttachmentFileEntryReference
+						blogsEntryAttachmentFileEntryReference :
+						blogsEntryAttachmentFileEntryReferences) {
+
+						JSONObject blogsEntryFileEntryReferencesJSONObject =
+							JSONFactoryUtil.createJSONObject();
+
+						blogsEntryFileEntryReferencesJSONObject.put(
+							"attributeDataImageId",
+							EditorConstants.ATTRIBUTE_DATA_IMAGE_ID);
+						blogsEntryFileEntryReferencesJSONObject.put(
+							"fileEntryId",
+							String.valueOf(
+								blogsEntryAttachmentFileEntryReference.
+									getTempBlogsEntryAttachmentFileEntryId()));
+						blogsEntryFileEntryReferencesJSONObject.put(
+							"fileEntryUrl",
+							PortletFileRepositoryUtil.getPortletFileEntryURL(
+								null,
+								blogsEntryAttachmentFileEntryReference.
+									getBlogsEntryAttachmentFileEntry(),
+								StringPool.BLANK));
+
+						jsonArray.put(blogsEntryFileEntryReferencesJSONObject);
+					}
+
+					jsonObject.put("blogsEntryAttachmentReferences", jsonArray);
+
+					jsonObject.put("entryId", entry.getEntryId());
+					jsonObject.put("redirect", redirect);
+					jsonObject.put("updateRedirect", updateRedirect);
+
+					writeJSON(actionRequest, actionResponse, jsonObject);
+
+					return;
+				}
 			}
 			else if (cmd.equals(Constants.DELETE)) {
 				deleteEntries(actionRequest, false);
@@ -145,87 +223,9 @@ public class EditEntryAction extends PortletAction {
 				unsubscribe(actionRequest);
 			}
 
-			String redirect = ParamUtil.getString(actionRequest, "redirect");
-			boolean updateRedirect = false;
-
-			String portletId = HttpUtil.getParameter(redirect, "p_p_id", false);
-
-			if (Validator.isNotNull(oldUrlTitle)) {
-				String oldRedirectParam =
-					PortalUtil.getPortletNamespace(portletId) + "redirect";
-
-				String oldRedirect = HttpUtil.getParameter(
-					redirect, oldRedirectParam, false);
-
-				if (Validator.isNotNull(oldRedirect)) {
-					String newRedirect = HttpUtil.decodeURL(oldRedirect);
-
-					newRedirect = StringUtil.replace(
-						newRedirect, oldUrlTitle, entry.getUrlTitle());
-					newRedirect = StringUtil.replace(
-						newRedirect, oldRedirectParam, "redirect");
-
-					redirect = StringUtil.replace(
-						redirect, oldRedirect, newRedirect);
-				}
-				else if (redirect.endsWith("/blogs/" + oldUrlTitle) ||
-						 redirect.contains("/blogs/" + oldUrlTitle + "?") ||
-						 redirect.contains("/blog/" + oldUrlTitle + "?")) {
-
-					redirect = StringUtil.replace(
-						redirect, oldUrlTitle, entry.getUrlTitle());
-				}
-
-				updateRedirect = true;
-			}
-
 			int workflowAction = ParamUtil.getInteger(
 				actionRequest, "workflowAction",
 				WorkflowConstants.ACTION_SAVE_DRAFT);
-
-			boolean ajax = ParamUtil.getBoolean(actionRequest, "ajax");
-
-			if (ajax) {
-				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-				JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
-				for (BlogsEntryAttachmentFileEntryReference
-						blogsEntryAttachmentFileEntryReference :
-							blogsEntryAttachmentFileEntryReferences) {
-
-					JSONObject blogsEntryFileEntryReferencesJSONObject =
-						JSONFactoryUtil.createJSONObject();
-
-					blogsEntryFileEntryReferencesJSONObject.put(
-						"attributeDataImageId",
-						EditorConstants.ATTRIBUTE_DATA_IMAGE_ID);
-					blogsEntryFileEntryReferencesJSONObject.put(
-						"fileEntryId",
-						String.valueOf(
-							blogsEntryAttachmentFileEntryReference.
-								getTempBlogsEntryAttachmentFileEntryId()));
-					blogsEntryFileEntryReferencesJSONObject.put(
-						"fileEntryUrl",
-						PortletFileRepositoryUtil.getPortletFileEntryURL(
-							null,
-							blogsEntryAttachmentFileEntryReference.
-								getBlogsEntryAttachmentFileEntry(),
-							StringPool.BLANK));
-
-					jsonArray.put(blogsEntryFileEntryReferencesJSONObject);
-				}
-
-				jsonObject.put("blogsEntryAttachmentReferences", jsonArray);
-
-				jsonObject.put("entryId", entry.getEntryId());
-				jsonObject.put("redirect", redirect);
-				jsonObject.put("updateRedirect", updateRedirect);
-
-				writeJSON(actionRequest, actionResponse, jsonObject);
-
-				return;
-			}
 
 			if ((entry != null) &&
 				(workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT)) {
