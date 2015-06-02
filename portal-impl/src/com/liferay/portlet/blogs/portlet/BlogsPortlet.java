@@ -170,50 +170,9 @@ public class BlogsPortlet extends MVCPortlet {
 		boolean ajax = ParamUtil.getBoolean(actionRequest, "ajax");
 
 		if (ajax) {
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-			JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
-			List<BlogsEntryAttachmentFileEntryReference>
-				blogsEntryAttachmentFileEntryReferences =
-					updateEntryResult.
-						getBlogsEntryAttachmentFileEntryReferences();
-
-			for (BlogsEntryAttachmentFileEntryReference
-				blogsEntryAttachmentFileEntryReference :
-				blogsEntryAttachmentFileEntryReferences) {
-
-				JSONObject blogsEntryFileEntryReferencesJSONObject =
-					JSONFactoryUtil.createJSONObject();
-
-				blogsEntryFileEntryReferencesJSONObject.put(
-					"attributeDataImageId",
-					EditorConstants.ATTRIBUTE_DATA_IMAGE_ID);
-				blogsEntryFileEntryReferencesJSONObject.put(
-					"fileEntryId",
-					String.valueOf(
-						blogsEntryAttachmentFileEntryReference.
-							getTempBlogsEntryAttachmentFileEntryId()));
-				blogsEntryFileEntryReferencesJSONObject.put(
-					"fileEntryUrl",
-					PortletFileRepositoryUtil.getPortletFileEntryURL(
-						null,
-						blogsEntryAttachmentFileEntryReference.
-							getBlogsEntryAttachmentFileEntry(),
-						StringPool.BLANK));
-
-				jsonArray.put(blogsEntryFileEntryReferencesJSONObject);
-			}
-
-			jsonObject.put("blogsEntryAttachmentReferences", jsonArray);
-
-			BlogsEntry entry = updateEntryResult.getEntry();
-
-			jsonObject.put("entryId", entry.getEntryId());
-			jsonObject.put("redirect", redirect);
-			jsonObject.put("updateRedirect", updateRedirect);
-
-			writeJSON(actionRequest, actionResponse, jsonObject);
+			sendAjaxResponse(
+				actionRequest, actionResponse, redirect, updateRedirect,
+				updateEntryResult);
 
 			return;
 		}
@@ -319,6 +278,57 @@ public class BlogsPortlet extends MVCPortlet {
 		}
 
 		return false;
+	}
+
+	protected void sendAjaxResponse(
+			ActionRequest actionRequest, ActionResponse actionResponse,
+			String redirect, boolean updateRedirect,
+			UpdateEntryResult updateEntryResult)
+		throws IOException {
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		List<BlogsEntryAttachmentFileEntryReference>
+			blogsEntryAttachmentFileEntryReferences =
+				updateEntryResult.getBlogsEntryAttachmentFileEntryReferences();
+
+		for (BlogsEntryAttachmentFileEntryReference
+			blogsEntryAttachmentFileEntryReference :
+			blogsEntryAttachmentFileEntryReferences) {
+
+			JSONObject blogsEntryFileEntryReferencesJSONObject =
+				JSONFactoryUtil.createJSONObject();
+
+			blogsEntryFileEntryReferencesJSONObject.put(
+				"attributeDataImageId",
+				EditorConstants.ATTRIBUTE_DATA_IMAGE_ID);
+			blogsEntryFileEntryReferencesJSONObject.put(
+				"fileEntryId",
+				String.valueOf(
+					blogsEntryAttachmentFileEntryReference.
+						getTempBlogsEntryAttachmentFileEntryId()));
+			blogsEntryFileEntryReferencesJSONObject.put(
+				"fileEntryUrl",
+				PortletFileRepositoryUtil.getPortletFileEntryURL(
+					null,
+					blogsEntryAttachmentFileEntryReference.
+						getBlogsEntryAttachmentFileEntry(),
+					StringPool.BLANK));
+
+			jsonArray.put(blogsEntryFileEntryReferencesJSONObject);
+		}
+
+		jsonObject.put("blogsEntryAttachmentReferences", jsonArray);
+
+		BlogsEntry entry = updateEntryResult.getEntry();
+
+		jsonObject.put("entryId", entry.getEntryId());
+		jsonObject.put("redirect", redirect);
+		jsonObject.put("updateRedirect", updateRedirect);
+
+		writeJSON(actionRequest, actionResponse, jsonObject);
 	}
 
 	protected UpdateEntryResult updateEntry(PortletRequest portletRequest)
