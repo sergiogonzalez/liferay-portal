@@ -114,23 +114,9 @@ public class EditEntryAction extends PortletAction {
 			List<BlogsEntryAttachmentFileEntryReference>
 				blogsEntryAttachmentFileEntryReferences = null;
 
-			UploadException uploadException =
-				(UploadException)actionRequest.getAttribute(
-					WebKeys.UPLOAD_EXCEPTION);
+			handleUploadException(actionRequest);
 
-			if (uploadException != null) {
-				if (uploadException.isExceededLiferayFileItemSizeLimit()) {
-					throw new LiferayFileItemException();
-				}
-				else if (uploadException.isExceededSizeLimit()) {
-					throw new FileSizeException(uploadException.getCause());
-				}
-
-				throw new PortalException(uploadException.getCause());
-			}
-			else if (cmd.equals(Constants.ADD) ||
-					 cmd.equals(Constants.UPDATE)) {
-
+			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
 				Callable<Object[]> updateEntryCallable =
 					new UpdateEntryCallable(actionRequest);
 
@@ -438,6 +424,25 @@ public class EditEntryAction extends PortletAction {
 		portletURL.setWindowState(actionRequest.getWindowState());
 
 		return portletURL.toString();
+	}
+
+	protected void handleUploadException(PortletRequest portletRequest)
+		throws PortalException {
+
+		UploadException uploadException =
+			(UploadException)portletRequest.getAttribute(
+				WebKeys.UPLOAD_EXCEPTION);
+
+		if (uploadException != null) {
+			if (uploadException.isExceededLiferayFileItemSizeLimit()) {
+				throw new LiferayFileItemException();
+			}
+			else if (uploadException.isExceededSizeLimit()) {
+				throw new FileSizeException(uploadException.getCause());
+			}
+
+			throw new PortalException(uploadException.getCause());
+		}
 	}
 
 	protected void restoreTrashEntries(ActionRequest actionRequest)
