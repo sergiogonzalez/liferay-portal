@@ -14,49 +14,45 @@
 
 package com.liferay.portlet.documentlibrary.action;
 
-import com.liferay.portal.struts.PortletAction;
+import com.liferay.portlet.mvc.MVCPortletAction;
 
-import javax.portlet.PortletConfig;
-import javax.portlet.PortletContext;
-import javax.portlet.PortletRequestDispatcher;
+import java.io.IOException;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
-
 /**
  * @author Sergio González
  */
-public class SearchAction extends PortletAction {
+public class SearchAction implements MVCPortletAction {
 
 	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
+	public String processAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws PortletException {
 
-		return actionMapping.findForward("portlet.document_library.view");
+		return null;
 	}
 
 	@Override
-	public void serveResource(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ResourceRequest resourceRequest,
-			ResourceResponse resourceResponse)
-		throws Exception {
+	public String render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
 
-		PortletContext portletContext = portletConfig.getPortletContext();
+		return "/html/portlet/document_library/view.jsp";
+	}
 
-		PortletRequestDispatcher portletRequestDispatcher =
-			portletContext.getRequestDispatcher(
-				"/html/portlet/document_library/search_resources.jsp");
+	@Override
+	public String serveResource(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws IOException, PortletException {
 
-		portletRequestDispatcher.include(resourceRequest, resourceResponse);
+		return "/html/portlet/document_library/search_resources.jsp";
 	}
 
 }

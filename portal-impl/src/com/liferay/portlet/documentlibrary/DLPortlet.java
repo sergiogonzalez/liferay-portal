@@ -15,6 +15,7 @@
 package com.liferay.portlet.documentlibrary;
 
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portlet.documentlibrary.action.SearchAction;
 import com.liferay.portlet.documentlibrary.action.ViewAction;
 import com.liferay.portlet.mvc.ActionableMVCPortlet;
 
@@ -24,6 +25,10 @@ import com.liferay.portlet.mvc.ActionableMVCPortlet;
 public class DLPortlet extends ActionableMVCPortlet {
 
 	public DLPortlet() {
+		SearchAction searchAction = new SearchAction();
+
+		registerMVCPortletAction(searchAction, "/document_library/search");
+
 		ViewAction viewAction = new ViewAction(
 			"/html/portlet/document_library/error.jsp",
 			"/html/portlet/document_library/view.jsp");
