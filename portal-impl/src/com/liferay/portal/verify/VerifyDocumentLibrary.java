@@ -349,6 +349,8 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 
 					newTitle = renameDlCharLastBlacklist(newTitle);
 
+					newTitle = renameDlNameBlacklist(newTitle);
+
 					if (!dlFileEntry.getTitle().equals(newTitle)) {
 						try {
 							dlFileEntry = renameTitle(dlFileEntry, newTitle);
@@ -530,6 +532,32 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 					title = StringUtil.replaceLast(
 						title, blacklistLastChar, StringPool.BLANK);
 				}
+			}
+		}
+
+		return title;
+	}
+
+	protected String renameDlNameBlacklist(String title) {
+		String nameWithoutExtension = title;
+
+		String extension = StringPool.BLANK;
+
+		if (title.contains(StringPool.PERIOD)) {
+			int index = title.lastIndexOf(StringPool.PERIOD);
+
+			nameWithoutExtension = title.substring(0, index);
+
+			extension = title.substring(index);
+		}
+
+		for (String blacklistName : PropsValues.DL_NAME_BLACKLIST) {
+			if (StringUtil.equalsIgnoreCase(
+					nameWithoutExtension, blacklistName)) {
+
+				title = nameWithoutExtension + StringPool.UNDERLINE + extension;
+
+				break;
 			}
 		}
 
