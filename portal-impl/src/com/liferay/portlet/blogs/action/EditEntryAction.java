@@ -209,27 +209,7 @@ public class EditEntryAction extends PortletAction {
 
 					return;
 				}
-			}
-			else if (cmd.equals(Constants.DELETE)) {
-				deleteEntries(actionRequest, false);
-			}
-			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
-				deleteEntries(actionRequest, true);
-			}
-			else if (cmd.equals(Constants.RESTORE)) {
-				restoreTrashEntries(actionRequest);
-			}
-			else if (cmd.equals(Constants.SUBSCRIBE)) {
-				subscribe(actionRequest);
-			}
-			else if (cmd.equals(Constants.UNSUBSCRIBE)) {
-				unsubscribe(actionRequest);
-			}
 
-			if (entry == null) {
-				doSendRedirect(actionRequest, actionResponse, redirect);
-			}
-			else {
 				int workflowAction = ParamUtil.getInteger(
 					actionRequest, "workflowAction",
 					WorkflowConstants.ACTION_SAVE_DRAFT);
@@ -265,6 +245,26 @@ public class EditEntryAction extends PortletAction {
 						actionResponse.sendRedirect(redirect);
 					}
 				}
+			}
+			else if (cmd.equals(Constants.DELETE)) {
+				deleteEntries(actionRequest, false);
+				doSendRedirect(actionRequest, actionResponse, redirect);
+			}
+			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
+				deleteEntries(actionRequest, true);
+				doSendRedirect(actionRequest, actionResponse, redirect);
+			}
+			else if (cmd.equals(Constants.RESTORE)) {
+				restoreTrashEntries(actionRequest);
+				doSendRedirect(actionRequest, actionResponse, redirect);
+			}
+			else if (cmd.equals(Constants.SUBSCRIBE)) {
+				subscribe(actionRequest);
+				doSendRedirect(actionRequest, actionResponse, redirect);
+			}
+			else if (cmd.equals(Constants.UNSUBSCRIBE)) {
+				unsubscribe(actionRequest);
+				doSendRedirect(actionRequest, actionResponse, redirect);
 			}
 		}
 		catch (Exception e) {
