@@ -122,17 +122,16 @@ public class EditEntryAction extends PortletAction {
 			String portletId = HttpUtil.getParameter(redirect, "p_p_id", false);
 
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-				Callable<Object[]> updateEntryCallable =
+				Callable<UpdateEntryResult> updateEntryCallable =
 					new UpdateEntryCallable(actionRequest);
 
-				Object[] returnValue = TransactionHandlerUtil.invoke(
+				UpdateEntryResult returnValue = TransactionHandlerUtil.invoke(
 					_transactionAttribute, updateEntryCallable);
 
-				entry = (BlogsEntry)returnValue[0];
-				oldUrlTitle = ((String)returnValue[1]);
+				entry = returnValue.getEntry();
+				oldUrlTitle = returnValue.getOldUrlTitle();
 				blogsEntryAttachmentFileEntryReferences =
-					((List<BlogsEntryAttachmentFileEntryReference>)
-						returnValue[2]);
+					returnValue.getBlogsEntryAttachmentFileEntryReferences();
 
 				if (Validator.isNotNull(oldUrlTitle)) {
 					String oldRedirectParam =
@@ -470,7 +469,7 @@ public class EditEntryAction extends PortletAction {
 		BlogsEntryServiceUtil.unsubscribe(themeDisplay.getScopeGroupId());
 	}
 
-	protected Object[] updateEntry(ActionRequest actionRequest)
+	protected UpdateEntryResult updateEntry(ActionRequest actionRequest)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -650,9 +649,8 @@ public class EditEntryAction extends PortletAction {
 			}
 		}
 
-		return new Object[] {
-			entry, oldUrlTitle, blogsEntryAttachmentFileEntryReferences
-		};
+		return new UpdateEntryResult(
+			entry, oldUrlTitle, blogsEntryAttachmentFileEntryReferences);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -662,10 +660,44 @@ public class EditEntryAction extends PortletAction {
 		TransactionAttributeBuilder.build(
 			Propagation.REQUIRED, new Class<?>[] {Exception.class});
 
-	private class UpdateEntryCallable implements Callable<Object[]> {
+	private static class UpdateEntryResult {
+
+		public List<BlogsEntryAttachmentFileEntryReference>
+			getBlogsEntryAttachmentFileEntryReferences() {
+
+			return _blogsEntryAttachmentFileEntryReferences;
+		}
+
+		public BlogsEntry getEntry() {
+			return _entry;
+		}
+
+		public String getOldUrlTitle() {
+			return _oldUrlTitle;
+		}
+
+		private UpdateEntryResult(
+			BlogsEntry entry, String oldUrlTitle,
+			List<BlogsEntryAttachmentFileEntryReference>
+				blogsEntryAttachmentFileEntryReferences) {
+
+			_entry = entry;
+			_oldUrlTitle = oldUrlTitle;
+			_blogsEntryAttachmentFileEntryReferences =
+				blogsEntryAttachmentFileEntryReferences;
+		}
+
+		private final List<BlogsEntryAttachmentFileEntryReference>
+			_blogsEntryAttachmentFileEntryReferences;
+		private final BlogsEntry _entry;
+		private final String _oldUrlTitle;
+
+	}
+
+	private class UpdateEntryCallable implements Callable<UpdateEntryResult> {
 
 		@Override
-		public Object[] call() throws Exception {
+		public UpdateEntryResult call() throws Exception {
 			return updateEntry(_actionRequest);
 		}
 
