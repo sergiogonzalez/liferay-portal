@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
@@ -344,6 +345,34 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 					for (String blacklistChar : PropsValues.DL_CHAR_BLACKLIST) {
 						newTitle = newTitle.replace(
 							blacklistChar, StringPool.UNDERLINE);
+					}
+
+					boolean replaced = true;
+
+					while (replaced) {
+						replaced = false;
+
+						for (
+							String blacklistLastChar :
+								PropsValues.DL_CHAR_LAST_BLACKLIST) {
+
+							if (blacklistLastChar.startsWith(
+									UnicodeFormatter.UNICODE_PREFIX)) {
+
+								blacklistLastChar = 
+									UnicodeFormatter.parseString(
+										blacklistLastChar);
+							}
+
+							while (newTitle.endsWith(blacklistLastChar))
+							{
+								newTitle = StringUtil.replaceLast(
+									newTitle, blacklistLastChar,
+										StringPool.BLANK);
+
+								replaced = true;
+							}
+						}
 					}
 
 					if (!dlFileEntry.getTitle().equals(newTitle)) {
