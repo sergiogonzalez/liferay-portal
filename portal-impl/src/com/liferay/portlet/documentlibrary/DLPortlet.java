@@ -19,22 +19,26 @@ import com.liferay.portlet.documentlibrary.action.SearchAction;
 import com.liferay.portlet.documentlibrary.action.ViewAction;
 import com.liferay.portlet.mvc.ActionableMVCPortlet;
 
+import javax.portlet.PortletException;
+
 /**
  * @author Iván Zaera
  */
 public class DLPortlet extends ActionableMVCPortlet {
 
-	public DLPortlet() {
-		SearchAction searchAction = new SearchAction();
+	@Override
+	public void init() throws PortletException {
+		super.init();
 
-		registerMVCPortletAction(searchAction, "/document_library/search");
-
-		ViewAction viewAction = new ViewAction(
-			"/html/portlet/document_library/error.jsp",
-			"/html/portlet/document_library/view.jsp");
 
 		registerMVCPortletAction(
-			viewAction, StringPool.BLANK, "/document_library/select_file_entry",
+			new SearchAction(), "/document_library/search");
+
+		registerMVCPortletAction(
+			new ViewAction(
+				"/html/portlet/document_library/error.jsp",
+				"/html/portlet/document_library/view.jsp"),
+			StringPool.BLANK, "/document_library/select_file_entry",
 			"/document_library/view");
 	}
 
