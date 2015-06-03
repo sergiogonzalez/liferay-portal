@@ -177,6 +177,17 @@ public class BlogsPortlet extends MVCPortlet {
 			return;
 		}
 
+		doSendRedirect(
+			actionRequest, actionResponse, redirect, cmd, portletId,
+			updateEntryResult);
+	}
+
+	protected void doSendRedirect(
+		ActionRequest actionRequest, ActionResponse actionResponse,
+		String redirect, String cmd, String portletId,
+		UpdateEntryResult updateEntryResult)
+		throws Exception {
+
 		BlogsEntry entry = updateEntryResult.getEntry();
 
 		int workflowAction = ParamUtil.getInteger(
