@@ -14,10 +14,21 @@
 
 package com.liferay.portlet.documentlibrarydisplay;
 
+import com.liferay.portlet.documentlibrary.action.ViewAction;
 import com.liferay.portlet.mvc.ActionableMVCPortlet;
 
 /**
  * @author Iván Zaera
  */
 public class DLDisplayPortlet extends ActionableMVCPortlet {
+
+	public DLDisplayPortlet() {
+		ViewAction viewAction = new ViewAction(
+			"/html/portlet/document_library/error.jsp",
+			"/html/portlet/document_library_display/view.jsp");
+
+		registerMVCPortletAction(
+			viewAction, null, "/document_library_display/view");
+	}
+
 }

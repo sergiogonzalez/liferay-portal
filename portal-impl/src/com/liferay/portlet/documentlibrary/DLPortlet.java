@@ -14,10 +14,23 @@
 
 package com.liferay.portlet.documentlibrary;
 
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portlet.documentlibrary.action.ViewAction;
 import com.liferay.portlet.mvc.ActionableMVCPortlet;
 
 /**
  * @author Iván Zaera
  */
 public class DLPortlet extends ActionableMVCPortlet {
+
+	public DLPortlet() {
+		ViewAction viewAction = new ViewAction(
+			"/html/portlet/document_library/error.jsp",
+			"/html/portlet/document_library/view.jsp");
+
+		registerMVCPortletAction(
+			viewAction, StringPool.BLANK, "/document_library/select_file_entry",
+			"/document_library/view");
+	}
+
 }
