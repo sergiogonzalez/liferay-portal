@@ -26,7 +26,6 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
-import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
@@ -48,33 +47,37 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
+import com.liferay.portlet.mvc.ActionableMVCPortlet;
+import com.liferay.portlet.mvc.MVCPortletAction;
+
+import java.io.IOException;
 
 import java.util.Locale;
 import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
 /**
  * @author Alexander Chow
  * @author Sergio González
  */
-public class EditFileEntryTypeAction extends PortletAction {
+public class EditFileEntryTypeAction implements MVCPortletAction {
+
+	public EditFileEntryTypeAction(ActionableMVCPortlet actionableMVCPortlet) {
+		_actionableMVCPortlet = actionableMVCPortlet;
+	}
 
 	@Override
-	public void processAction(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
-		throws Exception {
+	public String processAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws PortletException {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
@@ -100,7 +103,7 @@ public class EditFileEntryTypeAction extends PortletAction {
 					PortletKeys.DOCUMENT_LIBRARY);
 			}
 
-			sendRedirect(actionRequest, actionResponse);
+			_actionableMVCPortlet.sendRedirect(actionRequest, actionResponse);
 		}
 		catch (Exception e) {
 			if (e instanceof DuplicateFileEntryTypeException ||
@@ -117,25 +120,31 @@ public class EditFileEntryTypeAction extends PortletAction {
 
 				SessionErrors.add(actionRequest, e.getClass());
 
-				setForward(actionRequest, "portlet.document_library.error");
+				return "/html/portlet/document_library/error.jsp";
 			}
 			else if (e instanceof RequiredStructureException) {
 				SessionErrors.add(actionRequest, e.getClass());
 
-				sendRedirect(actionRequest, actionResponse);
+				try {
+					_actionableMVCPortlet.sendRedirect(
+						actionRequest, actionResponse);
+				}
+				catch (IOException ioe) {
+					throw new PortletException(ioe);
+				}
 			}
 			else {
-				throw e;
+				throw new PortletException(e);
 			}
 		}
+
+		return null;
 	}
 
 	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
+	public String render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
 
 		DLFileEntryType dlFileEntryType = null;
 
@@ -173,18 +182,22 @@ public class EditFileEntryTypeAction extends PortletAction {
 
 				SessionErrors.add(renderRequest, e.getClass());
 
-				return actionMapping.findForward(
-					"portlet.document_library.error");
+				return "/html/portlet/document_library/error.jsp";
 			}
 			else {
-				throw e;
+				throw new PortletException(e);
 			}
 		}
 
-		return actionMapping.findForward(
-			getForward(
-				renderRequest,
-				"portlet.document_library.edit_file_entry_type"));
+		return "/html/portlet/document_library/edit_file_entry_type.jsp";
+	}
+
+	@Override
+	public String serveResource(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws IOException, PortletException {
+
+		return null;
 	}
 
 	protected void deleteFileEntryType(
@@ -283,5 +296,7 @@ public class EditFileEntryTypeAction extends PortletAction {
 				serviceContext);
 		}
 	}
+
+	private final ActionableMVCPortlet _actionableMVCPortlet;
 
 }
