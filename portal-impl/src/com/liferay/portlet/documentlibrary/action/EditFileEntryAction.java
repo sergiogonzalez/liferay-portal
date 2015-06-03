@@ -48,7 +48,6 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.struts.ActionConstants;
-import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
@@ -77,9 +76,12 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.dynamicdatamapping.StorageFieldRequiredException;
+import com.liferay.portlet.mvc.ActionableMVCPortlet;
+import com.liferay.portlet.mvc.MVCPortletAction;
 import com.liferay.portlet.trash.service.TrashEntryServiceUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.ArrayList;
@@ -91,9 +93,8 @@ import java.util.Set;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
-import javax.portlet.PortletContext;
+import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.PortletResponse;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -104,9 +105,6 @@ import javax.portlet.WindowState;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.fileupload.FileUploadBase.IOFileUploadException;
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Brian Wing Shun Chan
@@ -116,16 +114,23 @@ import org.apache.struts.action.ActionMapping;
  * @author Levente Hudák
  * @author Kenneth Chang
  */
-public class EditFileEntryAction extends PortletAction {
+public class EditFileEntryAction implements MVCPortletAction {
 
 	public static final String TEMP_RANDOM_SUFFIX = "--tempRandomSuffix--";
 
+	public EditFileEntryAction(
+		ActionableMVCPortlet actionableMVCPortlet, String defaultJsp) {
+
+		_actionableMVCPortlet = actionableMVCPortlet;
+		_defaultJsp = defaultJsp;
+
+		_portletConfig = actionableMVCPortlet.getPortletConfig();
+	}
+
 	@Override
-	public void processAction(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
-		throws Exception {
+	public String processAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws PortletException {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
@@ -152,13 +157,13 @@ public class EditFileEntryAction extends PortletAction {
 					 cmd.equals(Constants.UPDATE_AND_CHECKIN)) {
 
 				fileEntry = updateFileEntry(
-					portletConfig, actionRequest, actionResponse);
+					_portletConfig, actionRequest, actionResponse);
 			}
 			else if (cmd.equals(Constants.ADD_MULTIPLE)) {
 				addMultipleFileEntries(
-					portletConfig, actionRequest, actionResponse);
+					_portletConfig, actionRequest, actionResponse);
 
-				hideDefaultSuccessMessage(actionRequest);
+				_actionableMVCPortlet.hideDefaultSuccessMessage(actionRequest);
 			}
 			else if (cmd.equals(Constants.ADD_TEMP)) {
 				addTempFileEntry(actionRequest, actionResponse);
@@ -193,12 +198,14 @@ public class EditFileEntryAction extends PortletAction {
 			if (cmd.equals(Constants.ADD_TEMP) ||
 				cmd.equals(Constants.DELETE_TEMP)) {
 
-				setForward(actionRequest, ActionConstants.COMMON_NULL);
+				actionResponse.setRenderParameter(
+					"mvcPath", "/html" + ActionConstants.COMMON_NULL);
 			}
 			else if (cmd.equals(Constants.PREVIEW)) {
 			}
 			else if (!windowState.equals(LiferayWindowState.POP_UP)) {
-				sendRedirect(actionRequest, actionResponse);
+				_actionableMVCPortlet.sendRedirect(
+					actionRequest, actionResponse);
 			}
 			else {
 				String redirect = ParamUtil.getString(
@@ -211,13 +218,15 @@ public class EditFileEntryAction extends PortletAction {
 					(workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT)) {
 
 					redirect = getSaveAndContinueRedirect(
-						portletConfig, actionRequest, fileEntry, redirect);
+						_portletConfig, actionRequest, fileEntry, redirect);
 
-					sendRedirect(actionRequest, actionResponse, redirect);
+					_actionableMVCPortlet.sendRedirect(
+						actionRequest, actionResponse, redirect);
 				}
 				else {
 					if (!windowState.equals(LiferayWindowState.POP_UP)) {
-						sendRedirect(actionRequest, actionResponse);
+						_actionableMVCPortlet.sendRedirect(
+							actionRequest, actionResponse);
 					}
 					else {
 						redirect = PortalUtil.escapeRedirect(
@@ -248,17 +257,22 @@ public class EditFileEntryAction extends PortletAction {
 			}
 		}
 		catch (Exception e) {
-			handleUploadException(
-				portletConfig, actionRequest, actionResponse, cmd, e);
+			try {
+				handleUploadException(
+					_portletConfig, actionRequest, actionResponse, cmd, e);
+			}
+			catch (Exception e1) {
+				throw new PortletException(e1);
+			}
 		}
+
+		return null;
 	}
 
 	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
+	public String render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
 
 		try {
 			ActionUtil.getFileEntry(renderRequest);
@@ -271,34 +285,23 @@ public class EditFileEntryAction extends PortletAction {
 
 				SessionErrors.add(renderRequest, e.getClass());
 
-				return actionMapping.findForward(
-					"portlet.document_library.error");
+				return "/html/portlet/document_library/error.jsp";
 			}
 			else {
-				throw e;
+				throw new PortletException(e);
 			}
 		}
 
-		String forward = "portlet.document_library.edit_file_entry";
-
-		return actionMapping.findForward(getForward(renderRequest, forward));
+		return _defaultJsp;
 	}
 
 	@Override
-	public void serveResource(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ResourceRequest resourceRequest,
-			ResourceResponse resourceResponse)
-		throws Exception {
+	public String serveResource(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws IOException, PortletException {
 
-		PortletContext portletContext = portletConfig.getPortletContext();
-
-		PortletRequestDispatcher portletRequestDispatcher =
-			portletContext.getRequestDispatcher(
-				"/html/portlet/document_library/" +
-					"upload_multiple_file_entries_resources.jsp");
-
-		portletRequestDispatcher.include(resourceRequest, resourceResponse);
+		return "/html/portlet/document_library/" +
+			"upload_multiple_file_entries_resources.jsp";
 	}
 
 	protected void addMultipleFileEntries(
@@ -347,7 +350,8 @@ public class EditFileEntryAction extends PortletAction {
 			jsonArray.put(jsonObject);
 		}
 
-		writeJSON(actionRequest, actionResponse, jsonArray);
+		_actionableMVCPortlet.writeJSON(
+			actionRequest, actionResponse, jsonArray);
 	}
 
 	protected void addMultipleFileEntries(
@@ -455,7 +459,8 @@ public class EditFileEntryAction extends PortletAction {
 			jsonObject.put("title", sourceFileName);
 			jsonObject.put("uuid", fileEntry.getUuid());
 
-			writeJSON(actionRequest, actionResponse, jsonObject);
+			_actionableMVCPortlet.writeJSON(
+				actionRequest, actionResponse, jsonObject);
 		}
 		catch (Exception e) {
 			UploadException uploadException =
@@ -577,7 +582,7 @@ public class EditFileEntryAction extends PortletAction {
 				actionRequest, (DLFileEntry)fileEntry.getModel());
 		}
 
-		hideDefaultSuccessMessage(actionRequest);
+		_actionableMVCPortlet.hideDefaultSuccessMessage(actionRequest);
 	}
 
 	protected void deleteTempFileEntry(
@@ -607,7 +612,8 @@ public class EditFileEntryAction extends PortletAction {
 			jsonObject.put("errorMessage", errorMessage);
 		}
 
-		writeJSON(actionRequest, actionResponse, jsonObject);
+		_actionableMVCPortlet.writeJSON(
+			actionRequest, actionResponse, jsonObject);
 	}
 
 	protected String getAddMultipleFileEntriesErrorMessage(
@@ -809,7 +815,7 @@ public class EditFileEntryAction extends PortletAction {
 				return;
 			}
 			else if (cmd.equals(Constants.ADD_TEMP)) {
-				hideDefaultErrorMessage(actionRequest);
+				_actionableMVCPortlet.hideDefaultErrorMessage(actionRequest);
 			}
 
 			if (e instanceof AntivirusScannerException ||
@@ -883,7 +889,8 @@ public class EditFileEntryAction extends PortletAction {
 				jsonObject.put("message", errorMessage);
 				jsonObject.put("status", errorType);
 
-				writeJSON(actionRequest, actionResponse, jsonObject);
+				_actionableMVCPortlet.writeJSON(
+					actionRequest, actionResponse, jsonObject);
 			}
 
 			if (e instanceof AntivirusScannerException) {
@@ -907,7 +914,8 @@ public class EditFileEntryAction extends PortletAction {
 				SessionErrors.add(actionRequest, e.getClass());
 			}
 
-			setForward(actionRequest, "portlet.document_library.error");
+			actionResponse.setRenderParameter(
+				"mvcPath", "/html/portlet/document_library/error.jsp");
 		}
 		else {
 			Throwable cause = e.getCause();
@@ -1036,7 +1044,8 @@ public class EditFileEntryAction extends PortletAction {
 
 					jsonObject.put("fileEntryId", fileEntry.getFileEntryId());
 
-					writeJSON(actionRequest, actionResponse, jsonObject);
+					_actionableMVCPortlet.writeJSON(
+						actionRequest, actionResponse, jsonObject);
 				}
 			}
 			else if (cmd.equals(Constants.UPDATE_AND_CHECKIN)) {
@@ -1083,5 +1092,9 @@ public class EditFileEntryAction extends PortletAction {
 
 	private static final String _TEMP_FOLDER_NAME =
 		EditFileEntryAction.class.getName();
+
+	private final ActionableMVCPortlet _actionableMVCPortlet;
+	private final String _defaultJsp;
+	private final PortletConfig _portletConfig;
 
 }

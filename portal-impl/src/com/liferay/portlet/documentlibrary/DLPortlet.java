@@ -15,6 +15,7 @@
 package com.liferay.portlet.documentlibrary;
 
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portlet.documentlibrary.action.EditFileEntryAction;
 import com.liferay.portlet.documentlibrary.action.SearchAction;
 import com.liferay.portlet.documentlibrary.action.ViewAction;
 import com.liferay.portlet.mvc.ActionableMVCPortlet;
@@ -30,6 +31,27 @@ public class DLPortlet extends ActionableMVCPortlet {
 	public void init() throws PortletException {
 		super.init();
 
+		registerMVCPortletAction(
+			new EditFileEntryAction(
+				this, "/html/portlet/document_library/edit_file_entry.jsp"),
+			"/document_library/edit_file_entry");
+
+		registerMVCPortletAction(
+			new EditFileEntryAction(
+				this,
+				"/html/portlet/document_library/" +
+					"upload_multiple_file_entries.jsp"),
+			"/document_library/upload_multiple_file_entries");
+
+		registerMVCPortletAction(
+			new EditFileEntryAction(
+				this, "/html/portlet/document_library/view_file_entry.jsp"),
+			"/document_library/view_file_entry");
+
+		registerMVCPortletAction(
+			new EditFileEntryAction(
+				this, "/html/portlet/document_library/view_file_entry.jsp"),
+			"/document_library/upload_file_entry");
 
 		registerMVCPortletAction(
 			new SearchAction(), "/document_library/search");
