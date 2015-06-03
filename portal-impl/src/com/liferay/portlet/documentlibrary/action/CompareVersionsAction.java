@@ -24,39 +24,46 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.documentlibrary.util.DocumentConversionUtil;
+import com.liferay.portlet.mvc.MVCPortletAction;
 
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import java.util.List;
 
-import javax.portlet.PortletConfig;
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
 /**
  * @author Bruno Farache
  */
-public class CompareVersionsAction extends PortletAction {
+public class CompareVersionsAction implements MVCPortletAction {
 
 	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
+	public String processAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws PortletException {
+
+		return null;
+	}
+
+	@Override
+	public String render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
 
 		try {
 			compareVersions(renderRequest);
@@ -67,15 +74,22 @@ public class CompareVersionsAction extends PortletAction {
 
 				SessionErrors.add(renderRequest, e.getClass());
 
-				setForward(renderRequest, "portlet.document_library.error");
+				return "/html/portlet/document_library/error.jsp";
 			}
 			else {
-				throw e;
+				throw new PortletException(e);
 			}
 		}
 
-		return actionMapping.findForward(
-			"portlet.document_library.compare_versions");
+		return "/html/portlet/document_library/compare_versions.jsp";
+	}
+
+	@Override
+	public String serveResource(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws IOException, PortletException {
+
+		return null;
 	}
 
 	protected void compareVersions(RenderRequest renderRequest)

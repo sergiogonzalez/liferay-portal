@@ -15,6 +15,7 @@
 package com.liferay.portlet.documentlibrary;
 
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portlet.documentlibrary.action.CompareVersionsAction;
 import com.liferay.portlet.documentlibrary.action.EditFileEntryAction;
 import com.liferay.portlet.documentlibrary.action.SearchAction;
 import com.liferay.portlet.documentlibrary.action.ViewAction;
@@ -30,6 +31,9 @@ public class DLPortlet extends ActionableMVCPortlet {
 	@Override
 	public void init() throws PortletException {
 		super.init();
+
+		registerMVCPortletAction(
+			new CompareVersionsAction(), "/document_library/compare_versions");
 
 		registerMVCPortletAction(
 			new EditFileEntryAction(
