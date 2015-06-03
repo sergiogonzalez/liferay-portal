@@ -22,36 +22,39 @@ import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
-import com.liferay.portal.struts.PortletAction;
 import com.liferay.portlet.documentlibrary.FileShortcutPermissionException;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcutConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
+import com.liferay.portlet.mvc.ActionableMVCPortlet;
+import com.liferay.portlet.mvc.MVCPortletAction;
 import com.liferay.portlet.trash.util.TrashUtil;
+
+import java.io.IOException;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Levente Hudák
  */
-public class EditFileShortcutAction extends PortletAction {
+public class EditFileShortcutAction implements MVCPortletAction {
+
+	public EditFileShortcutAction(ActionableMVCPortlet actionableMVCPortlet) {
+		_actionableMVCPortlet = actionableMVCPortlet;
+	}
 
 	@Override
-	public void processAction(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
-		throws Exception {
+	public String processAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws PortletException {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
@@ -66,7 +69,7 @@ public class EditFileShortcutAction extends PortletAction {
 				deleteFileShortcut(actionRequest, true);
 			}
 
-			sendRedirect(actionRequest, actionResponse);
+			_actionableMVCPortlet.sendRedirect(actionRequest, actionResponse);
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchFileShortcutException ||
@@ -74,7 +77,7 @@ public class EditFileShortcutAction extends PortletAction {
 
 				SessionErrors.add(actionRequest, e.getClass());
 
-				setForward(actionRequest, "portlet.document_library.error");
+				return "/html/portlet/document_library/error.jsp";
 			}
 			else if (e instanceof FileShortcutPermissionException ||
 					 e instanceof NoSuchFileEntryException) {
@@ -82,17 +85,17 @@ public class EditFileShortcutAction extends PortletAction {
 				SessionErrors.add(actionRequest, e.getClass());
 			}
 			else {
-				throw e;
+				throw new PortletException(e);
 			}
 		}
+
+		return null;
 	}
 
 	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
+	public String render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
 
 		try {
 			ActionUtil.getFileShortcut(renderRequest);
@@ -103,17 +106,22 @@ public class EditFileShortcutAction extends PortletAction {
 
 				SessionErrors.add(renderRequest, e.getClass());
 
-				return actionMapping.findForward(
-					"portlet.document_library.error");
+				return "/html/portlet/document_library/error.jsp";
 			}
 			else {
-				throw e;
+				throw new PortletException(e);
 			}
 		}
 
-		return actionMapping.findForward(
-			getForward(
-				renderRequest, "portlet.document_library.edit_file_shortcut"));
+		return "/html/portlet/document_library/edit_file_shortcut.jsp";
+	}
+
+	@Override
+	public String serveResource(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws IOException, PortletException {
+
+		return null;
 	}
 
 	protected void deleteFileShortcut(
@@ -132,7 +140,7 @@ public class EditFileShortcutAction extends PortletAction {
 					actionRequest, (TrashedModel)fileShortcut.getModel());
 			}
 
-			hideDefaultSuccessMessage(actionRequest);
+			_actionableMVCPortlet.hideDefaultSuccessMessage(actionRequest);
 		}
 		else {
 			DLAppServiceUtil.deleteFileShortcut(fileShortcutId);
@@ -167,5 +175,7 @@ public class EditFileShortcutAction extends PortletAction {
 				fileShortcutId, folderId, toFileEntryId, serviceContext);
 		}
 	}
+
+	private final ActionableMVCPortlet _actionableMVCPortlet;
 
 }
