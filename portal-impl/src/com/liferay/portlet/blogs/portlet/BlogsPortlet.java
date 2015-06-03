@@ -177,15 +177,15 @@ public class BlogsPortlet extends MVCPortlet {
 			return;
 		}
 
-		doSendRedirect(
-			actionRequest, actionResponse, redirect, cmd, portletId,
-			updateEntryResult);
+		redirect = getSaveRedirect(
+			actionRequest, redirect, cmd, portletId, updateEntryResult);
+
+		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 	}
 
-	protected void doSendRedirect(
-		ActionRequest actionRequest, ActionResponse actionResponse,
-		String redirect, String cmd, String portletId,
-		UpdateEntryResult updateEntryResult)
+	protected String getSaveRedirect(
+			ActionRequest actionRequest, String redirect, String cmd,
+			String portletId, UpdateEntryResult updateEntryResult)
 		throws Exception {
 
 		BlogsEntry entry = updateEntryResult.getEntry();
@@ -197,16 +197,11 @@ public class BlogsPortlet extends MVCPortlet {
 		if (workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT) {
 			redirect = getSaveAndContinueRedirect(
 				getPortletConfig(), actionRequest, entry, redirect);
-
-			actionResponse.sendRedirect(redirect);
 		}
 
 		WindowState windowState = actionRequest.getWindowState();
 
-		if (!windowState.equals(LiferayWindowState.POP_UP)) {
-			actionResponse.sendRedirect(redirect);
-		}
-		else {
+		if (windowState.equals(LiferayWindowState.POP_UP)) {
 			redirect = PortalUtil.escapeRedirect(redirect);
 
 			if (Validator.isNotNull(redirect)) {
@@ -220,10 +215,10 @@ public class BlogsPortlet extends MVCPortlet {
 					redirect = HttpUtil.addParameter(
 						redirect, namespace + "classPK", entry.getEntryId());
 				}
-
-				actionResponse.sendRedirect(redirect);
 			}
 		}
+
+		return redirect;
 	}
 
 	protected String getSaveAndContinueRedirect(
