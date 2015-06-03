@@ -30,7 +30,6 @@ import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
-import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.AssetCategoryException;
 import com.liferay.portlet.asset.AssetTagException;
@@ -42,24 +41,26 @@ import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.SourceFileNameException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
+import com.liferay.portlet.mvc.ActionableMVCPortlet;
+import com.liferay.portlet.mvc.MVCPortletAction;
 import com.liferay.portlet.trash.service.TrashEntryServiceUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
+
+import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 import javax.portlet.WindowState;
 
 import javax.servlet.http.HttpServletResponse;
-
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Brian Wing Shun Chan
@@ -67,14 +68,16 @@ import org.apache.struts.action.ActionMapping;
  * @author Manuel de la Peña
  * @author Levente Hudák
  */
-public class EditEntryAction extends PortletAction {
+public class EditEntryAction implements MVCPortletAction {
+
+	public EditEntryAction(ActionableMVCPortlet actionableMVCPortlet) {
+		_actionableMVCPortlet = actionableMVCPortlet;
+	}
 
 	@Override
-	public void processAction(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
-		throws Exception {
+	public String processAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws PortletException {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
@@ -104,7 +107,8 @@ public class EditEntryAction extends PortletAction {
 			WindowState windowState = actionRequest.getWindowState();
 
 			if (!windowState.equals(LiferayWindowState.POP_UP)) {
-				sendRedirect(actionRequest, actionResponse);
+				_actionableMVCPortlet.sendRedirect(
+					actionRequest, actionResponse);
 			}
 			else {
 				String redirect = PortalUtil.escapeRedirect(
@@ -131,7 +135,8 @@ public class EditEntryAction extends PortletAction {
 					SessionErrors.add(actionRequest, e.getClass());
 				}
 
-				setForward(actionRequest, "portlet.document_library.error");
+				actionResponse.setRenderParameter(
+					"mvcPath", "/html/portlet/document_library/error.jsp");
 			}
 			else if (e instanceof DuplicateFileException ||
 					 e instanceof DuplicateFolderNameException ||
@@ -154,17 +159,17 @@ public class EditEntryAction extends PortletAction {
 				SessionErrors.add(actionRequest, e.getClass(), e);
 			}
 			else {
-				throw e;
+				throw new PortletException(e);
 			}
 		}
+
+		return null;
 	}
 
 	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
+	public String render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
 
 		try {
 			ActionUtil.getFileEntries(renderRequest);
@@ -177,17 +182,22 @@ public class EditEntryAction extends PortletAction {
 
 				SessionErrors.add(renderRequest, e.getClass());
 
-				return actionMapping.findForward(
-					"portlet.document_library.error");
+				return "/html/portlet/document_library/error.jsp";
 			}
 			else {
-				throw e;
+				throw new PortletException(e);
 			}
 		}
 
-		String forward = "portlet.document_library.edit_entry";
+		return "/html/portlet/document_library/move_entries.jsp";
+	}
 
-		return actionMapping.findForward(getForward(renderRequest, forward));
+	@Override
+	public String serveResource(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws IOException, PortletException {
+
+		return null;
 	}
 
 	protected void cancelCheckedOutEntries(ActionRequest actionRequest)
@@ -297,7 +307,7 @@ public class EditEntryAction extends PortletAction {
 		if (moveToTrash && !trashedModels.isEmpty()) {
 			TrashUtil.addTrashSessionMessages(actionRequest, trashedModels);
 
-			hideDefaultSuccessMessage(actionRequest);
+			_actionableMVCPortlet.hideDefaultSuccessMessage(actionRequest);
 		}
 	}
 
@@ -349,5 +359,7 @@ public class EditEntryAction extends PortletAction {
 			TrashEntryServiceUtil.restoreEntry(restoreTrashEntryId);
 		}
 	}
+
+	private final ActionableMVCPortlet _actionableMVCPortlet;
 
 }
