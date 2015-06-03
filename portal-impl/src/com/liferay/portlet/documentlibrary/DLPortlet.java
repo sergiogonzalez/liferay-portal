@@ -21,6 +21,7 @@ import com.liferay.portlet.documentlibrary.action.EditFileEntryAction;
 import com.liferay.portlet.documentlibrary.action.SearchAction;
 import com.liferay.portlet.documentlibrary.action.ViewAction;
 import com.liferay.portlet.mvc.ActionableMVCPortlet;
+import com.liferay.portlet.mvc.util.ForwardMVCPortletAction;
 
 import javax.portlet.PortletException;
 
@@ -44,6 +45,11 @@ public class DLPortlet extends ActionableMVCPortlet {
 			new EditFileEntryAction(
 				this, "/html/portlet/document_library/edit_file_entry.jsp"),
 			"/document_library/edit_file_entry");
+
+		registerMVCPortletAction(
+			new ForwardMVCPortletAction(
+				"/html/portlet/document_library/view_file_entry_type.jsp"),
+			"/document_library/view_file_entry_type");
 
 		registerMVCPortletAction(
 			new EditFileEntryAction(
