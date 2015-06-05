@@ -181,6 +181,16 @@ public class BlogsPortlet extends MVCPortlet {
 		BlogsEntryServiceUtil.subscribe(themeDisplay.getScopeGroupId());
 	}
 
+	public void unsubscribe(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		BlogsEntryServiceUtil.unsubscribe(themeDisplay.getScopeGroupId());
+	}
+
 	protected void deleteEntries(
 			ActionRequest actionRequest, boolean moveToTrash)
 		throws Exception {

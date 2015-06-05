@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.struts.PortletAction;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.AssetCategoryException;
@@ -39,7 +38,6 @@ import com.liferay.portlet.blogs.EntrySmallImageNameException;
 import com.liferay.portlet.blogs.EntrySmallImageSizeException;
 import com.liferay.portlet.blogs.EntryTitleException;
 import com.liferay.portlet.blogs.NoSuchEntryException;
-import com.liferay.portlet.blogs.service.BlogsEntryServiceUtil;
 import com.liferay.portlet.documentlibrary.FileSizeException;
 
 import java.io.IOException;
@@ -88,8 +86,6 @@ public class EditEntryAction extends PortletAction {
 			else if (cmd.equals(Constants.SUBSCRIBE)) {
 			}
 			else if (cmd.equals(Constants.UNSUBSCRIBE)) {
-				unsubscribe(actionRequest);
-				doSendRedirect(actionRequest, actionResponse, redirect);
 			}
 		}
 		catch (Exception e) {
@@ -171,13 +167,6 @@ public class EditEntryAction extends PortletAction {
 
 			throw new PortalException(uploadException.getCause());
 		}
-	}
-
-	protected void unsubscribe(ActionRequest actionRequest) throws Exception {
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		BlogsEntryServiceUtil.unsubscribe(themeDisplay.getScopeGroupId());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
