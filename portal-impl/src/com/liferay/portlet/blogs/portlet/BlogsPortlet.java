@@ -183,6 +183,43 @@ public class BlogsPortlet extends MVCPortlet {
 		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 	}
 
+	protected String getSaveAndContinueRedirect(
+			PortletConfig portletConfig, ActionRequest actionRequest,
+			BlogsEntry entry, String redirect)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String backURL = ParamUtil.getString(actionRequest, "backURL");
+
+		PortletURLImpl portletURL = new PortletURLImpl(
+			actionRequest, portletConfig.getPortletName(),
+			themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
+
+		String portletName = portletConfig.getPortletName();
+
+		if (portletName.equals(PortletKeys.BLOGS_ADMIN)) {
+			portletURL.setParameter(
+				"mvcPath", "/html/portlet/blogs_admin/edit_entry.jsp");
+		}
+		else {
+			portletURL.setParameter(
+				"mvcPath", "/html/portlet/blogs/edit_entry.jsp");
+		}
+
+		portletURL.setParameter(Constants.CMD, Constants.UPDATE, false);
+		portletURL.setParameter("redirect", redirect, false);
+		portletURL.setParameter("backURL", backURL, false);
+		portletURL.setParameter(
+			"groupId", String.valueOf(entry.getGroupId()), false);
+		portletURL.setParameter(
+			"entryId", String.valueOf(entry.getEntryId()), false);
+		portletURL.setWindowState(actionRequest.getWindowState());
+
+		return portletURL.toString();
+	}
+
 	protected String getSaveRedirect(
 			ActionRequest actionRequest, String redirect, String cmd,
 			String portletId, UpdateEntryResult updateEntryResult)
@@ -219,41 +256,6 @@ public class BlogsPortlet extends MVCPortlet {
 		}
 
 		return redirect;
-	}
-
-	protected String getSaveAndContinueRedirect(
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			BlogsEntry entry, String redirect)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String backURL = ParamUtil.getString(actionRequest, "backURL");
-
-		PortletURLImpl portletURL = new PortletURLImpl(
-			actionRequest, portletConfig.getPortletName(),
-			themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
-
-		String portletName = portletConfig.getPortletName();
-
-		if (portletName.equals(PortletKeys.BLOGS_ADMIN)) {
-			portletURL.setParameter("struts_action", "/blogs_admin/edit_entry");
-		}
-		else {
-			portletURL.setParameter("struts_action", "/blogs/edit_entry");
-		}
-
-		portletURL.setParameter(Constants.CMD, Constants.UPDATE, false);
-		portletURL.setParameter("redirect", redirect, false);
-		portletURL.setParameter("backURL", backURL, false);
-		portletURL.setParameter(
-			"groupId", String.valueOf(entry.getGroupId()), false);
-		portletURL.setParameter(
-			"entryId", String.valueOf(entry.getEntryId()), false);
-		portletURL.setWindowState(actionRequest.getWindowState());
-
-		return portletURL.toString();
 	}
 
 	protected void handleUploadException(PortletRequest portletRequest)
