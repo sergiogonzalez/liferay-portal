@@ -86,8 +86,6 @@ public class EditEntryAction extends PortletAction {
 			else if (cmd.equals(Constants.RESTORE)) {
 			}
 			else if (cmd.equals(Constants.SUBSCRIBE)) {
-				subscribe(actionRequest);
-				doSendRedirect(actionRequest, actionResponse, redirect);
 			}
 			else if (cmd.equals(Constants.UNSUBSCRIBE)) {
 				unsubscribe(actionRequest);
@@ -173,13 +171,6 @@ public class EditEntryAction extends PortletAction {
 
 			throw new PortalException(uploadException.getCause());
 		}
-	}
-
-	protected void subscribe(ActionRequest actionRequest) throws Exception {
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		BlogsEntryServiceUtil.subscribe(themeDisplay.getScopeGroupId());
 	}
 
 	protected void unsubscribe(ActionRequest actionRequest) throws Exception {

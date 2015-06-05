@@ -55,9 +55,8 @@
 				/>
 			</c:when>
 			<c:otherwise>
-				<portlet:actionURL var="subscribeURL">
-					<portlet:param name="struts_action" value="/blogs/edit_entry" />
-					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.SUBSCRIBE %>" />
+				<portlet:actionURL name="subscribe" var="subscribeURL">
+					<portlet:param name="mvcPath" value="/html/portlet/blogs/edit_entry.jsp" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 				</portlet:actionURL>
 
