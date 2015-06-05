@@ -25,7 +25,6 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.RepositoryServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
-import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
@@ -35,28 +34,32 @@ import com.liferay.portlet.documentlibrary.DuplicateRepositoryNameException;
 import com.liferay.portlet.documentlibrary.FolderNameException;
 import com.liferay.portlet.documentlibrary.RepositoryNameException;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
+import com.liferay.portlet.mvc.ActionableMVCPortlet;
+import com.liferay.portlet.mvc.MVCPortletAction;
+
+import java.io.IOException;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
 /**
  * @author Sergio González
  */
-public class EditRepositoryAction extends PortletAction {
+public class EditRepositoryAction implements MVCPortletAction {
+
+	public EditRepositoryAction(ActionableMVCPortlet actionableMVCPortlet) {
+		_actionableMVCPortlet = actionableMVCPortlet;
+	}
 
 	@Override
-	public void processAction(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
-		throws Exception {
+	public String processAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws PortletException {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
@@ -68,7 +71,7 @@ public class EditRepositoryAction extends PortletAction {
 				unmountRepository(actionRequest);
 			}
 
-			sendRedirect(actionRequest, actionResponse);
+			_actionableMVCPortlet.sendRedirect(actionRequest, actionResponse);
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchRepositoryException ||
@@ -76,7 +79,7 @@ public class EditRepositoryAction extends PortletAction {
 
 				SessionErrors.add(actionRequest, e.getClass());
 
-				setForward(actionRequest, "portlet.document_library.error");
+				return "/html/portlet/document_library/error.jsp";
 			}
 			else if (e instanceof DuplicateFolderNameException ||
 					 e instanceof DuplicateRepositoryNameException ||
@@ -87,17 +90,17 @@ public class EditRepositoryAction extends PortletAction {
 				SessionErrors.add(actionRequest, e.getClass());
 			}
 			else {
-				throw e;
+				throw new PortletException(e);
 			}
 		}
+
+		return null;
 	}
 
 	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
+	public String render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
 
 		try {
 			ActionUtil.getRepository(renderRequest);
@@ -108,17 +111,22 @@ public class EditRepositoryAction extends PortletAction {
 
 				SessionErrors.add(renderRequest, e.getClass());
 
-				return actionMapping.findForward(
-					"portlet.document_library.error");
+				return "/html/portlet/document_library/error.jsp";
 			}
 			else {
-				throw e;
+				throw new PortletException(e);
 			}
 		}
 
-		return actionMapping.findForward(
-			getForward(
-				renderRequest, "portlet.document_library.edit_repository"));
+		return "/html/portlet/document_library/edit_repository.jsp";
+	}
+
+	@Override
+	public String serveResource(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws IOException, PortletException {
+
+		return null;
 	}
 
 	protected void unmountRepository(ActionRequest actionRequest)
@@ -170,5 +178,7 @@ public class EditRepositoryAction extends PortletAction {
 				repositoryId, name, description);
 		}
 	}
+
+	private final ActionableMVCPortlet _actionableMVCPortlet;
 
 }
