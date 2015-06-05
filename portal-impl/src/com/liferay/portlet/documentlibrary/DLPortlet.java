@@ -20,6 +20,7 @@ import com.liferay.portlet.documentlibrary.action.EditEntryAction;
 import com.liferay.portlet.documentlibrary.action.EditFileEntryAction;
 import com.liferay.portlet.documentlibrary.action.EditFileEntryTypeAction;
 import com.liferay.portlet.documentlibrary.action.EditFileShortcutAction;
+import com.liferay.portlet.documentlibrary.action.EditFolderAction;
 import com.liferay.portlet.documentlibrary.action.SearchAction;
 import com.liferay.portlet.documentlibrary.action.ViewAction;
 import com.liferay.portlet.mvc.ActionableMVCPortlet;
@@ -77,6 +78,16 @@ public class DLPortlet extends ActionableMVCPortlet {
 		registerMVCPortletAction(
 			new EditFileShortcutAction(this),
 			"/document_library/edit_file_shortcut");
+
+		registerMVCPortletAction(
+			new EditFolderAction(
+				this, "/html/portlet/document_library/edit_folder.jsp"),
+			"/document_library/edit_folder");
+
+		registerMVCPortletAction(
+			new EditFolderAction(
+				this, "/html/portlet/document_library/select_folder.jsp"),
+			"/document_library/select_folder");
 
 		registerMVCPortletAction(
 			new SearchAction(), "/document_library/search");
