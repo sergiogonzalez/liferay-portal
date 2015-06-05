@@ -14,10 +14,10 @@
 
 package com.liferay.portlet.blogsadmin.portlet;
 
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portlet.blogs.portlet.BlogsPortlet;
 
 /**
  * @author Adolfo Pérez
  */
-public class BlogsAdminPortlet extends MVCPortlet {
+public class BlogsAdminPortlet extends BlogsPortlet {
 }

@@ -14,10 +14,10 @@
 
 package com.liferay.portlet.blogsaggregator.portlet;
 
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portlet.blogs.portlet.BlogsPortlet;
 
 /**
  * @author Adolfo Pérez
  */
-public class BlogsAggregatorPortlet extends MVCPortlet {
+public class BlogsAggregatorPortlet extends BlogsPortlet {
 }
