@@ -25,8 +25,8 @@ PortletURL portletURL = renderResponse.createRenderURL();
 portletURL.setParameter("mvcPath", "/html/portlet/blogs/view.jsp");
 %>
 
-<portlet:actionURL var="restoreTrashEntriesURL">
-	<portlet:param name="struts_action" value="/blogs/edit_entry" />
+<portlet:actionURL name="restoreTrashEntries" var="restoreTrashEntriesURL">
+	<portlet:param name="mvcPath" value="/html/portlet/blogs/edit_entry.jsp" />
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
 </portlet:actionURL>
 

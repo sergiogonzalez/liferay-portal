@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.upload.LiferayFileItemException;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.struts.PortletAction;
@@ -42,7 +41,6 @@ import com.liferay.portlet.blogs.EntryTitleException;
 import com.liferay.portlet.blogs.NoSuchEntryException;
 import com.liferay.portlet.blogs.service.BlogsEntryServiceUtil;
 import com.liferay.portlet.documentlibrary.FileSizeException;
-import com.liferay.portlet.trash.service.TrashEntryServiceUtil;
 
 import java.io.IOException;
 
@@ -86,8 +84,6 @@ public class EditEntryAction extends PortletAction {
 			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
 			}
 			else if (cmd.equals(Constants.RESTORE)) {
-				restoreTrashEntries(actionRequest);
-				doSendRedirect(actionRequest, actionResponse, redirect);
 			}
 			else if (cmd.equals(Constants.SUBSCRIBE)) {
 				subscribe(actionRequest);
@@ -176,17 +172,6 @@ public class EditEntryAction extends PortletAction {
 			}
 
 			throw new PortalException(uploadException.getCause());
-		}
-	}
-
-	protected void restoreTrashEntries(ActionRequest actionRequest)
-		throws Exception {
-
-		long[] restoreTrashEntryIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "restoreTrashEntryIds"), 0L);
-
-		for (long restoreTrashEntryId : restoreTrashEntryIds) {
-			TrashEntryServiceUtil.restoreEntry(restoreTrashEntryId);
 		}
 	}
 
