@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -47,9 +48,16 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletURLImpl;
+import com.liferay.portlet.asset.AssetCategoryException;
+import com.liferay.portlet.asset.AssetTagException;
 import com.liferay.portlet.blogs.BlogsEntryAttachmentFileEntryHelper;
 import com.liferay.portlet.blogs.BlogsEntryAttachmentFileEntryReference;
+import com.liferay.portlet.blogs.EntryContentException;
 import com.liferay.portlet.blogs.EntryDescriptionException;
+import com.liferay.portlet.blogs.EntryDisplayDateException;
+import com.liferay.portlet.blogs.EntrySmallImageNameException;
+import com.liferay.portlet.blogs.EntrySmallImageSizeException;
+import com.liferay.portlet.blogs.EntryTitleException;
 import com.liferay.portlet.blogs.NoSuchEntryException;
 import com.liferay.portlet.blogs.action.ActionUtil;
 import com.liferay.portlet.blogs.model.BlogsEntry;
@@ -366,9 +374,26 @@ public class BlogsPortlet extends MVCPortlet {
 
 	@Override
 	protected boolean isSessionErrorException(Throwable cause) {
-		if (cause instanceof NoSuchEntryException ||
-			cause instanceof PrincipalException) {
+		if (cause instanceof AssetCategoryException ||
+			cause instanceof AssetTagException ||
+			cause instanceof EntryContentException ||
+			cause instanceof EntryDescriptionException ||
+			cause instanceof EntryDisplayDateException ||
+			cause instanceof EntrySmallImageNameException ||
+			cause instanceof EntrySmallImageSizeException ||
+			cause instanceof EntryTitleException ||
+			cause instanceof FileSizeException ||
+			cause instanceof LiferayFileItemException ||
+			cause instanceof NoSuchEntryException ||
+			cause instanceof PrincipalException ||
+			cause instanceof SanitizerException) {
 
+			return true;
+		}
+
+		Throwable innerCause = cause.getCause();
+
+		if (innerCause instanceof SanitizerException) {
 			return true;
 		}
 
