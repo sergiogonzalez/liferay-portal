@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -41,16 +40,11 @@ import com.liferay.portlet.blogs.EntrySmallImageNameException;
 import com.liferay.portlet.blogs.EntrySmallImageSizeException;
 import com.liferay.portlet.blogs.EntryTitleException;
 import com.liferay.portlet.blogs.NoSuchEntryException;
-import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryServiceUtil;
 import com.liferay.portlet.documentlibrary.FileSizeException;
 import com.liferay.portlet.trash.service.TrashEntryServiceUtil;
-import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.io.IOException;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -88,12 +82,8 @@ public class EditEntryAction extends PortletAction {
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
 			}
 			else if (cmd.equals(Constants.DELETE)) {
-				deleteEntries(actionRequest, false);
-				doSendRedirect(actionRequest, actionResponse, redirect);
 			}
 			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
-				deleteEntries(actionRequest, true);
-				doSendRedirect(actionRequest, actionResponse, redirect);
 			}
 			else if (cmd.equals(Constants.RESTORE)) {
 				restoreTrashEntries(actionRequest);
@@ -148,43 +138,6 @@ public class EditEntryAction extends PortletAction {
 			_log.error(t, t);
 
 			setForward(actionRequest, "portlet.blogs.error");
-		}
-	}
-
-	protected void deleteEntries(
-			ActionRequest actionRequest, boolean moveToTrash)
-		throws Exception {
-
-		long[] deleteEntryIds = null;
-
-		long entryId = ParamUtil.getLong(actionRequest, "entryId");
-
-		if (entryId > 0) {
-			deleteEntryIds = new long[] {entryId};
-		}
-		else {
-			deleteEntryIds = StringUtil.split(
-				ParamUtil.getString(actionRequest, "deleteEntryIds"), 0L);
-		}
-
-		List<TrashedModel> trashedModels = new ArrayList<>();
-
-		for (long deleteEntryId : deleteEntryIds) {
-			if (moveToTrash) {
-				BlogsEntry entry = BlogsEntryServiceUtil.moveEntryToTrash(
-					deleteEntryId);
-
-				trashedModels.add(entry);
-			}
-			else {
-				BlogsEntryServiceUtil.deleteEntry(deleteEntryId);
-			}
-		}
-
-		if (moveToTrash && !trashedModels.isEmpty()) {
-			TrashUtil.addTrashSessionMessages(actionRequest, trashedModels);
-
-			hideDefaultSuccessMessage(actionRequest);
 		}
 	}
 

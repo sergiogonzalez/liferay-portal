@@ -107,7 +107,7 @@ portletURL.setParameter("struts_action", "/blogs_admin/view");
 			form.fm('<%= Constants.CMD %>').val('<%= TrashUtil.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH :Constants.DELETE %>');
 			form.fm('deleteEntryIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
 
-			submitForm(form, '<portlet:actionURL><portlet:param name="struts_action" value="/blogs_admin/edit_entry" /></portlet:actionURL>');
+			submitForm(form, '<portlet:actionURL name="deleteEntry"><portlet:param name="mvcPath" value="/html/portlet/blogs_admin/edit_entry.jsp" /></portlet:actionURL>');
 		}
 	}
 </aui:script>

@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
@@ -55,6 +56,7 @@ import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.service.BlogsEntryServiceUtil;
 import com.liferay.portlet.documentlibrary.FileSizeException;
+import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.io.IOException;
 
@@ -80,6 +82,21 @@ import org.springframework.transaction.interceptor.TransactionAttribute;
  * @author Adolfo Pérez
  */
 public class BlogsPortlet extends MVCPortlet {
+
+	public void deleteEntry(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
+
+		boolean moveToTrash = true;
+
+		if (cmd.equals(Constants.DELETE)) {
+			moveToTrash = false;
+		}
+
+		deleteEntries(actionRequest, moveToTrash);
+	}
 
 	public void editEntry(
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -138,6 +155,43 @@ public class BlogsPortlet extends MVCPortlet {
 		}
 		catch (Exception e) {
 			throw new PortletException(e);
+		}
+	}
+
+	protected void deleteEntries(
+			ActionRequest actionRequest, boolean moveToTrash)
+		throws Exception {
+
+		long[] deleteEntryIds = null;
+
+		long entryId = ParamUtil.getLong(actionRequest, "entryId");
+
+		if (entryId > 0) {
+			deleteEntryIds = new long[] {entryId};
+		}
+		else {
+			deleteEntryIds = StringUtil.split(
+				ParamUtil.getString(actionRequest, "deleteEntryIds"), 0L);
+		}
+
+		List<TrashedModel> trashedModels = new ArrayList<>();
+
+		for (long deleteEntryId : deleteEntryIds) {
+			if (moveToTrash) {
+				BlogsEntry entry = BlogsEntryServiceUtil.moveEntryToTrash(
+					deleteEntryId);
+
+				trashedModels.add(entry);
+			}
+			else {
+				BlogsEntryServiceUtil.deleteEntry(deleteEntryId);
+			}
+		}
+
+		if (moveToTrash && !trashedModels.isEmpty()) {
+			TrashUtil.addTrashSessionMessages(actionRequest, trashedModels);
+
+			hideDefaultSuccessMessage(actionRequest);
 		}
 	}
 

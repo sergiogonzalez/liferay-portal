@@ -75,7 +75,7 @@ BlogsEntry entry = (BlogsEntry)row.getObject();
 	</c:if>
 
 	<c:if test="<%= BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.DELETE) %>">
-		<portlet:actionURL var="deleteEntryURL">
+		<portlet:actionURL name="deleteEntry" var="deleteEntryURL">
 			<portlet:param name="mvcPath" value="/html/portlet/blogs_admin/edit_entry.jsp" />
 			<portlet:param name="<%= Constants.CMD %>" value="<%= TrashUtil.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
 			<portlet:param name="redirect" value="<%= redirect %>" />
