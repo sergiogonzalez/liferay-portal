@@ -15,7 +15,6 @@
 package com.liferay.portlet.blogs.util;
 
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.struts.BaseFindActionHelper;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.blogs.model.BlogsEntry;
@@ -74,27 +73,29 @@ public class BlogsFindEntryHelper extends BaseFindActionHelper {
 	protected void addRequiredParameters(
 		HttpServletRequest request, String portletId, PortletURL portletURL) {
 
-		String strutsAction = StringPool.BLANK;
+		String mvcPath = "/html/portlet";
 
 		if (portletId.equals(PortletKeys.BLOGS_ADMIN)) {
-			strutsAction = "/blogs_admin";
+			mvcPath += "/blogs_admin";
 		}
 		else if (portletId.equals(PortletKeys.BLOGS)) {
-			strutsAction = "/blogs";
+			mvcPath += "/blogs";
 		}
 		else {
-			strutsAction = "/blogs_aggregator";
+			mvcPath += "/blogs_aggregator";
 		}
 
 		boolean showAllEntries = ParamUtil.getBoolean(
 			request, "showAllEntries");
 
 		if (showAllEntries) {
-			strutsAction += "/view";
+			mvcPath += "/view.jsp";
 		}
 		else {
-			strutsAction += "/view_entry";
+			mvcPath += "/view_entry.jsp";
 		}
+
+		portletURL.setParameter("mvcPath", mvcPath);
 	}
 
 }
