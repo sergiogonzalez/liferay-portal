@@ -14,10 +14,10 @@
 
 package com.liferay.portlet.blogsaggregator.portlet;
 
-import com.liferay.portlet.blogs.portlet.BlogsPortlet;
+import com.liferay.portlet.blogs.portlet.BaseBlogsPortlet;
 
 /**
  * @author Adolfo Pérez
  */
-public class BlogsAggregatorPortlet extends BlogsPortlet {
+public class BlogsAggregatorPortlet extends BaseBlogsPortlet {
 }
