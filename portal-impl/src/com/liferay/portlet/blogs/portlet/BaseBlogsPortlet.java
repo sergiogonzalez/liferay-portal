@@ -164,16 +164,63 @@ public class BaseBlogsPortlet extends MVCPortlet {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Throwable {
 
+		handleUploadException(actionRequest);
+
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
-		doUpdateEntry(actionRequest, actionResponse, cmd);
+		String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+		String portletId = HttpUtil.getParameter(redirect, "p_p_id", false);
+
+		Callable<UpdateEntryResult> updateEntryCallable =
+			new UpdateEntryCallable(actionRequest);
+
+		UpdateEntryResult updateEntryResult = TransactionHandlerUtil.invoke(
+			_transactionAttribute, updateEntryCallable);
+
+		String oldUrlTitle = updateEntryResult.getOldUrlTitle();
+
+		boolean updateRedirect = Validator.isNotNull(oldUrlTitle);
+
+		if (updateRedirect) {
+			redirect = updateRedirect(
+				portletId, oldUrlTitle, redirect, updateEntryResult);
+		}
+
+		redirect = getSaveRedirect(
+			actionRequest, redirect, cmd, portletId, updateEntryResult);
+
+		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 	}
 
 	public void editEntry(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Throwable {
 
-		doUpdateEntry(resourceRequest, resourceResponse);
+		handleUploadException(resourceRequest);
+
+		String redirect = ParamUtil.getString(resourceRequest, "redirect");
+
+		String portletId = HttpUtil.getParameter(redirect, "p_p_id", false);
+
+		Callable<UpdateEntryResult> updateEntryCallable =
+			new UpdateEntryCallable(resourceRequest);
+
+		UpdateEntryResult updateEntryResult = TransactionHandlerUtil.invoke(
+			_transactionAttribute, updateEntryCallable);
+
+		String oldUrlTitle = updateEntryResult.getOldUrlTitle();
+
+		boolean updateRedirect = Validator.isNotNull(oldUrlTitle);
+
+		if (updateRedirect) {
+			redirect = updateRedirect(
+				portletId, oldUrlTitle, redirect, updateEntryResult);
+		}
+
+		sendAjaxResponse(
+			resourceRequest, resourceResponse, redirect, updateRedirect,
+			updateEntryResult);
 	}
 
 	public void restoreTrashEntries(
@@ -223,68 +270,6 @@ public class BaseBlogsPortlet extends MVCPortlet {
 
 			hideDefaultSuccessMessage(actionRequest);
 		}
-	}
-
-	protected void doUpdateEntry(
-			ActionRequest actionRequest, ActionResponse actionResponse,
-			String cmd)
-		throws Throwable {
-
-		handleUploadException(actionRequest);
-
-		String redirect = ParamUtil.getString(actionRequest, "redirect");
-
-		String portletId = HttpUtil.getParameter(redirect, "p_p_id", false);
-
-		Callable<UpdateEntryResult> updateEntryCallable =
-			new UpdateEntryCallable(actionRequest);
-
-		UpdateEntryResult updateEntryResult = TransactionHandlerUtil.invoke(
-			_transactionAttribute, updateEntryCallable);
-
-		String oldUrlTitle = updateEntryResult.getOldUrlTitle();
-
-		boolean updateRedirect = Validator.isNotNull(oldUrlTitle);
-
-		if (updateRedirect) {
-			redirect = updateRedirect(
-				portletId, oldUrlTitle, redirect, updateEntryResult);
-		}
-
-		redirect = getSaveRedirect(
-			actionRequest, redirect, cmd, portletId, updateEntryResult);
-
-		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
-	}
-
-	protected void doUpdateEntry(
-			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
-		throws Throwable {
-
-		handleUploadException(resourceRequest);
-
-		String redirect = ParamUtil.getString(resourceRequest, "redirect");
-
-		String portletId = HttpUtil.getParameter(redirect, "p_p_id", false);
-
-		Callable<UpdateEntryResult> updateEntryCallable =
-			new UpdateEntryCallable(resourceRequest);
-
-		UpdateEntryResult updateEntryResult = TransactionHandlerUtil.invoke(
-			_transactionAttribute, updateEntryCallable);
-
-		String oldUrlTitle = updateEntryResult.getOldUrlTitle();
-
-		boolean updateRedirect = Validator.isNotNull(oldUrlTitle);
-
-		if (updateRedirect) {
-			redirect = updateRedirect(
-				portletId, oldUrlTitle, redirect, updateEntryResult);
-		}
-
-		sendAjaxResponse(
-			resourceRequest, resourceResponse, redirect, updateRedirect,
-			updateEntryResult);
 	}
 
 	protected String getSaveAndContinueRedirect(
