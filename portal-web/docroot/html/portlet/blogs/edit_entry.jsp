@@ -351,9 +351,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 	</aui:form>
 </div>
 
-<portlet:actionURL name="editEntry" var="editEntryURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
-	<portlet:param name="ajax" value="true" />
-</portlet:actionURL>
+<portlet:resourceURL id="editEntry" var="editEntryURL" />
 
 <aui:script>
 	function <portlet:namespace />OnChangeEditor(html) {

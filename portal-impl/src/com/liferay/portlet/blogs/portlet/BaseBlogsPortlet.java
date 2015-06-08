@@ -81,6 +81,8 @@ import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 import javax.portlet.WindowState;
 
 import javax.servlet.http.HttpServletResponse;
@@ -167,6 +169,13 @@ public class BaseBlogsPortlet extends MVCPortlet {
 		doUpdateEntry(actionRequest, actionResponse, cmd);
 	}
 
+	public void editEntry(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws Throwable {
+
+		doUpdateEntry(resourceRequest, resourceResponse);
+	}
+
 	public void restoreTrashEntries(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -242,20 +251,40 @@ public class BaseBlogsPortlet extends MVCPortlet {
 				portletId, oldUrlTitle, redirect, updateEntryResult);
 		}
 
-		boolean ajax = ParamUtil.getBoolean(actionRequest, "ajax");
-
-		if (ajax) {
-			sendAjaxResponse(
-				actionRequest, actionResponse, redirect, updateRedirect,
-				updateEntryResult);
-
-			return;
-		}
-
 		redirect = getSaveRedirect(
 			actionRequest, redirect, cmd, portletId, updateEntryResult);
 
 		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
+	}
+
+	protected void doUpdateEntry(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws Throwable {
+
+		handleUploadException(resourceRequest);
+
+		String redirect = ParamUtil.getString(resourceRequest, "redirect");
+
+		String portletId = HttpUtil.getParameter(redirect, "p_p_id", false);
+
+		Callable<UpdateEntryResult> updateEntryCallable =
+			new UpdateEntryCallable(resourceRequest);
+
+		UpdateEntryResult updateEntryResult = TransactionHandlerUtil.invoke(
+			_transactionAttribute, updateEntryCallable);
+
+		String oldUrlTitle = updateEntryResult.getOldUrlTitle();
+
+		boolean updateRedirect = Validator.isNotNull(oldUrlTitle);
+
+		if (updateRedirect) {
+			redirect = updateRedirect(
+				portletId, oldUrlTitle, redirect, updateEntryResult);
+		}
+
+		sendAjaxResponse(
+			resourceRequest, resourceResponse, redirect, updateRedirect,
+			updateEntryResult);
 	}
 
 	protected String getSaveAndContinueRedirect(
@@ -381,7 +410,7 @@ public class BaseBlogsPortlet extends MVCPortlet {
 	}
 
 	protected void sendAjaxResponse(
-			ActionRequest actionRequest, ActionResponse actionResponse,
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse,
 			String redirect, boolean updateRedirect,
 			UpdateEntryResult updateEntryResult)
 		throws IOException {
@@ -428,7 +457,7 @@ public class BaseBlogsPortlet extends MVCPortlet {
 		jsonObject.put("redirect", redirect);
 		jsonObject.put("updateRedirect", updateRedirect);
 
-		writeJSON(actionRequest, actionResponse, jsonObject);
+		writeJSON(resourceRequest, resourceResponse, jsonObject);
 	}
 
 	protected UpdateEntryResult updateEntry(PortletRequest portletRequest)
