@@ -107,17 +107,8 @@ public class BlogsPortlet extends MVCPortlet {
 		deleteEntries(actionRequest, moveToTrash);
 	}
 
-	public void editEntry(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Throwable {
-
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
-
-		doUpdateEntry(actionRequest, actionResponse, cmd);
-	}
-
 	@Override
-	public void render(
+	public void doDispatch(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
@@ -154,7 +145,7 @@ public class BlogsPortlet extends MVCPortlet {
 				return;
 			}
 
-			super.render(renderRequest, renderResponse);
+			super.doDispatch(renderRequest, renderResponse);
 		}
 		catch (NoSuchEntryException | PrincipalException e) {
 			SessionErrors.add(renderRequest, e.getClass());
@@ -165,6 +156,15 @@ public class BlogsPortlet extends MVCPortlet {
 		catch (Exception e) {
 			throw new PortletException(e);
 		}
+	}
+
+	public void editEntry(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Throwable {
+
+		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
+
+		doUpdateEntry(actionRequest, actionResponse, cmd);
 	}
 
 	public void restoreTrashEntries(
