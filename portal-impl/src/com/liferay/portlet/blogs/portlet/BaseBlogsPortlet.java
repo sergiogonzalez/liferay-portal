@@ -62,6 +62,7 @@ import com.liferay.portlet.blogs.EntryTitleException;
 import com.liferay.portlet.blogs.NoSuchEntryException;
 import com.liferay.portlet.blogs.action.ActionUtil;
 import com.liferay.portlet.blogs.image.selector.CoverImageSelectorUploadHandler;
+import com.liferay.portlet.blogs.image.selector.SmallImageSelectorUploadHandler;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.service.BlogsEntryServiceUtil;
@@ -243,6 +244,17 @@ public class BaseBlogsPortlet extends MVCPortlet {
 
 		ImageSelectorUploadHandler imageSelectorUploadHandler =
 			new CoverImageSelectorUploadHandler();
+
+		imageSelectorUploadHandler.uploadSelectedImage(
+			resourceRequest, resourceResponse);
+	}
+
+	public void selectSmallImage(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws PortalException {
+
+		ImageSelectorUploadHandler imageSelectorUploadHandler =
+			new SmallImageSelectorUploadHandler();
 
 		imageSelectorUploadHandler.uploadSelectedImage(
 			resourceRequest, resourceResponse);

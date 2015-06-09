@@ -178,9 +178,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 						</div>
 
 						<aui:fieldset cssClass="entry-abstract">
-							<portlet:actionURL var="smallImageSelectorURL">
-								<portlet:param name="struts_action" value="/blogs/small_image_selector" />
-							</portlet:actionURL>
+							<portlet:resourceURL id="selectSmallImage" var="smallImageSelectorURL" />
 
 							<div class="lfr-blogs-small-image-selector">
 								<liferay-ui:image-selector fileEntryId="<%= smallImageFileEntryId %>" maxFileSize="<%= smallImageMaxFileSize %>" paramName="smallImageFileEntry" uploadURL="<%= smallImageSelectorURL %>" validExtensions='<%= StringUtil.merge(imageExtensions, ", ") %>' />
