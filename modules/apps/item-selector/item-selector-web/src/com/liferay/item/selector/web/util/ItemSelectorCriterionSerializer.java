@@ -15,6 +15,7 @@
 package com.liferay.item.selector.web.util;
 
 import com.liferay.item.selector.ItemSelectorCriterion;
+import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -57,7 +58,7 @@ public class ItemSelectorCriterionSerializer<T extends ItemSelectorCriterion> {
 		JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 
 		String[] serializableFields = ArrayUtil.append(
-			_externalPropertyKeys, "desiredReturnTypes");
+			_externalPropertyKeys, "itemSelectorDesiredReturnTypes");
 
 		jsonSerializer.include(serializableFields);
 
@@ -134,8 +135,9 @@ public class ItemSelectorCriterionSerializer<T extends ItemSelectorCriterion> {
 	}
 
 	private boolean _isInternalProperty(String name) {
-		if (name.equals("availableReturnTypes") || name.equals("class") ||
-			name.equals("desiredReturnTypes")) {
+		if (name.equals("class") ||
+			name.equals("itemSelectorAvailableReturnTypes") ||
+			name.equals("itemSelectorDesiredReturnTypes")) {
 
 			return true;
 		}
@@ -144,25 +146,43 @@ public class ItemSelectorCriterionSerializer<T extends ItemSelectorCriterion> {
 	}
 
 	private void _setDesiredReturnTypes(Map<String, ?> map) {
-		Set<Class<?>> desiredReturnTypes = new LinkedHashSet<>();
+		Set<ItemSelectorReturnType> itemSelectorDesiredReturnTypes =
+			new LinkedHashSet<>();
 
-		List<String> desiredReturnTypeNames = (List<String>)map.get(
-			"desiredReturnTypes");
+		List<String> itemSelectorDesiredReturnTypeNames = (List<String>)map.get(
+			"itemSelectorDesiredReturnTypes");
 
-		for (String desiredReturnTypeName : desiredReturnTypeNames) {
-			try {
-				Class<?> clazz = Class.forName(desiredReturnTypeName);
+		for (String itemSelectorDesiredReturnTypeName :
+				itemSelectorDesiredReturnTypeNames) {
 
-				desiredReturnTypes.add(clazz);
-			}
-			catch (ClassNotFoundException cnfe) {
-				if (_log.isWarnEnabled()) {
-					_log.warn("Unable to load class " + desiredReturnTypeName);
+			Set<ItemSelectorReturnType> itemSelectorAvailableReturnTypes =
+				_itemSelectorCriterion.getItemSelectorAvailableReturnTypes();
+
+			for (ItemSelectorReturnType itemSelectorAvailableReturnType :
+					itemSelectorAvailableReturnTypes) {
+
+				String availableItemSelectorReturnTypeName =
+					itemSelectorAvailableReturnType.getName();
+
+				if (availableItemSelectorReturnTypeName.equals(
+						itemSelectorDesiredReturnTypeName)) {
+
+					itemSelectorDesiredReturnTypes.add(
+						itemSelectorAvailableReturnType);
+
+					break;
 				}
 			}
 		}
 
-		_itemSelectorCriterion.setDesiredReturnTypes(desiredReturnTypes);
+		if (itemSelectorDesiredReturnTypes.isEmpty()) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("No valid item selector return types found");
+			}
+		}
+
+		_itemSelectorCriterion.setItemSelectorDesiredReturnTypes(
+			itemSelectorDesiredReturnTypes);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
