@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.imageselector;
 
 import com.liferay.portal.kernel.editor.EditorConstants;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -35,6 +36,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.FileSizeException;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 import javax.portlet.ActionRequest;
@@ -50,7 +52,7 @@ public abstract class BaseImageSelectorUploadHandler
 	@Override
 	public void uploadSelectedImage(
 			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
+		throws PortalException {
 
 		UploadPortletRequest uploadPortletRequest =
 			PortalUtil.getUploadPortletRequest(actionRequest);
@@ -93,8 +95,12 @@ public abstract class BaseImageSelectorUploadHandler
 			JSONResponseUtil.writeJSON(
 				actionRequest, actionResponse, jsonObject);
 		}
-		catch (Exception e) {
-			handleUploadException(actionRequest, actionResponse, e, jsonObject);
+		catch (IOException ioe) {
+			throw new SystemException(ioe);
+		}
+		catch (PortalException pe) {
+			handleUploadException(
+				actionRequest, actionResponse, pe, jsonObject);
 		}
 	}
 
@@ -103,7 +109,7 @@ public abstract class BaseImageSelectorUploadHandler
 		throws PortalException;
 
 	protected JSONObject getImageJSONObject(ActionRequest actionRequest)
-		throws Exception {
+		throws PortalException {
 
 		UploadPortletRequest uploadPortletRequest =
 			PortalUtil.getUploadPortletRequest(actionRequest);
@@ -145,6 +151,9 @@ public abstract class BaseImageSelectorUploadHandler
 
 			return imageJSONObject;
 		}
+		catch (IOException ioe) {
+			throw new SystemException(ioe);
+		}
 		finally {
 			StreamUtil.cleanUp(inputStream);
 		}
@@ -152,8 +161,8 @@ public abstract class BaseImageSelectorUploadHandler
 
 	protected abstract void handleUploadException(
 			ActionRequest actionRequest, ActionResponse actionResponse,
-			Exception e, JSONObject jsonObject)
-		throws Exception;
+			PortalException pe, JSONObject jsonObject)
+		throws PortalException;
 
 	protected abstract void validateFile(
 			String fileName, String contentType, long size)

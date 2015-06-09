@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.imageselector;
 
+import com.liferay.portal.kernel.exception.PortalException;
+
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
@@ -24,6 +26,6 @@ public interface ImageSelectorUploadHandler {
 
 	public void uploadSelectedImage(
 			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception;
+		throws PortalException;
 
 }
