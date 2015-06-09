@@ -18,7 +18,6 @@
 
 <%
 String itemSelectedEventName = (String)request.getAttribute(LayoutItemSelectorView.ITEM_SELECTED_EVENT_NAME);
-URLItemSelectorCriterion urlItemSelectorCriterion = (URLItemSelectorCriterion)request.getAttribute(LayoutItemSelectorView.LAYOUT_ITEM_SELECTOR_CRITERION);
 
 long groupId = themeDisplay.getScopeGroupId();
 
@@ -177,7 +176,6 @@ if (group.getPrivateLayoutsPageCount() > 0) {
 		var link = labelEl.one('a');
 
 		var url = link.attr('data-url');
-		var uuid = link.attr('data-uuid');
 
 		if (link && url) {
 			disabled = false;
@@ -188,38 +186,9 @@ if (group.getPrivateLayoutsPageCount() > 0) {
 
 			button.attr('data-layoutpath', messageText);
 
-			<%
-			String returnType = StringPool.BLANK;
+			button.attr('data-returnType', '<%= URLItemSelectorReturnTypes.URL.getName() %>');
 
-			for (Class<?> desiredReturnType : urlItemSelectorCriterion.getDesiredReturnTypes()) {
-				if (desiredReturnType == URL.class) {
-					returnType = URL.class.getName();
-				}
-				else if (desiredReturnType == UUID.class) {
-					returnType = UUID.class.getName();
-				}
-				else {
-					continue;
-				}
-
-				break;
-			}
-
-			if (Validator.isNull(returnType)) {
-				throw new IllegalArgumentException("Invalid return type " + returnType);
-			}
-			%>
-
-			button.attr('data-returnType', '<%= returnType %>');
-
-			<c:choose>
-				<c:when test="<%= returnType.equals(URL.class.getName()) %>">
-					button.attr('data-value', url);
-				</c:when>
-				<c:when test="<%= returnType.equals(UUID.class.getName()) %>">
-					button.attr('data-value', uuid);
-				</c:when>
-			</c:choose>
+			button.attr('data-value', url);
 		}
 
 		Liferay.Util.toggleDisabled(button, disabled);
