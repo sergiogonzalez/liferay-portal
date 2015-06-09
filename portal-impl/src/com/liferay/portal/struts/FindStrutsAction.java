@@ -83,6 +83,10 @@ public abstract class FindStrutsAction extends BaseStrutsAction {
 		return null;
 	}
 
+	protected FindActionHelper getFindActionHelper() {
+		return _findActionHelper;
+	}
+
 	protected abstract long getGroupId(long primaryKey) throws Exception;
 
 	protected abstract String getPrimaryKeyParameterName();
