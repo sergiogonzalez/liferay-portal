@@ -81,22 +81,21 @@ public abstract class BaseImageSelectorUploadHandler
 
 		String randomId = ParamUtil.getString(uploadPortletRequest, "randomId");
 
-		JSONObject imageJSONObject = null;
-
 		try {
-			imageJSONObject = getImageJSONObject(actionRequest);
+			JSONObject imageJSONObject = getImageJSONObject(actionRequest);
 
 			jsonObject.put("success", Boolean.TRUE);
+
+			imageJSONObject.put("randomId", randomId);
+
+			jsonObject.put("image", imageJSONObject);
+
+			JSONResponseUtil.writeJSON(
+				actionRequest, actionResponse, jsonObject);
 		}
 		catch (Exception e) {
 			handleUploadException(actionRequest, actionResponse, e, jsonObject);
 		}
-
-		imageJSONObject.put("randomId", randomId);
-
-		jsonObject.put("image", imageJSONObject);
-
-		JSONResponseUtil.writeJSON(actionRequest, actionResponse, jsonObject);
 	}
 
 	protected abstract void checkPermission(
