@@ -113,9 +113,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 						<aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= entry.getStatus() %>" />
 					</c:if>
 
-					<portlet:actionURL var="coverImageSelectorURL">
-						<portlet:param name="struts_action" value="/blogs/cover_image_selector" />
-					</portlet:actionURL>
+					<portlet:resourceURL id="selectCoverImage" var="coverImageSelectorURL" />
 
 					<div class="lfr-blogs-cover-image-selector">
 						<liferay-ui:image-selector draggableImage="vertical" fileEntryId="<%= coverImageFileEntryId %>" maxFileSize="<%= PrefsPropsUtil.getLong(PropsKeys.BLOGS_IMAGE_COVER_MAX_SIZE) %>" paramName="coverImageFileEntry" uploadURL="<%= coverImageSelectorURL %>" validExtensions='<%= StringUtil.merge(imageExtensions, ", ") %>' />

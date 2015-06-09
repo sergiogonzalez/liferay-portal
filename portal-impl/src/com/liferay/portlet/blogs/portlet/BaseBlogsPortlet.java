@@ -16,6 +16,7 @@ package com.liferay.portlet.blogs.portlet;
 
 import com.liferay.portal.kernel.editor.EditorConstants;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.image.selector.ImageSelectorUploadHandler;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -60,6 +61,7 @@ import com.liferay.portlet.blogs.EntrySmallImageSizeException;
 import com.liferay.portlet.blogs.EntryTitleException;
 import com.liferay.portlet.blogs.NoSuchEntryException;
 import com.liferay.portlet.blogs.action.ActionUtil;
+import com.liferay.portlet.blogs.image.selector.CoverImageSelectorUploadHandler;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.service.BlogsEntryServiceUtil;
@@ -233,6 +235,17 @@ public class BaseBlogsPortlet extends MVCPortlet {
 		for (long restoreTrashEntryId : restoreTrashEntryIds) {
 			TrashEntryServiceUtil.restoreEntry(restoreTrashEntryId);
 		}
+	}
+
+	public void selectCoverImage(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws PortalException {
+
+		ImageSelectorUploadHandler imageSelectorUploadHandler =
+			new CoverImageSelectorUploadHandler();
+
+		imageSelectorUploadHandler.uploadSelectedImage(
+			resourceRequest, resourceResponse);
 	}
 
 	protected void deleteEntries(
