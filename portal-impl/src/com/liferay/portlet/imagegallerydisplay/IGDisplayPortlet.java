@@ -18,6 +18,7 @@ import com.liferay.portlet.documentlibrary.action.EditFileEntryAction;
 import com.liferay.portlet.documentlibrary.action.EditFileShortcutAction;
 import com.liferay.portlet.documentlibrary.action.EditFolderAction;
 import com.liferay.portlet.mvc.ActionableMVCPortlet;
+import com.liferay.portlet.mvc.util.ForwardMVCPortletAction;
 
 import javax.portlet.PortletException;
 
@@ -53,6 +54,22 @@ public class IGDisplayPortlet extends ActionableMVCPortlet {
 			new EditFolderAction(
 				this, "/html/portlet/document_library/select_folder.jsp"),
 			"/image_gallery_display/select_folder");
+
+		registerMVCPortletAction(
+			new ForwardMVCPortletAction(
+				"/html/portlet/image_gallery_display/embedded_player.jsp"),
+			"/image_gallery_display/embedded_player");
+
+		registerMVCPortletAction(
+			new ForwardMVCPortletAction(
+				"/html/portlet/image_gallery_display/search.jsp"),
+			"/image_gallery_display/search");
+
+		registerMVCPortletAction(
+			new ForwardMVCPortletAction(
+				"/html/portlet/document_library_display/" +
+					"select_add_file_entry_type.jsp"),
+			"/image_gallery_display/select_add_file_entry_type");
 	}
 
 }

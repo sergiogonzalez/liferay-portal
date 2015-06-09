@@ -16,6 +16,7 @@ package com.liferay.portlet.documentlibrarydisplay;
 
 import com.liferay.portlet.documentlibrary.action.ViewAction;
 import com.liferay.portlet.mvc.ActionableMVCPortlet;
+import com.liferay.portlet.mvc.util.ForwardMVCPortletAction;
 
 import javax.portlet.PortletException;
 
@@ -27,6 +28,17 @@ public class DLDisplayPortlet extends ActionableMVCPortlet {
 	@Override
 	public void init() throws PortletException {
 		super.init();
+
+		registerMVCPortletAction(
+			new ForwardMVCPortletAction(
+				"/html/portlet/document_library_display/search.jsp"),
+			"/document_library_display/search");
+
+		registerMVCPortletAction(
+			new ForwardMVCPortletAction(
+				"/html/portlet/document_library_display/" +
+					"select_add_file_entry_type.jsp"),
+			"/document_library_display/select_add_file_entry_type");
 
 		registerMVCPortletAction(
 			new ViewAction(

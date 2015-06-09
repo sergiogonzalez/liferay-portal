@@ -92,6 +92,17 @@ public class DLPortlet extends ActionableMVCPortlet {
 
 		registerMVCPortletAction(
 			new ForwardMVCPortletAction(
+				"/html/portlet/document_library/select_group.jsp"),
+			"/document_library/select_group");
+
+		registerMVCPortletAction(
+			new ForwardMVCPortletAction(
+				"/html/portlet/document_library/" +
+					"select_restricted_file_entry_type.jsp"),
+			"/document_library/select_restricted_file_entry_type");
+
+		registerMVCPortletAction(
+			new ForwardMVCPortletAction(
 				"/html/portlet/document_library/view_file_entry_type.jsp"),
 			"/document_library/view_file_entry_type");
 
