@@ -179,9 +179,8 @@ public class PortletPreferencesFactoryImpl
 			return null;
 		}
 
-		PortletPreferences portletPreferences =
-			PortletPreferencesFactoryUtil.getStrictPortletSetup(
-				layout, portletId);
+		PortletPreferences portletPreferences = getStrictPortletSetup(
+			layout, portletId);
 
 		if (portletPreferences instanceof StrictPortletPreferencesImpl) {
 			throw new PrincipalException();
