@@ -56,11 +56,6 @@ public class DLPortlet extends ActionableMVCPortlet {
 			"/document_library/edit_file_entry_type");
 
 		registerMVCPortletAction(
-			new ForwardMVCPortletAction(
-				"/html/portlet/document_library/view_file_entry_type.jsp"),
-			"/document_library/view_file_entry_type");
-
-		registerMVCPortletAction(
 			new EditFileEntryAction(
 				this,
 				"/html/portlet/document_library/" +
@@ -94,6 +89,11 @@ public class DLPortlet extends ActionableMVCPortlet {
 		registerMVCPortletAction(
 			new EditRepositoryAction(this),
 			"/document_library/edit_repository");
+
+		registerMVCPortletAction(
+			new ForwardMVCPortletAction(
+				"/html/portlet/document_library/view_file_entry_type.jsp"),
+			"/document_library/view_file_entry_type");
 
 		registerMVCPortletAction(
 			new GetFileAction(), "/document_library/get_file");
