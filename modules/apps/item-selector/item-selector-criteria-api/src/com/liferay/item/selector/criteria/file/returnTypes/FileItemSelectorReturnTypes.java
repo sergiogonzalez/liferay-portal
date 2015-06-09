@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,8 +11,21 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/html/taglib/init.jsp" %>
+package com.liferay.item.selector.criteria.file.returnTypes;
 
-<portlet:defineObjects />
+import com.liferay.item.selector.ItemSelectorReturnType;
+
+/**
+ * @author Roberto Díaz
+ */
+public enum FileItemSelectorReturnTypes implements ItemSelectorReturnType {
+
+	BASE_64, FILE_ENTRY, URL;
+
+	@Override
+	public String getName() {
+		return name();
+	}
+
+}
