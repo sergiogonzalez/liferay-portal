@@ -14,8 +14,9 @@
 
 package com.liferay.portlet.documentlibrarydisplay;
 
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portlet.documentlibrary.DLPortlet;
 import com.liferay.portlet.documentlibrary.action.ViewAction;
-import com.liferay.portlet.mvc.ActionableMVCPortlet;
 import com.liferay.portlet.mvc.util.ForwardMVCPortletAction;
 
 import javax.portlet.PortletException;
@@ -23,7 +24,7 @@ import javax.portlet.PortletException;
 /**
  * @author Iván Zaera
  */
-public class DLDisplayPortlet extends ActionableMVCPortlet {
+public class DLDisplayPortlet extends DLPortlet {
 
 	@Override
 	public void init() throws PortletException {
@@ -44,7 +45,7 @@ public class DLDisplayPortlet extends ActionableMVCPortlet {
 			new ViewAction(
 				"/html/portlet/document_library/error.jsp",
 				"/html/portlet/document_library_display/view.jsp"),
-			null, "/document_library_display/view");
+			"/document_library_display/view", StringPool.BLANK);
 	}
 
 }

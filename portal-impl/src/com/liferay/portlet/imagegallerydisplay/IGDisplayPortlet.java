@@ -14,10 +14,12 @@
 
 package com.liferay.portlet.imagegallerydisplay;
 
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portlet.documentlibrary.DLPortlet;
 import com.liferay.portlet.documentlibrary.action.EditFileEntryAction;
 import com.liferay.portlet.documentlibrary.action.EditFileShortcutAction;
 import com.liferay.portlet.documentlibrary.action.EditFolderAction;
-import com.liferay.portlet.mvc.ActionableMVCPortlet;
+import com.liferay.portlet.documentlibrary.action.ViewAction;
 import com.liferay.portlet.mvc.util.ForwardMVCPortletAction;
 
 import javax.portlet.PortletException;
@@ -25,7 +27,7 @@ import javax.portlet.PortletException;
 /**
  * @author Iván Zaera
  */
-public class IGDisplayPortlet extends ActionableMVCPortlet {
+public class IGDisplayPortlet extends DLPortlet {
 
 	@Override
 	public void init() throws PortletException {
@@ -70,6 +72,12 @@ public class IGDisplayPortlet extends ActionableMVCPortlet {
 				"/html/portlet/document_library_display/" +
 					"select_add_file_entry_type.jsp"),
 			"/image_gallery_display/select_add_file_entry_type");
+
+		registerMVCPortletAction(
+			new ViewAction(
+				"/html/portlet/image_gallery_display/error.jsp",
+				"/html/portlet/image_gallery_display/view.jsp"),
+			"/image_gallery_display/view", StringPool.BLANK);
 	}
 
 }

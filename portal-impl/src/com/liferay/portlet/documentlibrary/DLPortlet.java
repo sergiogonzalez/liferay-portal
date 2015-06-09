@@ -115,9 +115,14 @@ public class DLPortlet extends ActionableMVCPortlet {
 		registerMVCPortletAction(
 			new ViewAction(
 				"/html/portlet/document_library/error.jsp",
+				"/html/portlet/document_library/select_file_entry.jsp"),
+			"/document_library/select_file_entry");
+
+		registerMVCPortletAction(
+			new ViewAction(
+				"/html/portlet/document_library/error.jsp",
 				"/html/portlet/document_library/view.jsp"),
-			StringPool.BLANK, "/document_library/select_file_entry",
-			"/document_library/view");
+			"/document_library/view", StringPool.BLANK);
 	}
 
 }
