@@ -39,8 +39,8 @@ import com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerException;
 
 import java.io.IOException;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 /**
  * @author Sergio González
@@ -89,7 +89,7 @@ public abstract class BaseBlogsImageSelectorUploadHandler
 
 	@Override
 	protected void handleUploadException(
-			ActionRequest actionRequest, ActionResponse actionResponse,
+			PortletRequest portletRequest, PortletResponse portletResponse,
 			PortalException pe, JSONObject jsonObject)
 		throws PortalException {
 
@@ -104,7 +104,8 @@ public abstract class BaseBlogsImageSelectorUploadHandler
 			int errorType = 0;
 
 			ThemeDisplay themeDisplay =
-				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+				(ThemeDisplay)portletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
 			if (pe instanceof AntivirusScannerException) {
 				errorType =
@@ -133,7 +134,7 @@ public abstract class BaseBlogsImageSelectorUploadHandler
 
 			try {
 				JSONResponseUtil.writeJSON(
-					actionRequest, actionResponse, jsonObject);
+					portletRequest, portletResponse, jsonObject);
 			}
 			catch (IOException ioe) {
 				throw new SystemException(ioe);

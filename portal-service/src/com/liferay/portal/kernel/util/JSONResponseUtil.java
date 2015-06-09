@@ -21,9 +21,9 @@ import com.liferay.portal.util.PortalUtil;
 
 import java.io.IOException;
 
-import javax.portlet.ActionResponse;
 import javax.portlet.MimeResponse;
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -32,30 +32,6 @@ import javax.servlet.http.HttpServletResponse;
  * @author Adolfo Pérez
  */
 public class JSONResponseUtil {
-
-	public static void writeJSON(
-			PortletRequest portletRequest, ActionResponse actionResponse,
-			Object json)
-		throws IOException {
-
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			portletRequest);
-
-		String contentType = ContentTypes.APPLICATION_JSON;
-
-		if (BrowserSnifferUtil.isIe(request)) {
-			contentType = ContentTypes.TEXT_HTML;
-		}
-
-		HttpServletResponse response = PortalUtil.getHttpServletResponse(
-			actionResponse);
-
-		response.setContentType(contentType);
-
-		ServletResponseUtil.write(response, json.toString());
-
-		response.flushBuffer();
-	}
 
 	public static void writeJSON(
 			PortletRequest portletRequest, MimeResponse mimeResponse,
@@ -76,6 +52,30 @@ public class JSONResponseUtil {
 		PortletResponseUtil.write(mimeResponse, json.toString());
 
 		mimeResponse.flushBuffer();
+	}
+
+	public static void writeJSON(
+			PortletRequest portletRequest, PortletResponse portletResponse,
+			Object json)
+		throws IOException {
+
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			portletRequest);
+
+		String contentType = ContentTypes.APPLICATION_JSON;
+
+		if (BrowserSnifferUtil.isIe(request)) {
+			contentType = ContentTypes.TEXT_HTML;
+		}
+
+		HttpServletResponse response = PortalUtil.getHttpServletResponse(
+			portletResponse);
+
+		response.setContentType(contentType);
+
+		ServletResponseUtil.write(response, json.toString());
+
+		response.flushBuffer();
 	}
 
 }

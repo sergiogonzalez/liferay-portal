@@ -39,8 +39,8 @@ import com.liferay.portlet.documentlibrary.FileSizeException;
 import java.io.IOException;
 import java.io.InputStream;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 /**
  * @author Sergio González
@@ -51,13 +51,13 @@ public abstract class BaseImageSelectorUploadHandler
 
 	@Override
 	public void uploadSelectedImage(
-			ActionRequest actionRequest, ActionResponse actionResponse)
+			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws PortalException {
 
 		UploadPortletRequest uploadPortletRequest =
-			PortalUtil.getUploadPortletRequest(actionRequest);
+			PortalUtil.getUploadPortletRequest(portletRequest);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		checkPermission(
@@ -65,7 +65,7 @@ public abstract class BaseImageSelectorUploadHandler
 			themeDisplay.getPermissionChecker());
 
 		UploadException uploadException =
-			(UploadException)actionRequest.getAttribute(
+			(UploadException)portletRequest.getAttribute(
 				WebKeys.UPLOAD_EXCEPTION);
 
 		if (uploadException != null) {
@@ -84,7 +84,7 @@ public abstract class BaseImageSelectorUploadHandler
 		String randomId = ParamUtil.getString(uploadPortletRequest, "randomId");
 
 		try {
-			JSONObject imageJSONObject = getImageJSONObject(actionRequest);
+			JSONObject imageJSONObject = getImageJSONObject(portletRequest);
 
 			jsonObject.put("success", Boolean.TRUE);
 
@@ -93,14 +93,14 @@ public abstract class BaseImageSelectorUploadHandler
 			jsonObject.put("image", imageJSONObject);
 
 			JSONResponseUtil.writeJSON(
-				actionRequest, actionResponse, jsonObject);
+				portletRequest, portletResponse, jsonObject);
 		}
 		catch (IOException ioe) {
 			throw new SystemException(ioe);
 		}
 		catch (PortalException pe) {
 			handleUploadException(
-				actionRequest, actionResponse, pe, jsonObject);
+				portletRequest, portletResponse, pe, jsonObject);
 		}
 	}
 
@@ -108,13 +108,13 @@ public abstract class BaseImageSelectorUploadHandler
 			long groupId, PermissionChecker permissionChecker)
 		throws PortalException;
 
-	protected JSONObject getImageJSONObject(ActionRequest actionRequest)
+	protected JSONObject getImageJSONObject(PortletRequest portletRequest)
 		throws PortalException {
 
 		UploadPortletRequest uploadPortletRequest =
-			PortalUtil.getUploadPortletRequest(actionRequest);
+			PortalUtil.getUploadPortletRequest(portletRequest);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		JSONObject imageJSONObject = JSONFactoryUtil.createJSONObject();
@@ -160,7 +160,7 @@ public abstract class BaseImageSelectorUploadHandler
 	}
 
 	protected abstract void handleUploadException(
-			ActionRequest actionRequest, ActionResponse actionResponse,
+			PortletRequest portletRequest, PortletResponse portletResponse,
 			PortalException pe, JSONObject jsonObject)
 		throws PortalException;
 
