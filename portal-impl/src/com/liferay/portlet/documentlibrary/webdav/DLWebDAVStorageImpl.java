@@ -69,7 +69,11 @@ import java.io.File;
 import java.io.InputStream;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -270,6 +274,11 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 				}
 
 				long fileEntryId = fileEntry.getFileEntryId();
+
+				if (webDAVRequest.isMac()) {
+					_tempFileMap.put(
+						fileEntry.getTitle(), fileEntry.getFileEntryId());
+				}
 
 				if ((fileEntry.getModel() instanceof DLFileEntry) &&
 					TrashUtil.isTrashEnabled(fileEntry.getGroupId())) {
@@ -616,30 +625,54 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 				}
 			}
 
-			// LPS-5415
-
 			if (webDAVRequest.isMac()) {
-				try {
-					FileEntry destFileEntry = DLAppServiceUtil.getFileEntry(
-						groupId, newParentFolderId, title);
+				if (isLWorkFile(destination)) {
+					_tempFileMap.put(
+						fileEntry.getTitle(), fileEntry.getFileEntryId());
 
-					InputStream is = fileEntry.getContentStream();
-
-					file = FileUtil.createTempFile(is);
-
-					DLAppServiceUtil.updateFileEntry(
-						destFileEntry.getFileEntryId(),
-						destFileEntry.getTitle(), destFileEntry.getMimeType(),
-						destFileEntry.getTitle(),
-						destFileEntry.getDescription(), changeLog, false, file,
-						serviceContext);
-
-					DLAppServiceUtil.deleteFileEntry(
-						fileEntry.getFileEntryId());
-
-					return status;
+					_updateSet.add(fileEntry.getFileEntryId());
 				}
-				catch (NoSuchFileEntryException nsfee) {
+				else {
+					try {
+						FileEntry destFileEntry = DLAppServiceUtil.getFileEntry(
+							_tempFileMap.get(title));
+
+						populateServiceContext(serviceContext, destFileEntry);
+
+						InputStream is = fileEntry.getContentStream();
+
+						file = FileUtil.createTempFile(is);
+
+						if (destFileEntry.isInTrash()) {
+							DLAppServiceUtil.restoreFileEntryFromTrash(
+								destFileEntry.getFileEntryId());
+						}
+
+						if (_updateSet.contains(
+								destFileEntry.getFileEntryId())) {
+
+							DLAppServiceUtil.deleteFileVersion(
+								destFileEntry.getFileEntryId(),
+								destFileEntry.getVersion());
+
+							_updateSet.remove(destFileEntry.getFileEntryId());
+						}
+
+						DLAppServiceUtil.updateFileEntry(
+							destFileEntry.getFileEntryId(), sourceFileName,
+							destFileEntry.getMimeType(), title,
+							destFileEntry.getDescription(), changeLog, false,
+							file, serviceContext);
+
+						DLAppServiceUtil.deleteFileEntry(
+							fileEntry.getFileEntryId());
+
+						_tempFileMap.remove(title);
+
+						return status;
+					}
+					catch (NoSuchFileEntryException nsfee) {
+					}
 				}
 			}
 
@@ -1008,6 +1041,18 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 		}
 	}
 
+	protected boolean isLWorkFile(String destination) {
+		String[] destinationArray = WebDAVUtil.getPathArray(destination, true);
+		String title = WebDAVUtil.getResourceName(destinationArray);
+
+		if (title.contains("Work File L_")) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
 	protected void populateServiceContext(
 		ServiceContext serviceContext, FileEntry fileEntry) {
 
@@ -1079,5 +1124,8 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLWebDAVStorageImpl.class);
+
+	private final Map<String, Long> _tempFileMap = new HashMap<>();
+	private final Set<Long> _updateSet = new HashSet<>();
 
 }
