@@ -349,6 +349,8 @@ public class PDFProcessorImpl
 
 		InputStream inputStream = null;
 
+		File file = null;
+
 		try {
 			if (sourceFileVersion != null) {
 				copy(sourceFileVersion, destinationFileVersion);
@@ -368,7 +370,7 @@ public class PDFProcessorImpl
 						LiferayFileVersion liferayFileVersion =
 							(LiferayFileVersion)destinationFileVersion;
 
-						File file = liferayFileVersion.getFile(false);
+						file = liferayFileVersion.getFile(false);
 
 						_generateImages(destinationFileVersion, file);
 
@@ -392,13 +394,13 @@ public class PDFProcessorImpl
 				if (Validator.equals(
 						"PWC", destinationFileVersion.getVersion())) {
 
-					File file = new File(
+					File tempFile = new File(
 						DocumentConversionUtil.getFilePath(tempFileId, "pdf"));
 
-					FileUtil.delete(file);
+					FileUtil.delete(tempFile);
 				}
 
-				File file = DocumentConversionUtil.convert(
+				file = DocumentConversionUtil.convert(
 					tempFileId, inputStream, extension, "pdf");
 
 				_generateImages(destinationFileVersion, file);
@@ -410,6 +412,8 @@ public class PDFProcessorImpl
 			StreamUtil.cleanUp(inputStream);
 
 			_fileVersionIds.remove(destinationFileVersion.getFileVersionId());
+
+			FileUtil.delete(file);
 		}
 	}
 
