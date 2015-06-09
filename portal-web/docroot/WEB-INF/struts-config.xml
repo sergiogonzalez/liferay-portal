@@ -213,15 +213,11 @@
 
 		<action path="/blogs/trackback" type="com.liferay.portlet.blogs.action.TrackbackAction" />
 
-		<action path="/blogs/upload_editor_image" type="com.liferay.portlet.blogs.action.UploadEditorImageAction" />
-
 		<!-- Blogs Admin -->
 
 		<action path="/blogs_admin/edit_entry_discussion" type="com.liferay.portlet.messageboards.action.EditDiscussionAction">
 			<forward name="portlet.message_boards.error" path="portlet.blogs.error" />
 		</action>
-
-		<action path="/blogs_admin/upload_editor_image" type="com.liferay.portlet.blogs.action.UploadEditorImageAction" />
 
 		<!-- Blogs Aggregator -->
 
