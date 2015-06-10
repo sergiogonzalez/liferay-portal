@@ -15,6 +15,7 @@
 package com.liferay.portlet.documentlibrary.social;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -36,6 +37,11 @@ import com.liferay.portlet.trash.util.TrashUtil;
  * @author Ryan Park
  * @author Zsolt Berentey
  */
+@OSGiBeanProperties(
+	property = {
+		"model.class.name=com.liferay.portlet.documentlibrary.model.DLFileEntry"
+	}
+)
 public class DLFileEntryActivityInterpreter
 	extends BaseSocialActivityInterpreter {
 

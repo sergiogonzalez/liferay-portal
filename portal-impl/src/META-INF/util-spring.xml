@@ -856,6 +856,8 @@
 	<bean id="com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission" class="com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission" />
 	<bean id="com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission" class="com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission" />
 	<bean id="com.liferay.portlet.documentlibrary.service.permission.DLPermission" class="com.liferay.portlet.documentlibrary.service.permission.DLPermission" />
+	<bean id="com.liferay.portlet.documentlibrary.social.DLFileEntryActivityInterpreter" class="com.liferay.portlet.documentlibrary.social.DLFileEntryActivityInterpreter" />
+	<bean id="com.liferay.portlet.documentlibrary.social.DLFolderActivityInterpreter" class="com.liferay.portlet.documentlibrary.social.DLFolderActivityInterpreter" />
 	<bean id="com.liferay.portlet.documentlibrary.store.DLStore" class="com.liferay.portlet.documentlibrary.store.DLStoreImpl" />
 	<bean id="com.liferay.portlet.documentlibrary.store.Store" class="com.liferay.portlet.documentlibrary.store.SafeFileNameStoreWrapper">
 		<constructor-arg>

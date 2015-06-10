@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.documentlibrary.social;
 
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
@@ -26,6 +27,11 @@ import com.liferay.portlet.social.model.SocialActivityConstants;
 /**
  * @author Zsolt Berentey
  */
+@OSGiBeanProperties(
+	property = {
+		"model.class.name=com.liferay.portlet.documentlibrary.model.DLFolder"
+	}
+)
 public class DLFolderActivityInterpreter extends BaseSocialActivityInterpreter {
 
 	@Override
