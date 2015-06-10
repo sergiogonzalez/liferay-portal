@@ -12,9 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.mvc.util;
-
-import com.liferay.portlet.mvc.MVCPortletAction;
+package com.liferay.portal.kernel.portlet.bridges.mvc.action;
 
 import java.io.IOException;
 
@@ -51,7 +49,8 @@ public class ForwardMVCPortletAction implements MVCPortletAction {
 
 	@Override
 	public String processAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
+			ActionRequest actionRequest, ActionResponse actionResponse,
+			ActionContext actionContext)
 		throws PortletException {
 
 		return _processActionPath;
@@ -59,7 +58,8 @@ public class ForwardMVCPortletAction implements MVCPortletAction {
 
 	@Override
 	public String render(
-			RenderRequest renderRequest, RenderResponse renderResponse)
+			RenderRequest renderRequest, RenderResponse renderResponse,
+			RenderContext renderContext)
 		throws IOException, PortletException {
 
 		return _renderPath;
@@ -67,7 +67,8 @@ public class ForwardMVCPortletAction implements MVCPortletAction {
 
 	@Override
 	public String serveResource(
-			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse,
+			ResourceContext resourceContext)
 		throws IOException, PortletException {
 
 		return _serveResourcePath;

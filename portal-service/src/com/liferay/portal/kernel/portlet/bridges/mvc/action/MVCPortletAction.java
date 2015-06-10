@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.mvc;
+package com.liferay.portal.kernel.portlet.bridges.mvc.action;
 
 import java.io.IOException;
 
@@ -30,15 +30,18 @@ import javax.portlet.ResourceResponse;
 public interface MVCPortletAction {
 
 	public String processAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
+			ActionRequest actionRequest, ActionResponse actionResponse,
+			ActionContext actionContext)
 		throws PortletException;
 
 	public String render(
-			RenderRequest renderRequest, RenderResponse renderResponse)
+			RenderRequest renderRequest, RenderResponse renderResponse,
+			RenderContext renderContext)
 		throws IOException, PortletException;
 
 	public String serveResource(
-			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse,
+			ResourceContext resourceContext)
 		throws IOException, PortletException;
 
 }
