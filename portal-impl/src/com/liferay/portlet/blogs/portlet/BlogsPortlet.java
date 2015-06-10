@@ -143,12 +143,14 @@ public class BlogsPortlet extends BaseBlogsPortlet {
 			String msg)
 		throws Exception {
 
-		sendResponse(resourceRequest, resourceResponse, msg, false);
+		sendResponse(
+			resourceRequest, resourceResponse, "<error>1</error><message>", msg,
+			"</message>");
 	}
 
 	protected void sendResponse(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse,
-			String msg, boolean success)
+			String... contents)
 		throws Exception {
 
 		StringBundler sb = new StringBundler(7);
@@ -156,14 +158,8 @@ public class BlogsPortlet extends BaseBlogsPortlet {
 		sb.append("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
 		sb.append("<response>");
 
-		if (success) {
-			sb.append("<error>0</error>");
-		}
-		else {
-			sb.append("<error>1</error>");
-			sb.append("<message>");
-			sb.append(msg);
-			sb.append("</message>");
+		for (String content : contents) {
+			sb.append(content);
 		}
 
 		sb.append("</response>");
@@ -182,7 +178,7 @@ public class BlogsPortlet extends BaseBlogsPortlet {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		sendResponse(resourceRequest, resourceResponse, null, true);
+		sendResponse(resourceRequest, resourceResponse, "<error>0</error>");
 	}
 
 	protected void validate(BlogsEntry entry)
