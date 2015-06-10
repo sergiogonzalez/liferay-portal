@@ -62,7 +62,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
  */
 @PrepareForTest({ActionUtil.class})
 @RunWith(PowerMockRunner.class)
-public class TrackbackActionTest extends PowerMockito {
+public class TrackbackActionHelperTest extends PowerMockito {
 
 	@Before
 	public void setUp() throws Exception {
