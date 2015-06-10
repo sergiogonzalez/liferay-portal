@@ -12,9 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibraryadmin;
-
-import com.liferay.portlet.documentlibrary.DLPortlet;
+package com.liferay.portlet.documentlibrary.web.portlet;
 
 /**
  * @author Iván Zaera

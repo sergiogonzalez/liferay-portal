@@ -12,11 +12,10 @@
  * details.
  */
 
-package com.liferay.portlet.imagegallerydisplay;
+package com.liferay.portlet.documentlibrary.web.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.action.ForwardMVCPortletAction;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portlet.documentlibrary.DLPortlet;
 import com.liferay.portlet.documentlibrary.action.EditFileEntryAction;
 import com.liferay.portlet.documentlibrary.action.EditFileShortcutAction;
 import com.liferay.portlet.documentlibrary.action.EditFolderAction;
