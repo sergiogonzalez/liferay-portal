@@ -211,8 +211,6 @@
 			<forward name="portlet.message_boards.error" path="portlet.blogs.error" />
 		</action>
 
-		<action path="/blogs/trackback" type="com.liferay.portlet.blogs.action.TrackbackAction" />
-
 		<!-- Blogs Admin -->
 
 		<action path="/blogs_admin/edit_entry_discussion" type="com.liferay.portlet.messageboards.action.EditDiscussionAction">
