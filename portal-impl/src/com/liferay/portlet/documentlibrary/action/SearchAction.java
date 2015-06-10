@@ -14,7 +14,10 @@
 
 package com.liferay.portlet.documentlibrary.action;
 
-import com.liferay.portlet.mvc.MVCPortletAction;
+import com.liferay.portal.kernel.portlet.bridges.mvc.action.ActionContext;
+import com.liferay.portal.kernel.portlet.bridges.mvc.action.MVCPortletAction;
+import com.liferay.portal.kernel.portlet.bridges.mvc.action.RenderContext;
+import com.liferay.portal.kernel.portlet.bridges.mvc.action.ResourceContext;
 
 import java.io.IOException;
 
@@ -33,7 +36,8 @@ public class SearchAction implements MVCPortletAction {
 
 	@Override
 	public String processAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
+			ActionRequest actionRequest, ActionResponse actionResponse,
+			ActionContext actionContext)
 		throws PortletException {
 
 		return null;
@@ -41,7 +45,8 @@ public class SearchAction implements MVCPortletAction {
 
 	@Override
 	public String render(
-			RenderRequest renderRequest, RenderResponse renderResponse)
+			RenderRequest renderRequest, RenderResponse renderResponse,
+			RenderContext renderContext)
 		throws IOException, PortletException {
 
 		return "/html/portlet/document_library/view.jsp";
@@ -49,7 +54,8 @@ public class SearchAction implements MVCPortletAction {
 
 	@Override
 	public String serveResource(
-			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse,
+			ResourceContext resourceContext)
 		throws IOException, PortletException {
 
 		return "/html/portlet/document_library/search_resources.jsp";

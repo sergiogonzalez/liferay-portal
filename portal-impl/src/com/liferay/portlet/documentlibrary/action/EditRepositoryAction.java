@@ -16,6 +16,10 @@ package com.liferay.portlet.documentlibrary.action;
 
 import com.liferay.portal.InvalidRepositoryException;
 import com.liferay.portal.NoSuchRepositoryException;
+import com.liferay.portal.kernel.portlet.bridges.mvc.action.ActionContext;
+import com.liferay.portal.kernel.portlet.bridges.mvc.action.MVCPortletAction;
+import com.liferay.portal.kernel.portlet.bridges.mvc.action.RenderContext;
+import com.liferay.portal.kernel.portlet.bridges.mvc.action.ResourceContext;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -34,8 +38,6 @@ import com.liferay.portlet.documentlibrary.DuplicateRepositoryNameException;
 import com.liferay.portlet.documentlibrary.FolderNameException;
 import com.liferay.portlet.documentlibrary.RepositoryNameException;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
-import com.liferay.portlet.mvc.ActionableMVCPortlet;
-import com.liferay.portlet.mvc.MVCPortletAction;
 
 import java.io.IOException;
 
@@ -52,13 +54,10 @@ import javax.portlet.ResourceResponse;
  */
 public class EditRepositoryAction implements MVCPortletAction {
 
-	public EditRepositoryAction(ActionableMVCPortlet actionableMVCPortlet) {
-		_actionableMVCPortlet = actionableMVCPortlet;
-	}
-
 	@Override
 	public String processAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
+			ActionRequest actionRequest, ActionResponse actionResponse,
+			ActionContext actionContext)
 		throws PortletException {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
@@ -71,7 +70,7 @@ public class EditRepositoryAction implements MVCPortletAction {
 				unmountRepository(actionRequest);
 			}
 
-			_actionableMVCPortlet.sendRedirect(actionRequest, actionResponse);
+			actionContext.sendRedirect(actionRequest, actionResponse);
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchRepositoryException ||
@@ -99,7 +98,8 @@ public class EditRepositoryAction implements MVCPortletAction {
 
 	@Override
 	public String render(
-			RenderRequest renderRequest, RenderResponse renderResponse)
+			RenderRequest renderRequest, RenderResponse renderResponse,
+			RenderContext renderContext)
 		throws IOException, PortletException {
 
 		try {
@@ -123,7 +123,8 @@ public class EditRepositoryAction implements MVCPortletAction {
 
 	@Override
 	public String serveResource(
-			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse,
+			ResourceContext resourceContext)
 		throws IOException, PortletException {
 
 		return null;
@@ -178,7 +179,5 @@ public class EditRepositoryAction implements MVCPortletAction {
 				repositoryId, name, description);
 		}
 	}
-
-	private final ActionableMVCPortlet _actionableMVCPortlet;
 
 }

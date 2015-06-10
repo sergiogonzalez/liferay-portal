@@ -14,13 +14,13 @@
 
 package com.liferay.portlet.imagegallerydisplay;
 
+import com.liferay.portal.kernel.portlet.bridges.mvc.action.ForwardMVCPortletAction;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portlet.documentlibrary.DLPortlet;
 import com.liferay.portlet.documentlibrary.action.EditFileEntryAction;
 import com.liferay.portlet.documentlibrary.action.EditFileShortcutAction;
 import com.liferay.portlet.documentlibrary.action.EditFolderAction;
 import com.liferay.portlet.documentlibrary.action.ViewAction;
-import com.liferay.portlet.mvc.util.ForwardMVCPortletAction;
 
 import javax.portlet.PortletException;
 
@@ -44,17 +44,17 @@ public class IGDisplayPortlet extends DLPortlet {
 			"/image_gallery_display/view_image");
 
 		registerMVCPortletAction(
-			new EditFileShortcutAction(this),
+			new EditFileShortcutAction(),
 			"/image_gallery_display/edit_shortcut");
 
 		registerMVCPortletAction(
 			new EditFolderAction(
-				this, "/html/portlet/document_library/edit_folder.jsp"),
+				"/html/portlet/document_library/edit_folder.jsp"),
 			"/image_gallery_display/edit_folder");
 
 		registerMVCPortletAction(
 			new EditFolderAction(
-				this, "/html/portlet/document_library/select_folder.jsp"),
+				"/html/portlet/document_library/select_folder.jsp"),
 			"/image_gallery_display/select_folder");
 
 		registerMVCPortletAction(

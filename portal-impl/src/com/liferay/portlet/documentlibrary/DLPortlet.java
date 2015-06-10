@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.documentlibrary;
 
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.portlet.bridges.mvc.action.ForwardMVCPortletAction;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portlet.documentlibrary.action.CompareVersionsAction;
 import com.liferay.portlet.documentlibrary.action.EditEntryAction;
@@ -25,15 +27,17 @@ import com.liferay.portlet.documentlibrary.action.EditRepositoryAction;
 import com.liferay.portlet.documentlibrary.action.GetFileAction;
 import com.liferay.portlet.documentlibrary.action.SearchAction;
 import com.liferay.portlet.documentlibrary.action.ViewAction;
-import com.liferay.portlet.mvc.ActionableMVCPortlet;
-import com.liferay.portlet.mvc.util.ForwardMVCPortletAction;
 
 import javax.portlet.PortletException;
 
 /**
  * @author Iván Zaera
  */
-public class DLPortlet extends ActionableMVCPortlet {
+public class DLPortlet extends MVCPortlet {
+
+	public DLPortlet() {
+		super("struts_action");
+	}
 
 	@Override
 	public void init() throws PortletException {
@@ -43,16 +47,17 @@ public class DLPortlet extends ActionableMVCPortlet {
 			new CompareVersionsAction(), "/document_library/compare_versions");
 
 		registerMVCPortletAction(
-			new EditEntryAction(this), "/document_library/edit_entry",
+			new EditEntryAction(), "/document_library/edit_entry",
 			"/document_library/move_entry");
 
 		registerMVCPortletAction(
 			new EditFileEntryAction(
-				this, "/html/portlet/document_library/edit_file_entry.jsp"),
+				this,
+				"/html/portlet/document_library/edit_file_entry.jsp"),
 			"/document_library/edit_file_entry");
 
 		registerMVCPortletAction(
-			new EditFileEntryTypeAction(this),
+			new EditFileEntryTypeAction(),
 			"/document_library/edit_file_entry_type");
 
 		registerMVCPortletAction(
@@ -73,22 +78,21 @@ public class DLPortlet extends ActionableMVCPortlet {
 			"/document_library/upload_file_entry");
 
 		registerMVCPortletAction(
-			new EditFileShortcutAction(this),
+			new EditFileShortcutAction(),
 			"/document_library/edit_file_shortcut");
 
 		registerMVCPortletAction(
 			new EditFolderAction(
-				this, "/html/portlet/document_library/edit_folder.jsp"),
+				"/html/portlet/document_library/edit_folder.jsp"),
 			"/document_library/edit_folder");
 
 		registerMVCPortletAction(
 			new EditFolderAction(
-				this, "/html/portlet/document_library/select_folder.jsp"),
+				"/html/portlet/document_library/select_folder.jsp"),
 			"/document_library/select_folder");
 
 		registerMVCPortletAction(
-			new EditRepositoryAction(this),
-			"/document_library/edit_repository");
+			new EditRepositoryAction(), "/document_library/edit_repository");
 
 		registerMVCPortletAction(
 			new ForwardMVCPortletAction(

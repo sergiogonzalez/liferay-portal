@@ -14,6 +14,10 @@
 
 package com.liferay.portlet.documentlibrary.action;
 
+import com.liferay.portal.kernel.portlet.bridges.mvc.action.ActionContext;
+import com.liferay.portal.kernel.portlet.bridges.mvc.action.MVCPortletAction;
+import com.liferay.portal.kernel.portlet.bridges.mvc.action.RenderContext;
+import com.liferay.portal.kernel.portlet.bridges.mvc.action.ResourceContext;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
@@ -27,8 +31,6 @@ import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcutConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
-import com.liferay.portlet.mvc.ActionableMVCPortlet;
-import com.liferay.portlet.mvc.MVCPortletAction;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.io.IOException;
@@ -47,13 +49,10 @@ import javax.portlet.ResourceResponse;
  */
 public class EditFileShortcutAction implements MVCPortletAction {
 
-	public EditFileShortcutAction(ActionableMVCPortlet actionableMVCPortlet) {
-		_actionableMVCPortlet = actionableMVCPortlet;
-	}
-
 	@Override
 	public String processAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
+			ActionRequest actionRequest, ActionResponse actionResponse,
+			ActionContext actionContext)
 		throws PortletException {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
@@ -63,13 +62,13 @@ public class EditFileShortcutAction implements MVCPortletAction {
 				updateFileShortcut(actionRequest);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
-				deleteFileShortcut(actionRequest, false);
+				deleteFileShortcut(actionRequest, actionContext, false);
 			}
 			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
-				deleteFileShortcut(actionRequest, true);
+				deleteFileShortcut(actionRequest, actionContext, true);
 			}
 
-			_actionableMVCPortlet.sendRedirect(actionRequest, actionResponse);
+			actionContext.sendRedirect(actionRequest, actionResponse);
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchFileShortcutException ||
@@ -94,7 +93,8 @@ public class EditFileShortcutAction implements MVCPortletAction {
 
 	@Override
 	public String render(
-			RenderRequest renderRequest, RenderResponse renderResponse)
+			RenderRequest renderRequest, RenderResponse renderResponse,
+			RenderContext renderContext)
 		throws IOException, PortletException {
 
 		try {
@@ -118,14 +118,16 @@ public class EditFileShortcutAction implements MVCPortletAction {
 
 	@Override
 	public String serveResource(
-			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse,
+			ResourceContext resourceContext)
 		throws IOException, PortletException {
 
 		return null;
 	}
 
 	protected void deleteFileShortcut(
-			ActionRequest actionRequest, boolean moveToTrash)
+			ActionRequest actionRequest, ActionContext actionContext,
+			boolean moveToTrash)
 		throws Exception {
 
 		long fileShortcutId = ParamUtil.getLong(
@@ -140,7 +142,7 @@ public class EditFileShortcutAction implements MVCPortletAction {
 					actionRequest, (TrashedModel)fileShortcut.getModel());
 			}
 
-			_actionableMVCPortlet.hideDefaultSuccessMessage(actionRequest);
+			actionContext.hideDefaultSuccessMessage(actionRequest);
 		}
 		else {
 			DLAppServiceUtil.deleteFileShortcut(fileShortcutId);
@@ -175,7 +177,5 @@ public class EditFileShortcutAction implements MVCPortletAction {
 				fileShortcutId, folderId, toFileEntryId, serviceContext);
 		}
 	}
-
-	private final ActionableMVCPortlet _actionableMVCPortlet;
 
 }

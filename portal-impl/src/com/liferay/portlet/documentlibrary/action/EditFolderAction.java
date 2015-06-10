@@ -18,6 +18,10 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
+import com.liferay.portal.kernel.portlet.bridges.mvc.action.ActionContext;
+import com.liferay.portal.kernel.portlet.bridges.mvc.action.MVCPortletAction;
+import com.liferay.portal.kernel.portlet.bridges.mvc.action.RenderContext;
+import com.liferay.portal.kernel.portlet.bridges.mvc.action.ResourceContext;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
 import com.liferay.portal.kernel.repository.capabilities.TemporaryFileEntriesCapability;
@@ -49,8 +53,6 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
-import com.liferay.portlet.mvc.ActionableMVCPortlet;
-import com.liferay.portlet.mvc.MVCPortletAction;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.io.File;
@@ -77,16 +79,14 @@ import javax.portlet.ResourceResponse;
  */
 public class EditFolderAction implements MVCPortletAction {
 
-	public EditFolderAction(
-		ActionableMVCPortlet actionableMVCPortlet, String defaultJsp) {
-
-		_actionableMVCPortlet = actionableMVCPortlet;
+	public EditFolderAction(String defaultJsp) {
 		_defaultJsp = defaultJsp;
 	}
 
 	@Override
 	public String processAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
+			ActionRequest actionRequest, ActionResponse actionResponse,
+			ActionContext actionContext)
 		throws PortletException {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
@@ -96,10 +96,10 @@ public class EditFolderAction implements MVCPortletAction {
 				updateFolder(actionRequest);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
-				deleteFolders(actionRequest, false);
+				deleteFolders(actionRequest, actionContext, false);
 			}
 			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
-				deleteFolders(actionRequest, true);
+				deleteFolders(actionRequest, actionContext, true);
 			}
 			else if (cmd.equals(Constants.SUBSCRIBE)) {
 				subscribeFolder(actionRequest);
@@ -114,7 +114,7 @@ public class EditFolderAction implements MVCPortletAction {
 				updateWorkflowDefinitions(actionRequest);
 			}
 
-			_actionableMVCPortlet.sendRedirect(actionRequest, actionResponse);
+			actionContext.sendRedirect(actionRequest, actionResponse);
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchFolderException ||
@@ -141,7 +141,8 @@ public class EditFolderAction implements MVCPortletAction {
 
 	@Override
 	public String render(
-			RenderRequest renderRequest, RenderResponse renderResponse)
+			RenderRequest renderRequest, RenderResponse renderResponse,
+			RenderContext renderContext)
 		throws IOException, PortletException {
 
 		try {
@@ -165,7 +166,8 @@ public class EditFolderAction implements MVCPortletAction {
 
 	@Override
 	public String serveResource(
-			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse,
+			ResourceContext resourceContext)
 		throws IOException, PortletException {
 
 		try {
@@ -199,7 +201,8 @@ public class EditFolderAction implements MVCPortletAction {
 	}
 
 	protected void deleteFolders(
-			ActionRequest actionRequest, boolean moveToTrash)
+			ActionRequest actionRequest, ActionContext actionContext,
+			boolean moveToTrash)
 		throws Exception {
 
 		long[] deleteFolderIds = null;
@@ -233,7 +236,7 @@ public class EditFolderAction implements MVCPortletAction {
 		if (moveToTrash && (deleteFolderIds.length > 0)) {
 			TrashUtil.addTrashSessionMessages(actionRequest, trashedModels);
 
-			_actionableMVCPortlet.hideDefaultSuccessMessage(actionRequest);
+			actionContext.hideDefaultSuccessMessage(actionRequest);
 		}
 	}
 
@@ -374,7 +377,6 @@ public class EditFolderAction implements MVCPortletAction {
 		}
 	}
 
-	private final ActionableMVCPortlet _actionableMVCPortlet;
 	private final String _defaultJsp;
 
 }

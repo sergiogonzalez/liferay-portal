@@ -14,10 +14,10 @@
 
 package com.liferay.portlet.documentlibrarydisplay;
 
+import com.liferay.portal.kernel.portlet.bridges.mvc.action.ForwardMVCPortletAction;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portlet.documentlibrary.DLPortlet;
 import com.liferay.portlet.documentlibrary.action.ViewAction;
-import com.liferay.portlet.mvc.util.ForwardMVCPortletAction;
 
 import javax.portlet.PortletException;
 

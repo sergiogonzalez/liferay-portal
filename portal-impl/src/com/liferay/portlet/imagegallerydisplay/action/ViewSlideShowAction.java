@@ -14,11 +14,14 @@
 
 package com.liferay.portlet.imagegallerydisplay.action;
 
+import com.liferay.portal.kernel.portlet.bridges.mvc.action.ActionContext;
+import com.liferay.portal.kernel.portlet.bridges.mvc.action.MVCPortletAction;
+import com.liferay.portal.kernel.portlet.bridges.mvc.action.RenderContext;
+import com.liferay.portal.kernel.portlet.bridges.mvc.action.ResourceContext;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.action.ActionUtil;
-import com.liferay.portlet.mvc.MVCPortletAction;
 
 import java.io.IOException;
 
@@ -37,7 +40,8 @@ public class ViewSlideShowAction implements MVCPortletAction {
 
 	@Override
 	public String processAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
+			ActionRequest actionRequest, ActionResponse actionResponse,
+			ActionContext actionContext)
 		throws PortletException {
 
 		return null;
@@ -45,7 +49,8 @@ public class ViewSlideShowAction implements MVCPortletAction {
 
 	@Override
 	public String render(
-			RenderRequest renderRequest, RenderResponse renderResponse)
+			RenderRequest renderRequest, RenderResponse renderResponse,
+			RenderContext renderContext)
 		throws IOException, PortletException {
 
 		try {
@@ -69,7 +74,8 @@ public class ViewSlideShowAction implements MVCPortletAction {
 
 	@Override
 	public String serveResource(
-			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse,
+			ResourceContext resourceContext)
 		throws IOException, PortletException {
 
 		return null;

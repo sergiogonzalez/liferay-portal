@@ -16,6 +16,10 @@ package com.liferay.portlet.documentlibrary.action;
 
 import com.liferay.portal.kernel.lock.DuplicateLockException;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.bridges.mvc.action.ActionContext;
+import com.liferay.portal.kernel.portlet.bridges.mvc.action.MVCPortletAction;
+import com.liferay.portal.kernel.portlet.bridges.mvc.action.RenderContext;
+import com.liferay.portal.kernel.portlet.bridges.mvc.action.ResourceContext;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -41,8 +45,6 @@ import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.SourceFileNameException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
-import com.liferay.portlet.mvc.ActionableMVCPortlet;
-import com.liferay.portlet.mvc.MVCPortletAction;
 import com.liferay.portlet.trash.service.TrashEntryServiceUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
 
@@ -70,13 +72,10 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class EditEntryAction implements MVCPortletAction {
 
-	public EditEntryAction(ActionableMVCPortlet actionableMVCPortlet) {
-		_actionableMVCPortlet = actionableMVCPortlet;
-	}
-
 	@Override
 	public String processAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
+			ActionRequest actionRequest, ActionResponse actionResponse,
+			ActionContext actionContext)
 		throws PortletException {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
@@ -92,13 +91,13 @@ public class EditEntryAction implements MVCPortletAction {
 				checkOutEntries(actionRequest);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
-				deleteEntries(actionRequest, false);
+				deleteEntries(actionRequest, actionContext, false);
 			}
 			else if (cmd.equals(Constants.MOVE)) {
 				moveEntries(actionRequest);
 			}
 			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
-				deleteEntries(actionRequest, true);
+				deleteEntries(actionRequest, actionContext, true);
 			}
 			else if (cmd.equals(Constants.RESTORE)) {
 				restoreTrashEntries(actionRequest);
@@ -107,8 +106,7 @@ public class EditEntryAction implements MVCPortletAction {
 			WindowState windowState = actionRequest.getWindowState();
 
 			if (!windowState.equals(LiferayWindowState.POP_UP)) {
-				_actionableMVCPortlet.sendRedirect(
-					actionRequest, actionResponse);
+				actionContext.sendRedirect(actionRequest, actionResponse);
 			}
 			else {
 				String redirect = PortalUtil.escapeRedirect(
@@ -168,7 +166,8 @@ public class EditEntryAction implements MVCPortletAction {
 
 	@Override
 	public String render(
-			RenderRequest renderRequest, RenderResponse renderResponse)
+			RenderRequest renderRequest, RenderResponse renderResponse,
+			RenderContext renderContext)
 		throws IOException, PortletException {
 
 		try {
@@ -194,7 +193,8 @@ public class EditEntryAction implements MVCPortletAction {
 
 	@Override
 	public String serveResource(
-			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse,
+			ResourceContext resourceContext)
 		throws IOException, PortletException {
 
 		return null;
@@ -241,7 +241,8 @@ public class EditEntryAction implements MVCPortletAction {
 	}
 
 	protected void deleteEntries(
-			ActionRequest actionRequest, boolean moveToTrash)
+			ActionRequest actionRequest, ActionContext actionContext,
+			boolean moveToTrash)
 		throws Exception {
 
 		long[] deleteFolderIds = StringUtil.split(
@@ -307,7 +308,7 @@ public class EditEntryAction implements MVCPortletAction {
 		if (moveToTrash && !trashedModels.isEmpty()) {
 			TrashUtil.addTrashSessionMessages(actionRequest, trashedModels);
 
-			_actionableMVCPortlet.hideDefaultSuccessMessage(actionRequest);
+			actionContext.hideDefaultSuccessMessage(actionRequest);
 		}
 	}
 
@@ -359,7 +360,5 @@ public class EditEntryAction implements MVCPortletAction {
 			TrashEntryServiceUtil.restoreEntry(restoreTrashEntryId);
 		}
 	}
-
-	private final ActionableMVCPortlet _actionableMVCPortlet;
 
 }

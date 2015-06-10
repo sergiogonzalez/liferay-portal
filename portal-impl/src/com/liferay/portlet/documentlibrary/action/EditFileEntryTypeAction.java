@@ -14,6 +14,10 @@
 
 package com.liferay.portlet.documentlibrary.action;
 
+import com.liferay.portal.kernel.portlet.bridges.mvc.action.ActionContext;
+import com.liferay.portal.kernel.portlet.bridges.mvc.action.MVCPortletAction;
+import com.liferay.portal.kernel.portlet.bridges.mvc.action.RenderContext;
+import com.liferay.portal.kernel.portlet.bridges.mvc.action.ResourceContext;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.Constants;
@@ -47,8 +51,6 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
-import com.liferay.portlet.mvc.ActionableMVCPortlet;
-import com.liferay.portlet.mvc.MVCPortletAction;
 
 import java.io.IOException;
 
@@ -70,13 +72,10 @@ import javax.portlet.ResourceResponse;
  */
 public class EditFileEntryTypeAction implements MVCPortletAction {
 
-	public EditFileEntryTypeAction(ActionableMVCPortlet actionableMVCPortlet) {
-		_actionableMVCPortlet = actionableMVCPortlet;
-	}
-
 	@Override
 	public String processAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
+			ActionRequest actionRequest, ActionResponse actionResponse,
+			ActionContext actionContext)
 		throws PortletException {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
@@ -103,7 +102,7 @@ public class EditFileEntryTypeAction implements MVCPortletAction {
 					PortletKeys.DOCUMENT_LIBRARY);
 			}
 
-			_actionableMVCPortlet.sendRedirect(actionRequest, actionResponse);
+			actionContext.sendRedirect(actionRequest, actionResponse);
 		}
 		catch (Exception e) {
 			if (e instanceof DuplicateFileEntryTypeException ||
@@ -125,13 +124,7 @@ public class EditFileEntryTypeAction implements MVCPortletAction {
 			else if (e instanceof RequiredStructureException) {
 				SessionErrors.add(actionRequest, e.getClass());
 
-				try {
-					_actionableMVCPortlet.sendRedirect(
-						actionRequest, actionResponse);
-				}
-				catch (IOException ioe) {
-					throw new PortletException(ioe);
-				}
+				actionContext.sendRedirect(actionRequest, actionResponse);
 			}
 			else {
 				throw new PortletException(e);
@@ -143,7 +136,8 @@ public class EditFileEntryTypeAction implements MVCPortletAction {
 
 	@Override
 	public String render(
-			RenderRequest renderRequest, RenderResponse renderResponse)
+			RenderRequest renderRequest, RenderResponse renderResponse,
+			RenderContext renderContext)
 		throws IOException, PortletException {
 
 		DLFileEntryType dlFileEntryType = null;
@@ -194,7 +188,8 @@ public class EditFileEntryTypeAction implements MVCPortletAction {
 
 	@Override
 	public String serveResource(
-			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse,
+			ResourceContext resourceContext)
 		throws IOException, PortletException {
 
 		return null;
@@ -296,7 +291,5 @@ public class EditFileEntryTypeAction implements MVCPortletAction {
 				serviceContext);
 		}
 	}
-
-	private final ActionableMVCPortlet _actionableMVCPortlet;
 
 }

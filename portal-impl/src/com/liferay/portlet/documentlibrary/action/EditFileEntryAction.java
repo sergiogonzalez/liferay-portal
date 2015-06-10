@@ -21,6 +21,10 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.lock.DuplicateLockException;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.bridges.mvc.action.ActionContext;
+import com.liferay.portal.kernel.portlet.bridges.mvc.action.MVCPortletAction;
+import com.liferay.portal.kernel.portlet.bridges.mvc.action.RenderContext;
+import com.liferay.portal.kernel.portlet.bridges.mvc.action.ResourceContext;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.servlet.ServletResponseConstants;
@@ -76,8 +80,6 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.dynamicdatamapping.StorageFieldRequiredException;
-import com.liferay.portlet.mvc.ActionableMVCPortlet;
-import com.liferay.portlet.mvc.MVCPortletAction;
 import com.liferay.portlet.trash.service.TrashEntryServiceUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
 
@@ -118,18 +120,15 @@ public class EditFileEntryAction implements MVCPortletAction {
 
 	public static final String TEMP_RANDOM_SUFFIX = "--tempRandomSuffix--";
 
-	public EditFileEntryAction(
-		ActionableMVCPortlet actionableMVCPortlet, String defaultJsp) {
-
-		_actionableMVCPortlet = actionableMVCPortlet;
+	public EditFileEntryAction(PortletConfig portletConfig, String defaultJsp) {
+		_portletConfig = portletConfig;
 		_defaultJsp = defaultJsp;
-
-		_portletConfig = actionableMVCPortlet.getPortletConfig();
 	}
 
 	@Override
 	public String processAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
+			ActionRequest actionRequest, ActionResponse actionResponse,
+			ActionContext actionContext)
 		throws PortletException {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
@@ -157,22 +156,25 @@ public class EditFileEntryAction implements MVCPortletAction {
 					 cmd.equals(Constants.UPDATE_AND_CHECKIN)) {
 
 				fileEntry = updateFileEntry(
-					_portletConfig, actionRequest, actionResponse);
+					_portletConfig, actionRequest, actionResponse,
+					actionContext);
 			}
 			else if (cmd.equals(Constants.ADD_MULTIPLE)) {
 				addMultipleFileEntries(
-					_portletConfig, actionRequest, actionResponse);
+					_portletConfig, actionRequest, actionResponse,
+					actionContext);
 
-				_actionableMVCPortlet.hideDefaultSuccessMessage(actionRequest);
+				actionContext.hideDefaultSuccessMessage(actionRequest);
 			}
 			else if (cmd.equals(Constants.ADD_TEMP)) {
-				addTempFileEntry(actionRequest, actionResponse);
+				addTempFileEntry(actionRequest, actionResponse, actionContext);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
-				deleteFileEntry(actionRequest, false);
+				deleteFileEntry(actionRequest, actionContext, false);
 			}
 			else if (cmd.equals(Constants.DELETE_TEMP)) {
-				deleteTempFileEntry(actionRequest, actionResponse);
+				deleteTempFileEntry(
+					actionRequest, actionResponse, actionContext);
 			}
 			else if (cmd.equals(Constants.CANCEL_CHECKOUT)) {
 				cancelFileEntriesCheckOut(actionRequest);
@@ -184,7 +186,7 @@ public class EditFileEntryAction implements MVCPortletAction {
 				checkOutFileEntries(actionRequest);
 			}
 			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
-				deleteFileEntry(actionRequest, true);
+				deleteFileEntry(actionRequest, actionContext, true);
 			}
 			else if (cmd.equals(Constants.RESTORE)) {
 				restoreTrashEntries(actionRequest);
@@ -204,8 +206,7 @@ public class EditFileEntryAction implements MVCPortletAction {
 			else if (cmd.equals(Constants.PREVIEW)) {
 			}
 			else if (!windowState.equals(LiferayWindowState.POP_UP)) {
-				_actionableMVCPortlet.sendRedirect(
-					actionRequest, actionResponse);
+				actionContext.sendRedirect(actionRequest, actionResponse);
 			}
 			else {
 				String redirect = ParamUtil.getString(
@@ -220,12 +221,12 @@ public class EditFileEntryAction implements MVCPortletAction {
 					redirect = getSaveAndContinueRedirect(
 						_portletConfig, actionRequest, fileEntry, redirect);
 
-					_actionableMVCPortlet.sendRedirect(
+					actionContext.sendRedirect(
 						actionRequest, actionResponse, redirect);
 				}
 				else {
 					if (!windowState.equals(LiferayWindowState.POP_UP)) {
-						_actionableMVCPortlet.sendRedirect(
+						actionContext.sendRedirect(
 							actionRequest, actionResponse);
 					}
 					else {
@@ -259,7 +260,8 @@ public class EditFileEntryAction implements MVCPortletAction {
 		catch (Exception e) {
 			try {
 				handleUploadException(
-					_portletConfig, actionRequest, actionResponse, cmd, e);
+					_portletConfig, actionRequest, actionResponse,
+					actionContext, cmd, e);
 			}
 			catch (Exception e1) {
 				throw new PortletException(e1);
@@ -271,7 +273,8 @@ public class EditFileEntryAction implements MVCPortletAction {
 
 	@Override
 	public String render(
-			RenderRequest renderRequest, RenderResponse renderResponse)
+			RenderRequest renderRequest, RenderResponse renderResponse,
+			RenderContext renderContext)
 		throws IOException, PortletException {
 
 		try {
@@ -297,7 +300,8 @@ public class EditFileEntryAction implements MVCPortletAction {
 
 	@Override
 	public String serveResource(
-			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse,
+			ResourceContext resourceContext)
 		throws IOException, PortletException {
 
 		return "/html/portlet/document_library/" +
@@ -306,7 +310,7 @@ public class EditFileEntryAction implements MVCPortletAction {
 
 	protected void addMultipleFileEntries(
 			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
+			ActionResponse actionResponse, ActionContext actionContext)
 		throws Exception {
 
 		List<KeyValuePair> validFileNameKVPs = new ArrayList<>();
@@ -317,8 +321,8 @@ public class EditFileEntryAction implements MVCPortletAction {
 
 		for (String selectedFileName : selectedFileNames) {
 			addMultipleFileEntries(
-				portletConfig, actionRequest, actionResponse, selectedFileName,
-				validFileNameKVPs, invalidFileNameKVPs);
+				portletConfig, actionRequest, actionResponse, actionContext,
+				selectedFileName, validFileNameKVPs, invalidFileNameKVPs);
 		}
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
@@ -350,14 +354,13 @@ public class EditFileEntryAction implements MVCPortletAction {
 			jsonArray.put(jsonObject);
 		}
 
-		_actionableMVCPortlet.writeJSON(
-			actionRequest, actionResponse, jsonArray);
+		actionContext.writeJSON(actionRequest, actionResponse, jsonArray);
 	}
 
 	protected void addMultipleFileEntries(
 			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse, String selectedFileName,
-			List<KeyValuePair> validFileNameKVPs,
+			ActionResponse actionResponse, ActionContext actionContext,
+			String selectedFileName, List<KeyValuePair> validFileNameKVPs,
 			List<KeyValuePair> invalidFileNameKVPs)
 		throws Exception {
 
@@ -416,7 +419,8 @@ public class EditFileEntryAction implements MVCPortletAction {
 	}
 
 	protected void addTempFileEntry(
-			ActionRequest actionRequest, ActionResponse actionResponse)
+			ActionRequest actionRequest, ActionResponse actionResponse,
+			ActionContext actionContext)
 		throws Exception {
 
 		UploadPortletRequest uploadPortletRequest =
@@ -459,8 +463,7 @@ public class EditFileEntryAction implements MVCPortletAction {
 			jsonObject.put("title", sourceFileName);
 			jsonObject.put("uuid", fileEntry.getUuid());
 
-			_actionableMVCPortlet.writeJSON(
-				actionRequest, actionResponse, jsonObject);
+			actionContext.writeJSON(actionRequest, actionResponse, jsonObject);
 		}
 		catch (Exception e) {
 			UploadException uploadException =
@@ -551,7 +554,8 @@ public class EditFileEntryAction implements MVCPortletAction {
 	}
 
 	protected void deleteFileEntry(
-			ActionRequest actionRequest, boolean moveToTrash)
+			ActionRequest actionRequest, ActionContext actionContext,
+			boolean moveToTrash)
 		throws Exception {
 
 		long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
@@ -582,11 +586,12 @@ public class EditFileEntryAction implements MVCPortletAction {
 				actionRequest, (DLFileEntry)fileEntry.getModel());
 		}
 
-		_actionableMVCPortlet.hideDefaultSuccessMessage(actionRequest);
+		actionContext.hideDefaultSuccessMessage(actionRequest);
 	}
 
 	protected void deleteTempFileEntry(
-			ActionRequest actionRequest, ActionResponse actionResponse)
+			ActionRequest actionRequest, ActionResponse actionResponse,
+			ActionContext actionContext)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -612,8 +617,7 @@ public class EditFileEntryAction implements MVCPortletAction {
 			jsonObject.put("errorMessage", errorMessage);
 		}
 
-		_actionableMVCPortlet.writeJSON(
-			actionRequest, actionResponse, jsonObject);
+		actionContext.writeJSON(actionRequest, actionResponse, jsonObject);
 	}
 
 	protected String getAddMultipleFileEntriesErrorMessage(
@@ -767,7 +771,8 @@ public class EditFileEntryAction implements MVCPortletAction {
 
 	protected void handleUploadException(
 			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse, String cmd, Exception e)
+			ActionResponse actionResponse, ActionContext actionContext,
+			String cmd, Exception e)
 		throws Exception {
 
 		if (e instanceof AssetCategoryException ||
@@ -815,7 +820,7 @@ public class EditFileEntryAction implements MVCPortletAction {
 				return;
 			}
 			else if (cmd.equals(Constants.ADD_TEMP)) {
-				_actionableMVCPortlet.hideDefaultErrorMessage(actionRequest);
+				actionContext.hideDefaultErrorMessage(actionRequest);
 			}
 
 			if (e instanceof AntivirusScannerException ||
@@ -889,7 +894,7 @@ public class EditFileEntryAction implements MVCPortletAction {
 				jsonObject.put("message", errorMessage);
 				jsonObject.put("status", errorType);
 
-				_actionableMVCPortlet.writeJSON(
+				actionContext.writeJSON(
 					actionRequest, actionResponse, jsonObject);
 			}
 
@@ -954,7 +959,7 @@ public class EditFileEntryAction implements MVCPortletAction {
 
 	protected FileEntry updateFileEntry(
 			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
+			ActionResponse actionResponse, ActionContext actionContext)
 		throws Exception {
 
 		UploadPortletRequest uploadPortletRequest =
@@ -1044,7 +1049,7 @@ public class EditFileEntryAction implements MVCPortletAction {
 
 					jsonObject.put("fileEntryId", fileEntry.getFileEntryId());
 
-					_actionableMVCPortlet.writeJSON(
+					actionContext.writeJSON(
 						actionRequest, actionResponse, jsonObject);
 				}
 			}
@@ -1093,7 +1098,6 @@ public class EditFileEntryAction implements MVCPortletAction {
 	private static final String _TEMP_FOLDER_NAME =
 		EditFileEntryAction.class.getName();
 
-	private final ActionableMVCPortlet _actionableMVCPortlet;
 	private final String _defaultJsp;
 	private final PortletConfig _portletConfig;
 
