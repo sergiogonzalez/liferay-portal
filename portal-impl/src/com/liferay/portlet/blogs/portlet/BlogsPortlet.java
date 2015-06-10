@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.blogs.portlet;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -23,14 +22,12 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.Layout;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContextFunction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portlet.StrictPortletPreferencesImpl;
 import com.liferay.portlet.blogs.TrackbackValidationException;
 import com.liferay.portlet.blogs.action.ActionUtil;
 import com.liferay.portlet.blogs.model.BlogsEntry;
@@ -41,7 +38,6 @@ import com.liferay.portlet.blogs.trackback.TrackbackImpl;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletPreferences;
-import javax.portlet.PortletRequest;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
@@ -127,43 +123,12 @@ public class BlogsPortlet extends BaseBlogsPortlet {
 		return (BlogsEntry)resourceRequest.getAttribute(WebKeys.BLOGS_ENTRY);
 	}
 
-	protected PortletPreferences getStrictPortletSetup(
-			Layout layout, String portletId)
-		throws PortalException {
-
-		if (Validator.isNull(portletId)) {
-			return null;
-		}
-
-		PortletPreferences portletPreferences =
-			PortletPreferencesFactoryUtil.getStrictPortletSetup(
-				layout, portletId);
-
-		if (portletPreferences instanceof StrictPortletPreferencesImpl) {
-			throw new PrincipalException();
-		}
-
-		return portletPreferences;
-	}
-
-	protected PortletPreferences getStrictPortletSetup(
-			PortletRequest portletRequest)
-		throws PortalException {
-
-		String portletResource = ParamUtil.getString(
-			portletRequest, "portletResource");
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		return getStrictPortletSetup(themeDisplay.getLayout(), portletResource);
-	}
-
 	protected boolean isCommentsEnabled(ResourceRequest resourceRequest)
 		throws Exception {
 
-		PortletPreferences portletPreferences = getStrictPortletSetup(
-			resourceRequest);
+		PortletPreferences portletPreferences =
+			PortletPreferencesFactoryUtil.getExistingPortletSetup(
+				resourceRequest);
 
 		if (portletPreferences == null) {
 			portletPreferences = resourceRequest.getPreferences();
