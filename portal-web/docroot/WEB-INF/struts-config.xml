@@ -205,24 +205,6 @@
 
 		<action path="/asset/get_categories" type="com.liferay.portlet.asset.action.GetCategoriesAction" />
 
-		<!-- Blogs -->
-
-		<action path="/blogs/edit_entry_discussion" type="com.liferay.portlet.messageboards.action.EditDiscussionAction">
-			<forward name="portlet.message_boards.error" path="portlet.blogs.error" />
-		</action>
-
-		<!-- Blogs Admin -->
-
-		<action path="/blogs_admin/edit_entry_discussion" type="com.liferay.portlet.messageboards.action.EditDiscussionAction">
-			<forward name="portlet.message_boards.error" path="portlet.blogs.error" />
-		</action>
-
-		<!-- Blogs Aggregator -->
-
-		<action path="/blogs_aggregator/edit_entry_discussion" type="com.liferay.portlet.messageboards.action.EditDiscussionAction">
-			<forward name="portlet.message_boards.error" path="portlet.blogs.error" />
-		</action>
-
 		<!-- Control Panel Home -->
 
 		<action path="/control_panel_home/view" forward="portlet.control_panel_home.view" />
