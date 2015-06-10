@@ -25,6 +25,8 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.PortletPreferencesFactory;
+import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.blogs.NoSuchEntryException;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.trackback.Trackback;
@@ -69,7 +71,10 @@ public class TrackbackActionTest extends PowerMockito {
 		setUpActionRequest();
 		setUpActionUtil();
 		setUpBlogsEntry();
-		setUpPortal();
+		setUpHttpUtil();
+		setUpPortalUtil();
+		setUpPortletPreferencesFactoryUtil();
+		setUpPropsUtil();
 	}
 
 	@Test
@@ -230,7 +235,15 @@ public class TrackbackActionTest extends PowerMockito {
 		);
 	}
 
-	protected void setUpPortal() {
+	protected void setUpHttpUtil() throws Exception {
+		HttpUtil httpUtil = new HttpUtil();
+
+		httpUtil.setHttp(_http);
+	}
+
+	protected void setUpPortalUtil() throws Exception {
+		PortalUtil portalUtil = new PortalUtil();
+
 		Portal portal = mock(Portal.class);
 
 		when(
@@ -251,15 +264,29 @@ public class TrackbackActionTest extends PowerMockito {
 			_mockHttpServletResponse
 		);
 
-		PortalUtil portalUtil = new PortalUtil();
-
 		portalUtil.setPortal(portal);
+	}
 
+	protected void setUpPortletPreferencesFactoryUtil() throws Exception {
+		PortletPreferencesFactoryUtil portletPreferencesFactoryUtil =
+			new PortletPreferencesFactoryUtil();
+
+		PortletPreferencesFactory portletPreferencesFactory = mock(
+			PortletPreferencesFactory.class);
+
+		when(
+			portletPreferencesFactory.getExistingPortletSetup(
+				Mockito.any(PortletRequest.class))
+		).thenReturn(
+			_portletPreferences
+		);
+
+		portletPreferencesFactoryUtil.setPortletPreferencesFactory(
+			portletPreferencesFactory);
+	}
+
+	protected void setUpPropsUtil() throws Exception {
 		PropsUtil.setProps(mock(Props.class));
-
-		HttpUtil httpUtil = new HttpUtil();
-
-		httpUtil.setHttp(_http);
 	}
 
 	protected void whenGetEntryThenThrow(Throwable toBeThrown)
