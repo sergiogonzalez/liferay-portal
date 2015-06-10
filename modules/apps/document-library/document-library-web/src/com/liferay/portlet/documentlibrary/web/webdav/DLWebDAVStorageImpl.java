@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.webdav;
+package com.liferay.portlet.documentlibrary.web.webdav;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lock.DuplicateLockException;
@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.webdav.Resource;
 import com.liferay.portal.kernel.webdav.Status;
 import com.liferay.portal.kernel.webdav.WebDAVException;
 import com.liferay.portal.kernel.webdav.WebDAVRequest;
+import com.liferay.portal.kernel.webdav.WebDAVStorage;
 import com.liferay.portal.kernel.webdav.WebDAVUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
@@ -62,6 +63,8 @@ import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DL;
+import com.liferay.portlet.documentlibrary.web.constants.DLWebKeys;
+import com.liferay.portlet.documentlibrary.webdav.DLFileEntryResourceImpl;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.trash.util.TrashUtil;
 
@@ -74,10 +77,17 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Alexander Chow
  */
+@Component(
+	immediate = true,
+	property = {"javax.portlet.name=" + DLWebKeys.DOCUMENT_LIBRARY},
+	service = WebDAVStorage.class
+)
 public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 
 	public static final String MS_OFFICE_2010_TEXT_XML_UTF8 =
