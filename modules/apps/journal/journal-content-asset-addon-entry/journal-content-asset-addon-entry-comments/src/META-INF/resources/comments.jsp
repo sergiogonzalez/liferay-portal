@@ -60,8 +60,6 @@ String viewMode = ParamUtil.getString(request, "viewMode");
 
 	<%
 	PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, liferayPortletResponse);
-
-	String currentURL = currentURLObj.toString();
 	%>
 
 	<liferay-ui:discussion
