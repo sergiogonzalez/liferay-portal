@@ -12,15 +12,24 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary;
+package com.liferay.portlet.documentlibrary.customattributes;
 
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.web.constants.DLWebKeys;
 import com.liferay.portlet.expando.model.BaseCustomAttributesDisplay;
+import com.liferay.portlet.expando.model.CustomAttributesDisplay;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Jorge Ferrer
  */
+@Component(
+	immediate = true,
+	property = {"javax.portlet.name=" + DLWebKeys.DOCUMENT_LIBRARY},
+	service = CustomAttributesDisplay.class
+)
 public class DLFileEntryCustomAttributesDisplay
 	extends BaseCustomAttributesDisplay {
 
