@@ -78,14 +78,12 @@ public class BlogsPortlet extends BaseBlogsPortlet {
 			_trackback.addTrackback(
 				entry, themeDisplay, excerpt, url, blogName, title,
 				new ServiceContextFunction(resourceRequest));
+
+			sendSuccess(resourceRequest, resourceResponse);
 		}
 		catch (TrackbackValidationException tve) {
 			sendError(resourceRequest, resourceResponse, tve.getMessage());
-
-			return;
 		}
-
-		sendSuccess(resourceRequest, resourceResponse);
 	}
 
 	public void subscribe(
