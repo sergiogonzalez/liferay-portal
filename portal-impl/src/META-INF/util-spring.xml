@@ -892,6 +892,7 @@
 			<bean class="com.liferay.portlet.documentlibrary.util.DLValidatorImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portlet.documentlibrary.workflow.DLFileEntryWorkflowHandler" class="com.liferay.portlet.documentlibrary.workflow.DLFileEntryWorkflowHandler" />
 	<bean id="com.liferay.portlet.dynamicdatamapping.io.DDMFormFieldTypesJSONSerializerUtil" class="com.liferay.portlet.dynamicdatamapping.io.DDMFormFieldTypesJSONSerializerUtil">
 		<property name="DDMFormFieldTypesJSONSerializer">
 			<bean class="com.liferay.portlet.dynamicdatamapping.io.DDMFormFieldTypesJSONSerializerImpl" />

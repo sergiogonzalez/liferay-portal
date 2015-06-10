@@ -132,7 +132,6 @@
 	<portlet>
 		<portlet-name>20</portlet-name>
 		<user-notification-definitions>com/liferay/portlet/documentlibrary/document-library-user-notification-definitions.xml</user-notification-definitions>
-		<workflow-handler>com.liferay.portlet.documentlibrary.workflow.DLFileEntryWorkflowHandler</workflow-handler>
 	</portlet>
 	<portlet>
 		<portlet-name>31</portlet-name>
