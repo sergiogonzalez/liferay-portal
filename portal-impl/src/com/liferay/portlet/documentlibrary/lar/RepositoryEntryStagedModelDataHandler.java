@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.StagedModelModifiedDateComparator;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Repository;
@@ -32,6 +33,7 @@ import java.util.Map;
 /**
  * @author Mate Thurzo
  */
+@OSGiBeanProperties
 public class RepositoryEntryStagedModelDataHandler
 	extends BaseStagedModelDataHandler<RepositoryEntry> {
 

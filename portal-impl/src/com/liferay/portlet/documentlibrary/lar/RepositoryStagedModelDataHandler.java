@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.lar.StagedModelModifiedDateComparator;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Repository;
@@ -40,6 +41,7 @@ import java.util.List;
 /**
  * @author Mate Thurzo
  */
+@OSGiBeanProperties
 public class RepositoryStagedModelDataHandler
 	extends BaseStagedModelDataHandler<Repository> {
 

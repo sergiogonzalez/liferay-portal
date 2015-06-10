@@ -853,6 +853,12 @@
 			<bean class="com.liferay.portlet.documentlibrary.display.context.DLDisplayContextProviderImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portlet.documentlibrary.lar.DLFileEntryTypeStagedModelDataHandler" class="com.liferay.portlet.documentlibrary.lar.DLFileEntryTypeStagedModelDataHandler" />
+	<bean id="com.liferay.portlet.documentlibrary.lar.FileEntryStagedModelDataHandler" class="com.liferay.portlet.documentlibrary.lar.FileEntryStagedModelDataHandler" />
+	<bean id="com.liferay.portlet.documentlibrary.lar.FileShortcutStagedModelDataHandler" class="com.liferay.portlet.documentlibrary.lar.FileShortcutStagedModelDataHandler" />
+	<bean id="com.liferay.portlet.documentlibrary.lar.FolderStagedModelDataHandler" class="com.liferay.portlet.documentlibrary.lar.FolderStagedModelDataHandler" />
+	<bean id="com.liferay.portlet.documentlibrary.lar.RepositoryEntryStagedModelDataHandler" class="com.liferay.portlet.documentlibrary.lar.RepositoryEntryStagedModelDataHandler" />
+	<bean id="com.liferay.portlet.documentlibrary.lar.RepositoryStagedModelDataHandler" class="com.liferay.portlet.documentlibrary.lar.RepositoryStagedModelDataHandler" />
 	<bean id="com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission" class="com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission" />
 	<bean id="com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission" class="com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission" />
 	<bean id="com.liferay.portlet.documentlibrary.service.permission.DLPermission" class="com.liferay.portlet.documentlibrary.service.permission.DLPermission" />

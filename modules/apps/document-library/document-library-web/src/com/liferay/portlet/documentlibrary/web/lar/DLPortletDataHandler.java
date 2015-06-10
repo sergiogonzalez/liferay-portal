@@ -55,6 +55,7 @@ import com.liferay.portal.repository.temporaryrepository.TemporaryFileEntryRepos
 import com.liferay.portal.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.documentlibrary.lar.constants.DLDataHandlerConstants;
 import com.liferay.portlet.documentlibrary.lar.xstream.FileEntryConverter;
 import com.liferay.portlet.documentlibrary.lar.xstream.FileVersionConverter;
 import com.liferay.portlet.documentlibrary.lar.xstream.FolderConverter;
@@ -100,8 +101,6 @@ import org.osgi.service.component.annotations.Component;
 )
 public class DLPortletDataHandler extends BasePortletDataHandler {
 
-	public static final String NAMESPACE = "document_library";
-
 	public DLPortletDataHandler() {
 		setDataLocalized(true);
 		setDataPortletPreferences("rootFolderId");
@@ -114,24 +113,25 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 			new StagedModelType(Repository.class));
 		setExportControls(
 			new PortletDataHandlerBoolean(
-				NAMESPACE, "repositories", true, false, null,
-				Repository.class.getName()),
+				DLDataHandlerConstants.NAMESPACE, "repositories", true, false,
+				null, Repository.class.getName()),
 			new PortletDataHandlerBoolean(
-				NAMESPACE, "folders", true, false, null,
+				DLDataHandlerConstants.NAMESPACE, "folders", true, false, null,
 				DLFolderConstants.getClassName()),
 			new PortletDataHandlerBoolean(
-				NAMESPACE, "documents", true, false,
+				DLDataHandlerConstants.NAMESPACE, "documents", true, false,
 				new PortletDataHandlerControl[] {
 					new PortletDataHandlerBoolean(
-						NAMESPACE, "previews-and-thumbnails")
+						DLDataHandlerConstants.NAMESPACE,
+						"previews-and-thumbnails")
 				},
 				DLFileEntryConstants.getClassName()),
 			new PortletDataHandlerBoolean(
-				NAMESPACE, "document-types", true, false, null,
-				DLFileEntryType.class.getName()),
+				DLDataHandlerConstants.NAMESPACE, "document-types", true, false,
+				null, DLFileEntryType.class.getName()),
 			new PortletDataHandlerBoolean(
-				NAMESPACE, "shortcuts", true, false, null,
-				DLFileShortcutConstants.getClassName()));
+				DLDataHandlerConstants.NAMESPACE, "shortcuts", true, false,
+				null, DLFileShortcutConstants.getClassName()));
 		setPublishToLiveByDefault(PropsValues.DL_PUBLISH_TO_LIVE_BY_DEFAULT);
 
 		XStreamAliasRegistryUtil.register(DLFileEntryImpl.class, "DLFileEntry");
@@ -184,14 +184,18 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 		rootElement.addAttribute(
 			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
 
-		if (portletDataContext.getBooleanParameter(NAMESPACE, "folders")) {
+		if (portletDataContext.getBooleanParameter(
+				DLDataHandlerConstants.NAMESPACE, "folders")) {
+
 			ActionableDynamicQuery folderActionableDynamicQuery =
 				getFolderActionableDynamicQuery(portletDataContext);
 
 			folderActionableDynamicQuery.performActions();
 		}
 
-		if (portletDataContext.getBooleanParameter(NAMESPACE, "documents")) {
+		if (portletDataContext.getBooleanParameter(
+				DLDataHandlerConstants.NAMESPACE, "documents")) {
+
 			ActionableDynamicQuery fileEntryActionableDynamicQuery =
 				getFileEntryActionableDynamicQuery(portletDataContext);
 
@@ -199,7 +203,7 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 		}
 
 		if (portletDataContext.getBooleanParameter(
-				NAMESPACE, "document-types")) {
+				DLDataHandlerConstants.NAMESPACE, "document-types")) {
 
 			ActionableDynamicQuery fileEntryTypeActionableDynamicQuery =
 				getDLFileEntryTypeActionableDynamicQuery(portletDataContext);
@@ -207,14 +211,18 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 			fileEntryTypeActionableDynamicQuery.performActions();
 		}
 
-		if (portletDataContext.getBooleanParameter(NAMESPACE, "repositories")) {
+		if (portletDataContext.getBooleanParameter(
+				DLDataHandlerConstants.NAMESPACE, "repositories")) {
+
 			ActionableDynamicQuery repositoryActionableDynamicQuery =
 				getRepositoryActionableDynamicQuery(portletDataContext);
 
 			repositoryActionableDynamicQuery.performActions();
 		}
 
-		if (portletDataContext.getBooleanParameter(NAMESPACE, "shortcuts")) {
+		if (portletDataContext.getBooleanParameter(
+				DLDataHandlerConstants.NAMESPACE, "shortcuts")) {
+
 			ActionableDynamicQuery fileShortcutActionableDynamicQuery =
 				getDLFileShortcutActionableDynamicQuery(portletDataContext);
 
@@ -232,7 +240,9 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 
 		portletDataContext.importPortletPermissions(DLPermission.RESOURCE_NAME);
 
-		if (portletDataContext.getBooleanParameter(NAMESPACE, "folders")) {
+		if (portletDataContext.getBooleanParameter(
+				DLDataHandlerConstants.NAMESPACE, "folders")) {
+
 			Element foldersElement =
 				portletDataContext.getImportDataGroupElement(DLFolder.class);
 
@@ -244,7 +254,9 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 			}
 		}
 
-		if (portletDataContext.getBooleanParameter(NAMESPACE, "documents")) {
+		if (portletDataContext.getBooleanParameter(
+				DLDataHandlerConstants.NAMESPACE, "documents")) {
+
 			Element fileEntriesElement =
 				portletDataContext.getImportDataGroupElement(DLFileEntry.class);
 
@@ -257,7 +269,7 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 		}
 
 		if (portletDataContext.getBooleanParameter(
-				NAMESPACE, "document-types")) {
+				DLDataHandlerConstants.NAMESPACE, "document-types")) {
 
 			Element fileEntryTypesElement =
 				portletDataContext.getImportDataGroupElement(
@@ -272,7 +284,9 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 			}
 		}
 
-		if (portletDataContext.getBooleanParameter(NAMESPACE, "repositories")) {
+		if (portletDataContext.getBooleanParameter(
+				DLDataHandlerConstants.NAMESPACE, "repositories")) {
+
 			Element repositoriesElement =
 				portletDataContext.getImportDataGroupElement(Repository.class);
 
@@ -284,7 +298,9 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 			}
 		}
 
-		if (portletDataContext.getBooleanParameter(NAMESPACE, "shortcuts")) {
+		if (portletDataContext.getBooleanParameter(
+				DLDataHandlerConstants.NAMESPACE, "shortcuts")) {
+
 			Element fileShortcutsElement =
 				portletDataContext.getImportDataGroupElement(
 					DLFileShortcut.class);
