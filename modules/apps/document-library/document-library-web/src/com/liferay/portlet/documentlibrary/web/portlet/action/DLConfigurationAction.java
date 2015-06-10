@@ -12,9 +12,10 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.action;
+package com.liferay.portlet.documentlibrary.web.portlet.action;
 
 import com.liferay.portal.NoSuchRepositoryEntryException;
+import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.SettingsConfigurationAction;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
@@ -24,16 +25,27 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.web.constants.DLWebKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Jorge Ferrer
  * @author Sergio González
  */
-public class ConfigurationActionImpl extends SettingsConfigurationAction {
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + DLWebKeys.DOCUMENT_LIBRARY,
+		"javax.portlet.name=" + DLWebKeys.DOCUMENT_LIBRARY_ADMIN
+	},
+	service = ConfigurationAction.class
+)
+public class DLConfigurationAction extends SettingsConfigurationAction {
 
 	@Override
 	public void processAction(

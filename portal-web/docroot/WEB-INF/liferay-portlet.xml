@@ -131,7 +131,6 @@
 	</portlet>
 	<portlet>
 		<portlet-name>20</portlet-name>
-		<configuration-action-class>com.liferay.portlet.documentlibrary.action.ConfigurationActionImpl</configuration-action-class>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<portlet-data-handler-class>com.liferay.portlet.documentlibrary.lar.DLPortletDataHandler</portlet-data-handler-class>
 		<staged-model-data-handler-class>com.liferay.portlet.documentlibrary.lar.DLFileEntryTypeStagedModelDataHandler</staged-model-data-handler-class>
@@ -163,7 +162,6 @@
 	</portlet>
 	<portlet>
 		<portlet-name>31</portlet-name>
-		<configuration-action-class>com.liferay.portlet.imagegallerydisplay.action.ConfigurationActionImpl</configuration-action-class>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<friendly-url-mapper-class>com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper</friendly-url-mapper-class>
 		<friendly-url-mapping>image_gallery_display</friendly-url-mapping>
@@ -400,7 +398,6 @@
 	</portlet>
 	<portlet>
 		<portlet-name>110</portlet-name>
-		<configuration-action-class>com.liferay.portlet.documentlibrarydisplay.action.ConfigurationActionImpl</configuration-action-class>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<friendly-url-mapper-class>com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper</friendly-url-mapper-class>
 		<friendly-url-mapping>document_library_display</friendly-url-mapping>
@@ -943,7 +940,6 @@
 	</portlet>
 	<portlet>
 		<portlet-name>199</portlet-name>
-		<configuration-action-class>com.liferay.portlet.documentlibraryadmin.action.ConfigurationActionImpl</configuration-action-class>
 		<scheduler-entry>
 			<scheduler-event-listener-class>com.liferay.portlet.documentlibrary.messaging.TempFileEntriesMessageListener</scheduler-event-listener-class>
 			<trigger>

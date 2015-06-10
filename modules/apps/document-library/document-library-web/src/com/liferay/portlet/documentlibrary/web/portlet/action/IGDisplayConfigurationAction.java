@@ -12,15 +12,24 @@
  * details.
  */
 
-package com.liferay.portlet.imagegallerydisplay.action;
+package com.liferay.portlet.documentlibrary.web.portlet.action;
+
+import com.liferay.portal.kernel.portlet.ConfigurationAction;
+import com.liferay.portlet.documentlibrary.web.constants.DLWebKeys;
 
 import javax.portlet.ActionRequest;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Sergio González
  */
-public class ConfigurationActionImpl
-	extends com.liferay.portlet.documentlibrary.action.ConfigurationActionImpl {
+@Component(
+	immediate = true,
+	property = {"javax.portlet.name=" + DLWebKeys.IMAGE_GALLERY_DISPLAY},
+	service = ConfigurationAction.class
+)
+public class IGDisplayConfigurationAction extends DLConfigurationAction {
 
 	@Override
 	public void validate(ActionRequest actionRequest) throws Exception {
