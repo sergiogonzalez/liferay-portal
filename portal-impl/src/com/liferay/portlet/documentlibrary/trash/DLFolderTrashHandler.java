@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
 import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.trash.TrashActionKeys;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.Validator;
@@ -48,6 +49,11 @@ import javax.portlet.PortletRequest;
  * @author Alexander Chow
  * @author Zsolt Berentey
  */
+@OSGiBeanProperties(
+	property = {
+		"model.class.name=com.liferay.portlet.documentlibrary.model.DLFolder"
+	}
+)
 public class DLFolderTrashHandler extends DLBaseTrashHandler {
 
 	@Override

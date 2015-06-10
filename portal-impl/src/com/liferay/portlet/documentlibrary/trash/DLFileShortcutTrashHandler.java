@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
 import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.trash.TrashActionKeys;
 import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.model.TrashedModel;
@@ -44,6 +45,11 @@ import javax.portlet.PortletRequest;
  *
  * @author Zsolt Berentey
  */
+@OSGiBeanProperties(
+	property = {
+		"model.class.name=com.liferay.portlet.documentlibrary.model.DLFileShortcut"
+	}
+)
 public class DLFileShortcutTrashHandler extends DLBaseTrashHandler {
 
 	@Override

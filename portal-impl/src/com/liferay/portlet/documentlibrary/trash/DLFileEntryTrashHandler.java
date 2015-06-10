@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.trash.TrashActionKeys;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
@@ -59,6 +60,11 @@ import javax.portlet.PortletRequest;
  * @author Manuel de la Peña
  * @author Zsolt Berentey
  */
+@OSGiBeanProperties(
+	property = {
+		"model.class.name=com.liferay.portlet.documentlibrary.model.DLFileEntry"
+	}
+)
 public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 
 	@Override
