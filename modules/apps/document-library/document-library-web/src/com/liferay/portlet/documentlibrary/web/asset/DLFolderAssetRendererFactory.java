@@ -12,34 +12,41 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.asset;
+package com.liferay.portlet.documentlibrary.web.asset;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.asset.model.AssetRenderer;
+import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.BaseAssetRendererFactory;
+import com.liferay.portlet.documentlibrary.asset.DLFolderAssetRenderer;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
+import com.liferay.portlet.documentlibrary.web.constants.DLWebKeys;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 import javax.portlet.WindowStateException;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Alexander Chow
  */
-@OSGiBeanProperties(
+@Component(
+	immediate = true,
 	property = {
+		"javax.portlet.name=" + DLWebKeys.DOCUMENT_LIBRARY,
 		"search.asset.type=com.liferay.portlet.documentlibrary.model.DLFolder"
-	}
+	},
+	service = AssetRendererFactory.class
 )
 public class DLFolderAssetRendererFactory extends BaseAssetRendererFactory {
 

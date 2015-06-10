@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.asset;
+package com.liferay.portlet.documentlibrary.web.asset;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -20,15 +20,17 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.asset.model.AssetRenderer;
+import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.BaseAssetRendererFactory;
 import com.liferay.portlet.asset.model.ClassTypeReader;
+import com.liferay.portlet.documentlibrary.asset.DLFileEntryAssetRenderer;
+import com.liferay.portlet.documentlibrary.asset.DLFileEntryClassTypeReader;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
@@ -38,6 +40,7 @@ import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUt
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryTypePermission;
 import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
+import com.liferay.portlet.documentlibrary.web.constants.DLWebKeys;
 
 import java.util.Locale;
 
@@ -46,16 +49,21 @@ import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 import javax.portlet.WindowStateException;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Julio Camarero
  * @author Juan Fernández
  * @author Raymond Augé
  * @author Sergio González
  */
-@OSGiBeanProperties(
+@Component(
+	immediate = true,
 	property = {
+		"javax.portlet.name=" + DLWebKeys.DOCUMENT_LIBRARY,
 		"search.asset.type=com.liferay.portlet.documentlibrary.model.DLFileEntry"
-	}
+	},
+	service = AssetRendererFactory.class
 )
 public class DLFileEntryAssetRendererFactory extends BaseAssetRendererFactory {
 
