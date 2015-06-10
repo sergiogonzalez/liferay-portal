@@ -57,6 +57,7 @@ public class MVCPortlet extends LiferayPortlet {
 		super.destroy();
 
 		_actionCommandCache.close();
+		_renderCommandCache.close();
 	}
 
 	@Override
@@ -197,6 +198,8 @@ public class MVCPortlet extends LiferayPortlet {
 
 		_actionCommandCache = new ActionCommandCache(
 			packagePrefix, getPortletName());
+		_renderCommandCache = new RenderCommandCache(
+			packagePrefix, getPortletName());
 	}
 
 	public void invokeTaglibDiscussion(
@@ -252,6 +255,31 @@ public class MVCPortlet extends LiferayPortlet {
 		}
 		else {
 			super.serveResource(resourceRequest, resourceResponse);
+		}
+	}
+
+	@Override
+	public void render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws PortletException, IOException {
+
+		try {
+			checkPermissions(renderRequest);
+		}
+		catch (Exception e) {
+			throw new PortletException(e);
+		}
+
+		String renderName = getPath(renderRequest);
+
+		RenderCommand renderCommand = _renderCommandCache.getRenderCommand(
+			renderName);
+
+		if (renderCommand != RenderCommandCache.EMPTY) {
+			String mvcPath = renderCommand.processCommand(
+				renderRequest, renderResponse);
+
+			renderRequest.setAttribute("mvcPath", mvcPath);
 		}
 	}
 
@@ -389,6 +417,10 @@ public class MVCPortlet extends LiferayPortlet {
 	protected String getPath(PortletRequest portletRequest) {
 		String mvcPath = portletRequest.getParameter("mvcPath");
 
+		if (mvcPath == null) {
+			mvcPath = (String)portletRequest.getAttribute("mvcPath");
+		}
+
 		// Check deprecated parameter
 
 		if (mvcPath == null) {
@@ -511,5 +543,6 @@ public class MVCPortlet extends LiferayPortlet {
 	private static final Log _log = LogFactoryUtil.getLog(MVCPortlet.class);
 
 	private ActionCommandCache _actionCommandCache;
+	private RenderCommandCache _renderCommandCache;
 
 }
