@@ -846,6 +846,8 @@
 			<bean class="com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portlet.documentlibrary.atom.FileEntryAtomCollectionAdapter" class="com.liferay.portlet.documentlibrary.atom.FileEntryAtomCollectionAdapter" />
+	<bean id="com.liferay.portlet.documentlibrary.atom.FolderAtomCollectionAdapter" class="com.liferay.portlet.documentlibrary.atom.FolderAtomCollectionAdapter" />
 	<bean id="com.liferay.portlet.documentlibrary.display.context.DLDisplayContextFactoryProviderUtil" class="com.liferay.portlet.documentlibrary.display.context.DLDisplayContextProviderUtil">
 		<property name="DLDisplayContextFactoryProvider">
 			<bean class="com.liferay.portlet.documentlibrary.display.context.DLDisplayContextProviderImpl" />

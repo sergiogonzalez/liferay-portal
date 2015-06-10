@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.atom.AtomEntryContent;
 import com.liferay.portal.kernel.atom.AtomRequestContext;
 import com.liferay.portal.kernel.atom.BaseAtomCollectionAdapter;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortletKeys;
@@ -33,6 +34,11 @@ import java.util.List;
 /**
  * @author Igor Spasic
  */
+@OSGiBeanProperties(
+	property = {
+		"model.class.name=com.liferay.portal.kernel.repository.model.Folder"
+	}
+)
 public class FolderAtomCollectionAdapter
 	extends BaseAtomCollectionAdapter<Folder> {
 
