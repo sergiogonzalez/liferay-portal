@@ -135,9 +135,6 @@
 	</portlet>
 	<portlet>
 		<portlet-name>31</portlet-name>
-		<friendly-url-mapper-class>com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper</friendly-url-mapper-class>
-		<friendly-url-mapping>image_gallery_display</friendly-url-mapping>
-		<friendly-url-routes>com/liferay/portlet/imagegallerydisplay/image-gallery-display-friendly-url-routes.xml</friendly-url-routes>
 		<template-handler>com.liferay.portlet.documentlibrary.template.DocumentLibraryPortletDisplayTemplateHandler</template-handler>
 	</portlet>
 	<portlet>
@@ -366,9 +363,6 @@
 	</portlet>
 	<portlet>
 		<portlet-name>110</portlet-name>
-		<friendly-url-mapper-class>com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper</friendly-url-mapper-class>
-		<friendly-url-mapping>document_library_display</friendly-url-mapping>
-		<friendly-url-routes>com/liferay/portlet/documentlibrary/document-library-display-friendly-url-routes.xml</friendly-url-routes>
 	</portlet>
 	<portlet>
 		<portlet-name>114</portlet-name>
