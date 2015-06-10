@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,18 +11,24 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/html/portlet/document_library/init.jsp" %>
+package com.liferay.portlet.documentlibrary.web.constants;
 
-<%
-FileVersion fileVersion = (FileVersion)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_VERSION);
+/**
+ * @author Iván Zaera
+ */
+public class DLWebKeys {
 
-int status = ParamUtil.getInteger(request, "status", WorkflowConstants.STATUS_ANY);
+	public static final String DOCUMENT_LIBRARY =
+		"com_liferay_document_library_web_portlet_DLPortlet";
 
-boolean hasAudio = AudioProcessorUtil.hasAudio(fileVersion);
-boolean hasImages = ImageProcessorUtil.hasImages(fileVersion);
-boolean hasVideo = VideoProcessorUtil.hasVideo(fileVersion);
-%>
+	public static final String DOCUMENT_LIBRARY_ADMIN =
+		"com_liferay_document_library_web_portlet_DLAdminPortlet";
 
-<%@ include file="/html/portlet/document_library/view_file_entry_preview.jspf" %>
+	public static final String DOCUMENT_LIBRARY_DISPLAY =
+		"com_liferay_document_library_web_portlet_DLDisplayPortlet";
+
+	public static final String IMAGE_GALLERY_DISPLAY =
+		"com_liferay_document_library_web_portlet_IGDisplayPortlet";
+
+}

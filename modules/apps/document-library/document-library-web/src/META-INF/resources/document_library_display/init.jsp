@@ -16,15 +16,8 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.portal.kernel.repository.RepositoryException" %><%@
-page import="com.liferay.portlet.documentlibrary.DLPortletInstanceSettings" %><%@
+<%@ page import="com.liferay.portlet.documentlibrary.DLPortletInstanceSettings" %><%@
 page import="com.liferay.portlet.documentlibrary.NoSuchFolderException" %><%@
-page import="com.liferay.portlet.documentlibrary.display.context.logic.DLPortletInstanceSettingsHelper" %><%@
-page import="com.liferay.portlet.documentlibrary.model.DLFileEntryType" %><%@
-page import="com.liferay.portlet.documentlibrary.model.DLFileShortcutConstants" %><%@
-page import="com.liferay.portlet.documentlibrary.search.EntriesChecker" %><%@
-page import="com.liferay.portlet.documentlibrary.service.DLFileEntryTypeServiceUtil" %><%@
-page import="com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission" %><%@
 page import="com.liferay.portlet.documentlibrarydisplay.display.context.util.DLDisplayRequestHelper" %>
 
 <%
@@ -33,9 +26,6 @@ if (layout.isTypeControlPanel()) {
 }
 
 DLDisplayRequestHelper dlDisplayRequestHelper = new DLDisplayRequestHelper(request);
-
-String portletId = dlDisplayRequestHelper.getResourcePortletId();
-String portletResource = dlDisplayRequestHelper.getPortletResource();
 
 DLPortletInstanceSettings dlPortletInstanceSettings = dlDisplayRequestHelper.getDLPortletInstanceSettings();
 
@@ -57,10 +47,6 @@ if (rootFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 		rootFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 	}
 }
-
-boolean mergedView = false;
-
-Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>
 
 <%@ include file="/html/portlet/document_library_display/init-ext.jsp" %>

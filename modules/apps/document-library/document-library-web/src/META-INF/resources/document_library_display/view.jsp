@@ -57,7 +57,6 @@ if (permissionChecker.isContentReviewer(user.getCompanyId(), scopeGroupId)) {
 }
 
 String[] folderColumns = dlPortletInstanceSettingsHelper.getFolderColumns();
-String[] fileEntryColumns = dlPortletInstanceSettingsHelper.getFileEntryColumns();
 
 int foldersCount = DLAppServiceUtil.getFoldersCount(repositoryId, folderId);
 int fileEntriesCount = DLAppServiceUtil.getFileEntriesAndFileShortcutsCount(repositoryId, folderId, status);
@@ -269,8 +268,6 @@ request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntry
 			>
 
 				<%
-				FileShortcut fileShortcut = null;
-
 				String rowHREF = null;
 
 				if (DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.VIEW)) {
@@ -300,5 +297,4 @@ request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntry
 </c:choose>
 
 <%!
-private static Log _log = LogFactoryUtil.getLog("portal-web.docroot.html.portlet.document_library.view_jsp");
 %>

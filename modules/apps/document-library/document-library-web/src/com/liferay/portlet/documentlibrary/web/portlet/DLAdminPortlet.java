@@ -17,5 +17,41 @@ package com.liferay.portlet.documentlibrary.web.portlet;
 /**
  * @author Iván Zaera
  */
+
+import com.liferay.portlet.documentlibrary.web.constants.DLWebKeys;
+
+import javax.portlet.Portlet;
+
+import org.osgi.service.component.annotations.Component;
+@Component(
+	immediate = true,
+	property = {
+		"com.liferay.portlet.control-panel-entry-category=site_administration.content",
+		"com.liferay.portlet.control-panel-entry-weight=3.0",
+		"com.liferay.portlet.css-class-wrapper=portlet-document-library",
+		"com.liferay.portlet.header-portlet-css=/document_library/css/main.css",
+		"com.liferay.portlet.header-portlet-javascript=/document_library/js/main.js",
+		"com.liferay.portlet.header-portlet-javascript=/document_library/js/upload.js",
+		"com.liferay.portlet.icon=/icons/document_library.png",
+		"com.liferay.portlet.preferences-owned-by-group=true",
+		"com.liferay.portlet.preferences-unique-per-layout=false",
+		"com.liferay.portlet.private-request-attributes=false",
+		"com.liferay.portlet.private-session-attributes=false",
+		"com.liferay.portlet.render-weight=50",
+		"com.liferay.portlet.scopeable=true",
+		"com.liferay.portlet.use-default-template=true",
+		"com.liferay.portlet.webdav-storage-token=document_library",
+		"javax.portlet.display-name=Documents and Media Admin",
+		"javax.portlet.expiration-cache=0",
+		"javax.portlet.init-param.config-template=/document_library_admin/configuration.jsp",
+		"javax.portlet.init-param.template-path=/",
+		"javax.portlet.init-param.view-action=/document_library_admin/view",
+		"javax.portlet.name=" + DLWebKeys.DOCUMENT_LIBRARY_ADMIN,
+		"javax.portlet.resource-bundle=content.Language",
+		"javax.portlet.security-role-ref=administrator",
+		"javax.portlet.supports.mime-type=text/html"
+	},
+	service = {DLAdminPortlet.class, Portlet.class}
+)
 public class DLAdminPortlet extends DLPortlet {
 }

@@ -27,12 +27,48 @@ import com.liferay.portlet.documentlibrary.action.EditRepositoryAction;
 import com.liferay.portlet.documentlibrary.action.GetFileAction;
 import com.liferay.portlet.documentlibrary.action.SearchAction;
 import com.liferay.portlet.documentlibrary.action.ViewAction;
+import com.liferay.portlet.documentlibrary.web.constants.DLWebKeys;
 
+import javax.portlet.Portlet;
 import javax.portlet.PortletException;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Iván Zaera
  */
+@Component(
+	immediate = true,
+	property = {
+		"com.liferay.portlet.add-default-resource=true",
+		"com.liferay.portlet.css-class-wrapper=portlet-document-library",
+		"com.liferay.portlet.header-portlet-css=/document_library/css/main.css",
+		"com.liferay.portlet.header-portlet-javascript=/document_library/js/main.js",
+		"com.liferay.portlet.header-portlet-javascript=/document_library/js/upload.js",
+		"com.liferay.portlet.icon=/icons/document_library.png",
+		"com.liferay.portlet.preferences-owned-by-group=true",
+		"com.liferay.portlet.private-request-attributes=false",
+		"com.liferay.portlet.private-session-attributes=false",
+		"com.liferay.portlet.render-weight=50",
+		"com.liferay.portlet.scopeable=true",
+		"com.liferay.portlet.use-default-template=true",
+		"com.liferay.portlet.webdav-storage-token=document_library",
+		"javax.portlet.display-name=Documents and Media",
+		"javax.portlet.expiration-cache=0",
+		"javax.portlet.init-param.config-template=/document_library/configuration.jsp",
+		"javax.portlet.init-param.single-page-application-cacheable=false",
+		"javax.portlet.init-param.template-path=/",
+		"javax.portlet.init-param.view-action=/document_library/view",
+		"javax.portlet.name=" + DLWebKeys.DOCUMENT_LIBRARY,
+		"javax.portlet.resource-bundle=content.Language",
+		"javax.portlet.security-role-ref=guest,power-user,user",
+		"javax.portlet.supported-public-render-parameter=categoryId",
+		"javax.portlet.supported-public-render-parameter=resetCur",
+		"javax.portlet.supported-public-render-parameter=tag",
+		"javax.portlet.supports.mime-type=text/html"
+	},
+	service = {DLPortlet.class, Portlet.class}
+)
 public class DLPortlet extends MVCPortlet {
 
 	public DLPortlet() {
