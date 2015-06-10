@@ -135,7 +135,6 @@
 	</portlet>
 	<portlet>
 		<portlet-name>31</portlet-name>
-		<template-handler>com.liferay.portlet.documentlibrary.template.DocumentLibraryPortletDisplayTemplateHandler</template-handler>
 	</portlet>
 	<portlet>
 		<portlet-name>33</portlet-name>

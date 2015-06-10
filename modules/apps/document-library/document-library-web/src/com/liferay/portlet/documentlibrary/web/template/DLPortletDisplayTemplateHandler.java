@@ -12,13 +12,14 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.template;
+package com.liferay.portlet.documentlibrary.web.template;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.BasePortletDisplayTemplateHandler;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PortalUtil;
@@ -29,6 +30,7 @@ import com.liferay.portlet.documentlibrary.service.DLAppService;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeService;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
+import com.liferay.portlet.documentlibrary.web.constants.DLWebKeys;
 import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateConstants;
 
 import java.util.HashMap;
@@ -36,10 +38,17 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Eduardo Garcia
  */
-public class DocumentLibraryPortletDisplayTemplateHandler
+@Component(
+	immediate = true,
+	property = {"javax.portlet.name=" + DLWebKeys.DOCUMENT_LIBRARY},
+	service = TemplateHandler.class
+)
+public class DLPortletDisplayTemplateHandler
 	extends BasePortletDisplayTemplateHandler {
 
 	@Override
@@ -125,6 +134,6 @@ public class DocumentLibraryPortletDisplayTemplateHandler
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DocumentLibraryPortletDisplayTemplateHandler.class);
+		DLPortletDisplayTemplateHandler.class);
 
 }
