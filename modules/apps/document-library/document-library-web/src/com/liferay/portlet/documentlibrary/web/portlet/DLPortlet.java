@@ -42,7 +42,12 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"com.liferay.portlet.add-default-resource=true",
 		"com.liferay.portlet.css-class-wrapper=portlet-document-library",
+		"com.liferay.portlet.add-default-resource=true",
+		"com.liferay.portlet.autopropagated-parameters=showMountFolder",
+		"com.liferay.portlet.footer-portlet-javascript=/o/ddm-web/js/main.js",
+		"com.liferay.portlet.footer-portlet-javascript=/o/ddm-web/js/custom_fields.js",
 		"com.liferay.portlet.header-portlet-css=/document_library/css/main.css",
+		"com.liferay.portlet.header-portlet-css=/o/ddm-web/css/main.css",
 		"com.liferay.portlet.header-portlet-javascript=/document_library/js/main.js",
 		"com.liferay.portlet.header-portlet-javascript=/document_library/js/upload.js",
 		"com.liferay.portlet.icon=/icons/document_library.png",

@@ -133,10 +133,6 @@
 		<portlet-name>20</portlet-name>
 		<user-notification-definitions>com/liferay/portlet/documentlibrary/document-library-user-notification-definitions.xml</user-notification-definitions>
 		<workflow-handler>com.liferay.portlet.documentlibrary.workflow.DLFileEntryWorkflowHandler</workflow-handler>
-		<autopropagated-parameters>showMountFolder</autopropagated-parameters>
-		<header-portlet-css>/o/ddm-web/css/main.css</header-portlet-css>
-		<footer-portlet-javascript>/o/ddm-web/js/main.js</footer-portlet-javascript>
-		<footer-portlet-javascript>/o/ddm-web/js/custom_fields.js</footer-portlet-javascript>
 	</portlet>
 	<portlet>
 		<portlet-name>31</portlet-name>
@@ -144,8 +140,6 @@
 		<friendly-url-mapping>image_gallery_display</friendly-url-mapping>
 		<friendly-url-routes>com/liferay/portlet/imagegallerydisplay/image-gallery-display-friendly-url-routes.xml</friendly-url-routes>
 		<template-handler>com.liferay.portlet.documentlibrary.template.DocumentLibraryPortletDisplayTemplateHandler</template-handler>
-		<footer-portlet-javascript>/o/ddm-web/js/main.js</footer-portlet-javascript>
-		<footer-portlet-javascript>/o/ddm-web/js/custom_fields.js</footer-portlet-javascript>
 	</portlet>
 	<portlet>
 		<portlet-name>33</portlet-name>
@@ -921,9 +915,6 @@
 				</simple>
 			</trigger>
 		</scheduler-entry>
-		<header-portlet-css>/o/ddm-web/css/main.css</header-portlet-css>
-		<footer-portlet-javascript>/o/ddm-web/js/main.js</footer-portlet-javascript>
-		<footer-portlet-javascript>/o/ddm-web/js/custom_fields.js</footer-portlet-javascript>
 	</portlet>
 	<portlet>
 		<portlet-name>200</portlet-name>

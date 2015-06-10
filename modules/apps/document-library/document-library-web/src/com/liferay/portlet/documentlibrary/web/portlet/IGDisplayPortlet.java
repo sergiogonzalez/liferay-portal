@@ -37,6 +37,8 @@ import org.osgi.service.component.annotations.Component;
 		"com.liferay.portlet.css-class-wrapper=portlet-image-gallery-display",
 		"com.liferay.portlet.footer-portlet-javascript=/document_library/js/main.js",
 		"com.liferay.portlet.footer-portlet-javascript=/document_library/js/upload.js",
+		"com.liferay.portlet.footer-portlet-javascript=/o/ddm-web/js/main.js",
+		"com.liferay.portlet.footer-portlet-javascript=/o/ddm-web/js/custom_fields.js",
 		"com.liferay.portlet.header-portlet-css=/image_gallery_display/css/main.css",
 		"com.liferay.portlet.header-portlet-css=/document_library/css/main.css",
 		"com.liferay.portlet.icon=/icons/image_gallery.png",
