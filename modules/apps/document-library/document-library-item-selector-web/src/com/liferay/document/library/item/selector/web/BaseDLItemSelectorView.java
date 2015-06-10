@@ -46,7 +46,7 @@ public abstract class BaseDLItemSelectorView
 		throws IOException, ServletException {
 
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher(
-			"/o/document-library-item-selector-web/documents.jsp");
+			getJspPath());
 
 		DLItemSelectorViewDisplayContext dlItemSelectorViewDisplayContext =
 			new DLItemSelectorViewDisplayContext(
@@ -58,5 +58,7 @@ public abstract class BaseDLItemSelectorView
 
 		requestDispatcher.include(request, response);
 	}
+
+	protected abstract String getJspPath();
 
 }

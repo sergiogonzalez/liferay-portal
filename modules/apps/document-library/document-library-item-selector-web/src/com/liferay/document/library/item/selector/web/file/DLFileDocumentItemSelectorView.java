@@ -12,14 +12,13 @@
  * details.
  */
 
-package com.liferay.document.library.item.selector.web.image;
+package com.liferay.document.library.item.selector.web.file;
 
 import com.liferay.document.library.item.selector.web.BaseDLItemSelectorView;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.DefaultItemSelectorReturnType;
-import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
+import com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.util.PropsValues;
 
 import java.util.Collections;
 import java.util.Locale;
@@ -32,18 +31,18 @@ import org.osgi.service.component.annotations.Component;
  * @author Roberto Díaz
  */
 @Component(service = ItemSelectorView.class)
-public class DLImageItemSelectorView
+public class DLFileDocumentItemSelectorView
 	extends BaseDLItemSelectorView
-		<ImageItemSelectorCriterion, DefaultItemSelectorReturnType> {
+		<FileItemSelectorCriterion, DefaultItemSelectorReturnType> {
 
 	@Override
-	public Class<ImageItemSelectorCriterion> getItemSelectorCriterionClass() {
-		return ImageItemSelectorCriterion.class;
+	public Class<FileItemSelectorCriterion> getItemSelectorCriterionClass() {
+		return FileItemSelectorCriterion.class;
 	}
 
 	@Override
-	public String[] getMimeTypes() {
-		return PropsValues.DL_FILE_ENTRY_PREVIEW_IMAGE_MIME_TYPES;
+	public String getJspPath() {
+		return "/o/document-library-item-selector-web/documents.jsp";
 	}
 
 	@Override
