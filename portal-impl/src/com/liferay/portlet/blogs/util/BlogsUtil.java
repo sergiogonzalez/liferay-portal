@@ -28,6 +28,7 @@ import com.liferay.portal.model.Company;
 import com.liferay.portal.model.ModelHintsUtil;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryServiceUtil;
@@ -216,6 +217,27 @@ public class BlogsUtil {
 		return definitionTerms;
 	}
 
+	public static String getRSSUrl(ThemeDisplay themeDisplay) {
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		String portletName = portletDisplay.getPortletName();
+
+		String strutsAction = null;
+
+		if (portletName.equals(PortletKeys.BLOGS)) {
+			strutsAction = "/blogs/rss";
+		}
+		else if (portletName.equals(PortletKeys.BLOGS_AGGREGATOR)) {
+			strutsAction = "/blogs_aggregator/rss";
+		}
+		else {
+			throw new IllegalArgumentException(
+				"Blogs RSS action does not support portlet " + portletName);
+		}
+
+		return themeDisplay.getPathMain() + strutsAction;
+	}
+
 	public static String getRSSUrl(
 		ThemeDisplay themeDisplay, String selectionMethod,
 		long organizationId) {
@@ -236,8 +258,7 @@ public class BlogsUtil {
 			rssURLParams += "&groupId=" + themeDisplay.getScopeGroupId();
 		}
 
-		return themeDisplay.getPathMain() + "/blogs_aggregator/rss" +
-			rssURLParams;
+		return getRSSUrl(themeDisplay) + rssURLParams;
 	}
 
 	public static SearchContainerResults<AssetEntry> getSearchContainerResults(
