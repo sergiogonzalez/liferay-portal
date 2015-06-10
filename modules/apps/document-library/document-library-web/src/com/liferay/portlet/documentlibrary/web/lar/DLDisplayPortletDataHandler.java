@@ -12,19 +12,27 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.lar;
+package com.liferay.portlet.documentlibrary.web.lar;
 
 import com.liferay.portal.kernel.lar.DataLevel;
 import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.lar.PortletDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.documentlibrary.web.constants.DLWebKeys;
 
 import javax.portlet.PortletPreferences;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Raymond Augé
  */
+@Component(
+	property = { "javax.portlet.name=" + DLWebKeys.DOCUMENT_LIBRARY_DISPLAY },
+	service = PortletDataHandler.class
+)
 public class DLDisplayPortletDataHandler extends DLPortletDataHandler {
 
 	public DLDisplayPortletDataHandler() {
