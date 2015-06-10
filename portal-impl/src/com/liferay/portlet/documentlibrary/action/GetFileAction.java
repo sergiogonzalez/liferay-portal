@@ -15,10 +15,16 @@
 package com.liferay.portlet.documentlibrary.action;
 
 import com.liferay.portal.kernel.flash.FlashMagicBytesUtil;
+import com.liferay.portal.kernel.portlet.bridges.mvc.action.ActionContext;
+import com.liferay.portal.kernel.portlet.bridges.mvc.action.MVCPortletAction;
+import com.liferay.portal.kernel.portlet.bridges.mvc.action.RenderContext;
+import com.liferay.portal.kernel.portlet.bridges.mvc.action.ResourceContext;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
+import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
@@ -31,7 +37,6 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.struts.ActionConstants;
-import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
@@ -52,15 +57,15 @@ import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Brian Wing Shun Chan
@@ -68,64 +73,13 @@ import org.apache.struts.action.ActionMapping;
  * @author Charles May
  * @author Bruno Farache
  */
-public class GetFileAction extends PortletAction {
+@OSGiBeanProperties(
+	property = "path=/document_library/get_file", service = StrutsAction.class
+)
+public class GetFileAction implements MVCPortletAction, StrutsAction {
 
 	@Override
-	public void processAction(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
-		throws Exception {
-
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			actionRequest);
-		HttpServletResponse response = PortalUtil.getHttpServletResponse(
-			actionResponse);
-
-		try {
-			long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
-
-			long folderId = ParamUtil.getLong(actionRequest, "folderId");
-			String name = ParamUtil.getString(actionRequest, "name");
-			String title = ParamUtil.getString(actionRequest, "title");
-			String version = ParamUtil.getString(actionRequest, "version");
-
-			long fileShortcutId = ParamUtil.getLong(
-				actionRequest, "fileShortcutId");
-
-			String uuid = ParamUtil.getString(actionRequest, "uuid");
-
-			String targetExtension = ParamUtil.getString(
-				actionRequest, "targetExtension");
-
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
-
-			long groupId = ParamUtil.getLong(
-				actionRequest, "groupId", themeDisplay.getScopeGroupId());
-
-			getFile(
-				fileEntryId, folderId, name, title, version, fileShortcutId,
-				uuid, groupId, targetExtension, request, response);
-
-			setForward(actionRequest, ActionConstants.COMMON_NULL);
-		}
-		catch (NoSuchFileEntryException nsfee) {
-			PortalUtil.sendError(
-				HttpServletResponse.SC_NOT_FOUND, nsfee, actionRequest,
-				actionResponse);
-		}
-		catch (PrincipalException pe) {
-			processPrincipalException(pe, request, response);
-		}
-		catch (Exception e) {
-			PortalUtil.sendError(e, actionRequest, actionResponse);
-		}
-	}
-
-	@Override
-	public ActionForward strutsExecute(
-			ActionMapping actionMapping, ActionForm actionForm,
+	public String execute(
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
@@ -166,6 +120,97 @@ public class GetFileAction extends PortletAction {
 
 			return null;
 		}
+	}
+
+	@Override
+	public String execute(
+			StrutsAction originalStrutsAction, HttpServletRequest request,
+			HttpServletResponse response)
+		throws Exception {
+
+		return execute(request, response);
+	}
+
+	@Override
+	public String processAction(
+			ActionRequest actionRequest, ActionResponse actionResponse,
+			ActionContext actionContext)
+		throws PortletException {
+
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			actionRequest);
+		HttpServletResponse response = PortalUtil.getHttpServletResponse(
+			actionResponse);
+
+		try {
+			long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
+
+			long folderId = ParamUtil.getLong(actionRequest, "folderId");
+			String name = ParamUtil.getString(actionRequest, "name");
+			String title = ParamUtil.getString(actionRequest, "title");
+			String version = ParamUtil.getString(actionRequest, "version");
+
+			long fileShortcutId = ParamUtil.getLong(
+				actionRequest, "fileShortcutId");
+
+			String uuid = ParamUtil.getString(actionRequest, "uuid");
+
+			String targetExtension = ParamUtil.getString(
+				actionRequest, "targetExtension");
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+			long groupId = ParamUtil.getLong(
+				actionRequest, "groupId", themeDisplay.getScopeGroupId());
+
+			getFile(
+				fileEntryId, folderId, name, title, version, fileShortcutId,
+				uuid, groupId, targetExtension, request, response);
+
+			return "/html" + ActionConstants.COMMON_NULL;
+		}
+		catch (NoSuchFileEntryException nsfee) {
+			try {
+				PortalUtil.sendError(
+					HttpServletResponse.SC_NOT_FOUND, nsfee, actionRequest,
+					actionResponse);
+			}
+			catch (IOException ioe) {
+				throw new PortletException(ioe);
+			}
+		}
+		catch (PrincipalException pe) {
+			processPrincipalException(pe, request, response);
+		}
+		catch (Exception e) {
+			try {
+				PortalUtil.sendError(e, actionRequest, actionResponse);
+			}
+			catch (IOException ioe) {
+				throw new PortletException(ioe);
+			}
+		}
+
+		return null;
+	}
+
+	@Override
+	public String render(
+			RenderRequest renderRequest, RenderResponse renderResponse,
+			RenderContext renderContext)
+		throws IOException, PortletException {
+
+		return null;
+	}
+
+	@Override
+	public String serveResource(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse,
+			ResourceContext resourceContext)
+		throws IOException, PortletException {
+
+		return null;
 	}
 
 	protected void getFile(
@@ -298,7 +343,8 @@ public class GetFileAction extends PortletAction {
 			request, response, fileName, is, contentLength, contentType);
 	}
 
-	@Override
+	// TODO: PERMITE PEDIR VIA GET
+
 	protected boolean isCheckMethodOnProcessAction() {
 		return _CHECK_METHOD_ON_PROCESS_ACTION;
 	}
@@ -306,7 +352,7 @@ public class GetFileAction extends PortletAction {
 	protected void processPrincipalException(
 			Throwable t, HttpServletRequest request,
 			HttpServletResponse response)
-		throws IOException, ServletException {
+		throws PortletException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -317,9 +363,14 @@ public class GetFileAction extends PortletAction {
 		User user = permissionChecker.getUser();
 
 		if ((user != null) && !user.isDefaultUser()) {
-			PortalUtil.sendError(
-				HttpServletResponse.SC_UNAUTHORIZED, (Exception)t, request,
-				response);
+			try {
+				PortalUtil.sendError(
+					HttpServletResponse.SC_UNAUTHORIZED, (Exception)t, request,
+					response);
+			}
+			catch (IOException | ServletException e) {
+				throw new PortletException(e);
+			}
 
 			return;
 		}
@@ -330,7 +381,12 @@ public class GetFileAction extends PortletAction {
 
 		redirect = HttpUtil.addParameter(redirect, "redirect", currentURL);
 
-		response.sendRedirect(redirect);
+		try {
+			response.sendRedirect(redirect);
+		}
+		catch (IOException ioe) {
+			throw new PortletException(ioe);
+		}
 	}
 
 	private static final boolean _CHECK_METHOD_ON_PROCESS_ACTION = false;

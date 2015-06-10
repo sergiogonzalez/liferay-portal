@@ -839,6 +839,8 @@
 	<bean id="com.liferay.portlet.calendar.util.CalIndexer" class="com.liferay.portlet.calendar.util.CalIndexer" />
 	<bean id="com.liferay.portlet.directory.asset.UserAssetRendererFactory" class="com.liferay.portlet.directory.asset.UserAssetRendererFactory" />
 	<bean id="com.liferay.portlet.directory.util.DirectoryOpenSearchImpl" class="com.liferay.portlet.directory.util.DirectoryOpenSearchImpl" />
+	<bean id="com.liferay.portlet.documentlibrary.action.FindFolderAction" class="com.liferay.portlet.documentlibrary.action.FindFolderAction" />
+	<bean id="com.liferay.portlet.documentlibrary.action.GetFileAction" class="com.liferay.portlet.documentlibrary.action.GetFileAction" />
 	<bean id="com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerUtil" class="com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerUtil">
 		<property name="antivirusScanner">
 			<bean class="com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerImpl" />

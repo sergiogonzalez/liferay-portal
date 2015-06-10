@@ -18,6 +18,10 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
+import com.liferay.portal.kernel.portlet.bridges.mvc.action.ActionContext;
+import com.liferay.portal.kernel.portlet.bridges.mvc.action.MVCPortletAction;
+import com.liferay.portal.kernel.portlet.bridges.mvc.action.RenderContext;
+import com.liferay.portal.kernel.portlet.bridges.mvc.action.ResourceContext;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
 import com.liferay.portal.kernel.repository.capabilities.TemporaryFileEntriesCapability;
@@ -38,7 +42,6 @@ import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
-import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
@@ -54,6 +57,7 @@ import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.ArrayList;
@@ -61,15 +65,11 @@ import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
-
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Brian Wing Shun Chan
@@ -77,14 +77,17 @@ import org.apache.struts.action.ActionMapping;
  * @author Sergio González
  * @author Levente Hudák
  */
-public class EditFolderAction extends PortletAction {
+public class EditFolderAction implements MVCPortletAction {
+
+	public EditFolderAction(String defaultJsp) {
+		_defaultJsp = defaultJsp;
+	}
 
 	@Override
-	public void processAction(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
-		throws Exception {
+	public String processAction(
+			ActionRequest actionRequest, ActionResponse actionResponse,
+			ActionContext actionContext)
+		throws PortletException {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
@@ -93,10 +96,10 @@ public class EditFolderAction extends PortletAction {
 				updateFolder(actionRequest);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
-				deleteFolders(actionRequest, false);
+				deleteFolders(actionRequest, actionContext, false);
 			}
 			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
-				deleteFolders(actionRequest, true);
+				deleteFolders(actionRequest, actionContext, true);
 			}
 			else if (cmd.equals(Constants.SUBSCRIBE)) {
 				subscribeFolder(actionRequest);
@@ -111,7 +114,7 @@ public class EditFolderAction extends PortletAction {
 				updateWorkflowDefinitions(actionRequest);
 			}
 
-			sendRedirect(actionRequest, actionResponse);
+			actionContext.sendRedirect(actionRequest, actionResponse);
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchFolderException ||
@@ -119,7 +122,7 @@ public class EditFolderAction extends PortletAction {
 
 				SessionErrors.add(actionRequest, e.getClass());
 
-				setForward(actionRequest, "portlet.document_library.error");
+				return "/html/portlet/document_library/error.jsp";
 			}
 			else if (e instanceof DuplicateFileException ||
 					 e instanceof DuplicateFolderNameException ||
@@ -129,17 +132,18 @@ public class EditFolderAction extends PortletAction {
 				SessionErrors.add(actionRequest, e.getClass());
 			}
 			else {
-				throw e;
+				throw new PortletException(e);
 			}
 		}
+
+		return null;
 	}
 
 	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
+	public String render(
+			RenderRequest renderRequest, RenderResponse renderResponse,
+			RenderContext renderContext)
+		throws IOException, PortletException {
 
 		try {
 			ActionUtil.getFolder(renderRequest);
@@ -150,26 +154,30 @@ public class EditFolderAction extends PortletAction {
 
 				SessionErrors.add(renderRequest, e.getClass());
 
-				return actionMapping.findForward(
-					"portlet.document_library.error");
+				return "/html/portlet/document_library/error.jsp";
 			}
 			else {
-				throw e;
+				throw new PortletException(e);
 			}
 		}
 
-		return actionMapping.findForward(
-			getForward(renderRequest, "portlet.document_library.edit_folder"));
+		return _defaultJsp;
 	}
 
 	@Override
-	public void serveResource(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ResourceRequest resourceRequest,
-			ResourceResponse resourceResponse)
-		throws Exception {
+	public String serveResource(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse,
+			ResourceContext resourceContext)
+		throws IOException, PortletException {
 
-		downloadFolder(resourceRequest, resourceResponse);
+		try {
+			downloadFolder(resourceRequest, resourceResponse);
+		}
+		catch (Exception e) {
+			throw new PortletException(e);
+		}
+
+		return null;
 	}
 
 	protected void deleteExpiredTemporaryFileEntries(
@@ -193,7 +201,8 @@ public class EditFolderAction extends PortletAction {
 	}
 
 	protected void deleteFolders(
-			ActionRequest actionRequest, boolean moveToTrash)
+			ActionRequest actionRequest, ActionContext actionContext,
+			boolean moveToTrash)
 		throws Exception {
 
 		long[] deleteFolderIds = null;
@@ -227,7 +236,7 @@ public class EditFolderAction extends PortletAction {
 		if (moveToTrash && (deleteFolderIds.length > 0)) {
 			TrashUtil.addTrashSessionMessages(actionRequest, trashedModels);
 
-			hideDefaultSuccessMessage(actionRequest);
+			actionContext.hideDefaultSuccessMessage(actionRequest);
 		}
 	}
 
@@ -367,5 +376,7 @@ public class EditFolderAction extends PortletAction {
 			}
 		}
 	}
+
+	private final String _defaultJsp;
 
 }

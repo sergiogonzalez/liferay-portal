@@ -17,6 +17,10 @@ package com.liferay.portal.kernel.portlet.bridges.mvc;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortlet;
+import com.liferay.portal.kernel.portlet.bridges.mvc.action.ActionContext;
+import com.liferay.portal.kernel.portlet.bridges.mvc.action.MVCPortletAction;
+import com.liferay.portal.kernel.portlet.bridges.mvc.action.RenderContext;
+import com.liferay.portal.kernel.portlet.bridges.mvc.action.ResourceContext;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -27,7 +31,9 @@ import com.liferay.portal.util.PortalUtil;
 
 import java.io.IOException;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -51,6 +57,10 @@ import javax.portlet.WindowState;
  * @author Raymond Augé
  */
 public class MVCPortlet extends LiferayPortlet {
+
+	public MVCPortlet() {
+		this("mvcPortletAction");
+	}
 
 	@Override
 	public void destroy() {
@@ -232,9 +242,40 @@ public class MVCPortlet extends LiferayPortlet {
 	}
 
 	@Override
+	public void render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		MVCPortletAction mvcPortletAction = getMVCPortletAction(renderRequest);
+
+		if (mvcPortletAction != null) {
+			String mvcPath = mvcPortletAction.render(
+				renderRequest, renderResponse, _renderContext);
+
+			if (Validator.isNotNull(mvcPath)) {
+				renderRequest.setAttribute("mvcPath", mvcPath);
+			}
+		}
+
+		super.render(renderRequest, renderResponse);
+	}
+
+	@Override
 	public void serveResource(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws IOException, PortletException {
+
+		MVCPortletAction mvcPortletAction = getMVCPortletAction(
+			resourceRequest);
+
+		if (mvcPortletAction != null) {
+			String mvcPath = mvcPortletAction.serveResource(
+				resourceRequest, resourceResponse, _resourceContext);
+
+			if (Validator.isNotNull(mvcPath)) {
+				resourceRequest.setAttribute("mvcPath", mvcPath);
+			}
+		}
 
 		String path = getPath(resourceRequest);
 
@@ -255,6 +296,10 @@ public class MVCPortlet extends LiferayPortlet {
 		}
 	}
 
+	protected MVCPortlet(String mvcPortletActionParameter) {
+		_mvcPortletActionParameter = mvcPortletActionParameter;
+	}
+
 	@Override
 	protected boolean callActionMethod(
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -265,6 +310,19 @@ public class MVCPortlet extends LiferayPortlet {
 		}
 		catch (Exception e) {
 			throw new PortletException(e);
+		}
+
+		MVCPortletAction mvcPortletAction = getMVCPortletAction(actionRequest);
+
+		if (mvcPortletAction != null) {
+			String mvcPath = mvcPortletAction.processAction(
+				actionRequest, actionResponse, _actionContext);
+
+			if (Validator.isNotNull(mvcPath)) {
+				actionResponse.setRenderParameter("mvcPath", mvcPath);
+			}
+
+			return true;
 		}
 
 		String actionName = ParamUtil.getString(
@@ -386,8 +444,21 @@ public class MVCPortlet extends LiferayPortlet {
 		}
 	}
 
+	protected MVCPortletAction getMVCPortletAction(
+		PortletRequest portletRequest) {
+
+		String actionName = ParamUtil.getString(
+			portletRequest, _mvcPortletActionParameter);
+
+		return _mvcPortletActions.get(actionName);
+	}
+
 	protected String getPath(PortletRequest portletRequest) {
-		String mvcPath = portletRequest.getParameter("mvcPath");
+		String mvcPath = (String)portletRequest.getAttribute("mvcPath");
+
+		if (mvcPath == null) {
+			mvcPath = portletRequest.getParameter("mvcPath");
+		}
 
 		// Check deprecated parameter
 
@@ -474,6 +545,14 @@ public class MVCPortlet extends LiferayPortlet {
 			PortletRequest.RESOURCE_PHASE);
 	}
 
+	protected void registerMVCPortletAction(
+		MVCPortletAction mvcPortletAction, String...actionNames) {
+
+		for (String actionName : actionNames) {
+			_mvcPortletActions.put(actionName, mvcPortletAction);
+		}
+	}
+
 	protected String aboutTemplate;
 	protected boolean clearRequestParameters;
 	protected String configTemplate;
@@ -511,5 +590,53 @@ public class MVCPortlet extends LiferayPortlet {
 	private static final Log _log = LogFactoryUtil.getLog(MVCPortlet.class);
 
 	private ActionCommandCache _actionCommandCache;
+
+	private final ActionContext _actionContext = new ActionContext() {
+
+		@Override
+		public void sendRedirect(
+				ActionRequest actionRequest, ActionResponse actionResponse)
+			throws PortletException {
+		}
+
+		@Override
+		public void hideDefaultSuccessMessage(ActionRequest actionRequest) {
+		}
+
+		@Override
+		public void sendRedirect(
+				ActionRequest actionRequest, ActionResponse actionResponse,
+				String redirect)
+			throws PortletException {
+		}
+
+		@Override
+		public void writeJSON(
+				ActionRequest actionRequest, ActionResponse actionResponse,
+				Object object)
+			throws PortletException {
+
+			try {
+				MVCPortlet.this.writeJSON(
+					actionRequest, actionResponse, object);
+			}
+			catch (IOException ioe) {
+				throw new PortletException(ioe);
+			}
+		}
+
+		@Override
+		public void hideDefaultErrorMessage(ActionRequest actionRequest) {
+		}
+
+	};
+
+	private final String _mvcPortletActionParameter;
+	private final Map<String, MVCPortletAction> _mvcPortletActions =
+		new HashMap<>();
+	private final RenderContext _renderContext = new RenderContext() {
+	};
+	private final ResourceContext _resourceContext = new ResourceContext() {
+	};
 
 }

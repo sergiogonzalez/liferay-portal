@@ -14,31 +14,49 @@
 
 package com.liferay.portlet.documentlibrary.action;
 
+import com.liferay.portal.kernel.portlet.bridges.mvc.action.ActionContext;
+import com.liferay.portal.kernel.portlet.bridges.mvc.action.MVCPortletAction;
+import com.liferay.portal.kernel.portlet.bridges.mvc.action.RenderContext;
+import com.liferay.portal.kernel.portlet.bridges.mvc.action.ResourceContext;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.struts.PortletAction;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 
-import javax.portlet.PortletConfig;
+import java.io.IOException;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Sergio González
  */
-public class ViewAction extends PortletAction {
+public class ViewAction implements MVCPortletAction {
+
+	public ViewAction(String errorJsp, String viewJsp) {
+		_errorJsp = errorJsp;
+		_viewJsp = viewJsp;
+	}
 
 	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
+	public String processAction(
+			ActionRequest actionRequest, ActionResponse actionResponse,
+			ActionContext actionContext)
+		throws PortletException {
+
+		return null;
+	}
+
+	@Override
+	public String render(
+			RenderRequest renderRequest, RenderResponse renderResponse,
+			RenderContext renderContext)
+		throws IOException, PortletException {
 
 		try {
 			ActionUtil.getFolder(renderRequest);
@@ -49,15 +67,26 @@ public class ViewAction extends PortletAction {
 
 				SessionErrors.add(renderRequest, e.getClass());
 
-				return actionMapping.findForward(
-					"portlet.document_library.error");
+				return _errorJsp;
 			}
 			else {
-				throw e;
+				throw new PortletException(e);
 			}
 		}
 
-		return actionMapping.findForward("portlet.document_library.view");
+		return _viewJsp;
 	}
+
+	@Override
+	public String serveResource(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse,
+			ResourceContext resourceContext)
+		throws IOException, PortletException {
+
+		return null;
+	}
+
+	private final String _errorJsp;
+	private final String _viewJsp;
 
 }
