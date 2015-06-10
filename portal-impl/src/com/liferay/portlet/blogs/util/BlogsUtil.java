@@ -216,6 +216,30 @@ public class BlogsUtil {
 		return definitionTerms;
 	}
 
+	public static String getRSSUrl(
+		ThemeDisplay themeDisplay, String selectionMethod,
+		long organizationId) {
+
+		long plid = themeDisplay.getPlid();
+
+		String rssURLParams = "?p_l_id=" + plid;
+
+		if (selectionMethod.equals("users")) {
+			if (organizationId > 0) {
+				rssURLParams += "&organizationId=" + organizationId;
+			}
+			else {
+				rssURLParams += "&companyId=" + themeDisplay.getCompanyId();
+			}
+		}
+		else {
+			rssURLParams += "&groupId=" + themeDisplay.getScopeGroupId();
+		}
+
+		return themeDisplay.getPathMain() + "/blogs_aggregator/rss" +
+			rssURLParams;
+	}
+
 	public static SearchContainerResults<AssetEntry> getSearchContainerResults(
 			SearchContainer<?> searchContainer)
 		throws PortalException {
