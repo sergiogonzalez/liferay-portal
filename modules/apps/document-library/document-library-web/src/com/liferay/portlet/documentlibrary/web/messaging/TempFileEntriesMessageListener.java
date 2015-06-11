@@ -12,24 +12,53 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.messaging;
+package com.liferay.portlet.documentlibrary.web.messaging;
+
+import aQute.bnd.annotation.metatype.Configurable;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.messaging.BaseMessageListener;
+import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
 import com.liferay.portal.kernel.repository.capabilities.TemporaryFileEntriesCapability;
+import com.liferay.portal.kernel.scheduler.SchedulerEntry;
+import com.liferay.portal.kernel.scheduler.TimeUnit;
+import com.liferay.portal.kernel.scheduler.TriggerType;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.service.RepositoryLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.web.configuration.DLWebConfiguration;
+import com.liferay.portlet.documentlibrary.web.constants.DLWebKeys;
+
+import java.util.Map;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Iván Zaera
  */
-public class TempFileEntriesMessageListener extends BaseMessageListener {
+@Component(
+	configurationPid = "com.liferay.portlet.documentlibrary.web.configuration.DLWebConfiguration",
+	property = {"javax.portlet.name=" + DLWebKeys.DOCUMENT_LIBRARY_ADMIN},
+	service = SchedulerEntry.class
+)
+public class TempFileEntriesMessageListener
+	extends BaseSchedulerEntryMessageListener {
+
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		DLWebConfiguration dlWebConfiguration = Configurable.createConfigurable(
+			DLWebConfiguration.class, properties);
+
+		schedulerEntry.setTimeUnit(TimeUnit.HOUR);
+		schedulerEntry.setTriggerType(TriggerType.SIMPLE);
+		schedulerEntry.setTriggerValue(
+			dlWebConfiguration.tempFileEntriesCheckInterval());
+	}
 
 	protected void deleteExpiredTemporaryFileEntries(Repository repository) {
 		LocalRepository localRepository = null;

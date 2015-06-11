@@ -898,15 +898,6 @@
 	</portlet>
 	<portlet>
 		<portlet-name>199</portlet-name>
-		<scheduler-entry>
-			<scheduler-event-listener-class>com.liferay.portlet.documentlibrary.messaging.TempFileEntriesMessageListener</scheduler-event-listener-class>
-			<trigger>
-				<simple>
-					<property-key>dl.temporary.file.entries.check.interval</property-key>
-					<time-unit>hour</time-unit>
-				</simple>
-			</trigger>
-		</scheduler-entry>
 	</portlet>
 	<portlet>
 		<portlet-name>200</portlet-name>
