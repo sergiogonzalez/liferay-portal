@@ -14,12 +14,23 @@
 
 package com.liferay.portlet.social.handler;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 
 /**
  * @author Adolfo Pérez
  */
 public class SocialActivityHandlerUtil {
+
+	public static void addActivity(
+			long userId, long groupId, String className, long classPK, int type,
+			String extraData, long receiverUserId)
+		throws PortalException {
+
+		getSocialActivityHandler().addActivity(
+			userId, groupId, className, classPK, type, extraData,
+			receiverUserId);
+	}
 
 	public static SocialActivityHandler getSocialActivityHandler() {
 		PortalRuntimePermission.checkGetBeanProperty(
