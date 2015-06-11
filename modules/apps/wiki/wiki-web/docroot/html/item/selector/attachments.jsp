@@ -1,7 +1,3 @@
-<%@ page
-		import="com.liferay.wiki.item.selector.criterion.WikiAttachmentItemSelectorCriterion" %>
-<%@ page
-		import="com.liferay.wiki.web.item.selector.view.WikiAttachmentItemSelectorView" %>
 <%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
@@ -18,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/item/selector/init.jspm/selector/init.jsp" %>
+<%@ include file="/html/item/selector/init.jsp" %>
 
 <%
 String displayStyle = ParamUtil.getString(request, "displayStyle");
