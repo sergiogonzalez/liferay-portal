@@ -20,6 +20,8 @@ import com.liferay.registry.collections.ServiceReferenceMapper;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerMap;
 
+import java.util.Date;
+
 /**
  * @author Adolfo Pérez
  */
@@ -42,6 +44,20 @@ public class SocialActivityHandlerImpl implements SocialActivityHandler {
 
 		socialActivityHandler.addActivity(
 			userId, groupId, className, classPK, type, extraData,
+			receiverUserId);
+	}
+
+	@Override
+	public void addUniqueActivity(
+			long userId, long groupId, Date createDate, String className,
+			long classPK, int type, String extraData, long receiverUserId)
+		throws PortalException {
+
+		SocialActivityHandler socialActivityHandler = getSocialActivityHandler(
+			className);
+
+		socialActivityHandler.addUniqueActivity(
+			userId, groupId, createDate, className, classPK, type, extraData,
 			receiverUserId);
 	}
 

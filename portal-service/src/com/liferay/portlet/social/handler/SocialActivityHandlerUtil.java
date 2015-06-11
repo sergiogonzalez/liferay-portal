@@ -17,6 +17,8 @@ package com.liferay.portlet.social.handler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 
+import java.util.Date;
+
 /**
  * @author Adolfo Pérez
  */
@@ -29,6 +31,16 @@ public class SocialActivityHandlerUtil {
 
 		getSocialActivityHandler().addActivity(
 			userId, groupId, className, classPK, type, extraData,
+			receiverUserId);
+	}
+
+	public static void addUniqueActivity(
+			long userId, long groupId, Date createDate, String className,
+			long classPK, int type, String extraData, long receiverUserId)
+		throws PortalException {
+
+		getSocialActivityHandler().addUniqueActivity(
+			userId, groupId, createDate, className, classPK, type, extraData,
 			receiverUserId);
 	}
 

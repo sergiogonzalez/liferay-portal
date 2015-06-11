@@ -16,6 +16,8 @@ package com.liferay.portlet.social.handler;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
+import java.util.Date;
+
 /**
  * @author Adolfo Pérez
  */
@@ -24,6 +26,11 @@ public interface SocialActivityHandler {
 	public void addActivity(
 			long userId, long groupId, String className, long classPK, int type,
 			String extraData, long receiverUserId)
+		throws PortalException;
+
+	public void addUniqueActivity(
+			long userId, long groupId, Date createDate, String className,
+			long classPK, int type, String extraData, long receiverUserId)
 		throws PortalException;
 
 }

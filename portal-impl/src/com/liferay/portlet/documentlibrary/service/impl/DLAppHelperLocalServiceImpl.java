@@ -1367,7 +1367,7 @@ public class DLAppHelperLocalServiceImpl
 
 				extraDataJSONObject.put("title", fileEntry.getTitle());
 
-				socialActivityLocalService.addUniqueActivity(
+				SocialActivityHandlerUtil.addUniqueActivity(
 					latestFileVersion.getStatusByUserId(),
 					fileEntry.getGroupId(), activityCreateDate,
 					DLFileEntryConstants.getClassName(),
