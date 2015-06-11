@@ -40,6 +40,7 @@ Import-Package:\
 	com.liferay.wiki.constants,\
 	com.liferay.wiki.importer.impl,\
 	com.liferay.wiki.indexer,\
+	com.liferay.wiki.item.selector.criterion,\
 	com.liferay.wiki.lar,\
 	com.liferay.wiki.model.impl,\
 	com.liferay.wiki.notifications,\
