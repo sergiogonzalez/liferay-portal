@@ -16,6 +16,7 @@ package com.liferay.blogs.item.selector.criterion;
 
 import com.liferay.item.selector.BaseItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorReturnType;
+import com.liferay.item.selector.criteria.DefaultItemSelectorReturnType;
 
 import java.util.Set;
 
@@ -24,10 +25,14 @@ import java.util.Set;
  */
 public class BlogsItemSelectorCriterion extends BaseItemSelectorCriterion {
 
-	protected BlogsItemSelectorCriterion(
-		Set<ItemSelectorReturnType> availableItemSelectorReturnTypes) {
-
-		super(availableItemSelectorReturnTypes);
+	public BlogsItemSelectorCriterion() {
+		super(_availableItemSelectorReturnTypes);
 	}
+
+	private static final Set<ItemSelectorReturnType>
+		_availableItemSelectorReturnTypes = getImmutableSet(
+			DefaultItemSelectorReturnType.BASE_64,
+			DefaultItemSelectorReturnType.FILE_ENTRY,
+			DefaultItemSelectorReturnType.URL);
 
 }
