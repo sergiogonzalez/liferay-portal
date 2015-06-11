@@ -20,22 +20,23 @@ import com.liferay.portal.util.PortalUtil;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public abstract class BaseActionCommand implements ActionCommand {
+public abstract class BaseResourceCommand implements ResourceCommand {
 
 	@Override
 	public boolean processCommand(
-			PortletRequest portletRequest, PortletResponse portletResponse)
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws PortletException {
 
 		try {
-			doProcessCommand(portletRequest, portletResponse);
+			doProcessCommand(resourceRequest, resourceResponse);
 
-			return SessionErrors.isEmpty(portletRequest);
+			return SessionErrors.isEmpty(resourceRequest);
 		}
 		catch (PortletException pe) {
 			throw pe;
@@ -46,7 +47,7 @@ public abstract class BaseActionCommand implements ActionCommand {
 	}
 
 	protected abstract void doProcessCommand(
-			PortletRequest portletRequest, PortletResponse portletResponse)
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception;
 
 	protected void hideDefaultSuccessMessage(PortletRequest portletRequest) {

@@ -24,15 +24,15 @@ import com.liferay.portal.util.PortletKeys;
 @OSGiBeanProperties(
 	property = {
 		"javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY,
-		"render.command.name=/document_library/edit_folder"
+		"render.command.name=/document_library/select_folder"
 	},
 	service = RenderCommand.class
 )
-public class EditFolderRenderCommand extends GetFolderRenderCommand {
+public class SelectFolderRenderCommand extends GetFolderRenderCommand {
 
 	@Override
 	protected String getMVCPath() {
-		return "/html/portlet/document_library/edit_folder.jsp";
+		return "/html/portlet/document_library/select_folder.jsp";
 	}
 
 }

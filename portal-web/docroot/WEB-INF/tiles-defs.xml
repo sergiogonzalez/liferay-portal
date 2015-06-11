@@ -290,10 +290,6 @@
 		<put name="portlet_content" value="/portlet/document_library/edit_file_version.jsp" />
 	</definition>
 
-	<definition name="portlet.document_library.edit_folder" extends="portlet.document_library">
-		<put name="portlet_content" value="/portlet/document_library/edit_folder.jsp" />
-	</definition>
-
 	<definition name="portlet.document_library.edit_repository" extends="portlet.document_library">
 		<put name="portlet_content" value="/portlet/document_library/edit_repository.jsp" />
 	</definition>
@@ -312,10 +308,6 @@
 
 	<definition name="portlet.document_library.select_file_entry" extends="portlet.document_library">
 		<put name="portlet_content" value="/portlet/document_library/select_file_entry.jsp" />
-	</definition>
-
-	<definition name="portlet.document_library.select_folder" extends="portlet.document_library">
-		<put name="portlet_content" value="/portlet/document_library/select_folder.jsp" />
 	</definition>
 
 	<definition name="portlet.document_library.select_group" extends="portlet.document_library">
