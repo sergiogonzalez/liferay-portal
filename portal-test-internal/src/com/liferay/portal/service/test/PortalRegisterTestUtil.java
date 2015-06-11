@@ -27,8 +27,8 @@ import com.liferay.portlet.blogs.util.BlogsIndexer;
 import com.liferay.portlet.blogs.workflow.BlogsEntryWorkflowHandler;
 import com.liferay.portlet.directory.asset.UserAssetRendererFactory;
 import com.liferay.portlet.directory.workflow.UserWorkflowHandler;
-import com.liferay.portlet.documentlibrary.asset.DLFileEntryAssetRendererFactory;
-import com.liferay.portlet.documentlibrary.asset.DLFolderAssetRendererFactory;
+//import com.liferay.portlet.documentlibrary.asset.DLFileEntryAssetRendererFactory;
+//import com.liferay.portlet.documentlibrary.asset.DLFolderAssetRendererFactory;
 import com.liferay.portlet.documentlibrary.trash.DLFileEntryTrashHandler;
 import com.liferay.portlet.documentlibrary.trash.DLFileShortcutTrashHandler;
 import com.liferay.portlet.documentlibrary.trash.DLFolderTrashHandler;
@@ -139,8 +139,8 @@ public class PortalRegisterTestUtil {
 
 	private static final Class<?>[] _ASSET_RENDERER_FACTORY_CLASSES = {
 		BlogsEntryAssetRendererFactory.class,
-		DLFileEntryAssetRendererFactory.class,
-		DLFolderAssetRendererFactory.class,
+//		DLFileEntryAssetRendererFactory.class,
+//		DLFolderAssetRendererFactory.class,
 		LayoutRevisionAssetRendererFactory.class,
 		MBCategoryAssetRendererFactory.class,
 		MBDiscussionAssetRendererFactory.class,

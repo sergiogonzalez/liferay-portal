@@ -214,7 +214,7 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 
 	@Override
 	protected PortletDataHandler createPortletDataHandler() {
-		return new DLPortletDataHandler();
+		return null;//new DLPortletDataHandler();
 	}
 
 	@Override

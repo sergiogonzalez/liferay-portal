@@ -57,7 +57,7 @@ public class BaseWebDAVTestCase {
 	public Tuple service(
 		String method, String path, Map<String, String> headers, byte[] data) {
 
-		WebDAVStorage webDAVStorage = new DLWebDAVStorageImpl();
+		WebDAVStorage webDAVStorage = null;//new DLWebDAVStorageImpl();
 
 		webDAVStorage.setToken("document_library");
 
