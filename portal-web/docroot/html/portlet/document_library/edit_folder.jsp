@@ -63,7 +63,7 @@ if (workflowEnabled) {
 </liferay-util:buffer>
 
 <portlet:actionURL var="editFolderURL">
-	<portlet:param name="struts_action" value="/document_library/edit_folder" />
+	<portlet:param name="mvcRenderCommandName" value="/document_library/edit_folder" />
 </portlet:actionURL>
 
 <aui:form action="<%= editFolderURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "savePage();" %>'>
