@@ -22,7 +22,7 @@ String assetTagName = ParamUtil.getString(request, "tag");
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/blogs_admin/view");
+portletURL.setParameter("mvcPath", "/html/portlet/blogs_admin/view.jsp");
 %>
 
 <portlet:actionURL name="restoreTrashEntries" var="restoreTrashEntriesURL">
