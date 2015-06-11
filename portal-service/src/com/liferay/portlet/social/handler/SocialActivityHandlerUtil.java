@@ -44,6 +44,16 @@ public class SocialActivityHandlerUtil {
 			receiverUserId);
 	}
 
+	public static void addUniqueActivity(
+			long userId, long groupId, String className, long classPK, int type,
+			String extraData, long receiverUserId)
+		throws PortalException {
+
+		getSocialActivityHandler().addUniqueActivity(
+			userId, groupId, className, classPK, type, extraData,
+			receiverUserId);
+	}
+
 	public static SocialActivityHandler getSocialActivityHandler() {
 		PortalRuntimePermission.checkGetBeanProperty(
 			SocialActivityHandlerUtil.class);
