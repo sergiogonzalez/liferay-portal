@@ -63,6 +63,7 @@ import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DL;
+import com.liferay.portlet.documentlibrary.util.DLConstants;
 import com.liferay.portlet.documentlibrary.web.constants.DLWebKeys;
 import com.liferay.portlet.documentlibrary.webdav.DLFileEntryResourceImpl;
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -89,9 +90,6 @@ import org.osgi.service.component.annotations.Component;
 	service = WebDAVStorage.class
 )
 public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
-
-	public static final String MS_OFFICE_2010_TEXT_XML_UTF8 =
-		"text/xml; charset=\"utf-8\"";
 
 	@Override
 	public int copyCollectionResource(
@@ -905,7 +903,7 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 			ContentTypes.APPLICATION_OCTET_STREAM);
 
 		if (contentType.equals(ContentTypes.APPLICATION_OCTET_STREAM) ||
-			contentType.equals(MS_OFFICE_2010_TEXT_XML_UTF8)) {
+			contentType.equals(DLConstants.MS_OFFICE_2010_TEXT_XML_UTF8)) {
 
 			contentType = MimeTypesUtil.getContentType(file, title);
 		}

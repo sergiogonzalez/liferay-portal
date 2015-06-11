@@ -56,9 +56,9 @@ import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUt
 import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
+import com.liferay.portlet.documentlibrary.util.DLConstants;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.documentlibrary.util.comparator.DLFileVersionVersionComparator;
-import com.liferay.portlet.documentlibrary.webdav.DLWebDAVStorageImpl;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLinkLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageAdapter;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageAdapterRegistryUtil;
@@ -292,7 +292,7 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 	protected void checkMimeTypes() throws Exception {
 		String[] mimeTypes = {
 			ContentTypes.APPLICATION_OCTET_STREAM,
-			DLWebDAVStorageImpl.MS_OFFICE_2010_TEXT_XML_UTF8
+			DLConstants.MS_OFFICE_2010_TEXT_XML_UTF8
 		};
 
 		checkFileVersionMimeTypes(mimeTypes);

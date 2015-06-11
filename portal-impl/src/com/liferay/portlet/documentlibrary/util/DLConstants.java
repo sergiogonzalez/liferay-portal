@@ -19,6 +19,9 @@ package com.liferay.portlet.documentlibrary.util;
  */
 public class DLConstants {
 
+	public static final String MS_OFFICE_2010_TEXT_XML_UTF8 =
+		"text/xml; charset=\"utf-8\"";
+
 	public static final String SERVICE_NAME =
 		"com.liferay.portlet.documentlibrary";
 
