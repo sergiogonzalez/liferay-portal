@@ -57,6 +57,7 @@ import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLinkConstants;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink;
+import com.liferay.portlet.social.handler.SocialActivityHandlerUtil;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.model.TrashVersion;
@@ -627,7 +628,7 @@ public class JournalFolderLocalServiceImpl
 
 		extraDataJSONObject.put("title", title);
 
-		socialActivityLocalService.addActivity(
+		SocialActivityHandlerUtil.addActivity(
 			userId, folder.getGroupId(), JournalFolder.class.getName(),
 			folder.getFolderId(), SocialActivityConstants.TYPE_MOVE_TO_TRASH,
 			extraDataJSONObject.toString(), 0);
@@ -732,7 +733,7 @@ public class JournalFolderLocalServiceImpl
 
 		extraDataJSONObject.put("title", folder.getName());
 
-		socialActivityLocalService.addActivity(
+		SocialActivityHandlerUtil.addActivity(
 			userId, folder.getGroupId(), JournalFolder.class.getName(),
 			folder.getFolderId(),
 			SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,

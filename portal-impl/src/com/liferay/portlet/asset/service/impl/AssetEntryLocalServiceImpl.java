@@ -55,6 +55,7 @@ import com.liferay.portlet.asset.service.persistence.AssetEntryQuery;
 import com.liferay.portlet.asset.util.AssetEntryValidator;
 import com.liferay.portlet.asset.util.AssetSearcher;
 import com.liferay.portlet.exportimport.lar.ExportImportThreadLocal;
+import com.liferay.portlet.social.handler.SocialActivityHandlerUtil;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 
 import java.util.ArrayList;
@@ -377,7 +378,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		AssetEntry assetEntry = getEntry(className, classPK);
 
 		if (!user.isDefaultUser()) {
-			socialActivityLocalService.addActivity(
+			SocialActivityHandlerUtil.addActivity(
 				user.getUserId(), assetEntry.getGroupId(), className, classPK,
 				SocialActivityConstants.TYPE_VIEW, StringPool.BLANK, 0);
 		}

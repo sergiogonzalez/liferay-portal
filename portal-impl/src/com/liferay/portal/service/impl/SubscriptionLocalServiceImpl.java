@@ -24,8 +24,7 @@ import com.liferay.portal.model.SubscriptionConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.base.SubscriptionLocalServiceBaseImpl;
 import com.liferay.portlet.asset.model.AssetEntry;
-import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.messageboards.model.MBThread;
+import com.liferay.portlet.social.handler.SocialActivityHandlerUtil;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 
 import java.util.List;
@@ -151,25 +150,10 @@ public class SubscriptionLocalServiceImpl
 
 			extraDataJSONObject.put("title", assetEntry.getTitle());
 
-			if (className.equals(MBThread.class.getName())) {
-				MBThread mbThread = mbThreadLocalService.getMBThread(classPK);
-
-				extraDataJSONObject.put("threadId", classPK);
-
-				socialActivityLocalService.addActivity(
-					userId, groupId, MBMessage.class.getName(),
-					mbThread.getRootMessageId(),
-					SocialActivityConstants.TYPE_SUBSCRIBE,
-					extraDataJSONObject.toString(), 0);
-			}
-			else {
-				if (classPK != groupId) {
-					socialActivityLocalService.addActivity(
-						userId, groupId, className, classPK,
-						SocialActivityConstants.TYPE_SUBSCRIBE,
-						extraDataJSONObject.toString(), 0);
-				}
-			}
+			SocialActivityHandlerUtil.addActivity(
+				userId, groupId, className, classPK,
+				SocialActivityConstants.TYPE_SUBSCRIBE,
+				extraDataJSONObject.toString(), 0);
 		}
 
 		return subscription;
@@ -249,7 +233,7 @@ public class SubscriptionLocalServiceImpl
 
 			extraDataJSONObject.put("title", assetEntry.getTitle());
 
-			socialActivityLocalService.addActivity(
+			SocialActivityHandlerUtil.addActivity(
 				subscription.getUserId(), assetEntry.getGroupId(),
 				subscriptionClassName, subscription.getClassPK(),
 				SocialActivityConstants.TYPE_UNSUBSCRIBE,

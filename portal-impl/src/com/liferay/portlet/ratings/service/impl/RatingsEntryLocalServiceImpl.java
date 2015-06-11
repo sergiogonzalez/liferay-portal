@@ -28,6 +28,7 @@ import com.liferay.portlet.ratings.EntryScoreException;
 import com.liferay.portlet.ratings.model.RatingsEntry;
 import com.liferay.portlet.ratings.model.RatingsStats;
 import com.liferay.portlet.ratings.service.base.RatingsEntryLocalServiceBaseImpl;
+import com.liferay.portlet.social.handler.SocialActivityHandlerUtil;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 
 import java.util.List;
@@ -251,7 +252,7 @@ public class RatingsEntryLocalServiceImpl
 
 			extraDataJSONObject.put("title", assetEntry.getTitle());
 
-			socialActivityLocalService.addActivity(
+			SocialActivityHandlerUtil.addActivity(
 				userId, assetEntry.getGroupId(), className, classPK,
 				SocialActivityConstants.TYPE_ADD_VOTE,
 				extraDataJSONObject.toString(), 0);

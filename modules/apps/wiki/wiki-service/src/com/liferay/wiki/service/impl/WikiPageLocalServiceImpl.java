@@ -73,6 +73,7 @@ import com.liferay.portlet.asset.model.AssetLinkConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.util.ExpandoBridgeUtil;
+import com.liferay.portlet.social.handler.SocialActivityHandlerUtil;
 import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
@@ -297,7 +298,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		extraDataJSONObject.put("title", page.getTitle());
 		extraDataJSONObject.put("version", page.getVersion());
 
-		socialActivityLocalService.addActivity(
+		SocialActivityHandlerUtil.addActivity(
 			userId, page.getGroupId(), WikiPage.class.getName(),
 			page.getResourcePrimKey(),
 			SocialActivityConstants.TYPE_ADD_ATTACHMENT,
@@ -330,7 +331,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		extraDataJSONObject.put("title", page.getTitle());
 		extraDataJSONObject.put("version", page.getVersion());
 
-		socialActivityLocalService.addActivity(
+		SocialActivityHandlerUtil.addActivity(
 			userId, page.getGroupId(), WikiPage.class.getName(),
 			page.getResourcePrimKey(),
 			SocialActivityConstants.TYPE_ADD_ATTACHMENT,
@@ -1573,7 +1574,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		extraDataJSONObject.put("title", page.getTitle());
 		extraDataJSONObject.put("version", page.getVersion());
 
-		socialActivityLocalService.addActivity(
+		SocialActivityHandlerUtil.addActivity(
 			userId, page.getGroupId(), WikiPage.class.getName(),
 			page.getResourcePrimKey(),
 			SocialActivityConstants.TYPE_MOVE_ATTACHMENT_TO_TRASH,
@@ -1726,7 +1727,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			"title", TrashUtil.getOriginalTitle(page.getTitle()));
 		extraDataJSONObject.put("version", page.getVersion());
 
-		socialActivityLocalService.addActivity(
+		SocialActivityHandlerUtil.addActivity(
 			userId, page.getGroupId(), WikiPage.class.getName(),
 			page.getResourcePrimKey(),
 			SocialActivityConstants.TYPE_MOVE_TO_TRASH,
@@ -1829,7 +1830,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		PortletFileRepositoryUtil.restorePortletFileEntryFromTrash(
 			userId, fileEntry.getFileEntryId());
 
-		socialActivityLocalService.addActivity(
+		SocialActivityHandlerUtil.addActivity(
 			userId, page.getGroupId(), WikiPage.class.getName(),
 			page.getResourcePrimKey(),
 			SocialActivityConstants.TYPE_RESTORE_ATTACHMENT_FROM_TRASH,
@@ -2122,7 +2123,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 				extraDataJSONObject.put("title", page.getTitle());
 				extraDataJSONObject.put("version", page.getVersion());
 
-				socialActivityLocalService.addActivity(
+				SocialActivityHandlerUtil.addActivity(
 					userId, page.getGroupId(), WikiPage.class.getName(),
 					page.getResourcePrimKey(), WikiActivityKeys.ADD_PAGE,
 					extraDataJSONObject.toString(), 0);
@@ -3014,7 +3015,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		extraDataJSONObject.put("title", page.getTitle());
 		extraDataJSONObject.put("version", page.getVersion());
 
-		socialActivityLocalService.addActivity(
+		SocialActivityHandlerUtil.addActivity(
 			userId, page.getGroupId(), WikiPage.class.getName(),
 			page.getResourcePrimKey(),
 			SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
@@ -3357,7 +3358,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 				extraDataJSONObject.put("title", page.getTitle());
 				extraDataJSONObject.put("version", page.getVersion());
 
-				socialActivityLocalService.addActivity(
+				SocialActivityHandlerUtil.addActivity(
 					userId, page.getGroupId(), WikiPage.class.getName(),
 					page.getResourcePrimKey(), WikiActivityKeys.UPDATE_PAGE,
 					extraDataJSONObject.toString(), 0);

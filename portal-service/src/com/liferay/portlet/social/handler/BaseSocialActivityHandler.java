@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.social.handler;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.social.service.SocialActivityLocalService;
 
 /**
@@ -21,6 +23,26 @@ import com.liferay.portlet.social.service.SocialActivityLocalService;
  */
 public abstract class BaseSocialActivityHandler
 	implements SocialActivityHandler {
+
+	@Override
+	public void addActivity(
+			long userId, long groupId, String className, long classPK, int type,
+			String extraData, long receiverUserId)
+		throws PortalException {
+
+		if (type == SocialActivityConstants.TYPE_SUBSCRIBE) {
+			if (classPK != groupId) {
+				getSocialActivityLocalService().addActivity(
+					userId, groupId, className, classPK,
+					SocialActivityConstants.TYPE_SUBSCRIBE, extraData, 0);
+			}
+		}
+		else {
+			getSocialActivityLocalService().addActivity(
+				userId, groupId, className, classPK, type, extraData,
+				receiverUserId);
+		}
+	}
 
 	protected abstract SocialActivityLocalService
 		getSocialActivityLocalService();

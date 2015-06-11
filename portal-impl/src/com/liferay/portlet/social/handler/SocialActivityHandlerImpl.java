@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.social.handler;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.registry.ServiceReference;
 import com.liferay.registry.collections.ServiceReferenceMapper;
 import com.liferay.registry.collections.ServiceTrackerCollections;
@@ -28,6 +29,20 @@ public class SocialActivityHandlerImpl implements SocialActivityHandler {
 		SocialActivityHandler defaultSocialActivityHandler) {
 
 		_defaultSocialActivityHandler = defaultSocialActivityHandler;
+	}
+
+	@Override
+	public void addActivity(
+			long userId, long groupId, String className, long classPK, int type,
+			String extraData, long receiverUserId)
+		throws PortalException {
+
+		SocialActivityHandler socialActivityHandler = getSocialActivityHandler(
+			className);
+
+		socialActivityHandler.addActivity(
+			userId, groupId, className, classPK, type, extraData,
+			receiverUserId);
 	}
 
 	protected SocialActivityHandler getSocialActivityHandler(String className) {
