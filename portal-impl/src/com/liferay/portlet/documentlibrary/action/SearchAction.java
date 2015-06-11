@@ -49,7 +49,7 @@ public class SearchAction implements MVCPortletAction {
 			RenderContext renderContext)
 		throws IOException, PortletException {
 
-		return "/html/portlet/document_library/view.jsp";
+		return "/document_library/view.jsp";
 	}
 
 	@Override
@@ -58,7 +58,7 @@ public class SearchAction implements MVCPortletAction {
 			ResourceContext resourceContext)
 		throws IOException, PortletException {
 
-		return "/html/portlet/document_library/search_resources.jsp";
+		return "/document_library/search_resources.jsp";
 	}
 
 }

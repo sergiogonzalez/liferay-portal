@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/image_gallery_display/init.jsp" %>
+<%@ include file="/image_gallery_display/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
@@ -108,7 +108,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 		request.setAttribute("view.jsp-searchContainer", searchContainer);
 		%>
 
-		<liferay-util:include page="/html/portlet/image_gallery_display/view_images.jsp" />
+		<liferay-util:include page="/image_gallery_display/view_images.jsp" />
 	</div>
 
 	<%

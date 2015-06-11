@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/document_library/init.jsp" %>
+<%@ include file="/document_library/init.jsp" %>
 
 <%
 PortletURL portletURL = renderResponse.createRenderURL();
@@ -22,7 +22,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 portletURL.setParameter("struts_action", "/document_library/view_file_entry_type");
 %>
 
-<liferay-util:include page="/html/portlet/document_library/file_entry_type_toolbar.jsp">
+<liferay-util:include page="/document_library/file_entry_type_toolbar.jsp">
 	<liferay-util:param name="includeBasicFileEntryType" value="<%= Boolean.FALSE.toString() %>" />
 </liferay-util:include>
 
@@ -34,7 +34,7 @@ portletURL.setParameter("struts_action", "/document_library/view_file_entry_type
 	searchContainer="<%= new StructureSearch(renderRequest, portletURL) %>"
 >
 	<liferay-ui:search-container-results>
-		<%@ include file="/html/portlet/document_library/file_entry_type_search_results.jspf" %>
+		<%@ include file="/document_library/file_entry_type_search_results.jspf" %>
 	</liferay-ui:search-container-results>
 
 	<liferay-ui:search-container-row
@@ -65,7 +65,7 @@ portletURL.setParameter("struts_action", "/document_library/view_file_entry_type
 		<liferay-ui:search-container-column-jsp
 			align="right"
 			cssClass="entry-action"
-			path="/html/portlet/document_library/file_entry_type_action.jsp"
+			path="/document_library/file_entry_type_action.jsp"
 		/>
 	</liferay-ui:search-container-row>
 

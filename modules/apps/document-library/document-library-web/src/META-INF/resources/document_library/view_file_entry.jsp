@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/document_library/init.jsp" %>
+<%@ include file="/document_library/init.jsp" %>
 
 <%
 String tabs2 = ParamUtil.getString(request, "tabs2", "version-history");
@@ -527,7 +527,7 @@ DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = DLDisplayConte
 										<liferay-ui:search-container-column-jsp
 											align="right"
 											cssClass="entry-action"
-											path="/html/portlet/document_library/file_entry_history_action.jsp"
+											path="/document_library/file_entry_history_action.jsp"
 										/>
 									</liferay-ui:search-container-row>
 
@@ -614,7 +614,7 @@ DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = DLDisplayConte
 </aui:script>
 
 <c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.VIEW) && DLUtil.isOfficeExtension(fileVersion.getExtension()) && portletDisplay.isWebDAVEnabled() && BrowserSnifferUtil.isIeOnWin32(request) %>">
-	<%@ include file="/html/portlet/document_library/action/open_document_js.jspf" %>
+	<%@ include file="/document_library/action/open_document_js.jspf" %>
 </c:if>
 
 <c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() %>">

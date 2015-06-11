@@ -122,7 +122,7 @@ public class EditFolderAction implements MVCPortletAction {
 
 				SessionErrors.add(actionRequest, e.getClass());
 
-				return "/html/portlet/document_library/error.jsp";
+				return "/document_library/error.jsp";
 			}
 			else if (e instanceof DuplicateFileException ||
 					 e instanceof DuplicateFolderNameException ||
@@ -154,7 +154,7 @@ public class EditFolderAction implements MVCPortletAction {
 
 				SessionErrors.add(renderRequest, e.getClass());
 
-				return "/html/portlet/document_library/error.jsp";
+				return "/document_library/error.jsp";
 			}
 			else {
 				throw new PortletException(e);

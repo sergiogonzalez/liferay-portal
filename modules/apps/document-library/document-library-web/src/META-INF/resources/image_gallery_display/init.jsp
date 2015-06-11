@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%@ page import="com.liferay.portlet.documentlibrary.DLPortletInstanceSettings" %><%@
 page import="com.liferay.portlet.documentlibrary.NoSuchFolderException" %><%@
@@ -52,4 +52,4 @@ String displayStyle = portletPreferences.getValue("displayStyle", StringPool.BLA
 long displayStyleGroupId = GetterUtil.getLong(portletPreferences.getValue("displayStyleGroupId", null), themeDisplay.getScopeGroupId());
 %>
 
-<%@ include file="/html/portlet/image_gallery_display/init-ext.jsp" %>
+<%@ include file="/image_gallery_display/init-ext.jsp" %>

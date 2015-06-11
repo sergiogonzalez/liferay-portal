@@ -288,7 +288,7 @@ public class EditFileEntryAction implements MVCPortletAction {
 
 				SessionErrors.add(renderRequest, e.getClass());
 
-				return "/html/portlet/document_library/error.jsp";
+				return "/document_library/error.jsp";
 			}
 			else {
 				throw new PortletException(e);
@@ -304,8 +304,7 @@ public class EditFileEntryAction implements MVCPortletAction {
 			ResourceContext resourceContext)
 		throws IOException, PortletException {
 
-		return "/html/portlet/document_library/" +
-			"upload_multiple_file_entries_resources.jsp";
+		return "/document_library/upload_multiple_file_entries_resources.jsp";
 	}
 
 	protected void addMultipleFileEntries(
@@ -920,7 +919,7 @@ public class EditFileEntryAction implements MVCPortletAction {
 			}
 
 			actionResponse.setRenderParameter(
-				"mvcPath", "/html/portlet/document_library/error.jsp");
+				"mvcPath", "/document_library/error.jsp");
 		}
 		else {
 			Throwable cause = e.getCause();

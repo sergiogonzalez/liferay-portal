@@ -65,20 +65,18 @@ public class DLDisplayPortlet extends DLPortlet {
 		super.init();
 
 		registerMVCPortletAction(
-			new ForwardMVCPortletAction(
-				"/html/portlet/document_library_display/search.jsp"),
+			new ForwardMVCPortletAction("/document_library_display/search.jsp"),
 			"/document_library_display/search");
 
 		registerMVCPortletAction(
 			new ForwardMVCPortletAction(
-				"/html/portlet/document_library_display/" +
-					"select_add_file_entry_type.jsp"),
+				"/document_library_display/select_add_file_entry_type.jsp"),
 			"/document_library_display/select_add_file_entry_type");
 
 		registerMVCPortletAction(
 			new ViewAction(
-				"/html/portlet/document_library/error.jsp",
-				"/html/portlet/document_library_display/view.jsp"),
+				"/document_library/error.jsp",
+				"/document_library_display/view.jsp"),
 			"/document_library_display/view", StringPool.BLANK);
 	}
 

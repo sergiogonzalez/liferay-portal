@@ -364,8 +364,7 @@ public class DLFileEntryAssetRenderer
 					_fileEntry.getFileVersion());
 			}
 
-			return "/html/portlet/document_library/asset/file_entry_" +
-				template + ".jsp";
+			return "/document_library/asset/file_entry_" + template + ".jsp";
 		}
 		else {
 			return null;

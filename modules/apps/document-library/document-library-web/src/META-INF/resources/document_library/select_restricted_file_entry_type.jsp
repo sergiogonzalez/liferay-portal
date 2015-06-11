@@ -14,13 +14,13 @@
  */
 --%>
 
-<%@ include file="/html/portlet/document_library/init.jsp" %>
+<%@ include file="/document_library/init.jsp" %>
 
 <%
 String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectFileEntryType");
 %>
 
-<liferay-util:include page="/html/portlet/document_library/file_entry_type_toolbar.jsp">
+<liferay-util:include page="/document_library/file_entry_type_toolbar.jsp">
 	<liferay-util:param name="strutsAction" value="/document_library/select_restricted_file_entry_type" />
 	<liferay-util:param name="includeBasicFileEntryType" value="<%= Boolean.TRUE.toString() %>" />
 </liferay-util:include>
@@ -35,7 +35,7 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 		searchContainer="<%= new StructureSearch(renderRequest, portletURL) %>"
 	>
 		<liferay-ui:search-container-results>
-			<%@ include file="/html/portlet/document_library/file_entry_type_search_results.jspf" %>
+			<%@ include file="/document_library/file_entry_type_search_results.jspf" %>
 		</liferay-ui:search-container-results>
 
 		<liferay-ui:search-container-row

@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/document_library/init.jsp" %>
+<%@ include file="/document_library/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
@@ -52,7 +52,7 @@ if (workflowEnabled) {
 }
 %>
 
-<liferay-util:include page="/html/portlet/document_library/top_links.jsp" />
+<liferay-util:include page="/document_library/top_links.jsp" />
 
 <liferay-util:buffer var="removeFileEntryTypeIcon">
 	<liferay-ui:icon

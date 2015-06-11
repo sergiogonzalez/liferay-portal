@@ -73,12 +73,12 @@ public class IGDisplayPortlet extends DLPortlet {
 
 		registerMVCPortletAction(
 			new EditFileEntryAction(
-				this, "/html/portlet/document_library/edit_file_entry.jsp"),
+				this, "/document_library/edit_file_entry.jsp"),
 			"/image_gallery_display/edit_image");
 
 		registerMVCPortletAction(
 			new EditFileEntryAction(
-				this, "/html/portlet/document_library/view_file_entry.jsp"),
+				this, "/document_library/view_file_entry.jsp"),
 			"/image_gallery_display/view_image");
 
 		registerMVCPortletAction(
@@ -86,35 +86,31 @@ public class IGDisplayPortlet extends DLPortlet {
 			"/image_gallery_display/edit_shortcut");
 
 		registerMVCPortletAction(
-			new EditFolderAction(
-				"/html/portlet/document_library/edit_folder.jsp"),
+			new EditFolderAction("/document_library/edit_folder.jsp"),
 			"/image_gallery_display/edit_folder");
 
 		registerMVCPortletAction(
-			new EditFolderAction(
-				"/html/portlet/document_library/select_folder.jsp"),
+			new EditFolderAction("/document_library/select_folder.jsp"),
 			"/image_gallery_display/select_folder");
 
 		registerMVCPortletAction(
 			new ForwardMVCPortletAction(
-				"/html/portlet/image_gallery_display/embedded_player.jsp"),
+				"/image_gallery_display/embedded_player.jsp"),
 			"/image_gallery_display/embedded_player");
 
 		registerMVCPortletAction(
-			new ForwardMVCPortletAction(
-				"/html/portlet/image_gallery_display/search.jsp"),
+			new ForwardMVCPortletAction("/image_gallery_display/search.jsp"),
 			"/image_gallery_display/search");
 
 		registerMVCPortletAction(
 			new ForwardMVCPortletAction(
-				"/html/portlet/document_library_display/" +
-					"select_add_file_entry_type.jsp"),
+				"/document_library_display/select_add_file_entry_type.jsp"),
 			"/image_gallery_display/select_add_file_entry_type");
 
 		registerMVCPortletAction(
 			new ViewAction(
-				"/html/portlet/image_gallery_display/error.jsp",
-				"/html/portlet/image_gallery_display/view.jsp"),
+				"/image_gallery_display/error.jsp",
+				"/image_gallery_display/view.jsp"),
 			"/image_gallery_display/view", StringPool.BLANK);
 	}
 

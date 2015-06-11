@@ -119,7 +119,7 @@ public class EditFileEntryTypeAction implements MVCPortletAction {
 
 				SessionErrors.add(actionRequest, e.getClass());
 
-				return "/html/portlet/document_library/error.jsp";
+				return "/document_library/error.jsp";
 			}
 			else if (e instanceof RequiredStructureException) {
 				SessionErrors.add(actionRequest, e.getClass());
@@ -176,14 +176,14 @@ public class EditFileEntryTypeAction implements MVCPortletAction {
 
 				SessionErrors.add(renderRequest, e.getClass());
 
-				return "/html/portlet/document_library/error.jsp";
+				return "/document_library/error.jsp";
 			}
 			else {
 				throw new PortletException(e);
 			}
 		}
 
-		return "/html/portlet/document_library/edit_file_entry_type.jsp";
+		return "/document_library/edit_file_entry_type.jsp";
 	}
 
 	@Override

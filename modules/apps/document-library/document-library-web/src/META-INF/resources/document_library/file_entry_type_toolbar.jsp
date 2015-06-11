@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/document_library/init.jsp" %>
+<%@ include file="/document_library/init.jsp" %>
 
 <%
 String strutsAction = ParamUtil.getString(request, "strutsAction", "/document_library/view_file_entry_type");

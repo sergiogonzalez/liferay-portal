@@ -78,7 +78,7 @@ public class EditRepositoryAction implements MVCPortletAction {
 
 				SessionErrors.add(actionRequest, e.getClass());
 
-				return "/html/portlet/document_library/error.jsp";
+				return "/document_library/error.jsp";
 			}
 			else if (e instanceof DuplicateFolderNameException ||
 					 e instanceof DuplicateRepositoryNameException ||
@@ -111,14 +111,14 @@ public class EditRepositoryAction implements MVCPortletAction {
 
 				SessionErrors.add(renderRequest, e.getClass());
 
-				return "/html/portlet/document_library/error.jsp";
+				return "/document_library/error.jsp";
 			}
 			else {
 				throw new PortletException(e);
 			}
 		}
 
-		return "/html/portlet/document_library/edit_repository.jsp";
+		return "/document_library/edit_repository.jsp";
 	}
 
 	@Override

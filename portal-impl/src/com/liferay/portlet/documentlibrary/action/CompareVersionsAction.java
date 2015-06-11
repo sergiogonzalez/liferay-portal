@@ -79,14 +79,14 @@ public class CompareVersionsAction implements MVCPortletAction {
 
 				SessionErrors.add(renderRequest, e.getClass());
 
-				return "/html/portlet/document_library/error.jsp";
+				return "/document_library/error.jsp";
 			}
 			else {
 				throw new PortletException(e);
 			}
 		}
 
-		return "/html/portlet/document_library/compare_versions.jsp";
+		return "/document_library/compare_versions.jsp";
 	}
 
 	@Override

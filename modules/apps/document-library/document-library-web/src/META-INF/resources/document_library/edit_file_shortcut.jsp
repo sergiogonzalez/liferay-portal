@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/document_library/init.jsp" %>
+<%@ include file="/document_library/init.jsp" %>
 
 <%
 String strutsAction = ParamUtil.getString(request, "struts_action");
@@ -66,7 +66,7 @@ portletURL.setParameter("redirect", redirect);
 portletURL.setParameter("fileShortcutId", String.valueOf(fileShortcutId));
 %>
 
-<liferay-util:include page="/html/portlet/document_library/top_links.jsp" />
+<liferay-util:include page="/document_library/top_links.jsp" />
 
 <portlet:actionURL var="editFileShortcutURL">
 	<portlet:param name="struts_action" value="/document_library/edit_file_shortcut" />

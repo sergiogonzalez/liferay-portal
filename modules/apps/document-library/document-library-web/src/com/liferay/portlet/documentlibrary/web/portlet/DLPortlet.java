@@ -93,8 +93,7 @@ public class DLPortlet extends MVCPortlet {
 
 		registerMVCPortletAction(
 			new EditFileEntryAction(
-				this,
-				"/html/portlet/document_library/edit_file_entry.jsp"),
+				this, "/document_library/edit_file_entry.jsp"),
 			"/document_library/edit_file_entry");
 
 		registerMVCPortletAction(
@@ -103,19 +102,17 @@ public class DLPortlet extends MVCPortlet {
 
 		registerMVCPortletAction(
 			new EditFileEntryAction(
-				this,
-				"/html/portlet/document_library/" +
-					"upload_multiple_file_entries.jsp"),
+				this, "/document_library/upload_multiple_file_entries.jsp"),
 			"/document_library/upload_multiple_file_entries");
 
 		registerMVCPortletAction(
 			new EditFileEntryAction(
-				this, "/html/portlet/document_library/view_file_entry.jsp"),
+				this, "/document_library/view_file_entry.jsp"),
 			"/document_library/view_file_entry");
 
 		registerMVCPortletAction(
 			new EditFileEntryAction(
-				this, "/html/portlet/document_library/view_file_entry.jsp"),
+				this, "/document_library/view_file_entry.jsp"),
 			"/document_library/upload_file_entry");
 
 		registerMVCPortletAction(
@@ -123,32 +120,28 @@ public class DLPortlet extends MVCPortlet {
 			"/document_library/edit_file_shortcut");
 
 		registerMVCPortletAction(
-			new EditFolderAction(
-				"/html/portlet/document_library/edit_folder.jsp"),
+			new EditFolderAction("/document_library/edit_folder.jsp"),
 			"/document_library/edit_folder");
 
 		registerMVCPortletAction(
-			new EditFolderAction(
-				"/html/portlet/document_library/select_folder.jsp"),
+			new EditFolderAction("/document_library/select_folder.jsp"),
 			"/document_library/select_folder");
 
 		registerMVCPortletAction(
 			new EditRepositoryAction(), "/document_library/edit_repository");
 
 		registerMVCPortletAction(
-			new ForwardMVCPortletAction(
-				"/html/portlet/document_library/select_group.jsp"),
+			new ForwardMVCPortletAction("/document_library/select_group.jsp"),
 			"/document_library/select_group");
 
 		registerMVCPortletAction(
 			new ForwardMVCPortletAction(
-				"/html/portlet/document_library/" +
-					"select_restricted_file_entry_type.jsp"),
+				"/document_library/select_restricted_file_entry_type.jsp"),
 			"/document_library/select_restricted_file_entry_type");
 
 		registerMVCPortletAction(
 			new ForwardMVCPortletAction(
-				"/html/portlet/document_library/view_file_entry_type.jsp"),
+				"/document_library/view_file_entry_type.jsp"),
 			"/document_library/view_file_entry_type");
 
 		registerMVCPortletAction(
@@ -159,14 +152,13 @@ public class DLPortlet extends MVCPortlet {
 
 		registerMVCPortletAction(
 			new ViewAction(
-				"/html/portlet/document_library/error.jsp",
-				"/html/portlet/document_library/select_file_entry.jsp"),
+				"/document_library/error.jsp",
+				"/document_library/select_file_entry.jsp"),
 			"/document_library/select_file_entry");
 
 		registerMVCPortletAction(
 			new ViewAction(
-				"/html/portlet/document_library/error.jsp",
-				"/html/portlet/document_library/view.jsp"),
+				"/document_library/error.jsp", "/document_library/view.jsp"),
 			"/document_library/view", StringPool.BLANK);
 	}
 

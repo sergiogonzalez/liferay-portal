@@ -284,8 +284,7 @@ public class DLFolderAssetRenderer
 			portletRequest.setAttribute(
 				WebKeys.DOCUMENT_LIBRARY_FOLDER, _folder);
 
-			return "/html/portlet/document_library/asset/folder_" + template +
-				".jsp";
+			return "/document_library/asset/folder_" + template + ".jsp";
 		}
 		else {
 			return null;
