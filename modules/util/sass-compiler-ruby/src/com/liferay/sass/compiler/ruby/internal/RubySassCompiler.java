@@ -16,6 +16,7 @@ package com.liferay.sass.compiler.ruby.internal;
 
 import com.liferay.sass.compiler.SassCompiler;
 
+import java.io.File;
 import java.io.InputStream;
 
 import java.nio.file.Files;
@@ -117,7 +118,12 @@ public class RubySassCompiler implements AutoCloseable, SassCompiler {
 
 			String input = new String(Files.readAllBytes(path));
 
-			return compileString(input, includeDirName, imgDirName);
+			File inputFile = new File(inputFileName);
+
+			return compileString(
+				input,
+				includeDirName + File.pathSeparator + inputFile.getParent(),
+				imgDirName);
 		}
 		catch (Exception e) {
 			throw new RubySassCompilerException(

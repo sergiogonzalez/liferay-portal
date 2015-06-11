@@ -42,11 +42,6 @@ public class WildcardQueryImpl extends BaseQueryImpl implements WildcardQuery {
 		return _queryTerm;
 	}
 
-	@Override
-	public Object getWrappedQuery() {
-		return this;
-	}
-
 	private final QueryTerm _queryTerm;
 
 }

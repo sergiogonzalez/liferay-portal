@@ -79,6 +79,10 @@ public class DDMFormField implements Serializable {
 		return (DDMFormFieldOptions)_properties.get("options");
 	}
 
+	public String getFieldNamespace() {
+		return MapUtil.getString(_properties, "fieldNamespace");
+	}
+
 	public String getIndexType() {
 		return MapUtil.getString(_properties, "indexType");
 	}
@@ -89,10 +93,6 @@ public class DDMFormField implements Serializable {
 
 	public String getName() {
 		return MapUtil.getString(_properties, "name");
-	}
-
-	public String getNamespace() {
-		return MapUtil.getString(_properties, "namespace");
 	}
 
 	public List<DDMFormField> getNestedDDMFormFields() {
@@ -134,12 +134,16 @@ public class DDMFormField implements Serializable {
 		return MapUtil.getString(_properties, "type");
 	}
 
+	public String getVisibilityExpression() {
+		return MapUtil.getString(_properties, "visibilityExpression");
+	}
+
 	public boolean isLocalizable() {
 		return MapUtil.getBoolean(_properties, "localizable");
 	}
 
 	public boolean isMultiple() {
-		return MapUtil.getBoolean(_properties, "localizable");
+		return MapUtil.getBoolean(_properties, "multiple");
 	}
 
 	public boolean isReadOnly() {
@@ -184,6 +188,10 @@ public class DDMFormField implements Serializable {
 		_properties.put("options", ddmFormFieldOptions);
 	}
 
+	public void setFieldNamespace(String fieldNamespace) {
+		_properties.put("fieldNamespace", fieldNamespace);
+	}
+
 	public void setIndexType(String indexType) {
 		_properties.put("indexType", indexType);
 	}
@@ -202,10 +210,6 @@ public class DDMFormField implements Serializable {
 
 	public void setName(String name) {
 		_properties.put("name", name);
-	}
-
-	public void setNamespace(String namespace) {
-		_properties.put("namespace", namespace);
 	}
 
 	public void setNestedDDMFormFields(List<DDMFormField> nestedDDMFormFields) {
@@ -246,6 +250,10 @@ public class DDMFormField implements Serializable {
 
 	public void setType(String type) {
 		_properties.put("type", type);
+	}
+
+	public void setVisibilityExpression(String visibilityExpression) {
+		_properties.put("visibilityExpression", visibilityExpression);
 	}
 
 	private DDMForm _ddmForm;

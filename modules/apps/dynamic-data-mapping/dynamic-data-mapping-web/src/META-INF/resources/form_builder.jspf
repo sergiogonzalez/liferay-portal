@@ -223,6 +223,7 @@ for (Locale availableLocale : LanguageUtil.getAvailableLocales(themeDisplay.getS
 
 			portletNamespace: '<portlet:namespace />',
 			portletResourceNamespace: '<%= HtmlUtil.escapeJS(portletResourceNamespace) %>',
+			readOnly: <%= ParamUtil.getBoolean(request, "formBuilderReadOnly") %>,
 			srcNode: '#<portlet:namespace />formBuilderContent',
 			translationManager: {
 

@@ -42,21 +42,31 @@ if (group.getPrivateLayoutsPageCount() > 0) {
 	<%
 	boolean checkContentDisplayPage = ParamUtil.getBoolean(request, "checkContentDisplayPage");
 	String selectedLayoutIds = ParamUtil.getString(request, "selectedLayoutIds");
+	long selPlid = ParamUtil.getLong(request, "selPlid", LayoutConstants.DEFAULT_PLID);
 
-	LayoutsAdminDisplayContext layoutsAdminDisplayContext = new LayoutsAdminDisplayContext(request, liferayPortletResponse);
+	PortletURL editLayoutURL = PortletProviderUtil.getPortletURL(request, Layout.class.getName(), PortletProvider.Action.EDIT);
+
+	editLayoutURL.setParameter("redirect", currentURL);
+	editLayoutURL.setParameter("groupId", String.valueOf(groupId));
+	editLayoutURL.setParameter("viewLayout", Boolean.TRUE.toString());
 	%>
 
 	<c:if test="<%= group.getPublicLayoutsPageCount() > 0 %>">
+
+		<%
+		editLayoutURL.setParameter("tabs1", "public-pages");
+		%>
+
 		<liferay-ui:section>
 			<div>
 				<liferay-ui:layouts-tree
 					checkContentDisplayPage="<%= checkContentDisplayPage %>"
 					draggableTree="<%= false %>"
 					groupId="<%= groupId %>"
-					portletURL="<%= layoutsAdminDisplayContext.getEditLayoutURL() %>"
-					rootNodeName="<%= layoutsAdminDisplayContext.getRootNodeName() %>"
+					portletURL="<%= editLayoutURL %>"
+					rootNodeName="<%= group.getLayoutRootNodeName(false, themeDisplay.getLocale()) %>"
 					saveState="<%= false %>"
-					selPlid="<%= layoutsAdminDisplayContext.getSelPlid() %>"
+					selPlid="<%= selPlid %>"
 					selectedLayoutIds="<%= selectedLayoutIds %>"
 					treeId="treeContainerPublicPages"
 				/>
@@ -65,17 +75,22 @@ if (group.getPrivateLayoutsPageCount() > 0) {
 	</c:if>
 
 	<c:if test="<%= group.getPrivateLayoutsPageCount() > 0 %>">
+
+		<%
+		editLayoutURL.setParameter("tabs1", "private-pages");
+		%>
+
 		<liferay-ui:section>
 			<div>
 				<liferay-ui:layouts-tree
 					checkContentDisplayPage="<%= checkContentDisplayPage %>"
 					draggableTree="<%= false %>"
 					groupId="<%= groupId %>"
-					portletURL="<%= layoutsAdminDisplayContext.getEditLayoutURL() %>"
+					portletURL="<%= editLayoutURL %>"
 					privateLayout="<%= true %>"
-					rootNodeName="<%= layoutsAdminDisplayContext.getRootNodeName() %>"
+					rootNodeName="<%= group.getLayoutRootNodeName(true, themeDisplay.getLocale()) %>"
 					saveState="<%= false %>"
-					selPlid="<%= layoutsAdminDisplayContext.getSelPlid() %>"
+					selPlid="<%= selPlid %>"
 					selectedLayoutIds="<%= selectedLayoutIds %>"
 					treeId="treeContainerPrivatePages"
 				/>
@@ -189,34 +204,26 @@ if (group.getPrivateLayoutsPageCount() > 0) {
 			button.attr('data-layoutpath', messageText);
 
 			<%
-			String returnType = StringPool.BLANK;
+			String itemSelectorReturnTypeName = StringPool.BLANK;
 
-			for (Class<?> desiredReturnType : urlItemSelectorCriterion.getDesiredReturnTypes()) {
-				if (desiredReturnType == URL.class) {
-					returnType = URL.class.getName();
-				}
-				else if (desiredReturnType == UUID.class) {
-					returnType = UUID.class.getName();
-				}
-				else {
-					continue;
-				}
+			for (ItemSelectorReturnType desiredItemSelectorReturnType : urlItemSelectorCriterion.getDesiredItemSelectorReturnTypes()) {
+				itemSelectorReturnTypeName = desiredItemSelectorReturnType.getName();
 
 				break;
 			}
 
-			if (Validator.isNull(returnType)) {
-				throw new IllegalArgumentException("Invalid return type " + returnType);
+			if (Validator.isNull(itemSelectorReturnTypeName)) {
+				throw new IllegalArgumentException("Invalid item selector return type " + itemSelectorReturnTypeName);
 			}
 			%>
 
-			button.attr('data-returnType', '<%= returnType %>');
+			button.attr('data-returnType', '<%= itemSelectorReturnTypeName %>');
 
 			<c:choose>
-				<c:when test="<%= returnType.equals(URL.class.getName()) %>">
+				<c:when test="<%= itemSelectorReturnTypeName.equals(DefaultItemSelectorReturnType.URL.getName()) %>">
 					button.attr('data-value', url);
 				</c:when>
-				<c:when test="<%= returnType.equals(UUID.class.getName()) %>">
+				<c:when test="<%= itemSelectorReturnTypeName.equals(DefaultItemSelectorReturnType.UUID.getName()) %>">
 					button.attr('data-value', uuid);
 				</c:when>
 			</c:choose>
