@@ -14,8 +14,16 @@
 
 package com.liferay.portlet.social.handler;
 
+import com.liferay.portal.kernel.exception.PortalException;
+
 /**
  * @author Adolfo Pérez
  */
 public interface SocialActivityHandler {
+
+	public void addActivity(
+			long userId, long groupId, String className, long classPK, int type,
+			String extraData, long receiverUserId)
+		throws PortalException;
+
 }

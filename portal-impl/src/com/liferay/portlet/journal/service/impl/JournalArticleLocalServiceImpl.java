@@ -142,6 +142,7 @@ import com.liferay.portlet.journal.util.JournalContentUtil;
 import com.liferay.portlet.journal.util.JournalUtil;
 import com.liferay.portlet.journal.util.comparator.ArticleIDComparator;
 import com.liferay.portlet.journal.util.comparator.ArticleVersionComparator;
+import com.liferay.portlet.social.handler.SocialActivityHandlerUtil;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.model.TrashVersion;
@@ -3596,7 +3597,7 @@ public class JournalArticleLocalServiceImpl
 
 		extraDataJSONObject.put("title", article.getTitle());
 
-		socialActivityLocalService.addActivity(
+		SocialActivityHandlerUtil.addActivity(
 			userId, article.getGroupId(), JournalArticle.class.getName(),
 			article.getResourcePrimKey(),
 			SocialActivityConstants.TYPE_MOVE_TO_TRASH,
@@ -3795,7 +3796,7 @@ public class JournalArticleLocalServiceImpl
 
 		extraDataJSONObject.put("title", article.getTitle());
 
-		socialActivityLocalService.addActivity(
+		SocialActivityHandlerUtil.addActivity(
 			userId, article.getGroupId(), JournalArticle.class.getName(),
 			article.getResourcePrimKey(),
 			SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
@@ -5797,7 +5798,7 @@ public class JournalArticleLocalServiceImpl
 				extraDataJSONObject.put("title", article.getTitle());
 
 				if (serviceContext.isCommandUpdate()) {
-					socialActivityLocalService.addActivity(
+					SocialActivityHandlerUtil.addActivity(
 						user.getUserId(), article.getGroupId(),
 						JournalArticle.class.getName(),
 						article.getResourcePrimKey(),
