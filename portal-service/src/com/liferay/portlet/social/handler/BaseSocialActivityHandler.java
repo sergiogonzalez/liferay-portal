@@ -57,6 +57,17 @@ public abstract class BaseSocialActivityHandler
 			receiverUserId);
 	}
 
+	@Override
+	public void addUniqueActivity(
+			long userId, long groupId, String className, long classPK, int type,
+			String extraData, long receiverUserId)
+		throws PortalException {
+
+		getSocialActivityLocalService().addUniqueActivity(
+			userId, groupId, className, classPK, type, extraData,
+			receiverUserId);
+	}
+
 	protected abstract SocialActivityLocalService
 		getSocialActivityLocalService();
 

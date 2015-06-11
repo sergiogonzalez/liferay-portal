@@ -33,4 +33,9 @@ public interface SocialActivityHandler {
 			long classPK, int type, String extraData, long receiverUserId)
 		throws PortalException;
 
+	public void addUniqueActivity(
+			long userId, long groupId, String className, long classPK, int type,
+			String extraData, long receiverUserId)
+		throws PortalException;
+
 }

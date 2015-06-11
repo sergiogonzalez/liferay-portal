@@ -61,6 +61,20 @@ public class SocialActivityHandlerImpl implements SocialActivityHandler {
 			receiverUserId);
 	}
 
+	@Override
+	public void addUniqueActivity(
+			long userId, long groupId, String className, long classPK, int type,
+			String extraData, long receiverUserId)
+		throws PortalException {
+
+		SocialActivityHandler socialActivityHandler = getSocialActivityHandler(
+			className);
+
+		socialActivityHandler.addUniqueActivity(
+			userId, groupId, className, classPK, type, extraData,
+			receiverUserId);
+	}
+
 	protected SocialActivityHandler getSocialActivityHandler(String className) {
 		SocialActivityHandler socialActivityHandler =
 			_serviceTrackerMap.getService(className);
