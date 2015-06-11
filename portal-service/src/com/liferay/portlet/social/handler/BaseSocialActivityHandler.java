@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.social.service.SocialActivityLocalService;
 
+import java.util.Date;
+
 /**
  * @author Adolfo Pérez
  */
@@ -42,6 +44,17 @@ public abstract class BaseSocialActivityHandler
 				userId, groupId, className, classPK, type, extraData,
 				receiverUserId);
 		}
+	}
+
+	@Override
+	public void addUniqueActivity(
+			long userId, long groupId, Date createDate, String className,
+			long classPK, int type, String extraData, long receiverUserId)
+		throws PortalException {
+
+		getSocialActivityLocalService().addUniqueActivity(
+			userId, groupId, createDate, className, classPK, type, extraData,
+			receiverUserId);
 	}
 
 	protected abstract SocialActivityLocalService
