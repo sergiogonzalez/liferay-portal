@@ -45,7 +45,7 @@ boolean hasAddDocumentPermission = DLFolderPermission.contains(permissionChecker
 <aui:nav-item dropdown="<%= true %>" id="addButtonContainer" label="add">
 	<c:if test="<%= DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_FOLDER) %>">
 		<portlet:renderURL var="addFolderURL">
-			<portlet:param name="struts_action" value="/document_library/edit_folder" />
+			<portlet:param name="mvcRenderCommandName" value="/document_library/edit_folder" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
 			<portlet:param name="parentFolderId" value="<%= String.valueOf(folderId) %>" />
