@@ -77,7 +77,7 @@ import org.apache.struts.action.ActionMapping;
  * @author Sergio González
  * @author Levente Hudák
  */
-public class EditFolderAction extends PortletAction {
+public class EditFolderRenderCommand extends PortletAction {
 
 	@Override
 	public void processAction(
