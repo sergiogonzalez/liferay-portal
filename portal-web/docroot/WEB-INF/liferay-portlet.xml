@@ -134,9 +134,6 @@
 		<user-notification-definitions>com/liferay/portlet/documentlibrary/document-library-user-notification-definitions.xml</user-notification-definitions>
 	</portlet>
 	<portlet>
-		<portlet-name>31</portlet-name>
-	</portlet>
-	<portlet>
 		<portlet-name>33</portlet-name>
 		<icon>/html/icons/blogs.png</icon>
 		<struts-path>blogs</struts-path>
@@ -359,9 +356,6 @@
 		<private-session-attributes>false</private-session-attributes>
 		<render-weight>50</render-weight>
 		<css-class-wrapper>portlet-page-ratings</css-class-wrapper>
-	</portlet>
-	<portlet>
-		<portlet-name>110</portlet-name>
 	</portlet>
 	<portlet>
 		<portlet-name>114</portlet-name>
@@ -895,9 +889,6 @@
 		<private-session-attributes>false</private-session-attributes>
 		<render-weight>50</render-weight>
 		<css-class-wrapper>portlet-shopping</css-class-wrapper>
-	</portlet>
-	<portlet>
-		<portlet-name>199</portlet-name>
 	</portlet>
 	<portlet>
 		<portlet-name>200</portlet-name>
