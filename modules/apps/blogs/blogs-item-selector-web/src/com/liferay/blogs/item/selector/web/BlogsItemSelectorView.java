@@ -17,14 +17,18 @@ package com.liferay.blogs.item.selector.web;
 import com.liferay.blogs.item.selector.criterion.BlogsItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.DefaultItemSelectorReturnType;
+import com.liferay.portal.kernel.util.SetUtil;
 
 import java.io.IOException;
 
+import java.util.Collections;
 import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.Set;
 
 import javax.portlet.PortletURL;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -39,6 +43,9 @@ public class BlogsItemSelectorView
 	implements ItemSelectorView
 		<BlogsItemSelectorCriterion, DefaultItemSelectorReturnType> {
 
+	public static final String BLOGS_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT =
+		"BLOGS_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT";
+
 	@Override
 	public Class<BlogsItemSelectorCriterion> getItemSelectorCriterionClass() {
 		return BlogsItemSelectorCriterion.class;
@@ -48,20 +55,46 @@ public class BlogsItemSelectorView
 	public Set<DefaultItemSelectorReturnType>
 		getSupportedItemSelectorReturnTypes() {
 
-		return null;
+		return _supportedItemSelectorReturnTypes;
 	}
 
 	@Override
 	public String getTitle(Locale locale) {
-		return null;
+		ResourceBundle resourceBundle = ResourceBundle.getBundle(
+			"content/Language", locale);
+
+		return resourceBundle.getString("blogs-images");
 	}
 
 	@Override
 	public void renderHTML(
 			ServletRequest request, ServletResponse response,
-			BlogsItemSelectorCriterion itemSelectorCriterion,
+			BlogsItemSelectorCriterion blogsItemSelectorCriterion,
 			PortletURL portletURL, String itemSelectedEventName)
 		throws IOException, ServletException {
+
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher(
+			"/o/blogs-item-selector-web/blogs_attachments.jsp");
+
+		BlogsItemSelectorViewDisplayContext
+			blogsItemSelectorViewDisplayContext =
+				new BlogsItemSelectorViewDisplayContext(
+					blogsItemSelectorCriterion, this, itemSelectedEventName,
+					portletURL);
+
+		request.setAttribute(
+			BLOGS_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT,
+			blogsItemSelectorViewDisplayContext);
+
+		requestDispatcher.include(request, response);
 	}
+
+	private static final Set<DefaultItemSelectorReturnType>
+		_supportedItemSelectorReturnTypes = Collections.unmodifiableSet(
+			SetUtil.fromArray(
+				new DefaultItemSelectorReturnType[] {
+					DefaultItemSelectorReturnType.FILE_ENTRY,
+					DefaultItemSelectorReturnType.URL
+				}));
 
 }
