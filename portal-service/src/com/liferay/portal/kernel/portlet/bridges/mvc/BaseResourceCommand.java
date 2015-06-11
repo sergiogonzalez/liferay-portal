@@ -17,9 +17,15 @@ package com.liferay.portal.kernel.portlet.bridges.mvc;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.PortletConfigFactoryUtil;
 
+import java.io.IOException;
+
+import javax.portlet.PortletConfig;
+import javax.portlet.PortletContext;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
@@ -55,6 +61,23 @@ public abstract class BaseResourceCommand implements ResourceCommand {
 			portletRequest,
 			PortalUtil.getPortletId(portletRequest) +
 				SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE);
+	}
+
+	protected void include(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse,
+			String jspPath)
+		throws IOException, PortletException {
+
+		String portletId = PortalUtil.getPortletId(resourceRequest);
+
+		PortletConfig portletConfig = PortletConfigFactoryUtil.get(portletId);
+
+		PortletContext portletContext = portletConfig.getPortletContext();
+
+		PortletRequestDispatcher portletRequestDispatcher =
+			portletContext.getRequestDispatcher(jspPath);
+
+		portletRequestDispatcher.include(resourceRequest, resourceResponse);
 	}
 
 }

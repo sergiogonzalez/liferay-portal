@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+
+<beans
+	default-destroy-method="destroy"
+	default-init-method="afterPropertiesSet"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
+>
+	<bean id="com.liferay.portlet.documentlibrary.action.EditFolderActionCommand" class="com.liferay.portlet.documentlibrary.action.EditFolderActionCommand" />
+	<bean id="com.liferay.portlet.documentlibrary.action.EditFolderRenderCommand" class="com.liferay.portlet.documentlibrary.action.EditFolderRenderCommand" />
+	<bean id="com.liferay.portlet.documentlibrary.action.EditFolderResourceCommand" class="com.liferay.portlet.documentlibrary.action.EditFolderResourceCommand" />
+	<bean id="com.liferay.portlet.documentlibrary.action.SelectFolderRenderCommand" class="com.liferay.portlet.documentlibrary.action.SelectFolderRenderCommand" />
+	<bean id="com.liferay.portlet.documentlibrary.action.ViewRenderCommand" class="com.liferay.portlet.documentlibrary.action.ViewRenderCommand" />
+</beans>
