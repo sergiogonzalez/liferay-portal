@@ -56,6 +56,12 @@ public abstract class BaseResourceCommand implements ResourceCommand {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception;
 
+	protected PortletConfig getPortletConfig(ResourceRequest resourceRequest) {
+		String portletId = PortalUtil.getPortletId(resourceRequest);
+
+		return PortletConfigFactoryUtil.get(portletId);
+	}
+
 	protected void hideDefaultSuccessMessage(PortletRequest portletRequest) {
 		SessionMessages.add(
 			portletRequest,
@@ -68,9 +74,7 @@ public abstract class BaseResourceCommand implements ResourceCommand {
 			String jspPath)
 		throws IOException, PortletException {
 
-		String portletId = PortalUtil.getPortletId(resourceRequest);
-
-		PortletConfig portletConfig = PortletConfigFactoryUtil.get(portletId);
+		PortletConfig portletConfig = getPortletConfig(resourceRequest);
 
 		PortletContext portletContext = portletConfig.getPortletContext();
 

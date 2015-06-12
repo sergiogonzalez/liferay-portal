@@ -16,8 +16,16 @@ package com.liferay.portal.kernel.portlet.bridges.mvc;
 
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.PortletConfigFactoryUtil;
 
+import java.io.IOException;
+
+import javax.portlet.ActionResponse;
+import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -49,11 +57,55 @@ public abstract class BaseActionCommand implements ActionCommand {
 			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws Exception;
 
+	protected PortletConfig getPortletConfig(PortletRequest portletRequest) {
+		String portletId = PortalUtil.getPortletId(portletRequest);
+
+		return PortletConfigFactoryUtil.get(portletId);
+	}
+
+	protected void hideDefaultErrorMessage(PortletRequest portletRequest) {
+		SessionMessages.add(
+			portletRequest,
+			PortalUtil.getPortletId(portletRequest) +
+				SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_ERROR_MESSAGE);
+	}
+
 	protected void hideDefaultSuccessMessage(PortletRequest portletRequest) {
 		SessionMessages.add(
 			portletRequest,
 			PortalUtil.getPortletId(portletRequest) +
 				SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE);
+	}
+
+	protected void sendRedirect(
+			PortletRequest portletRequest, PortletResponse portletResponse)
+		throws IOException {
+
+		sendRedirect(portletRequest, portletResponse, null);
+	}
+
+	protected void sendRedirect(
+			PortletRequest portletRequest, PortletResponse portletResponse,
+			String redirect)
+		throws IOException {
+
+		if (Validator.isNull(redirect)) {
+			redirect = _getRedirect(portletRequest);
+		}
+
+		if (Validator.isNotNull(redirect)) {
+			((ActionResponse)portletResponse).sendRedirect(redirect);
+		}
+	}
+
+	private String _getRedirect(PortletRequest actionRequest) {
+		String redirect = (String)actionRequest.getAttribute(WebKeys.REDIRECT);
+
+		if (Validator.isNull(redirect)) {
+			redirect = ParamUtil.getString(actionRequest, "redirect");
+		}
+
+		return redirect;
 	}
 
 }
