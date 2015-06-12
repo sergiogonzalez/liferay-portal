@@ -54,6 +54,12 @@ public class SocialActivityHandlerUtil {
 			receiverUserId);
 	}
 
+	public static void deleteActivities(String className, long classPK)
+		throws PortalException {
+
+		getSocialActivityHandler().deleteActivities(className, classPK);
+	}
+
 	public static SocialActivityHandler getSocialActivityHandler() {
 		PortalRuntimePermission.checkGetBeanProperty(
 			SocialActivityHandlerUtil.class);

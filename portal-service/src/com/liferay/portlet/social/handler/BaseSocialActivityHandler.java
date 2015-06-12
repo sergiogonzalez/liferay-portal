@@ -68,6 +68,13 @@ public abstract class BaseSocialActivityHandler
 			receiverUserId);
 	}
 
+	@Override
+	public void deleteActivities(String className, long classPK)
+		throws PortalException {
+
+		getSocialActivityLocalService().deleteActivities(className, classPK);
+	}
+
 	protected abstract SocialActivityLocalService
 		getSocialActivityLocalService();
 
