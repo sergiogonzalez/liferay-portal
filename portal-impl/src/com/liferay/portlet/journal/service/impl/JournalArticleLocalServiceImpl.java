@@ -5801,7 +5801,7 @@ public class JournalArticleLocalServiceImpl
 				}
 				else {
 					SocialActivityHandlerUtil.addUniqueActivity(
-						user.getUserId(), article.getGroupId(), article,
+						user.getUserId(), article,
 						JournalActivityKeys.ADD_ARTICLE,
 						extraDataJSONObject.toString(), 0);
 				}
