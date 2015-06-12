@@ -297,8 +297,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		extraDataJSONObject.put("version", page.getVersion());
 
 		SocialActivityHandlerUtil.addActivity(
-			userId, page.getGroupId(), page,
-			SocialActivityConstants.TYPE_ADD_ATTACHMENT,
+			userId, page, SocialActivityConstants.TYPE_ADD_ATTACHMENT,
 			extraDataJSONObject.toString(), 0);
 	}
 
@@ -329,8 +328,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		extraDataJSONObject.put("version", page.getVersion());
 
 		SocialActivityHandlerUtil.addActivity(
-			userId, page.getGroupId(), page,
-			SocialActivityConstants.TYPE_ADD_ATTACHMENT,
+			userId, page, SocialActivityConstants.TYPE_ADD_ATTACHMENT,
 			extraDataJSONObject.toString(), 0);
 	}
 
@@ -1576,8 +1574,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		extraDataJSONObject.put("version", page.getVersion());
 
 		SocialActivityHandlerUtil.addActivity(
-			userId, page.getGroupId(), page,
-			SocialActivityConstants.TYPE_MOVE_ATTACHMENT_TO_TRASH,
+			userId, page, SocialActivityConstants.TYPE_MOVE_ATTACHMENT_TO_TRASH,
 			extraDataJSONObject.toString(), 0);
 
 		return fileEntry;
@@ -1728,8 +1725,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		extraDataJSONObject.put("version", page.getVersion());
 
 		SocialActivityHandlerUtil.addActivity(
-			userId, page.getGroupId(), page,
-			SocialActivityConstants.TYPE_MOVE_TO_TRASH,
+			userId, page, SocialActivityConstants.TYPE_MOVE_TO_TRASH,
 			extraDataJSONObject.toString(), 0);
 
 		if (!pageVersions.isEmpty()) {
@@ -1830,7 +1826,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			userId, fileEntry.getFileEntryId());
 
 		SocialActivityHandlerUtil.addActivity(
-			userId, page.getGroupId(), page,
+			userId, page,
 			SocialActivityConstants.TYPE_RESTORE_ATTACHMENT_FROM_TRASH,
 			extraDataJSONObject.toString(), 0);
 	}
@@ -2122,7 +2118,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 				extraDataJSONObject.put("version", page.getVersion());
 
 				SocialActivityHandlerUtil.addActivity(
-					userId, page.getGroupId(), page, WikiActivityKeys.ADD_PAGE,
+					userId, page, WikiActivityKeys.ADD_PAGE,
 					extraDataJSONObject.toString(), 0);
 			}
 
@@ -3013,8 +3009,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		extraDataJSONObject.put("version", page.getVersion());
 
 		SocialActivityHandlerUtil.addActivity(
-			userId, page.getGroupId(), page,
-			SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
+			userId, page, SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
 			extraDataJSONObject.toString(), 0);
 
 		if (!pageVersions.isEmpty()) {
@@ -3349,8 +3344,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 				extraDataJSONObject.put("version", page.getVersion());
 
 				SocialActivityHandlerUtil.addActivity(
-					userId, page.getGroupId(), page,
-					WikiActivityKeys.UPDATE_PAGE,
+					userId, page, WikiActivityKeys.UPDATE_PAGE,
 					extraDataJSONObject.toString(), 0);
 			}
 		}
