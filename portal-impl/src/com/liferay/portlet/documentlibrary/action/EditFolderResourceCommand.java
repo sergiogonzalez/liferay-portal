@@ -50,8 +50,8 @@ import javax.portlet.ResourceResponse;
  */
 @OSGiBeanProperties(
 	property = {
-		"resource.command.name=/document_library/edit_folder",
-		"javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY
+		"javax.portlet.name=",
+		"resource.command.name=/document_library/edit_folder" + PortletKeys.DOCUMENT_LIBRARY
 	},
 	service = ResourceCommand.class
 )
