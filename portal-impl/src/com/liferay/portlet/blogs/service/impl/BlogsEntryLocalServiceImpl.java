@@ -1536,8 +1536,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 				}
 				else {
 					SocialActivityHandlerUtil.addUniqueActivity(
-						user.getUserId(), entry.getGroupId(), entry,
-						BlogsActivityKeys.ADD_ENTRY,
+						user.getUserId(), entry, BlogsActivityKeys.ADD_ENTRY,
 						extraDataJSONObject.toString(), 0);
 				}
 			}
