@@ -16,11 +16,14 @@ package com.liferay.portlet.documentlibrary.action;
 
 import com.liferay.portal.kernel.lock.DuplicateLockException;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.bridges.mvc.ActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseActionCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.servlet.ServletResponseConstants;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -30,8 +33,8 @@ import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
-import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.asset.AssetCategoryException;
 import com.liferay.portlet.asset.AssetTagException;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
@@ -50,16 +53,11 @@ import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletConfig;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.WindowState;
 
 import javax.servlet.http.HttpServletResponse;
-
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Brian Wing Shun Chan
@@ -67,128 +65,15 @@ import org.apache.struts.action.ActionMapping;
  * @author Manuel de la Peña
  * @author Levente Hudák
  */
-public class EditEntryAction extends PortletAction {
-
-	@Override
-	public void processAction(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
-		throws Exception {
-
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
-
-		try {
-			if (cmd.equals(Constants.CANCEL_CHECKOUT)) {
-				cancelCheckedOutEntries(actionRequest);
-			}
-			else if (cmd.equals(Constants.CHECKIN)) {
-				checkInEntries(actionRequest);
-			}
-			else if (cmd.equals(Constants.CHECKOUT)) {
-				checkOutEntries(actionRequest);
-			}
-			else if (cmd.equals(Constants.DELETE)) {
-				deleteEntries(actionRequest, false);
-			}
-			else if (cmd.equals(Constants.MOVE)) {
-				moveEntries(actionRequest);
-			}
-			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
-				deleteEntries(actionRequest, true);
-			}
-			else if (cmd.equals(Constants.RESTORE)) {
-				restoreTrashEntries(actionRequest);
-			}
-
-			WindowState windowState = actionRequest.getWindowState();
-
-			if (!windowState.equals(LiferayWindowState.POP_UP)) {
-				sendRedirect(actionRequest, actionResponse);
-			}
-			else {
-				String redirect = PortalUtil.escapeRedirect(
-					ParamUtil.getString(actionRequest, "redirect"));
-
-				if (Validator.isNotNull(redirect)) {
-					actionResponse.sendRedirect(redirect);
-				}
-			}
-		}
-		catch (Exception e) {
-			if (e instanceof DuplicateLockException ||
-				e instanceof NoSuchFileEntryException ||
-				e instanceof NoSuchFolderException ||
-				e instanceof PrincipalException) {
-
-				if (e instanceof DuplicateLockException) {
-					DuplicateLockException dle = (DuplicateLockException)e;
-
-					SessionErrors.add(
-						actionRequest, dle.getClass(), dle.getLock());
-				}
-				else {
-					SessionErrors.add(actionRequest, e.getClass());
-				}
-
-				setForward(actionRequest, "portlet.document_library.error");
-			}
-			else if (e instanceof DuplicateFileException ||
-					 e instanceof DuplicateFolderNameException ||
-					 e instanceof SourceFileNameException) {
-
-				if (e instanceof DuplicateFileException) {
-					HttpServletResponse response =
-						PortalUtil.getHttpServletResponse(actionResponse);
-
-					response.setStatus(
-						ServletResponseConstants.SC_DUPLICATE_FILE_EXCEPTION);
-				}
-
-				SessionErrors.add(actionRequest, e.getClass());
-			}
-			else if (e instanceof AssetCategoryException ||
-					 e instanceof AssetTagException ||
-					 e instanceof InvalidFolderException) {
-
-				SessionErrors.add(actionRequest, e.getClass(), e);
-			}
-			else {
-				throw e;
-			}
-		}
-	}
-
-	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
-
-		try {
-			ActionUtil.getFileEntries(renderRequest);
-			ActionUtil.getFileShortcuts(renderRequest);
-			ActionUtil.getFolders(renderRequest);
-		}
-		catch (Exception e) {
-			if (e instanceof NoSuchFileEntryException ||
-				e instanceof PrincipalException) {
-
-				SessionErrors.add(renderRequest, e.getClass());
-
-				return actionMapping.findForward(
-					"portlet.document_library.error");
-			}
-			else {
-				throw e;
-			}
-		}
-
-		String forward = "portlet.document_library.edit_entry";
-
-		return actionMapping.findForward(getForward(renderRequest, forward));
-	}
+@OSGiBeanProperties(
+	property = {
+		"javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY,
+		"render.command.name=/document_library/edit_entry",
+		"render.command.name=/document_library/move_entry"
+	},
+	service = ActionCommand.class
+)
+public class EditEntryActionCommand extends BaseActionCommand {
 
 	protected void cancelCheckedOutEntries(ActionRequest actionRequest)
 		throws Exception {
@@ -298,6 +183,99 @@ public class EditEntryAction extends PortletAction {
 			TrashUtil.addTrashSessionMessages(actionRequest, trashedModels);
 
 			hideDefaultSuccessMessage(actionRequest);
+		}
+	}
+
+	@Override
+	protected void doProcessCommand(
+			PortletRequest portletRequest, PortletResponse portletResponse)
+		throws Exception {
+
+		ActionRequest actionRequest = (ActionRequest)portletRequest;
+
+		ActionResponse actionResponse = (ActionResponse)portletResponse;
+
+		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
+
+		try {
+			if (cmd.equals(Constants.CANCEL_CHECKOUT)) {
+				cancelCheckedOutEntries(actionRequest);
+			}
+			else if (cmd.equals(Constants.CHECKIN)) {
+				checkInEntries(actionRequest);
+			}
+			else if (cmd.equals(Constants.CHECKOUT)) {
+				checkOutEntries(actionRequest);
+			}
+			else if (cmd.equals(Constants.DELETE)) {
+				deleteEntries(actionRequest, false);
+			}
+			else if (cmd.equals(Constants.MOVE)) {
+				moveEntries(actionRequest);
+			}
+			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
+				deleteEntries(actionRequest, true);
+			}
+			else if (cmd.equals(Constants.RESTORE)) {
+				restoreTrashEntries(actionRequest);
+			}
+
+			WindowState windowState = actionRequest.getWindowState();
+
+			if (!windowState.equals(LiferayWindowState.POP_UP)) {
+				sendRedirect(actionRequest, actionResponse);
+			}
+			else {
+				String redirect = PortalUtil.escapeRedirect(
+					ParamUtil.getString(actionRequest, "redirect"));
+
+				if (Validator.isNotNull(redirect)) {
+					actionResponse.sendRedirect(redirect);
+				}
+			}
+		}
+		catch (Exception e) {
+			if (e instanceof DuplicateLockException ||
+				e instanceof NoSuchFileEntryException ||
+				e instanceof NoSuchFolderException ||
+				e instanceof PrincipalException) {
+
+				if (e instanceof DuplicateLockException) {
+					DuplicateLockException dle = (DuplicateLockException)e;
+
+					SessionErrors.add(
+						actionRequest, dle.getClass(), dle.getLock());
+				}
+				else {
+					SessionErrors.add(actionRequest, e.getClass());
+				}
+
+				actionResponse.setRenderParameter(
+					"mvcPath", "/html/portlet/document_library/error.jsp");
+			}
+			else if (e instanceof DuplicateFileException ||
+					 e instanceof DuplicateFolderNameException ||
+					 e instanceof SourceFileNameException) {
+
+				if (e instanceof DuplicateFileException) {
+					HttpServletResponse response =
+						PortalUtil.getHttpServletResponse(actionResponse);
+
+					response.setStatus(
+						ServletResponseConstants.SC_DUPLICATE_FILE_EXCEPTION);
+				}
+
+				SessionErrors.add(actionRequest, e.getClass());
+			}
+			else if (e instanceof AssetCategoryException ||
+					 e instanceof AssetTagException ||
+					 e instanceof InvalidFolderException) {
+
+				SessionErrors.add(actionRequest, e.getClass(), e);
+			}
+			else {
+				throw e;
+			}
 		}
 	}
 
