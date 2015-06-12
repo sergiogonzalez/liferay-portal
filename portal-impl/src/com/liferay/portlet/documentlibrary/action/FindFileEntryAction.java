@@ -49,7 +49,7 @@ public class FindFileEntryAction extends FindFolderAction {
 			return "/document_library_display/view_file_entry";
 		}
 		else if (rootPortletId.equals(PortletKeys.MEDIA_GALLERY_DISPLAY)) {
-			return "/image_gallery_display/view_image";
+			return "/document_library_display/view_image";
 		}
 
 		return "/document_library/view_file_entry";
