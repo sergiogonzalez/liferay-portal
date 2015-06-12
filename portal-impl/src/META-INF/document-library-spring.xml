@@ -30,5 +30,6 @@
 	<bean id="com.liferay.portlet.documentlibrary.action.SearchResourceCommand" class="com.liferay.portlet.documentlibrary.action.SearchResourceCommand" />
 	<bean id="com.liferay.portlet.documentlibrary.action.SelectFolderRenderCommand" class="com.liferay.portlet.documentlibrary.action.SelectFolderRenderCommand" />
 	<bean id="com.liferay.portlet.imagegallerydisplay.action.ViewAction" class="com.liferay.portlet.imagegallerydisplay.action.ViewAction" />
+	<bean id="com.liferay.portlet.imagegallerydisplay.action.ViewSlideShowAction" class="com.liferay.portlet.imagegallerydisplay.action.ViewSlideShowAction" />
 	<bean id="com.liferay.portlet.documentlibrary.action.ViewRenderCommand" class="com.liferay.portlet.documentlibrary.action.ViewRenderCommand" />
 </beans>
