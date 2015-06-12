@@ -1061,6 +1061,7 @@
 	</bean>
 	<bean id="com.liferay.portlet.layoutsetprototypes.lar.LayoutSetPrototypeStagedModelDataHandler" class="com.liferay.portlet.layoutsetprototypes.lar.LayoutSetPrototypeStagedModelDataHandler" />
 	<bean id="com.liferay.portlet.messageboards.asset.MBMessageAssetRendererFactory" class="com.liferay.portlet.messageboards.asset.MBMessageAssetRendererFactory" />
+	<bean id="com.liferay.portlet.messageboards.social.MBMessageSocialActivityHandler" class="com.liferay.portlet.messageboards.social.MBMessageSocialActivityHandler" />
 	<bean id="com.liferay.portlet.messageboards.social.MBThreadSocialActivityHandler" class="com.liferay.portlet.messageboards.social.MBThreadSocialActivityHandler" />
 	<bean id="com.liferay.portlet.messageboards.service.permission.MBCategoryPermission" class="com.liferay.portlet.messageboards.service.permission.MBCategoryPermission" />
 	<bean id="com.liferay.portlet.messageboards.service.permission.MBDiscussionPermission" class="com.liferay.portlet.messageboards.service.permission.MBDiscussionPermission" />
