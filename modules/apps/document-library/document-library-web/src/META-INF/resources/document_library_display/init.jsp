@@ -16,37 +16,51 @@
 
 <%@ include file="/init.jsp" %>
 
-<%@ page import="com.liferay.portlet.documentlibrary.DLPortletInstanceSettings" %><%@
+<%@ page import="com.liferay.portal.kernel.repository.RepositoryException" %><%@
+page import="com.liferay.portlet.documentlibrary.DLPortletInstanceSettings" %><%@
 page import="com.liferay.portlet.documentlibrary.NoSuchFolderException" %><%@
+page import="com.liferay.portlet.documentlibrary.display.context.logic.DLPortletInstanceSettingsHelper" %><%@
+page import="com.liferay.portlet.documentlibrary.model.DLFileEntryType" %><%@
+page import="com.liferay.portlet.documentlibrary.model.DLFileShortcutConstants" %><%@
+page import="com.liferay.portlet.documentlibrary.search.EntriesChecker" %><%@
+page import="com.liferay.portlet.documentlibrary.service.DLFileEntryTypeServiceUtil" %><%@
+page import="com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission" %><%@
 page import="com.liferay.portlet.documentlibrarydisplay.display.context.util.DLDisplayRequestHelper" %>
 
 <%
-if (layout.isTypeControlPanel()) {
-	portletPreferences = PortletPreferencesLocalServiceUtil.getPreferences(themeDisplay.getCompanyId(), scopeGroupId, PortletKeys.PREFS_OWNER_TYPE_GROUP, 0, PortletKeys.DOCUMENT_LIBRARY, null);
-}
+	if (layout.isTypeControlPanel()) {
+		portletPreferences = PortletPreferencesLocalServiceUtil.getPreferences(themeDisplay.getCompanyId(), scopeGroupId, PortletKeys.PREFS_OWNER_TYPE_GROUP, 0, PortletKeys.DOCUMENT_LIBRARY, null);
+	}
 
-DLDisplayRequestHelper dlDisplayRequestHelper = new DLDisplayRequestHelper(request);
+	DLDisplayRequestHelper dlDisplayRequestHelper = new DLDisplayRequestHelper(request);
 
-DLPortletInstanceSettings dlPortletInstanceSettings = dlDisplayRequestHelper.getDLPortletInstanceSettings();
+	String portletId = dlDisplayRequestHelper.getResourcePortletId();
+	String portletResource = dlDisplayRequestHelper.getPortletResource();
 
-long rootFolderId = dlPortletInstanceSettings.getRootFolderId();
-String rootFolderName = StringPool.BLANK;
+	DLPortletInstanceSettings dlPortletInstanceSettings = dlDisplayRequestHelper.getDLPortletInstanceSettings();
 
-if (rootFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-	try {
-		Folder rootFolder = DLAppLocalServiceUtil.getFolder(rootFolderId);
+	long rootFolderId = dlPortletInstanceSettings.getRootFolderId();
+	String rootFolderName = StringPool.BLANK;
 
-		rootFolderName = rootFolder.getName();
+	if (rootFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+		try {
+			Folder rootFolder = DLAppLocalServiceUtil.getFolder(rootFolderId);
 
-		if (rootFolder.getGroupId() != scopeGroupId) {
+			rootFolderName = rootFolder.getName();
+
+			if (rootFolder.getGroupId() != scopeGroupId) {
+				rootFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+				rootFolderName = StringPool.BLANK;
+			}
+		}
+		catch (NoSuchFolderException nsfe) {
 			rootFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
-			rootFolderName = StringPool.BLANK;
 		}
 	}
-	catch (NoSuchFolderException nsfe) {
-		rootFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
-	}
-}
+
+	boolean mergedView = false;
+
+	Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>
 
-<%@ include file="/document_library_display/init-ext.jsp" %>
+<%@ include file="/html/portlet/document_library_display/init-ext.jsp" %>
