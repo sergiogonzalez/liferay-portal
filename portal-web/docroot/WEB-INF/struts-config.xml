@@ -411,8 +411,6 @@
 
 		<action path="/image_gallery_display/embedded_player" forward="portlet.image_gallery_display.embedded_player" />
 
-		<action path="/image_gallery_display/find_image" type="com.liferay.portlet.imagegallerydisplay.action.FindImageAction" />
-
 		<action path="/image_gallery_display/search" forward="portlet.image_gallery_display.search" />
 
 		<action path="/image_gallery_display/select_add_file_entry_type" forward="portlet.document_library_display.select_add_file_entry_type" />
