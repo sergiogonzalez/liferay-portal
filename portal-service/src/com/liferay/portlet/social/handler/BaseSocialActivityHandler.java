@@ -15,6 +15,7 @@
 package com.liferay.portlet.social.handler;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.social.service.SocialActivityLocalService;
 
@@ -73,6 +74,25 @@ public abstract class BaseSocialActivityHandler
 		throws PortalException {
 
 		getSocialActivityLocalService().deleteActivities(className, classPK);
+	}
+
+	@Override
+	public void updateLastSocialActivity(
+			long userId, long groupId, String className, long classPK, int type,
+			Date createDate)
+		throws PortalException {
+
+		SocialActivity lastSocialActivity =
+			getSocialActivityLocalService().fetchFirstActivity(
+				className, classPK, type);
+
+		if (lastSocialActivity != null) {
+			lastSocialActivity.setCreateDate(createDate.getTime());
+			lastSocialActivity.setUserId(userId);
+
+			getSocialActivityLocalService().updateSocialActivity(
+				lastSocialActivity);
+		}
 	}
 
 	protected abstract SocialActivityLocalService
