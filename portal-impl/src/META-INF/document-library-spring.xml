@@ -20,6 +20,8 @@
 	<bean id="com.liferay.portlet.documentlibrary.action.EditFolderActionCommand" class="com.liferay.portlet.documentlibrary.action.EditFolderActionCommand" />
 	<bean id="com.liferay.portlet.documentlibrary.action.EditFolderRenderCommand" class="com.liferay.portlet.documentlibrary.action.EditFolderRenderCommand" />
 	<bean id="com.liferay.portlet.documentlibrary.action.EditFolderResourceCommand" class="com.liferay.portlet.documentlibrary.action.EditFolderResourceCommand" />
+	<bean id="com.liferay.portlet.documentlibrary.action.EditRepositoryActionCommand" class="com.liferay.portlet.documentlibrary.action.EditRepositoryActionCommand" />
+	<bean id="com.liferay.portlet.documentlibrary.action.EditRepositoryRenderCommand" class="com.liferay.portlet.documentlibrary.action.EditRepositoryRenderCommand" />
 	<bean id="com.liferay.portlet.documentlibrary.action.SearchRenderCommand" class="com.liferay.portlet.documentlibrary.action.SearchRenderCommand" />
 	<bean id="com.liferay.portlet.documentlibrary.action.SearchResourceCommand" class="com.liferay.portlet.documentlibrary.action.SearchResourceCommand" />
 	<bean id="com.liferay.portlet.documentlibrary.action.SelectFolderRenderCommand" class="com.liferay.portlet.documentlibrary.action.SelectFolderRenderCommand" />
