@@ -32,6 +32,8 @@
 	<bean id="com.liferay.portlet.documentlibrary.action.SelectGroupRenderCommand" class="com.liferay.portlet.documentlibrary.action.SelectGroupRenderCommand" />
 	<bean id="com.liferay.portlet.documentlibrary.action.SelectRestrictedFileEntryTypeRenderCommand" class="com.liferay.portlet.documentlibrary.action.SelectRestrictedFileEntryTypeRenderCommand" />
 	<bean id="com.liferay.portlet.documentlibrary.action.ViewFileEntryTypeRenderCommand" class="com.liferay.portlet.documentlibrary.action.ViewFileEntryTypeRenderCommand" />
+	<bean id="com.liferay.portlet.documentlibrarydisplay.action.SelectAddFileEntryTypeRenderCommand" class="com.liferay.portlet.documentlibrarydisplay.action.SelectAddFileEntryTypeRenderCommand" />
+	<bean id="com.liferay.portlet.documentlibrarydisplay.action.SearchRenderCommand" class="com.liferay.portlet.documentlibrarydisplay.action.SearchRenderCommand" />
 	<bean id="com.liferay.portlet.imagegallerydisplay.action.EmbeddedPlayerRenderCommand" class="com.liferay.portlet.imagegallerydisplay.action.EmbeddedPlayerRenderCommand" />
 	<bean id="com.liferay.portlet.imagegallerydisplay.action.SearchRenderCommand" class="com.liferay.portlet.imagegallerydisplay.action.SearchRenderCommand" />
 	<bean id="com.liferay.portlet.imagegallerydisplay.action.SelectAddFileEntryTypeRenderCommand" class="com.liferay.portlet.imagegallerydisplay.action.SelectAddFileEntryTypeRenderCommand" />

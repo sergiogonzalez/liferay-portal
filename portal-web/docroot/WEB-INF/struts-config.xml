@@ -332,12 +332,6 @@
 			<forward name="portlet.message_boards.error" path="portlet.document_library.error" />
 		</action>
 
-		<!-- Document Library Display -->
-
-		<action path="/document_library_display/search" forward="portlet.document_library_display.search" />
-
-		<action path="/document_library_display/select_add_file_entry_type" forward="portlet.document_library_display.select_add_file_entry_type" />
-
 		<!-- Export Import -->
 
 		<action path="/export_import/confirmation" type="com.liferay.portlet.exportimport.action.ConfirmationExportImportConfigurationAction">
