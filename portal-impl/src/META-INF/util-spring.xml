@@ -229,6 +229,9 @@
 			<bean class="com.liferay.portal.repository.util.RepositoryTrashImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.repository.social.FileEntrySocialActivityHandler" class="com.liferay.portal.repository.social.FileEntrySocialActivityHandler" />
+	<bean id="com.liferay.portal.repository.social.FileShortcutSocialActivityHandler" class="com.liferay.portal.repository.social.FileShortcutSocialActivityHandler" />
+	<bean id="com.liferay.portal.repository.social.FolderSocialActivityHandler" class="com.liferay.portal.repository.social.FolderSocialActivityHandler" />
 	<bean id="com.liferay.portal.kernel.resiliency.spi.SPIRegistryUtil" class="com.liferay.portal.kernel.resiliency.spi.SPIRegistryUtil">
 		<property name="sPIRegistry">
 			<bean class="com.liferay.portal.resiliency.spi.SPIRegistryImpl">
@@ -735,6 +738,7 @@
 		</property>
 	</bean>
 	<bean id="com.liferay.portal.struts.DoIncludeJSPDynamicInclude" class="com.liferay.portal.struts.DoIncludeJSPDynamicInclude" />
+	<bean id="com.liferay.portal.subscription.social.SubscriptionSocialActivityHandler" class="com.liferay.portal.subscription.social.SubscriptionSocialActivityHandler" />
 	<bean id="com.liferay.portal.util.CustomJspRegistryUtil" class="com.liferay.portal.util.CustomJspRegistryUtil">
 		<property name="customJspRegistry">
 			<bean class="com.liferay.portal.util.CustomJspRegistryImpl" />
@@ -823,6 +827,7 @@
 	<bean id="com.liferay.portlet.asset.lar.AssetCategoryStagedModelDataHandler" class="com.liferay.portlet.asset.lar.AssetCategoryStagedModelDataHandler" />
 	<bean id="com.liferay.portlet.asset.lar.AssetVocabularyStagedModelDataHandler" class="com.liferay.portlet.asset.lar.AssetVocabularyStagedModelDataHandler" />
 	<bean id="com.liferay.portlet.asset.lar.StagedAssetTagStagedModelDataHandler" class="com.liferay.portlet.asset.lar.StagedAssetTagStagedModelDataHandler" />
+	<bean id="com.liferay.portlet.asset.social.AssetEntrySocialActivityHandler" class="com.liferay.portlet.asset.social.AssetEntrySocialActivityHandler" />
 	<bean id="com.liferay.portlet.asset.util.AssetCategoryIndexer" class="com.liferay.portlet.asset.util.AssetCategoryIndexer" />
 	<bean id="com.liferay.portlet.asset.util.AssetIndexer" class="com.liferay.portlet.asset.util.AssetIndexer" />
 	<bean id="com.liferay.portlet.asset.util.AssetVocabularyIndexer" class="com.liferay.portlet.asset.util.AssetVocabularyIndexer" />
@@ -1058,6 +1063,7 @@
 	<bean id="com.liferay.portlet.journal.service.permission.JournalFeedPermission" class="com.liferay.portlet.journal.service.permission.JournalFeedPermission" />
 	<bean id="com.liferay.portlet.journal.service.permission.JournalFolderPermission" class="com.liferay.portlet.journal.service.permission.JournalFolderPermission" />
 	<bean id="com.liferay.portlet.journal.service.permission.JournalPermission" class="com.liferay.portlet.journal.service.permission.JournalPermission" />
+	<bean id="com.liferay.portlet.journal.social.JournalArticleSocialActivityHandler" class="com.liferay.portlet.journal.social.JournalArticleSocialActivityHandler" />
 	<bean id="com.liferay.portlet.journal.util.JournalContent" class="com.liferay.portlet.journal.util.JournalContentImpl" />
 	<bean id="com.liferay.portlet.journal.util.JournalContentUtil" class="com.liferay.portlet.journal.util.JournalContentUtil">
 		<property name="journalContent" ref="com.liferay.portlet.journal.util.JournalContent" />
@@ -1129,7 +1135,7 @@
 	<bean id="com.liferay.portlet.sitesadmin.lar.StagedGroupStagedModelDataHandler" class="com.liferay.portlet.sitesadmin.lar.StagedGroupStagedModelDataHandler" />
 	<bean id="com.liferay.portlet.social.handler.SocialActivityHandlerUtil" class="com.liferay.portlet.social.handler.SocialActivityHandlerUtil">
 		<property name="socialActivityHandler">
-			<bean class="com.liferay.portlet.social.handler.SocialActivityHandlerImpl">
+			<bean class="com.liferay.portlet.social.handler.SocialActivityHandlerImpl" init-method="activate">
 				<constructor-arg>
 					<bean class="com.liferay.portlet.social.handler.DefaultSocialActivityHandler" />
 				</constructor-arg>

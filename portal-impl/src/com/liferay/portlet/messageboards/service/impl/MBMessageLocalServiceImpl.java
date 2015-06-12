@@ -567,8 +567,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	public MBMessage deleteDiscussionMessage(long messageId)
 		throws PortalException {
 
-		SocialActivityHandlerUtil.deleteActivities(
-			MBMessage.class.getName(), messageId);
+		MBMessage message = mbMessagePersistence.findByPrimaryKey(messageId);
+
+		SocialActivityHandlerUtil.deleteActivities(message);
 
 		return mbMessageLocalService.deleteMessage(messageId);
 	}
@@ -600,8 +601,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		if (!messages.isEmpty()) {
 			MBMessage message = messages.get(0);
 
-			SocialActivityHandlerUtil.deleteActivities(
-				MBMessage.class.getName(), message.getMessageId());
+			SocialActivityHandlerUtil.deleteActivities(message);
 
 			mbThreadLocalService.deleteThread(message.getThreadId());
 		}
@@ -1222,9 +1222,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			mbThreadLocalService.incrementViewCounter(thread.getThreadId(), 1);
 
 			SocialActivityHandlerUtil.addActivity(
-				userId, thread.getGroupId(), MBThread.class.getName(),
-				thread.getThreadId(), SocialActivityConstants.TYPE_VIEW,
-				StringPool.BLANK, 0);
+				userId, thread.getGroupId(), thread,
+				SocialActivityConstants.TYPE_VIEW, StringPool.BLANK, 0);
 		}
 
 		MBThread previousThread = null;
@@ -1845,9 +1844,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 							SocialActivityHandlerUtil.addActivity(
 								message.getUserId(), message.getGroupId(),
-								MBMessage.class.getName(),
-								message.getMessageId(),
-								MBActivityKeys.ADD_MESSAGE,
+								message, MBActivityKeys.ADD_MESSAGE,
 								extraDataJSONObject.toString(), receiverUserId);
 
 							if ((parentMessage != null) &&
@@ -1855,9 +1852,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 								SocialActivityHandlerUtil.addActivity(
 									message.getUserId(),
-									parentMessage.getGroupId(),
-									MBMessage.class.getName(),
-									parentMessage.getMessageId(),
+									parentMessage.getGroupId(), parentMessage,
 									MBActivityKeys.REPLY_MESSAGE,
 									extraDataJSONObject.toString(), 0);
 							}
@@ -1883,7 +1878,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 								SocialActivityHandlerUtil.addActivity(
 									message.getUserId(),
-									assetEntry.getGroupId(), className, classPK,
+									assetEntry.getGroupId(), assetEntry,
 									SocialActivityConstants.TYPE_ADD_COMMENT,
 									extraDataJSONObject.toString(),
 									assetEntry.getUserId());
