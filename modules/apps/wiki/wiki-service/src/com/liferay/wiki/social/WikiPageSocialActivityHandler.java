@@ -12,24 +12,42 @@
  * details.
  */
 
-package com.liferay.portlet.social.handler;
+package com.liferay.wiki.social;
 
-import com.liferay.portal.kernel.bean.BeanReference;
-import com.liferay.portal.model.ClassedModel;
+import com.liferay.portlet.social.handler.BaseSocialActivityHandler;
 import com.liferay.portlet.social.service.SocialActivityLocalService;
+import com.liferay.wiki.model.WikiPage;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
  */
-public class DefaultSocialActivityHandler
-	extends BaseSocialActivityHandler<ClassedModel> {
+@Component(
+	property = "model.className=com.liferay.wiki.model.WikiPage",
+	service = WikiPage.class
+)
+public class WikiPageSocialActivityHandler
+	extends BaseSocialActivityHandler<WikiPage> {
+
+	@Override
+	protected long getPrimaryKey(WikiPage wikiPage) {
+		return wikiPage.getResourcePrimKey();
+	}
 
 	@Override
 	protected SocialActivityLocalService getSocialActivityLocalService() {
 		return _socialActivityLocalService;
 	}
 
-	@BeanReference(type = SocialActivityLocalService.class)
-	protected SocialActivityLocalService _socialActivityLocalService;
+	@Reference(unbind = "-")
+	protected void setSocialActivityLocalService(
+		SocialActivityLocalService socialActivityLocalService) {
+
+		_socialActivityLocalService = socialActivityLocalService;
+	}
+
+	private SocialActivityLocalService _socialActivityLocalService;
 
 }

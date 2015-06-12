@@ -233,6 +233,9 @@
 			<bean class="com.liferay.portal.repository.util.RepositoryTrashImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.repository.social.FileEntrySocialActivityHandler" class="com.liferay.portal.repository.social.FileEntrySocialActivityHandler" />
+	<bean id="com.liferay.portal.repository.social.FileShortcutSocialActivityHandler" class="com.liferay.portal.repository.social.FileShortcutSocialActivityHandler" />
+	<bean id="com.liferay.portal.repository.social.FolderSocialActivityHandler" class="com.liferay.portal.repository.social.FolderSocialActivityHandler" />
 	<bean id="com.liferay.portal.kernel.resiliency.spi.SPIRegistryUtil" class="com.liferay.portal.kernel.resiliency.spi.SPIRegistryUtil">
 		<property name="sPIRegistry">
 			<bean class="com.liferay.portal.resiliency.spi.SPIRegistryImpl">
@@ -740,6 +743,7 @@
 		</property>
 	</bean>
 	<bean id="com.liferay.portal.struts.DoIncludeJSPDynamicInclude" class="com.liferay.portal.struts.DoIncludeJSPDynamicInclude" />
+	<bean id="com.liferay.portal.subscription.social.SubscriptionSocialActivityHandler" class="com.liferay.portal.subscription.social.SubscriptionSocialActivityHandler" />
 	<bean id="com.liferay.portal.util.CustomJspRegistryUtil" class="com.liferay.portal.util.CustomJspRegistryUtil">
 		<property name="customJspRegistry">
 			<bean class="com.liferay.portal.util.CustomJspRegistryImpl" />
@@ -828,6 +832,7 @@
 	<bean id="com.liferay.portlet.asset.lar.AssetCategoryStagedModelDataHandler" class="com.liferay.portlet.asset.lar.AssetCategoryStagedModelDataHandler" />
 	<bean id="com.liferay.portlet.asset.lar.AssetVocabularyStagedModelDataHandler" class="com.liferay.portlet.asset.lar.AssetVocabularyStagedModelDataHandler" />
 	<bean id="com.liferay.portlet.asset.lar.StagedAssetTagStagedModelDataHandler" class="com.liferay.portlet.asset.lar.StagedAssetTagStagedModelDataHandler" />
+	<bean id="com.liferay.portlet.asset.social.AssetEntrySocialActivityHandler" class="com.liferay.portlet.asset.social.AssetEntrySocialActivityHandler" />
 	<bean id="com.liferay.portlet.asset.util.AssetCategoryIndexer" class="com.liferay.portlet.asset.util.AssetCategoryIndexer" />
 	<bean id="com.liferay.portlet.asset.util.AssetIndexer" class="com.liferay.portlet.asset.util.AssetIndexer" />
 	<bean id="com.liferay.portlet.asset.util.AssetVocabularyIndexer" class="com.liferay.portlet.asset.util.AssetVocabularyIndexer" />
