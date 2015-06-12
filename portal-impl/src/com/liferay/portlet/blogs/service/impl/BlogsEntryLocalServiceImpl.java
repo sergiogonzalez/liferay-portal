@@ -1058,8 +1058,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		extraDataJSONObject.put("title", entry.getTitle());
 
 		SocialActivityHandlerUtil.addActivity(
-			userId, entry.getGroupId(), entry,
-			SocialActivityConstants.TYPE_MOVE_TO_TRASH,
+			userId, entry, SocialActivityConstants.TYPE_MOVE_TO_TRASH,
 			extraDataJSONObject.toString(), 0);
 
 		// Workflow
@@ -1123,8 +1122,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		extraDataJSONObject.put("title", entry.getTitle());
 
 		SocialActivityHandlerUtil.addActivity(
-			userId, trashEntry.getGroupId(), entry,
-			SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
+			userId, entry, SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
 			extraDataJSONObject.toString(), 0);
 
 		return entry;
@@ -1533,8 +1531,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 				if (serviceContext.isCommandUpdate()) {
 					SocialActivityHandlerUtil.addActivity(
-						user.getUserId(), entry.getGroupId(), entry,
-						BlogsActivityKeys.UPDATE_ENTRY,
+						user.getUserId(), entry, BlogsActivityKeys.UPDATE_ENTRY,
 						extraDataJSONObject.toString(), 0);
 				}
 				else {
@@ -1586,8 +1583,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 				if (serviceContext.isCommandUpdate()) {
 					SocialActivityHandlerUtil.addActivity(
-						user.getUserId(), entry.getGroupId(), entry,
-						BlogsActivityKeys.UPDATE_ENTRY,
+						user.getUserId(), entry, BlogsActivityKeys.UPDATE_ENTRY,
 						extraDataJSONObject.toString(), 0);
 				}
 				else {

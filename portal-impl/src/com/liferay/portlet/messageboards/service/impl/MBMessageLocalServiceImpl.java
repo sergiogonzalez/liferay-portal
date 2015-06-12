@@ -1222,8 +1222,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			mbThreadLocalService.incrementViewCounter(thread.getThreadId(), 1);
 
 			SocialActivityHandlerUtil.addActivity(
-				userId, thread.getGroupId(), thread,
-				SocialActivityConstants.TYPE_VIEW, StringPool.BLANK, 0);
+				userId, thread, SocialActivityConstants.TYPE_VIEW,
+				StringPool.BLANK, 0);
 		}
 
 		MBThread previousThread = null;
@@ -1843,16 +1843,15 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 							}
 
 							SocialActivityHandlerUtil.addActivity(
-								message.getUserId(), message.getGroupId(),
-								message, MBActivityKeys.ADD_MESSAGE,
+								message.getUserId(), message,
+								MBActivityKeys.ADD_MESSAGE,
 								extraDataJSONObject.toString(), receiverUserId);
 
 							if ((parentMessage != null) &&
 								(receiverUserId != message.getUserId())) {
 
 								SocialActivityHandlerUtil.addActivity(
-									message.getUserId(),
-									parentMessage.getGroupId(), parentMessage,
+									message.getUserId(), parentMessage,
 									MBActivityKeys.REPLY_MESSAGE,
 									extraDataJSONObject.toString(), 0);
 							}
@@ -1877,8 +1876,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 									"messageId", message.getMessageId());
 
 								SocialActivityHandlerUtil.addActivity(
-									message.getUserId(),
-									assetEntry.getGroupId(), assetEntry,
+									message.getUserId(), assetEntry,
 									SocialActivityConstants.TYPE_ADD_COMMENT,
 									extraDataJSONObject.toString(),
 									assetEntry.getUserId());
