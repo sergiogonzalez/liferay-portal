@@ -13,6 +13,8 @@
 	<bean id="com.liferay.portlet.documentlibrary.action.EditFileEntryActionCommand" class="com.liferay.portlet.documentlibrary.action.EditFileEntryActionCommand" />
 	<bean id="com.liferay.portlet.documentlibrary.action.EditFileEntryRenderCommand" class="com.liferay.portlet.documentlibrary.action.EditFileEntryRenderCommand" />
 	<bean id="com.liferay.portlet.documentlibrary.action.EditFileEntryResourceCommand" class="com.liferay.portlet.documentlibrary.action.EditFileEntryResourceCommand" />
+	<bean id="com.liferay.portlet.documentlibrary.action.EditFileEntryTypeActionCommand" class="com.liferay.portlet.documentlibrary.action.EditFileEntryTypeActionCommand" />
+	<bean id="com.liferay.portlet.documentlibrary.action.EditFileEntryTypeRenderCommand" class="com.liferay.portlet.documentlibrary.action.EditFileEntryTypeRenderCommand" />
 	<bean id="com.liferay.portlet.documentlibrary.action.EditFolderActionCommand" class="com.liferay.portlet.documentlibrary.action.EditFolderActionCommand" />
 	<bean id="com.liferay.portlet.documentlibrary.action.EditFolderRenderCommand" class="com.liferay.portlet.documentlibrary.action.EditFolderRenderCommand" />
 	<bean id="com.liferay.portlet.documentlibrary.action.EditFolderResourceCommand" class="com.liferay.portlet.documentlibrary.action.EditFolderResourceCommand" />
