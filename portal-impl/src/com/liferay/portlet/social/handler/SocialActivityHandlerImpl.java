@@ -75,6 +75,16 @@ public class SocialActivityHandlerImpl implements SocialActivityHandler {
 			receiverUserId);
 	}
 
+	@Override
+	public void deleteActivities(String className, long classPK)
+		throws PortalException {
+
+		SocialActivityHandler socialActivityHandler = getSocialActivityHandler(
+			className);
+
+		socialActivityHandler.deleteActivities(className, classPK);
+	}
+
 	protected SocialActivityHandler getSocialActivityHandler(String className) {
 		SocialActivityHandler socialActivityHandler =
 			_serviceTrackerMap.getService(className);

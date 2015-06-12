@@ -38,4 +38,7 @@ public interface SocialActivityHandler {
 			String extraData, long receiverUserId)
 		throws PortalException;
 
+	public void deleteActivities(String className, long classPK)
+		throws PortalException;
+
 }
