@@ -22,6 +22,7 @@
 	<bean id="com.liferay.portlet.documentlibrary.action.EditFolderResourceCommand" class="com.liferay.portlet.documentlibrary.action.EditFolderResourceCommand" />
 	<bean id="com.liferay.portlet.documentlibrary.action.EditRepositoryActionCommand" class="com.liferay.portlet.documentlibrary.action.EditRepositoryActionCommand" />
 	<bean id="com.liferay.portlet.documentlibrary.action.EditRepositoryRenderCommand" class="com.liferay.portlet.documentlibrary.action.EditRepositoryRenderCommand" />
+	<bean id="com.liferay.portlet.documentlibrary.action.FindFileEntryAction" class="com.liferay.portlet.documentlibrary.action.FindFileEntryAction" />
 	<bean id="com.liferay.portlet.documentlibrary.action.FindFolderAction" class="com.liferay.portlet.documentlibrary.action.FindFolderAction" />
 	<bean id="com.liferay.portlet.documentlibrary.action.GetFileActionCommand" class="com.liferay.portlet.documentlibrary.action.GetFileActionCommand" />
 	<bean id="com.liferay.portlet.documentlibrary.action.GetFileStrutsAction" class="com.liferay.portlet.documentlibrary.action.GetFileStrutsAction" />

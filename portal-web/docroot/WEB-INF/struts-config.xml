@@ -332,8 +332,6 @@
 			<forward name="portlet.message_boards.error" path="portlet.document_library.error" />
 		</action>
 
-		<action path="/document_library/find_file_entry" type="com.liferay.portlet.documentlibrary.action.FindFileEntryAction" />
-
 		<action path="/document_library/select_group" forward="portlet.document_library.select_group" />
 
 		<action path="/document_library/select_restricted_file_entry_type" forward="portlet.document_library.select_restricted_file_entry_type" />
