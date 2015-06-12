@@ -97,7 +97,8 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 		// Social
 
-		socialActivityLocalService.deleteActivities(entry);
+		SocialActivityHandlerUtil.deleteActivities(
+			entry.getClassName(), entry.getClassPK());
 	}
 
 	@Override
