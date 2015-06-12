@@ -15,8 +15,10 @@
 package com.liferay.portlet.documentlibrary.action;
 
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
+import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.model.PortletConstants;
-import com.liferay.portal.struts.FindAction;
+import com.liferay.portal.struts.FindStrutsAction;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 
@@ -25,7 +27,14 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Brian Wing Shun Chan
  */
-public class FindFolderAction extends FindAction {
+@OSGiBeanProperties(
+	property = {
+		"path=/document_library/find_folder",
+		"path=/image_gallery_display/find_folder"
+	},
+	service = StrutsAction.class
+)
+public class FindFolderAction extends FindStrutsAction {
 
 	@Override
 	protected long getGroupId(long primaryKey) throws Exception {
