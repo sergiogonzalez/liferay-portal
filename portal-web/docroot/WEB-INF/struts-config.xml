@@ -401,14 +401,6 @@
 			<forward name="portlet.iframe.view" path="portlet.iframe.view" />
 		</action>
 
-		<!-- Image Gallery Display -->
-
-		<action path="/image_gallery_display/embedded_player" forward="portlet.image_gallery_display.embedded_player" />
-
-		<action path="/image_gallery_display/search" forward="portlet.image_gallery_display.search" />
-
-		<action path="/image_gallery_display/select_add_file_entry_type" forward="portlet.document_library_display.select_add_file_entry_type" />
-
 		<!-- Image Uploader -->
 
 		<action path="/image_uploader/view" type="com.liferay.portlet.imageuploader.action.UploadImageAction">
