@@ -41,4 +41,9 @@ public interface SocialActivityHandler {
 	public void deleteActivities(String className, long classPK)
 		throws PortalException;
 
+	public void updateLastSocialActivity(
+			long userId, long groupId, String className, long classPK, int type,
+			Date createDate)
+		throws PortalException;
+
 }

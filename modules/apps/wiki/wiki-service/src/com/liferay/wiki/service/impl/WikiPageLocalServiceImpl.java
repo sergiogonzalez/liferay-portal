@@ -74,7 +74,6 @@ import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.util.ExpandoBridgeUtil;
 import com.liferay.portlet.social.handler.SocialActivityHandlerUtil;
-import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.model.TrashVersion;
@@ -3339,17 +3338,12 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			wikiGroupServiceSettings.pageMinorEditAddSocialActivity()) {
 
 			if (oldPage.getVersion() == newVersion) {
-				SocialActivity lastSocialActivity =
-					socialActivityLocalService.fetchFirstActivity(
-						WikiPage.class.getName(), page.getResourcePrimKey(),
-						WikiActivityKeys.UPDATE_PAGE);
+				Date createDate = new Date(now.getTime() + 1);
 
-				if (lastSocialActivity != null) {
-					lastSocialActivity.setCreateDate(now.getTime() + 1);
-					lastSocialActivity.setUserId(serviceContext.getUserId());
-
-					socialActivityPersistence.update(lastSocialActivity);
-				}
+				SocialActivityHandlerUtil.updateLastSocialActivity(
+					serviceContext.getUserId(), page.getGroupId(),
+					WikiPage.class.getName(), page.getResourcePrimKey(),
+					WikiActivityKeys.UPDATE_PAGE, createDate);
 			}
 			else {
 				JSONObject extraDataJSONObject =

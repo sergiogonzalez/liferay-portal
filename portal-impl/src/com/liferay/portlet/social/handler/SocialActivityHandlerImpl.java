@@ -85,6 +85,19 @@ public class SocialActivityHandlerImpl implements SocialActivityHandler {
 		socialActivityHandler.deleteActivities(className, classPK);
 	}
 
+	@Override
+	public void updateLastSocialActivity(
+			long userId, long groupId, String className, long classPK, int type,
+			Date createDate)
+		throws PortalException {
+
+		SocialActivityHandler socialActivityHandler = getSocialActivityHandler(
+			className);
+
+		socialActivityHandler.updateLastSocialActivity(
+			userId, groupId, className, classPK, type, createDate);
+	}
+
 	protected SocialActivityHandler getSocialActivityHandler(String className) {
 		SocialActivityHandler socialActivityHandler =
 			_serviceTrackerMap.getService(className);

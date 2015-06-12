@@ -67,6 +67,15 @@ public class SocialActivityHandlerUtil {
 		return _socialActivityHandler;
 	}
 
+	public static void updateLastSocialActivity(
+			long userId, long groupId, String className, long classPK, int type,
+			Date createDate)
+		throws PortalException {
+
+		getSocialActivityHandler().updateLastSocialActivity(
+			userId, groupId, className, classPK, type, createDate);
+	}
+
 	public void setSocialActivityHandler(
 		SocialActivityHandler socialActivityHandler) {
 
