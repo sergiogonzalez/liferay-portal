@@ -3597,8 +3597,7 @@ public class JournalArticleLocalServiceImpl
 		extraDataJSONObject.put("title", article.getTitle());
 
 		SocialActivityHandlerUtil.addActivity(
-			userId, article.getGroupId(), article,
-			SocialActivityConstants.TYPE_MOVE_TO_TRASH,
+			userId, article, SocialActivityConstants.TYPE_MOVE_TO_TRASH,
 			extraDataJSONObject.toString(), 0);
 
 		if (oldStatus == WorkflowConstants.STATUS_PENDING) {
@@ -3795,8 +3794,7 @@ public class JournalArticleLocalServiceImpl
 		extraDataJSONObject.put("title", article.getTitle());
 
 		SocialActivityHandlerUtil.addActivity(
-			userId, article.getGroupId(), article,
-			SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
+			userId, article, SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
 			extraDataJSONObject.toString(), 0);
 
 		return article;
@@ -5796,7 +5794,7 @@ public class JournalArticleLocalServiceImpl
 
 				if (serviceContext.isCommandUpdate()) {
 					SocialActivityHandlerUtil.addActivity(
-						user.getUserId(), article.getGroupId(), article,
+						user.getUserId(), article,
 						JournalActivityKeys.UPDATE_ARTICLE,
 						extraDataJSONObject.toString(), 0);
 				}
