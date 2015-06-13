@@ -12,15 +12,14 @@
  * details.
  */
 
-package com.liferay.portlet.imagegallerydisplay.action;
+package com.liferay.portlet.documentlibrary.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.RenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portlet.documentlibrary.NoSuchFolderException;
-import com.liferay.portlet.documentlibrary.action.ActionUtil;
+import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -28,15 +27,19 @@ import javax.portlet.RenderResponse;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Sergio González
+ * @author Manuel de la Peña
+ * @author Levente Hudák
  */
 @OSGiBeanProperties(
 	property = {
-		"action.command.name=/image_gallery_display/view_slide_show",
-		"javax.portlet.name=" + PortletKeys.MEDIA_GALLERY_DISPLAY
+		"javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY,
+		"render.command.name=/document_library/edit_entry",
+		"render.command.name=/document_library/move_entry"
 	},
 	service = RenderCommand.class
 )
-public class ViewSlideShowAction implements RenderCommand {
+public class EditEntryRenderCommand implements RenderCommand {
 
 	@Override
 	public String processCommand(
@@ -44,22 +47,24 @@ public class ViewSlideShowAction implements RenderCommand {
 		throws PortletException {
 
 		try {
-			ActionUtil.getFolder(renderRequest);
+			ActionUtil.getFileEntries(renderRequest);
+			ActionUtil.getFileShortcuts(renderRequest);
+			ActionUtil.getFolders(renderRequest);
 		}
 		catch (Exception e) {
-			if (e instanceof NoSuchFolderException ||
+			if (e instanceof NoSuchFileEntryException ||
 				e instanceof PrincipalException) {
 
 				SessionErrors.add(renderRequest, e.getClass());
 
-				return "/html/portlet/image_gallery_display/error.jsp";
+				return "/html/portlet/document_library/error.jsp";
 			}
 			else {
 				throw new PortletException(e);
 			}
 		}
 
-		return "/html/portlet/image_gallery_display/view_slide_show.jsp";
+		return "/html/portlet/document_library/edit_entry.jsp";
 	}
 
 }

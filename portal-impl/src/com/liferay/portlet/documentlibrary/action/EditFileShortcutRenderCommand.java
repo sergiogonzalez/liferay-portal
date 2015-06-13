@@ -14,50 +14,52 @@
 
 package com.liferay.portlet.documentlibrary.action;
 
+import com.liferay.portal.kernel.portlet.bridges.mvc.RenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.struts.PortletAction;
-import com.liferay.portlet.documentlibrary.NoSuchFolderException;
+import com.liferay.portal.util.PortletKeys;
+import com.liferay.portlet.documentlibrary.NoSuchFileShortcutException;
 
-import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
-
 /**
  * @author Brian Wing Shun Chan
- * @author Sergio González
+ * @author Levente Hudák
  */
-public class ViewAction extends PortletAction {
+@OSGiBeanProperties(
+	property = {
+		"javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY,
+		"render.command.name=/document_library/edit_file_shortcut"
+	},
+	service = RenderCommand.class
+)
+public class EditFileShortcutRenderCommand implements RenderCommand {
 
 	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
+	public String processCommand(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws PortletException {
 
 		try {
-			ActionUtil.getFolder(renderRequest);
+			ActionUtil.getFileShortcut(renderRequest);
 		}
 		catch (Exception e) {
-			if (e instanceof NoSuchFolderException ||
+			if (e instanceof NoSuchFileShortcutException ||
 				e instanceof PrincipalException) {
 
 				SessionErrors.add(renderRequest, e.getClass());
 
-				return actionMapping.findForward(
-					"portlet.document_library.error");
+				return "/html/portlet/document_library/error.jsp";
 			}
 			else {
-				throw e;
+				throw new PortletException(e);
 			}
 		}
 
-		return actionMapping.findForward("portlet.document_library.view");
+		return "/html/portlet/document_library/edit_file_shortcut.jsp";
 	}
 
 }

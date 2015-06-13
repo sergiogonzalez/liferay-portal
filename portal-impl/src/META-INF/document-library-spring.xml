@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+
+<beans
+	default-destroy-method="destroy"
+	default-init-method="afterPropertiesSet"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
+>
+	<bean id="com.liferay.portlet.documentlibrary.action.CompareVersionsRenderCommand" class="com.liferay.portlet.documentlibrary.action.CompareVersionsRenderCommand" />
+	<bean id="com.liferay.portlet.documentlibrary.action.EditEntryActionCommand" class="com.liferay.portlet.documentlibrary.action.EditEntryActionCommand" />
+	<bean id="com.liferay.portlet.documentlibrary.action.EditEntryRenderCommand" class="com.liferay.portlet.documentlibrary.action.EditEntryRenderCommand" />
+	<bean id="com.liferay.portlet.documentlibrary.action.EditFileEntryActionCommand" class="com.liferay.portlet.documentlibrary.action.EditFileEntryActionCommand" />
+	<bean id="com.liferay.portlet.documentlibrary.action.EditFileEntryRenderCommand" class="com.liferay.portlet.documentlibrary.action.EditFileEntryRenderCommand" />
+	<bean id="com.liferay.portlet.documentlibrary.action.EditFileEntryResourceCommand" class="com.liferay.portlet.documentlibrary.action.EditFileEntryResourceCommand" />
+	<bean id="com.liferay.portlet.documentlibrary.action.EditFileEntryTypeActionCommand" class="com.liferay.portlet.documentlibrary.action.EditFileEntryTypeActionCommand" />
+	<bean id="com.liferay.portlet.documentlibrary.action.EditFileEntryTypeRenderCommand" class="com.liferay.portlet.documentlibrary.action.EditFileEntryTypeRenderCommand" />
+	<bean id="com.liferay.portlet.documentlibrary.action.EditFileShortcutActionCommand" class="com.liferay.portlet.documentlibrary.action.EditFileShortcutActionCommand" />
+	<bean id="com.liferay.portlet.documentlibrary.action.EditFileShortcutRenderCommand" class="com.liferay.portlet.documentlibrary.action.EditFileShortcutRenderCommand" />
+	<bean id="com.liferay.portlet.documentlibrary.action.EditFolderActionCommand" class="com.liferay.portlet.documentlibrary.action.EditFolderActionCommand" />
+	<bean id="com.liferay.portlet.documentlibrary.action.EditFolderRenderCommand" class="com.liferay.portlet.documentlibrary.action.EditFolderRenderCommand" />
+	<bean id="com.liferay.portlet.documentlibrary.action.EditFolderResourceCommand" class="com.liferay.portlet.documentlibrary.action.EditFolderResourceCommand" />
+	<bean id="com.liferay.portlet.documentlibrary.action.EditRepositoryActionCommand" class="com.liferay.portlet.documentlibrary.action.EditRepositoryActionCommand" />
+	<bean id="com.liferay.portlet.documentlibrary.action.EditRepositoryRenderCommand" class="com.liferay.portlet.documentlibrary.action.EditRepositoryRenderCommand" />
+	<bean id="com.liferay.portlet.documentlibrary.action.FindFileEntryAction" class="com.liferay.portlet.documentlibrary.action.FindFileEntryAction" />
+	<bean id="com.liferay.portlet.documentlibrary.action.FindFolderAction" class="com.liferay.portlet.documentlibrary.action.FindFolderAction" />
+	<bean id="com.liferay.portlet.documentlibrary.action.GetFileActionCommand" class="com.liferay.portlet.documentlibrary.action.GetFileActionCommand" />
+	<bean id="com.liferay.portlet.documentlibrary.action.GetFileStrutsAction" class="com.liferay.portlet.documentlibrary.action.GetFileStrutsAction" />
+	<bean id="com.liferay.portlet.documentlibrary.action.SearchRenderCommand" class="com.liferay.portlet.documentlibrary.action.SearchRenderCommand" />
+	<bean id="com.liferay.portlet.documentlibrary.action.SearchResourceCommand" class="com.liferay.portlet.documentlibrary.action.SearchResourceCommand" />
+	<bean id="com.liferay.portlet.documentlibrary.action.SelectFolderRenderCommand" class="com.liferay.portlet.documentlibrary.action.SelectFolderRenderCommand" />
+	<bean id="com.liferay.portlet.documentlibrary.action.SelectGroupRenderCommand" class="com.liferay.portlet.documentlibrary.action.SelectGroupRenderCommand" />
+	<bean id="com.liferay.portlet.documentlibrary.action.SelectRestrictedFileEntryTypeRenderCommand" class="com.liferay.portlet.documentlibrary.action.SelectRestrictedFileEntryTypeRenderCommand" />
+	<bean id="com.liferay.portlet.documentlibrary.action.ViewFileEntryTypeRenderCommand" class="com.liferay.portlet.documentlibrary.action.ViewFileEntryTypeRenderCommand" />
+	<bean id="com.liferay.portlet.documentlibrarydisplay.action.SelectAddFileEntryTypeRenderCommand" class="com.liferay.portlet.documentlibrarydisplay.action.SelectAddFileEntryTypeRenderCommand" />
+	<bean id="com.liferay.portlet.documentlibrarydisplay.action.SearchRenderCommand" class="com.liferay.portlet.documentlibrarydisplay.action.SearchRenderCommand" />
+	<bean id="com.liferay.portlet.imagegallerydisplay.action.EmbeddedPlayerRenderCommand" class="com.liferay.portlet.imagegallerydisplay.action.EmbeddedPlayerRenderCommand" />
+	<bean id="com.liferay.portlet.imagegallerydisplay.action.SearchRenderCommand" class="com.liferay.portlet.imagegallerydisplay.action.SearchRenderCommand" />
+	<bean id="com.liferay.portlet.imagegallerydisplay.action.SelectAddFileEntryTypeRenderCommand" class="com.liferay.portlet.imagegallerydisplay.action.SelectAddFileEntryTypeRenderCommand" />
+	<bean id="com.liferay.portlet.imagegallerydisplay.action.ViewAction" class="com.liferay.portlet.imagegallerydisplay.action.ViewAction" />
+	<bean id="com.liferay.portlet.imagegallerydisplay.action.ViewSlideShowAction" class="com.liferay.portlet.imagegallerydisplay.action.ViewSlideShowAction" />
+	<bean id="com.liferay.portlet.documentlibrary.action.ViewRenderCommand" class="com.liferay.portlet.documentlibrary.action.ViewRenderCommand" />
+</beans>

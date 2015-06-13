@@ -62,7 +62,7 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.documentlibrary.DLPortletInstanceSettings;
-import com.liferay.portlet.documentlibrary.action.EditFileEntryAction;
+import com.liferay.portlet.documentlibrary.action.EditFileEntryActionCommand;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
@@ -289,8 +289,6 @@ public class DLImpl implements DL {
 
 		if (strutsAction.equals("/document_library/select_file_entry") ||
 			strutsAction.equals("/document_library/select_folder") ||
-			strutsAction.equals("/document_library_display/select_folder") ||
-			strutsAction.equals("/image_gallery_display/select_folder") ||
 			strutsAction.equals("/item_selector/view")) {
 
 			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
@@ -712,7 +710,7 @@ public class DLImpl implements DL {
 		String extension = FileUtil.getExtension(tempFileName);
 
 		int pos = tempFileName.lastIndexOf(
-			EditFileEntryAction.TEMP_RANDOM_SUFFIX);
+			EditFileEntryActionCommand.TEMP_RANDOM_SUFFIX);
 
 		if (pos != -1) {
 			tempFileName = tempFileName.substring(0, pos);

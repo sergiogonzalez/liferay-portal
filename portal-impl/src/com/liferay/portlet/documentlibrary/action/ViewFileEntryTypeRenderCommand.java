@@ -5,61 +5,42 @@
  * the terms of the GNU Lesser General Public License as published by the Free
  * Software Foundation; either version 2.1 of the License, or (at your option)
  * any later version.
- *
+ * 
  * This library is distributed in the hope that it will be useful, but WITHOUT
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
 
-package com.liferay.portlet.imagegallerydisplay.action;
+package com.liferay.portlet.documentlibrary.action;
 
+import com.liferay.portal.kernel.portlet.bridges.mvc.ActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.RenderCommand;
-import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
-import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portlet.documentlibrary.NoSuchFolderException;
-import com.liferay.portlet.documentlibrary.action.ActionUtil;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Iván Zaera
  */
 @OSGiBeanProperties(
 	property = {
-		"action.command.name=/image_gallery_display/view_slide_show",
-		"javax.portlet.name=" + PortletKeys.MEDIA_GALLERY_DISPLAY
+		"javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY,
+		"render.command.name=/document_library/view_file_entry_type"
 	},
-	service = RenderCommand.class
+	service = ActionCommand.class
 )
-public class ViewSlideShowAction implements RenderCommand {
+public class ViewFileEntryTypeRenderCommand implements RenderCommand {
 
 	@Override
 	public String processCommand(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		try {
-			ActionUtil.getFolder(renderRequest);
-		}
-		catch (Exception e) {
-			if (e instanceof NoSuchFolderException ||
-				e instanceof PrincipalException) {
-
-				SessionErrors.add(renderRequest, e.getClass());
-
-				return "/html/portlet/image_gallery_display/error.jsp";
-			}
-			else {
-				throw new PortletException(e);
-			}
-		}
-
-		return "/html/portlet/image_gallery_display/view_slide_show.jsp";
+		return "/html/portlet/document_library/view_file_entry_type.jsp";
 	}
 
 }

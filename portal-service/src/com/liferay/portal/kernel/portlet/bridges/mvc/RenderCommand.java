@@ -14,32 +14,34 @@
 
 package com.liferay.portal.kernel.portlet.bridges.mvc;
 
+import com.liferay.portal.kernel.util.StringPool;
+
 import javax.portlet.PortletException;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 /**
- * @author Michael C. Han
+ * @author Sergio González
  */
-public interface ActionCommand {
+public interface RenderCommand {
 
-	public static final String ACTION_COMMAND_POSTFIX = "ActionCommand";
-
-	public static final String ACTION_PACKAGE_NAME = "action.package.prefix";
-
-	public static final ActionCommand EMPTY = new ActionCommand() {
+	public static final RenderCommand EMPTY = new RenderCommand() {
 
 		@Override
-		public boolean processCommand(
-			PortletRequest portletRequest, PortletResponse portletResponse) {
+		public String processCommand(
+			RenderRequest renderRequest, RenderResponse renderResponse) {
 
-			return false;
+			return StringPool.BLANK;
 		}
 
 	};
 
-	public boolean processCommand(
-			PortletRequest portletRequest, PortletResponse portletResponse)
+	public static final String RENDER_COMMAND_POSTFIX = "RenderCommand";
+
+	public static final String RENDER_PACKAGE_NAME = "render.package.prefix";
+
+	public String processCommand(
+			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException;
 
 }
