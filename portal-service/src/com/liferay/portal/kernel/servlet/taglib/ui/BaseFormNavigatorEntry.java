@@ -49,12 +49,8 @@ public abstract class BaseFormNavigatorEntry<T>
 	public abstract String getLabel(Locale locale);
 
 	@Override
-	public boolean isVisible(User user, T formModelBean) {
-		return true;
-	}
-
-	@Override
-	public void include(HttpServletRequest request, HttpServletResponse response)
+	public void include(
+			HttpServletRequest request, HttpServletResponse response)
 		throws IOException {
 
 		ServletContext servletContext = getServletContext(request);
@@ -72,6 +68,11 @@ public abstract class BaseFormNavigatorEntry<T>
 
 			throw new IOException("Unable to include JSP", se);
 		}
+	}
+
+	@Override
+	public boolean isVisible(User user, T formModelBean) {
+		return true;
 	}
 
 	protected abstract String getJspPath();
