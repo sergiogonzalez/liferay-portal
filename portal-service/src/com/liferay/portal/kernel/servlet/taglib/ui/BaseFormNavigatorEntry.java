@@ -14,18 +14,12 @@
 
 package com.liferay.portal.kernel.servlet.taglib.ui;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.User;
 
 import java.io.IOException;
 
 import java.util.Locale;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -48,39 +42,13 @@ public abstract class BaseFormNavigatorEntry<T>
 	public abstract String getLabel(Locale locale);
 
 	@Override
-	public void include(
+	public abstract void include(
 			HttpServletRequest request, HttpServletResponse response)
-		throws IOException {
-
-		ServletContext servletContext = getServletContext(request);
-
-		RequestDispatcher requestDispatcher =
-			servletContext.getRequestDispatcher(getJspPath());
-
-		try {
-			requestDispatcher.include(request, response);
-		}
-		catch (ServletException se) {
-			if (_log.isErrorEnabled()) {
-				_log.error("Unable to include JSP", se);
-			}
-
-			throw new IOException("Unable to include JSP", se);
-		}
-	}
+		throws IOException;
 
 	@Override
 	public boolean isVisible(User user, T formModelBean) {
 		return true;
 	}
-
-	protected abstract String getJspPath();
-
-	protected ServletContext getServletContext(HttpServletRequest request) {
-		return (ServletContext)request.getAttribute(WebKeys.CTX);
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		BaseFormNavigatorEntry.class);
 
 }
