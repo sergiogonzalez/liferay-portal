@@ -16,9 +16,8 @@ package com.liferay.portal.kernel.servlet.taglib.ui;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.servlet.ServletContextPool;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.User;
-import com.liferay.portal.spring.context.PortalContextLoaderListener;
 
 import java.io.IOException;
 
@@ -78,8 +77,7 @@ public abstract class BaseFormNavigatorEntry<T>
 	protected abstract String getJspPath();
 
 	protected ServletContext getServletContext(HttpServletRequest request) {
-		return ServletContextPool.get(
-			PortalContextLoaderListener.getPortalServletContextName());
+		return (ServletContext)request.getAttribute(WebKeys.CTX);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
