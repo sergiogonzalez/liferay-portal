@@ -14,9 +14,9 @@
 
 package com.liferay.site.admin.web.servlet.taglib.ui;
 
+import com.liferay.portal.kernel.servlet.taglib.ui.BaseFormNavigatorEntry;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.servlet.taglib.ui.BaseFormNavigatorEntry;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
