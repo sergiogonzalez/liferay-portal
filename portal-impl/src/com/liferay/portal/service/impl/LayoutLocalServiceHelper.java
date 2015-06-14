@@ -410,6 +410,11 @@ public class LayoutLocalServiceHelper implements IdentifiableBean {
 
 			throw lfurle;
 		}
+
+		if (StringUtil.count(friendlyURL, StringPool.SLASH) > 1) {
+			throw new LayoutFriendlyURLException(
+				LayoutFriendlyURLException.TOO_DEEP);
+		}
 	}
 
 	public void validateFriendlyURLs(
