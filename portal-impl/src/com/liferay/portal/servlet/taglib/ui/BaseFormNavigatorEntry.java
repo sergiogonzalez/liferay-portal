@@ -55,7 +55,7 @@ public abstract class BaseFormNavigatorEntry<T>
 	}
 
 	@Override
-	public void render(HttpServletRequest request, HttpServletResponse response)
+	public void include(HttpServletRequest request, HttpServletResponse response)
 		throws IOException {
 
 		ServletContext servletContext = getServletContext(request);

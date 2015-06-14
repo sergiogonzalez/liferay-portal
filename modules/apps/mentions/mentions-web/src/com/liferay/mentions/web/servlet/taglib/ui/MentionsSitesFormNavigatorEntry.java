@@ -54,7 +54,8 @@ public class MentionsSitesFormNavigatorEntry
 	}
 
 	@Override
-	public void render(HttpServletRequest request, HttpServletResponse response)
+	public void include(
+			HttpServletRequest request, HttpServletResponse response)
 		throws IOException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
@@ -85,7 +86,7 @@ public class MentionsSitesFormNavigatorEntry
 		request.setAttribute(
 			MentionsWebKeys.GROUP_MENTIONS_ENABLED, groupMentionsEnabled);
 
-		super.render(request, response);
+		super.include(request, response);
 	}
 
 	@Override

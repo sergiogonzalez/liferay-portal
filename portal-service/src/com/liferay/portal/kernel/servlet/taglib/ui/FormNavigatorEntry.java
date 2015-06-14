@@ -96,7 +96,7 @@ public interface FormNavigatorEntry<T> {
 	 *         rendered
 	 * @throws IOException if an IO exception occurs
 	 */
-	public void render(HttpServletRequest request, HttpServletResponse response)
+	public void include(HttpServletRequest request, HttpServletResponse response)
 		throws IOException;
 
 }

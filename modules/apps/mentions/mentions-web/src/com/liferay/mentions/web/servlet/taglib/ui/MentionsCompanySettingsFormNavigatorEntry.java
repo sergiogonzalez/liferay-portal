@@ -52,7 +52,7 @@ public class MentionsCompanySettingsFormNavigatorEntry
 	}
 
 	@Override
-	public void render(HttpServletRequest request, HttpServletResponse response)
+	public void include(HttpServletRequest request, HttpServletResponse response)
 		throws IOException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
@@ -67,7 +67,7 @@ public class MentionsCompanySettingsFormNavigatorEntry
 		request.setAttribute(
 			MentionsWebKeys.COMPANY_MENTIONS_ENABLED, companyMentionsEnabled);
 
-		super.render(request, response);
+		super.include(request, response);
 	}
 
 	@Override
