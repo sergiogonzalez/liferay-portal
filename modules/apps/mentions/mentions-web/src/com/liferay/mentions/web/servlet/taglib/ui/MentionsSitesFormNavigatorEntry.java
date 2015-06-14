@@ -90,20 +90,17 @@ public class MentionsSitesFormNavigatorEntry
 	}
 
 	@Override
-	protected String getJspPath() {
-		return "/META-INF/resources/sites_admin/mentions.jsp";
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.mentions.web)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
 	}
 
 	@Override
-	protected ServletContext getServletContext() {
-		return _servletContext;
+	protected String getJspPath() {
+		return "/META-INF/resources/sites_admin/mentions.jsp";
 	}
-
-	@Reference(target = "(osgi.web.symbolicname=com.liferay.mentions.web)")
-	protected void setServletContext(ServletContext servletContext) {
-		_servletContext = servletContext;
-	}
-
-	private ServletContext _servletContext;
 
 }
