@@ -15,10 +15,14 @@
 package com.liferay.portal.kernel.portlet.bridges.mvc;
 
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.PortletConfigFactoryUtil;
 
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
 
 /**
  * @author Brian Wing Shun Chan
@@ -27,13 +31,13 @@ public abstract class BaseActionCommand implements ActionCommand {
 
 	@Override
 	public boolean processCommand(
-			PortletRequest portletRequest, PortletResponse portletResponse)
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws PortletException {
 
 		try {
-			doProcessCommand(portletRequest, portletResponse);
+			doProcessCommand(actionRequest, actionResponse);
 
-			return SessionErrors.isEmpty(portletRequest);
+			return SessionErrors.isEmpty(actionRequest);
 		}
 		catch (PortletException pe) {
 			throw pe;
@@ -44,7 +48,27 @@ public abstract class BaseActionCommand implements ActionCommand {
 	}
 
 	protected abstract void doProcessCommand(
-			PortletRequest portletRequest, PortletResponse portletResponse)
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception;
+
+	protected PortletConfig getPortletConfig(ActionRequest actionRequest) {
+		String portletId = PortalUtil.getPortletId(actionRequest);
+
+		return PortletConfigFactoryUtil.get(portletId);
+	}
+
+	protected void hideDefaultErrorMessage(ActionRequest actionRequest) {
+		SessionMessages.add(
+			actionRequest,
+			PortalUtil.getPortletId(actionRequest) +
+				SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_ERROR_MESSAGE);
+	}
+
+	protected void hideDefaultSuccessMessage(ActionRequest actionRequest) {
+		SessionMessages.add(
+			actionRequest,
+			PortalUtil.getPortletId(actionRequest) +
+				SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE);
+	}
 
 }
