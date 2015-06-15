@@ -116,15 +116,15 @@ public class CopyStructureActionCommand extends DDMBaseActionCommand {
 
 	@Override
 	protected String getSaveAndContinueRedirect(
-			ActionRequest actionRequest, DDMStructure structure,
+			PortletRequest portletRequest, DDMStructure structure,
 			String redirect)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		PortletURLImpl portletURL = new PortletURLImpl(
-			actionRequest, themeDisplay.getPpid(), themeDisplay.getPlid(),
+			portletRequest, themeDisplay.getPpid(), themeDisplay.getPlid(),
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcPath", "/copy_structure");
@@ -138,11 +138,11 @@ public class CopyStructureActionCommand extends DDMBaseActionCommand {
 			"classPK", String.valueOf(structure.getStructureId()), false);
 		portletURL.setParameter(
 			"copyFormTemplates",
-			ParamUtil.getString(actionRequest, "copyFormTemplates"), false);
+			ParamUtil.getString(portletRequest, "copyFormTemplates"), false);
 		portletURL.setParameter(
 			"copyDisplayTemplates",
-			ParamUtil.getString(actionRequest, "copyDisplayTemplates"), false);
-		portletURL.setWindowState(actionRequest.getWindowState());
+			ParamUtil.getString(portletRequest, "copyDisplayTemplates"), false);
+		portletURL.setWindowState(portletRequest.getWindowState());
 
 		return portletURL.toString();
 	}

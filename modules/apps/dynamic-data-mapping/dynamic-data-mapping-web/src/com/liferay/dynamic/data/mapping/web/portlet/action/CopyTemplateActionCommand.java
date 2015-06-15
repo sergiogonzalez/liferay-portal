@@ -79,20 +79,20 @@ public class CopyTemplateActionCommand extends DDMBaseActionCommand {
 
 	@Override
 	protected String getSaveAndContinueRedirect(
-			ActionRequest actionRequest, DDMTemplate template, String redirect)
+			PortletRequest portletRequest, DDMTemplate template, String redirect)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		PortletURLImpl portletURL = new PortletURLImpl(
-			actionRequest, themeDisplay.getPpid(), themeDisplay.getPlid(),
+			portletRequest, themeDisplay.getPpid(), themeDisplay.getPlid(),
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter("mvcPath", "/copy_template");
 		portletURL.setParameter(
 			"templateId", String.valueOf(template.getTemplateId()), false);
-		portletURL.setWindowState(actionRequest.getWindowState());
+		portletURL.setWindowState(portletRequest.getWindowState());
 
 		return portletURL.toString();
 	}
