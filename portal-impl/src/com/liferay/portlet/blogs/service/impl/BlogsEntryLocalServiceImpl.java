@@ -2207,10 +2207,12 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		throws PortalException {
 
 		if (Validator.isNull(title)) {
-			throw new EntryTitleException();
+			throw new EntryTitleException(
+				"Blogs entry title must be a non null string");
 		}
 		else if (Validator.isNull(content)) {
-			throw new EntryContentException();
+			throw new EntryContentException(
+				"Blogs entry content must be a non null string");
 		}
 	}
 
