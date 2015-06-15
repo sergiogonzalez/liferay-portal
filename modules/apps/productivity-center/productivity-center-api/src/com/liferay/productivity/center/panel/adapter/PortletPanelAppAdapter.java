@@ -15,14 +15,21 @@
 package com.liferay.productivity.center.panel.adapter;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portlet.ControlPanelEntry;
+import com.liferay.portlet.PortletConfigFactoryUtil;
 import com.liferay.productivity.center.panel.PanelApp;
 
 import java.util.Locale;
+import java.util.ResourceBundle;
+
+import javax.portlet.PortletConfig;
 
 /**
  * @author Adolfo Pérez
@@ -42,7 +49,34 @@ public class PortletPanelAppAdapter implements PanelApp {
 	public String getLabel(Locale locale) {
 		Portlet portlet = getPortlet();
 
-		return portlet.getDisplayName();
+		String key =
+			JavaConstants.JAVAX_PORTLET_TITLE + StringPool.PERIOD +
+				portlet.getPortletName();
+
+		PortletConfig portletConfig = PortletConfigFactoryUtil.get(
+			getPortletId());
+
+		ResourceBundle resourceBundle = portletConfig.getResourceBundle(locale);
+
+		String value = LanguageUtil.get(resourceBundle, key);
+
+		if (!key.equals(value)) {
+			return value;
+		}
+
+		value = LanguageUtil.get(locale, key);
+
+		if (!key.equals(value)) {
+			return value;
+		}
+
+		String displayName = portlet.getDisplayName();
+
+		if (!displayName.equals(portlet.getPortletName())) {
+			return displayName;
+		}
+
+		return key;
 	}
 
 	@Override
