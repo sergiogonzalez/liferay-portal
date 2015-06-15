@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.ModelHintsUtil;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -43,9 +44,13 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
+import com.liferay.portlet.blogs.EntryContentException;
+import com.liferay.portlet.blogs.EntryTitleException;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.util.test.BlogsTestUtil;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
+
+import com.sap.dbtech.util.StringUtil;
 
 import java.io.InputStream;
 
@@ -106,6 +111,36 @@ public class BlogsEntryLocalServiceTest {
 			expectedEntry.getEntryId());
 
 		BlogsTestUtil.assertEquals(expectedEntry, actualEntry);
+	}
+
+	@Test(expected = EntryContentException.class)
+	public void testAddEntryWithVeryLargeContent() throws Exception {
+		int maxLength = ModelHintsUtil.getMaxLength(
+			BlogsEntry.class.getName(), "content");
+
+		String content = StringUtil.repeat("0", maxLength + 1);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group, _user.getUserId());
+
+		BlogsEntryLocalServiceUtil.addEntry(
+			_user.getUserId(), RandomTestUtil.randomString(), content,
+			new Date(), serviceContext);
+	}
+
+	@Test(expected = EntryTitleException.class)
+	public void testAddEntryWithVeryLargeTitle() throws Exception {
+		int maxLength = ModelHintsUtil.getMaxLength(
+			BlogsEntry.class.getName(), "title");
+
+		String title = StringUtil.repeat("0", maxLength + 1);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(_group, _user.getUserId());
+
+		BlogsEntryLocalServiceUtil.addEntry(
+			_user.getUserId(), title, RandomTestUtil.randomString(), new Date(),
+			serviceContext);
 	}
 
 	@Test
