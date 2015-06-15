@@ -87,6 +87,7 @@ import com.liferay.portlet.blogs.util.BlogsUtil;
 import com.liferay.portlet.blogs.util.LinkbackProducerUtil;
 import com.liferay.portlet.blogs.util.comparator.EntryDisplayDateComparator;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.social.handler.SocialActivityHandlerUtil;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
 
@@ -540,6 +541,30 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		BlogsEntry entry = blogsEntryPersistence.findByPrimaryKey(entryId);
 
 		blogsEntryLocalService.deleteEntry(entry);
+	}
+
+	@Override
+	public Folder fetchAttachmentsFolder(long userId, long groupId) {
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+
+		Repository repository =
+			PortletFileRepositoryUtil.fetchPortletRepository(
+				groupId, PortletKeys.BLOGS);
+
+		try {
+			Folder folder = PortletFileRepositoryUtil.getPortletFolder(
+				repository.getRepositoryId(),
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, PortletKeys.BLOGS);
+
+			return folder;
+		}
+		catch (Exception e) {
+		}
+
+		return null;
 	}
 
 	/**
@@ -1031,9 +1056,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		extraDataJSONObject.put("title", entry.getTitle());
 
-		socialActivityLocalService.addActivity(
-			userId, entry.getGroupId(), BlogsEntry.class.getName(),
-			entry.getEntryId(), SocialActivityConstants.TYPE_MOVE_TO_TRASH,
+		SocialActivityHandlerUtil.addActivity(
+			userId, entry, SocialActivityConstants.TYPE_MOVE_TO_TRASH,
 			extraDataJSONObject.toString(), 0);
 
 		// Workflow
@@ -1096,9 +1120,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		extraDataJSONObject.put("title", entry.getTitle());
 
-		socialActivityLocalService.addActivity(
-			userId, trashEntry.getGroupId(), BlogsEntry.class.getName(),
-			entryId, SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
+		SocialActivityHandlerUtil.addActivity(
+			userId, entry, SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
 			extraDataJSONObject.toString(), 0);
 
 		return entry;
@@ -1506,17 +1529,13 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 				(oldStatus != WorkflowConstants.STATUS_SCHEDULED)) {
 
 				if (serviceContext.isCommandUpdate()) {
-					socialActivityLocalService.addActivity(
-						user.getUserId(), entry.getGroupId(),
-						BlogsEntry.class.getName(), entryId,
-						BlogsActivityKeys.UPDATE_ENTRY,
+					SocialActivityHandlerUtil.addActivity(
+						user.getUserId(), entry, BlogsActivityKeys.UPDATE_ENTRY,
 						extraDataJSONObject.toString(), 0);
 				}
 				else {
-					socialActivityLocalService.addUniqueActivity(
-						user.getUserId(), entry.getGroupId(),
-						BlogsEntry.class.getName(), entryId,
-						BlogsActivityKeys.ADD_ENTRY,
+					SocialActivityHandlerUtil.addUniqueActivity(
+						user.getUserId(), entry, BlogsActivityKeys.ADD_ENTRY,
 						extraDataJSONObject.toString(), 0);
 				}
 			}
@@ -1561,10 +1580,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 				(oldStatus != WorkflowConstants.STATUS_IN_TRASH)) {
 
 				if (serviceContext.isCommandUpdate()) {
-					socialActivityLocalService.addActivity(
-						user.getUserId(), entry.getGroupId(),
-						BlogsEntry.class.getName(), entryId,
-						BlogsActivityKeys.UPDATE_ENTRY,
+					SocialActivityHandlerUtil.addActivity(
+						user.getUserId(), entry, BlogsActivityKeys.UPDATE_ENTRY,
 						extraDataJSONObject.toString(), 0);
 				}
 				else {

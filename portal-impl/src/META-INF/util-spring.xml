@@ -233,6 +233,9 @@
 			<bean class="com.liferay.portal.repository.util.RepositoryTrashImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.repository.liferayrepository.social.LiferayFileEntrySocialActivityHandler" class="com.liferay.portal.repository.liferayrepository.social.LiferayFileEntrySocialActivityHandler" />
+	<bean id="com.liferay.portal.repository.liferayrepository.social.LiferayFileShortcutSocialActivityHandler" class="com.liferay.portal.repository.liferayrepository.social.LiferayFileShortcutSocialActivityHandler" />
+	<bean id="com.liferay.portal.repository.liferayrepository.social.LiferayFolderSocialActivityHandler" class="com.liferay.portal.repository.liferayrepository.social.LiferayFolderSocialActivityHandler" />
 	<bean id="com.liferay.portal.kernel.resiliency.spi.SPIRegistryUtil" class="com.liferay.portal.kernel.resiliency.spi.SPIRegistryUtil">
 		<property name="sPIRegistry">
 			<bean class="com.liferay.portal.resiliency.spi.SPIRegistryImpl">
@@ -740,6 +743,7 @@
 		</property>
 	</bean>
 	<bean id="com.liferay.portal.struts.DoIncludeJSPDynamicInclude" class="com.liferay.portal.struts.DoIncludeJSPDynamicInclude" />
+	<bean id="com.liferay.portal.subscription.social.SubscriptionSocialActivityHandler" class="com.liferay.portal.subscription.social.SubscriptionSocialActivityHandler" />
 	<bean id="com.liferay.portal.util.CustomJspRegistryUtil" class="com.liferay.portal.util.CustomJspRegistryUtil">
 		<property name="customJspRegistry">
 			<bean class="com.liferay.portal.util.CustomJspRegistryImpl" />
@@ -828,6 +832,7 @@
 	<bean id="com.liferay.portlet.asset.lar.AssetCategoryStagedModelDataHandler" class="com.liferay.portlet.asset.lar.AssetCategoryStagedModelDataHandler" />
 	<bean id="com.liferay.portlet.asset.lar.AssetVocabularyStagedModelDataHandler" class="com.liferay.portlet.asset.lar.AssetVocabularyStagedModelDataHandler" />
 	<bean id="com.liferay.portlet.asset.lar.StagedAssetTagStagedModelDataHandler" class="com.liferay.portlet.asset.lar.StagedAssetTagStagedModelDataHandler" />
+	<bean id="com.liferay.portlet.asset.social.AssetEntrySocialActivityHandler" class="com.liferay.portlet.asset.social.AssetEntrySocialActivityHandler" />
 	<bean id="com.liferay.portlet.asset.util.AssetCategoryIndexer" class="com.liferay.portlet.asset.util.AssetCategoryIndexer" />
 	<bean id="com.liferay.portlet.asset.util.AssetIndexer" class="com.liferay.portlet.asset.util.AssetIndexer" />
 	<bean id="com.liferay.portlet.asset.util.AssetVocabularyIndexer" class="com.liferay.portlet.asset.util.AssetVocabularyIndexer" />
@@ -1066,6 +1071,7 @@
 	<bean id="com.liferay.portlet.journal.service.permission.JournalPermission" class="com.liferay.portlet.journal.service.permission.JournalPermission" />
 	<bean id="com.liferay.portlet.journal.social.JournalArticleActivityInterpreter" class="com.liferay.portlet.journal.social.JournalArticleActivityInterpreter" />
 	<bean id="com.liferay.portlet.journal.social.JournalFolderActivityInterpreter" class="com.liferay.portlet.journal.social.JournalFolderActivityInterpreter" />
+	<bean id="com.liferay.portlet.journal.social.JournalArticleSocialActivityHandler" class="com.liferay.portlet.journal.social.JournalArticleSocialActivityHandler" />
 	<bean id="com.liferay.portlet.journal.trash.JournalArticleTrashHandler" class="com.liferay.portlet.journal.trash.JournalArticleTrashHandler" />
 	<bean id="com.liferay.portlet.journal.trash.JournalFolderTrashHandler" class="com.liferay.portlet.journal.trash.JournalFolderTrashHandler" />
 	<bean id="com.liferay.portlet.journal.util.JournalArticleIndexer" class="com.liferay.portlet.journal.util.JournalArticleIndexer" />
@@ -1101,6 +1107,8 @@
 	</bean>
 	<bean id="com.liferay.portlet.layoutsetprototypes.lar.LayoutSetPrototypeStagedModelDataHandler" class="com.liferay.portlet.layoutsetprototypes.lar.LayoutSetPrototypeStagedModelDataHandler" />
 	<bean id="com.liferay.portlet.messageboards.asset.MBMessageAssetRendererFactory" class="com.liferay.portlet.messageboards.asset.MBMessageAssetRendererFactory" />
+	<bean id="com.liferay.portlet.messageboards.social.MBMessageSocialActivityHandler" class="com.liferay.portlet.messageboards.social.MBMessageSocialActivityHandler" />
+	<bean id="com.liferay.portlet.messageboards.social.MBThreadSocialActivityHandler" class="com.liferay.portlet.messageboards.social.MBThreadSocialActivityHandler" />
 	<bean id="com.liferay.portlet.messageboards.service.permission.MBCategoryPermission" class="com.liferay.portlet.messageboards.service.permission.MBCategoryPermission" />
 	<bean id="com.liferay.portlet.messageboards.service.permission.MBDiscussionPermission" class="com.liferay.portlet.messageboards.service.permission.MBDiscussionPermission" />
 	<bean id="com.liferay.portlet.messageboards.service.permission.MBMessagePermission" class="com.liferay.portlet.messageboards.service.permission.MBMessagePermission" />
@@ -1140,6 +1148,15 @@
 		<property name="sites" ref="com.liferay.portlet.sites.util.Sites" />
 	</bean>
 	<bean id="com.liferay.portlet.sitesadmin.lar.StagedGroupStagedModelDataHandler" class="com.liferay.portlet.sitesadmin.lar.StagedGroupStagedModelDataHandler" />
+	<bean id="com.liferay.portlet.social.handler.SocialActivityHandlerUtil" class="com.liferay.portlet.social.handler.SocialActivityHandlerUtil">
+		<property name="socialActivityHandler">
+			<bean class="com.liferay.portlet.social.handler.SocialActivityHandlerImpl" init-method="activate">
+				<constructor-arg>
+					<bean class="com.liferay.portlet.social.handler.DefaultSocialActivityHandler" />
+				</constructor-arg>
+			</bean>
+		</property>
+	</bean>
 	<bean id="com.liferay.portlet.social.service.permission.SocialActivityPermissionUtil" class="com.liferay.portlet.social.service.permission.SocialActivityPermissionUtil">
 		<property name="socialActivityPermission">
 			<bean class="com.liferay.portlet.social.service.permission.SocialActivityPermissionImpl" />
