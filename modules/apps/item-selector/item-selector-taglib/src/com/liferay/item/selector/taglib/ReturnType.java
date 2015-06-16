@@ -24,6 +24,8 @@ import com.liferay.portlet.documentlibrary.util.DLUtil;
 
 import java.util.Set;
 
+import javax.portlet.PortletURL;
+
 /**
  * @author Roberto Díaz
  */
@@ -35,7 +37,6 @@ public enum ReturnType implements ItemSelectorReturnType {
 		public String getValue(FileEntry fileEntry, ThemeDisplay themeDisplay) {
 			return StringPool.BLANK;
 		}
-
 	},
 	FILE_ENTRY {
 
@@ -54,7 +55,18 @@ public enum ReturnType implements ItemSelectorReturnType {
 
 			return fileEntryJSONObject.toString();
 		}
+	},
+	UPLOADABLE_BASE_64 {
 
+		@Override
+		public String getValue(PortletURL uploadURL) throws Exception {
+			JSONObject base64JSONObject = JSONFactoryUtil.createJSONObject();
+
+			base64JSONObject.put("base64", StringPool.BLANK);
+			base64JSONObject.put("uploadURL", uploadURL);
+
+			return base64JSONObject.toString();
+		}
 	},
 	URL {
 
@@ -64,7 +76,6 @@ public enum ReturnType implements ItemSelectorReturnType {
 
 			return DLUtil.getImagePreviewURL(fileEntry, themeDisplay);
 		}
-
 	};
 
 	public static ReturnType parse(
@@ -106,7 +117,14 @@ public enum ReturnType implements ItemSelectorReturnType {
 		return name();
 	}
 
-	public abstract String getValue(
-		FileEntry fileEntry, ThemeDisplay themeDisplay) throws Exception;
+	public String getValue(FileEntry fileEntry, ThemeDisplay themeDisplay)
+		throws Exception {
+
+		throw new UnsupportedOperationException();
+	}
+
+	public String getValue(PortletURL uploadURL) throws Exception {
+		throw new UnsupportedOperationException();
+	}
 
 }
