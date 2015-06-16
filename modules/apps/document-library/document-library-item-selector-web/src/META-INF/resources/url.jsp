@@ -18,4 +18,35 @@
 
 <%
 DLItemSelectorViewDisplayContext dlItemSelectorViewDisplayContext = (DLItemSelectorViewDisplayContext)request.getAttribute(DLItemSelectorView.DL_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT);
+
+String itemSelectedEventName = dlItemSelectorViewDisplayContext.getItemSelectedEventName();
+
+String tabName = dlItemSelectorViewDisplayContext.getTitle(locale);
 %>
+
+<aui:row cssClass="lfr-item-viewer" id="itemSelectorUrlContainer">
+	<aui:col width="60" cssClass="col-md-offset-2">
+		<h4>Enter URL</h4>
+		<p>Enter the url that contains the image you want to add.</p>
+		<div class="col-md-12">
+			<aui:input wrapperCssClass="col-md-10" label="" name="urlInput" placeholder="http://" />
+			<aui:button cssClass="btn-primary" name="previewBtn" value="Enter" />
+		</div>
+		<em>For example, http://wwww.liferay.com/liferay.png</em>
+	</aui:col>
+</aui:row>
+
+<aui:script use="liferay-item-selector-url">
+	new Liferay.ItemSelectorUrl(
+		{
+			closeCaption: '<%= tabName %>',
+			namespace: '<portlet:namespace/>',
+			on: {
+				selectedItem: function(event) {
+					Liferay.Util.getOpener().Liferay.fire('<%= itemSelectedEventName %>', event);
+				}
+			},
+			rootNode: '#itemSelectorUrlContainer'
+		}
+	);
+</aui:script>
