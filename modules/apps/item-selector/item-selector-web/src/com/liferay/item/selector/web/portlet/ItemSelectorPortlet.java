@@ -16,11 +16,18 @@ package com.liferay.item.selector.web.portlet;
 
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorRendering;
+import com.liferay.item.selector.exception.NoSuchItemSelectorViewException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
+
+import java.util.List;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
@@ -70,12 +77,36 @@ public class ItemSelectorPortlet extends MVCPortlet {
 
 		localizedItemSelectorRendering.store(renderRequest);
 
+		_checkItemSelectorViews(renderRequest, localizedItemSelectorRendering);
+
 		super.render(renderRequest, renderResponse);
 	}
 
 	@Reference
 	protected void setItemSelector(ItemSelector itemSelector) {
 		_itemSelector = itemSelector;
+	}
+
+	private void _checkItemSelectorViews(
+		RenderRequest renderRequest,
+		LocalizedItemSelectorRendering localizedItemSelectorRendering) {
+
+		List<String> titles = localizedItemSelectorRendering.getTitles();
+
+		if (titles.isEmpty()) {
+			String[] criteria = ParamUtil.getParameterValues(
+				renderRequest, "criteria");
+
+			String criteriaNames = StringUtil.merge(criteria, StringPool.COMMA);
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"No item selector views were founded for " + criteriaNames);
+			}
+
+			SessionErrors.add(
+				renderRequest, NoSuchItemSelectorViewException.class);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

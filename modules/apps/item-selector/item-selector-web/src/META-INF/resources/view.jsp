@@ -1,3 +1,5 @@
+<%@ page import="java.util.List" %>
+
 <%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
@@ -18,27 +20,38 @@
 
 <%
 LocalizedItemSelectorRendering localizedItemSelectorRendering = LocalizedItemSelectorRendering.get(liferayPortletRequest);
+
+ResourceBundle resourceBundle = ResourceBundle.getBundle("content/Language", locale);
 %>
 
-<liferay-ui:tabs names="<%= StringUtil.merge(localizedItemSelectorRendering.getTitles()) %>" refresh="<%= false %>" type="pills" value="<%= localizedItemSelectorRendering.getSelectedTab() %>">
+<liferay-ui:error exception="<%= NoSuchItemSelectorViewException.class %>" message='<%= LanguageUtil.get(resourceBundle, "selection-is-not-available") %>' />
+
+<c:if test="<%= SessionErrors.contains(renderRequest, NoSuchItemSelectorViewException.class.getName()) %>">
 
 	<%
-	for (String title : localizedItemSelectorRendering.getTitles()) {
-		ItemSelectorViewRenderer itemSelectorViewRenderer = localizedItemSelectorRendering.getItemSelectorViewRenderer(title);
+	List<String> titles = localizedItemSelectorRendering.getTitles();
 	%>
 
-		<liferay-ui:section>
-			<div>
+	<liferay-ui:tabs names="<%= StringUtil.merge(titles) %>" refresh="<%= false %>" type="pills" value="<%= localizedItemSelectorRendering.getSelectedTab() %>">
 
-				<%
-				itemSelectorViewRenderer.renderHTML(pageContext);
-				%>
+		<%
+		for (String title : titles) {
+			ItemSelectorViewRenderer itemSelectorViewRenderer = localizedItemSelectorRendering.getItemSelectorViewRenderer(title);
+		%>
 
-			</div>
-		</liferay-ui:section>
+			<liferay-ui:section>
+				<div>
 
-	<%
-	}
-	%>
+					<%
+					itemSelectorViewRenderer.renderHTML(pageContext);
+					%>
 
-</liferay-ui:tabs>
+				</div>
+			</liferay-ui:section>
+
+		<%
+		}
+		%>
+
+	</liferay-ui:tabs>
+</c:if>
