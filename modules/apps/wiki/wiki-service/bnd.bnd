@@ -5,7 +5,6 @@ Export-Package:\
 	com.liferay.wiki.asset,\
 	com.liferay.wiki.engine.impl,\
 	com.liferay.wiki.importer.impl,\
-	com.liferay.wiki.indexer,\
 	com.liferay.wiki.lar,\
 	com.liferay.wiki.model.impl,\
 	com.liferay.wiki.notifications,\
