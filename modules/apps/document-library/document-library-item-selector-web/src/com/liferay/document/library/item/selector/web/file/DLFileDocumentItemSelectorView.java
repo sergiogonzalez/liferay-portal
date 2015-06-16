@@ -57,7 +57,7 @@ public class DLFileDocumentItemSelectorView
 		ResourceBundle resourceBundle = ResourceBundle.getBundle(
 			"content/Language", locale);
 
-		return resourceBundle.getString("images");
+		return resourceBundle.getString("files");
 	}
 
 	private static final Set<DefaultItemSelectorReturnType>
