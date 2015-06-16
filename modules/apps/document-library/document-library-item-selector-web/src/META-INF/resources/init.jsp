@@ -25,7 +25,10 @@ page import="com.liferay.document.library.item.selector.web.display.context.DLIt
 page import="com.liferay.item.selector.ItemSelectorCriterion" %><%@
 page import="com.liferay.item.selector.taglib.ReturnType" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
+page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.service.DLAppServiceUtil" %>
+
+<%@ page import="java.util.ResourceBundle" %>
 
 <portlet:defineObjects />
 
