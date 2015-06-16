@@ -359,7 +359,7 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 							if (blacklistLastChar.startsWith(
 									UnicodeFormatter.UNICODE_PREFIX)) {
 
-								blacklistLastChar = 
+								blacklistLastChar =
 									UnicodeFormatter.parseString(
 										blacklistLastChar);
 							}
