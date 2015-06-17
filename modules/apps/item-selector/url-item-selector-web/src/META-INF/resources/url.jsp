@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-URLItemSelectorViewDisplayContext urlItemSelectorViewDisplayContext = (URLItemSelectorViewDisplayContext)request.getAttribute(URLItemSelectorView.URL_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT);
+URLItemSelectorViewDisplayContext urlItemSelectorViewDisplayContext = (URLItemSelectorViewDisplayContext)request.getAttribute(URLImageItemSelectorView.URL_IMAGE_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT);
 
 String itemSelectedEventName = urlItemSelectorViewDisplayContext.getItemSelectedEventName();
 

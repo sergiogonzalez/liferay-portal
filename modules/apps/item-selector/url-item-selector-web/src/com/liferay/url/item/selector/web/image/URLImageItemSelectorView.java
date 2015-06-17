@@ -18,15 +18,22 @@ import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.DefaultItemSelectorReturnType;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.util.PropsValues;
-import com.liferay.url.item.selector.web.BaseURLItemSelectorView;
+import com.liferay.url.item.selector.web.display.context.URLItemSelectorViewDisplayContext;
+
+import java.io.IOException;
 
 import java.util.Collections;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Set;
 
+import javax.portlet.PortletURL;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -36,17 +43,19 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(service = ItemSelectorView.class)
 public class URLImageItemSelectorView
-	extends BaseURLItemSelectorView
+	implements ItemSelectorView
 		<ImageItemSelectorCriterion, DefaultItemSelectorReturnType> {
+
+	public static final String URL_IMAGE_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT =
+		"URL_IMAGE_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT";
 
 	@Override
 	public Class<ImageItemSelectorCriterion> getItemSelectorCriterionClass() {
 		return ImageItemSelectorCriterion.class;
 	}
 
-	@Override
-	public String[] getMimeTypes() {
-		return PropsValues.DL_FILE_ENTRY_PREVIEW_IMAGE_MIME_TYPES;
+	public ServletContext getServletContext() {
+		return _servletContext;
 	}
 
 	@Override
@@ -65,12 +74,33 @@ public class URLImageItemSelectorView
 	}
 
 	@Override
+	public void renderHTML(
+			ServletRequest request, ServletResponse response,
+			ImageItemSelectorCriterion imageItemSelectorCriterion,
+			PortletURL portletURL, String itemSelectedEventName)
+		throws IOException, ServletException {
+
+		ServletContext servletContext = getServletContext();
+
+		RequestDispatcher requestDispatcher =
+			servletContext.getRequestDispatcher("/url.jsp");
+
+		URLItemSelectorViewDisplayContext urlItemSelectorViewDisplayContext =
+			new URLItemSelectorViewDisplayContext(this, itemSelectedEventName);
+
+		request.setAttribute(
+			URL_IMAGE_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT,
+			urlItemSelectorViewDisplayContext);
+
+		requestDispatcher.include(request, response);
+	}
+
 	@Reference(
 		target ="(osgi.web.symbolicname=com.liferay.url.item.selector.web)",
 		unbind = "-"
 	)
 	public void setServletContext(ServletContext servletContext) {
-		super.setServletContext(servletContext);
+		_servletContext = servletContext;
 	}
 
 	private static final Set<DefaultItemSelectorReturnType>
@@ -79,5 +109,7 @@ public class URLImageItemSelectorView
 				new DefaultItemSelectorReturnType[] {
 					DefaultItemSelectorReturnType.URL
 				}));
+
+	private ServletContext _servletContext;
 
 }
