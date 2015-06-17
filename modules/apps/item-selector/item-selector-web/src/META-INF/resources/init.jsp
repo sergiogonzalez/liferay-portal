@@ -39,9 +39,3 @@ page import="java.util.ResourceBundle" %>
 <portlet:defineObjects />
 
 <liferay-theme:defineObjects />
-
-<%
-PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, liferayPortletResponse);
-
-String currentURL = currentURLObj.toString();
-%>
