@@ -66,25 +66,23 @@ public class ReturnTypeUtil {
 	protected static ReturnType parse(
 		ItemSelectorReturnType itemSelectorReturnType) {
 
-		if (ReturnType.BASE_64.name(
-				).equals(itemSelectorReturnType.getName())) {
-
+		if (DefaultItemSelectorReturnType.BASE_64 == itemSelectorReturnType) {
 			return ReturnType.BASE_64;
 		}
 
-		if (ReturnType.FILE_ENTRY.name(
-				).equals(itemSelectorReturnType.getName())) {
+		if (DefaultItemSelectorReturnType.FILE_ENTRY ==
+				itemSelectorReturnType) {
 
 			return ReturnType.FILE_ENTRY;
 		}
 
-		if (ReturnType.UPLOADABLE_BASE_64.name().equals(
-				itemSelectorReturnType.getName())) {
+		if (DefaultItemSelectorReturnType.UPLOADABLE_BASE_64 ==
+				itemSelectorReturnType) {
 
 			return ReturnType.UPLOADABLE_BASE_64;
 		}
 
-		if (ReturnType.URL.name().equals(itemSelectorReturnType.getName())) {
+		if (DefaultItemSelectorReturnType.URL == itemSelectorReturnType) {
 			return ReturnType.URL;
 		}
 
