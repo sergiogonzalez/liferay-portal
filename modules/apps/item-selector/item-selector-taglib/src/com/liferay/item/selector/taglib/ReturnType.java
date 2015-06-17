@@ -15,16 +15,12 @@
 package com.liferay.item.selector.taglib;
 
 import com.liferay.item.selector.ItemSelectorReturnType;
-import com.liferay.item.selector.criteria.DefaultItemSelectorReturnType;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
-
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.portlet.PortletURL;
 
@@ -80,30 +76,6 @@ public enum ReturnType implements ItemSelectorReturnType {
 		}
 	};
 
-	public static ReturnType parseFirstDraggableReturnType(
-			Set<ItemSelectorReturnType> desiredItemSelectorReturnTypes)
-		throws Exception {
-
-		Set<ItemSelectorReturnType> itemSelectorReturnTypes = new HashSet<>(
-			desiredItemSelectorReturnTypes);
-
-		itemSelectorReturnTypes.retainAll(_draggableReturnTypes);
-
-		return parseFirst(itemSelectorReturnTypes);
-	}
-
-	public static ReturnType parseFirstExistingFileReturnType(
-			Set<ItemSelectorReturnType> desiredItemSelectorReturnTypes)
-		throws Exception {
-
-		Set<ItemSelectorReturnType> itemSelectorReturnTypes = new HashSet<>(
-			desiredItemSelectorReturnTypes);
-
-		itemSelectorReturnTypes.retainAll(_existingFileReturnTypes);
-
-		return parseFirst(itemSelectorReturnTypes);
-	}
-
 	@Override
 	public String getName() {
 		return name();
@@ -117,60 +89,6 @@ public enum ReturnType implements ItemSelectorReturnType {
 
 	public String getValue(PortletURL uploadURL) throws Exception {
 		throw new UnsupportedOperationException();
-	}
-
-	protected static ReturnType parse(
-		ItemSelectorReturnType itemSelectorReturnType) {
-
-		if (BASE_64.name().equals(itemSelectorReturnType.getName())) {
-			return BASE_64;
-		}
-
-		if (FILE_ENTRY.name().equals(itemSelectorReturnType.getName())) {
-			return FILE_ENTRY;
-		}
-
-		if (UPLOADABLE_BASE_64.name().equals(
-				itemSelectorReturnType.getName())) {
-
-			return UPLOADABLE_BASE_64;
-		}
-
-		if (URL.name().equals(itemSelectorReturnType.getName())) {
-			return URL;
-		}
-
-		throw new IllegalArgumentException(
-			"Invalid item selector return type " +
-				itemSelectorReturnType.getName());
-	}
-
-	protected static ReturnType parseFirst(Set<ItemSelectorReturnType> values)
-		throws Exception {
-
-		for (ItemSelectorReturnType value : values) {
-			try {
-				return parse(value);
-			}
-			catch (IllegalArgumentException iae) {
-			}
-		}
-
-		throw new IllegalArgumentException("Invalid values " + values);
-	}
-
-	private static final Set<ItemSelectorReturnType> _draggableReturnTypes =
-		new HashSet<>();
-	private static final Set<ItemSelectorReturnType> _existingFileReturnTypes =
-		new HashSet<>();
-
-	static {
-		_draggableReturnTypes.add(DefaultItemSelectorReturnType.BASE_64);
-		_draggableReturnTypes.add(
-			DefaultItemSelectorReturnType.UPLOADABLE_BASE_64);
-
-		_existingFileReturnTypes.add(DefaultItemSelectorReturnType.FILE_ENTRY);
-		_existingFileReturnTypes.add(DefaultItemSelectorReturnType.URL);
 	}
 
 }
