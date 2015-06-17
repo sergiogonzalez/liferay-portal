@@ -22,17 +22,19 @@ URLItemSelectorViewDisplayContext urlItemSelectorViewDisplayContext = (URLItemSe
 String itemSelectedEventName = urlItemSelectorViewDisplayContext.getItemSelectedEventName();
 
 String tabName = urlItemSelectorViewDisplayContext.getTitle(locale);
+
+ResourceBundle resourceBundle = ResourceBundle.getBundle("content/Language", locale);
 %>
 
 <aui:row cssClass="lfr-item-viewer" id="itemSelectorUrlContainer">
 	<aui:col cssClass="col-md-offset-2" width="60">
-		<h4>Enter URL</h4>
-		<p>Enter the url that contains the image you want to add.</p>
+		<h4><%= LanguageUtil.get(resourceBundle, "enter-url") %></h4>
+		<p><%= LanguageUtil.get(resourceBundle, "enter-url-that-contains-the-image-you-want-to-add") %></p>
 		<div class="col-md-12">
 			<aui:input label="" name="urlInput" placeholder="http://" wrapperCssClass="col-md-10" />
-			<aui:button cssClass="btn-primary" name="previewBtn" value="Enter" />
+			<aui:button cssClass="btn-primary" name="previewBtn" value='<%= LanguageUtil.get(resourceBundle, "enter") %>'/>
 		</div>
-		<em>For example, http://wwww.liferay.com/liferay.png</em>
+		<em><%= LanguageUtil.format(resourceBundle, "for-example-x", "http://www.liferay.com/liferay.png", false) %></em>
 	</aui:col>
 </aui:row>
 
