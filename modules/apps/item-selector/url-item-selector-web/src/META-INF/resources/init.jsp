@@ -19,8 +19,8 @@
 <%@ taglib uri="http://liferay.com/tld/item-selector/ui" prefix="item-selector-ui" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
-<%@ page import="com.liferay.document.library.item.selector.web.DLItemSelectorView" %><%@
-page import="com.liferay.document.library.item.selector.web.display.context.DLItemSelectorViewDisplayContext" %><%@
+<%@ page import="com.liferay.url.item.selector.web.URLItemSelectorView" %><%@
+page import="com.liferay.url.item.selector.web.display.context.URLItemSelectorViewDisplayContext" %><%@
 page import="com.liferay.item.selector.ItemSelectorCriterion" %><%@
 page import="com.liferay.item.selector.taglib.ReturnType" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@

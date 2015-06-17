@@ -12,15 +12,15 @@
  * details.
  */
 
-package com.liferay.document.library.item.selector.web.display.context;
+package com.liferay.url.item.selector.web.display.context;
 
-import com.liferay.document.library.item.selector.web.DLItemSelectorView;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.url.item.selector.web.URLItemSelectorView;
 
 import java.util.Locale;
 
@@ -31,15 +31,15 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Roberto Díaz
  */
-public class DLItemSelectorViewDisplayContext
+public class URLItemSelectorViewDisplayContext
 	<T extends ItemSelectorCriterion, S extends ItemSelectorReturnType> {
 
-	public DLItemSelectorViewDisplayContext(
-		T itemSelectorCriterion, DLItemSelectorView<T, S> dlItemSelectorView,
+	public URLItemSelectorViewDisplayContext(
+		T itemSelectorCriterion, URLItemSelectorView<T, S> urlItemSelectorView,
 		String itemSelectedEventName, PortletURL portletURL) {
 
 		_itemSelectorCriterion = itemSelectorCriterion;
-		_dlItemSelectorView = dlItemSelectorView;
+		_urlItemSelectorView = urlItemSelectorView;
 		_itemSelectedEventName = itemSelectedEventName;
 		_portletURL = portletURL;
 	}
@@ -62,7 +62,7 @@ public class DLItemSelectorViewDisplayContext
 	}
 
 	public String[] getMimeTypes() {
-		return _dlItemSelectorView.getMimeTypes();
+		return _urlItemSelectorView.getMimeTypes();
 	}
 
 	public PortletURL getPortletURL() {
@@ -78,12 +78,12 @@ public class DLItemSelectorViewDisplayContext
 	}
 
 	public String getTitle(Locale locale) {
-		return _dlItemSelectorView.getTitle(locale);
+		return _urlItemSelectorView.getTitle(locale);
 	}
 
-	private final DLItemSelectorView<T, S> _dlItemSelectorView;
 	private final String _itemSelectedEventName;
 	private final T _itemSelectorCriterion;
 	private final PortletURL _portletURL;
+	private final URLItemSelectorView<T, S> _urlItemSelectorView;
 
 }
