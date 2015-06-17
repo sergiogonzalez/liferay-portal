@@ -19,23 +19,34 @@
 <%
 URLItemSelectorViewDisplayContext urlItemSelectorViewDisplayContext = (URLItemSelectorViewDisplayContext)request.getAttribute(URLItemSelectorView.URL_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT);
 
-ItemSelectorCriterion itemSelectorCriterion = urlItemSelectorViewDisplayContext.getItemSelectorCriterion();
+String itemSelectedEventName = urlItemSelectorViewDisplayContext.getItemSelectedEventName();
 
-SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "curDocuments", SearchContainer.DEFAULT_DELTA, urlItemSelectorViewDisplayContext.getPortletURL(), null, null);
-
-long repositoryId = urlItemSelectorViewDisplayContext.getRepositoryId(request);
-long folderId = urlItemSelectorViewDisplayContext.getFolderId(request);
-String[] mimeTypes = urlItemSelectorViewDisplayContext.getMimeTypes();
-
-searchContainer.setTotal(DLAppServiceUtil.getFileEntriesCount(repositoryId, folderId, mimeTypes));
-searchContainer.setResults(DLAppServiceUtil.getFileEntries(repositoryId, folderId, mimeTypes, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()));
+String tabName = urlItemSelectorViewDisplayContext.getTitle(locale);
 %>
 
-<item-selector-ui:browser
-	displayStyle="<%= urlItemSelectorViewDisplayContext.getDisplayStyle(request) %>"
-	displayStyleURL="<%= urlItemSelectorViewDisplayContext.getPortletURL() %>"
-	itemSelectedEventName="<%= urlItemSelectorViewDisplayContext.getItemSelectedEventName() %>"
-	returnType="<%= ReturnType.parseFirst(itemSelectorCriterion.getDesiredItemSelectorReturnTypes()) %>"
-	searchContainer="<%= searchContainer %>"
-	tabName="<%= urlItemSelectorViewDisplayContext.getTitle(locale) %>"
-/>
+<aui:row cssClass="lfr-item-viewer" id="itemSelectorUrlContainer">
+	<aui:col cssClass="col-md-offset-2" width="60">
+		<h4>Enter URL</h4>
+		<p>Enter the url that contains the image you want to add.</p>
+		<div class="col-md-12">
+			<aui:input label="" name="urlInput" placeholder="http://" wrapperCssClass="col-md-10" />
+			<aui:button cssClass="btn-primary" name="previewBtn" value="Enter" />
+		</div>
+		<em>For example, http://wwww.liferay.com/liferay.png</em>
+	</aui:col>
+</aui:row>
+
+<aui:script use="liferay-item-selector-url">
+	new Liferay.ItemSelectorUrl(
+		{
+			closeCaption: '<%= tabName %>',
+			namespace: '<portlet:namespace/>',
+			on: {
+				selectedItem: function(event) {
+					Liferay.Util.getOpener().Liferay.fire('<%= itemSelectedEventName %>', event);
+				}
+			},
+			rootNode: '#itemSelectorUrlContainer'
+		}
+	);
+</aui:script>
