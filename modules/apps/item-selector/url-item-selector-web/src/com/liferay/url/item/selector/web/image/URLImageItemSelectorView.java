@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.document.library.item.selector.web.image;
+package com.liferay.url.item.selector.web.image;
 
-import com.liferay.document.library.item.selector.web.BaseDLItemSelectorView;
+import com.liferay.url.item.selector.web.BaseURLItemSelectorView;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.DefaultItemSelectorReturnType;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
@@ -35,8 +35,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Roberto Díaz
  */
 @Component(service = ItemSelectorView.class)
-public class DLImageItemSelectorView
-	extends BaseDLItemSelectorView
+public class URLImageItemSelectorView
+	extends BaseURLItemSelectorView
 		<ImageItemSelectorCriterion, DefaultItemSelectorReturnType> {
 
 	@Override
@@ -61,12 +61,12 @@ public class DLImageItemSelectorView
 		ResourceBundle resourceBundle = ResourceBundle.getBundle(
 			"content/Language", locale);
 
-		return resourceBundle.getString("images");
+		return resourceBundle.getString("image-url");
 	}
 
 	@Override
 	@Reference(
-		target ="(osgi.web.symbolicname=com.liferay.document.library.item.selector.web)",
+		target ="(osgi.web.symbolicname=com.liferay.url.item.selector.web)",
 		unbind = "-"
 	)
 	public void setServletContext(ServletContext servletContext) {
@@ -77,7 +77,6 @@ public class DLImageItemSelectorView
 		_supportedItemSelectorReturnTypes = Collections.unmodifiableSet(
 			SetUtil.fromArray(
 				new DefaultItemSelectorReturnType[] {
-					DefaultItemSelectorReturnType.FILE_ENTRY,
 					DefaultItemSelectorReturnType.URL
 				}));
 

@@ -17,25 +17,25 @@
 <%@ include file="/init.jsp" %>
 
 <%
-DLItemSelectorViewDisplayContext dlItemSelectorViewDisplayContext = (DLItemSelectorViewDisplayContext)request.getAttribute(DLItemSelectorView.DL_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT);
+URLItemSelectorViewDisplayContext urlItemSelectorViewDisplayContext = (URLItemSelectorViewDisplayContext)request.getAttribute(URLItemSelectorView.URL_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT);
 
-ItemSelectorCriterion itemSelectorCriterion = dlItemSelectorViewDisplayContext.getItemSelectorCriterion();
+ItemSelectorCriterion itemSelectorCriterion = urlItemSelectorViewDisplayContext.getItemSelectorCriterion();
 
-SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "curDocuments", SearchContainer.DEFAULT_DELTA, dlItemSelectorViewDisplayContext.getPortletURL(), null, null);
+SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "curDocuments", SearchContainer.DEFAULT_DELTA, urlItemSelectorViewDisplayContext.getPortletURL(), null, null);
 
-long repositoryId = dlItemSelectorViewDisplayContext.getRepositoryId(request);
-long folderId = dlItemSelectorViewDisplayContext.getFolderId(request);
-String[] mimeTypes = dlItemSelectorViewDisplayContext.getMimeTypes();
+long repositoryId = urlItemSelectorViewDisplayContext.getRepositoryId(request);
+long folderId = urlItemSelectorViewDisplayContext.getFolderId(request);
+String[] mimeTypes = urlItemSelectorViewDisplayContext.getMimeTypes();
 
 searchContainer.setTotal(DLAppServiceUtil.getFileEntriesCount(repositoryId, folderId, mimeTypes));
 searchContainer.setResults(DLAppServiceUtil.getFileEntries(repositoryId, folderId, mimeTypes, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()));
 %>
 
 <item-selector-ui:browser
-	displayStyle="<%= dlItemSelectorViewDisplayContext.getDisplayStyle(request) %>"
-	displayStyleURL="<%= dlItemSelectorViewDisplayContext.getPortletURL() %>"
-	itemSelectedEventName="<%= dlItemSelectorViewDisplayContext.getItemSelectedEventName() %>"
+	displayStyle="<%= urlItemSelectorViewDisplayContext.getDisplayStyle(request) %>"
+	displayStyleURL="<%= urlItemSelectorViewDisplayContext.getPortletURL() %>"
+	itemSelectedEventName="<%= urlItemSelectorViewDisplayContext.getItemSelectedEventName() %>"
 	returnType="<%= ReturnType.parseFirst(itemSelectorCriterion.getDesiredItemSelectorReturnTypes()) %>"
 	searchContainer="<%= searchContainer %>"
-	tabName="<%= dlItemSelectorViewDisplayContext.getTitle(locale) %>"
+	tabName="<%= urlItemSelectorViewDisplayContext.getTitle(locale) %>"
 />

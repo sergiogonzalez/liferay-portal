@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.item.selector.web;
+package com.liferay.url.item.selector.web;
 
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorReturnType;
@@ -21,12 +21,12 @@ import com.liferay.item.selector.ItemSelectorView;
 /**
  * @author Roberto Díaz
  */
-public interface DLItemSelectorView
+public interface URLItemSelectorView
 	<T extends ItemSelectorCriterion, S extends ItemSelectorReturnType>
 		extends ItemSelectorView<T, S> {
 
-	public static final String DL_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT =
-		"DL_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT";
+	public static final String URL_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT =
+		"URL_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT";
 
 	public String[] getMimeTypes();
 

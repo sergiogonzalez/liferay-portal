@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.document.library.item.selector.web;
+package com.liferay.url.item.selector.web;
 
-import com.liferay.document.library.item.selector.web.display.context.DLItemSelectorViewDisplayContext;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorReturnType;
+import com.liferay.url.item.selector.web.display.context.URLItemSelectorViewDisplayContext;
 
 import java.io.IOException;
 
@@ -31,9 +31,9 @@ import javax.servlet.ServletResponse;
 /**
  * @author Roberto Díaz
  */
-public abstract class BaseDLItemSelectorView
+public abstract class BaseURLItemSelectorView
 	<T extends ItemSelectorCriterion, S extends ItemSelectorReturnType>
-		implements DLItemSelectorView<T, S> {
+		implements URLItemSelectorView<T, S> {
 
 	@Override
 	public String[] getMimeTypes() {
@@ -53,15 +53,15 @@ public abstract class BaseDLItemSelectorView
 		ServletContext servletContext = getServletContext();
 
 		RequestDispatcher requestDispatcher =
-			servletContext.getRequestDispatcher("/documents.jsp");
+			servletContext.getRequestDispatcher("/url.jsp");
 
-		DLItemSelectorViewDisplayContext dlItemSelectorViewDisplayContext =
-			new DLItemSelectorViewDisplayContext(
+		URLItemSelectorViewDisplayContext urlItemSelectorViewDisplayContext =
+			new URLItemSelectorViewDisplayContext(
 				t, this, itemSelectedEventName, portletURL);
 
 		request.setAttribute(
-			DL_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT,
-			dlItemSelectorViewDisplayContext);
+			URL_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT,
+			urlItemSelectorViewDisplayContext);
 
 		requestDispatcher.include(request, response);
 	}
