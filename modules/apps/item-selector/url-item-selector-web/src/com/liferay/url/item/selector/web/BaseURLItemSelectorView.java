@@ -35,11 +35,6 @@ public abstract class BaseURLItemSelectorView
 	<T extends ItemSelectorCriterion, S extends ItemSelectorReturnType>
 		implements URLItemSelectorView<T, S> {
 
-	@Override
-	public String[] getMimeTypes() {
-		return new String[0];
-	}
-
 	public ServletContext getServletContext() {
 		return _servletContext;
 	}
@@ -56,8 +51,7 @@ public abstract class BaseURLItemSelectorView
 			servletContext.getRequestDispatcher("/url.jsp");
 
 		URLItemSelectorViewDisplayContext urlItemSelectorViewDisplayContext =
-			new URLItemSelectorViewDisplayContext(
-				t, this, itemSelectedEventName, portletURL);
+			new URLItemSelectorViewDisplayContext(this, itemSelectedEventName);
 
 		request.setAttribute(
 			URL_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT,
