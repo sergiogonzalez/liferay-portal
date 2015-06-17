@@ -12,14 +12,13 @@
  * details.
  */
 
-package com.liferay.blogs.item.selector.web;
+package com.liferay.item.selector.url.web.image;
 
-import com.liferay.blogs.item.selector.criterion.BlogsItemSelectorCriterion;
-import com.liferay.blogs.item.selector.web.display.context.BlogsItemSelectorViewDisplayContext;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
-import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
+import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
+import com.liferay.item.selector.url.web.display.context.URLItemSelectorViewDisplayContext;
 import com.liferay.portal.kernel.util.SetUtil;
 
 import java.io.IOException;
@@ -43,16 +42,16 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Roberto Díaz
  */
-@Component
-public class BlogsItemSelectorView
-	implements ItemSelectorView<BlogsItemSelectorCriterion> {
+@Component(service = ItemSelectorView.class)
+public class URLImageItemSelectorView
+	implements ItemSelectorView<ImageItemSelectorCriterion> {
 
-	public static final String BLOGS_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT =
-		"BLOGS_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT";
+	public static final String URL_IMAGE_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT =
+		"URL_IMAGE_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT";
 
 	@Override
-	public Class<BlogsItemSelectorCriterion> getItemSelectorCriterionClass() {
-		return BlogsItemSelectorCriterion.class;
+	public Class<ImageItemSelectorCriterion> getItemSelectorCriterionClass() {
+		return ImageItemSelectorCriterion.class;
 	}
 
 	public ServletContext getServletContext() {
@@ -67,38 +66,35 @@ public class BlogsItemSelectorView
 	@Override
 	public String getTitle(Locale locale) {
 		ResourceBundle resourceBundle = ResourceBundle.getBundle(
-			"content/Language", locale);
+			"content.Language", locale);
 
-		return resourceBundle.getString("blogs-images");
+		return resourceBundle.getString("image-url");
 	}
 
 	@Override
 	public void renderHTML(
 			ServletRequest request, ServletResponse response,
-			BlogsItemSelectorCriterion blogsItemSelectorCriterion,
+			ImageItemSelectorCriterion imageItemSelectorCriterion,
 			PortletURL portletURL, String itemSelectedEventName)
 		throws IOException, ServletException {
-
-		BlogsItemSelectorViewDisplayContext
-			blogsItemSelectorViewDisplayContext =
-				new BlogsItemSelectorViewDisplayContext(
-					blogsItemSelectorCriterion, this, itemSelectedEventName,
-					portletURL);
-
-		request.setAttribute(
-			BLOGS_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT,
-			blogsItemSelectorViewDisplayContext);
 
 		ServletContext servletContext = getServletContext();
 
 		RequestDispatcher requestDispatcher =
-			servletContext.getRequestDispatcher("/blogs_attachments.jsp");
+			servletContext.getRequestDispatcher("/url.jsp");
+
+		URLItemSelectorViewDisplayContext urlItemSelectorViewDisplayContext =
+			new URLItemSelectorViewDisplayContext(this, itemSelectedEventName);
+
+		request.setAttribute(
+			URL_IMAGE_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT,
+			urlItemSelectorViewDisplayContext);
 
 		requestDispatcher.include(request, response);
 	}
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.blogs.item.selector.web)",
+		target ="(osgi.web.symbolicname=com.liferay.url.item.selector.web)",
 		unbind = "-"
 	)
 	public void setServletContext(ServletContext servletContext) {
@@ -109,7 +105,6 @@ public class BlogsItemSelectorView
 		_supportedItemSelectorReturnTypes = Collections.unmodifiableSet(
 			SetUtil.fromArray(
 				new ItemSelectorReturnType[] {
-					new FileEntryItemSelectorReturnType(),
 					new URLItemSelectorReturnType()
 				}));
 
