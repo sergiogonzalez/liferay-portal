@@ -16,7 +16,7 @@ package com.liferay.url.item.selector.web.display.context;
 
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorReturnType;
-import com.liferay.url.item.selector.web.URLItemSelectorView;
+import com.liferay.url.item.selector.web.image.URLImageItemSelectorView;
 
 import java.util.Locale;
 
@@ -27,10 +27,10 @@ public class URLItemSelectorViewDisplayContext
 	<T extends ItemSelectorCriterion, S extends ItemSelectorReturnType> {
 
 	public URLItemSelectorViewDisplayContext(
-		URLItemSelectorView<T, S> urlItemSelectorView,
+		URLImageItemSelectorView urlImageItemSelectorView,
 		String itemSelectedEventName) {
 
-		_urlItemSelectorView = urlItemSelectorView;
+		_urlImageItemSelectorView = urlImageItemSelectorView;
 		_itemSelectedEventName = itemSelectedEventName;
 	}
 
@@ -39,10 +39,10 @@ public class URLItemSelectorViewDisplayContext
 	}
 
 	public String getTitle(Locale locale) {
-		return _urlItemSelectorView.getTitle(locale);
+		return _urlImageItemSelectorView.getTitle(locale);
 	}
 
 	private final String _itemSelectedEventName;
-	private final URLItemSelectorView<T, S> _urlItemSelectorView;
+	private final URLImageItemSelectorView _urlImageItemSelectorView;
 
 }
