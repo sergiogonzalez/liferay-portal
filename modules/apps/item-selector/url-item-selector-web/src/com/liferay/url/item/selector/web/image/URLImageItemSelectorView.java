@@ -14,12 +14,12 @@
 
 package com.liferay.url.item.selector.web.image;
 
-import com.liferay.url.item.selector.web.BaseURLItemSelectorView;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.DefaultItemSelectorReturnType;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.url.item.selector.web.BaseURLItemSelectorView;
 
 import java.util.Collections;
 import java.util.Locale;
