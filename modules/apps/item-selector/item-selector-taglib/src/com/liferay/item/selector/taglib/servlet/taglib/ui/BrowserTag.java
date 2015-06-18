@@ -15,9 +15,12 @@
 package com.liferay.item.selector.taglib.servlet.taglib.ui;
 
 import com.liferay.item.selector.ItemSelectorReturnType;
+import com.liferay.item.selector.taglib.ReturnTypeUtil;
 import com.liferay.item.selector.taglib.util.ServletContextUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.util.IncludeTag;
 
@@ -116,13 +119,35 @@ public class BrowserTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute(
-			"liferay-ui:item-selector-browser:desiredItemSelectorReturnTypes",
-			_desiredItemSelectorReturnTypes);
-		request.setAttribute(
 			"liferay-ui:item-selector-browser:displayStyle", getDisplayStyle());
 		request.setAttribute(
 			"liferay-ui:item-selector-browser:displayStyleURL",
 			_displayStyleURL);
+
+		try {
+			request.setAttribute(
+				"liferay-ui:item-selector-browser:firstDraggableReturnType",
+				ReturnTypeUtil.parseFirstDraggableReturnType(
+					_desiredItemSelectorReturnTypes));
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("No valid draggable return type found");
+			}
+		}
+
+		try {
+			request.setAttribute(
+				"liferay-ui:item-selector-browser:firstExistingFileReturnType",
+				ReturnTypeUtil.parseFirstExistingFileReturnType(
+					_desiredItemSelectorReturnTypes));
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("No valid existing files return type found");
+			}
+		}
+
 		request.setAttribute(
 			"liferay-ui:item-selector-browser:itemSelectedEventName",
 			_itemSelectedEventName);
@@ -141,6 +166,8 @@ public class BrowserTag extends IncludeTag {
 	private static final String _DEFAULT_DISPLAY_STYLE = "icon";
 
 	private static final String _PAGE = "/taglib/ui/browser/page.jsp";
+
+	private static final Log _log = LogFactoryUtil.getLog(BrowserTag.class);
 
 	private Set<ItemSelectorReturnType> _desiredItemSelectorReturnTypes;
 	private String _displayStyle;
