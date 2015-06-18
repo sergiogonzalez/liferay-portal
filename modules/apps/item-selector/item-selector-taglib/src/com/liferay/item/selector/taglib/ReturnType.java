@@ -32,7 +32,7 @@ public enum ReturnType implements ItemSelectorReturnType {
 	BASE_64 {
 
 		@Override
-		public String getValue(FileEntry fileEntry, ThemeDisplay themeDisplay) {
+		public String getValue(PortletURL uploadURL) throws Exception {
 			return StringPool.BLANK;
 		}
 	},
