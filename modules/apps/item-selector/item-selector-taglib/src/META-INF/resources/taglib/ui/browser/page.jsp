@@ -21,8 +21,9 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_browse
 
 String displayStyle = GetterUtil.getString(request.getAttribute("liferay-ui:item-selector-browser:displayStyle"));
 PortletURL displayStyleURL = (PortletURL)request.getAttribute("liferay-ui:item-selector-browser:displayStyleURL");
+ReturnType firstDraggableReturnType = (ReturnType)request.getAttribute("liferay-ui:item-selector-browser:firstDraggableReturnType");
+ReturnType firstExistingFileReturnType = (ReturnType)request.getAttribute("liferay-ui:item-selector-browser:firstExistingFileReturnType");
 String itemSelectedEventName = GetterUtil.getString(request.getAttribute("liferay-ui:item-selector-browser:itemSelectedEventName"));
-Set<ItemSelectorReturnType> desiredItemSelectorReturnTypes = (Set<ItemSelectorReturnType>)request.getAttribute("liferay-ui:item-selector-browser:desiredItemSelectorReturnTypes");
 SearchContainer searchContainer = (SearchContainer)request.getAttribute("liferay-ui:item-selector-browser:searchContainer");
 String tabName = GetterUtil.getString(request.getAttribute("liferay-ui:item-selector-browser:tabName"));
 String uploadMessage = GetterUtil.getString(request.getAttribute("liferay-ui:item-selector-browser:uploadMessage"));
@@ -42,10 +43,6 @@ PortletURL uploadURL = (PortletURL)request.getAttribute("liferay-ui:item-selecto
 		</aui:nav-bar>
 	</c:if>
 
-	<%
-	ReturnType firstDraggableReturnType = ReturnTypeUtil.parseFirstDraggableReturnType(desiredItemSelectorReturnTypes);
-	%>
-
 	<c:if test="<%= firstDraggableReturnType != null %>">
 		<div class="drop-zone" data-returnType="<%= HtmlUtil.escapeAttribute(firstDraggableReturnType.getName()) %>" data-value="<%= ReturnType.BASE_64.equals(firstDraggableReturnType) ? StringPool.BLANK : firstDraggableReturnType.getValue(uploadURL) %>">
 			<label class="btn btn-primary" for="<%= randomNamespace %>InputFile"><liferay-ui:message key="select-file" /></label>
@@ -57,10 +54,6 @@ PortletURL uploadURL = (PortletURL)request.getAttribute("liferay-ui:item-selecto
 			</p>
 		</div>
 	</c:if>
-
-	<%
-	ReturnType firstExistingFileReturnType = ReturnTypeUtil.parseFirstExistingFileReturnType(desiredItemSelectorReturnTypes);
-	%>
 
 	<c:if test="<%= firstExistingFileReturnType != null %>">
 		<c:choose>
