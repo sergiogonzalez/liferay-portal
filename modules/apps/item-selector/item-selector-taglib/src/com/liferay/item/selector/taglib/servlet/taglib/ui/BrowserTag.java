@@ -15,6 +15,7 @@
 package com.liferay.item.selector.taglib.servlet.taglib.ui;
 
 import com.liferay.item.selector.ItemSelectorReturnType;
+import com.liferay.item.selector.taglib.ReturnType;
 import com.liferay.item.selector.taglib.ReturnTypeUtil;
 import com.liferay.item.selector.taglib.util.ServletContextUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -125,10 +126,19 @@ public class BrowserTag extends IncludeTag {
 			_displayStyleURL);
 
 		try {
+			ReturnType firstDraggableReturnType =
+				ReturnTypeUtil.parseFirstDraggableReturnType(
+					_desiredItemSelectorReturnTypes);
+
+			if ((firstDraggableReturnType == ReturnType.UPLOADABLE_BASE_64) &&
+				(_uploadURL == null)) {
+
+				firstDraggableReturnType = null;
+			}
+
 			request.setAttribute(
 				"liferay-ui:item-selector-browser:firstDraggableReturnType",
-				ReturnTypeUtil.parseFirstDraggableReturnType(
-					_desiredItemSelectorReturnTypes));
+				firstDraggableReturnType);
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {
