@@ -62,6 +62,7 @@ import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 import com.liferay.portlet.exportimport.lar.StagedModelType;
+import com.liferay.portlet.trash.service.persistence.TrashEntryFinder;
 import com.liferay.portlet.trash.service.persistence.TrashEntryPersistence;
 import com.liferay.portlet.trash.service.persistence.TrashVersionPersistence;
 
@@ -873,6 +874,24 @@ public abstract class DLFileShortcutLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the trash entry finder.
+	 *
+	 * @return the trash entry finder
+	 */
+	public TrashEntryFinder getTrashEntryFinder() {
+		return trashEntryFinder;
+	}
+
+	/**
+	 * Sets the trash entry finder.
+	 *
+	 * @param trashEntryFinder the trash entry finder
+	 */
+	public void setTrashEntryFinder(TrashEntryFinder trashEntryFinder) {
+		this.trashEntryFinder = trashEntryFinder;
+	}
+
+	/**
 	 * Returns the trash version local service.
 	 *
 	 * @return the trash version local service
@@ -1090,6 +1109,8 @@ public abstract class DLFileShortcutLocalServiceBaseImpl
 	protected com.liferay.portlet.trash.service.TrashEntryService trashEntryService;
 	@BeanReference(type = TrashEntryPersistence.class)
 	protected TrashEntryPersistence trashEntryPersistence;
+	@BeanReference(type = TrashEntryFinder.class)
+	protected TrashEntryFinder trashEntryFinder;
 	@BeanReference(type = com.liferay.portlet.trash.service.TrashVersionLocalService.class)
 	protected com.liferay.portlet.trash.service.TrashVersionLocalService trashVersionLocalService;
 	@BeanReference(type = TrashVersionPersistence.class)

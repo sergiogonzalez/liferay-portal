@@ -127,6 +127,11 @@ public class TrashEntryServiceUtil {
 		return getService().getEntries(groupId);
 	}
 
+	public static java.util.List<com.liferay.portlet.trash.model.TrashEntry> getEntries(
+		long groupId, java.lang.String className) {
+		return getService().getEntries(groupId, className);
+	}
+
 	/**
 	* Returns a range of all the trash entries matching the group ID.
 	*
