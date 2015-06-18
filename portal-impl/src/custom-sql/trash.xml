@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+
+<custom-sql>
+	<sql id="com.liferay.portlet.trash.service.persistence.TrashEntryFinder.findByG_C">
+		<![CDATA[
+			SELECT
+				{TrashEntry.*}
+			FROM
+				TrashEntry
+			WHERE
+				(groupId = ?) AND
+				(classNameId = ?)
+		]]>
+	</sql>
+</custom-sql>
