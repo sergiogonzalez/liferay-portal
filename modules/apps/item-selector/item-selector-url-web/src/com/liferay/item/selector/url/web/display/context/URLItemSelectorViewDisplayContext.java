@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.url.item.selector.web.display.context;
+package com.liferay.item.selector.url.web.display.context;
 
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorReturnType;
-import com.liferay.url.item.selector.web.image.URLImageItemSelectorView;
+import com.liferay.item.selector.url.web.image.URLImageItemSelectorView;
 
 import java.util.Locale;
 

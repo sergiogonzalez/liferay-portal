@@ -1,5 +1,5 @@
-Bundle-Name: Liferay URL Item Selector Web
-Bundle-SymbolicName: com.liferay.url.item.selector.web
+Bundle-Name: Liferay Item Selector URL Web
+Bundle-SymbolicName: com.liferay.item.selector.url.web
 Bundle-Version: 1.0.0
 Import-Package:\
 	com.liferay.item.selector.criteria.file.criterion,\
@@ -8,4 +8,4 @@ Import-Package:\
 Include-Resource:\
 	classes,\
 	META-INF/resources=src/META-INF/resources
-Web-ContextPath: /url-item-selector-web
+Web-ContextPath: /item-selector-url-web

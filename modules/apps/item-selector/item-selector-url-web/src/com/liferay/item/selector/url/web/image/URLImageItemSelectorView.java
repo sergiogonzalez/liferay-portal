@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.url.item.selector.web.image;
+package com.liferay.item.selector.url.web.image;
 
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.DefaultItemSelectorReturnType;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.url.item.selector.web.display.context.URLItemSelectorViewDisplayContext;
+import com.liferay.item.selector.url.web.display.context.URLItemSelectorViewDisplayContext;
 
 import java.io.IOException;
 
