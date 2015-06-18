@@ -32,8 +32,12 @@ public enum ReturnType implements ItemSelectorReturnType {
 	BASE_64 {
 
 		@Override
-		public String getValue(FileEntry fileEntry, ThemeDisplay themeDisplay) {
-			return StringPool.BLANK;
+		public String getValue(PortletURL uploadURL) throws Exception {
+			JSONObject base64JSONObject = JSONFactoryUtil.createJSONObject();
+
+			base64JSONObject.put("base64", StringPool.BLANK);
+
+			return base64JSONObject.toString();
 		}
 	},
 	FILE_ENTRY {
