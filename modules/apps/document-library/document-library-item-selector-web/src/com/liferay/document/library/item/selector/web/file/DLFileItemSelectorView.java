@@ -55,7 +55,7 @@ public class DLFileItemSelectorView
 		ResourceBundle resourceBundle = ResourceBundle.getBundle(
 			"content/Language", locale);
 
-		return resourceBundle.getString("images");
+		return resourceBundle.getString("documents");
 	}
 
 	@Override
