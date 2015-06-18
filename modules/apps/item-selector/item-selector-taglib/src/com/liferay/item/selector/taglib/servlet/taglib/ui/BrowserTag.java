@@ -126,19 +126,9 @@ public class BrowserTag extends IncludeTag {
 			_displayStyleURL);
 
 		try {
-			ReturnType firstDraggableReturnType =
-				ReturnTypeUtil.parseFirstDraggableReturnType(
-					_desiredItemSelectorReturnTypes);
-
-			if ((firstDraggableReturnType == ReturnType.UPLOADABLE_BASE_64) &&
-				(_uploadURL == null)) {
-
-				firstDraggableReturnType = null;
-			}
-
 			request.setAttribute(
 				"liferay-ui:item-selector-browser:firstDraggableReturnType",
-				firstDraggableReturnType);
+				getDraggableReturnType());
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {
@@ -171,6 +161,19 @@ public class BrowserTag extends IncludeTag {
 			getUploadMessage());
 		request.setAttribute(
 			"liferay-ui:item-selector-browser:uploadURL", _uploadURL);
+	}
+
+	protected ReturnType getDraggableReturnType() throws Exception {
+		ReturnType firstDraggableReturnType =
+			ReturnTypeUtil.parseFirstDraggableReturnType(
+				_desiredItemSelectorReturnTypes);
+
+		if ((firstDraggableReturnType == ReturnType.UPLOADABLE_BASE_64) &&
+			(_uploadURL == null)) {
+
+			firstDraggableReturnType = null;
+		}
+		return firstDraggableReturnType;
 	}
 
 	private static final String _DEFAULT_DISPLAY_STYLE = "icon";
