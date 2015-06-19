@@ -14,12 +14,19 @@
 
 package com.liferay.item.selector.taglib.servlet.taglib.ui;
 
+import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.taglib.ReturnType;
+import com.liferay.item.selector.taglib.ReturnTypeUtil;
 import com.liferay.item.selector.taglib.util.ServletContextUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.util.IncludeTag;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.portlet.PortletURL;
 
@@ -30,6 +37,12 @@ import javax.servlet.jsp.PageContext;
  * @author Roberto Díaz
  */
 public class BrowserTag extends IncludeTag {
+
+	public void setDesiredItemSelectorReturnTypes(
+		Set<ItemSelectorReturnType> desiredItemSelectorReturnTypes) {
+
+		_desiredItemSelectorReturnTypes = desiredItemSelectorReturnTypes;
+	}
 
 	public void setDisplayStyle(String displayStyle) {
 		_displayStyle = displayStyle;
@@ -50,10 +63,6 @@ public class BrowserTag extends IncludeTag {
 		servletContext = ServletContextUtil.getServletContext();
 	}
 
-	public void setReturnType(ReturnType returnType) {
-		_returnType = returnType;
-	}
-
 	public void setSearchContainer(SearchContainer<?> searchContainer) {
 		_searchContainer = searchContainer;
 	}
@@ -66,17 +75,22 @@ public class BrowserTag extends IncludeTag {
 		_uploadMessage = uploadMessage;
 	}
 
+	public void setUploadURL(PortletURL uploadURL) {
+		_uploadURL = uploadURL;
+	}
+
 	@Override
 	protected void cleanUp() {
 		super.cleanUp();
 
+		_desiredItemSelectorReturnTypes = new HashSet<>();
 		_displayStyle = null;
 		_displayStyleURL = null;
 		_itemSelectedEventName = null;
-		_returnType = null;
 		_searchContainer = null;
 		_tabName = null;
 		_uploadMessage = null;
+		_uploadURL = null;
 	}
 
 	protected String getDisplayStyle() {
@@ -85,6 +99,20 @@ public class BrowserTag extends IncludeTag {
 		}
 
 		return _DEFAULT_DISPLAY_STYLE;
+	}
+
+	protected ReturnType getDraggableReturnType() throws Exception {
+		ReturnType firstDraggableReturnType =
+			ReturnTypeUtil.parseFirstDraggableReturnType(
+				_desiredItemSelectorReturnTypes);
+
+		if ((firstDraggableReturnType == ReturnType.UPLOADABLE_BASE_64) &&
+			(_uploadURL == null)) {
+
+			firstDraggableReturnType = null;
+		}
+
+		return firstDraggableReturnType;
 	}
 
 	@Override
@@ -110,11 +138,33 @@ public class BrowserTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:item-selector-browser:displayStyleURL",
 			_displayStyleURL);
+
+		try {
+			request.setAttribute(
+				"liferay-ui:item-selector-browser:firstDraggableReturnType",
+				getDraggableReturnType());
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("No valid draggable return type found");
+			}
+		}
+
+		try {
+			request.setAttribute(
+				"liferay-ui:item-selector-browser:firstExistingFileReturnType",
+				ReturnTypeUtil.parseFirstExistingFileReturnType(
+					_desiredItemSelectorReturnTypes));
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("No valid existing files return type found");
+			}
+		}
+
 		request.setAttribute(
 			"liferay-ui:item-selector-browser:itemSelectedEventName",
 			_itemSelectedEventName);
-		request.setAttribute(
-			"liferay-ui:item-selector-browser:returnType", _returnType);
 		request.setAttribute(
 			"liferay-ui:item-selector-browser:searchContainer",
 			_searchContainer);
@@ -123,18 +173,23 @@ public class BrowserTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:item-selector-browser:uploadMessage",
 			getUploadMessage());
+		request.setAttribute(
+			"liferay-ui:item-selector-browser:uploadURL", _uploadURL);
 	}
 
 	private static final String _DEFAULT_DISPLAY_STYLE = "icon";
 
 	private static final String _PAGE = "/taglib/ui/browser/page.jsp";
 
+	private static final Log _log = LogFactoryUtil.getLog(BrowserTag.class);
+
+	private Set<ItemSelectorReturnType> _desiredItemSelectorReturnTypes;
 	private String _displayStyle;
 	private PortletURL _displayStyleURL;
 	private String _itemSelectedEventName;
-	private ReturnType _returnType;
 	private SearchContainer<?> _searchContainer;
 	private String _tabName;
 	private String _uploadMessage;
+	private PortletURL _uploadURL;
 
 }
