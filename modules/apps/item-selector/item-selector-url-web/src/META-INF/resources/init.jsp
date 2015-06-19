@@ -17,12 +17,11 @@
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
-taglib uri="http://liferay.com/tld/item-selector/ui" prefix="item-selector-ui" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
 <%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
-page import="com.liferay.url.item.selector.web.display.context.URLItemSelectorViewDisplayContext" %><%@
-page import="com.liferay.url.item.selector.web.image.URLImageItemSelectorView" %>
+page import="com.liferay.item.selector.url.web.display.context.URLItemSelectorViewDisplayContext" %><%@
+page import="com.liferay.item.selector.url.web.image.URLImageItemSelectorView" %>
 
 <%@ page import="java.util.ResourceBundle" %>
 
