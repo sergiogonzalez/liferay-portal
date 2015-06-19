@@ -21,7 +21,7 @@ import com.liferay.item.selector.ItemSelectorReturnType;
  */
 public enum DefaultItemSelectorReturnType implements ItemSelectorReturnType {
 
-	BASE_64, FILE_ENTRY, UPLOADABLE_BASE_64, URL, UUID;
+	BASE_64, FILE_ENTRY, UPLOADABLE_FILE, URL, UUID;
 
 	@Override
 	public String getName() {

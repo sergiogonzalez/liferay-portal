@@ -106,7 +106,7 @@ public class BrowserTag extends IncludeTag {
 			ReturnTypeUtil.parseFirstDraggableReturnType(
 				_desiredItemSelectorReturnTypes);
 
-		if ((firstDraggableReturnType == ReturnType.UPLOADABLE_BASE_64) &&
+		if ((firstDraggableReturnType == ReturnType.UPLOADABLE_FILE) &&
 			(_uploadURL == null)) {
 
 			firstDraggableReturnType = null;
