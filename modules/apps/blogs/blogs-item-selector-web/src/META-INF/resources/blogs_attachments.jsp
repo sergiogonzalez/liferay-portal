@@ -38,10 +38,10 @@ searchContainer.setResults(results);
 %>
 
 <item-selector-ui:browser
+	desiredItemSelectorReturnTypes="<%= blogsItemSelectorCriterion.getDesiredItemSelectorReturnTypes() %>"
 	displayStyle="<%= blogsItemSelectorViewDisplayContext.getDisplayStyle(request) %>"
 	displayStyleURL="<%= blogsItemSelectorViewDisplayContext.getPortletURL() %>"
 	itemSelectedEventName="<%= blogsItemSelectorViewDisplayContext.getItemSelectedEventName() %>"
-	returnType="<%= ReturnType.parseFirst(blogsItemSelectorCriterion.getDesiredItemSelectorReturnTypes()) %>"
 	searchContainer="<%= searchContainer %>"
 	tabName="<%= blogsItemSelectorViewDisplayContext.getTitle(locale) %>"
 />
