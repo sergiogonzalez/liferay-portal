@@ -76,10 +76,10 @@ public class ReturnTypeUtil {
 			return ReturnType.FILE_ENTRY;
 		}
 
-		if (DefaultItemSelectorReturnType.UPLOADABLE_BASE_64 ==
+		if (DefaultItemSelectorReturnType.UPLOADABLE_FILE ==
 				itemSelectorReturnType) {
 
-			return ReturnType.UPLOADABLE_BASE_64;
+			return ReturnType.UPLOADABLE_FILE;
 		}
 
 		if (DefaultItemSelectorReturnType.URL == itemSelectorReturnType) {
@@ -99,7 +99,7 @@ public class ReturnTypeUtil {
 	static {
 		_draggableReturnTypes.add(DefaultItemSelectorReturnType.BASE_64);
 		_draggableReturnTypes.add(
-			DefaultItemSelectorReturnType.UPLOADABLE_BASE_64);
+			DefaultItemSelectorReturnType.UPLOADABLE_FILE);
 
 		_existingFileReturnTypes.add(DefaultItemSelectorReturnType.FILE_ENTRY);
 		_existingFileReturnTypes.add(DefaultItemSelectorReturnType.URL);

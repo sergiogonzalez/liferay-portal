@@ -54,13 +54,13 @@ public enum ReturnType implements ItemSelectorReturnType {
 			return fileEntryJSONObject.toString();
 		}
 	},
-	UPLOADABLE_BASE_64 {
+	UPLOADABLE_FILE {
 
 		@Override
 		public String getValue(PortletURL uploadURL) throws Exception {
 			JSONObject base64JSONObject = JSONFactoryUtil.createJSONObject();
 
-			base64JSONObject.put("base64", StringPool.BLANK);
+			base64JSONObject.put("file", StringPool.BLANK);
 			base64JSONObject.put("uploadURL", uploadURL);
 
 			return base64JSONObject.toString();
