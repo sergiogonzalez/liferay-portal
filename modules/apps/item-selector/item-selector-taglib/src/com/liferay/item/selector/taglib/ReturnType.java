@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 
-import java.util.Set;
+import javax.portlet.PortletURL;
 
 /**
  * @author Roberto Díaz
@@ -32,10 +32,9 @@ public enum ReturnType implements ItemSelectorReturnType {
 	BASE_64 {
 
 		@Override
-		public String getValue(FileEntry fileEntry, ThemeDisplay themeDisplay) {
+		public String getValue(PortletURL uploadURL) throws Exception {
 			return StringPool.BLANK;
 		}
-
 	},
 	FILE_ENTRY {
 
@@ -54,7 +53,18 @@ public enum ReturnType implements ItemSelectorReturnType {
 
 			return fileEntryJSONObject.toString();
 		}
+	},
+	UPLOADABLE_FILE {
 
+		@Override
+		public String getValue(PortletURL uploadURL) throws Exception {
+			JSONObject base64JSONObject = JSONFactoryUtil.createJSONObject();
+
+			base64JSONObject.put("file", StringPool.BLANK);
+			base64JSONObject.put("uploadURL", uploadURL);
+
+			return base64JSONObject.toString();
+		}
 	},
 	URL {
 
@@ -64,49 +74,21 @@ public enum ReturnType implements ItemSelectorReturnType {
 
 			return DLUtil.getImagePreviewURL(fileEntry, themeDisplay);
 		}
-
 	};
-
-	public static ReturnType parse(
-		ItemSelectorReturnType itemSelectorReturnType) {
-
-		if (BASE_64.name().equals(itemSelectorReturnType.getName())) {
-			return BASE_64;
-		}
-
-		if (FILE_ENTRY.name().equals(itemSelectorReturnType.getName())) {
-			return FILE_ENTRY;
-		}
-
-		if (URL.name().equals(itemSelectorReturnType.getName())) {
-			return URL;
-		}
-
-		throw new IllegalArgumentException(
-			"Invalid item selector return type " +
-				itemSelectorReturnType.getName());
-	}
-
-	public static ReturnType parseFirst(Set<ItemSelectorReturnType> values)
-		throws Exception {
-
-		for (ItemSelectorReturnType value : values) {
-			try {
-				return parse(value);
-			}
-			catch (IllegalArgumentException iae) {
-			}
-		}
-
-		throw new IllegalArgumentException("Invalid values " + values);
-	}
 
 	@Override
 	public String getName() {
 		return name();
 	}
 
-	public abstract String getValue(
-		FileEntry fileEntry, ThemeDisplay themeDisplay) throws Exception;
+	public String getValue(FileEntry fileEntry, ThemeDisplay themeDisplay)
+		throws Exception {
+
+		throw new UnsupportedOperationException();
+	}
+
+	public String getValue(PortletURL uploadURL) throws Exception {
+		throw new UnsupportedOperationException();
+	}
 
 }
