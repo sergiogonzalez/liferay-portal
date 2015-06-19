@@ -43,6 +43,7 @@ import com.liferay.portal.repository.capabilities.LiferayTrashCapability;
 import com.liferay.portal.repository.capabilities.LiferayWorkflowCapability;
 import com.liferay.portal.repository.capabilities.util.DLAppServiceAdapter;
 import com.liferay.portal.repository.capabilities.util.DLFileEntryServiceAdapter;
+import com.liferay.portal.repository.capabilities.util.DLFileVersionServiceAdapter;
 import com.liferay.portal.repository.capabilities.util.DLFolderServiceAdapter;
 import com.liferay.portal.repository.capabilities.util.GroupServiceAdapter;
 import com.liferay.portal.repository.capabilities.util.RepositoryEntryChecker;
@@ -59,6 +60,8 @@ import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileVersionServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderServiceUtil;
 import com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil;
@@ -90,6 +93,7 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 
 		DLAppServiceAdapter dlAppServiceAdapter = null;
 		DLFileEntryServiceAdapter dlFileEntryServiceAdapter = null;
+		DLFileVersionServiceAdapter dlFileVersionServiceAdapter = null;
 		DLFolderServiceAdapter dlFolderServiceAdapter = null;
 		GroupServiceAdapter groupServiceAdapter = null;
 		RepositoryServiceAdapter repositoryServiceAdapter = null;
@@ -101,6 +105,9 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 
 			dlFileEntryServiceAdapter = new DLFileEntryServiceAdapter(
 				DLFileEntryLocalServiceUtil.getService());
+
+			dlFileVersionServiceAdapter = new DLFileVersionServiceAdapter(
+				DLFileVersionLocalServiceUtil.getService());
 
 			dlFolderServiceAdapter = new DLFolderServiceAdapter(
 				DLFolderLocalServiceUtil.getService());
@@ -122,6 +129,10 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 			dlFileEntryServiceAdapter = new DLFileEntryServiceAdapter(
 				DLFileEntryLocalServiceUtil.getService(),
 				DLFileEntryServiceUtil.getService());
+
+			dlFileVersionServiceAdapter = new DLFileVersionServiceAdapter(
+				DLFileVersionLocalServiceUtil.getService(),
+				DLFileVersionServiceUtil.getService());
 
 			dlFolderServiceAdapter = new DLFolderServiceAdapter(
 				DLFolderLocalServiceUtil.getService(),
@@ -170,9 +181,10 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 			ThumbnailCapability.class,
 			new LiferayThumbnailCapability(
 				repositoryEntryConverter, repositoryEntryChecker));
-
 		capabilityRegistry.addExportedCapability(
-			WorkflowCapability.class, _workflowCapability);
+			WorkflowCapability.class,
+			new LiferayWorkflowCapability(
+				dlFileEntryServiceAdapter, dlFileVersionServiceAdapter));
 
 		if (PropsValues.DL_FILE_ENTRY_COMMENTS_ENABLED) {
 			capabilityRegistry.addSupportedCapability(
@@ -203,8 +215,6 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 	private final ProcessorCapability _processorCapability =
 		new LiferayProcessorCapability();
 	private RepositoryFactory _repositoryFactory;
-	private final WorkflowCapability _workflowCapability =
-		new LiferayWorkflowCapability();
 
 	private class LiferayRepositoryFactoryWrapper implements RepositoryFactory {
 
