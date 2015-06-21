@@ -15,10 +15,12 @@
 package com.liferay.item.selector.criteria;
 
 import com.liferay.item.selector.ItemSelectorReturnType;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Sergio González
  */
+@Component
 public class URLItemSelectorReturnType implements ItemSelectorReturnType {
 
 	@Override
