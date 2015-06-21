@@ -26,6 +26,9 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
@@ -40,9 +43,6 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import org.apache.commons.beanutils.PropertyUtils;
 
 import org.osgi.service.component.annotations.Component;
@@ -169,8 +169,8 @@ public class ItemSelectorCriterionSerializer<T extends ItemSelectorCriterion> {
 		Set<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
 			new LinkedHashSet<>();
 
-		String[] desiredItemSelectorReturnTypesString =
-			StringUtil.split((String)map.get("desiredItemSelectorReturnTypes"));
+		String[] desiredItemSelectorReturnTypesString = StringUtil.split(
+			(String)map.get("desiredItemSelectorReturnTypes"));
 
 		for (String desiredItemSelectorReturnTypeName :
 				desiredItemSelectorReturnTypesString) {
@@ -262,7 +262,7 @@ public class ItemSelectorCriterionSerializer<T extends ItemSelectorCriterion> {
 
 						Class<? extends ItemSelectorReturnType>
 							itemSelectorReturnTypeClass =
-							itemSelectorReturnType.getClass();
+								itemSelectorReturnType.getClass();
 
 						return itemSelectorReturnTypeClass.getName();
 					}
@@ -284,5 +284,7 @@ public class ItemSelectorCriterionSerializer<T extends ItemSelectorCriterion> {
 				StringUtil.quote(
 					desiredItemSelectorReturnTypesString, StringPool.QUOTE));
 		}
+
 	}
+
 }

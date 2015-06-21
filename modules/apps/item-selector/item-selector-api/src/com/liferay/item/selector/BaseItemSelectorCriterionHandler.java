@@ -47,7 +47,8 @@ public abstract class BaseItemSelectorCriterionHandler
 			for (ItemSelectorReturnType desiredItemSelectorReturnType :
 					desiredItemSelectorReturnTypes) {
 
-				if (supportedItemSelectorReturnTypes.contains(
+				if (ItemSelectorReturnTypeUtil.contains(
+						supportedItemSelectorReturnTypes,
 						desiredItemSelectorReturnType)) {
 
 					filteredItemSelectedViews.add(itemSelectorView);
