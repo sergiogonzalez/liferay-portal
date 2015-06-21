@@ -126,14 +126,20 @@ public class ItemSelectorCriterionSerializer<T extends ItemSelectorCriterion> {
 	protected void setItemSelectorReturnType(
 		ItemSelectorReturnType itemSelectorReturnType) {
 
+		Class<? extends ItemSelectorReturnType> itemSelectorReturnTypeClass =
+			itemSelectorReturnType.getClass();
+
 		_itemSelectorReturnTypes.put(
-			itemSelectorReturnType.getName(), itemSelectorReturnType);
+			itemSelectorReturnTypeClass.getName(), itemSelectorReturnType);
 	}
 
 	protected void unsetItemSelectorReturnType(
 		ItemSelectorReturnType itemSelectorReturnType) {
 
-		_itemSelectorReturnTypes.remove(itemSelectorReturnType.getName());
+		Class<? extends ItemSelectorReturnType> itemSelectorReturnTypeClass =
+			itemSelectorReturnType.getClass();
+
+		_itemSelectorReturnTypes.remove(itemSelectorReturnTypeClass.getName());
 	}
 
 	private boolean _isInternalProperty(String name) {
@@ -166,8 +172,12 @@ public class ItemSelectorCriterionSerializer<T extends ItemSelectorCriterion> {
 			for (ItemSelectorReturnType availableItemSelectorReturnType :
 					availableItemSelectorReturnTypes) {
 
+				Class<? extends ItemSelectorReturnType>
+					availableItemSelectorReturnTypeClass =
+						availableItemSelectorReturnType.getClass();
+
 				String availableItemSelectorReturnTypeName =
-					availableItemSelectorReturnType.getName();
+					availableItemSelectorReturnTypeClass.getName();
 
 				if (availableItemSelectorReturnTypeName.equals(
 						desiredItemSelectorReturnTypeName)) {

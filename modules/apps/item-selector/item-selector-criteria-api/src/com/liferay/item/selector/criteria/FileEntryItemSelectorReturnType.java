@@ -15,6 +15,7 @@
 package com.liferay.item.selector.criteria;
 
 import com.liferay.item.selector.ItemSelectorReturnType;
+
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -22,10 +23,4 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component
 public class FileEntryItemSelectorReturnType implements ItemSelectorReturnType {
-
-	@Override
-	public String getName() {
-		return "FILE_ENTRY";
-	}
-
 }
