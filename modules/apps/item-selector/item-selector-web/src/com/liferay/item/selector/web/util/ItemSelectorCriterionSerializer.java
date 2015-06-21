@@ -17,11 +17,14 @@ package com.liferay.item.selector.web.util;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONContext;
 import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONSerializer;
+import com.liferay.portal.kernel.json.JSONTransformer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.lang.reflect.Array;
@@ -37,6 +40,9 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import org.apache.commons.beanutils.PropertyUtils;
 
 import org.osgi.service.component.annotations.Component;
@@ -64,6 +70,10 @@ public class ItemSelectorCriterionSerializer<T extends ItemSelectorCriterion> {
 
 		String[] serializableFields = ArrayUtil.append(
 			externalPropertyKeys, "desiredItemSelectorReturnTypes");
+
+		jsonSerializer.transform(
+			new DesiredItemSelectorReturnTypesJSONTransformer(),
+			"desiredItemSelectorReturnTypes");
 
 		jsonSerializer.include(serializableFields);
 
@@ -159,11 +169,11 @@ public class ItemSelectorCriterionSerializer<T extends ItemSelectorCriterion> {
 		Set<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
 			new LinkedHashSet<>();
 
-		List<String> desiredItemSelectorReturnTypeNames = (List<String>)map.get(
-			"desiredItemSelectorReturnTypes");
+		String[] desiredItemSelectorReturnTypesString =
+			StringUtil.split((String)map.get("desiredItemSelectorReturnTypes"));
 
 		for (String desiredItemSelectorReturnTypeName :
-				desiredItemSelectorReturnTypeNames) {
+				desiredItemSelectorReturnTypesString) {
 
 			Collection<ItemSelectorReturnType>
 				availableItemSelectorReturnTypes =
@@ -234,4 +244,45 @@ public class ItemSelectorCriterionSerializer<T extends ItemSelectorCriterion> {
 	private final ConcurrentMap<String, ItemSelectorReturnType>
 		_itemSelectorReturnTypes = new ConcurrentHashMap<>();
 
+	private class DesiredItemSelectorReturnTypesJSONTransformer
+		implements JSONTransformer {
+
+		@Override
+		public void transform(JSONContext jsonContext, Object object) {
+			List<ItemSelectorReturnType> desiredItemSelectorReturnTypesList =
+				new ArrayList<>((Set<ItemSelectorReturnType>)object);
+
+			String desiredItemSelectorReturnTypesString = ListUtil.toString(
+				desiredItemSelectorReturnTypesList,
+				new Accessor<ItemSelectorReturnType, String>() {
+
+					@Override
+					public String get(
+						ItemSelectorReturnType itemSelectorReturnType) {
+
+						Class<? extends ItemSelectorReturnType>
+							itemSelectorReturnTypeClass =
+							itemSelectorReturnType.getClass();
+
+						return itemSelectorReturnTypeClass.getName();
+					}
+
+					@Override
+					public Class<String> getAttributeClass() {
+						return String.class;
+					}
+
+					@Override
+					public Class<ItemSelectorReturnType> getTypeClass() {
+						return ItemSelectorReturnType.class;
+					}
+
+				}
+			);
+
+			jsonContext.write(
+				StringUtil.quote(
+					desiredItemSelectorReturnTypesString, StringPool.QUOTE));
+		}
+	}
 }
