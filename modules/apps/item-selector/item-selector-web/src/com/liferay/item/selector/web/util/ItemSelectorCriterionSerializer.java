@@ -28,15 +28,21 @@ import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 import org.apache.commons.beanutils.PropertyUtils;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
 
 /**
  * @author Iván Zaera
@@ -113,6 +119,23 @@ public class ItemSelectorCriterionSerializer<T extends ItemSelectorCriterion> {
 		}
 	}
 
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC
+	)
+	protected void setItemSelectorReturnType(
+		ItemSelectorReturnType itemSelectorReturnType) {
+
+		_itemSelectorReturnTypes.put(
+			itemSelectorReturnType.getName(), itemSelectorReturnType);
+	}
+
+	protected void unsetItemSelectorReturnType(
+		ItemSelectorReturnType itemSelectorReturnType) {
+
+		_itemSelectorReturnTypes.remove(itemSelectorReturnType.getName());
+	}
+
 	private boolean _isInternalProperty(String name) {
 		if (name.equals("availableItemSelectorReturnTypes") ||
 			name.equals("class") ||
@@ -136,8 +159,9 @@ public class ItemSelectorCriterionSerializer<T extends ItemSelectorCriterion> {
 		for (String desiredItemSelectorReturnTypeName :
 				desiredItemSelectorReturnTypeNames) {
 
-			Set<ItemSelectorReturnType> availableItemSelectorReturnTypes =
-				itemSelectorCriterion.getAvailableItemSelectorReturnTypes();
+			Collection<ItemSelectorReturnType>
+				availableItemSelectorReturnTypes =
+					_itemSelectorReturnTypes.values();
 
 			for (ItemSelectorReturnType availableItemSelectorReturnType :
 					availableItemSelectorReturnTypes) {
@@ -196,5 +220,8 @@ public class ItemSelectorCriterionSerializer<T extends ItemSelectorCriterion> {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ItemSelectorCriterionSerializer.class);
+
+	private final ConcurrentMap<String, ItemSelectorReturnType>
+		_itemSelectorReturnTypes = new ConcurrentHashMap<>();
 
 }
