@@ -11,4 +11,5 @@
 	<bean id="com.liferay.portlet.documentlibrary.action.EditFolderMVCRenderCommand" class="com.liferay.portlet.documentlibrary.action.EditFolderMVCRenderCommand" />
 	<bean id="com.liferay.portlet.documentlibrary.action.SearchMVCRenderCommand" class="com.liferay.portlet.documentlibrary.action.SearchMVCRenderCommand" />
 	<bean id="com.liferay.portlet.documentlibrary.action.SearchMVCResourceCommand" class="com.liferay.portlet.documentlibrary.action.SearchMVCResourceCommand" />
+	<bean id="com.liferay.portlet.documentlibrary.action.ViewMVCRenderCommand" class="com.liferay.portlet.documentlibrary.action.ViewMVCRenderCommand" />
 </beans>

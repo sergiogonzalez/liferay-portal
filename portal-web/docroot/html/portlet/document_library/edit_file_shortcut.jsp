@@ -181,7 +181,7 @@ portletURL.setParameter("fileShortcutId", String.valueOf(fileShortcutId));
 					title: '<liferay-ui:message arguments="file" key="select-x" />',
 
 					<portlet:renderURL var="selectFileEntryURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-						<portlet:param name="struts_action" value="/document_library/select_file_entry" />
+						<portlet:param name="mvcRenderCommandName" value="/document_library/select_file_entry" />
 					</portlet:renderURL>
 
 					uri: <portlet:namespace />createSelectFileEntryURL('<%= selectFileEntryURL.toString() %>')

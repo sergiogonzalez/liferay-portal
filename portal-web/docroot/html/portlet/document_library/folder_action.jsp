@@ -415,7 +415,7 @@ String iconMenuId = null;
 
 			<c:if test="<%= hasDeletePermission && !folder.isMountPoint() %>">
 				<portlet:renderURL var="redirectURL">
-					<portlet:param name="struts_action" value="/document_library/view" />
+					<portlet:param name="mvcRenderCommandName" value="/document_library/view" />
 					<portlet:param name="folderId" value="<%= String.valueOf(folder.getParentFolderId()) %>" />
 				</portlet:renderURL>
 
@@ -431,7 +431,7 @@ String iconMenuId = null;
 
 			<c:if test="<%= hasDeletePermission && folder.isMountPoint() %>">
 				<portlet:renderURL var="redirectURL">
-					<portlet:param name="struts_action" value="/document_library/view" />
+					<portlet:param name="mvcRenderCommandName" value="/document_library/view" />
 					<portlet:param name="folderId" value="<%= String.valueOf(folder.getParentFolderId()) %>" />
 				</portlet:renderURL>
 

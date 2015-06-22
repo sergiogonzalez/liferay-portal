@@ -218,7 +218,7 @@ public class UIItemsBuilder {
 
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
-		portletURL.setParameter("struts_action", "/document_library/view");
+		portletURL.setParameter("mvcRenderCommandName", "/document_library/view");
 		portletURL.setParameter(
 			"folderId", String.valueOf(_fileEntry.getFolderId()));
 
@@ -326,7 +326,7 @@ public class UIItemsBuilder {
 
 		PortletURL redirectURL = liferayPortletResponse.createRenderURL();
 
-		redirectURL.setParameter("struts_action", "/document_library/view");
+		redirectURL.setParameter("mvcRenderCommandName", "/document_library/view");
 		redirectURL.setParameter("folderId", String.valueOf(_folderId));
 
 		portletURL.setParameter("redirect", redirectURL.toString());
@@ -366,7 +366,7 @@ public class UIItemsBuilder {
 
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
-		portletURL.setParameter("struts_action", "/document_library/view");
+		portletURL.setParameter("mvcRenderCommandName", "/document_library/view");
 		portletURL.setParameter(
 			"folderId", String.valueOf(_fileEntry.getFolderId()));
 
