@@ -34,7 +34,7 @@ long folderId = fileEntry.getFolderId();
 if (Validator.isNull(redirect)) {
 	PortletURL portletURL = renderResponse.createRenderURL();
 
-	portletURL.setParameter("struts_action", "/document_library/view");
+	portletURL.setParameter("mvcRenderCommandName", "/document_library/view");
 	portletURL.setParameter("folderId", String.valueOf(folderId));
 
 	redirect = portletURL.toString();
