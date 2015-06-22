@@ -52,7 +52,7 @@ boolean showSearchInfo = ParamUtil.getBoolean(request, "showSearchInfo");
 
 PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/document_library/search");
+portletURL.setParameter("mvcRenderCommandName", "/document_library/search");
 portletURL.setParameter("redirect", redirect);
 portletURL.setParameter("breadcrumbsFolderId", String.valueOf(breadcrumbsFolderId));
 portletURL.setParameter("searchFolderId", String.valueOf(searchFolderId));
@@ -84,7 +84,7 @@ SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, por
 				<span class="change-search-folder">
 
 					<portlet:renderURL var="changeSearchFolderURL">
-						<portlet:param name="struts_action" value="/document_library/search" />
+						<portlet:param name="mvcRenderCommandName" value="/document_library/search" />
 						<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
 						<portlet:param name="searchRepositoryId" value="<%= !searchEverywhere ? String.valueOf(scopeGroupId) : String.valueOf(repositoryId) %>" />
 						<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
@@ -120,7 +120,7 @@ SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, por
 
 <liferay-util:buffer var="searchResults">
 	<liferay-portlet:renderURL varImpl="searchURL">
-		<portlet:param name="struts_action" value="/document_library/search" />
+		<portlet:param name="mvcRenderCommandName" value="/document_library/search" />
 	</liferay-portlet:renderURL>
 
 	<div class="document-container" id="<portlet:namespace />entriesContainer">
@@ -286,7 +286,7 @@ SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, por
 		<%
 		PortletURL searchRepositoryURL = liferayPortletResponse.createRenderURL();
 
-		searchRepositoryURL.setParameter("struts_action", "/document_library/search");
+		searchRepositoryURL.setParameter("mvcRenderCommandName", "/document_library/search");
 		searchRepositoryURL.setParameter("repositoryId", String.valueOf(scopeGroupId));
 		searchRepositoryURL.setParameter("searchRepositoryId", String.valueOf(scopeGroupId));
 		searchRepositoryURL.setParameter("keywords", keywords);

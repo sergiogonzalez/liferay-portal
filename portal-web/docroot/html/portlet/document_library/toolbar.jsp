@@ -112,7 +112,7 @@ boolean search = strutsAction.equals("/document_library/search");
 		<aui:nav-bar-search>
 			<div class="form-search">
 				<liferay-portlet:renderURL varImpl="searchURL">
-					<portlet:param name="struts_action" value="/document_library/search" />
+					<portlet:param name="mvcRenderCommandName" value="/document_library/search" />
 					<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
 					<portlet:param name="searchRepositoryId" value="<%= String.valueOf(repositoryId) %>" />
 					<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
