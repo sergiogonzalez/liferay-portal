@@ -18,15 +18,19 @@ import com.liferay.blogs.item.selector.criterion.BlogsItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorReturnType;
-import com.liferay.item.selector.criteria.DefaultItemSelectorReturnType;
+import com.liferay.item.selector.criteria.Base64ItemSelectorReturnType;
+import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
+import com.liferay.item.selector.criteria.URLItemSelectorReturnType;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -80,10 +84,19 @@ public class BlogsContentEditorConfigContributor
 			blogsContentEditorDesiredItemSelectorReturnTypes = new HashSet<>();
 
 		blogsContentEditorDesiredItemSelectorReturnTypes.add(
-			DefaultItemSelectorReturnType.URL);
+			new URLItemSelectorReturnType());
 
 		ItemSelectorCriterion blogsItemSelectorCriterion =
 			new BlogsItemSelectorCriterion();
+
+		blogsItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			Collections.unmodifiableSet(
+				SetUtil.fromArray(
+					new ItemSelectorReturnType[] {
+						new Base64ItemSelectorReturnType(),
+						new FileEntryItemSelectorReturnType(),
+						new URLItemSelectorReturnType()
+					})));
 
 		blogsItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			blogsContentEditorDesiredItemSelectorReturnTypes);
