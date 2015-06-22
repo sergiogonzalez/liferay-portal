@@ -268,6 +268,13 @@ public class TrashEntryServiceImpl extends TrashEntryServiceBaseImpl {
 		return trashEntriesList;
 	}
 
+	@Override
+	public List<TrashEntry> getEntries(long groupId, String className) {
+		long classNameId = classNameLocalService.getClassNameId(className);
+
+		return trashEntryFinder.filterFindByG_C(groupId, classNameId);
+	}
+
 	/**
 	 * Moves the trash entry with the entity class name and primary key,
 	 * restoring it to a new location identified by the destination container

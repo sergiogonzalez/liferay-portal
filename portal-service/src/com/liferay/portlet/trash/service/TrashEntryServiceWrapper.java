@@ -124,6 +124,12 @@ public class TrashEntryServiceWrapper implements TrashEntryService,
 		return _trashEntryService.getEntries(groupId);
 	}
 
+	@Override
+	public java.util.List<com.liferay.portlet.trash.model.TrashEntry> getEntries(
+		long groupId, java.lang.String className) {
+		return _trashEntryService.getEntries(groupId, className);
+	}
+
 	/**
 	* Returns a range of all the trash entries matching the group ID.
 	*
