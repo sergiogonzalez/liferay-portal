@@ -51,7 +51,7 @@ String displayStyle = GetterUtil.getString((String)request.getAttribute("view.js
 
 PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/document_library/view");
+portletURL.setParameter("mvcRenderCommandName", "/document_library/view");
 portletURL.setParameter("curFolder", currentFolder);
 portletURL.setParameter("deltaFolder", deltaFolder);
 portletURL.setParameter("folderId", String.valueOf(folderId));
@@ -331,7 +331,7 @@ dlSearchContainer.setResults(results);
 
 						PortletURL tempRowURL = liferayPortletResponse.createRenderURL();
 
-						tempRowURL.setParameter("struts_action", "/document_library/view");
+						tempRowURL.setParameter("mvcRenderCommandName", "/document_library/view");
 						tempRowURL.setParameter("redirect", currentURL);
 						tempRowURL.setParameter("folderId", String.valueOf(curFolder.getFolderId()));
 
@@ -510,7 +510,7 @@ dlSearchContainer.setResults(results);
 
 									PortletURL rowURL = liferayPortletResponse.createRenderURL();
 
-									rowURL.setParameter("struts_action", "/document_library/view");
+									rowURL.setParameter("mvcRenderCommandName", "/document_library/view");
 									rowURL.setParameter("redirect", currentURL);
 									rowURL.setParameter("folderId", String.valueOf(curFolder.getFolderId()));
 									%>

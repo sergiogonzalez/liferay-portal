@@ -228,8 +228,7 @@ public class DLFolderAssetRenderer
 		PortletURL portletURL = assetRendererFactory.getURLView(
 			liferayPortletResponse, windowState);
 
-		portletURL.setParameter(
-			"struts_action", "/document_library_display/view");
+		portletURL.setParameter("mvcRenderCommandName", "/document_library/view");
 		portletURL.setParameter(
 			"folderId", String.valueOf(_folder.getFolderId()));
 		portletURL.setWindowState(windowState);

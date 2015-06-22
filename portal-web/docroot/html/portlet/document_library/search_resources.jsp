@@ -99,7 +99,7 @@ SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, por
 			</c:if>
 
 			<portlet:renderURL var="closeSearchURL">
-				<portlet:param name="struts_action" value="/document_library/view" />
+				<portlet:param name="mvcRenderCommandName" value="/document_library/view" />
 			</portlet:renderURL>
 
 			<liferay-ui:icon cssClass="close-search" iconCssClass="icon-remove" id="closeSearch" message="remove" url="<%= closeSearchURL %>" />
@@ -227,7 +227,7 @@ SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, por
 
 							PortletURL tempRowURL = liferayPortletResponse.createRenderURL();
 
-							tempRowURL.setParameter("struts_action", "/document_library/view");
+							tempRowURL.setParameter("mvcRenderCommandName", "/document_library/view");
 							tempRowURL.setParameter("redirect", HttpUtil.removeParameter(currentURL, liferayPortletResponse.getNamespace() + "ajax"));
 							tempRowURL.setParameter("folderId", String.valueOf(curFolder.getFolderId()));
 

@@ -166,7 +166,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 
 			<c:when test="<%= curFolder != null %>">
 				<portlet:renderURL var="viewFolderURL">
-					<portlet:param name="struts_action" value="/image_gallery_display/view" />
+					<portlet:param name="mvcRenderCommandName" value="/image_gallery_display/view" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="folderId" value="<%= String.valueOf(curFolder.getFolderId()) %>" />
 				</portlet:renderURL>

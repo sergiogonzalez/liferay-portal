@@ -170,7 +170,8 @@ public class DLImpl implements DL {
 
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
-		portletURL.setParameter("struts_action", "/document_library/view");
+		portletURL.setParameter(
+			"mvcRenderCommandName", "/document_library/view");
 
 		Map<String, Object> data = new HashMap<>();
 
@@ -306,7 +307,8 @@ public class DLImpl implements DL {
 				request, themeDisplay.translate("home"), portletURL.toString());
 		}
 		else {
-			portletURL.setParameter("struts_action", "/document_library/view");
+			portletURL.setParameter(
+				"mvcRenderCommandName", "/document_library/view");
 		}
 
 		addPortletBreadcrumbEntries(folder, request, portletURL);
@@ -476,7 +478,8 @@ public class DLImpl implements DL {
 			PortalUtil.getControlPanelPlid(themeDisplay.getCompanyId()),
 			PortletRequest.RENDER_PHASE);
 
-		portletURL.setParameter("struts_action", "/document_library/view");
+		portletURL.setParameter(
+			"mvcRenderCommandName", "/document_library/view");
 		portletURL.setParameter("folderId", String.valueOf(folderId));
 
 		return portletURL.toString();
