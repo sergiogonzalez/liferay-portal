@@ -1119,9 +1119,9 @@
 	<bean id="com.liferay.portlet.sitesadmin.lar.StagedGroupStagedModelDataHandler" class="com.liferay.portlet.sitesadmin.lar.StagedGroupStagedModelDataHandler" />
 	<bean id="com.liferay.portlet.social.manager.SocialActivityManagerUtil" class="com.liferay.portlet.social.manager.SocialActivityManagerUtil">
 		<property name="socialActivityManager">
-			<bean class="com.liferay.portlet.social.manager.SocialActivityManagerImpl" init-method="activate">
+			<bean class="com.liferay.portlet.social.manager.impl.SocialActivityManagerImpl" init-method="activate">
 				<constructor-arg>
-					<bean class="com.liferay.portlet.social.manager.DefaultSocialActivityManager" />
+					<bean class="com.liferay.portlet.social.manager.impl.DefaultSocialActivityManager" />
 				</constructor-arg>
 			</bean>
 		</property>

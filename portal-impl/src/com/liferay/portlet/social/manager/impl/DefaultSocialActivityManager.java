@@ -12,11 +12,12 @@
  * details.
  */
 
-package com.liferay.portlet.social.manager;
+package com.liferay.portlet.social.manager.impl;
 
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.model.ClassedModel;
 import com.liferay.portal.model.GroupedModel;
+import com.liferay.portlet.social.manager.BaseSocialActivityManager;
 import com.liferay.portlet.social.service.SocialActivityLocalService;
 
 /**
