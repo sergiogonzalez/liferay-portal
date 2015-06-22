@@ -16,6 +16,8 @@ package com.liferay.comments.remote.comment.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.comment.DiscussionComment;
+
 /**
  * The extended model implementation for the Comment service. Represents a row in the &quot;Comment&quot; database table, with each column mapped to a property of this class.
  *
@@ -27,11 +29,17 @@ import aQute.bnd.annotation.ProviderType;
  */
 @ProviderType
 public class CommentImpl extends CommentBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. All methods that expect a comment model instance should use the {@link com.liferay.comments.remote.comment.model.Comment} interface instead.
-	 */
+
 	public CommentImpl() {
 	}
+
+	public CommentImpl(DiscussionComment discussionComment) {
+		setBody(discussionComment.getBody());
+		setCommentId(discussionComment.getCommentId());
+		setCreateDate(discussionComment.getCreateDate());
+		setModifiedDate(discussionComment.getModifiedDate());
+		setUserId(discussionComment.getUserId());
+		setUserName(discussionComment.getUserName());
+	}
+
 }
