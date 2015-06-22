@@ -73,7 +73,7 @@ import com.liferay.portlet.asset.model.AssetLinkConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.util.ExpandoBridgeUtil;
-import com.liferay.portlet.social.handler.SocialActivityHandlerUtil;
+import com.liferay.portlet.social.handler.SocialActivityManagerUtil;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.model.TrashVersion;
@@ -296,7 +296,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		extraDataJSONObject.put("title", page.getTitle());
 		extraDataJSONObject.put("version", page.getVersion());
 
-		SocialActivityHandlerUtil.addActivity(
+		SocialActivityManagerUtil.addActivity(
 			userId, page, SocialActivityConstants.TYPE_ADD_ATTACHMENT,
 			extraDataJSONObject.toString(), 0);
 	}
@@ -327,7 +327,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		extraDataJSONObject.put("title", page.getTitle());
 		extraDataJSONObject.put("version", page.getVersion());
 
-		SocialActivityHandlerUtil.addActivity(
+		SocialActivityManagerUtil.addActivity(
 			userId, page, SocialActivityConstants.TYPE_ADD_ATTACHMENT,
 			extraDataJSONObject.toString(), 0);
 	}
@@ -1573,7 +1573,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		extraDataJSONObject.put("title", page.getTitle());
 		extraDataJSONObject.put("version", page.getVersion());
 
-		SocialActivityHandlerUtil.addActivity(
+		SocialActivityManagerUtil.addActivity(
 			userId, page, SocialActivityConstants.TYPE_MOVE_ATTACHMENT_TO_TRASH,
 			extraDataJSONObject.toString(), 0);
 
@@ -1724,7 +1724,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			"title", TrashUtil.getOriginalTitle(page.getTitle()));
 		extraDataJSONObject.put("version", page.getVersion());
 
-		SocialActivityHandlerUtil.addActivity(
+		SocialActivityManagerUtil.addActivity(
 			userId, page, SocialActivityConstants.TYPE_MOVE_TO_TRASH,
 			extraDataJSONObject.toString(), 0);
 
@@ -1825,7 +1825,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		PortletFileRepositoryUtil.restorePortletFileEntryFromTrash(
 			userId, fileEntry.getFileEntryId());
 
-		SocialActivityHandlerUtil.addActivity(
+		SocialActivityManagerUtil.addActivity(
 			userId, page,
 			SocialActivityConstants.TYPE_RESTORE_ATTACHMENT_FROM_TRASH,
 			extraDataJSONObject.toString(), 0);
@@ -2117,7 +2117,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 				extraDataJSONObject.put("title", page.getTitle());
 				extraDataJSONObject.put("version", page.getVersion());
 
-				SocialActivityHandlerUtil.addActivity(
+				SocialActivityManagerUtil.addActivity(
 					userId, page, WikiActivityKeys.ADD_PAGE,
 					extraDataJSONObject.toString(), 0);
 			}
@@ -3008,7 +3008,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		extraDataJSONObject.put("title", page.getTitle());
 		extraDataJSONObject.put("version", page.getVersion());
 
-		SocialActivityHandlerUtil.addActivity(
+		SocialActivityManagerUtil.addActivity(
 			userId, page, SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
 			extraDataJSONObject.toString(), 0);
 
@@ -3332,7 +3332,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			if (oldPage.getVersion() == newVersion) {
 				Date createDate = new Date(now.getTime() + 1);
 
-				SocialActivityHandlerUtil.updateLastSocialActivity(
+				SocialActivityManagerUtil.updateLastSocialActivity(
 					serviceContext.getUserId(), page,
 					WikiActivityKeys.UPDATE_PAGE, createDate);
 			}
@@ -3343,7 +3343,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 				extraDataJSONObject.put("title", page.getTitle());
 				extraDataJSONObject.put("version", page.getVersion());
 
-				SocialActivityHandlerUtil.addActivity(
+				SocialActivityManagerUtil.addActivity(
 					userId, page, WikiActivityKeys.UPDATE_PAGE,
 					extraDataJSONObject.toString(), 0);
 			}
