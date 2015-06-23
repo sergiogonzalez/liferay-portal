@@ -61,7 +61,7 @@ boolean hasAddDocumentPermission = DLFolderPermission.contains(permissionChecker
 
 	<c:if test="<%= ((folder == null) || folder.isSupportsShortcuts()) && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_SHORTCUT) %>">
 		<portlet:renderURL var="editFileShortcutURL">
-			<portlet:param name="struts_action" value="/document_library/edit_file_shortcut" />
+			<portlet:param name="mvcRenderCommandName" value="/document_library/edit_file_shortcut" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
 			<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
