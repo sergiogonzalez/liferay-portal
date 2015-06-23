@@ -184,10 +184,6 @@
 		<put name="portlet_content" value="/portlet/blogs_aggregator/error.jsp" />
 	</definition>
 
-	<definition name="portlet.blogs_aggregator.view" extends="portlet.blogs_aggregator">
-		<put name="portlet_content" value="/portlet/blogs_aggregator/view.jsp" />
-	</definition>
-
 	<!-- Calendar -->
 
 	<definition name="portlet.calendar" extends="portlet" />

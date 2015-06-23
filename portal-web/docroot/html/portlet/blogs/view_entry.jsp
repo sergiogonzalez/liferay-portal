@@ -28,7 +28,7 @@ if (Validator.isNull(redirect) || (strutsAction.equals("/blogs/view_entry") && !
 		portletURL.setParameter("mvcRenderCommandName", "/blogs_admin/view");
 	}
 	else if (portletId.equals(PortletKeys.BLOGS_AGGREGATOR)) {
-		portletURL.setParameter("struts_action", "/blogs_aggregator/view");
+		portletURL.setParameter("mvcRenderCommandName", "/blogs_aggregator/view");
 	}
 	else {
 		portletURL.setParameter("mvcRenderCommandName", "/blogs/view");

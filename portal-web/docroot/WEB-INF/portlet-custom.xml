@@ -554,10 +554,6 @@
 			<name>template-path</name>
 			<value>/html/portlet/blogs_aggregator/</value>
 		</init-param>
-		<init-param>
-			<name>view-action</name>
-			<value>/blogs_aggregator/view</value>
-		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>
 			<mime-type>text/html</mime-type>
