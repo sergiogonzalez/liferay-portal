@@ -254,11 +254,6 @@
 			<forward name="portlet.document_library.error" path="portlet.document_library.error" />
 		</action>
 
-		<action path="/document_library/edit_file_entry" type="com.liferay.portlet.documentlibrary.action.EditFileEntryAction">
-			<forward name="portlet.document_library.edit_file_entry" path="portlet.document_library.edit_file_entry" />
-			<forward name="portlet.document_library.error" path="portlet.document_library.error" />
-		</action>
-
 		<action path="/document_library/edit_file_entry_discussion" type="com.liferay.portlet.messageboards.action.EditDiscussionAction">
 			<forward name="portlet.message_boards.error" path="portlet.document_library.error" />
 		</action>
@@ -292,18 +287,6 @@
 		<action path="/document_library/select_group" forward="portlet.document_library.select_group" />
 
 		<action path="/document_library/select_restricted_file_entry_type" forward="portlet.document_library.select_restricted_file_entry_type" />
-
-		<action path="/document_library/upload_file_entry" type="com.liferay.portlet.documentlibrary.action.EditFileEntryAction" />
-
-		<action path="/document_library/upload_multiple_file_entries" type="com.liferay.portlet.documentlibrary.action.EditFileEntryAction">
-			<forward name="portlet.document_library.edit_file_entry" path="portlet.document_library.upload_multiple_file_entries" />
-			<forward name="portlet.document_library.error" path="portlet.document_library.error" />
-		</action>
-
-		<action path="/document_library/view_file_entry" type="com.liferay.portlet.documentlibrary.action.EditFileEntryAction">
-			<forward name="portlet.document_library.edit_file_entry" path="portlet.document_library.view_file_entry" />
-			<forward name="portlet.document_library.error" path="portlet.document_library.error" />
-		</action>
 
 		<action path="/document_library/view_file_entry_type" forward="portlet.document_library.view_file_entry_type" />
 
@@ -378,11 +361,6 @@
 
 		<!-- Image Gallery Display -->
 
-		<action path="/image_gallery_display/edit_image" type="com.liferay.portlet.documentlibrary.action.EditFileEntryAction">
-			<forward name="portlet.document_library.edit_file_entry" path="portlet.document_library.edit_file_entry" />
-			<forward name="portlet.document_library.error" path="portlet.document_library.error" />
-		</action>
-
 		<action path="/image_gallery_display/edit_shortcut" type="com.liferay.portlet.documentlibrary.action.EditFileShortcutAction">
 			<forward name="portlet.document_library.edit_file_shortcut" path="portlet.document_library.edit_file_shortcut" />
 			<forward name="portlet.document_library.error" path="portlet.document_library.error" />
@@ -401,11 +379,6 @@
 		<action path="/image_gallery_display/view" type="com.liferay.portlet.imagegallerydisplay.action.ViewAction">
 			<forward name="portlet.image_gallery_display.error" path="portlet.document_library.error" />
 			<forward name="portlet.image_gallery_display.view" path="portlet.image_gallery_display.view" />
-		</action>
-
-		<action path="/image_gallery_display/view_image" type="com.liferay.portlet.documentlibrary.action.EditFileEntryAction">
-			<forward name="portlet.document_library.edit_file_entry" path="portlet.document_library.view_file_entry" />
-			<forward name="portlet.document_library.error" path="portlet.document_library.error" />
 		</action>
 
 		<action path="/image_gallery_display/view_slide_show" type="com.liferay.portlet.imagegallerydisplay.action.ViewSlideShowAction">
