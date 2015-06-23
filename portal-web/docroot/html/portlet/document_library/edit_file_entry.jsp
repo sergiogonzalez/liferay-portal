@@ -174,7 +174,7 @@ else {
 </c:if>
 
 <liferay-portlet:actionURL varImpl="editFileEntryURL">
-	<liferay-portlet:param name="struts_action" value="/document_library/edit_file_entry" />
+	<liferay-portlet:param name="mvcRenderCommandName" value="/document_library/edit_file_entry" />
 	<liferay-portlet:param name="uploadExceptionRedirect" value="<%= uploadExceptionRedirect %>" />
 </liferay-portlet:actionURL>
 

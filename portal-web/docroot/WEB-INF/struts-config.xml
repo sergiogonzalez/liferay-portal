@@ -240,11 +240,6 @@
 			<forward name="portlet.document_library.error" path="portlet.document_library.error" />
 		</action>
 
-		<action path="/document_library/edit_file_entry" type="com.liferay.portlet.documentlibrary.action.EditFileEntryAction">
-			<forward name="portlet.document_library.edit_file_entry" path="portlet.document_library.edit_file_entry" />
-			<forward name="portlet.document_library.error" path="portlet.document_library.error" />
-		</action>
-
 		<action path="/document_library/edit_file_entry_discussion" type="com.liferay.portlet.messageboards.action.EditDiscussionAction">
 			<forward name="portlet.message_boards.error" path="portlet.document_library.error" />
 		</action>
@@ -358,11 +353,6 @@
 		</action>
 
 		<!-- Image Gallery Display -->
-
-		<action path="/image_gallery_display/edit_image" type="com.liferay.portlet.documentlibrary.action.EditFileEntryAction">
-			<forward name="portlet.document_library.edit_file_entry" path="portlet.document_library.edit_file_entry" />
-			<forward name="portlet.document_library.error" path="portlet.document_library.error" />
-		</action>
 
 		<action path="/image_gallery_display/edit_shortcut" type="com.liferay.portlet.documentlibrary.action.EditFileShortcutAction">
 			<forward name="portlet.document_library.edit_file_shortcut" path="portlet.document_library.edit_file_shortcut" />

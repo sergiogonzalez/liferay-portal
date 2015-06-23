@@ -423,7 +423,7 @@ dlSearchContainer.setResults(results);
 
 									PortletURL rowURL = liferayPortletResponse.createRenderURL();
 
-									rowURL.setParameter("struts_action", "/document_library/view_file_entry");
+									rowURL.setParameter("mvcRenderCommandName", "/document_library/view_file_entry");
 									rowURL.setParameter("redirect", HttpUtil.removeParameter(currentURL, liferayPortletResponse.getNamespace() + "ajax"));
 									rowURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
 									%>

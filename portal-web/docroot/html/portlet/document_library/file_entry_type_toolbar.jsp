@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/document_library/init.jsp" %>
 
 <%
-String strutsAction = ParamUtil.getString(request, "strutsAction", "/document_library/view_file_entry_type");
+String strutsAction = ParamUtil.getString(request, "mvcRenderCommandName", "/document_library/view_file_entry_type");
 
 String toolbarItem = ParamUtil.getString(request, "toolbarItem");
 

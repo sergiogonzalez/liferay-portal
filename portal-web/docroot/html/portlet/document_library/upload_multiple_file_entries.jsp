@@ -85,7 +85,7 @@ long folderId = BeanParamUtil.getLong(fileEntry, request, "folderId");
 									groupId: <%= scopeGroupId %>
 								}
 							},
-							tempRandomSuffix: '<%= EditFileEntryAction.TEMP_RANDOM_SUFFIX %>',
+							tempRandomSuffix: '<%= EditFileEntryMVCActionCommand.TEMP_RANDOM_SUFFIX %>',
 							uploadFile: '<liferay-portlet:actionURL doAsUserId="<%= user.getUserId() %>"><portlet:param name="struts_action" value="/document_library/upload_multiple_file_entries" /><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_TEMP %>" /><portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" /></liferay-portlet:actionURL>&ticketKey=<%= ticket.getKey() %><liferay-ui:input-permissions-params modelName="<%= DLFileEntryConstants.getClassName() %>" />'
 						}
 					);
@@ -171,7 +171,7 @@ long folderId = BeanParamUtil.getLong(fileEntry, request, "folderId");
 
 													var originalFileName = item.originalFileName;
 
-													var pos = originalFileName.indexOf('<%= EditFileEntryAction.TEMP_RANDOM_SUFFIX %>');
+													var pos = originalFileName.indexOf('<%= EditFileEntryMVCActionCommand.TEMP_RANDOM_SUFFIX %>');
 
 													if (pos != -1) {
 														originalFileName = originalFileName.substr(0, pos);
@@ -195,7 +195,7 @@ long folderId = BeanParamUtil.getLong(fileEntry, request, "folderId");
 											}
 
 											<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="uploadMultipleFileEntries">
-												<portlet:param name="struts_action" value="/document_library/upload_multiple_file_entries" />
+												<portlet:param name="mvcRenderCommandName" value="/document_library/upload_multiple_file_entries" />
 												<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
 												<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 											</liferay-portlet:resourceURL>

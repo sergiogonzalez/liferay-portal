@@ -62,7 +62,7 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.documentlibrary.DLPortletInstanceSettings;
-import com.liferay.portlet.documentlibrary.action.EditFileEntryAction;
+import com.liferay.portlet.documentlibrary.action.EditFileEntryMVCActionCommand;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
@@ -715,7 +715,7 @@ public class DLImpl implements DL {
 		String extension = FileUtil.getExtension(tempFileName);
 
 		int pos = tempFileName.lastIndexOf(
-			EditFileEntryAction.TEMP_RANDOM_SUFFIX);
+			EditFileEntryMVCActionCommand.TEMP_RANDOM_SUFFIX);
 
 		if (pos != -1) {
 			tempFileName = tempFileName.substring(0, pos);
