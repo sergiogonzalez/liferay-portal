@@ -90,7 +90,7 @@ for (FileShortcut curFileShortcut : fileShortcuts) {
 </c:if>
 
 <portlet:actionURL var="moveFileEntryURL">
-	<portlet:param name="struts_action" value="/document_library/move_entry" />
+	<portlet:param name="mvcRenderCommandName" value="/document_library/move_entry" />
 </portlet:actionURL>
 
 <aui:form action="<%= moveFileEntryURL %>" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveFileEntry(false);" %>'>

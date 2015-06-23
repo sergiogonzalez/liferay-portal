@@ -245,10 +245,6 @@
 
 		<!-- Document Library -->
 
-		<action path="/document_library/edit_entry" type="com.liferay.portlet.documentlibrary.action.EditEntryAction">
-			<forward name="portlet.document_library.error" path="portlet.document_library.error" />
-		</action>
-
 		<action path="/document_library/edit_file_entry_discussion" type="com.liferay.portlet.messageboards.action.EditDiscussionAction">
 			<forward name="portlet.message_boards.error" path="portlet.document_library.error" />
 		</action>
@@ -273,11 +269,6 @@
 		<action path="/document_library/find_folder" type="com.liferay.portlet.documentlibrary.action.FindFolderAction" />
 
 		<action path="/document_library/get_file" type="com.liferay.portlet.documentlibrary.action.GetFileAction" />
-
-		<action path="/document_library/move_entry" type="com.liferay.portlet.documentlibrary.action.EditEntryAction">
-			<forward name="portlet.document_library.edit_entry" path="portlet.document_library.move_entries" />
-			<forward name="portlet.document_library.error" path="portlet.document_library.error" />
-		</action>
 
 		<action path="/document_library/select_group" forward="portlet.document_library.select_group" />
 
