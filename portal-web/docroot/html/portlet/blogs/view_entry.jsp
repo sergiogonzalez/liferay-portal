@@ -31,7 +31,7 @@ if (Validator.isNull(redirect) || (strutsAction.equals("/blogs/view_entry") && !
 		portletURL.setParameter("struts_action", "/blogs_aggregator/view");
 	}
 	else {
-		portletURL.setParameter("struts_action", "/blogs/view");
+		portletURL.setParameter("mvcRenderCommandName", "/blogs/view");
 	}
 
 	redirect = portletURL.toString();

@@ -152,7 +152,7 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 					<c:if test="<%= BlogsEntryPermission.contains(permissionChecker, entry, ActionKeys.DELETE) %>">
 						<li class="delete-entry">
 							<portlet:renderURL var="viewURL">
-								<portlet:param name="struts_action" value="/blogs/view" />
+								<portlet:param name="mvcRenderCommandName" value="/blogs/view" />
 							</portlet:renderURL>
 
 							<portlet:actionURL var="deleteEntryURL">
