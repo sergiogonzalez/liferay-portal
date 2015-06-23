@@ -11,6 +11,8 @@
 	<bean id="com.liferay.portlet.documentlibrary.action.CompareVersionsMVCRenderCommand" class="com.liferay.portlet.documentlibrary.action.CompareVersionsMVCRenderCommand" />
 	<bean id="com.liferay.portlet.documentlibrary.action.EditFileEntryMVCActionCommand" class="com.liferay.portlet.documentlibrary.action.EditFileEntryMVCActionCommand" />
 	<bean id="com.liferay.portlet.documentlibrary.action.EditFileEntryMVCRenderCommand" class="com.liferay.portlet.documentlibrary.action.EditFileEntryMVCRenderCommand" />
+	<bean id="com.liferay.portlet.documentlibrary.action.EditFileEntryTypeMVCActionCommand" class="com.liferay.portlet.documentlibrary.action.EditFileEntryTypeMVCActionCommand" />
+	<bean id="com.liferay.portlet.documentlibrary.action.EditFileEntryTypeMVCRenderCommand" class="com.liferay.portlet.documentlibrary.action.EditFileEntryTypeMVCRenderCommand" />
 	<bean id="com.liferay.portlet.documentlibrary.action.EditFolderMVCActionCommand" class="com.liferay.portlet.documentlibrary.action.EditFolderMVCActionCommand" />
 	<bean id="com.liferay.portlet.documentlibrary.action.EditFolderMVCRenderCommand" class="com.liferay.portlet.documentlibrary.action.EditFolderMVCRenderCommand" />
 	<bean id="com.liferay.portlet.documentlibrary.action.MoveEntryMVCRenderCommand" class="com.liferay.portlet.documentlibrary.action.MoveEntryMVCRenderCommand" />
