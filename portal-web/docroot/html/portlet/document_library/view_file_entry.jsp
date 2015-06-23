@@ -540,9 +540,9 @@ DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = DLDisplayConte
 									FileVersion curFileVersion = (FileVersion)fileVersions.get(0);
 								%>
 
-									<portlet:actionURL var="compareVersionsURL">
-										<portlet:param name="struts_action" value="/document_library/compare_versions" />
-									</portlet:actionURL>
+									<portlet:renderURL var="compareVersionsURL">
+										<portlet:param name="mvcRenderCommandName" value="/document_library/compare_versions" />
+									</portlet:renderURL>
 
 									<aui:form action="<%= compareVersionsURL %>" method="post" name="fm1" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "compare();" %>'>
 										<aui:input name="backURL" type="hidden" value="<%= currentURL %>" />
