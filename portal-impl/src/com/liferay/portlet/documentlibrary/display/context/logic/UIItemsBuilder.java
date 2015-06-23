@@ -323,7 +323,7 @@ public class UIItemsBuilder {
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 		portletURL.setParameter(
-			"struts_action", "/document_library/move_entry");
+			"mvcRenderCommandName", "/document_library/move_entry");
 
 		PortletURL redirectURL = liferayPortletResponse.createRenderURL();
 
