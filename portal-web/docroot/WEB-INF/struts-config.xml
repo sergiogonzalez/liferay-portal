@@ -255,8 +255,6 @@
 
 		<action path="/blogs_admin/upload_editor_image" type="com.liferay.portlet.blogs.action.UploadEditorImageAction" />
 
-		<action path="/blogs_admin/view" forward="portlet.blogs_admin.view" />
-
 		<action path="/blogs_admin/view_entry" type="com.liferay.portlet.blogs.action.EditEntryAction">
 			<forward name="portlet.blogs.edit_entry" path="portlet.blogs.view_entry" />
 			<forward name="portlet.blogs.error" path="portlet.blogs.error" />

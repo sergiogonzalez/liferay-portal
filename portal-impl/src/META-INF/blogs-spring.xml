@@ -8,4 +8,5 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
 >
 	<bean id="com.liferay.portlet.blogs.action.ViewMVCRenderCommand" class="com.liferay.portlet.blogs.action.ViewMVCRenderCommand" />
+	<bean id="com.liferay.portlet.blogsadmin.action.ViewMVCRenderCommand" class="com.liferay.portlet.blogsadmin.action.ViewMVCRenderCommand" />
 </beans>

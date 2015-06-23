@@ -176,12 +176,6 @@
 		<put name="portlet_content" value="/portlet/blogs/view_entry.jsp" />
 	</definition>
 
-	<!-- Blogs Admin -->
-
-	<definition name="portlet.blogs_admin.view" extends="portlet">
-			<put name="portlet_content" value="/portlet/blogs_admin/view.jsp" />
-	</definition>
-
 	<!-- Blogs Aggregator -->
 
 	<definition name="portlet.blogs_aggregator" extends="portlet" />
