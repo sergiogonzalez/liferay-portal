@@ -21,6 +21,7 @@ page import="com.liferay.portlet.blogs.BlogsGroupServiceSettings" %><%@
 page import="com.liferay.portlet.blogs.BlogsPortletInstanceSettings" %><%@
 page import="com.liferay.portlet.blogs.EntryContentException" %><%@
 page import="com.liferay.portlet.blogs.EntryDescriptionException" %><%@
+page import="com.liferay.portlet.blogs.EntryDisplayDateException" %><%@
 page import="com.liferay.portlet.blogs.EntrySmallImageNameException" %><%@
 page import="com.liferay.portlet.blogs.EntrySmallImageSizeException" %><%@
 page import="com.liferay.portlet.blogs.EntryTitleException" %><%@

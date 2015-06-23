@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.blogs.action;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -26,77 +24,50 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContextFunction;
-import com.liferay.portal.struts.ActionConstants;
-import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.blogs.NoSuchEntryException;
+import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.blogs.TrackbackValidationException;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.trackback.Trackback;
 import com.liferay.portlet.blogs.trackback.TrackbackImpl;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
-import javax.portlet.PortletConfig;
 import javax.portlet.PortletPreferences;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionMapping;
-
 /**
- * @author Alexander Chow
+ * @author Adolfo Pérez
  */
-public class TrackbackAction extends PortletAction {
+public class TrackbackActionHelper {
 
-	public TrackbackAction() {
-		_trackback = new TrackbackImpl();
+	public TrackbackActionHelper() {
+		this(new TrackbackImpl());
 	}
 
-	@Override
-	public void processAction(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
-		throws Exception {
-
-		try {
-			addTrackback(actionRequest, actionResponse);
-		}
-		catch (NoSuchEntryException nsee) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(nsee, nsee);
-			}
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-
-		setForward(actionRequest, ActionConstants.COMMON_NULL);
-	}
-
-	protected TrackbackAction(Trackback trackback) {
+	public TrackbackActionHelper(Trackback trackback) {
 		_trackback = trackback;
 	}
 
-	protected void addTrackback(
-			ActionRequest actionRequest, ActionResponse actionResponse)
+	public void addTrackback(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
 		try {
-			BlogsEntry entry = getBlogsEntry(actionRequest);
+			BlogsEntry entry = getBlogsEntry(resourceRequest);
 
 			validate(entry);
 
 			ThemeDisplay themeDisplay =
-				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+				(ThemeDisplay)resourceRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
 			HttpServletRequest request = PortalUtil.getHttpServletRequest(
-				actionRequest);
+				resourceRequest);
 
 			HttpServletRequest originalRequest =
 				PortalUtil.getOriginalServletRequest(request);
@@ -106,26 +77,24 @@ public class TrackbackAction extends PortletAction {
 			String blogName = ParamUtil.getString(originalRequest, "blog_name");
 			String title = ParamUtil.getString(originalRequest, "title");
 
-			validate(actionRequest, request.getRemoteAddr(), url);
+			validate(resourceRequest, request.getRemoteAddr(), url);
 
 			_trackback.addTrackback(
 				entry, themeDisplay, excerpt, url, blogName, title,
-				new ServiceContextFunction(actionRequest));
+				new ServiceContextFunction(resourceRequest));
+
+			sendSuccess(resourceRequest, resourceResponse);
 		}
 		catch (TrackbackValidationException tve) {
-			sendError(actionRequest, actionResponse, tve.getMessage());
-
-			return;
+			sendError(resourceRequest, resourceResponse, tve.getMessage());
 		}
-
-		sendSuccess(actionRequest, actionResponse);
 	}
 
-	protected BlogsEntry getBlogsEntry(ActionRequest actionRequest)
+	protected BlogsEntry getBlogsEntry(ResourceRequest resourceRequest)
 		throws Exception {
 
 		try {
-			ActionUtil.getEntry(actionRequest);
+			ActionUtil.getEntry(resourceRequest);
 		}
 		catch (PrincipalException pe) {
 			throw new TrackbackValidationException(
@@ -133,22 +102,18 @@ public class TrackbackAction extends PortletAction {
 					"trackbacks");
 		}
 
-		return (BlogsEntry)actionRequest.getAttribute(WebKeys.BLOGS_ENTRY);
+		return (BlogsEntry)resourceRequest.getAttribute(WebKeys.BLOGS_ENTRY);
 	}
 
-	@Override
-	protected boolean isCheckMethodOnProcessAction() {
-		return _CHECK_METHOD_ON_PROCESS_ACTION;
-	}
-
-	protected boolean isCommentsEnabled(ActionRequest actionRequest)
+	protected boolean isCommentsEnabled(ResourceRequest resourceRequest)
 		throws Exception {
 
-		PortletPreferences portletPreferences = getStrictPortletSetup(
-			actionRequest);
+		PortletPreferences portletPreferences =
+			PortletPreferencesFactoryUtil.getExistingPortletSetup(
+				resourceRequest);
 
 		if (portletPreferences == null) {
-			portletPreferences = actionRequest.getPreferences();
+			portletPreferences = resourceRequest.getPreferences();
 		}
 
 		return GetterUtil.getBoolean(
@@ -156,16 +121,18 @@ public class TrackbackAction extends PortletAction {
 	}
 
 	protected void sendError(
-			ActionRequest actionRequest, ActionResponse actionResponse,
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse,
 			String msg)
 		throws Exception {
 
-		sendResponse(actionRequest, actionResponse, msg, false);
+		sendResponse(
+			resourceRequest, resourceResponse, "<error>1</error><message>", msg,
+			"</message>");
 	}
 
 	protected void sendResponse(
-			ActionRequest actionRequest, ActionResponse actionResponse,
-			String msg, boolean success)
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse,
+			String... contents)
 		throws Exception {
 
 		StringBundler sb = new StringBundler(7);
@@ -173,22 +140,16 @@ public class TrackbackAction extends PortletAction {
 		sb.append("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
 		sb.append("<response>");
 
-		if (success) {
-			sb.append("<error>0</error>");
-		}
-		else {
-			sb.append("<error>1</error>");
-			sb.append("<message>");
-			sb.append(msg);
-			sb.append("</message>");
+		for (String content : contents) {
+			sb.append(content);
 		}
 
 		sb.append("</response>");
 
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			actionRequest);
+			resourceRequest);
 		HttpServletResponse response = PortalUtil.getHttpServletResponse(
-			actionResponse);
+			resourceResponse);
 
 		ServletResponseUtil.sendFile(
 			request, response, null, sb.toString().getBytes(StringPool.UTF8),
@@ -196,17 +157,26 @@ public class TrackbackAction extends PortletAction {
 	}
 
 	protected void sendSuccess(
-			ActionRequest actionRequest, ActionResponse actionResponse)
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		sendResponse(actionRequest, actionResponse, null, true);
+		sendResponse(resourceRequest, resourceResponse, "<error>0</error>");
+	}
+
+	protected void validate(BlogsEntry entry)
+		throws TrackbackValidationException {
+
+		if (!entry.isAllowTrackbacks()) {
+			throw new TrackbackValidationException(
+				"Trackbacks are not enabled");
+		}
 	}
 
 	protected void validate(
-			ActionRequest actionRequest, String remoteIP, String url)
+			ResourceRequest resourceRequest, String remoteIP, String url)
 		throws Exception {
 
-		if (!isCommentsEnabled(actionRequest)) {
+		if (!isCommentsEnabled(resourceRequest)) {
 			throw new TrackbackValidationException("Comments are disabled");
 		}
 
@@ -222,20 +192,6 @@ public class TrackbackAction extends PortletAction {
 				"Remote IP does not match the trackback URL's IP");
 		}
 	}
-
-	protected void validate(BlogsEntry entry)
-		throws TrackbackValidationException {
-
-		if (!entry.isAllowTrackbacks()) {
-			throw new TrackbackValidationException(
-				"Trackbacks are not enabled");
-		}
-	}
-
-	private static final boolean _CHECK_METHOD_ON_PROCESS_ACTION = false;
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		TrackbackAction.class);
 
 	private final Trackback _trackback;
 

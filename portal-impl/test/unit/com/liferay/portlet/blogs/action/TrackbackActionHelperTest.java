@@ -31,11 +31,11 @@ import com.liferay.portlet.blogs.NoSuchEntryException;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.trackback.Trackback;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -62,7 +62,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
  */
 @PrepareForTest({ActionUtil.class})
 @RunWith(PowerMockRunner.class)
-public class TrackbackActionTest extends PowerMockito {
+public class TrackbackActionHelperTest extends PowerMockito {
 
 	@Before
 	public void setUp() throws Exception {
@@ -165,9 +165,10 @@ public class TrackbackActionTest extends PowerMockito {
 	}
 
 	protected void addTrackback() throws Exception {
-		TrackbackAction trackbackAction = new TrackbackAction(_trackback);
+		TrackbackActionHelper trackbackActionHelper = new TrackbackActionHelper(
+			_trackback);
 
-		trackbackAction.addTrackback(_actionRequest, _actionResponse);
+		trackbackActionHelper.addTrackback(_resourceRequest, _resourceResponse);
 	}
 
 	protected void assertError(String msg) throws Exception {
@@ -205,19 +206,19 @@ public class TrackbackActionTest extends PowerMockito {
 
 	protected void setUpActionRequest() {
 		when(
-			_actionRequest.getAttribute(WebKeys.THEME_DISPLAY)
+			_resourceRequest.getAttribute(WebKeys.THEME_DISPLAY)
 		).thenReturn(
 			_themeDisplay
 		);
 
 		when(
-			_actionRequest.getPreferences()
+			_resourceRequest.getPreferences()
 		).thenReturn(
 			_portletPreferences
 		);
 
 		when(
-			_actionRequest.getAttribute(WebKeys.BLOGS_ENTRY)
+			_resourceRequest.getAttribute(WebKeys.BLOGS_ENTRY)
 		).thenReturn(
 			_blogsEntry
 		);
@@ -300,12 +301,6 @@ public class TrackbackActionTest extends PowerMockito {
 	}
 
 	@Mock
-	private ActionRequest _actionRequest;
-
-	@Mock
-	private ActionResponse _actionResponse;
-
-	@Mock
 	private BlogsEntry _blogsEntry;
 
 	@Mock
@@ -320,6 +315,12 @@ public class TrackbackActionTest extends PowerMockito {
 
 	@Mock
 	private PortletPreferences _portletPreferences;
+
+	@Mock
+	private ResourceRequest _resourceRequest;
+
+	@Mock
+	private ResourceResponse _resourceResponse;
 
 	private final ThemeDisplay _themeDisplay = new ThemeDisplay();
 

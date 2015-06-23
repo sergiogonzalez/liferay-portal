@@ -44,27 +44,11 @@
 
 <c:if test="<%= enableRSS %>">
 
-	<%
-	String rssURLParams = null;
-
-	if (selectionMethod.equals("users")) {
-		if (organizationId > 0) {
-			rssURLParams = "&organizationId=" + organizationId;
-		}
-		else {
-			rssURLParams = "&companyId=" + company.getCompanyId();
-		}
-	}
-	else {
-		rssURLParams = "&groupId=" + themeDisplay.getScopeGroupId();
-	}
-	%>
-
 	<liferay-ui:rss
 		delta="<%= rssDelta %>"
 		displayStyle="<%= rssDisplayStyle %>"
 		feedType="<%= rssFeedType %>"
-		url='<%= themeDisplay.getPathMain() + "/blogs_aggregator/rss?p_l_id=" + plid + rssURLParams %>'
+		url="<%= BlogsUtil.getRSSUrl(themeDisplay, selectionMethod, organizationId) %>"
 	/>
 </c:if>
 

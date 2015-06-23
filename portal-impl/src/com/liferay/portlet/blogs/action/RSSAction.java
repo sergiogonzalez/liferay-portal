@@ -15,11 +15,15 @@
 package com.liferay.portlet.blogs.action;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
+import com.liferay.portal.kernel.struts.StrutsAction;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.RSSUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.struts.BaseRSSStrutsAction;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.Portal;
@@ -37,7 +41,11 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Brian Wing Shun Chan
  */
-public class RSSAction extends com.liferay.portal.struts.RSSAction {
+@OSGiBeanProperties(
+	property = {"path=/blogs/rss", "path=/blogs_aggregator/rss"},
+	service = StrutsAction.class
+)
+public class RSSAction extends BaseRSSStrutsAction {
 
 	@Override
 	protected byte[] getRSS(HttpServletRequest request) throws Exception {
@@ -109,8 +117,12 @@ public class RSSAction extends com.liferay.portal.struts.RSSAction {
 	}
 
 	@Override
-	protected boolean isRSSFeedsEnabled(PortletRequest portletRequest)
+	protected boolean isRSSFeedsEnabled(HttpServletRequest httpServletRequest)
 		throws Exception {
+
+		PortletRequest portletRequest =
+			(PortletRequest)httpServletRequest.getAttribute(
+				JavaConstants.JAVAX_PORTLET_REQUEST);
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);

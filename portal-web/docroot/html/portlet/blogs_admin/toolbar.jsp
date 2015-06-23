@@ -23,12 +23,12 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem");
 <aui:nav-bar>
 	<aui:nav cssClass="navbar-nav">
 		<portlet:renderURL var="viewEntriesURL">
-			<portlet:param name="struts_action" value="/blogs_admin/view" />
+			<portlet:param name="mvcPath" value="/html/portlet/blogs_admin/view.jsp" />
 		</portlet:renderURL>
 
 		<c:if test="<%= BlogsPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_ENTRY) %>">
 			<portlet:renderURL var="addEntryURL">
-				<portlet:param name="struts_action" value="/blogs_admin/edit_entry" />
+				<portlet:param name="mvcPath" value="/html/portlet/blogs_admin/edit_entry.jsp" />
 				<portlet:param name="redirect" value="<%= viewEntriesURL %>" />
 				<portlet:param name="backURL" value="<%= viewEntriesURL %>" />
 			</portlet:renderURL>

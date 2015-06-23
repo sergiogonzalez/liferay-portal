@@ -55,9 +55,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 	/>
 </c:if>
 
-<portlet:actionURL var="editEntryURL">
-	<portlet:param name="struts_action" value="/blogs/edit_entry" />
-</portlet:actionURL>
+<portlet:actionURL name="editEntry" var="editEntryURL" />
 
 <div class="edit-entry">
 	<aui:form action="<%= editEntryURL %>" cssClass="edit-entry" enctype="multipart/form-data" method="post" name="fm" onSubmit="event.preventDefault();">
@@ -70,6 +68,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 
 		<liferay-ui:error exception="<%= EntryContentException.class %>" message="please-enter-valid-content" />
 		<liferay-ui:error exception="<%= EntryDescriptionException.class %>" message="please-enter-a-valid-abstract" />
+		<liferay-ui:error exception="<%= EntryDisplayDateException.class %>" message="please-enter-a-valid-display-date" />
 		<liferay-ui:error exception="<%= EntryTitleException.class %>" message="please-enter-a-valid-title" />
 
 		<liferay-ui:error exception="<%= LiferayFileItemException.class %>">
@@ -114,9 +113,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 						<aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= entry.getStatus() %>" />
 					</c:if>
 
-					<portlet:actionURL var="coverImageSelectorURL">
-						<portlet:param name="struts_action" value="/blogs/cover_image_selector" />
-					</portlet:actionURL>
+					<portlet:resourceURL id="selectCoverImage" var="coverImageSelectorURL" />
 
 					<div class="lfr-blogs-cover-image-selector">
 						<liferay-ui:image-selector draggableImage="vertical" fileEntryId="<%= coverImageFileEntryId %>" maxFileSize="<%= PrefsPropsUtil.getLong(PropsKeys.BLOGS_IMAGE_COVER_MAX_SIZE) %>" paramName="coverImageFileEntry" uploadURL="<%= coverImageSelectorURL %>" validExtensions='<%= StringUtil.merge(imageExtensions, ", ") %>' />
@@ -181,9 +178,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 						</div>
 
 						<aui:fieldset cssClass="entry-abstract">
-							<portlet:actionURL var="smallImageSelectorURL">
-								<portlet:param name="struts_action" value="/blogs/small_image_selector" />
-							</portlet:actionURL>
+							<portlet:resourceURL id="selectSmallImage" var="smallImageSelectorURL" />
 
 							<div class="lfr-blogs-small-image-selector">
 								<liferay-ui:image-selector fileEntryId="<%= smallImageFileEntryId %>" maxFileSize="<%= smallImageMaxFileSize %>" paramName="smallImageFileEntry" uploadURL="<%= smallImageSelectorURL %>" validExtensions='<%= StringUtil.merge(imageExtensions, ", ") %>' />
@@ -352,10 +347,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 	</aui:form>
 </div>
 
-<portlet:actionURL var="editEntryURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
-	<portlet:param name="struts_action" value="/blogs/edit_entry" />
-	<portlet:param name="ajax" value="true" />
-</portlet:actionURL>
+<portlet:resourceURL id="editEntry" var="editEntryURL" />
 
 <aui:script>
 	function <portlet:namespace />OnChangeEditor(html) {
@@ -426,7 +418,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 if (entry != null) {
 	PortletURL portletURL = renderResponse.createRenderURL();
 
-	portletURL.setParameter("struts_action", "/blogs/view_entry");
+	portletURL.setParameter("mvcPath", "/html/portlet/blogs/view_entry.jsp");
 	portletURL.setParameter("entryId", String.valueOf(entry.getEntryId()));
 
 	PortalUtil.addPortletBreadcrumbEntry(request, entry.getTitle(), portletURL.toString());

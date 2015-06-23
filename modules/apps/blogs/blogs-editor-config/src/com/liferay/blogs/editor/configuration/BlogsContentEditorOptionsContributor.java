@@ -21,7 +21,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 
 import java.util.Map;
 
-import javax.portlet.PortletURL;
+import javax.portlet.ResourceURL;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -49,11 +49,11 @@ public class BlogsContentEditorOptionsContributor
 			return;
 		}
 
-		PortletURL portletURL = liferayPortletResponse.createActionURL();
+		ResourceURL resourceURL = liferayPortletResponse.createResourceURL();
 
-		portletURL.setParameter("struts_action", "/blogs/upload_editor_image");
+		resourceURL.setResourceID("selectEditorImage");
 
-		editorOptions.setUploadURL(portletURL.toString());
+		editorOptions.setUploadURL(resourceURL.toString());
 	}
 
 }
