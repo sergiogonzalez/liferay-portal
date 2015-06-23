@@ -159,7 +159,7 @@ boolean search = strutsAction.equals("/document_library/search");
 				},
 				id: '<portlet:namespace />openFileEntryTypeView',
 				title: '<%= UnicodeLanguageUtil.get(request, "document-types") %>',
-				uri: '<liferay-portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/document_library/view_file_entry_type" /><portlet:param name="redirect" value="<%= currentURL %>" /></liferay-portlet:renderURL>'
+				uri: '<liferay-portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcRenderCommandName" value="/document_library/view_file_entry_type" /><portlet:param name="redirect" value="<%= currentURL %>" /></liferay-portlet:renderURL>'
 			}
 		);
 	}

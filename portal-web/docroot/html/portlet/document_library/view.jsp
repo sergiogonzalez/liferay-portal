@@ -97,7 +97,7 @@ request.setAttribute("view.jsp-orderByCol", orderByCol);
 request.setAttribute("view.jsp-orderByType", orderByType);
 %>
 
-<liferay-util:buffer var="uploadURL"><liferay-portlet:actionURL><portlet:param name="struts_action" value="/document_library/view_file_entry" /><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_DYNAMIC %>" /><portlet:param name="folderId" value="{folderId}" /><portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" /></liferay-portlet:actionURL></liferay-util:buffer>
+<liferay-util:buffer var="uploadURL"><liferay-portlet:actionURL><portlet:param name="mvcRenderCommandName" value="/document_library/view_file_entry" /><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_DYNAMIC %>" /><portlet:param name="folderId" value="{folderId}" /><portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" /></liferay-portlet:actionURL></liferay-util:buffer>
 
 <portlet:actionURL var="restoreTrashEntriesURL">
 	<portlet:param name="struts_action" value="/document_library/edit_entry" />
@@ -133,7 +133,7 @@ request.setAttribute("view.jsp-orderByType", orderByType);
 			</c:if>
 
 			<liferay-portlet:renderURL varImpl="editFileEntryURL">
-				<portlet:param name="struts_action" value="/document_library/edit_file_entry" />
+				<portlet:param name="mvcRenderCommandName" value="/document_library/edit_file_entry" />
 			</liferay-portlet:renderURL>
 
 			<aui:form action="<%= editFileEntryURL.toString() %>" method="get" name="fm2">
@@ -263,7 +263,7 @@ if (!defaultFolderView && (folder != null) && (portletName.equals(PortletKeys.DO
 			trashEnabled: <%= (scopeGroupId == repositoryId) && TrashUtil.isTrashEnabled(scopeGroupId) %>,
 			updateable: <%= DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.UPDATE) %>,
 			uploadURL: '<%= uploadURL %>',
-			viewFileEntryURL: '<portlet:renderURL><portlet:param name="struts_action" value="/document_library/view_file_entry" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>'
+			viewFileEntryURL: '<portlet:renderURL><portlet:param name="mvcRenderCommandName" value="/document_library/view_file_entry" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>'
 		}
 	);
 

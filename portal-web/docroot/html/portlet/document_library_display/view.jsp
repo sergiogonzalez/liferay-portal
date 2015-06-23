@@ -87,7 +87,7 @@ request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntry
 %>
 
 <portlet:actionURL var="restoreTrashEntriesURL">
-	<portlet:param name="struts_action" value="/document_library/edit_file_entry" />
+	<portlet:param name="mvcRenderCommandName" value="/document_library/edit_file_entry" />
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
 </portlet:actionURL>
 
