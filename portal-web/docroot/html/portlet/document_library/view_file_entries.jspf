@@ -156,7 +156,7 @@
 			form.fm('fileEntryIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds', '<portlet:namespace />rowIdsFileEntry'));
 			form.fm('fileShortcutIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds', '<portlet:namespace />rowIdsDLFileShortcut'));
 
-			submitForm(form, '<portlet:actionURL><portlet:param name="struts_action" value="/document_library/edit_entry" /></portlet:actionURL>');
+			submitForm(form, '<portlet:actionURL><portlet:param name="mvcRenderCommandName" value="/document_library/edit_entry" /></portlet:actionURL>');
 		}
 	}
 </aui:script>

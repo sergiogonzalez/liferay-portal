@@ -177,7 +177,7 @@ String iconMenuId = null;
 
 					<c:if test="<%= hasUpdatePermission && !folder.isMountPoint() %>">
 						<portlet:renderURL var="moveURL">
-							<portlet:param name="struts_action" value="/document_library/move_entry" />
+							<portlet:param name="mvcRenderCommandName" value="/document_library/move_entry" />
 							<portlet:param name="redirect" value="<%= redirect %>" />
 							<portlet:param name="folderIds" value="<%= String.valueOf(folderId) %>" />
 							<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
