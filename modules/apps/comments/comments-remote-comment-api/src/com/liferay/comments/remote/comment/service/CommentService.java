@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.transaction.Isolation;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.service.BaseService;
 
@@ -46,6 +47,10 @@ public interface CommentService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommentServiceUtil} to access the comment remote service. Add custom service methods to {@link com.liferay.comments.remote.comment.service.impl.CommentServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public long addComment(long groupId, java.lang.String className,
+		long classPK, java.lang.String body) throws PortalException;
+
+	public void deleteComment(long commentId) throws PortalException;
 
 	/**
 	* Returns the Spring bean ID for this bean.
@@ -54,10 +59,33 @@ public interface CommentService extends BaseService {
 	*/
 	public java.lang.String getBeanIdentifier();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.comments.remote.comment.model.Comment> getComments(
+		long groupId, java.lang.String className, long classPK, int start,
+		int end) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommentsCount(long groupId, java.lang.String className,
+		long classPK) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasDiscussion(long groupId, java.lang.String className,
+		long classPK) throws PortalException;
+
 	/**
 	* Sets the Spring bean ID for this bean.
 	*
 	* @param beanIdentifier the Spring bean ID for this bean
 	*/
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
+
+	public void subscribeDiscussion(long groupId, java.lang.String className,
+		long classPK) throws PortalException;
+
+	public void unsubscribeDiscussion(long groupId, java.lang.String className,
+		long classPK) throws PortalException;
+
+	public long updateComment(java.lang.String className, long classPK,
+		long commentId, java.lang.String subject, java.lang.String body)
+		throws PortalException;
 }

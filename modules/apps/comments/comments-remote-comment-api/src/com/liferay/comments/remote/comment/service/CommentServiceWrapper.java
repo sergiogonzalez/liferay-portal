@@ -32,6 +32,19 @@ public class CommentServiceWrapper implements CommentService,
 		_commentService = commentService;
 	}
 
+	@Override
+	public long addComment(long groupId, java.lang.String className,
+		long classPK, java.lang.String body)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commentService.addComment(groupId, className, classPK, body);
+	}
+
+	@Override
+	public void deleteComment(long commentId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_commentService.deleteComment(commentId);
+	}
+
 	/**
 	* Returns the Spring bean ID for this bean.
 	*
@@ -42,6 +55,28 @@ public class CommentServiceWrapper implements CommentService,
 		return _commentService.getBeanIdentifier();
 	}
 
+	@Override
+	public java.util.List<com.liferay.comments.remote.comment.model.Comment> getComments(
+		long groupId, java.lang.String className, long classPK, int start,
+		int end) throws com.liferay.portal.kernel.exception.PortalException {
+		return _commentService.getComments(groupId, className, classPK, start,
+			end);
+	}
+
+	@Override
+	public int getCommentsCount(long groupId, java.lang.String className,
+		long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commentService.getCommentsCount(groupId, className, classPK);
+	}
+
+	@Override
+	public boolean hasDiscussion(long groupId, java.lang.String className,
+		long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commentService.hasDiscussion(groupId, className, classPK);
+	}
+
 	/**
 	* Sets the Spring bean ID for this bean.
 	*
@@ -50,6 +85,28 @@ public class CommentServiceWrapper implements CommentService,
 	@Override
 	public void setBeanIdentifier(java.lang.String beanIdentifier) {
 		_commentService.setBeanIdentifier(beanIdentifier);
+	}
+
+	@Override
+	public void subscribeDiscussion(long groupId, java.lang.String className,
+		long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_commentService.subscribeDiscussion(groupId, className, classPK);
+	}
+
+	@Override
+	public void unsubscribeDiscussion(long groupId, java.lang.String className,
+		long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_commentService.unsubscribeDiscussion(groupId, className, classPK);
+	}
+
+	@Override
+	public long updateComment(java.lang.String className, long classPK,
+		long commentId, java.lang.String subject, java.lang.String body)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commentService.updateComment(className, classPK, commentId,
+			subject, body);
 	}
 
 	/**
