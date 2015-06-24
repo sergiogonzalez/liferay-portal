@@ -16,9 +16,16 @@ package com.liferay.comments.remote.comment.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.comments.remote.comment.service.CommentServiceUtil;
+
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * {@link com.liferay.comments.remote.comment.service.CommentServiceUtil} service utility. The
+ * {@link CommentServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -53,9 +60,123 @@ import aQute.bnd.annotation.ProviderType;
  * @author Brian Wing Shun Chan
  * @see CommentServiceHttp
  * @see com.liferay.comments.remote.comment.model.CommentSoap
- * @see com.liferay.comments.remote.comment.service.CommentServiceUtil
+ * @see CommentServiceUtil
  * @generated
  */
 @ProviderType
 public class CommentServiceSoap {
+	public static long addComment(long groupId, java.lang.String className,
+		long classPK, java.lang.String body) throws RemoteException {
+		try {
+			long returnValue = CommentServiceUtil.addComment(groupId,
+					className, classPK, body);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void deleteComment(long commentId) throws RemoteException {
+		try {
+			CommentServiceUtil.deleteComment(commentId);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.comments.remote.comment.model.CommentSoap[] getComments(
+		long groupId, java.lang.String className, long classPK, int start,
+		int end) throws RemoteException {
+		try {
+			java.util.List<com.liferay.comments.remote.comment.model.Comment> returnValue =
+				CommentServiceUtil.getComments(groupId, className, classPK,
+					start, end);
+
+			return com.liferay.comments.remote.comment.model.CommentSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getCommentsCount(long groupId,
+		java.lang.String className, long classPK) throws RemoteException {
+		try {
+			int returnValue = CommentServiceUtil.getCommentsCount(groupId,
+					className, classPK);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static boolean hasDiscussion(long groupId,
+		java.lang.String className, long classPK) throws RemoteException {
+		try {
+			boolean returnValue = CommentServiceUtil.hasDiscussion(groupId,
+					className, classPK);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void subscribeDiscussion(long groupId,
+		java.lang.String className, long classPK) throws RemoteException {
+		try {
+			CommentServiceUtil.subscribeDiscussion(groupId, className, classPK);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void unsubscribeDiscussion(long groupId,
+		java.lang.String className, long classPK) throws RemoteException {
+		try {
+			CommentServiceUtil.unsubscribeDiscussion(groupId, className, classPK);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static long updateComment(java.lang.String className, long classPK,
+		long commentId, java.lang.String subject, java.lang.String body)
+		throws RemoteException {
+		try {
+			long returnValue = CommentServiceUtil.updateComment(className,
+					classPK, commentId, subject, body);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(CommentServiceSoap.class);
 }

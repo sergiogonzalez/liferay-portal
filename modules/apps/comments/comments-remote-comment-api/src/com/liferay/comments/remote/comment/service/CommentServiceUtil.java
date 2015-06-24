@@ -42,6 +42,16 @@ public class CommentServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.comments.remote.comment.service.impl.CommentServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static long addComment(long groupId, java.lang.String className,
+		long classPK, java.lang.String body)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().addComment(groupId, className, classPK, body);
+	}
+
+	public static void deleteComment(long commentId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteComment(commentId);
+	}
 
 	/**
 	* Returns the Spring bean ID for this bean.
@@ -52,6 +62,24 @@ public class CommentServiceUtil {
 		return getService().getBeanIdentifier();
 	}
 
+	public static java.util.List<com.liferay.comments.remote.comment.model.Comment> getComments(
+		long groupId, java.lang.String className, long classPK, int start,
+		int end) throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getComments(groupId, className, classPK, start, end);
+	}
+
+	public static int getCommentsCount(long groupId,
+		java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCommentsCount(groupId, className, classPK);
+	}
+
+	public static boolean hasDiscussion(long groupId,
+		java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().hasDiscussion(groupId, className, classPK);
+	}
+
 	/**
 	* Sets the Spring bean ID for this bean.
 	*
@@ -59,6 +87,25 @@ public class CommentServiceUtil {
 	*/
 	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
 		getService().setBeanIdentifier(beanIdentifier);
+	}
+
+	public static void subscribeDiscussion(long groupId,
+		java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().subscribeDiscussion(groupId, className, classPK);
+	}
+
+	public static void unsubscribeDiscussion(long groupId,
+		java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().unsubscribeDiscussion(groupId, className, classPK);
+	}
+
+	public static long updateComment(java.lang.String className, long classPK,
+		long commentId, java.lang.String subject, java.lang.String body)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateComment(className, classPK, commentId, subject, body);
 	}
 
 	public static CommentService getService() {
