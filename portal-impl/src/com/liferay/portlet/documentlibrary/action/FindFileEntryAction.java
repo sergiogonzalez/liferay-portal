@@ -15,6 +15,8 @@
 package com.liferay.portlet.documentlibrary.action;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
+import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
@@ -25,6 +27,10 @@ import javax.servlet.http.HttpServletRequest;
  * @author Juan Fernández
  * @author Ryan Park
  */
+@OSGiBeanProperties(
+	property = "path=/document_library/find_file_entry",
+	service = StrutsAction.class
+)
 public class FindFileEntryAction extends FindFolderAction {
 
 	@Override
