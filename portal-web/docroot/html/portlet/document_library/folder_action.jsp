@@ -162,7 +162,7 @@ String iconMenuId = null;
 
 					<c:if test="<%= hasUpdatePermission && folder.isMountPoint() %>">
 						<portlet:renderURL var="editURL">
-							<portlet:param name="struts_action" value="/document_library/edit_repository" />
+							<portlet:param name="mvcRenderCommandName" value="/document_library/edit_repository" />
 							<portlet:param name="redirect" value="<%= redirect %>" />
 							<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 							<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
@@ -309,7 +309,7 @@ String iconMenuId = null;
 
 					<c:if test="<%= DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_REPOSITORY) %>">
 						<portlet:renderURL var="addRepositoryURL">
-							<portlet:param name="struts_action" value="/document_library/edit_repository" />
+							<portlet:param name="mvcRenderCommandName" value="/document_library/edit_repository" />
 							<portlet:param name="redirect" value="<%= currentURL %>" />
 							<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 						</portlet:renderURL>
@@ -436,7 +436,7 @@ String iconMenuId = null;
 				</portlet:renderURL>
 
 				<portlet:actionURL var="deleteURL">
-					<portlet:param name="struts_action" value="/document_library/edit_repository" />
+					<portlet:param name="mvcRenderCommandName" value="/document_library/edit_repository" />
 					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 					<portlet:param name="redirect" value="<%= (view || folderSelected) ? redirectURL : redirect %>" />
 					<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
