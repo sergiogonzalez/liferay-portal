@@ -29,7 +29,7 @@ long folderId = ParamUtil.getLong(request, "folderId");
 <liferay-util:include page="/html/portlet/document_library/top_links.jsp" />
 
 <portlet:actionURL var="editRepositoryURL">
-	<portlet:param name="struts_action" value="/document_library/edit_repository" />
+	<portlet:param name="mvcRenderCommandName" value="/document_library/edit_repository" />
 </portlet:actionURL>
 
 <aui:form action="<%= editRepositoryURL %>" method="post" name="fm">

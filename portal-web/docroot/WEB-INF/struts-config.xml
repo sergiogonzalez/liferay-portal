@@ -235,11 +235,6 @@
 			<forward name="portlet.message_boards.error" path="portlet.document_library.error" />
 		</action>
 
-		<action path="/document_library/edit_repository" type="com.liferay.portlet.documentlibrary.action.EditRepositoryAction">
-			<forward name="portlet.document_library.edit_repository" path="portlet.document_library.edit_repository" />
-			<forward name="portlet.document_library.error" path="portlet.document_library.error" />
-		</action>
-
 		<action path="/document_library/find_file_entry" type="com.liferay.portlet.documentlibrary.action.FindFileEntryAction" />
 
 		<action path="/document_library/find_folder" type="com.liferay.portlet.documentlibrary.action.FindFolderAction" />
