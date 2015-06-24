@@ -62,7 +62,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
  */
 @PrepareForTest({ActionUtil.class})
 @RunWith(PowerMockRunner.class)
-public class TrackbackActionTest extends PowerMockito {
+public class TrackbackMVActionCommandTest extends PowerMockito {
 
 	@Before
 	public void setUp() throws Exception {
@@ -165,9 +165,10 @@ public class TrackbackActionTest extends PowerMockito {
 	}
 
 	protected void addTrackback() throws Exception {
-		TrackbackAction trackbackAction = new TrackbackAction(_trackback);
+		TrackbackMVActionCommand trackbackMVActionCommand =
+			new TrackbackMVActionCommand(_trackback);
 
-		trackbackAction.addTrackback(_actionRequest, _actionResponse);
+		trackbackMVActionCommand.addTrackback(_actionRequest, _actionResponse);
 	}
 
 	protected void assertError(String msg) throws Exception {
