@@ -237,8 +237,6 @@
 
 		<action path="/document_library/find_file_entry" type="com.liferay.portlet.documentlibrary.action.FindFileEntryAction" />
 
-		<action path="/document_library/find_folder" type="com.liferay.portlet.documentlibrary.action.FindFolderAction" />
-
 		<action path="/document_library/get_file" type="com.liferay.portlet.documentlibrary.action.GetFileAction" />
 
 		<action path="/document_library/select_group" forward="portlet.document_library.select_group" />
@@ -326,8 +324,6 @@
 		<!-- Image Gallery Display -->
 
 		<action path="/image_gallery_display/embedded_player" forward="portlet.image_gallery_display.embedded_player" />
-
-		<action path="/image_gallery_display/find_folder" type="com.liferay.portlet.documentlibrary.action.FindFolderAction" />
 
 		<action path="/image_gallery_display/find_image" type="com.liferay.portlet.imagegallerydisplay.action.FindImageAction" />
 
