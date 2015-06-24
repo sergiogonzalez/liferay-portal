@@ -21,6 +21,8 @@
 	<bean id="com.liferay.portlet.documentlibrary.action.EditRepositoryMVCRenderCommand" class="com.liferay.portlet.documentlibrary.action.EditRepositoryMVCRenderCommand" />
 	<bean id="com.liferay.portlet.documentlibrary.action.FindFileEntryAction" class="com.liferay.portlet.documentlibrary.action.FindFileEntryAction" />
 	<bean id="com.liferay.portlet.documentlibrary.action.FindFolderAction" class="com.liferay.portlet.documentlibrary.action.FindFolderAction" />
+	<bean id="com.liferay.portlet.documentlibrary.action.GetFileMVCActionCommand" class="com.liferay.portlet.documentlibrary.action.GetFileMVCActionCommand" />
+	<bean id="com.liferay.portlet.documentlibrary.action.GetFileStrutsAction" class="com.liferay.portlet.documentlibrary.action.GetFileStrutsAction" />
 	<bean id="com.liferay.portlet.documentlibrary.action.MoveEntryMVCRenderCommand" class="com.liferay.portlet.documentlibrary.action.MoveEntryMVCRenderCommand" />
 	<bean id="com.liferay.portlet.documentlibrary.action.SearchMVCRenderCommand" class="com.liferay.portlet.documentlibrary.action.SearchMVCRenderCommand" />
 	<bean id="com.liferay.portlet.documentlibrary.action.SelectFileEntryMVCRenderCommand" class="com.liferay.portlet.documentlibrary.action.SelectFileEntryMVCRenderCommand" />
