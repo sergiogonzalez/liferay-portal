@@ -55,9 +55,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 	/>
 </c:if>
 
-<portlet:actionURL var="editEntryURL">
-	<portlet:param name="struts_action" value="/blogs/edit_entry" />
-</portlet:actionURL>
+<portlet:actionURL name="/blogs/edit_entry" var="editEntryURL" />
 
 <div class="edit-entry">
 	<aui:form action="<%= editEntryURL %>" cssClass="edit-entry" enctype="multipart/form-data" method="post" name="fm" onSubmit="event.preventDefault();">
@@ -352,8 +350,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 	</aui:form>
 </div>
 
-<portlet:actionURL var="editEntryURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
-	<portlet:param name="struts_action" value="/blogs/edit_entry" />
+<portlet:actionURL name="/blogs/edit_entry" var="editEntryURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
 	<portlet:param name="ajax" value="true" />
 </portlet:actionURL>
 

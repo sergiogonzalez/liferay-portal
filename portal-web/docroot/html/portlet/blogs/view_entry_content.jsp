@@ -155,8 +155,7 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 								<portlet:param name="mvcRenderCommandName" value="/blogs/view" />
 							</portlet:renderURL>
 
-							<portlet:actionURL var="deleteEntryURL">
-								<portlet:param name="struts_action" value="/blogs/edit_entry" />
+							<portlet:actionURL name="/blogs/edit_entry" var="deleteEntryURL">
 								<portlet:param name="<%= Constants.CMD %>" value="<%= TrashUtil.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
 								<portlet:param name="redirect" value="<%= viewURL %>" />
 								<portlet:param name="entryId" value="<%= String.valueOf(entry.getEntryId()) %>" />

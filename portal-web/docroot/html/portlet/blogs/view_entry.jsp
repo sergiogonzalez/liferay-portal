@@ -64,9 +64,7 @@ request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
 	/>
 </c:if>
 
-<portlet:actionURL var="editEntryURL">
-	<portlet:param name="struts_action" value="/blogs/edit_entry" />
-</portlet:actionURL>
+<portlet:actionURL name="/blogs/edit_entry" var="editEntryURL" />
 
 <aui:form action="<%= editEntryURL %>" method="post" name="fm1" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveEntry();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />

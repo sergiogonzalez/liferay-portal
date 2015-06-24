@@ -41,8 +41,7 @@
 	<c:if test="<%= BlogsPermission.contains(permissionChecker, scopeGroupId, ActionKeys.SUBSCRIBE) && (blogsGroupServiceSettings.isEmailEntryAddedEnabled() || blogsGroupServiceSettings.isEmailEntryUpdatedEnabled()) %>">
 		<c:choose>
 			<c:when test="<%= SubscriptionLocalServiceUtil.isSubscribed(company.getCompanyId(), user.getUserId(), BlogsEntry.class.getName(), scopeGroupId) %>">
-				<portlet:actionURL var="unsubscribeURL">
-					<portlet:param name="struts_action" value="/blogs/edit_entry" />
+				<portlet:actionURL name="/blogs/edit_entry" var="unsubscribeURL">
 					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UNSUBSCRIBE %>" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 				</portlet:actionURL>
@@ -55,8 +54,7 @@
 				/>
 			</c:when>
 			<c:otherwise>
-				<portlet:actionURL var="subscribeURL">
-					<portlet:param name="struts_action" value="/blogs/edit_entry" />
+				<portlet:actionURL name="/blogs/edit_entry" var="subscribeURL">
 					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.SUBSCRIBE %>" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 				</portlet:actionURL>

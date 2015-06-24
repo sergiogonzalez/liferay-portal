@@ -156,10 +156,6 @@
 
 	<definition name="portlet.blogs" extends="portlet" />
 
-	<definition name="portlet.blogs.edit_entry" extends="portlet.blogs">
-		<put name="portlet_content" value="/portlet/blogs/edit_entry.jsp" />
-	</definition>
-
 	<definition name="portlet.blogs.error" extends="portlet.blogs">
 		<put name="portlet_content" value="/portlet/blogs/error.jsp" />
 	</definition>
@@ -170,10 +166,6 @@
 
 	<definition name="portlet.blogs.view" extends="portlet.blogs">
 		<put name="portlet_content" value="/portlet/blogs/view.jsp" />
-	</definition>
-
-	<definition name="portlet.blogs.view_entry" extends="portlet.blogs">
-		<put name="portlet_content" value="/portlet/blogs/view_entry.jsp" />
 	</definition>
 
 	<!-- Blogs Aggregator -->

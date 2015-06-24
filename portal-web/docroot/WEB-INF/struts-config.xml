@@ -209,11 +209,6 @@
 
 		<action path="/blogs/cover_image_selector" type="com.liferay.portlet.blogs.action.CoverImageSelectorAction" />
 
-		<action path="/blogs/edit_entry" type="com.liferay.portlet.blogs.action.EditEntryAction">
-			<forward name="portlet.blogs.edit_entry" path="portlet.blogs.edit_entry" />
-			<forward name="portlet.blogs.error" path="portlet.blogs.error" />
-		</action>
-
 		<action path="/blogs/edit_entry_discussion" type="com.liferay.portlet.messageboards.action.EditDiscussionAction">
 			<forward name="portlet.message_boards.error" path="portlet.blogs.error" />
 		</action>
@@ -234,11 +229,6 @@
 
 		<action path="/blogs_admin/cover_image_selector" type="com.liferay.portlet.blogs.action.CoverImageSelectorAction" />
 
-		<action path="/blogs_admin/edit_entry" type="com.liferay.portlet.blogs.action.EditEntryAction">
-			<forward name="portlet.blogs.edit_entry" path="portlet.blogs.edit_entry" />
-			<forward name="portlet.blogs.error" path="portlet.blogs.error" />
-		</action>
-
 		<action path="/blogs_admin/edit_entry_discussion" type="com.liferay.portlet.messageboards.action.EditDiscussionAction">
 			<forward name="portlet.message_boards.error" path="portlet.blogs.error" />
 		</action>
@@ -250,11 +240,6 @@
 		<action path="/blogs_admin/upload_editor_image" type="com.liferay.portlet.blogs.action.UploadEditorImageAction" />
 
 		<!-- Blogs Aggregator -->
-
-		<action path="/blogs_aggregator/edit_entry" type="com.liferay.portlet.blogs.action.EditEntryAction">
-			<forward name="portlet.blogs.edit_entry" path="portlet.blogs.edit_entry" />
-			<forward name="portlet.blogs.error" path="portlet.blogs.error" />
-		</action>
 
 		<action path="/blogs_aggregator/edit_entry_discussion" type="com.liferay.portlet.messageboards.action.EditDiscussionAction">
 			<forward name="portlet.message_boards.error" path="portlet.blogs.error" />

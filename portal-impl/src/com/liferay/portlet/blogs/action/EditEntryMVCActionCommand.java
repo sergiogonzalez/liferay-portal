@@ -21,16 +21,22 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.servlet.taglib.ui.ImageSelector;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.upload.LiferayFileItemException;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -43,9 +49,9 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.spring.transaction.TransactionAttributeBuilder;
 import com.liferay.portal.spring.transaction.TransactionHandlerUtil;
-import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletURLImpl;
 import com.liferay.portlet.asset.AssetCategoryException;
@@ -77,9 +83,6 @@ import javax.portlet.PortletConfig;
 import javax.portlet.PortletRequest;
 import javax.portlet.WindowState;
 
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionMapping;
-
 import org.springframework.transaction.interceptor.TransactionAttribute;
 
 /**
@@ -90,13 +93,59 @@ import org.springframework.transaction.interceptor.TransactionAttribute;
  * @author Zsolt Berentey
  * @author Levente Hudák
  */
-public class EditEntryAction extends PortletAction {
+@OSGiBeanProperties(
+	property = {
+		"javax.portlet.name=" + PortletKeys.BLOGS,
+		"javax.portlet.name=" + PortletKeys.BLOGS_ADMIN,
+		"javax.portlet.name=" + PortletKeys.BLOGS_AGGREGATOR,
+		"mvc.command.name=/blogs/edit_entry"
+	}
+)
+public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
+
+	protected void deleteEntries(
+			ActionRequest actionRequest, boolean moveToTrash)
+		throws Exception {
+
+		long[] deleteEntryIds = null;
+
+		long entryId = ParamUtil.getLong(actionRequest, "entryId");
+
+		if (entryId > 0) {
+			deleteEntryIds = new long[] {entryId};
+		}
+		else {
+			deleteEntryIds = StringUtil.split(
+				ParamUtil.getString(actionRequest, "deleteEntryIds"), 0L);
+		}
+
+		List<TrashedModel> trashedModels = new ArrayList<>();
+
+		for (long deleteEntryId : deleteEntryIds) {
+			if (moveToTrash) {
+				BlogsEntry entry = BlogsEntryServiceUtil.moveEntryToTrash(
+					deleteEntryId);
+
+				trashedModels.add(entry);
+			}
+			else {
+				BlogsEntryServiceUtil.deleteEntry(deleteEntryId);
+			}
+		}
+
+		if (moveToTrash && !trashedModels.isEmpty()) {
+			TrashUtil.addTrashSessionMessages(actionRequest, trashedModels);
+
+			SessionMessages.add(
+				actionRequest,
+				PortalUtil.getPortletId(actionRequest) +
+					SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE);
+		}
+	}
 
 	@Override
-	public void processAction(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
+	protected void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
@@ -229,7 +278,8 @@ public class EditEntryAction extends PortletAction {
 				jsonObject.put("redirect", redirect);
 				jsonObject.put("updateRedirect", updateRedirect);
 
-				writeJSON(actionRequest, actionResponse, jsonObject);
+				JSONPortletResponseUtil.writeJSON(
+					actionRequest, actionResponse, jsonObject);
 
 				return;
 			}
@@ -238,15 +288,15 @@ public class EditEntryAction extends PortletAction {
 				(workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT)) {
 
 				redirect = getSaveAndContinueRedirect(
-					portletConfig, actionRequest, entry, redirect);
+					actionRequest, entry, redirect);
 
-				sendRedirect(actionRequest, actionResponse, redirect);
+				actionResponse.sendRedirect(redirect);
 			}
 			else {
 				WindowState windowState = actionRequest.getWindowState();
 
 				if (!windowState.equals(LiferayWindowState.POP_UP)) {
-					sendRedirect(actionRequest, actionResponse, redirect);
+					actionResponse.sendRedirect(redirect);
 				}
 				else {
 					redirect = PortalUtil.escapeRedirect(redirect);
@@ -275,7 +325,8 @@ public class EditEntryAction extends PortletAction {
 
 				SessionErrors.add(actionRequest, e.getClass());
 
-				setForward(actionRequest, "portlet.blogs.error");
+				actionRequest.setAttribute(
+					MVCPortlet.MVC_PATH, "/html/portlet/blogs/error.jsp");
 			}
 			else if (e instanceof EntryContentException ||
 					 e instanceof EntryDescriptionException ||
@@ -308,54 +359,20 @@ public class EditEntryAction extends PortletAction {
 		catch (Throwable t) {
 			_log.error(t, t);
 
-			setForward(actionRequest, "portlet.blogs.error");
-		}
-	}
-
-	protected void deleteEntries(
-			ActionRequest actionRequest, boolean moveToTrash)
-		throws Exception {
-
-		long[] deleteEntryIds = null;
-
-		long entryId = ParamUtil.getLong(actionRequest, "entryId");
-
-		if (entryId > 0) {
-			deleteEntryIds = new long[] {entryId};
-		}
-		else {
-			deleteEntryIds = StringUtil.split(
-				ParamUtil.getString(actionRequest, "deleteEntryIds"), 0L);
-		}
-
-		List<TrashedModel> trashedModels = new ArrayList<>();
-
-		for (long deleteEntryId : deleteEntryIds) {
-			if (moveToTrash) {
-				BlogsEntry entry = BlogsEntryServiceUtil.moveEntryToTrash(
-					deleteEntryId);
-
-				trashedModels.add(entry);
-			}
-			else {
-				BlogsEntryServiceUtil.deleteEntry(deleteEntryId);
-			}
-		}
-
-		if (moveToTrash && !trashedModels.isEmpty()) {
-			TrashUtil.addTrashSessionMessages(actionRequest, trashedModels);
-
-			hideDefaultSuccessMessage(actionRequest);
+			actionRequest.setAttribute(
+				MVCPortlet.MVC_PATH, "/html/portlet/blogs/error.jsp");
 		}
 	}
 
 	protected String getSaveAndContinueRedirect(
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			BlogsEntry entry, String redirect)
+			ActionRequest actionRequest, BlogsEntry entry, String redirect)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		PortletConfig portletConfig = (PortletConfig)actionRequest.getAttribute(
+			JavaConstants.JAVAX_PORTLET_CONFIG);
 
 		String backURL = ParamUtil.getString(actionRequest, "backURL");
 
@@ -588,7 +605,7 @@ public class EditEntryAction extends PortletAction {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		EditEntryAction.class);
+		EditEntryMVCActionCommand.class);
 
 	private final TransactionAttribute _transactionAttribute =
 		TransactionAttributeBuilder.build(
