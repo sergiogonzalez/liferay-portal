@@ -1750,7 +1750,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			request, PortletKeys.BLOGS_ADMIN, controlPanelPlid,
 			PortletRequest.RENDER_PHASE);
 
-		portletURL.setParameter("struts_action", "/blogs_admin/view_entry");
+		portletURL.setParameter("mvcRenderCommandName", "/blogs/view_entry");
 		portletURL.setParameter("entryId", String.valueOf(entry.getEntryId()));
 
 		return portletURL.toString();

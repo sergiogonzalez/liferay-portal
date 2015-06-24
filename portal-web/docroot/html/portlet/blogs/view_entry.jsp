@@ -17,11 +17,11 @@
 <%@ include file="/html/portlet/blogs/init.jsp" %>
 
 <%
-String strutsAction = ParamUtil.getString(request, "struts_action");
+String mvcRenderCommandName = ParamUtil.getString(request, "mvcRenderCommandName");
 
 String redirect = ParamUtil.getString(request, "redirect");
 
-if (Validator.isNull(redirect) || (strutsAction.equals("/blogs/view_entry") && !portletId.equals(PortletKeys.BLOGS))) {
+if (Validator.isNull(redirect) || (mvcRenderCommandName.equals("/blogs/view_entry") && !portletId.equals(PortletKeys.BLOGS))) {
 	PortletURL portletURL = renderResponse.createRenderURL();
 
 	if (portletId.equals(PortletKeys.BLOGS_ADMIN)) {
@@ -93,7 +93,7 @@ request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
 
 						<div class="previous-entry-content">
 							<portlet:renderURL var="previousEntryURL">
-								<portlet:param name="struts_action" value="/blogs/view_entry" />
+								<portlet:param name="mvcRenderCommandName" value="/blogs/view_entry" />
 								<portlet:param name="redirect" value="<%= redirect %>" />
 								<portlet:param name="entryId" value="<%= String.valueOf(previousEntry.getEntryId()) %>" />
 							</portlet:renderURL>
@@ -145,7 +145,7 @@ request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
 
 						<div class="next-entry-content">
 							<portlet:renderURL var="nextEntryURL">
-								<portlet:param name="struts_action" value="/blogs/view_entry" />
+								<portlet:param name="mvcRenderCommandName" value="/blogs/view_entry" />
 								<portlet:param name="redirect" value="<%= redirect %>" />
 								<portlet:param name="entryId" value="<%= String.valueOf(nextEntry.getEntryId()) %>" />
 							</portlet:renderURL>

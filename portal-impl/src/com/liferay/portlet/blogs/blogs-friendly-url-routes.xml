@@ -25,7 +25,7 @@
 		<implicit-parameter name="categoryId"></implicit-parameter>
 		<implicit-parameter name="p_p_lifecycle">0</implicit-parameter>
 		<implicit-parameter name="p_p_state">normal</implicit-parameter>
-		<implicit-parameter name="struts_action">/blogs/view_entry</implicit-parameter>
+		<implicit-parameter name="mvcRenderCommandName">/blogs/view_entry</implicit-parameter>
 		<implicit-parameter name="tag"></implicit-parameter>
 	</route>
 	<route>
@@ -33,7 +33,7 @@
 		<implicit-parameter name="categoryId"></implicit-parameter>
 		<implicit-parameter name="p_p_lifecycle">0</implicit-parameter>
 		<implicit-parameter name="p_p_state">normal</implicit-parameter>
-		<implicit-parameter name="struts_action">/blogs/view_entry</implicit-parameter>
+		<implicit-parameter name="mvcRenderCommandName">/blogs/view_entry</implicit-parameter>
 		<implicit-parameter name="tag"></implicit-parameter>
 	</route>
 	<route>
@@ -57,14 +57,14 @@
 		<pattern>/{entryId:\d+}/{p_p_state}</pattern>
 		<implicit-parameter name="categoryId"></implicit-parameter>
 		<implicit-parameter name="p_p_lifecycle">0</implicit-parameter>
-		<implicit-parameter name="struts_action">/blogs/view_entry</implicit-parameter>
+		<implicit-parameter name="mvcRenderCommandName">/blogs/view_entry</implicit-parameter>
 		<implicit-parameter name="tag"></implicit-parameter>
 	</route>
 	<route>
 		<pattern>/{urlTitle}/{p_p_state}</pattern>
 		<implicit-parameter name="categoryId"></implicit-parameter>
 		<implicit-parameter name="p_p_lifecycle">0</implicit-parameter>
-		<implicit-parameter name="struts_action">/blogs/view_entry</implicit-parameter>
+		<implicit-parameter name="mvcRenderCommandName">/blogs/view_entry</implicit-parameter>
 		<implicit-parameter name="tag"></implicit-parameter>
 	</route>
 	<route>

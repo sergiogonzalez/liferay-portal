@@ -28,7 +28,7 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem");
 
 		<c:if test="<%= BlogsPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_ENTRY) %>">
 			<portlet:renderURL var="addEntryURL">
-				<portlet:param name="struts_action" value="/blogs_admin/edit_entry" />
+				<portlet:param name="mvcRenderCommandName" value="/blogs/edit_entry" />
 				<portlet:param name="redirect" value="<%= viewEntriesURL %>" />
 				<portlet:param name="backURL" value="<%= viewEntriesURL %>" />
 			</portlet:renderURL>

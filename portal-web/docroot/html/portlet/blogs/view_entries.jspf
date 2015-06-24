@@ -16,7 +16,7 @@
 
 <c:if test="<%= BlogsPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_ENTRY) %>">
 	<portlet:renderURL var="editEntryURL">
-		<portlet:param name="struts_action" value="/blogs/edit_entry" />
+		<portlet:param name="mvcRenderCommandName" value="/blogs/edit_entry" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="backURL" value="<%= currentURL %>" />
 	</portlet:renderURL>
