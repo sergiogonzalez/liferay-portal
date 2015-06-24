@@ -72,7 +72,7 @@ boolean hasAddDocumentPermission = DLFolderPermission.contains(permissionChecker
 
 	<c:if test="<%= (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) && (DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_REPOSITORY)) %>">
 		<portlet:renderURL var="addRepositoryURL">
-			<portlet:param name="struts_action" value="/document_library/edit_repository" />
+			<portlet:param name="mvcRenderCommandName" value="/document_library/edit_repository" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 		</portlet:renderURL>
 
