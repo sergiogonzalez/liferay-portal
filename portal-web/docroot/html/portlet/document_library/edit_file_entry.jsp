@@ -173,7 +173,7 @@ else {
 	/>
 </c:if>
 
-<liferay-portlet:actionURL varImpl="editFileEntryURL" name="/document_library/edit_file_entry">
+<liferay-portlet:actionURL name="/document_library/edit_file_entry" varImpl="editFileEntryURL">
 	<liferay-portlet:param name="uploadExceptionRedirect" value="<%= uploadExceptionRedirect %>" />
 </liferay-portlet:actionURL>
 

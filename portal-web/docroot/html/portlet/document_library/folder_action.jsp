@@ -124,7 +124,7 @@ String iconMenuId = null;
 
 		<c:if test="<%= dlPortletInstanceSettingsHelper.isShowActions() %>">
 			<c:if test="<%= hasViewPermission %>">
-				<portlet:resourceURL var="downloadURL" id="/document_library/edit_folder">
+				<portlet:resourceURL id="/document_library/edit_folder" var="downloadURL">
 					<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 					<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
 				</portlet:resourceURL>
@@ -231,7 +231,7 @@ String iconMenuId = null;
 						if (localRepository.isCapabilityProvided(TemporaryFileEntriesCapability.class)) {
 						%>
 
-							<portlet:actionURL var="deleteExpiredTemporaryFileEntriesURL" name="/document_library/edit_folder">
+							<portlet:actionURL name="/document_library/edit_folder" var="deleteExpiredTemporaryFileEntriesURL">
 								<portlet:param name="<%= Constants.CMD %>" value="deleteExpiredTemporaryFileEntries" />
 								<portlet:param name="redirect" value="<%= currentURL %>" />
 								<portlet:param name="repositoryId" value="<%= String.valueOf(folder.getRepositoryId()) %>" />
@@ -417,7 +417,7 @@ String iconMenuId = null;
 					<portlet:param name="folderId" value="<%= String.valueOf(folder.getParentFolderId()) %>" />
 				</portlet:renderURL>
 
-				<portlet:actionURL var="deleteURL" name="/document_library/edit_folder">
+				<portlet:actionURL name="/document_library/edit_folder" var="deleteURL">
 					<portlet:param name="<%= Constants.CMD %>" value="<%= ((folder.getModel() instanceof DLFolder) && TrashUtil.isTrashEnabled(scopeGroupId)) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
 					<portlet:param name="redirect" value="<%= (view || folderSelected) ? redirectURL : redirect %>" />
 					<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
@@ -432,7 +432,7 @@ String iconMenuId = null;
 					<portlet:param name="folderId" value="<%= String.valueOf(folder.getParentFolderId()) %>" />
 				</portlet:renderURL>
 
-				<portlet:actionURL var="deleteURL" name="/document_library/edit_repository">
+				<portlet:actionURL name="/document_library/edit_repository" var="deleteURL">
 					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 					<portlet:param name="redirect" value="<%= (view || folderSelected) ? redirectURL : redirect %>" />
 					<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />

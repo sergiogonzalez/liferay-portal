@@ -54,7 +54,7 @@ String scopeAvailableFields = ParamUtil.getString(request, "scopeAvailableFields
 	/>
 </liferay-util:buffer>
 
-<portlet:actionURL var="editFileEntryTypeURL" name="/document_library/edit_file_entry_type" />
+<portlet:actionURL name="/document_library/edit_file_entry_type" var="editFileEntryTypeURL" />
 
 <aui:form action="<%= editFileEntryTypeURL %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (fileEntryType == null) ? Constants.ADD : Constants.UPDATE %>" />
