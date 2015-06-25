@@ -44,15 +44,15 @@ public class IGUtil {
 			RenderResponse renderResponse)
 		throws Exception {
 
-		String strutsAction = ParamUtil.getString(request, "struts_action");
+		String mvcRenderCommandName = ParamUtil.getString(request, "mvcRenderCommandName");
 
 		PortletURL portletURL = renderResponse.createRenderURL();
 
-		if (strutsAction.equals("/image_gallery_display/select_folder")) {
+		if (mvcRenderCommandName.equals("/image_gallery_display/select_folder")) {
 			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-			portletURL.setParameter("struts_action", strutsAction);
+			portletURL.setParameter("mvcRenderCommandName", mvcRenderCommandName);
 			portletURL.setWindowState(LiferayWindowState.POP_UP);
 
 			PortalUtil.addPortletBreadcrumbEntry(

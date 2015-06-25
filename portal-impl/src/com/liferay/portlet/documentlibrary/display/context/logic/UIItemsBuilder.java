@@ -669,7 +669,7 @@ public class UIItemsBuilder {
 
 		PortletURL portletURL = liferayPortletResponse.createActionURL();
 
-		portletURL.setParameter("struts_action", strutsAction);
+		portletURL.setParameter("javax.portlet.action", strutsAction);
 		portletURL.setParameter(Constants.CMD, cmd);
 		portletURL.setParameter("redirect", _getCurrentURL());
 		portletURL.setParameter(
@@ -718,7 +718,7 @@ public class UIItemsBuilder {
 
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
-		portletURL.setParameter("struts_action", strutsAction);
+		portletURL.setParameter("mvcRenderCommandName", strutsAction);
 		portletURL.setParameter("redirect", _getCurrentURL());
 		portletURL.setParameter(
 			"fileEntryId", String.valueOf(_fileEntry.getFileEntryId()));

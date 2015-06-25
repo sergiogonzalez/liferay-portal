@@ -86,8 +86,7 @@ request.setAttribute("view.jsp-viewFolder", Boolean.TRUE.toString());
 request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntryQuery));
 %>
 
-<portlet:actionURL var="restoreTrashEntriesURL">
-	<portlet:param name="mvcRenderCommandName" value="/document_library/edit_file_entry" />
+<portlet:actionURL var="restoreTrashEntriesURL" name="/document_library/edit_file_entry">
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
 </portlet:actionURL>
 
@@ -276,7 +275,7 @@ request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntry
 				if (DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.VIEW)) {
 					PortletURL viewFileEntryURL = renderResponse.createRenderURL();
 
-					viewFileEntryURL.setParameter("struts_action", "/document_library_display/view_file_entry");
+					viewFileEntryURL.setParameter("mvcRenderCommandName", "/document_library_display/view_file_entry");
 					viewFileEntryURL.setParameter("redirect", currentURL);
 					viewFileEntryURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
 
