@@ -269,10 +269,37 @@ public class TrashEntryServiceImpl extends TrashEntryServiceBaseImpl {
 	}
 
 	@Override
-	public List<TrashEntry> getEntries(long groupId, String className) {
+	public List<TrashEntry> getEntries(long groupId, String className)
+		throws PrincipalException {
+
 		long classNameId = classNameLocalService.getClassNameId(className);
 
-		return trashEntryFinder.filterFindByG_C(groupId, classNameId);
+		List<TrashEntry> entries = trashEntryPersistence.findByG_C(
+			groupId, classNameId);
+
+		List<TrashEntry> filteredEntries = new ArrayList<>();
+
+		PermissionChecker permissionChecker = getPermissionChecker();
+
+		for (TrashEntry entry : entries) {
+			long classPK = entry.getClassPK();
+
+			try {
+				TrashHandler trashHandler =
+					TrashHandlerRegistryUtil.getTrashHandler(className);
+
+				if (trashHandler.hasTrashPermission(
+						permissionChecker, 0, classPK, ActionKeys.VIEW)) {
+
+					filteredEntries.add(entry);
+				}
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+			}
+		}
+
+		return filteredEntries;
 	}
 
 	/**

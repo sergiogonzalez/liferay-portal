@@ -60,7 +60,9 @@ public class TrashEntryServiceAdapter {
 		}
 	}
 
-	public List<TrashEntry> getEntries(long repositoryId, String className) {
+	public List<TrashEntry> getEntries(long repositoryId, String className)
+		throws PortalException {
+
 		List<TrashEntry> trashEntries = null;
 
 		if (_trashEntryService != null) {
