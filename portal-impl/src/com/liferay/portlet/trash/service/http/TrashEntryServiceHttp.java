@@ -227,7 +227,8 @@ public class TrashEntryServiceHttp {
 	}
 
 	public static java.util.List<com.liferay.portlet.trash.model.TrashEntry> getEntries(
-		HttpPrincipal httpPrincipal, long groupId, java.lang.String className) {
+		HttpPrincipal httpPrincipal, long groupId, java.lang.String className)
+		throws com.liferay.portal.security.auth.PrincipalException {
 		try {
 			MethodKey methodKey = new MethodKey(TrashEntryServiceUtil.class,
 					"getEntries", _getEntriesParameterTypes6);
@@ -241,6 +242,10 @@ public class TrashEntryServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
+				if (e instanceof com.liferay.portal.security.auth.PrincipalException) {
+					throw (com.liferay.portal.security.auth.PrincipalException)e;
+				}
+
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 

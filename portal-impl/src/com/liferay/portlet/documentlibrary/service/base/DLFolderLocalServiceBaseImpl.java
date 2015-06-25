@@ -72,7 +72,6 @@ import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 import com.liferay.portlet.exportimport.lar.StagedModelType;
-import com.liferay.portlet.trash.service.persistence.TrashEntryFinder;
 import com.liferay.portlet.trash.service.persistence.TrashEntryPersistence;
 
 import java.io.Serializable;
@@ -1486,24 +1485,6 @@ public abstract class DLFolderLocalServiceBaseImpl extends BaseLocalServiceImpl
 		this.trashEntryPersistence = trashEntryPersistence;
 	}
 
-	/**
-	 * Returns the trash entry finder.
-	 *
-	 * @return the trash entry finder
-	 */
-	public TrashEntryFinder getTrashEntryFinder() {
-		return trashEntryFinder;
-	}
-
-	/**
-	 * Sets the trash entry finder.
-	 *
-	 * @param trashEntryFinder the trash entry finder
-	 */
-	public void setTrashEntryFinder(TrashEntryFinder trashEntryFinder) {
-		this.trashEntryFinder = trashEntryFinder;
-	}
-
 	public void afterPropertiesSet() {
 		persistedModelLocalServiceRegistry.register("com.liferay.portlet.documentlibrary.model.DLFolder",
 			dlFolderLocalService);
@@ -1660,8 +1641,6 @@ public abstract class DLFolderLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected com.liferay.portlet.trash.service.TrashEntryService trashEntryService;
 	@BeanReference(type = TrashEntryPersistence.class)
 	protected TrashEntryPersistence trashEntryPersistence;
-	@BeanReference(type = TrashEntryFinder.class)
-	protected TrashEntryFinder trashEntryFinder;
 	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
 	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 	private String _beanIdentifier;

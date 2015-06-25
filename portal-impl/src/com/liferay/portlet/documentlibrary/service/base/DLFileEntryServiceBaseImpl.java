@@ -55,7 +55,6 @@ import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructureFi
 import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructurePersistence;
 import com.liferay.portlet.expando.service.persistence.ExpandoRowPersistence;
 import com.liferay.portlet.expando.service.persistence.ExpandoTablePersistence;
-import com.liferay.portlet.trash.service.persistence.TrashEntryFinder;
 import com.liferay.portlet.trash.service.persistence.TrashEntryPersistence;
 
 import javax.sql.DataSource;
@@ -1076,24 +1075,6 @@ public abstract class DLFileEntryServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
-	 * Returns the trash entry finder.
-	 *
-	 * @return the trash entry finder
-	 */
-	public TrashEntryFinder getTrashEntryFinder() {
-		return trashEntryFinder;
-	}
-
-	/**
-	 * Sets the trash entry finder.
-	 *
-	 * @param trashEntryFinder the trash entry finder
-	 */
-	public void setTrashEntryFinder(TrashEntryFinder trashEntryFinder) {
-		this.trashEntryFinder = trashEntryFinder;
-	}
-
-	/**
 	 * Returns the document library file entry metadata local service.
 	 *
 	 * @return the document library file entry metadata local service
@@ -1521,8 +1502,6 @@ public abstract class DLFileEntryServiceBaseImpl extends BaseServiceImpl
 	protected com.liferay.portlet.trash.service.TrashEntryService trashEntryService;
 	@BeanReference(type = TrashEntryPersistence.class)
 	protected TrashEntryPersistence trashEntryPersistence;
-	@BeanReference(type = TrashEntryFinder.class)
-	protected TrashEntryFinder trashEntryFinder;
 	@BeanReference(type = com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalService.class)
 	protected com.liferay.portlet.documentlibrary.service.DLFileEntryMetadataLocalService dlFileEntryMetadataLocalService;
 	@BeanReference(type = DLFileEntryMetadataPersistence.class)

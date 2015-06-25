@@ -128,7 +128,8 @@ public interface TrashEntryService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.trash.model.TrashEntry> getEntries(
-		long groupId, java.lang.String className);
+		long groupId, java.lang.String className)
+		throws com.liferay.portal.security.auth.PrincipalException;
 
 	/**
 	* Returns a range of all the trash entries matching the group ID.

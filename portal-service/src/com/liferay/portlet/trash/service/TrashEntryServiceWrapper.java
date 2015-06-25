@@ -126,7 +126,8 @@ public class TrashEntryServiceWrapper implements TrashEntryService,
 
 	@Override
 	public java.util.List<com.liferay.portlet.trash.model.TrashEntry> getEntries(
-		long groupId, java.lang.String className) {
+		long groupId, java.lang.String className)
+		throws com.liferay.portal.security.auth.PrincipalException {
 		return _trashEntryService.getEntries(groupId, className);
 	}
 
