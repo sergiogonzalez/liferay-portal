@@ -122,10 +122,6 @@
 			<finder-column name="groupId" />
 			<finder-column name="status" />
 		</finder>
-		<finder name="C_DDMTK" return-type="Collection">
-			<finder-column name="classNameId" />
-			<finder-column name="DDMTemplateKey" />
-		</finder>
 		<finder name="C_V" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column name="version" />
@@ -137,6 +133,10 @@
 		<finder name="C_NotST" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column name="status" comparator="!=" />
+		</finder>
+		<finder name="C_DDMTK" return-type="Collection">
+			<finder-column name="classNameId" />
+			<finder-column name="DDMTemplateKey" />
 		</finder>
 		<finder name="LtD_S" return-type="Collection">
 			<finder-column name="displayDate" comparator="&lt;" />
@@ -287,9 +287,12 @@
 
 		<column name="resourcePrimKey" type="long" primary="true" />
 
-		<!-- Other fields -->
+		<!-- Group instance -->
 
 		<column name="groupId" type="long" />
+
+		<!-- Other fields -->
+
 		<column name="articleId" type="String" />
 
 		<!-- Finder methods -->
