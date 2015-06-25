@@ -312,13 +312,6 @@
 			<forward name="portlet.iframe.view" path="portlet.iframe.view" />
 		</action>
 
-		<!-- Image Gallery Display -->
-
-		<action path="/image_gallery_display/view_slide_show" type="com.liferay.portlet.imagegallerydisplay.action.ViewSlideShowAction">
-			<forward name="portlet.image_gallery_display.error" path="portlet.document_library.error" />
-			<forward name="portlet.image_gallery_display.view_slide_show" path="portlet.image_gallery_display.view_slide_show" />
-		</action>
-
 		<!-- Image Uploader -->
 
 		<action path="/image_uploader/view" type="com.liferay.portlet.imageuploader.action.UploadImageAction">
