@@ -507,7 +507,7 @@ String iconMenuId = null;
 			'click',
 			function(event) {
 				<portlet:renderURL var="viewSlideShowURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-					<portlet:param name="struts_action" value="/image_gallery_display/view_slide_show" />
+					<portlet:param name="mvcRenderCommandName" value="/image_gallery_display/view_slide_show" />
 					<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 				</portlet:renderURL>
 
