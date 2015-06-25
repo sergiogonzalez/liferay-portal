@@ -280,7 +280,8 @@ public class DLImpl implements DL {
 			RenderResponse renderResponse)
 		throws Exception {
 
-		String strutsAction = ParamUtil.getString(request, "mvcRenderCommandName");
+		String strutsAction = ParamUtil.getString(
+			request, "mvcRenderCommandName");
 
 		long groupId = ParamUtil.getLong(request, "groupId");
 		boolean ignoreRootFolder = ParamUtil.getBoolean(

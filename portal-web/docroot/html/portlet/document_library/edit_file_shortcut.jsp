@@ -68,7 +68,7 @@ portletURL.setParameter("fileShortcutId", String.valueOf(fileShortcutId));
 
 <liferay-util:include page="/html/portlet/document_library/top_links.jsp" />
 
-<portlet:actionURL var="editFileShortcutURL" name="/document_library/edit_file_shortcut" />
+<portlet:actionURL name="/document_library/edit_file_shortcut" var="editFileShortcutURL" />
 
 <aui:form action="<%= editFileShortcutURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveFileShortcut();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
