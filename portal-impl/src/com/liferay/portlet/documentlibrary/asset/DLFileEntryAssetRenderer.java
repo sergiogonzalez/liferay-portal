@@ -253,7 +253,8 @@ public class DLFileEntryAssetRenderer
 			getControlPanelPlid(liferayPortletRequest),
 			PortletKeys.DOCUMENT_LIBRARY, PortletRequest.ACTION_PHASE);
 
-		portletURL.setParameter("struts_action", "/document_library/get_file");
+		portletURL.setParameter(
+			"javax.portlet.action", "/document_library/get_file");
 		portletURL.setParameter(
 			"groupId", String.valueOf(_fileEntry.getRepositoryId()));
 		portletURL.setParameter(

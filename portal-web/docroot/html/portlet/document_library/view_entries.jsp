@@ -204,8 +204,7 @@ dlSearchContainer.setResults(results);
 			<c:when test="<%= subscribed %>">
 				<c:choose>
 					<c:when test="<%= unsubscribable %>">
-						<portlet:actionURL var="unsubscribeURL">
-							<portlet:param name="mvcRenderCommandName" value='<%= (fileEntryTypeId == DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL) ? "/document_library/edit_folder" : "/document_library/edit_file_entry_type" %>' />
+						<portlet:actionURL name='<%= (fileEntryTypeId == DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL) ? "/document_library/edit_folder" : "/document_library/edit_file_entry_type" %>' var="unsubscribeURL">
 							<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UNSUBSCRIBE %>" />
 							<portlet:param name="redirect" value="<%= currentURL %>" />
 
@@ -236,8 +235,7 @@ dlSearchContainer.setResults(results);
 				</c:choose>
 			</c:when>
 			<c:otherwise>
-				<portlet:actionURL var="subscribeURL">
-					<portlet:param name="mvcRenderCommandName" value='<%= (fileEntryTypeId == DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL) ? "/document_library/edit_folder" : "/document_library/edit_file_entry_type" %>' />
+				<portlet:actionURL name='<%= (fileEntryTypeId == DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_ALL) ? "/document_library/edit_folder" : "/document_library/edit_file_entry_type" %>' var="subscribeURL">
 					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.SUBSCRIBE %>" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 

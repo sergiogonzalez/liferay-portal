@@ -89,9 +89,7 @@ for (FileShortcut curFileShortcut : fileShortcuts) {
 	<liferay-util:include page="/html/portlet/document_library/top_links.jsp" />
 </c:if>
 
-<portlet:actionURL var="moveFileEntryURL">
-	<portlet:param name="mvcRenderCommandName" value="/document_library/move_entry" />
-</portlet:actionURL>
+<portlet:actionURL name="/document_library/move_entry" var="moveFileEntryURL" />
 
 <aui:form action="<%= moveFileEntryURL %>" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveFileEntry(false);" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.MOVE %>" />

@@ -663,13 +663,13 @@ public class UIItemsBuilder {
 		return urlUIItem;
 	}
 
-	private String _getActionURL(String strutsAction, String cmd) {
+	private String _getActionURL(String mvcActionCommandName, String cmd) {
 		LiferayPortletResponse liferayPortletResponse =
 			_getLiferayPortletResponse();
 
 		PortletURL portletURL = liferayPortletResponse.createActionURL();
 
-		portletURL.setParameter("struts_action", strutsAction);
+		portletURL.setParameter("javax.portlet.action", mvcActionCommandName);
 		portletURL.setParameter(Constants.CMD, cmd);
 		portletURL.setParameter("redirect", _getCurrentURL());
 		portletURL.setParameter(

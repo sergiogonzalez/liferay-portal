@@ -88,9 +88,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = DLDisplayContextProviderUtil.getDLViewFileVersionDisplayContext(request, response, fileVersion);
 %>
 
-<portlet:actionURL var="editFileEntry">
-	<portlet:param name="mvcRenderCommandName" value="/document_library/edit_file_entry" />
-</portlet:actionURL>
+<portlet:actionURL name="/document_library/edit_file_entry" var="editFileEntry" />
 
 <aui:form action="<%= editFileEntry %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
@@ -247,13 +245,9 @@ DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = DLDisplayConte
 
 				<c:if test="<%= PropsValues.DL_FILE_ENTRY_COMMENTS_ENABLED && showComments %>">
 					<liferay-ui:panel collapsible="<%= true %>" cssClass="lfr-document-library-comments" extended="<%= true %>" persistState="<%= true %>" title="comments">
-						<portlet:actionURL var="discussionURL">
-							<portlet:param name="mvcRenderCommandName" value="/document_library/edit_file_entry_discussion" />
-						</portlet:actionURL>
+						<portlet:actionURL name="/document_library/edit_file_entry_discussion" var="discussionURL" />
 
-						<portlet:resourceURL var="discussionPaginationURL">
-							<portlet:param name="mvcRenderCommandName" value="/document_library/edit_file_entry_discussion" />
-						</portlet:resourceURL>
+						<portlet:resourceURL id="/document_library/edit_file_entry_discussion" var="discussionPaginationURL" />
 
 						<liferay-ui:discussion
 							className="<%= DLFileEntryConstants.getClassName() %>"

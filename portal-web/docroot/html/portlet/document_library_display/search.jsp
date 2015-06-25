@@ -96,7 +96,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 	<%
 	PortletURL portletURL = renderResponse.createRenderURL();
 
-	portletURL.setParameter("struts_action", "/document_library_display/search");
+	portletURL.setParameter("mvcRenderCommandName", "/document_library_display/search");
 	portletURL.setParameter("redirect", redirect);
 	portletURL.setParameter("repositoryId", String.valueOf(repositoryId));
 	portletURL.setParameter("folderId", String.valueOf(folderId));

@@ -280,7 +280,8 @@ public class DLImpl implements DL {
 			RenderResponse renderResponse)
 		throws Exception {
 
-		String strutsAction = ParamUtil.getString(request, "struts_action");
+		String strutsAction = ParamUtil.getString(
+			request, "mvcRenderCommandName");
 
 		long groupId = ParamUtil.getLong(request, "groupId");
 		boolean ignoreRootFolder = ParamUtil.getBoolean(
@@ -297,7 +298,7 @@ public class DLImpl implements DL {
 			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-			portletURL.setParameter("struts_action", strutsAction);
+			portletURL.setParameter("mvcRenderCommandName", strutsAction);
 			portletURL.setParameter("groupId", String.valueOf(groupId));
 			portletURL.setParameter(
 				"ignoreRootFolder", String.valueOf(ignoreRootFolder));
