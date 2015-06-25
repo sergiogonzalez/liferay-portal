@@ -73,7 +73,7 @@ List fileEntries = DLAppServiceUtil.getGroupFileEntries(scopeGroupId, 0, folderI
 
 	PortletURL portletURL = renderResponse.createRenderURL();
 
-	portletURL.setParameter("struts_action", "/image_gallery_display/view");
+	portletURL.setParameter("mvcRenderCommandName", "/image_gallery_display/view");
 	portletURL.setParameter("topLink", topLink);
 	portletURL.setParameter("folderId", String.valueOf(folderId));
 

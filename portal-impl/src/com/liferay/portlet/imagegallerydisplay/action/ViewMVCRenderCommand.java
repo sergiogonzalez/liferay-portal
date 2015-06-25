@@ -14,31 +14,34 @@
 
 package com.liferay.portlet.imagegallerydisplay.action;
 
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.struts.PortletAction;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.action.ActionUtil;
 
-import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class ViewAction extends PortletAction {
+@OSGiBeanProperties(
+	property = {
+		"javax.portlet.name=" + PortletKeys.MEDIA_GALLERY_DISPLAY,
+		"mvc.command.name=/image_gallery_display/view"
+	},
+	service = MVCRenderCommand.class
+)
+public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
+	public String render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws PortletException {
 
 		try {
 			ActionUtil.getFolder(renderRequest);
@@ -49,15 +52,14 @@ public class ViewAction extends PortletAction {
 
 				SessionErrors.add(renderRequest, e.getClass());
 
-				return actionMapping.findForward(
-					"portlet.image_gallery_display.error");
+				return "/html/portlet/image_gallery_display/error.jsp";
 			}
 			else {
-				throw e;
+				throw new PortletException(e);
 			}
 		}
 
-		return actionMapping.findForward("portlet.image_gallery_display.view");
+		return "/html/portlet/image_gallery_display/view.jsp";
 	}
 
 }

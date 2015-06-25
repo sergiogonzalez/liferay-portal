@@ -60,7 +60,7 @@ public class IGUtil {
 		}
 		else {
 			portletURL.setParameter(
-				"struts_action", "/image_gallery_display/view");
+				"mvcRenderCommandName", "/image_gallery_display/view");
 		}
 
 		long defaultFolderId = getDefaultFolderId(request);
