@@ -34,7 +34,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 %>
 
 <liferay-portlet:renderURL varImpl="searchURL">
-	<portlet:param name="struts_action" value="/document_library_display/search" />
+	<portlet:param name="mvcRenderCommandName" value="/document_library_display/search" />
 </liferay-portlet:renderURL>
 
 <aui:form action="<%= searchURL %>" method="get" name="fm">
@@ -68,7 +68,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 
 			PortletURL searchExternalRepositoryURL = renderResponse.createRenderURL();
 
-			searchExternalRepositoryURL.setParameter("struts_action", "/document_library_display/search");
+			searchExternalRepositoryURL.setParameter("mvcRenderCommandName", "/document_library_display/search");
 			searchExternalRepositoryURL.setParameter("redirect", redirect);
 			searchExternalRepositoryURL.setParameter("repositoryId", String.valueOf(mountFolder.getRepositoryId()));
 			searchExternalRepositoryURL.setParameter("folderId", String.valueOf(mountFolder.getFolderId()));
@@ -96,7 +96,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 	<%
 	PortletURL portletURL = renderResponse.createRenderURL();
 
-	portletURL.setParameter("struts_action", "/document_library_display/search");
+	portletURL.setParameter("mvcRenderCommandName", "/document_library_display/search");
 	portletURL.setParameter("redirect", redirect);
 	portletURL.setParameter("repositoryId", String.valueOf(repositoryId));
 	portletURL.setParameter("folderId", String.valueOf(folderId));

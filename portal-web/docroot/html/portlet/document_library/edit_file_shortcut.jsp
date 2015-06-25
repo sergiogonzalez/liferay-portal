@@ -146,7 +146,7 @@ portletURL.setParameter("fileShortcutId", String.valueOf(fileShortcutId));
 					title: '<liferay-ui:message arguments="site" key="select-x" />',
 
 					<portlet:renderURL var="selectGroupURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-						<portlet:param name="struts_action" value="/document_library/select_group" />
+						<portlet:param name="mvcRenderCommandName" value="/document_library/select_group" />
 					</portlet:renderURL>
 
 					uri: '<%= selectGroupURL.toString() %>'
