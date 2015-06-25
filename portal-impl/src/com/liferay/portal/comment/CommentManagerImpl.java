@@ -14,6 +14,7 @@
 
 package com.liferay.portal.comment;
 
+import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.comment.Discussion;
 import com.liferay.portal.kernel.comment.DiscussionPermission;
@@ -57,7 +58,7 @@ public class CommentManagerImpl implements CommentManager {
 	}
 
 	@Override
-	public void addComment(
+	public long addComment(
 			long userId, long groupId, String className, long classPK,
 			String body,
 			Function<String, ServiceContext> serviceContextFunction)
@@ -65,7 +66,7 @@ public class CommentManagerImpl implements CommentManager {
 
 		CommentManager commentManager = getCommentManager();
 
-		commentManager.addComment(
+		return commentManager.addComment(
 			userId, groupId, className, classPK, body, serviceContextFunction);
 	}
 
@@ -123,6 +124,13 @@ public class CommentManagerImpl implements CommentManager {
 		CommentManager commentManager = getCommentManager();
 
 		commentManager.deleteDiscussion(className, classPK);
+	}
+
+	@Override
+	public Comment fetchComment(long commentId) {
+		CommentManager commentManager = getCommentManager();
+
+		return commentManager.fetchComment(commentId);
 	}
 
 	@Override

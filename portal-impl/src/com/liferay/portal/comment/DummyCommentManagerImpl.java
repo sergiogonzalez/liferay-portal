@@ -15,6 +15,7 @@
 package com.liferay.portal.comment;
 
 import com.liferay.portal.kernel.comment.BaseDiscussionPermission;
+import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.comment.Discussion;
 import com.liferay.portal.kernel.comment.DiscussionComment;
@@ -33,9 +34,11 @@ import com.liferay.portlet.exportimport.lar.PortletDataContext;
 public class DummyCommentManagerImpl implements CommentManager {
 
 	@Override
-	public void addComment(
+	public long addComment(
 		long userId, long groupId, String className, long classPK, String body,
 		Function<String, ServiceContext> serviceContextFunction) {
+
+		return 0;
 	}
 
 	@Override
@@ -68,6 +71,11 @@ public class DummyCommentManagerImpl implements CommentManager {
 
 	@Override
 	public void deleteDiscussion(String className, long classPK) {
+	}
+
+	@Override
+	public Comment fetchComment(long commentId) {
+		return null;
 	}
 
 	@Override
@@ -145,6 +153,13 @@ public class DummyCommentManagerImpl implements CommentManager {
 
 			@Override
 			public boolean hasDeletePermission(long commentId) {
+
+				return false;
+			}
+
+			@Override
+			public boolean hasSubscribePermission(
+				long companyId, long groupId, String className, long classPK) {
 
 				return false;
 			}

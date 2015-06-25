@@ -33,6 +33,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -281,10 +282,11 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected void checkServiceXMLFinders(
-			String fileName, Element entityElement, String entityName)
+			String fileName, String absolutePath, Element entityElement,
+			String entityName)
 		throws Exception {
 
-		_columnNames = getColumnNames(fileName, entityName);
+		_columnNames = getColumnNames(fileName, absolutePath, entityName);
 
 		FinderElementComparator finderElementComparator =
 			new FinderElementComparator();
@@ -351,11 +353,15 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		String newContent = content;
 
-		if (!fileName.startsWith("build") && !fileName.contains("/build")) {
+		if (!fileName.startsWith(
+				sourceFormatterArgs.getBaseDirName() + "build") &&
+			!fileName.contains("/build")) {
+
 			newContent = trimContent(newContent, false);
 		}
 
-		if (fileName.startsWith("build") ||
+		if (fileName.startsWith(
+				sourceFormatterArgs.getBaseDirName() + "build") ||
 			(fileName.contains("/build") && !fileName.contains("/tools/"))) {
 
 			newContent = formatAntXML(fileName, newContent);
@@ -384,7 +390,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			newContent = formatPoshiXML(fileName, newContent);
 		}
 		else if (fileName.endsWith("/service.xml")) {
-			formatServiceXML(fileName, newContent);
+			formatServiceXML(fileName, absolutePath, newContent);
 		}
 		else if (portalSource && fileName.endsWith("/struts-config.xml")) {
 			formatStrutsConfigXML(fileName, newContent);
@@ -404,13 +410,13 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	}
 
 	@Override
-	protected List<String> doGetFileNames() {
+	protected List<String> doGetFileNames() throws Exception {
 		String[] excludes = new String[] {
-			"**\\.bnd\\**", "**\\.idea\\**", "**\\.ivy\\**", "bin\\**",
-			"logs\\**", "portal-impl\\**\\*.action",
-			"portal-impl\\**\\*.function", "portal-impl\\**\\*.macro",
-			"portal-impl\\**\\*.testcase", "test-classes\\unit\\**",
-			"test-results\\**", "test\\unit\\**"
+			"**/.bnd/**", "**/.idea/**", "**/.ivy/**", "**/bin/**",
+			"**/logs/**", "**/portal-impl/**/*.action",
+			"**/portal-impl/**/*.function", "**/portal-impl/**/*.macro",
+			"**/portal-impl/**/*.testcase", "**/test-classes/unit/**",
+			"**/test-results/**", "**/test/unit/**"
 		};
 
 		_numericalPortletNameElementExclusionFiles = getPropertyList(
@@ -421,38 +427,40 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected String fixAntXMLProjectName(String fileName, String content) {
-		int x = 0;
+		String baseDirName = sourceFormatterArgs.getBaseDirName();
+
+		int x = baseDirName.length();
 
 		if (fileName.endsWith("-ext/build.xml")) {
-			if (fileName.startsWith("ext/")) {
-				x = 4;
+			if (fileName.startsWith(baseDirName + "ext/")) {
+				x += 4;
 			}
 		}
 		else if (fileName.endsWith("-hook/build.xml")) {
-			if (fileName.startsWith("hooks/")) {
-				x = 6;
+			if (fileName.startsWith(baseDirName + "hooks/")) {
+				x += 6;
 			}
 		}
 		else if (fileName.endsWith("-layouttpl/build.xml")) {
-			if (fileName.startsWith("layouttpl/")) {
-				x = 10;
+			if (fileName.startsWith(baseDirName + "layouttpl/")) {
+				x += 10;
 			}
 		}
 		else if (fileName.endsWith("-portlet/build.xml")) {
-			if (fileName.startsWith("portlets/")) {
-				x = 9;
+			if (fileName.startsWith(baseDirName + "portlets/")) {
+				x += 9;
 			}
 		}
 		else if (fileName.endsWith("-theme/build.xml")) {
-			if (fileName.startsWith("themes/")) {
-				x = 7;
+			if (fileName.startsWith(baseDirName + "themes/")) {
+				x += 7;
 			}
 		}
 		else if (fileName.endsWith("-web/build.xml") &&
 				 !fileName.endsWith("/ext-web/build.xml")) {
 
-			if (fileName.startsWith("webs/")) {
-				x = 5;
+			if (fileName.startsWith(baseDirName + "webs/")) {
+				x += 5;
 			}
 		}
 		else {
@@ -826,7 +834,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		return fixPoshiXMLNumberOfTabs(content);
 	}
 
-	protected void formatServiceXML(String fileName, String content)
+	protected void formatServiceXML(
+			String fileName, String absolutePath, String content)
 		throws Exception {
 
 		Document document = readXML(content);
@@ -847,7 +856,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 					fileName, "sort: " + fileName + " " + entityName);
 			}
 
-			checkServiceXMLFinders(fileName, entityElement, entityName);
+			checkServiceXMLFinders(
+				fileName, absolutePath, entityElement, entityName);
 			checkServiceXMLReferences(fileName, entityElement, entityName);
 
 			previousEntityName = entityName;
@@ -999,7 +1009,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			newContent.substring(y);
 	}
 
-	protected List<String> getColumnNames(String fileName, String entityName)
+	protected List<String> getColumnNames(
+			String fileName, String absolutePath, String entityName)
 		throws Exception {
 
 		List<String> columnNames = new ArrayList<>();
@@ -1007,7 +1018,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		Pattern pattern = Pattern.compile(
 			"create table " + entityName + "_? \\(\n([\\s\\S]*?)\n\\);");
 
-		Matcher matcher = pattern.matcher(getTablesContent(fileName));
+		Matcher matcher = pattern.matcher(
+			getTablesContent(fileName, absolutePath));
 
 		if (!matcher.find()) {
 			return columnNames;
@@ -1034,8 +1046,10 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		return columnNames;
 	}
 
-	protected String getTablesContent(String fileName) throws Exception {
-		if (portalSource) {
+	protected String getTablesContent(String fileName, String absolutePath)
+		throws Exception {
+
+		if (portalSource && !absolutePath.contains("/modules/")) {
 			if (_tablesContent == null) {
 				_tablesContent = getContent("sql/portal-tables.sql", 4);
 			}
@@ -1043,9 +1057,26 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			return _tablesContent;
 		}
 
+		String tablesContent = _tablesContentMap.get(fileName);
+
+		if (tablesContent != null) {
+			return tablesContent;
+		}
+
 		int pos = fileName.lastIndexOf(CharPool.SLASH);
 
-		return getContent(fileName.substring(0, pos) + "/sql/tables.sql", 1);
+		if (portalSource) {
+			tablesContent = getContent(
+				fileName.substring(0, pos) + "/src/META-INF/sql/tables.sql", 1);
+		}
+		else {
+			tablesContent = getContent(
+				fileName.substring(0, pos) + "/sql/tables.sql", 1);
+		}
+
+		_tablesContentMap.put(fileName, tablesContent);
+
+		return tablesContent;
 	}
 
 	protected Document readXML(String content) throws DocumentException {
@@ -1238,8 +1269,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	}
 
 	private static final String[] _INCLUDES = new String[] {
-		"**\\*.action", "**\\*.function", "**\\*.macro", "**\\*.testcase",
-		"**\\*.xml"
+		"**/*.action", "**/*.function", "**/*.macro", "**/*.testcase",
+		"**/*.xml"
 	};
 
 	private static final Pattern _commentPattern1 = Pattern.compile(
@@ -1282,6 +1313,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	private final Pattern _poshiWholeTagPattern = Pattern.compile(
 		"<[^\\>^/]*\\/>");
 	private String _tablesContent;
+	private final Map<String, String> _tablesContentMap = new HashMap<>();
 	private final Pattern _whereNotInSQLPattern = Pattern.compile(
 		"WHERE[ \t\n]+\\(*[a-zA-z0-9.]+ NOT IN");
 	private List<String> _xmlExclusionFiles;
