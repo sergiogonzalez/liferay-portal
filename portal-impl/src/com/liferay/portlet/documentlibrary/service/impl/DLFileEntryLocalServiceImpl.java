@@ -36,6 +36,12 @@ import com.liferay.portal.kernel.lock.LockManagerUtil;
 import com.liferay.portal.kernel.lock.NoSuchLockException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.repository.LocalRepository;
+import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
+import com.liferay.portal.kernel.repository.capabilities.RepositoryEventTriggerCapability;
+import com.liferay.portal.kernel.repository.event.RepositoryEventTrigger;
+import com.liferay.portal.kernel.repository.event.RepositoryEventType;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexable;
@@ -720,6 +726,9 @@ public class DLFileEntryLocalServiceImpl
 			final boolean includeTrashedEntries)
 		throws PortalException {
 
+		final RepositoryEventTrigger repositoryEventTrigger =
+			getRepositoryEventTrigger(folderId);
+
 		ActionableDynamicQuery actionableDynamicQuery =
 			dlFileEntryLocalService.getActionableDynamicQuery();
 
@@ -747,6 +756,10 @@ public class DLFileEntryLocalServiceImpl
 
 					if (includeTrashedEntries ||
 						!dlFileEntry.isInTrashExplicitly()) {
+
+						repositoryEventTrigger.trigger(
+							RepositoryEventType.Delete.class, FileEntry.class,
+							new LiferayFileEntry(dlFileEntry));
 
 						dlFileEntryLocalService.deleteFileEntry(dlFileEntry);
 					}
@@ -972,6 +985,9 @@ public class DLFileEntryLocalServiceImpl
 			final boolean includeTrashedEntries)
 		throws PortalException {
 
+		final RepositoryEventTrigger repositoryEventTrigger =
+			getRepositoryEventTrigger(folderId);
+
 		int total = dlFileEntryPersistence.countByR_F(repositoryId, folderId);
 
 		final IntervalActionProcessor<Void> intervalActionProcessor =
@@ -991,6 +1007,11 @@ public class DLFileEntryLocalServiceImpl
 					for (DLFileEntry dlFileEntry : dlFileEntries) {
 						if (includeTrashedEntries ||
 							!dlFileEntry.isInTrashExplicitly()) {
+
+							repositoryEventTrigger.trigger(
+								RepositoryEventType.Delete.class,
+								FileEntry.class,
+								new LiferayFileEntry(dlFileEntry));
 
 							dlFileEntryLocalService.deleteFileEntry(
 								dlFileEntry);
@@ -2303,6 +2324,22 @@ public class DLFileEntryLocalServiceImpl
 		return versionParts[0] + StringPool.PERIOD + versionParts[1];
 	}
 
+	protected RepositoryEventTrigger getRepositoryEventTrigger(long folderId)
+		throws PortalException {
+
+		LocalRepository localRepository =
+			RepositoryProviderUtil.getFolderLocalRepository(folderId);
+
+		if (!localRepository.isCapabilityProvided(
+				RepositoryEventTriggerCapability.class)) {
+
+			return _dummyRepositoryEventTrigger;
+		}
+
+		return localRepository.getCapability(
+			RepositoryEventTriggerCapability.class);
+	}
+
 	/**
 	 * @see com.liferay.dynamic.data.lists.service.impl.DDLRecordLocalServiceImpl#isKeepRecordVersionLabel(
 	 *      com.liferay.dynamic.data.lists.model.DDLRecordVersion,
@@ -2828,5 +2865,16 @@ public class DLFileEntryLocalServiceImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLFileEntryLocalServiceImpl.class);
+
+	private final RepositoryEventTrigger _dummyRepositoryEventTrigger =
+		new RepositoryEventTrigger() {
+
+			@Override
+			public <S extends RepositoryEventType, T> void trigger(
+				Class<S> repositoryEventTypeClass, Class<T> modelClass,
+				T model) {
+			}
+
+		};
 
 }
