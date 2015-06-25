@@ -56,8 +56,7 @@ DLFileEntryType fileEntryType = (DLFileEntryType)row.getObject();
 	</c:if>
 
 	<c:if test="<%= DLFileEntryTypePermission.contains(permissionChecker, fileEntryType, ActionKeys.DELETE) %>">
-		<portlet:actionURL var="deleteURL">
-			<portlet:param name="mvcRenderCommandName" value="/document_library/edit_file_entry_type" />
+		<portlet:actionURL var="deleteURL" name="/document_library/edit_file_entry_type">
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="fileEntryTypeId" value="<%= String.valueOf(fileEntryType.getFileEntryTypeId()) %>" />

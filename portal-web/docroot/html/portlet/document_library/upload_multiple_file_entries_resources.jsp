@@ -92,8 +92,7 @@ else {
 }
 %>
 
-<portlet:actionURL var="uploadMultipleFileEntriesURL">
-	<portlet:param name="struts_action" value="document_library/upload_multiple_file_entries" />
+<portlet:actionURL var="uploadMultipleFileEntriesURL" name="document_library/upload_multiple_file_entries">
 	<portlet:param name="backURL" value="<%= backURL %>" />
 </portlet:actionURL>
 

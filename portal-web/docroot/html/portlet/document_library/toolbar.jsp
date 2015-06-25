@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/document_library/init.jsp" %>
 
 <%
-String strutsAction = ParamUtil.getString(request, "struts_action");
+String mvcRenderCommandName = ParamUtil.getString(request, "mvcRenderCommandName");
 
 Folder folder = (Folder)request.getAttribute("view.jsp-folder");
 
@@ -27,7 +27,7 @@ long repositoryId = GetterUtil.getLong((String)request.getAttribute("view.jsp-re
 
 String keywords = ParamUtil.getString(request, "keywords");
 
-boolean search = strutsAction.equals("/document_library/search");
+boolean search = mvcRenderCommandName.equals("/document_library/search");
 %>
 
 <aui:nav-bar>

@@ -92,8 +92,7 @@ List fileEntries = DLAppServiceUtil.getGroupFileEntries(scopeGroupId, 0, folderI
 	request.setAttribute("view.jsp-portletURL", portletURL);
 	%>
 
-	<portlet:actionURL var="restoreTrashEntriesURL">
-		<portlet:param name="struts_action" value="/image_gallery_display/edit_entry" />
+	<portlet:actionURL var="restoreTrashEntriesURL" name="/image_gallery_display/edit_entry">
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
 	</portlet:actionURL>
 
