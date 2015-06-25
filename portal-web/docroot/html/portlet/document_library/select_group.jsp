@@ -28,7 +28,7 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 	<%
 	PortletURL portletURL = renderResponse.createRenderURL();
 
-	portletURL.setParameter("struts_action", "/document_library/select_group");
+	portletURL.setParameter("mvcRenderCommandName", "/document_library/select_group");
 	%>
 
 	<liferay-ui:search-container
