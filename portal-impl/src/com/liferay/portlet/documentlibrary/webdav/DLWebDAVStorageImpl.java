@@ -640,6 +640,9 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 					return status;
 				}
 				catch (NoSuchFileEntryException nsfee) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(nsfee, nsfee);
+					}
 				}
 			}
 
