@@ -27,6 +27,7 @@
 	<bean id="com.liferay.portlet.documentlibrary.action.GetFileStrutsAction" class="com.liferay.portlet.documentlibrary.action.GetFileStrutsAction" />
 	<bean id="com.liferay.portlet.documentlibrary.action.SearchMVCRenderCommand" class="com.liferay.portlet.documentlibrary.action.SearchMVCRenderCommand" />
 	<bean id="com.liferay.portlet.documentlibrary.action.SearchMVCResourceCommand" class="com.liferay.portlet.documentlibrary.action.SearchMVCResourceCommand" />
+	<bean id="com.liferay.portlet.documentlibrary.action.SelectFileEntryMVCRenderCommand" class="com.liferay.portlet.documentlibrary.action.SelectFileEntryMVCRenderCommand" />
 	<bean id="com.liferay.portlet.documentlibrary.action.SelectGroupMVCRenderCommand" class="com.liferay.portlet.documentlibrary.action.SelectGroupMVCRenderCommand" />
 	<bean id="com.liferay.portlet.documentlibrary.action.SelectRestrictedFileEntryTypeMVCRenderCommand" class="com.liferay.portlet.documentlibrary.action.SelectRestrictedFileEntryTypeMVCRenderCommand" />
 	<bean id="com.liferay.portlet.documentlibrary.action.ViewFileEntryTypeMVCRenderCommand" class="com.liferay.portlet.documentlibrary.action.ViewFileEntryTypeMVCRenderCommand" />
