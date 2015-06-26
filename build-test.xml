@@ -1233,6 +1233,7 @@ ${tomcat-gc-log}
 			<var name="test.app.server.deploy.dir" unset="true" />
 			<var name="test.app.server.dir" unset="true" />
 			<var name="test.app.server.leading.port.number" unset="true" />
+			<var name="test.app.server.liferay.home" unset="true" />
 			<var name="test.app.server.parent.dir" unset="true" />
 
 			<math
@@ -1250,6 +1251,7 @@ ${tomcat-gc-log}
 					<var name="test.app.server.classes.portal.dir" value="${app.server.classes.portal.dir}" />
 					<var name="test.app.server.deploy.dir" value="${app.server.deploy.dir}" />
 					<var name="test.app.server.dir" value="${app.server.dir}" />
+					<var name="test.app.server.liferay.home" value="${liferay.home}" />
 					<var name="test.app.server.parent.dir" value="${app.server.parent.dir}" />
 				 </then>
 				 <else>
@@ -1266,6 +1268,10 @@ ${tomcat-gc-log}
 					</antelope:stringutil>
 
 					<antelope:stringutil property="test.app.server.dir" string="${app.server.dir}">
+						<antelope:replace regex="(${app.server.parent.dir})(.*)" replacement="$1-@{app.server.bundle.index}$2" />
+					</antelope:stringutil>
+
+					<antelope:stringutil property="test.app.server.liferay.home" string="${liferay.home}">
 						<antelope:replace regex="(${app.server.parent.dir})(.*)" replacement="$1-@{app.server.bundle.index}$2" />
 					</antelope:stringutil>
 
@@ -2480,11 +2486,20 @@ go]]></replacevalue>
 				<equals arg1="${delete.liferay.home}" arg2="false" />
 			</not>
 			<then>
-				<delete dir="${liferay.home}/data" />
-				<delete dir="${liferay.home}/logs" />
-				<delete dir="${liferay.home}/osgi/state" />
+				<if>
+					<not>
+						<isset property="test.app.server.liferay.home" />
+					</not>
+					<then>
+						<set-app-server-properties />
+					</then>
+				</if>
 
-				<delete file="${liferay.home}/portal-setup-wizard.properties" />
+				<delete dir="${test.app.server.liferay.home}/data" />
+				<delete dir="${test.app.server.liferay.home}/logs" />
+				<delete dir="${test.app.server.liferay.home}/osgi/state" />
+
+				<delete file="${test.app.server.liferay.home}/portal-setup-wizard.properties" />
 			</then>
 		</if>
 	</target>
@@ -3880,10 +3895,10 @@ module.framework.properties.osgi.console=11312</echo>
 		<antcall target="prepare-selenium-testcase-properties" />
 
 		<if>
-			<isset property="mobile.android.home" />
+			<isset property="legacy.theme.ids" />
 			<then>
 				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					mobile.android.home=${mobile.android.home}
+					theme.ids=${legacy.theme.ids}
 				</echo>
 			</then>
 		</if>
@@ -3907,10 +3922,19 @@ module.framework.properties.osgi.console=11312</echo>
 		</if>
 
 		<if>
-			<isset property="legacy.theme.ids" />
+			<isset property="mobile.android.home" />
 			<then>
 				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
-					theme.ids=${legacy.theme.ids}
+					mobile.android.home=${mobile.android.home}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="osb.lcs.portlet.host.name" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					osb.lcs.portlet.host.name=${osb.lcs.portlet.host.name}
 				</echo>
 			</then>
 		</if>
@@ -5339,6 +5363,7 @@ if (ppstate.equals("normal")) {
 							"modules/portal/portal-json-web-service-extender/test/integration/**/*Test.java",
 							"modules/portal/portal-template-freemarker/test/integration/**/*Test.java",
 							"modules/util/osgi-util/test/integration/**/*Test.java",
+							"portal-service/test/unit/com/liferay/portal/log/assertor/PortalLogAssertorTest.java",
 							"*/pacl/test/[\\w]+Test.class",
 							"**/*ServiceHttpTest.java",
 							"**/*ServiceJsonTest.java",
@@ -5629,6 +5654,7 @@ if (ppstate.equals("normal")) {
 		<gradle-execute failonerror="false" task="runPoshi">
 			<arg value="--build-file=portal-web/build-test.gradle" />
 			<arg value="-PposhiTestName=${poshi.test.name}" />
+			<arg value="-PsaveScreenshot=${test.save.screenshot}" />
 			<arg value="-PseleniumLoggerEnabled=${test.selenium.logger.enabled}" />
 			<arg value="-PtestCaseAvailablePropertyNames=${test.case.available.property.names}" />
 			<arg value="-PtestSkipTearDown=${test.skip.tear.down}" />
@@ -6374,7 +6400,13 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 
 		<antcall target="rebuild-database" inheritAll="false" />
 
+		<antcall target="delete-liferay-home" />
+
 		<ant dir="modules" target="test-class-group" inheritAll="false" />
+
+		<ant dir="portal-service" target="test-class" inheritAll="false">
+			<property name="test.class" value="PortalLogAssertorTest" />
+		</ant>
 
 		<ant antfile="build-test-tck.xml" target="record-test-tck-package-names" />
 

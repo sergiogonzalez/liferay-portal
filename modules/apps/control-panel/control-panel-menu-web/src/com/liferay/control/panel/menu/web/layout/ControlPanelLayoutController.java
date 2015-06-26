@@ -14,13 +14,13 @@
 
 package com.liferay.control.panel.menu.web.layout;
 
+import com.liferay.application.list.PanelAppRegistry;
+import com.liferay.application.list.PanelCategoryRegistry;
+import com.liferay.application.list.taglib.constants.ApplicationListWebKeys;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutTypeController;
 import com.liferay.portal.model.impl.BasePanelLayoutControllerImpl;
-import com.liferay.productivity.center.panel.PanelAppRegistry;
-import com.liferay.productivity.center.panel.PanelCategoryRegistry;
-import com.liferay.productivity.center.taglib.constants.ProductivityCenterWebKeys;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
 import javax.servlet.ServletContext;
@@ -70,9 +70,9 @@ public class ControlPanelLayoutController
 	@Override
 	protected void addAttributes(HttpServletRequest request) {
 		request.setAttribute(
-			ProductivityCenterWebKeys.PANEL_APP_REGISTRY, _panelAppRegistry);
+			ApplicationListWebKeys.PANEL_APP_REGISTRY, _panelAppRegistry);
 		request.setAttribute(
-			ProductivityCenterWebKeys.PANEL_CATEGORY_REGISTRY,
+			ApplicationListWebKeys.PANEL_CATEGORY_REGISTRY,
 			_panelCategoryRegistry);
 	}
 
@@ -95,9 +95,8 @@ public class ControlPanelLayoutController
 
 	@Override
 	protected void removeAttributes(HttpServletRequest request) {
-		request.removeAttribute(ProductivityCenterWebKeys.PANEL_APP_REGISTRY);
-		request.removeAttribute(
-			ProductivityCenterWebKeys.PANEL_CATEGORY_REGISTRY);
+		request.removeAttribute(ApplicationListWebKeys.PANEL_APP_REGISTRY);
+		request.removeAttribute(ApplicationListWebKeys.PANEL_CATEGORY_REGISTRY);
 	}
 
 	@Reference(unbind = "-")
