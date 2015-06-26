@@ -52,7 +52,7 @@ public class FindFileEntryAction extends FindFolderAction {
 		String rootPortletId = PortletConstants.getRootPortletId(portletId);
 
 		if (rootPortletId.equals(PortletKeys.DOCUMENT_LIBRARY_DISPLAY)) {
-			return "/document_library_display/view_file_entry";
+			return "/document_library/view_file_entry";
 		}
 		else if (rootPortletId.equals(PortletKeys.MEDIA_GALLERY_DISPLAY)) {
 			return "/document_library_display/view_image";

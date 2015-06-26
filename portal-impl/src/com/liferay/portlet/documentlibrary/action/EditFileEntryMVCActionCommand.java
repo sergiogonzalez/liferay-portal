@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.servlet.ServletResponseConstants;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.upload.LiferayFileItemException;
 import com.liferay.portal.kernel.upload.UploadException;
@@ -105,6 +106,9 @@ import org.apache.commons.fileupload.FileUploadBase;
 @OSGiBeanProperties(
 	property = {
 		"javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY,
+		"javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY_ADMIN,
+		"javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY_DISPLAY,
+		"javax.portlet.name=" + PortletKeys.MEDIA_GALLERY_DISPLAY,
 		"mvc.command.name=/document_library/edit_file_entry",
 		"mvc.command.name=/document_library/upload_file_entry",
 		"mvc.command.name=/document_library/upload_multiple_file_entries",
@@ -1010,6 +1014,11 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand
 					description, changeLog, majorVersion, inputStream, size,
 					serviceContext);
 			}
+
+			SessionMessages.add(
+				actionRequest,
+				PortalUtil.getPortletId(actionRequest) +
+					SessionMessages.KEY_SUFFIX_FORCE_SEND_REDIRECT);
 
 			return fileEntry;
 		}

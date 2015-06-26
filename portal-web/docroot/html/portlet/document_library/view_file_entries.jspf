@@ -114,12 +114,12 @@
 					PortletURL tempRowURL = renderResponse.createRenderURL();
 
 					if (fileShortcut == null) {
-						tempRowURL.setParameter("mvcRenderCommandName", "/document_library_display/view_file_entry");
+						tempRowURL.setParameter("mvcRenderCommandName", "/document_library/view_file_entry");
 						tempRowURL.setParameter("redirect", currentURL);
 						tempRowURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
 					}
 					else {
-						tempRowURL.setParameter("mvcRenderCommandName", "/document_library_display/view_file_entry");
+						tempRowURL.setParameter("mvcRenderCommandName", "/document_library/view_file_entry");
 						tempRowURL.setParameter("redirect", currentURL);
 						tempRowURL.setParameter("fileEntryId", String.valueOf(fileShortcut.getToFileEntryId()));
 					}
