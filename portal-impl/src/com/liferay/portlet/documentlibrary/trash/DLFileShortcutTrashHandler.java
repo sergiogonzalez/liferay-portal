@@ -16,6 +16,8 @@ package com.liferay.portlet.documentlibrary.trash;
 
 import com.liferay.portal.InvalidRepositoryException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
 import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
@@ -142,6 +144,10 @@ public class DLFileShortcutTrashHandler extends DLBaseTrashHandler {
 			return dlFileShortcut.isInTrash();
 		}
 		catch (InvalidRepositoryException ire) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(ire, ire);
+			}
+
 			return false;
 		}
 	}
@@ -154,6 +160,10 @@ public class DLFileShortcutTrashHandler extends DLBaseTrashHandler {
 			return dlFileShortcut.isInTrashContainer();
 		}
 		catch (InvalidRepositoryException ire) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(ire, ire);
+			}
+
 			return false;
 		}
 	}
@@ -166,6 +176,10 @@ public class DLFileShortcutTrashHandler extends DLBaseTrashHandler {
 			dlFileShortcut.getFolder();
 		}
 		catch (NoSuchFolderException nsfe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(nsfe, nsfe);
+			}
+
 			return false;
 		}
 
@@ -269,5 +283,8 @@ public class DLFileShortcutTrashHandler extends DLBaseTrashHandler {
 		return DLFileShortcutPermission.contains(
 			permissionChecker, classPK, actionId);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DLFileShortcutTrashHandler.class);
 
 }

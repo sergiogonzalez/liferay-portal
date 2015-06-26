@@ -16,6 +16,8 @@ package com.liferay.portlet.documentlibrary.trash;
 
 import com.liferay.portal.InvalidRepositoryException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
 import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
@@ -202,6 +204,10 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 			return dlFileEntry.isInTrash();
 		}
 		catch (InvalidRepositoryException ire) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(ire, ire);
+			}
+
 			return false;
 		}
 	}
@@ -214,6 +220,10 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 			return dlFileEntry.isInTrashContainer();
 		}
 		catch (InvalidRepositoryException ire) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(ire, ire);
+			}
+
 			return false;
 		}
 	}
@@ -426,5 +436,8 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 		return DLFileEntryPermission.contains(
 			permissionChecker, classPK, actionId);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DLFileEntryTrashHandler.class);
 
 }

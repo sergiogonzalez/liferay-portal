@@ -3316,6 +3316,10 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			return repository.getFileEntryByUuid(uuid);
 		}
 		catch (NoSuchFileEntryException nsfee) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(nsfee, nsfee);
+			}
+
 			return null;
 		}
 		catch (RepositoryException re) {
