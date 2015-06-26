@@ -605,6 +605,10 @@ public class JCRStore extends BaseStore {
 			getFileContentNode(companyId, repositoryId, fileName, versionLabel);
 		}
 		catch (NoSuchFileException nsfe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(nsfe, nsfe);
+			}
+
 			return false;
 		}
 
