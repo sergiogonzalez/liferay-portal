@@ -14,7 +14,8 @@
 
 package com.liferay.portlet.documentlibrary.action;
 
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseJSPMVCResourceCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.util.PortletKeys;
 
@@ -27,15 +28,16 @@ import com.liferay.portal.util.PortletKeys;
 		"javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY_ADMIN,
 		"javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY_DISPLAY,
 		"javax.portlet.name=" + PortletKeys.MEDIA_GALLERY_DISPLAY,
-		"mvc.command.name=/document_library/edit_file_entry"
+		"mvc.command.name=/document_library/upload_multiple_file_entries"
 	},
-	service = MVCRenderCommand.class
+	service = MVCResourceCommand.class
 )
-public class EditFileEntryMVCRenderCommand
-	extends BaseGetFileEntryMVCRenderCommand implements MVCRenderCommand {
+public class UploadMultipleFileEntriesMVCResourceCommand
+	extends BaseJSPMVCResourceCommand implements MVCResourceCommand {
 
-	public EditFileEntryMVCRenderCommand() {
-		super("/html/portlet/document_library/edit_file_entry.jsp");
+	public UploadMultipleFileEntriesMVCResourceCommand() {
+		super(
+			"/html/portlet/document_library/upload_multiple_file_entries.jsp");
 	}
 
 }

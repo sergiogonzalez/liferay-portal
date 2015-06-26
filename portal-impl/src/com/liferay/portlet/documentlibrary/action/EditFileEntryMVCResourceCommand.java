@@ -14,13 +14,10 @@
 
 package com.liferay.portlet.documentlibrary.action;
 
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCResourceCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseJSPMVCResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCResourceCommand;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.util.PortletKeys;
-
-import javax.portlet.ResourceRequest;
-import javax.portlet.ResourceResponse;
 
 /**
  * @author Iván Zaera
@@ -28,25 +25,18 @@ import javax.portlet.ResourceResponse;
 @OSGiBeanProperties(
 	property = {
 		"javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY,
-		"mvc.command.name=/document_library/edit_file_entry",
-		"mvc.command.name=/document_library/upload_file_entry",
-		"mvc.command.name=/document_library/upload_multiple_file_entries",
-		"mvc.command.name=/document_library/view_file_entry"
+		"javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY_ADMIN,
+		"javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY_DISPLAY,
+		"javax.portlet.name=" + PortletKeys.MEDIA_GALLERY_DISPLAY,
+		"mvc.command.name=/document_library/edit_file_entry"
 	},
 	service = MVCResourceCommand.class
 )
-public class EditFileEntryMVCResourceCommand extends BaseMVCResourceCommand
+public class EditFileEntryMVCResourceCommand extends BaseJSPMVCResourceCommand
 	implements MVCResourceCommand {
 
-	@Override
-	protected void doServeResource(
-			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
-		throws Exception {
-
-		include(
-			resourceRequest, resourceResponse,
-			"/html/portlet/document_library/" +
-				"upload_multiple_file_entries_resources.jsp");
+	public EditFileEntryMVCResourceCommand() {
+		super("/html/portlet/document_library/edit_file_entry.jsp");
 	}
 
 }

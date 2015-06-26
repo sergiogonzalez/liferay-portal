@@ -12,31 +12,28 @@
  * details.
  */
 
-package com.liferay.portlet.imagegallerydisplay.action;
+package com.liferay.portlet.documentlibrary.action;
 
+import com.liferay.portal.NoSuchRepositoryEntryException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.util.PortletKeys;
-import com.liferay.portlet.documentlibrary.NoSuchFolderException;
-import com.liferay.portlet.documentlibrary.action.ActionUtil;
+import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
+import com.liferay.portlet.documentlibrary.NoSuchFileVersionException;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Iván Zaera
  */
-@OSGiBeanProperties(
-	property = {
-		"javax.portlet.name=" + PortletKeys.MEDIA_GALLERY_DISPLAY,
-		"mvc.command.name=", "mvc.command.name=/image_gallery_display/view"
-	},
-	service = MVCRenderCommand.class
-)
-public class ViewMVCRenderCommand implements MVCRenderCommand {
+public abstract class BaseGetFileEntryMVCRenderCommand
+	implements MVCRenderCommand {
+
+	public BaseGetFileEntryMVCRenderCommand(String path) {
+		_path = path;
+	}
 
 	@Override
 	public String render(
@@ -44,22 +41,26 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 		throws PortletException {
 
 		try {
-			ActionUtil.getFolder(renderRequest);
+			ActionUtil.getFileEntry(renderRequest);
 		}
 		catch (Exception e) {
-			if (e instanceof NoSuchFolderException ||
+			if (e instanceof NoSuchFileEntryException ||
+				e instanceof NoSuchFileVersionException ||
+				e instanceof NoSuchRepositoryEntryException ||
 				e instanceof PrincipalException) {
 
 				SessionErrors.add(renderRequest, e.getClass());
 
-				return "/html/portlet/image_gallery_display/error.jsp";
+				return "/html/portlet/document_library/error.jsp";
 			}
 			else {
 				throw new PortletException(e);
 			}
 		}
 
-		return "/html/portlet/image_gallery_display/view.jsp";
+		return _path;
 	}
+
+	private final String _path;
 
 }

@@ -27,15 +27,15 @@ import com.liferay.portal.util.PortletKeys;
 		"javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY_ADMIN,
 		"javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY_DISPLAY,
 		"javax.portlet.name=" + PortletKeys.MEDIA_GALLERY_DISPLAY,
-		"mvc.command.name=/document_library/edit_file_entry"
+		"mvc.command.name=/document_library/upload_file_entry"
 	},
 	service = MVCRenderCommand.class
 )
-public class EditFileEntryMVCRenderCommand
+public class UploadFileEntryMVCRenderCommand
 	extends BaseGetFileEntryMVCRenderCommand implements MVCRenderCommand {
 
-	public EditFileEntryMVCRenderCommand() {
-		super("/html/portlet/document_library/edit_file_entry.jsp");
+	public UploadFileEntryMVCRenderCommand() {
+		super("/html/portlet/document_library/upload_file_entry.jsp");
 	}
 
 }

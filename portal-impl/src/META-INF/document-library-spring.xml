@@ -30,10 +30,17 @@
 	<bean id="com.liferay.portlet.documentlibrary.action.SelectFileEntryMVCRenderCommand" class="com.liferay.portlet.documentlibrary.action.SelectFileEntryMVCRenderCommand" />
 	<bean id="com.liferay.portlet.documentlibrary.action.SelectGroupMVCRenderCommand" class="com.liferay.portlet.documentlibrary.action.SelectGroupMVCRenderCommand" />
 	<bean id="com.liferay.portlet.documentlibrary.action.SelectRestrictedFileEntryTypeMVCRenderCommand" class="com.liferay.portlet.documentlibrary.action.SelectRestrictedFileEntryTypeMVCRenderCommand" />
+	<bean id="com.liferay.portlet.documentlibrary.action.UploadFileEntryMVCRenderCommand" class="com.liferay.portlet.documentlibrary.action.UploadFileEntryMVCRenderCommand" />
+	<bean id="com.liferay.portlet.documentlibrary.action.UploadFileEntryMVCResourceCommand" class="com.liferay.portlet.documentlibrary.action.UploadFileEntryMVCResourceCommand" />
+	<bean id="com.liferay.portlet.documentlibrary.action.UploadMultipleFileEntriesMVCRenderCommand" class="com.liferay.portlet.documentlibrary.action.UploadMultipleFileEntriesMVCRenderCommand" />
+	<bean id="com.liferay.portlet.documentlibrary.action.UploadMultipleFileEntriesMVCResourceCommand" class="com.liferay.portlet.documentlibrary.action.UploadMultipleFileEntriesMVCResourceCommand" />
+	<bean id="com.liferay.portlet.documentlibrary.action.ViewFileEntryMVCRenderCommand" class="com.liferay.portlet.documentlibrary.action.ViewFileEntryMVCRenderCommand" />
+	<bean id="com.liferay.portlet.documentlibrary.action.ViewFileEntryMVCResourceCommand" class="com.liferay.portlet.documentlibrary.action.ViewFileEntryMVCResourceCommand" />
 	<bean id="com.liferay.portlet.documentlibrary.action.ViewFileEntryTypeMVCRenderCommand" class="com.liferay.portlet.documentlibrary.action.ViewFileEntryTypeMVCRenderCommand" />
 	<bean id="com.liferay.portlet.documentlibrary.action.ViewMVCRenderCommand" class="com.liferay.portlet.documentlibrary.action.ViewMVCRenderCommand" />
 	<bean id="com.liferay.portlet.documentlibrarydisplay.action.SearchMVCRenderCommand" class="com.liferay.portlet.documentlibrarydisplay.action.SearchMVCRenderCommand" />
 	<bean id="com.liferay.portlet.documentlibrarydisplay.action.SelectAddFileEntryTypeMVCRenderCommand" class="com.liferay.portlet.documentlibrarydisplay.action.SelectAddFileEntryTypeMVCRenderCommand" />
+	<bean id="com.liferay.portlet.documentlibrarydisplay.action.ViewMVCRenderCommand" class="com.liferay.portlet.documentlibrarydisplay.action.ViewMVCRenderCommand" />
 	<bean id="com.liferay.portlet.imagegallerydisplay.action.EmbeddedPlayerMVCRenderCommand" class="com.liferay.portlet.imagegallerydisplay.action.EmbeddedPlayerMVCRenderCommand" />
 	<bean id="com.liferay.portlet.imagegallerydisplay.action.SearchMVCRenderCommand" class="com.liferay.portlet.imagegallerydisplay.action.SearchMVCRenderCommand" />
 	<bean id="com.liferay.portlet.imagegallerydisplay.action.SelectAddFileEntryTypeMVCRenderCommand" class="com.liferay.portlet.imagegallerydisplay.action.SelectAddFileEntryTypeMVCRenderCommand" />
