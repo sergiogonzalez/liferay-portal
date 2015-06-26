@@ -24,14 +24,18 @@ import com.liferay.portal.util.PortletKeys;
 @OSGiBeanProperties(
 	property = {
 		"javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY,
-		"mvc.command.name=", "mvc.command.name=/document_library/view"
+		"javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY_ADMIN,
+		"javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY_DISPLAY,
+		"javax.portlet.name=" + PortletKeys.MEDIA_GALLERY_DISPLAY,
+		"mvc.command.name=/document_library/select_file_entry"
 	},
 	service = MVCRenderCommand.class
 )
-public class ViewMVCRenderCommand extends BaseGetFolderMVCRenderCommand {
+public class SelectFileEntryMVCRenderCommand
+	extends BaseGetFolderMVCRenderCommand {
 
-	public ViewMVCRenderCommand() {
-		super("/html/portlet/document_library/view.jsp");
+	public SelectFileEntryMVCRenderCommand() {
+		super("/html/portlet/document_library/select_file_entry.jsp");
 	}
 
 }
