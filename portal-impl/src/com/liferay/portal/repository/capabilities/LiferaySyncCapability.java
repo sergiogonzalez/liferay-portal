@@ -33,7 +33,7 @@ import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
 import com.liferay.portlet.documentlibrary.model.DLSyncConstants;
 import com.liferay.portlet.documentlibrary.model.DLSyncEvent;
-import com.liferay.portlet.documentlibrary.service.DLSyncEventLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLSyncEventLocalService;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -45,8 +45,12 @@ import java.util.concurrent.Callable;
 public class LiferaySyncCapability
 	implements RepositoryEventAware, SyncCapability {
 
-	public LiferaySyncCapability(GroupServiceAdapter groupServiceAdapter) {
+	public LiferaySyncCapability(
+		GroupServiceAdapter groupServiceAdapter,
+		DLSyncEventLocalService dlSyncEventLocalService) {
+
 		_groupServiceAdapter = groupServiceAdapter;
+		_dlSyncEventLocalService = dlSyncEventLocalService;
 	}
 
 	@Override
@@ -94,41 +98,6 @@ public class LiferaySyncCapability
 			WORKFLOW_UPDATE_FILE_ENTRY_EVENT_LISTENER);
 	}
 
-	protected static void registerDLSyncEventCallback(
-		final String event, final String type, final long typePK) {
-
-		DLSyncEvent dlSyncEvent = DLSyncEventLocalServiceUtil.addDLSyncEvent(
-			event, type, typePK);
-
-		final long modifiedTime = dlSyncEvent.getModifiedTime();
-
-		TransactionCommitCallbackRegistryUtil.registerCallback(
-			new Callable<Void>() {
-
-				@Override
-				public Void call() throws Exception {
-					Message message = new Message();
-
-					Map<String, Object> values = new HashMap<>(4);
-
-					values.put("event", event);
-					values.put("modifiedTime", modifiedTime);
-					values.put("type", type);
-					values.put("typePK", typePK);
-
-					message.setValues(values);
-
-					MessageBusUtil.sendMessage(
-						DestinationNames.DOCUMENT_LIBRARY_SYNC_EVENT_PROCESSOR,
-						message);
-
-					return null;
-				}
-
-			}
-		);
-	}
-
 	protected boolean isStagingGroup(long groupId) {
 		try {
 			Group group = _groupServiceAdapter.getGroup(groupId);
@@ -162,6 +131,41 @@ public class LiferaySyncCapability
 
 		registerDLSyncEventCallback(
 			event, DLSyncConstants.TYPE_FOLDER, folder.getFolderId());
+	}
+
+	protected void registerDLSyncEventCallback(
+		final String event, final String type, final long typePK) {
+
+		DLSyncEvent dlSyncEvent = _dlSyncEventLocalService.addDLSyncEvent(
+			event, type, typePK);
+
+		final long modifiedTime = dlSyncEvent.getModifiedTime();
+
+		TransactionCommitCallbackRegistryUtil.registerCallback(
+			new Callable<Void>() {
+
+				@Override
+				public Void call() throws Exception {
+					Message message = new Message();
+
+					Map<String, Object> values = new HashMap<>(4);
+
+					values.put("event", event);
+					values.put("modifiedTime", modifiedTime);
+					values.put("type", type);
+					values.put("typePK", typePK);
+
+					message.setValues(values);
+
+					MessageBusUtil.sendMessage(
+						DestinationNames.DOCUMENT_LIBRARY_SYNC_EVENT_PROCESSOR,
+						message);
+
+					return null;
+				}
+
+			}
+		);
 	}
 
 	private final RepositoryEventListener
@@ -235,6 +239,7 @@ public class LiferaySyncCapability
 				new SyncFileEntryRepositoryEventListener<>(
 					DLSyncConstants.EVENT_UPDATE);
 
+	private final DLSyncEventLocalService _dlSyncEventLocalService;
 	private final GroupServiceAdapter _groupServiceAdapter;
 
 	private class SyncFileEntryRepositoryEventListener

@@ -41,7 +41,6 @@ import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalService;
-import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.service.TrashVersionLocalService;
 
@@ -255,7 +254,7 @@ public class LiferayTrashCapability
 		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
 
 		List<Object> foldersAndFileEntriesAndFileShortcuts =
-			DLFolderLocalServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(
+			_dlFolderServiceAdapter.getFoldersAndFileEntriesAndFileShortcuts(
 				groupId, dlFolderId, null, true, queryDefinition);
 
 		for (Object folderFileEntryOrFileShortcut :
