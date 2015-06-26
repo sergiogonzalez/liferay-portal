@@ -62,6 +62,7 @@ public class SACPEntryWrapper implements SACPEntry, ModelWrapper<SACPEntry> {
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("allowedServiceSignatures", getAllowedServiceSignatures());
+		attributes.put("defaultSACPEntry", getDefaultSACPEntry());
 		attributes.put("name", getName());
 		attributes.put("title", getTitle());
 
@@ -117,6 +118,12 @@ public class SACPEntryWrapper implements SACPEntry, ModelWrapper<SACPEntry> {
 
 		if (allowedServiceSignatures != null) {
 			setAllowedServiceSignatures(allowedServiceSignatures);
+		}
+
+		Boolean defaultSACPEntry = (Boolean)attributes.get("defaultSACPEntry");
+
+		if (defaultSACPEntry != null) {
+			setDefaultSACPEntry(defaultSACPEntry);
 		}
 
 		String name = (String)attributes.get("name");
@@ -186,6 +193,16 @@ public class SACPEntryWrapper implements SACPEntry, ModelWrapper<SACPEntry> {
 	@Override
 	public java.lang.String getDefaultLanguageId() {
 		return _sacpEntry.getDefaultLanguageId();
+	}
+
+	/**
+	* Returns the default s a c p entry of this s a c p entry.
+	*
+	* @return the default s a c p entry of this s a c p entry
+	*/
+	@Override
+	public boolean getDefaultSACPEntry() {
+		return _sacpEntry.getDefaultSACPEntry();
 	}
 
 	@Override
@@ -365,6 +382,16 @@ public class SACPEntryWrapper implements SACPEntry, ModelWrapper<SACPEntry> {
 		return _sacpEntry.isCachedModel();
 	}
 
+	/**
+	* Returns <code>true</code> if this s a c p entry is default s a c p entry.
+	*
+	* @return <code>true</code> if this s a c p entry is default s a c p entry; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isDefaultSACPEntry() {
+		return _sacpEntry.isDefaultSACPEntry();
+	}
+
 	@Override
 	public boolean isEscapedModel() {
 		return _sacpEntry.isEscapedModel();
@@ -427,6 +454,16 @@ public class SACPEntryWrapper implements SACPEntry, ModelWrapper<SACPEntry> {
 	@Override
 	public void setCreateDate(Date createDate) {
 		_sacpEntry.setCreateDate(createDate);
+	}
+
+	/**
+	* Sets whether this s a c p entry is default s a c p entry.
+	*
+	* @param defaultSACPEntry the default s a c p entry of this s a c p entry
+	*/
+	@Override
+	public void setDefaultSACPEntry(boolean defaultSACPEntry) {
+		_sacpEntry.setDefaultSACPEntry(defaultSACPEntry);
 	}
 
 	@Override

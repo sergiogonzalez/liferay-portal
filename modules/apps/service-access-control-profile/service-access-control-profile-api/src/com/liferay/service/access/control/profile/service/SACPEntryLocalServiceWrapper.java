@@ -48,12 +48,19 @@ public class SACPEntryLocalServiceWrapper implements SACPEntryLocalService,
 	@Override
 	public com.liferay.service.access.control.profile.model.SACPEntry addSACPEntry(
 		long userId, java.lang.String allowedServiceSignatures,
-		java.lang.String name,
+		boolean defaultSACPEntry, java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _sacpEntryLocalService.addSACPEntry(userId,
-			allowedServiceSignatures, name, titleMap, serviceContext);
+			allowedServiceSignatures, defaultSACPEntry, name, titleMap,
+			serviceContext);
+	}
+
+	@Override
+	public void checkDefaultSACPEntry(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_sacpEntryLocalService.checkDefaultSACPEntry(companyId);
 	}
 
 	/**

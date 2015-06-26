@@ -1323,6 +1323,7 @@
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
+			<var name="roleName" value="${roleName}" />
 		</execute>
 
 		<execute macro="User#addCP">
@@ -3483,7 +3484,9 @@
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
-		<execute macro="WebContentNavigator#gotoAddWithStructureCP" />
+		<execute macro="WebContentNavigator#gotoAddWithStructureCP">
+			<var name="structureName" value="Structure Name" />
+		</execute>
 
 		<execute macro="WebContent#addWithStructureCP">
 			<var name="structureName" value="Structure Name" />

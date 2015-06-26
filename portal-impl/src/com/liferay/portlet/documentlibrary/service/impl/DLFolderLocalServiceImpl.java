@@ -27,6 +27,9 @@ import com.liferay.portal.kernel.lock.LockManagerUtil;
 import com.liferay.portal.kernel.lock.NoSuchLockException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.repository.event.RepositoryEventTrigger;
+import com.liferay.portal.kernel.repository.event.RepositoryEventType;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
@@ -47,7 +50,9 @@ import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.TreeModel;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.WorkflowDefinitionLink;
+import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.util.RepositoryUtil;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.DuplicateFolderNameException;
 import com.liferay.portlet.documentlibrary.FolderNameException;
@@ -271,6 +276,10 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			DLFolder dlFolder, boolean includeTrashedEntries)
 		throws PortalException {
 
+		RepositoryEventTrigger repositoryEventTrigger =
+			RepositoryUtil.getRepositoryEventTrigger(
+				dlFolder.getRepositoryId());
+
 		// Folders
 
 		List<DLFolder> dlFolders = dlFolderPersistence.findByG_P(
@@ -278,6 +287,10 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 		for (DLFolder curDLFolder : dlFolders) {
 			if (includeTrashedEntries || !curDLFolder.isInTrashExplicitly()) {
+				repositoryEventTrigger.trigger(
+					RepositoryEventType.Delete.class, Folder.class,
+					new LiferayFolder(curDLFolder));
+
 				dlFolderLocalService.deleteFolder(
 					curDLFolder, includeTrashedEntries);
 			}

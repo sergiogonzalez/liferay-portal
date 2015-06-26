@@ -98,8 +98,14 @@ public class LiferayPortlet extends GenericPortlet {
 				addSuccessMessage(actionRequest, actionResponse);
 			}
 
-			if (emptySessionMessages || isAlwaysSendRedirect()) {
-				sendRedirect(actionRequest, actionResponse);
+			if (!SessionMessages.contains(
+					actionRequest,
+					PortalUtil.getPortletId(actionRequest) +
+						SessionMessages.KEY_SUFFIX_FORCE_SEND_REDIRECT)) {
+
+				if (emptySessionMessages || isAlwaysSendRedirect()) {
+					sendRedirect(actionRequest, actionResponse);
+				}
 			}
 		}
 		catch (PortletException pe) {
