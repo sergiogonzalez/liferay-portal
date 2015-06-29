@@ -46,34 +46,6 @@ public class DDMStructureLocalServiceWrapper implements DDMStructureLocalService
 	}
 
 	@Override
-	public void addDLFileEntryTypeDDMStructure(long fileEntryTypeId,
-		com.liferay.portlet.dynamicdatamapping.model.DDMStructure ddmStructure) {
-		_ddmStructureLocalService.addDLFileEntryTypeDDMStructure(fileEntryTypeId,
-			ddmStructure);
-	}
-
-	@Override
-	public void addDLFileEntryTypeDDMStructure(long fileEntryTypeId,
-		long structureId) {
-		_ddmStructureLocalService.addDLFileEntryTypeDDMStructure(fileEntryTypeId,
-			structureId);
-	}
-
-	@Override
-	public void addDLFileEntryTypeDDMStructures(long fileEntryTypeId,
-		java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> DDMStructures) {
-		_ddmStructureLocalService.addDLFileEntryTypeDDMStructures(fileEntryTypeId,
-			DDMStructures);
-	}
-
-	@Override
-	public void addDLFileEntryTypeDDMStructures(long fileEntryTypeId,
-		long[] structureIds) {
-		_ddmStructureLocalService.addDLFileEntryTypeDDMStructures(fileEntryTypeId,
-			structureIds);
-	}
-
-	@Override
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure addStructure(
 		long userId, long groupId, long classNameId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
@@ -285,11 +257,6 @@ public class DDMStructureLocalServiceWrapper implements DDMStructureLocalService
 			groupPermissions, guestPermissions);
 	}
 
-	@Override
-	public void clearDLFileEntryTypeDDMStructures(long fileEntryTypeId) {
-		_ddmStructureLocalService.clearDLFileEntryTypeDDMStructures(fileEntryTypeId);
-	}
-
 	/**
 	* Copies a structure, creating a new structure with all the values
 	* extracted from the original one. The new structure supports a new name
@@ -362,34 +329,6 @@ public class DDMStructureLocalServiceWrapper implements DDMStructureLocalService
 		long structureId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmStructureLocalService.deleteDDMStructure(structureId);
-	}
-
-	@Override
-	public void deleteDLFileEntryTypeDDMStructure(long fileEntryTypeId,
-		com.liferay.portlet.dynamicdatamapping.model.DDMStructure ddmStructure) {
-		_ddmStructureLocalService.deleteDLFileEntryTypeDDMStructure(fileEntryTypeId,
-			ddmStructure);
-	}
-
-	@Override
-	public void deleteDLFileEntryTypeDDMStructure(long fileEntryTypeId,
-		long structureId) {
-		_ddmStructureLocalService.deleteDLFileEntryTypeDDMStructure(fileEntryTypeId,
-			structureId);
-	}
-
-	@Override
-	public void deleteDLFileEntryTypeDDMStructures(long fileEntryTypeId,
-		java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> DDMStructures) {
-		_ddmStructureLocalService.deleteDLFileEntryTypeDDMStructures(fileEntryTypeId,
-			DDMStructures);
-	}
-
-	@Override
-	public void deleteDLFileEntryTypeDDMStructures(long fileEntryTypeId,
-		long[] structureIds) {
-		_ddmStructureLocalService.deleteDLFileEntryTypeDDMStructures(fileEntryTypeId,
-			structureIds);
 	}
 
 	/**
@@ -818,56 +757,6 @@ public class DDMStructureLocalServiceWrapper implements DDMStructureLocalService
 	}
 
 	@Override
-	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getDLFileEntryTypeDDMStructures(
-		long fileEntryTypeId) {
-		return _ddmStructureLocalService.getDLFileEntryTypeDDMStructures(fileEntryTypeId);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getDLFileEntryTypeDDMStructures(
-		long fileEntryTypeId, int start, int end) {
-		return _ddmStructureLocalService.getDLFileEntryTypeDDMStructures(fileEntryTypeId,
-			start, end);
-	}
-
-	@Override
-	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getDLFileEntryTypeDDMStructures(
-		long fileEntryTypeId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator) {
-		return _ddmStructureLocalService.getDLFileEntryTypeDDMStructures(fileEntryTypeId,
-			start, end, orderByComparator);
-	}
-
-	@Override
-	public int getDLFileEntryTypeDDMStructuresCount(long fileEntryTypeId) {
-		return _ddmStructureLocalService.getDLFileEntryTypeDDMStructuresCount(fileEntryTypeId);
-	}
-
-	/**
-	* Returns the fileEntryTypeIds of the document library file entry types associated with the d d m structure.
-	*
-	* @param structureId the structureId of the d d m structure
-	* @return long[] the fileEntryTypeIds of document library file entry types associated with the d d m structure
-	*/
-	@Override
-	public long[] getDLFileEntryTypePrimaryKeys(long structureId) {
-		return _ddmStructureLocalService.getDLFileEntryTypePrimaryKeys(structureId);
-	}
-
-	/**
-	* Returns all the structures for the document library file entry type.
-	*
-	* @param dlFileEntryTypeId the primary key of the document library file
-	entry type
-	* @return the structures for the document library file entry type
-	*/
-	@Override
-	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getDLFileEntryTypeStructures(
-		long dlFileEntryTypeId) {
-		return _ddmStructureLocalService.getDLFileEntryTypeStructures(dlFileEntryTypeId);
-	}
-
-	@Override
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		com.liferay.portlet.exportimport.lar.PortletDataContext portletDataContext) {
 		return _ddmStructureLocalService.getExportActionableDynamicQuery(portletDataContext);
@@ -1183,18 +1072,6 @@ public class DDMStructureLocalServiceWrapper implements DDMStructureLocalService
 	}
 
 	@Override
-	public boolean hasDLFileEntryTypeDDMStructure(long fileEntryTypeId,
-		long structureId) {
-		return _ddmStructureLocalService.hasDLFileEntryTypeDDMStructure(fileEntryTypeId,
-			structureId);
-	}
-
-	@Override
-	public boolean hasDLFileEntryTypeDDMStructures(long fileEntryTypeId) {
-		return _ddmStructureLocalService.hasDLFileEntryTypeDDMStructures(fileEntryTypeId);
-	}
-
-	@Override
 	public void revertStructure(long userId, long structureId,
 		java.lang.String version,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -1311,6 +1188,7 @@ public class DDMStructureLocalServiceWrapper implements DDMStructureLocalService
 	*
 	* @param companyId the primary key of the structure's company
 	* @param groupIds the primary keys of the groups
+	* @param classNameId
 	* @param name the name keywords
 	* @param description the description keywords
 	* @param storageType the structure's storage type. It can be "xml" or
@@ -1338,13 +1216,6 @@ public class DDMStructureLocalServiceWrapper implements DDMStructureLocalService
 	@Override
 	public void setBeanIdentifier(java.lang.String beanIdentifier) {
 		_ddmStructureLocalService.setBeanIdentifier(beanIdentifier);
-	}
-
-	@Override
-	public void setDLFileEntryTypeDDMStructures(long fileEntryTypeId,
-		long[] structureIds) {
-		_ddmStructureLocalService.setDLFileEntryTypeDDMStructures(fileEntryTypeId,
-			structureIds);
 	}
 
 	/**
