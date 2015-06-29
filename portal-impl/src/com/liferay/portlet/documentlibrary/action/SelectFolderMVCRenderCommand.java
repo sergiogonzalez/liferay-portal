@@ -30,15 +30,15 @@ import com.liferay.portal.util.PortletKeys;
 		"javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY_ADMIN,
 		"javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY_DISPLAY,
 		"javax.portlet.name=" + PortletKeys.MEDIA_GALLERY_DISPLAY,
-		"mvc.command.name=/document_library/edit_folder"
+		"mvc.command.name=/document_library/select_folder"
 	},
 	service = MVCRenderCommand.class
 )
-public class EditFolderMVCRenderCommand extends BaseGetFolderMVCRenderCommand
+public class SelectFolderMVCRenderCommand extends BaseGetFolderMVCRenderCommand
 	implements MVCRenderCommand {
 
-	public EditFolderMVCRenderCommand() {
-		super("/html/portlet/document_library/edit_folder.jsp");
+	public SelectFolderMVCRenderCommand() {
+		super("/html/portlet/document_library/select_folder.jsp");
 	}
 
 }
