@@ -226,11 +226,18 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 		Group group = groupLocalService.getGroup(groupId);
 
+		RepositoryEventTrigger repositoryEventTrigger =
+			RepositoryUtil.getRepositoryEventTrigger(repositoryId);
+
 		List<DLFolder> dlFolders = dlFolderPersistence.findByR_P(
 			repositoryId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 
 		for (DLFolder dlFolder : dlFolders) {
 			dlFolderLocalService.deleteFolder(dlFolder);
+
+			repositoryEventTrigger.trigger(
+				RepositoryEventType.Delete.class, Folder.class,
+				new LiferayFolder(dlFolder));
 		}
 
 		if (repository != null) {
