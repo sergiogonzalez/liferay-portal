@@ -5655,7 +5655,7 @@ public class PortalImpl implements Portal {
 			strutsAction.equals("/document_library/edit_file_entry") ||
 			strutsAction.equals("/document_library_display/edit_file_entry") ||
 			strutsAction.equals("/image_gallery_display/edit_file_entry") ||
-			strutsAction.equals("/document_library_display/edit_image") ||
+			strutsAction.equals("/image_gallery_display/edit_image") ||
 			actionName.equals("addFile") ||
 			isAlwaysAllowDoAsUser(path, strutsAction, actionName)) {
 
