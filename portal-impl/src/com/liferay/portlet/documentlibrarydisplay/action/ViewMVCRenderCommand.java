@@ -17,7 +17,7 @@ package com.liferay.portlet.documentlibrarydisplay.action;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portlet.documentlibrary.action.BaseGetFolderMVCRenderCommand;
+import com.liferay.portlet.documentlibrary.action.GetFolderMVCRenderCommand;
 
 /**
  * @author Iván Zaera
@@ -29,10 +29,11 @@ import com.liferay.portlet.documentlibrary.action.BaseGetFolderMVCRenderCommand;
 	},
 	service = MVCRenderCommand.class
 )
-public class ViewMVCRenderCommand extends BaseGetFolderMVCRenderCommand {
+public class ViewMVCRenderCommand extends GetFolderMVCRenderCommand {
 
-	public ViewMVCRenderCommand() {
-		super("/html/portlet/document_library_display/view.jsp");
+	@Override
+	protected String getPath() {
+		return "/html/portlet/document_library_display/view.jsp";
 	}
 
 }

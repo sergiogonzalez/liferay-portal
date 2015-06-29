@@ -34,11 +34,12 @@ import com.liferay.portal.util.PortletKeys;
 	},
 	service = MVCRenderCommand.class
 )
-public class EditFolderMVCRenderCommand extends BaseGetFolderMVCRenderCommand
+public class EditFolderMVCRenderCommand extends GetFolderMVCRenderCommand
 	implements MVCRenderCommand {
 
-	public EditFolderMVCRenderCommand() {
-		super("/html/portlet/document_library/edit_folder.jsp");
+	@Override
+	protected String getPath() {
+		return "/html/portlet/document_library/edit_folder.jsp";
 	}
 
 }

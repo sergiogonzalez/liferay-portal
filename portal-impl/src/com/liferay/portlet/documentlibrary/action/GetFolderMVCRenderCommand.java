@@ -14,12 +14,10 @@
 
 package com.liferay.portlet.documentlibrary.action;
 
-import com.liferay.portal.NoSuchRepositoryEntryException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
-import com.liferay.portlet.documentlibrary.NoSuchFileVersionException;
+import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -28,12 +26,7 @@ import javax.portlet.RenderResponse;
 /**
  * @author Iván Zaera
  */
-public abstract class BaseGetFileEntryMVCRenderCommand
-	implements MVCRenderCommand {
-
-	public BaseGetFileEntryMVCRenderCommand(String path) {
-		_path = path;
-	}
+public abstract class GetFolderMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
@@ -41,12 +34,10 @@ public abstract class BaseGetFileEntryMVCRenderCommand
 		throws PortletException {
 
 		try {
-			ActionUtil.getFileEntry(renderRequest);
+			ActionUtil.getFolder(renderRequest);
 		}
 		catch (Exception e) {
-			if (e instanceof NoSuchFileEntryException ||
-				e instanceof NoSuchFileVersionException ||
-				e instanceof NoSuchRepositoryEntryException ||
+			if (e instanceof NoSuchFolderException ||
 				e instanceof PrincipalException) {
 
 				SessionErrors.add(renderRequest, e.getClass());
@@ -58,9 +49,9 @@ public abstract class BaseGetFileEntryMVCRenderCommand
 			}
 		}
 
-		return _path;
+		return getPath();
 	}
 
-	private final String _path;
+	protected abstract String getPath();
 
 }

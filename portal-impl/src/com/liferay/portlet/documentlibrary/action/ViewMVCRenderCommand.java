@@ -31,10 +31,11 @@ import com.liferay.portal.util.PortletKeys;
 	},
 	service = MVCRenderCommand.class
 )
-public class ViewMVCRenderCommand extends BaseGetFolderMVCRenderCommand {
+public class ViewMVCRenderCommand extends GetFolderMVCRenderCommand {
 
-	public ViewMVCRenderCommand() {
-		super("/html/portlet/document_library/view.jsp");
+	@Override
+	protected String getPath() {
+		return "/html/portlet/document_library/view.jsp";
 	}
 
 }

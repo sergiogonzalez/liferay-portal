@@ -32,10 +32,11 @@ import com.liferay.portal.util.PortletKeys;
 	service = MVCRenderCommand.class
 )
 public class ViewFileEntryMVCRenderCommand
-	extends BaseGetFileEntryMVCRenderCommand implements MVCRenderCommand {
+	extends GetFileEntryMVCRenderCommand {
 
-	public ViewFileEntryMVCRenderCommand() {
-		super("/html/portlet/document_library/view_file_entry.jsp");
+	@Override
+	protected String getPath() {
+		return "/html/portlet/document_library/view_file_entry.jsp";
 	}
 
 }

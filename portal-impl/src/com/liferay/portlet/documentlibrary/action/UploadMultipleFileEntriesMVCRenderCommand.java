@@ -32,11 +32,12 @@ import com.liferay.portal.util.PortletKeys;
 	service = MVCRenderCommand.class
 )
 public class UploadMultipleFileEntriesMVCRenderCommand
-	extends BaseGetFileEntryMVCRenderCommand implements MVCRenderCommand {
+	extends GetFileEntryMVCRenderCommand {
 
-	public UploadMultipleFileEntriesMVCRenderCommand() {
-		super(
-			"/html/portlet/document_library/upload_multiple_file_entries.jsp");
+	@Override
+	protected String getPath() {
+		return
+			"/html/portlet/document_library/upload_multiple_file_entries.jsp";
 	}
 
 }

@@ -31,11 +31,11 @@ import com.liferay.portal.util.PortletKeys;
 	},
 	service = MVCRenderCommand.class
 )
-public class SelectFileEntryMVCRenderCommand
-	extends BaseGetFolderMVCRenderCommand {
+public class SelectFileEntryMVCRenderCommand extends GetFolderMVCRenderCommand {
 
-	public SelectFileEntryMVCRenderCommand() {
-		super("/html/portlet/document_library/select_file_entry.jsp");
+	@Override
+	protected String getPath() {
+		return "/html/portlet/document_library/select_file_entry.jsp";
 	}
 
 }
