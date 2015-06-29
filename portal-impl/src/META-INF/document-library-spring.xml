@@ -45,7 +45,6 @@
 	<bean id="com.liferay.portlet.documentlibrarydisplay.action.ViewMVCRenderCommand" class="com.liferay.portlet.documentlibrarydisplay.action.ViewMVCRenderCommand" />
 	<bean id="com.liferay.portlet.imagegallerydisplay.action.EmbeddedPlayerMVCRenderCommand" class="com.liferay.portlet.imagegallerydisplay.action.EmbeddedPlayerMVCRenderCommand" />
 	<bean id="com.liferay.portlet.imagegallerydisplay.action.SearchMVCRenderCommand" class="com.liferay.portlet.imagegallerydisplay.action.SearchMVCRenderCommand" />
-	<bean id="com.liferay.portlet.imagegallerydisplay.action.SelectAddFileEntryTypeMVCRenderCommand" class="com.liferay.portlet.imagegallerydisplay.action.SelectAddFileEntryTypeMVCRenderCommand" />
 	<bean id="com.liferay.portlet.imagegallerydisplay.action.ViewMVCRenderCommand" class="com.liferay.portlet.imagegallerydisplay.action.ViewMVCRenderCommand" />
 	<bean id="com.liferay.portlet.imagegallerydisplay.action.ViewSlideShowMVCRenderCommand" class="com.liferay.portlet.imagegallerydisplay.action.ViewSlideShowMVCRenderCommand" />
 </beans>
