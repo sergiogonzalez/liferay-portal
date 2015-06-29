@@ -62,7 +62,7 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.documentlibrary.DLPortletInstanceSettings;
-import com.liferay.portlet.documentlibrary.action.EditFileEntryAction;
+import com.liferay.portlet.documentlibrary.action.EditFileEntryMVCActionCommand;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
@@ -123,7 +123,7 @@ public class DLImpl implements DL {
 		FileEntry unescapedFileEntry = fileEntry.toUnescapedModel();
 
 		portletURL.setParameter(
-			"struts_action", "/document_library/view_file_entry");
+			"mvcRenderCommandName", "/document_library/view_file_entry");
 		portletURL.setParameter(
 			"fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
 
@@ -150,7 +150,7 @@ public class DLImpl implements DL {
 		PortletURL portletURL = renderResponse.createRenderURL();
 
 		portletURL.setParameter(
-			"struts_action", "/document_library/view_file_entry");
+			"mvcRenderCommandName", "/document_library/view_file_entry");
 		portletURL.setParameter(
 			"fileEntryId", String.valueOf(fileShortcut.getToFileEntryId()));
 
@@ -170,7 +170,8 @@ public class DLImpl implements DL {
 
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
-		portletURL.setParameter("struts_action", "/document_library/view");
+		portletURL.setParameter(
+			"mvcRenderCommandName", "/document_library/view");
 
 		Map<String, Object> data = new HashMap<>();
 
@@ -279,7 +280,8 @@ public class DLImpl implements DL {
 			RenderResponse renderResponse)
 		throws Exception {
 
-		String strutsAction = ParamUtil.getString(request, "struts_action");
+		String strutsAction = ParamUtil.getString(
+			request, "mvcRenderCommandName");
 
 		long groupId = ParamUtil.getLong(request, "groupId");
 		boolean ignoreRootFolder = ParamUtil.getBoolean(
@@ -296,7 +298,7 @@ public class DLImpl implements DL {
 			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-			portletURL.setParameter("struts_action", strutsAction);
+			portletURL.setParameter("mvcRenderCommandName", strutsAction);
 			portletURL.setParameter("groupId", String.valueOf(groupId));
 			portletURL.setParameter(
 				"ignoreRootFolder", String.valueOf(ignoreRootFolder));
@@ -306,7 +308,8 @@ public class DLImpl implements DL {
 				request, themeDisplay.translate("home"), portletURL.toString());
 		}
 		else {
-			portletURL.setParameter("struts_action", "/document_library/view");
+			portletURL.setParameter(
+				"mvcRenderCommandName", "/document_library/view");
 		}
 
 		addPortletBreadcrumbEntries(folder, request, portletURL);
@@ -457,7 +460,7 @@ public class DLImpl implements DL {
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter(
-			"struts_action", "/document_library/view_file_entry");
+			"mvcRenderCommandName", "/document_library/view_file_entry");
 		portletURL.setParameter("fileEntryId", String.valueOf(fileEntryId));
 
 		return portletURL.toString();
@@ -476,7 +479,8 @@ public class DLImpl implements DL {
 			PortalUtil.getControlPanelPlid(themeDisplay.getCompanyId()),
 			PortletRequest.RENDER_PHASE);
 
-		portletURL.setParameter("struts_action", "/document_library/view");
+		portletURL.setParameter(
+			"mvcRenderCommandName", "/document_library/view");
 		portletURL.setParameter("folderId", String.valueOf(folderId));
 
 		return portletURL.toString();
@@ -712,7 +716,7 @@ public class DLImpl implements DL {
 		String extension = FileUtil.getExtension(tempFileName);
 
 		int pos = tempFileName.lastIndexOf(
-			EditFileEntryAction.TEMP_RANDOM_SUFFIX);
+			EditFileEntryMVCActionCommand.TEMP_RANDOM_SUFFIX);
 
 		if (pos != -1) {
 			tempFileName = tempFileName.substring(0, pos);
@@ -1361,7 +1365,7 @@ public class DLImpl implements DL {
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter(
-			"struts_action", "/document_library/view_file_entry");
+			"mvcRenderCommandName", "/document_library/view_file_entry");
 		portletURL.setParameter(
 			"fileEntryId", String.valueOf(dlFileVersion.getFileEntryId()));
 

@@ -19,7 +19,7 @@
 <%
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/document_library/view_file_entry_type");
+portletURL.setParameter("mvcRenderCommandName", "/document_library/view_file_entry_type");
 %>
 
 <liferay-util:include page="/html/portlet/document_library/file_entry_type_toolbar.jsp">
