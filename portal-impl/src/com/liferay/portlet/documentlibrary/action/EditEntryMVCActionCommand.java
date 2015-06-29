@@ -75,8 +75,7 @@ import javax.servlet.http.HttpServletResponse;
 	},
 	service = MVCActionCommand.class
 )
-public class EditEntryMVCActionCommand extends BaseMVCActionCommand
-	implements MVCActionCommand {
+public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 
 	protected void cancelCheckedOutEntries(ActionRequest actionRequest)
 		throws Exception {

@@ -116,8 +116,7 @@ import org.apache.commons.fileupload.FileUploadBase;
 	},
 	service = MVCActionCommand.class
 )
-public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand
-	implements MVCActionCommand {
+public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 	public static final String TEMP_RANDOM_SUFFIX = "--tempRandomSuffix--";
 

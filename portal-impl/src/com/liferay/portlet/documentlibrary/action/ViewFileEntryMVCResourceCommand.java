@@ -32,8 +32,7 @@ import com.liferay.portal.util.PortletKeys;
 	},
 	service = MVCResourceCommand.class
 )
-public class ViewFileEntryMVCResourceCommand extends BaseJSPMVCResourceCommand
-	implements MVCResourceCommand {
+public class ViewFileEntryMVCResourceCommand extends BaseJSPMVCResourceCommand {
 
 	public ViewFileEntryMVCResourceCommand() {
 		super("/html/portlet/document_library/view_file_entry.jsp");

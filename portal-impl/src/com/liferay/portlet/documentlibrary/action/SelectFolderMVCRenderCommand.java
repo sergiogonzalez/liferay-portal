@@ -34,8 +34,7 @@ import com.liferay.portal.util.PortletKeys;
 	},
 	service = MVCRenderCommand.class
 )
-public class SelectFolderMVCRenderCommand extends GetFolderMVCRenderCommand
-	implements MVCRenderCommand {
+public class SelectFolderMVCRenderCommand extends GetFolderMVCRenderCommand {
 
 	@Override
 	protected String getPath() {

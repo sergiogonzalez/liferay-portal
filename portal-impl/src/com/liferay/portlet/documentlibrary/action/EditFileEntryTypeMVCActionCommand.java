@@ -68,8 +68,7 @@ import javax.portlet.PortletRequest;
 	},
 	service = MVCActionCommand.class
 )
-public class EditFileEntryTypeMVCActionCommand extends BaseMVCActionCommand
-	implements MVCActionCommand {
+public class EditFileEntryTypeMVCActionCommand extends BaseMVCActionCommand {
 
 	protected void deleteFileEntryType(
 			ActionRequest actionRequest, ActionResponse actionResponse)

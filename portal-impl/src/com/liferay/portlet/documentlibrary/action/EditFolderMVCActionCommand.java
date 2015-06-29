@@ -85,8 +85,7 @@ import javax.portlet.ResourceResponse;
 	},
 	service = MVCActionCommand.class
 )
-public class EditFolderMVCActionCommand extends BaseMVCActionCommand
-	implements MVCActionCommand {
+public class EditFolderMVCActionCommand extends BaseMVCActionCommand {
 
 	protected void deleteExpiredTemporaryFileEntries(
 			ActionRequest actionRequest)

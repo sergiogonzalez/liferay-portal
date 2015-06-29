@@ -33,7 +33,7 @@ import com.liferay.portal.util.PortletKeys;
 	service = MVCResourceCommand.class
 )
 public class UploadMultipleFileEntriesMVCResourceCommand
-	extends BaseJSPMVCResourceCommand implements MVCResourceCommand {
+	extends BaseJSPMVCResourceCommand {
 
 	public UploadMultipleFileEntriesMVCResourceCommand() {
 		super(

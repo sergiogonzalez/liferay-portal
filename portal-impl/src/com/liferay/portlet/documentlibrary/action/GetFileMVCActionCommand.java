@@ -42,8 +42,7 @@ import javax.servlet.http.HttpServletResponse;
 	},
 	service = MVCActionCommand.class
 )
-public class GetFileMVCActionCommand extends BaseMVCActionCommand
-	implements MVCActionCommand {
+public class GetFileMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(

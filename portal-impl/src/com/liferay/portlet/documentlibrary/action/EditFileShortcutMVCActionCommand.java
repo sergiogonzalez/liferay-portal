@@ -50,8 +50,7 @@ import javax.portlet.ActionResponse;
 	},
 	service = MVCActionCommand.class
 )
-public class EditFileShortcutMVCActionCommand extends BaseMVCActionCommand
-	implements MVCActionCommand {
+public class EditFileShortcutMVCActionCommand extends BaseMVCActionCommand {
 
 	protected void deleteFileShortcut(
 			ActionRequest actionRequest, boolean moveToTrash)

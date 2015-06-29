@@ -37,8 +37,7 @@ import javax.servlet.http.HttpServletResponse;
 	},
 	service = StrutsAction.class
 )
-public class GetFileStrutsAction extends BaseStrutsAction
-	implements StrutsAction {
+public class GetFileStrutsAction extends BaseStrutsAction {
 
 	@Override
 	public String execute(

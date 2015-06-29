@@ -55,8 +55,7 @@ import javax.portlet.ActionResponse;
 	},
 	service = MVCActionCommand.class
 )
-public class EditRepositoryMVCActionCommand extends BaseMVCActionCommand
-	implements MVCActionCommand {
+public class EditRepositoryMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(

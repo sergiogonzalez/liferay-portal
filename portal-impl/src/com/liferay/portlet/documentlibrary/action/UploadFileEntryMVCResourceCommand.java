@@ -32,8 +32,8 @@ import com.liferay.portal.util.PortletKeys;
 	},
 	service = MVCResourceCommand.class
 )
-public class UploadFileEntryMVCResourceCommand extends BaseJSPMVCResourceCommand
-	implements MVCResourceCommand {
+public class UploadFileEntryMVCResourceCommand
+	extends BaseJSPMVCResourceCommand {
 
 	public UploadFileEntryMVCResourceCommand() {
 		super("/html/portlet/document_library/upload_file_entry.jsp");
