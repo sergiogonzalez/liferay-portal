@@ -525,7 +525,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 					redirect = getSaveAndContinueRedirect(
 						portletConfig, actionRequest, fileEntry, redirect);
 
-					actionResponse.sendRedirect(redirect);
+					sendRedirect(actionRequest, actionResponse, redirect);
 				}
 				else {
 					if (windowState.equals(LiferayWindowState.POP_UP)) {
@@ -1012,11 +1012,6 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 					description, changeLog, majorVersion, inputStream, size,
 					serviceContext);
 			}
-
-			SessionMessages.add(
-				actionRequest,
-				PortalUtil.getPortletId(actionRequest) +
-					SessionMessages.KEY_SUFFIX_FORCE_SEND_REDIRECT);
 
 			return fileEntry;
 		}
