@@ -931,10 +931,6 @@
 		<action path="/users_admin/select_organization" forward="portlet.users_admin.select_organization" />
 
 		<action path="/users_admin/select_user_group" forward="portlet.user_groups_admin.select_user_group" />
-
-		<action path="/users_admin/view" forward="portlet.users_admin.view" />
-
-		<action path="/users_admin/view_users" forward="portlet.users_admin.view" />
 	</action-mappings>
 
 	<!-- Custom Request Processor -->

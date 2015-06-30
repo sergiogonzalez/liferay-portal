@@ -855,8 +855,4 @@
 	<definition name="portlet.users_admin.select_organization" extends="portlet.users_admin">
 		<put name="portlet_content" value="/portlet/users_admin/select_organization.jsp" />
 	</definition>
-
-	<definition name="portlet.users_admin.view" extends="portlet.users_admin">
-		<put name="portlet_content" value="/portlet/users_admin/view.jsp" />
-	</definition>
 </tiles-definitions>
