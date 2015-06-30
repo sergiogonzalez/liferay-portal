@@ -37,12 +37,11 @@ import javax.portlet.RenderResponse;
 		"javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY_ADMIN,
 		"javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY_DISPLAY,
 		"javax.portlet.name=" + PortletKeys.MEDIA_GALLERY_DISPLAY,
-		"mvc.command.name=/document_library/edit_entry",
 		"mvc.command.name=/document_library/move_entry"
 	},
 	service = MVCRenderCommand.class
 )
-public class EditEntryMVCRenderCommand implements MVCRenderCommand {
+public class MoveEntryMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
