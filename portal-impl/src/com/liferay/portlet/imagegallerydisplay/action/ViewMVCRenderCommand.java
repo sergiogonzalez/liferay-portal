@@ -15,16 +15,8 @@
 package com.liferay.portlet.imagegallerydisplay.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
-import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portlet.documentlibrary.NoSuchFolderException;
-import com.liferay.portlet.documentlibrary.action.ActionUtil;
-
-import javax.portlet.PortletException;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
 
 /**
  * @author Brian Wing Shun Chan
@@ -36,29 +28,10 @@ import javax.portlet.RenderResponse;
 	},
 	service = MVCRenderCommand.class
 )
-public class ViewMVCRenderCommand implements MVCRenderCommand {
+public class ViewMVCRenderCommand extends GetFolderMVCRenderCommand {
 
 	@Override
-	public String render(
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws PortletException {
-
-		try {
-			ActionUtil.getFolder(renderRequest);
-		}
-		catch (Exception e) {
-			if (e instanceof NoSuchFolderException ||
-				e instanceof PrincipalException) {
-
-				SessionErrors.add(renderRequest, e.getClass());
-
-				return "/html/portlet/image_gallery_display/error.jsp";
-			}
-			else {
-				throw new PortletException(e);
-			}
-		}
-
+	protected String getPath() {
 		return "/html/portlet/image_gallery_display/view.jsp";
 	}
 
