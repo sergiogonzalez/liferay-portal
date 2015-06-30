@@ -195,7 +195,7 @@ long folderId = BeanParamUtil.getLong(fileEntry, request, "folderId");
 											}
 
 											<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="uploadMultipleFileEntries">
-												<portlet:param name="mvcRenderCommandName" value="/document_library/upload_multiple_file_entries" />
+												<portlet:param name="mvcPath" value="/html/portlet/document_library/upload_multiple_file_entries.jsp" />
 												<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
 												<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 											</liferay-portlet:resourceURL>
