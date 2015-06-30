@@ -80,8 +80,7 @@ import javax.portlet.ResourceResponse;
 		"javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY_ADMIN,
 		"javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY_DISPLAY,
 		"javax.portlet.name=" + PortletKeys.MEDIA_GALLERY_DISPLAY,
-		"mvc.command.name=/document_library/edit_folder",
-		"mvc.command.name=/document_library/select_folder"
+		"mvc.command.name=/document_library/edit_folder"
 	},
 	service = MVCActionCommand.class
 )
