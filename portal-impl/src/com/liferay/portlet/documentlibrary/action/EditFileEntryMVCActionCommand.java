@@ -111,8 +111,7 @@ import org.apache.commons.fileupload.FileUploadBase;
 		"javax.portlet.name=" + PortletKeys.MEDIA_GALLERY_DISPLAY,
 		"mvc.command.name=/document_library/edit_file_entry",
 		"mvc.command.name=/document_library/upload_file_entry",
-		"mvc.command.name=/document_library/upload_multiple_file_entries",
-		"mvc.command.name=/document_library/view_file_entry"
+		"mvc.command.name=/document_library/upload_multiple_file_entries"
 	},
 	service = MVCActionCommand.class
 )
