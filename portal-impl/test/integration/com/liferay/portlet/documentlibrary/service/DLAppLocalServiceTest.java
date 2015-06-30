@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Repository;
@@ -118,6 +119,81 @@ public class DLAppLocalServiceTest {
 
 		@DeleteAfterTestRun
 		private Group _group;
+
+	}
+
+	@Sync
+	public static class WhenDeletingAllRepositoriesInAGroup {
+
+		@ClassRule
+		@Rule
+		public static final AggregateTestRule aggregateTestRule =
+			new AggregateTestRule(
+				new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
+				SynchronousDestinationTestRule.INSTANCE);
+
+		@Test
+		public void shouldDeleteAllGroupRepositoryFileEntries()
+			throws Exception {
+
+			Group group = GroupTestUtil.addGroup();
+
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+			addFileEntry(serviceContext);
+
+			Folder folder = addFolder(group.getGroupId(), true);
+
+			DLAppLocalServiceUtil.addFileEntry(
+				serviceContext.getUserId(), group.getGroupId(),
+				folder.getFolderId(), StringUtil.randomString(),
+				ContentTypes.APPLICATION_OCTET_STREAM, new byte[0],
+				serviceContext);
+
+			DLAppLocalServiceUtil.deleteAllRepositories(group.getGroupId());
+
+			LocalRepository localRepository =
+				RepositoryProviderUtil.getLocalRepository(group.getGroupId());
+
+			int rootFolderFileEntriesCount =
+				localRepository.getFileEntriesCount(
+					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+			Assert.assertEquals(0, rootFolderFileEntriesCount);
+
+			int subfolderFileEntriesCount = localRepository.getFileEntriesCount(
+				folder.getFolderId());
+
+			Assert.assertEquals(0, subfolderFileEntriesCount);
+		}
+
+		@Test
+		public void shouldDeleteAllGroupRepositoryFolders() throws Exception {
+			Group group = GroupTestUtil.addGroup();
+
+			Folder folder = addFolder(group.getGroupId(), true);
+
+			Folder subfolder = addFolder(
+				group.getGroupId(), folder.getFolderId(),
+				StringUtil.randomString());
+
+			DLAppLocalServiceUtil.deleteAllRepositories(group.getGroupId());
+
+			try {
+				DLAppLocalServiceUtil.getFolder(folder.getFolderId());
+				Assert.fail();
+			}
+			catch (NoSuchFolderException nsfe) {
+			}
+
+			try {
+				DLAppLocalServiceUtil.getFolder(subfolder.getFolderId());
+				Assert.fail();
+			}
+			catch (NoSuchFolderException nsfe) {
+			}
+		}
 
 	}
 
