@@ -23,21 +23,18 @@ MBMessage message = (MBMessage)request.getAttribute(WebKeys.MESSAGE_BOARDS_MESSA
 
 long commentId = BeanParamUtil.getLong(message, request, "messageId");
 
-long threadId = BeanParamUtil.getLong(message, request, "threadId");
 long parentCommentId = BeanParamUtil.getLong(message, request, "parentMessageId", MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID);
 
 MBMessage curParentMessage = null;
 
-if (threadId > 0) {
-	try {
-		curParentMessage = MBMessageLocalServiceUtil.getMessage(parentCommentId);
-	}
-	catch (Exception e) {
-	}
+try {
+	curParentMessage = MBMessageLocalServiceUtil.getMessage(parentCommentId);
+}
+catch (Exception e) {
+}
 
-	if (curParentMessage.isRoot() && curParentMessage.isDiscussion()) {
-		curParentMessage = null;
-	}
+if (curParentMessage.isRoot() && curParentMessage.isDiscussion()) {
+	curParentMessage = null;
 }
 
 boolean pending = false;
