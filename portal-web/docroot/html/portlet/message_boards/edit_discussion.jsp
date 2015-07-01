@@ -25,15 +25,9 @@ long commentId = BeanParamUtil.getLong(message, request, "messageId");
 
 long parentCommentId = BeanParamUtil.getLong(message, request, "parentMessageId", MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID);
 
-MBMessage curParentMessage = null;
+MBMessage curParentMessage = MBMessageLocalServiceUtil.fetchMBMessage(parentCommentId);
 
-try {
-	curParentMessage = MBMessageLocalServiceUtil.getMessage(parentCommentId);
-}
-catch (Exception e) {
-}
-
-if (curParentMessage.isRoot()) {
+if ((curParentMessage != null) && curParentMessage.isRoot()) {
 	curParentMessage = null;
 }
 
