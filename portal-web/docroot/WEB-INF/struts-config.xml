@@ -694,10 +694,6 @@
 
 		<action path="/monitoring/view" forward="portlet.monitoring.view" />
 
-		<!-- My Account -->
-
-		<action path="/my_account/edit_user_details" forward="portlet.users_admin.edit_user_details" />
-
 		<!-- News -->
 
 		<action path="/news/edit" type="com.liferay.portlet.news.action.EditPreferencesAction">
@@ -888,8 +884,6 @@
 		</action>
 
 		<!-- Users Admin -->
-
-		<action path="/users_admin/edit_user_details" forward="portlet.users_admin.edit_user_details" />
 
 		<action path="/users_admin/select_user_group" forward="portlet.user_groups_admin.select_user_group" />
 	</action-mappings>
