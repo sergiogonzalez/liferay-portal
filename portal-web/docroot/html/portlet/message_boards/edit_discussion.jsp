@@ -40,8 +40,7 @@ if (message != null) {
 
 <liferay-ui:header
 	backURL="<%= redirect %>"
-	localizeTitle="<%= (message == null) %>"
-	title='<%= (message == null) ? "new-message" : message.getSubject() %>'
+	title='<%= (message == null) ? "new-message" : "edit-message" %>'
 />
 
 <portlet:actionURL var="editMessageURL">
