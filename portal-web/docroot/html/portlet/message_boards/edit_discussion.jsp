@@ -21,16 +21,16 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 MBMessage message = (MBMessage)request.getAttribute(WebKeys.MESSAGE_BOARDS_MESSAGE);
 
-long messageId = BeanParamUtil.getLong(message, request, "messageId");
+long commentId = BeanParamUtil.getLong(message, request, "messageId");
 
 long threadId = BeanParamUtil.getLong(message, request, "threadId");
-long parentMessageId = BeanParamUtil.getLong(message, request, "parentMessageId", MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID);
+long parentCommentId = BeanParamUtil.getLong(message, request, "parentMessageId", MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID);
 
 MBMessage curParentMessage = null;
 
 if (threadId > 0) {
 	try {
-		curParentMessage = MBMessageLocalServiceUtil.getMessage(parentMessageId);
+		curParentMessage = MBMessageLocalServiceUtil.getMessage(parentCommentId);
 	}
 	catch (Exception e) {
 	}
@@ -60,9 +60,8 @@ if (message != null) {
 <aui:form action="<%= editMessageURL %>" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveMessage(" + pending + ");" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="messageId" type="hidden" value="<%= messageId %>" />
-	<aui:input name="threadId" type="hidden" value="<%= threadId %>" />
-	<aui:input name="parentMessageId" type="hidden" value="<%= parentMessageId %>" />
+	<aui:input name="commentId" type="hidden" value="<%= commentId %>" />
+	<aui:input name="parentCommentId" type="hidden" value="<%= parentCommentId %>" />
 	<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(WorkflowConstants.ACTION_SAVE_DRAFT) %>" />
 
 	<liferay-ui:error exception="<%= CaptchaConfigurationException.class %>" message="a-captcha-error-occurred-please-contact-an-administrator" />
