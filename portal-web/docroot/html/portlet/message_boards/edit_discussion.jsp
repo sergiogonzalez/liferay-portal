@@ -33,7 +33,7 @@ try {
 catch (Exception e) {
 }
 
-if (curParentMessage.isRoot() && curParentMessage.isDiscussion()) {
+if (curParentMessage.isRoot()) {
 	curParentMessage = null;
 }
 
