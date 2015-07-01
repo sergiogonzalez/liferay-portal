@@ -263,7 +263,7 @@ public class RatingsEntryLocalServiceImpl
 	protected void validate(double score) throws PortalException {
 		if ((score > 1) || (score < 0)) {
 			throw new EntryScoreException(
-				"Score is not a valid score {score=" + score + "}");
+				"{score=" + score + "} is not a valid score");
 		}
 	}
 
