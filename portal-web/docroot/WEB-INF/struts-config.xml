@@ -882,10 +882,6 @@
 			<forward name="portlet.software_catalog.view_product_entry" path="portlet.software_catalog.view_product_entry" />
 			<forward name="portlet.software_catalog.error" path="portlet.software_catalog.error" />
 		</action>
-
-		<!-- Users Admin -->
-
-		<action path="/users_admin/select_user_group" forward="portlet.user_groups_admin.select_user_group" />
 	</action-mappings>
 
 	<!-- Custom Request Processor -->
