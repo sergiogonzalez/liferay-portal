@@ -55,12 +55,12 @@ if (comment instanceof WorkflowableComment) {
 	<portlet:param name="struts_action" value="/message_boards/edit_discussion" />
 </portlet:actionURL>
 
-<aui:form action="<%= editMessageURL %>" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveMessage(" + pending + ");" %>'>
+<aui:form action="<%= editMessageURL %>" enctype="multipart/form-data" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="commentId" type="hidden" value="<%= commentId %>" />
 	<aui:input name="parentCommentId" type="hidden" value="<%= parentCommentId %>" />
-	<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(WorkflowConstants.ACTION_SAVE_DRAFT) %>" />
+	<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(pending ? WorkflowConstants.ACTION_SAVE_DRAFT : WorkflowConstants.ACTION_PUBLISH) %>" />
 
 	<liferay-ui:error exception="<%= CaptchaConfigurationException.class %>" message="a-captcha-error-occurred-please-contact-an-administrator" />
 	<liferay-ui:error exception="<%= CaptchaTextException.class %>" message="text-verification-failed" />
@@ -107,16 +107,6 @@ if (comment instanceof WorkflowableComment) {
 		<aui:button href="<%= redirect %>" type="cancel" />
 	</aui:button-row>
 </aui:form>
-
-<aui:script>
-	function <portlet:namespace />saveMessage(pending) {
-		if (!pending) {
-			document.<portlet:namespace />fm.<portlet:namespace />workflowAction.value = <%= WorkflowConstants.ACTION_PUBLISH %>;
-		}
-
-		submitForm(document.<portlet:namespace />fm);
-	}
-</aui:script>
 
 <%
 if (message != null) {
