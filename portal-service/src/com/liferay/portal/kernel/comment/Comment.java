@@ -46,4 +46,6 @@ public interface Comment {
 
 	public String getUserName();
 
+	public boolean isRoot();
+
 }

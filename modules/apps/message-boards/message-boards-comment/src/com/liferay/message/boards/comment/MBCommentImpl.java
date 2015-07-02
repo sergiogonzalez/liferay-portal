@@ -105,6 +105,13 @@ public class MBCommentImpl implements WorkflowableComment {
 		return _message.getUserName();
 	}
 
+	@Override
+	public boolean isRoot() {
+		MBMessage message = getMessage();
+
+		return message.isRoot();
+	}
+
 	protected MBMessage getMessage() {
 		return _message;
 	}

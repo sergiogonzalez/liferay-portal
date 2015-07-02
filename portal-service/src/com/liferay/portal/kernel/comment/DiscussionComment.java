@@ -44,6 +44,4 @@ public interface DiscussionComment extends Comment {
 
 	public String getTranslatedBody();
 
-	public boolean isRoot();
-
 }

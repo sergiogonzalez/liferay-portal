@@ -27,10 +27,10 @@ Comment comment = CommentManagerUtil.fetchComment(commentId);
 
 long parentCommentId = BeanParamUtil.getLong(message, request, "parentMessageId", MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID);
 
-MBMessage curParentMessage = MBMessageLocalServiceUtil.fetchMBMessage(parentCommentId);
+Comment parentComment = CommentManagerUtil.fetchComment(parentCommentId);
 
-if ((curParentMessage != null) && curParentMessage.isRoot()) {
-	curParentMessage = null;
+if ((parentComment != null) && parentComment.isRoot()) {
+	parentComment = null;
 }
 
 WorkflowableComment workflowableComment = null;
@@ -77,11 +77,11 @@ if (comment instanceof WorkflowableComment) {
 		<aui:input autoFocus="<%= (windowState.equals(WindowState.MAXIMIZED) && !themeDisplay.isFacebook()) %>" name="body" style='<%= "height: " + ModelHintsConstants.TEXTAREA_DISPLAY_HEIGHT + "px; width: " + ModelHintsConstants.TEXTAREA_DISPLAY_WIDTH + "px;" %>' type="textarea" wrap="soft" />
 	</aui:fieldset>
 
-	<c:if test="<%= curParentMessage != null %>">
+	<c:if test="<%= parentComment != null %>">
 		<liferay-ui:message key="replying-to" />:
 
 		<%
-		request.setAttribute(WebKeys.MESSAGE_BOARDS_MESSAGE, curParentMessage);
+		request.setAttribute(WebKeys.MESSAGE_BOARDS_MESSAGE, MBMessageLocalServiceUtil.fetchMBMessage(parentCommentId));
 		%>
 
 		<liferay-util:include page="/html/portlet/message_boards/asset/discussion_full_content.jsp" />

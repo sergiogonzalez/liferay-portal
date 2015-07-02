@@ -153,13 +153,6 @@ public class MBDiscussionCommentImpl
 		return getBody();
 	}
 
-	@Override
-	public boolean isRoot() {
-		MBMessage message = getMessage();
-
-		return message.isRoot();
-	}
-
 	private final String _pathThemeImages;
 	private final List<RatingsEntry> _ratingsEntries;
 	private final List<RatingsStats> _ratingsStats;
