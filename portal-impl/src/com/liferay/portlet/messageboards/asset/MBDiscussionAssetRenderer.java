@@ -102,8 +102,7 @@ public class MBDiscussionAssetRenderer extends MBMessageAssetRenderer {
 		Comment comment = CommentManagerUtil.fetchComment(
 			_message.getMessageId());
 
-		request.setAttribute(
-			WebKeys.MESSAGE_BOARDS_MESSAGE, comment);
+		request.setAttribute(WebKeys.COMMENT, comment);
 
 		return super.include(request, response, template);
 	}

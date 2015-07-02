@@ -19,7 +19,7 @@
 <%
 int abstractLength = GetterUtil.getInteger(request.getAttribute(WebKeys.ASSET_ENTRY_ABSTRACT_LENGTH), AssetUtil.ASSET_ENTRY_ABSTRACT_LENGTH);
 
-Comment comment = (Comment)request.getAttribute(WebKeys.MESSAGE_BOARDS_MESSAGE);
+Comment comment = (Comment)request.getAttribute(WebKeys.COMMENT);
 
 String summary = StringUtil.shorten(comment.getBody(), abstractLength);
 %>

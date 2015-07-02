@@ -19,7 +19,7 @@
 <%
 String randomNamespace = PortalUtil.generateRandomKey(request, "discussion_full_content") + StringPool.UNDERLINE;
 
-Comment comment = (Comment)request.getAttribute(WebKeys.MESSAGE_BOARDS_MESSAGE);
+Comment comment = (Comment)request.getAttribute(WebKeys.COMMENT);
 
 Comment parentComment = CommentManagerUtil.fetchComment(comment.getParentCommentId());
 
@@ -76,7 +76,7 @@ if (comment instanceof WorkflowableComment) {
 	<h3><liferay-ui:message key="replying-to" />:</h3>
 
 	<%
-	request.setAttribute(WebKeys.MESSAGE_BOARDS_MESSAGE, parentComment);
+	request.setAttribute(WebKeys.COMMENT, parentComment);
 	%>
 
 	<liferay-util:include page="/html/portlet/message_boards/asset/discussion_full_content.jsp" />

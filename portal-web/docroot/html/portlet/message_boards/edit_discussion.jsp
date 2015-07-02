@@ -19,7 +19,7 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-Comment comment = (Comment)request.getAttribute(WebKeys.MESSAGE_BOARDS_MESSAGE);
+Comment comment = (Comment)request.getAttribute(WebKeys.COMMENT);
 
 long commentId = BeanParamUtil.getLong(comment, request, "commentId");
 
@@ -79,7 +79,7 @@ if (comment instanceof WorkflowableComment) {
 		<liferay-ui:message key="replying-to" />:
 
 		<%
-		request.setAttribute(WebKeys.MESSAGE_BOARDS_MESSAGE, parentComment);
+		request.setAttribute(WebKeys.COMMENT, parentComment);
 		%>
 
 		<liferay-util:include page="/html/portlet/message_boards/asset/discussion_full_content.jsp" />
