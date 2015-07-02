@@ -23,6 +23,8 @@ MBMessage message = (MBMessage)request.getAttribute(WebKeys.MESSAGE_BOARDS_MESSA
 
 long commentId = BeanParamUtil.getLong(message, request, "messageId");
 
+Comment comment = CommentManagerUtil.fetchComment(commentId);
+
 long parentCommentId = BeanParamUtil.getLong(message, request, "parentMessageId", MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID);
 
 MBMessage curParentMessage = MBMessageLocalServiceUtil.fetchMBMessage(parentCommentId);
@@ -31,16 +33,22 @@ if ((curParentMessage != null) && curParentMessage.isRoot()) {
 	curParentMessage = null;
 }
 
-boolean pending = false;
+WorkflowableComment workflowableComment = null;
 
-if (message != null) {
-	pending = message.isPending();
+boolean pending = false;
+boolean approved = true;
+
+if (comment instanceof WorkflowableComment) {
+	workflowableComment = (WorkflowableComment)comment;
+
+	pending = workflowableComment.getStatus() == WorkflowConstants.STATUS_PENDING;
+	approved = workflowableComment.getStatus() == WorkflowConstants.STATUS_APPROVED;
 }
 %>
 
 <liferay-ui:header
 	backURL="<%= redirect %>"
-	title='<%= (message == null) ? "new-message" : "edit-message" %>'
+	title='<%= (comment == null) ? "new-message" : "edit-message" %>'
 />
 
 <portlet:actionURL var="editMessageURL">
@@ -59,11 +67,11 @@ if (message != null) {
 	<liferay-ui:error exception="<%= DiscussionMaxCommentsException.class %>" message="maximum-number-of-comments-has-been-reached" />
 	<liferay-ui:error exception="<%= MessageBodyException.class %>" message="please-enter-a-valid-message" />
 
-	<aui:model-context bean="<%= message %>" model="<%= MBMessage.class %>" />
+	<aui:model-context bean="<%= comment %>" model="<%= comment.getModelClass() %>" />
 
 	<aui:fieldset>
-		<c:if test="<%= message != null %>">
-			<aui:workflow-status status="<%= message.getStatus() %>" />
+		<c:if test="<%= workflowableComment != null %>">
+			<aui:workflow-status model="<%= CommentConstants.getDiscussionClass() %>" status="<%= workflowableComment.getStatus() %>" />
 		</c:if>
 
 		<aui:input autoFocus="<%= (windowState.equals(WindowState.MAXIMIZED) && !themeDisplay.isFacebook()) %>" name="body" style='<%= "height: " + ModelHintsConstants.TEXTAREA_DISPLAY_HEIGHT + "px; width: " + ModelHintsConstants.TEXTAREA_DISPLAY_WIDTH + "px;" %>' type="textarea" wrap="soft" />
@@ -86,13 +94,13 @@ if (message != null) {
 	</c:if>
 
 	<aui:button-row>
-		<c:if test="<%= (message == null) || !message.isApproved() %>">
+		<c:if test="<%= (comment == null) || !approved %>">
 			<aui:button type="submit" />
 		</c:if>
 
-		<c:if test="<%= (message != null) && message.isApproved() && WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(message.getCompanyId(), message.getGroupId(), MBMessage.class.getName()) %>">
+		<c:if test="<%= (workflowableComment != null) && approved && WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(workflowableComment.getCompanyId(), workflowableComment.getGroupId(), CommentConstants.getDiscussionClassName()) %>">
 			<div class="alert alert-info">
-				<%= LanguageUtil.format(request, "this-x-is-approved.-publishing-these-changes-will-cause-it-to-be-unpublished-and-go-through-the-approval-process-again", ResourceActionsUtil.getModelResource(locale, MBMessage.class.getName()), false) %>
+				<%= LanguageUtil.format(request, "this-x-is-approved.-publishing-these-changes-will-cause-it-to-be-unpublished-and-go-through-the-approval-process-again", ResourceActionsUtil.getModelResource(locale, comment.getModelClassName()), false) %>
 			</div>
 		</c:if>
 
