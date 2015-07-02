@@ -25,12 +25,8 @@ Comment parentComment = CommentManagerUtil.fetchComment(comment.getParentComment
 
 WorkflowableComment workflowableComment = null;
 
-boolean approved = true;
-
 if (comment instanceof WorkflowableComment) {
 	workflowableComment = (WorkflowableComment)comment;
-
-	approved = workflowableComment.getStatus() == WorkflowConstants.STATUS_APPROVED;
 }
 %>
 
@@ -49,7 +45,7 @@ if (comment instanceof WorkflowableComment) {
 		/>
 	</td>
 	<td class="lfr-top stretch">
-		<c:if test="<%= (workflowableComment != null) && !approved %>">
+		<c:if test="<%= (workflowableComment != null) && (workflowableComment.getStatus() != WorkflowConstants.STATUS_APPROVED) %>">
 			<aui:model-context bean="<%= comment %>" model="<%= comment.getModelClass() %>" />
 
 			<div>
