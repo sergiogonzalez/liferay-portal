@@ -19,10 +19,9 @@
 <%
 String randomNamespace = PortalUtil.generateRandomKey(request, "discussion_full_content") + StringPool.UNDERLINE;
 
-MBMessage message = (MBMessage)request.getAttribute(WebKeys.MESSAGE_BOARDS_MESSAGE);
-Comment comment = CommentManagerUtil.fetchComment(message.getMessageId());
+Comment comment = (Comment)request.getAttribute(WebKeys.MESSAGE_BOARDS_MESSAGE);
 
-Comment parentComment = CommentManagerUtil.fetchComment(message.getParentMessageId());
+Comment parentComment = CommentManagerUtil.fetchComment(comment.getParentCommentId());
 
 WorkflowableComment workflowableComment = null;
 
@@ -65,7 +64,7 @@ if (comment instanceof WorkflowableComment) {
 		<br />
 
 		<div>
-			<c:if test="<%= parentComment.isRoot() %>">
+			<c:if test="<%= (parentComment != null) && parentComment.isRoot() %>">
 				<%= LanguageUtil.format(request, "posted-on-x", dateFormatDateTime.format(comment.getModifiedDate()), false) %>
 			</c:if>
 		</div>
@@ -77,7 +76,7 @@ if (comment instanceof WorkflowableComment) {
 	<h3><liferay-ui:message key="replying-to" />:</h3>
 
 	<%
-	request.setAttribute(WebKeys.MESSAGE_BOARDS_MESSAGE, MBMessageLocalServiceUtil.fetchMBMessage(parentComment.getCommentId()));
+	request.setAttribute(WebKeys.MESSAGE_BOARDS_MESSAGE, parentComment);
 	%>
 
 	<liferay-util:include page="/html/portlet/message_boards/asset/discussion_full_content.jsp" />

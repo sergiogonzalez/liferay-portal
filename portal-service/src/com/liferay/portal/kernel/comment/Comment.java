@@ -40,6 +40,8 @@ public interface Comment {
 
 	public Date getModifiedDate();
 
+	public long getParentCommentId();
+
 	public User getUser() throws PortalException;
 
 	public long getUserId();

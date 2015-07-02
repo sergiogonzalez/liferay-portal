@@ -19,13 +19,11 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-MBMessage message = (MBMessage)request.getAttribute(WebKeys.MESSAGE_BOARDS_MESSAGE);
+Comment comment = (Comment)request.getAttribute(WebKeys.MESSAGE_BOARDS_MESSAGE);
 
-long commentId = BeanParamUtil.getLong(message, request, "messageId");
+long commentId = BeanParamUtil.getLong(comment, request, "commentId");
 
-Comment comment = CommentManagerUtil.fetchComment(commentId);
-
-long parentCommentId = BeanParamUtil.getLong(message, request, "parentMessageId", MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID);
+long parentCommentId = comment.getParentCommentId();
 
 Comment parentComment = CommentManagerUtil.fetchComment(parentCommentId);
 
@@ -81,7 +79,7 @@ if (comment instanceof WorkflowableComment) {
 		<liferay-ui:message key="replying-to" />:
 
 		<%
-		request.setAttribute(WebKeys.MESSAGE_BOARDS_MESSAGE, MBMessageLocalServiceUtil.fetchMBMessage(parentCommentId));
+		request.setAttribute(WebKeys.MESSAGE_BOARDS_MESSAGE, parentComment);
 		%>
 
 		<liferay-util:include page="/html/portlet/message_boards/asset/discussion_full_content.jsp" />
@@ -107,11 +105,3 @@ if (comment instanceof WorkflowableComment) {
 		<aui:button href="<%= redirect %>" type="cancel" />
 	</aui:button-row>
 </aui:form>
-
-<%
-if (message != null) {
-	MBUtil.addPortletBreadcrumbEntries(message, request, renderResponse);
-
-	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "update-message"), currentURL);
-}
-%>

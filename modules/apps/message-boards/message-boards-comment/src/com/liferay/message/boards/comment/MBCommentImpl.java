@@ -81,6 +81,13 @@ public class MBCommentImpl implements WorkflowableComment {
 	}
 
 	@Override
+	public long getParentCommentId() {
+		MBMessage message = getMessage();
+
+		return message.getParentMessageId();
+	}
+
+	@Override
 	public long getPrimaryKey() {
 		return _message.getPrimaryKey();
 	}

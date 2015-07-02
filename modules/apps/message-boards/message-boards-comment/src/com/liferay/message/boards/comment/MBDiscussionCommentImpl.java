@@ -67,13 +67,6 @@ public class MBDiscussionCommentImpl
 	}
 
 	@Override
-	public long getParentCommentId() {
-		MBMessage message = getMessage();
-
-		return message.getParentMessageId();
-	}
-
-	@Override
 	public RatingsEntry getRatingsEntry() {
 		long classPK = getCommentId();
 

@@ -19,9 +19,9 @@
 <%
 int abstractLength = GetterUtil.getInteger(request.getAttribute(WebKeys.ASSET_ENTRY_ABSTRACT_LENGTH), AssetUtil.ASSET_ENTRY_ABSTRACT_LENGTH);
 
-MBMessage message = (MBMessage)request.getAttribute(WebKeys.MESSAGE_BOARDS_MESSAGE);
+Comment comment = (Comment)request.getAttribute(WebKeys.MESSAGE_BOARDS_MESSAGE);
 
-String summary = StringUtil.shorten(message.getBody(), abstractLength);
+String summary = StringUtil.shorten(comment.getBody(), abstractLength);
 %>
 
 <%= HtmlUtil.escape(summary) %>
