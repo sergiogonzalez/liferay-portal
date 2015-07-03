@@ -2539,12 +2539,32 @@ go]]></replacevalue>
 		<if>
 			<os family="unix" />
 			<then>
-				<mkdir dir="lib/development/libs" />
+				<mirrors-get
+					dest="lib/development/opencv-linux-x86.jar"
+					src="http://repo1.maven.org/maven2/org/bytedeco/javacpp-presets/opencv/2.4.9-0.9/opencv-2.4.9-0.9-linux-x86.jar"
+				/>
 
-				<copy todir="lib/development/libs">
-					<fileset dir="tools/selenium/sikuli/linux" />
-				</copy>
+				<mirrors-get
+					dest="lib/development/opencv-linux-x86_64.jar"
+					src="http://repo1.maven.org/maven2/org/bytedeco/javacpp-presets/opencv/2.4.9-0.9/opencv-2.4.9-0.9-linux-x86_64.jar"
+				/>
 			</then>
+			<else>
+				<if>
+					<os family="windows" />
+					<then>
+						<mirrors-get
+							dest="lib/development/opencv-windows-x86.jar"
+							src="http://repo1.maven.org/maven2/org/bytedeco/javacpp-presets/opencv/2.4.9-0.9/opencv-2.4.9-0.9-windows-x86.jar"
+						/>
+
+						<mirrors-get
+							dest="lib/development/opencv-windows-x86_64.jar"
+							src="http://repo1.maven.org/maven2/org/bytedeco/javacpp-presets/opencv/2.4.9-0.9/opencv-2.4.9-0.9-windows-x86_64.jar"
+						/>
+					</then>
+				</if>
+			</else>
 		</if>
 	</target>
 
@@ -5880,7 +5900,7 @@ jdbc.default.password=${database.mysql.password}</echo>
 					<and>
 						<or>
 							<available file="portal-web/test-results/functional/screenshots" />
-							<available file="portal-web/test-results/${poshi.runner.results.dir}/screenshot" />
+							<available file="portal-web/test-results/${poshi.runner.results.dir}/screenshots" />
 						</or>
 						<equals arg1="${test.save.screenshot}" arg2="true" />
 					</and>
@@ -5888,18 +5908,14 @@ jdbc.default.password=${database.mysql.password}</echo>
 						<if>
 							<equals arg1="${test.poshi.runner.enabled}" arg2="true" />
 							<then>
-								<property name="screenshot.dir" value="portal-web/test-results/${poshi.runner.results.dir}/screenshot" />
-
-								<property name="screenshot.dest.dir"  value="${jenkins.shared.results.dir}/${job.name}/builds/${env.BUILD_NUMBER}/screenshot" />
+								<property name="screenshot.dir" value="portal-web/test-results/${poshi.runner.results.dir}/screenshots" />
 							</then>
 							<else>
 								<property name="screenshot.dir" value="portal-web/test-results/functional/screenshots" />
-
-								<property name="screenshot.dest.dir"  value="${jenkins.shared.results.dir}/${job.name}/builds/${env.BUILD_NUMBER}/screenshots" />
 							</else>
 						</if>
 
-						<copy todir="${screenshot.dest.dir}">
+						<copy todir="${jenkins.shared.results.dir}/${job.name}/builds/${env.BUILD_NUMBER}/screenshots">
 							<fileset dir="${screenshot.dir}" erroronmissingdir="false" />
 						</copy>
 					</then>
@@ -6010,8 +6026,6 @@ jdbc.default.password=${database.mysql.password}</echo>
 		<if>
 			<equals arg1="${solr.enabled}" arg2="true" />
 			<then>
-				<ant antfile="build-test-solr.xml" target="prepare-solr-web-properties" />
-
 				<ant antfile="build-test-solr.xml" target="start-solr" />
 			</then>
 		</if>

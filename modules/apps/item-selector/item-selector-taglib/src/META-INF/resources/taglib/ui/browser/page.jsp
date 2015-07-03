@@ -27,6 +27,7 @@ String itemSelectedEventName = GetterUtil.getString(request.getAttribute("lifera
 SearchContainer searchContainer = (SearchContainer)request.getAttribute("liferay-ui:item-selector-browser:searchContainer");
 String tabName = GetterUtil.getString(request.getAttribute("liferay-ui:item-selector-browser:tabName"));
 String uploadMessage = GetterUtil.getString(request.getAttribute("liferay-ui:item-selector-browser:uploadMessage"));
+PortletURL uploadURL = (PortletURL)request.getAttribute("liferay-ui:item-selector-browser:uploadURL");
 %>
 
 <div class="lfr-item-viewer" id="<%= randomNamespace %>ItemSelectorContainer">
@@ -43,7 +44,7 @@ String uploadMessage = GetterUtil.getString(request.getAttribute("liferay-ui:ite
 	</c:if>
 
 	<c:if test="<%= draggableFileReturnType != null %>">
-		<div class="drop-zone" data-returnType="<%= HtmlUtil.escapeAttribute(ClassUtil.getClassName(draggableFileReturnType)) %>" data-value="<%= ItemSelectorBrowserReturnTypeUtil.getValue(draggableFileReturnType, null, null) %>">
+		<div class="drop-enabled drop-zone" data-returntype="<%= HtmlUtil.escapeAttribute(ClassUtil.getClassName(draggableFileReturnType)) %>" data-uploadurl="<%= uploadURL.toString() %>">
 			<label class="btn btn-primary" for="<%= randomNamespace %>InputFile"><liferay-ui:message key="select-file" /></label>
 
 			<input class="hide" id="<%= randomNamespace %>InputFile" type="file" />
@@ -77,11 +78,12 @@ String uploadMessage = GetterUtil.getString(request.getAttribute("liferay-ui:ite
 							FileVersion latestFileVersion = fileEntry.getLatestFileVersion();
 
 							String title = DLUtil.getTitleWithExtension(fileEntry);
+
+							JSONObject itemMedatadaJSONObject = ItemSelectorBrowserUtil.getItemMetadataJSONObject(fileEntry, locale);
 							%>
 
 							<liferay-ui:search-container-column-text name="title">
-
-								<a class="item-preview" data-returnType="<%= HtmlUtil.escapeAttribute(ClassUtil.getClassName(existingFileEntryReturnType)) %>" data-url="<%= HtmlUtil.escapeAttribute(DLUtil.getPreviewURL(fileEntry, latestFileVersion, themeDisplay, StringPool.BLANK)) %>" data-value="<%= HtmlUtil.escapeAttribute(ItemSelectorBrowserReturnTypeUtil.getValue(existingFileEntryReturnType, fileEntry, themeDisplay)) %>" href="<%= HtmlUtil.escapeHREF(DLUtil.getImagePreviewURL(fileEntry, themeDisplay)) %>" title="<%= HtmlUtil.escapeAttribute(title) %>">
+								<a class="item-preview" data-metadata="<%= HtmlUtil.escapeAttribute(itemMedatadaJSONObject.toString()) %>" data-returntype="<%= HtmlUtil.escapeAttribute(ClassUtil.getClassName(existingFileEntryReturnType)) %>" data-url="<%= HtmlUtil.escapeAttribute(DLUtil.getPreviewURL(fileEntry, latestFileVersion, themeDisplay, StringPool.BLANK)) %>" data-value="<%= HtmlUtil.escapeAttribute(ItemSelectorBrowserReturnTypeUtil.getValue(existingFileEntryReturnType, fileEntry, themeDisplay)) %>" href="<%= HtmlUtil.escapeHREF(DLUtil.getImagePreviewURL(fileEntry, themeDisplay)) %>" title="<%= HtmlUtil.escapeAttribute(title) %>">
 
 									<%
 									String iconCssClass = DLUtil.getFileIconCssClass(fileEntry.getExtension());
@@ -95,8 +97,6 @@ String uploadMessage = GetterUtil.getString(request.getAttribute("liferay-ui:ite
 										<%= HtmlUtil.escape(title) %>
 									</span>
 								</a>
-
-								<%@ include file="/taglib/ui/browser/metadata_view.jspf" %>
 							</liferay-ui:search-container-column-text>
 
 							<liferay-ui:search-container-column-text name="size" value="<%= TextFormatter.formatStorageSize(fileEntry.getSize(), locale) %>" />
@@ -123,6 +123,8 @@ String uploadMessage = GetterUtil.getString(request.getAttribute("liferay-ui:ite
 					FileVersion latestFileVersion = fileEntry.getLatestFileVersion();
 
 					String title = DLUtil.getTitleWithExtension(fileEntry);
+
+					JSONObject itemMedatadaJSONObject = ItemSelectorBrowserUtil.getItemMetadataJSONObject(fileEntry, locale);
 				%>
 
 					<li class="list-group-item list-group-item-default">
@@ -137,11 +139,9 @@ String uploadMessage = GetterUtil.getString(request.getAttribute("liferay-ui:ite
 							</div>
 
 							<div class="text-primary">
-								<a class="item-preview" data-returnType="<%= HtmlUtil.escapeAttribute(ClassUtil.getClassName(existingFileEntryReturnType)) %>" data-url="<%= HtmlUtil.escapeAttribute(DLUtil.getPreviewURL(fileEntry, latestFileVersion, themeDisplay, StringPool.BLANK)) %>" data-value="<%= HtmlUtil.escapeAttribute(ItemSelectorBrowserReturnTypeUtil.getValue(existingFileEntryReturnType, fileEntry, themeDisplay)) %>" href="<%= HtmlUtil.escapeHREF(DLUtil.getImagePreviewURL(fileEntry, themeDisplay)) %>" title="<%= HtmlUtil.escapeAttribute(title) %>">
+								<a class="item-preview" data-metadata="<%= HtmlUtil.escapeAttribute(itemMedatadaJSONObject.toString()) %>" data-returntype="<%= HtmlUtil.escapeAttribute(ClassUtil.getClassName(existingFileEntryReturnType)) %>" data-url="<%= HtmlUtil.escapeAttribute(DLUtil.getPreviewURL(fileEntry, latestFileVersion, themeDisplay, StringPool.BLANK)) %>" data-value="<%= HtmlUtil.escapeAttribute(ItemSelectorBrowserReturnTypeUtil.getValue(existingFileEntryReturnType, fileEntry, themeDisplay)) %>" href="<%= HtmlUtil.escapeHREF(DLUtil.getImagePreviewURL(fileEntry, themeDisplay)) %>" title="<%= HtmlUtil.escapeAttribute(title) %>">
 									<%= HtmlUtil.escape(title) %>
 								</a>
-
-								<%@ include file="/taglib/ui/browser/metadata_view.jspf" %>
 							</div>
 
 							<div class="status text-default">

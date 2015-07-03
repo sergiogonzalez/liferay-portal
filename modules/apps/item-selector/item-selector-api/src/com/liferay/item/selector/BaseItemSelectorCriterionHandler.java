@@ -45,6 +45,8 @@ public abstract class BaseItemSelectorCriterionHandler
 			Set<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
 				itemSelectorCriterion.getDesiredItemSelectorReturnTypes();
 
+			boolean breakLoop = false;
+
 			for (ItemSelectorReturnType desiredItemSelectorReturnType :
 					desiredItemSelectorReturnTypes) {
 
@@ -59,8 +61,16 @@ public abstract class BaseItemSelectorCriterionHandler
 					if (desiredItemSelectorReturnTypeClassName.equals(
 							supportedItemSelectorReturnTypeClassName)) {
 
+						breakLoop = true;
+
 						filteredItemSelectedViews.add(itemSelectorView);
+
+						break;
 					}
+				}
+
+				if (breakLoop) {
+					break;
 				}
 			}
 		}
