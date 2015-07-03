@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portlet.blogs.util;
+package com.liferay.blogs.util;
 
+import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.comment.DuplicateCommentException;
 import com.liferay.portal.kernel.language.Language;
@@ -36,11 +37,11 @@ import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalService;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
+import com.liferay.portlet.blogs.util.BlogsUtil;
 
 import java.io.IOException;
 
@@ -186,7 +187,7 @@ public class PingbackMethodImplTest extends PowerMockito {
 		String namespace = RandomTestUtil.randomString() + ".";
 
 		when(
-			_portal.getPortletNamespace(PortletKeys.BLOGS)
+			_portal.getPortletNamespace(BlogsPortletKeys.BLOGS)
 		).thenReturn(
 			namespace
 		);
@@ -426,7 +427,7 @@ public class PingbackMethodImplTest extends PowerMockito {
 	protected void setUpPortalUtil() throws Exception {
 		when(
 			_portal.getLayoutFullURL(
-				Matchers.anyLong(), Matchers.eq(PortletKeys.BLOGS))
+				Matchers.anyLong(), Matchers.eq(BlogsPortletKeys.BLOGS))
 		).thenReturn(
 			_LAYOUT_FULL_URL
 		);
@@ -468,14 +469,14 @@ public class PingbackMethodImplTest extends PowerMockito {
 			PortletLocalService.class);
 
 		when(
-			portletLocalService.getPortletById(PortletKeys.BLOGS)
+			portletLocalService.getPortletById(BlogsPortletKeys.BLOGS)
 		).thenReturn(
 			portlet
 		);
 
 		when(
 			portletLocalService.getPortletById(
-				Matchers.anyLong(), Matchers.eq(PortletKeys.BLOGS))
+				Matchers.anyLong(), Matchers.eq(BlogsPortletKeys.BLOGS))
 		).thenReturn(
 			portlet
 		);
