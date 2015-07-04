@@ -922,13 +922,9 @@ public class AssetPublisherUtil {
 
 			long scopeGroupId = GetterUtil.getLong(scopeIdSuffix);
 
-			Group scopeGroup = GroupLocalServiceUtil.fetchGroup(scopeGroupId);
+			Group scopeGroup = GroupLocalServiceUtil.getGroup(scopeGroupId);
 
-			if (scopeGroup == null) {
-				throw new PrincipalException();
-			}
-
-			return scopeGroupId;
+			return scopeGroup.getGroupId();
 		}
 		else if (scopeId.startsWith(SCOPE_ID_LAYOUT_UUID_PREFIX)) {
 			String layoutUuid = scopeId.substring(

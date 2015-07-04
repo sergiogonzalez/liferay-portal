@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Image Gallery Web
+Bundle-SymbolicName: com.liferay.image.gallery.web
+Bundle-Version: 1.0.0
+Include-Resource:\
+	classes,\
+	META-INF/resources=src/META-INF/resources
+Web-ContextPath: /image-gallery-web

@@ -54,6 +54,7 @@ Export-Package:\
 	com.liferay.portlet.documentlibrary.model,\
 	com.liferay.portlet.documentlibrary.service,\
 	com.liferay.portlet.documentlibrary.store,\
+	com.liferay.portlet.documentlibrary.webdav,\
 	com.liferay.portlet.dynamicdatamapping.service.permission,\
 	com.liferay.portlet.documentlibrary,\
 	com.liferay.portlet.documentlibrary.action,\

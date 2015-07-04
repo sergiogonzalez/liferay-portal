@@ -74,6 +74,7 @@ import java.util.Set;
  * @see com.liferay.portlet.calendar.service.persistence.CalEventUtil
  * @generated
  */
+@Deprecated
 @ProviderType
 public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	implements CalEventPersistence {
