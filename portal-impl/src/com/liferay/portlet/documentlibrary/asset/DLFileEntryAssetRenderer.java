@@ -215,7 +215,7 @@ public class DLFileEntryAssetRenderer
 			PortletKeys.DOCUMENT_LIBRARY, PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter(
-			"struts_action", "/document_library/edit_file_entry");
+			"mvcRenderCommandName", "/document_library/edit_file_entry");
 		portletURL.setParameter(
 			"fileEntryId", String.valueOf(_fileEntry.getFileEntryId()));
 
@@ -232,7 +232,8 @@ public class DLFileEntryAssetRenderer
 			getControlPanelPlid(liferayPortletRequest),
 			PortletKeys.DOCUMENT_LIBRARY, PortletRequest.ACTION_PHASE);
 
-		portletURL.setParameter("struts_action", "/document_library/get_file");
+		portletURL.setParameter(
+			"javax.portlet.action", "/document_library/get_file");
 		portletURL.setParameter(
 			"groupId", String.valueOf(_fileEntry.getRepositoryId()));
 		portletURL.setParameter(
@@ -265,7 +266,7 @@ public class DLFileEntryAssetRenderer
 			liferayPortletResponse, windowState);
 
 		portletURL.setParameter(
-			"struts_action", "/document_library_display/view_file_entry");
+			"mvcRenderCommandName", "/document_library/view_file_entry");
 		portletURL.setParameter(
 			"fileEntryId", String.valueOf(_fileEntry.getFileEntryId()));
 		portletURL.setWindowState(windowState);

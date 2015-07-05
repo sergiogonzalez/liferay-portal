@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -325,8 +324,8 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 
 				SessionErrors.add(actionRequest, e.getClass());
 
-				actionRequest.setAttribute(
-					MVCPortlet.MVC_PATH, "/html/portlet/blogs/error.jsp");
+				actionResponse.setRenderParameter(
+					"mvcPath", "/html/portlet/blogs/error.jsp");
 			}
 			else if (e instanceof EntryContentException ||
 					 e instanceof EntryDescriptionException ||
@@ -359,8 +358,8 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		catch (Throwable t) {
 			_log.error(t, t);
 
-			actionRequest.setAttribute(
-				MVCPortlet.MVC_PATH, "/html/portlet/blogs/error.jsp");
+			actionResponse.setRenderParameter(
+				"mvcPath", "/html/portlet/blogs/error.jsp");
 		}
 	}
 
