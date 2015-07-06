@@ -42,6 +42,8 @@ public interface Comment {
 
 	public long getParentCommentId();
 
+	public String getTranslatedBody(String pathThemeImages);
+
 	public User getUser() throws PortalException;
 
 	public long getUserId();

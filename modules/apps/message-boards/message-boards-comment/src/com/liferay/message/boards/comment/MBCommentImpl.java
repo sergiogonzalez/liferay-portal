@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.comment.WorkflowableComment;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portlet.messageboards.model.MBMessage;
+import com.liferay.portlet.messageboards.util.MBUtil;
 
 import java.util.Date;
 
@@ -95,6 +96,17 @@ public class MBCommentImpl implements WorkflowableComment {
 	@Override
 	public int getStatus() {
 		return _message.getStatus();
+	}
+
+	@Override
+	public String getTranslatedBody(String pathThemeImages) {
+		MBMessage message = getMessage();
+
+		if (message.isFormatBBCode()) {
+			return MBUtil.getBBCodeHTML(getBody(), pathThemeImages);
+		}
+
+		return getBody();
 	}
 
 	@Override

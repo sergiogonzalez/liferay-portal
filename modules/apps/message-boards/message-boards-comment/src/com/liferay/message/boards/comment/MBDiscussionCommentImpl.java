@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBTreeWalker;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
-import com.liferay.portlet.messageboards.util.MBUtil;
 import com.liferay.portlet.ratings.model.RatingsEntry;
 import com.liferay.portlet.ratings.model.RatingsStats;
 import com.liferay.portlet.ratings.service.persistence.RatingsStatsUtil;
@@ -137,13 +136,7 @@ public class MBDiscussionCommentImpl
 
 	@Override
 	public String getTranslatedBody() {
-		MBMessage message = getMessage();
-
-		if (message.isFormatBBCode()) {
-			return MBUtil.getBBCodeHTML(getBody(), _pathThemeImages);
-		}
-
-		return getBody();
+		return getTranslatedBody(_pathThemeImages);
 	}
 
 	private final String _pathThemeImages;
