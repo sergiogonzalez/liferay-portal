@@ -266,7 +266,7 @@ public class LiferaySeleniumHelper {
 
 				Element throwableElement = eventElement.element("throwable");
 
-				Exception exception;
+				Exception exception = null;
 
 				if (throwableElement != null) {
 					exception = new Exception(
@@ -1082,6 +1082,15 @@ public class LiferaySeleniumHelper {
 
 		if (line.matches(
 				"Current URL.*add_panel generates exception:[\\s\\S]*")) {
+
+			return true;
+		}
+
+		// LPS-56767, temporary workaround until Eudaldo Alonso fixes it
+
+		if (line.matches(
+				".*\\java.io.FileNotFoundException: " +
+					"/html/portlet/blogs_admin/view.jsp.*")) {
 
 			return true;
 		}

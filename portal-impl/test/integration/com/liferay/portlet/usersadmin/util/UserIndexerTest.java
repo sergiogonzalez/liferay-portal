@@ -201,9 +201,7 @@ public class UserIndexerTest {
 
 		addUserNameFields(firstName, lastName, middleName);
 
-		User user;
-
-		user = assertSearchOneUser("Fir");
+		User user = assertSearchOneUser("Fir");
 
 		Assert.assertEquals("First", user.getFirstName());
 
@@ -427,7 +425,7 @@ public class UserIndexerTest {
 		Assert.assertEquals(middleName, user.getMiddleName());
 	}
 
-	private Indexer _indexer;
+	private Indexer<User> _indexer;
 	private ServiceContext _serviceContext;
 
 	@DeleteAfterTestRun
