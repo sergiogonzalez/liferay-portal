@@ -72,7 +72,7 @@ public class FindActionTest {
 	public void setUp() throws Exception {
 		_portletIds = new String[] {
 			PortletProviderUtil.getPortletId(
-				BlogsEntry.class.getName(), PortletProvider.Action.ADMIN),
+				BlogsEntry.class.getName(), PortletProvider.Action.MANAGE),
 			PortletProviderUtil.getPortletId(
 				BlogsEntry.class.getName(), PortletProvider.Action.VIEW)
 		};

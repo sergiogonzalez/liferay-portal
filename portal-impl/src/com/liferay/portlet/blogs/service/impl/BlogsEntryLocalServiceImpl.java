@@ -1751,7 +1751,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			serviceContext.getCompanyId());
 
 		portletId = PortletProviderUtil.getPortletId(
-			BlogsEntry.class.getName(), PortletProvider.Action.ADMIN);
+			BlogsEntry.class.getName(), PortletProvider.Action.MANAGE);
 
 		if (Validator.isNull(portletId)) {
 			return StringPool.BLANK;
@@ -1962,7 +1962,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		}
 
 		String portletId = PortletProviderUtil.getPortletId(
-			BlogsEntry.class.getName(), PortletProvider.Action.ADMIN);
+			BlogsEntry.class.getName(), PortletProvider.Action.MANAGE);
 
 		if (Validator.isNull(portletId)) {
 			if (_log.isDebugEnabled()) {
