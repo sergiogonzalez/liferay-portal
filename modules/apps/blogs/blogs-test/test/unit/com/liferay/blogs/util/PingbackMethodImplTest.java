@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.comment.DuplicateCommentException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.security.pacl.permission.PortalSocketPermission;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Http;
@@ -48,6 +50,8 @@ import java.io.IOException;
 import java.util.Locale;
 import java.util.Map;
 
+import com.liferay.registry.collections.ServiceTrackerCollections;
+import com.liferay.registry.collections.ServiceTrackerMap;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -71,7 +75,8 @@ import org.powermock.reflect.Whitebox;
 @PrepareForTest( {
 	BlogsEntryLocalServiceUtil.class, BlogsUtil.class,
 	PortalSocketPermission.class, PortletLocalServiceUtil.class,
-	PropsValues.class, UserLocalServiceUtil.class
+	PortletProviderUtil.class, PropsValues.class,
+	ServiceTrackerCollections.class, UserLocalServiceUtil.class
 })
 @RunWith(PowerMockRunner.class)
 public class PingbackMethodImplTest extends PowerMockito {
@@ -86,6 +91,7 @@ public class PingbackMethodImplTest extends PowerMockito {
 		setUpLanguageUtil();
 		setUpPortalUtil();
 		setUpPortletLocalServiceUtil();
+		setUpPortletProviderUtil();
 		setUpUserLocalServiceUtil();
 		setUpXmlRpcUtil();
 	}
@@ -509,6 +515,26 @@ public class PingbackMethodImplTest extends PowerMockito {
 		);
 	}
 
+	protected void setUpPortletProviderUtil() {
+		mockStatic(ServiceTrackerCollections.class, Mockito.RETURNS_MOCKS);
+
+		stub(
+			method(
+				ServiceTrackerCollections.class, "singleValueMap", Class.class,
+				String.class)
+		).toReturn(_serviceTrackerMap);
+
+		mockStatic(PortletProviderUtil.class, Mockito.CALLS_REAL_METHODS);
+
+		stub(
+			method(
+				PortletProviderUtil.class, "getPortletId", String.class,
+				PortletProvider.Action.class)
+		).toReturn(
+			BlogsPortletKeys.BLOGS
+		);
+	}
+
 	protected void setUpXmlRpcUtil() {
 		Fault fault = Mockito.mock(Fault.class);
 
@@ -680,5 +706,8 @@ public class PingbackMethodImplTest extends PowerMockito {
 
 	@Mock
 	private XmlRpc _xmlRpc;
+
+	@Mock
+	private ServiceTrackerMap<String, PortletProvider> _serviceTrackerMap;
 
 }
