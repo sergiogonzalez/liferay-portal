@@ -582,7 +582,15 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 	@Override
 	@Skip
 	public Portlet getPortletByStrutsPath(long companyId, String strutsPath) {
-		return getPortletById(companyId, _getPortletId(strutsPath));
+		String porletId = _getPortletId(strutsPath);
+
+		Portlet portlet = null;
+
+		if (porletId != null) {
+			portlet = getPortletById(companyId, porletId);
+		}
+
+		return portlet;
 	}
 
 	@Override
