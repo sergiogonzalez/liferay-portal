@@ -14,17 +14,25 @@
 
 package com.liferay.blogs.web.blogs.portlet.action;
 
+import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.portal.kernel.portlet.BaseJSPSettingsConfigurationAction;
+import com.liferay.portal.kernel.portlet.ConfigurationAction;
 
 import javax.portlet.RenderRequest;
 
 import javax.servlet.ServletContext;
 
+import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Sergio González
  */
+@Component(
+	immediate = true,
+	property = {"javax.portlet.name=" + BlogsPortletKeys.BLOGS},
+	service = ConfigurationAction.class
+)
 public class BlogsConfigurationAction
 	extends BaseJSPSettingsConfigurationAction {
 
