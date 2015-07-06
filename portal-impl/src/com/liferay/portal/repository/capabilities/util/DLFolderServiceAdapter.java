@@ -17,9 +17,13 @@ package com.liferay.portal.repository.capabilities.util;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.repository.DocumentRepository;
+import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalService;
+import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderService;
+import com.liferay.portlet.documentlibrary.service.DLFolderServiceUtil;
 
 import java.util.List;
 
@@ -27,6 +31,19 @@ import java.util.List;
  * @author Iván Zaera
  */
 public class DLFolderServiceAdapter {
+
+	public static DLFolderServiceAdapter create(
+		DocumentRepository documentRepository) {
+
+		if (documentRepository instanceof LocalRepository) {
+			return new DLFolderServiceAdapter(
+				DLFolderLocalServiceUtil.getService());
+		}
+
+		return new DLFolderServiceAdapter(
+			DLFolderLocalServiceUtil.getService(),
+			DLFolderServiceUtil.getService());
+	}
 
 	public DLFolderServiceAdapter(DLFolderLocalService dlFolderLocalService) {
 		this(dlFolderLocalService, null);

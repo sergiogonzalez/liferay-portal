@@ -15,14 +15,29 @@
 package com.liferay.portal.repository.capabilities.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.repository.DocumentRepository;
+import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.GroupLocalService;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.GroupService;
+import com.liferay.portal.service.GroupServiceUtil;
 
 /**
  * @author Iván Zaera
  */
 public class GroupServiceAdapter {
+
+	public static GroupServiceAdapter create(
+		DocumentRepository documentRepository) {
+
+		if (documentRepository instanceof LocalRepository) {
+			return new GroupServiceAdapter(GroupLocalServiceUtil.getService());
+		}
+
+		return new GroupServiceAdapter(
+			GroupLocalServiceUtil.getService(), GroupServiceUtil.getService());
+	}
 
 	public GroupServiceAdapter(GroupLocalService repositoryLocalService) {
 		this(repositoryLocalService, null);

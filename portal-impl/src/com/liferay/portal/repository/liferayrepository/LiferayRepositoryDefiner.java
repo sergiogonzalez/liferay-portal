@@ -50,23 +50,9 @@ import com.liferay.portal.repository.capabilities.util.RepositoryEntryChecker;
 import com.liferay.portal.repository.capabilities.util.RepositoryEntryConverter;
 import com.liferay.portal.repository.capabilities.util.RepositoryServiceAdapter;
 import com.liferay.portal.repository.capabilities.util.TrashEntryServiceAdapter;
-import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.GroupServiceUtil;
-import com.liferay.portal.service.RepositoryLocalServiceUtil;
-import com.liferay.portal.service.RepositoryServiceUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryServiceUtil;
-import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.service.DLFileVersionServiceUtil;
-import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.service.DLFolderServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLSyncEventLocalServiceUtil;
-import com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil;
-import com.liferay.portlet.trash.service.TrashEntryServiceUtil;
 import com.liferay.portlet.trash.service.TrashVersionLocalServiceUtil;
 
 /**
@@ -92,65 +78,26 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 
 		DocumentRepository documentRepository = capabilityRegistry.getTarget();
 
-		DLAppServiceAdapter dlAppServiceAdapter = null;
-		DLFileEntryServiceAdapter dlFileEntryServiceAdapter = null;
-		DLFileVersionServiceAdapter dlFileVersionServiceAdapter = null;
-		DLFolderServiceAdapter dlFolderServiceAdapter = null;
-		GroupServiceAdapter groupServiceAdapter = null;
-		RepositoryServiceAdapter repositoryServiceAdapter = null;
-		TrashEntryServiceAdapter trashEntryServiceAdapter = null;
+		DLAppServiceAdapter dlAppServiceAdapter = DLAppServiceAdapter.create(
+			documentRepository);
 
-		if (documentRepository instanceof LocalRepository) {
-			dlAppServiceAdapter = new DLAppServiceAdapter(
-				DLAppLocalServiceUtil.getService());
+		DLFileEntryServiceAdapter dlFileEntryServiceAdapter =
+			DLFileEntryServiceAdapter.create(documentRepository);
 
-			dlFileEntryServiceAdapter = new DLFileEntryServiceAdapter(
-				DLFileEntryLocalServiceUtil.getService());
+		DLFileVersionServiceAdapter dlFileVersionServiceAdapter =
+			DLFileVersionServiceAdapter.create(documentRepository);
 
-			dlFileVersionServiceAdapter = new DLFileVersionServiceAdapter(
-				DLFileVersionLocalServiceUtil.getService());
+		DLFolderServiceAdapter dlFolderServiceAdapter =
+			DLFolderServiceAdapter.create(documentRepository);
 
-			dlFolderServiceAdapter = new DLFolderServiceAdapter(
-				DLFolderLocalServiceUtil.getService());
+		GroupServiceAdapter groupServiceAdapter = GroupServiceAdapter.create(
+			documentRepository);
 
-			groupServiceAdapter = new GroupServiceAdapter(
-				GroupLocalServiceUtil.getService());
+		RepositoryServiceAdapter repositoryServiceAdapter =
+			RepositoryServiceAdapter.create(documentRepository);
 
-			repositoryServiceAdapter = new RepositoryServiceAdapter(
-				RepositoryLocalServiceUtil.getService());
-
-			trashEntryServiceAdapter = new TrashEntryServiceAdapter(
-				TrashEntryLocalServiceUtil.getService());
-		}
-		else {
-			dlAppServiceAdapter = new DLAppServiceAdapter(
-				DLAppLocalServiceUtil.getService(),
-				DLAppServiceUtil.getService());
-
-			dlFileEntryServiceAdapter = new DLFileEntryServiceAdapter(
-				DLFileEntryLocalServiceUtil.getService(),
-				DLFileEntryServiceUtil.getService());
-
-			dlFileVersionServiceAdapter = new DLFileVersionServiceAdapter(
-				DLFileVersionLocalServiceUtil.getService(),
-				DLFileVersionServiceUtil.getService());
-
-			dlFolderServiceAdapter = new DLFolderServiceAdapter(
-				DLFolderLocalServiceUtil.getService(),
-				DLFolderServiceUtil.getService());
-
-			groupServiceAdapter = new GroupServiceAdapter(
-				GroupLocalServiceUtil.getService(),
-				GroupServiceUtil.getService());
-
-			repositoryServiceAdapter = new RepositoryServiceAdapter(
-				RepositoryLocalServiceUtil.getService(),
-				RepositoryServiceUtil.getService());
-
-			trashEntryServiceAdapter = new TrashEntryServiceAdapter(
-				TrashEntryLocalServiceUtil.getService(),
-				TrashEntryServiceUtil.getService());
-		}
+		TrashEntryServiceAdapter trashEntryServiceAdapter =
+			TrashEntryServiceAdapter.create(documentRepository);
 
 		TrashCapability trashCapability = new LiferayTrashCapability(
 			dlAppServiceAdapter, DLAppHelperLocalServiceUtil.getService(),

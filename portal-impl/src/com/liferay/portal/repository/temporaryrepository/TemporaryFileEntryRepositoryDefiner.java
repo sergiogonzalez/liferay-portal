@@ -15,7 +15,6 @@
 package com.liferay.portal.repository.temporaryrepository;
 
 import com.liferay.portal.kernel.repository.DocumentRepository;
-import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
 import com.liferay.portal.kernel.repository.capabilities.BulkOperationCapability;
 import com.liferay.portal.kernel.repository.capabilities.TemporaryFileEntriesCapability;
@@ -28,10 +27,6 @@ import com.liferay.portal.repository.capabilities.MinimalWorkflowCapability;
 import com.liferay.portal.repository.capabilities.TemporaryFileEntriesCapabilityImpl;
 import com.liferay.portal.repository.capabilities.util.DLFileEntryServiceAdapter;
 import com.liferay.portal.repository.capabilities.util.DLFolderServiceAdapter;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryServiceUtil;
-import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.service.DLFolderServiceUtil;
 
 /**
  * @author Iván Zaera
@@ -57,25 +52,11 @@ public class TemporaryFileEntryRepositoryDefiner extends BaseRepositoryDefiner {
 
 		DocumentRepository documentRepository = capabilityRegistry.getTarget();
 
-		DLFileEntryServiceAdapter dlFileEntryServiceAdapter = null;
-		DLFolderServiceAdapter dlFolderServiceAdapter = null;
+		DLFileEntryServiceAdapter dlFileEntryServiceAdapter =
+			DLFileEntryServiceAdapter.create(documentRepository);
 
-		if (documentRepository instanceof LocalRepository) {
-			dlFileEntryServiceAdapter = new DLFileEntryServiceAdapter(
-				DLFileEntryLocalServiceUtil.getService());
-
-			dlFolderServiceAdapter = new DLFolderServiceAdapter(
-				DLFolderLocalServiceUtil.getService());
-		}
-		else {
-			dlFileEntryServiceAdapter = new DLFileEntryServiceAdapter(
-				DLFileEntryLocalServiceUtil.getService(),
-				DLFileEntryServiceUtil.getService());
-
-			dlFolderServiceAdapter = new DLFolderServiceAdapter(
-				DLFolderLocalServiceUtil.getService(),
-				DLFolderServiceUtil.getService());
-		}
+		DLFolderServiceAdapter dlFolderServiceAdapter =
+			DLFolderServiceAdapter.create(documentRepository);
 
 		capabilityRegistry.addExportedCapability(
 			BulkOperationCapability.class,

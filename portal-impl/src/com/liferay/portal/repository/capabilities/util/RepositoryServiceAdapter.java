@@ -15,15 +15,32 @@
 package com.liferay.portal.repository.capabilities.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.repository.DocumentRepository;
+import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.RepositoryLocalService;
+import com.liferay.portal.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.service.RepositoryService;
+import com.liferay.portal.service.RepositoryServiceUtil;
 
 /**
  * @author Iván Zaera
  */
 public class RepositoryServiceAdapter {
+
+	public static RepositoryServiceAdapter create(
+		DocumentRepository documentRepository) {
+
+		if (documentRepository instanceof LocalRepository) {
+			return new RepositoryServiceAdapter(
+				RepositoryLocalServiceUtil.getService());
+		}
+
+		return new RepositoryServiceAdapter(
+			RepositoryLocalServiceUtil.getService(),
+			RepositoryServiceUtil.getService());
+	}
 
 	public RepositoryServiceAdapter(
 		RepositoryLocalService repositoryLocalService) {

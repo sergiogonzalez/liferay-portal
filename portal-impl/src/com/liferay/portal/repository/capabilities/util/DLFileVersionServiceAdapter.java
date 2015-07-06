@@ -15,14 +15,31 @@
 package com.liferay.portal.repository.capabilities.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.repository.DocumentRepository;
+import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalService;
+import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileVersionService;
+import com.liferay.portlet.documentlibrary.service.DLFileVersionServiceUtil;
 
 /**
  * @author Iván Zaera
  */
 public class DLFileVersionServiceAdapter {
+
+	public static DLFileVersionServiceAdapter create(
+		DocumentRepository documentRepository) {
+
+		if (documentRepository instanceof LocalRepository) {
+			return new DLFileVersionServiceAdapter(
+				DLFileVersionLocalServiceUtil.getService());
+		}
+
+		return new DLFileVersionServiceAdapter(
+			DLFileVersionLocalServiceUtil.getService(),
+			DLFileVersionServiceUtil.getService());
+	}
 
 	public DLFileVersionServiceAdapter(
 		DLFileVersionLocalService dlFileVersionLocalService) {

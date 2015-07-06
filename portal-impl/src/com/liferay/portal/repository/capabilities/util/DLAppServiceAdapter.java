@@ -15,13 +15,28 @@
 package com.liferay.portal.repository.capabilities.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.repository.DocumentRepository;
+import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalService;
+import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppService;
+import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 
 /**
  * @author Iván Zaera
  */
 public class DLAppServiceAdapter {
+
+	public static DLAppServiceAdapter create(
+		DocumentRepository documentRepository) {
+
+		if (documentRepository instanceof LocalRepository) {
+			return new DLAppServiceAdapter(DLAppLocalServiceUtil.getService());
+		}
+
+		return new DLAppServiceAdapter(
+			DLAppLocalServiceUtil.getService(), DLAppServiceUtil.getService());
+	}
 
 	public DLAppServiceAdapter(DLAppLocalService dlAppLocalService) {
 		this(dlAppLocalService, null);

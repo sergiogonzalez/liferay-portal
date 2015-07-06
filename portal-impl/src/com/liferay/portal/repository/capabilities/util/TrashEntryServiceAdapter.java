@@ -15,9 +15,13 @@
 package com.liferay.portal.repository.capabilities.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.repository.DocumentRepository;
+import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.service.TrashEntryLocalService;
+import com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil;
 import com.liferay.portlet.trash.service.TrashEntryService;
+import com.liferay.portlet.trash.service.TrashEntryServiceUtil;
 
 import java.util.List;
 
@@ -25,6 +29,19 @@ import java.util.List;
  * @author Iván Zaera
  */
 public class TrashEntryServiceAdapter {
+
+	public static TrashEntryServiceAdapter create(
+		DocumentRepository documentRepository) {
+
+		if (documentRepository instanceof LocalRepository) {
+			return new TrashEntryServiceAdapter(
+				TrashEntryLocalServiceUtil.getService());
+		}
+
+		return new TrashEntryServiceAdapter(
+			TrashEntryLocalServiceUtil.getService(),
+			TrashEntryServiceUtil.getService());
+	}
 
 	public TrashEntryServiceAdapter(
 		TrashEntryLocalService trashEntryLocalService) {
