@@ -49,10 +49,10 @@ import com.liferay.portal.repository.capabilities.util.GroupServiceAdapter;
 import com.liferay.portal.repository.capabilities.util.RepositoryEntryChecker;
 import com.liferay.portal.repository.capabilities.util.RepositoryEntryConverter;
 import com.liferay.portal.repository.capabilities.util.RepositoryServiceAdapter;
-import com.liferay.portal.repository.capabilities.util.TrashEntryServiceAdapter;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLSyncEventLocalServiceUtil;
+import com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil;
 import com.liferay.portlet.trash.service.TrashVersionLocalServiceUtil;
 
 /**
@@ -96,13 +96,10 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 		RepositoryServiceAdapter repositoryServiceAdapter =
 			RepositoryServiceAdapter.create(documentRepository);
 
-		TrashEntryServiceAdapter trashEntryServiceAdapter =
-			TrashEntryServiceAdapter.create(documentRepository);
-
 		TrashCapability trashCapability = new LiferayTrashCapability(
 			dlAppServiceAdapter, DLAppHelperLocalServiceUtil.getService(),
 			dlFileEntryServiceAdapter, dlFolderServiceAdapter,
-			repositoryServiceAdapter, trashEntryServiceAdapter,
+			repositoryServiceAdapter, TrashEntryLocalServiceUtil.getService(),
 			TrashVersionLocalServiceUtil.getService());
 
 		capabilityRegistry.addExportedCapability(
