@@ -36,15 +36,13 @@ public class MBDiscussionCommentImpl
 
 	public MBDiscussionCommentImpl(
 		MBMessage message, MBTreeWalker treeWalker,
-		List<RatingsEntry> ratingsEntries, List<RatingsStats> ratingsStats,
-		String pathThemeImages) {
+		List<RatingsEntry> ratingsEntries, List<RatingsStats> ratingsStats) {
 
 		super(message);
 
 		_treeWalker = treeWalker;
 		_ratingsEntries = ratingsEntries;
 		_ratingsStats = ratingsStats;
-		_pathThemeImages = pathThemeImages;
 	}
 
 	@Override
@@ -61,8 +59,7 @@ public class MBDiscussionCommentImpl
 			parentMessageId);
 
 		return new MBDiscussionCommentImpl(
-			parentMessage, _treeWalker, _ratingsEntries, _ratingsStats,
-			_pathThemeImages);
+			parentMessage, _treeWalker, _ratingsEntries, _ratingsStats);
 	}
 
 	@Override
@@ -119,7 +116,7 @@ public class MBDiscussionCommentImpl
 		int[] range = _treeWalker.getChildrenRange(getMessage());
 
 		return new MBDiscussionCommentIterator(
-			messages, range[0], range[1], _treeWalker, _pathThemeImages);
+			messages, range[0], range[1], _treeWalker);
 	}
 
 	@Override
@@ -131,15 +128,9 @@ public class MBDiscussionCommentImpl
 		int[] range = _treeWalker.getChildrenRange(getMessage());
 
 		return new MBDiscussionCommentIterator(
-			messages, from, range[1], _treeWalker, _pathThemeImages);
+			messages, from, range[1], _treeWalker);
 	}
 
-	@Override
-	public String getTranslatedBody() {
-		return getTranslatedBody(_pathThemeImages);
-	}
-
-	private final String _pathThemeImages;
 	private final List<RatingsEntry> _ratingsEntries;
 	private final List<RatingsStats> _ratingsStats;
 	private final MBTreeWalker _treeWalker;
@@ -148,14 +139,13 @@ public class MBDiscussionCommentImpl
 		implements DiscussionCommentIterator {
 
 		public MBDiscussionCommentIterator(
-			List<MBMessage> messages, int from, int to, MBTreeWalker treeWalker,
-			String pathThemeImages) {
+			List<MBMessage> messages, int from, int to,
+			MBTreeWalker treeWalker) {
 
 			_messages = messages;
 			_from = from;
 			_to = to;
 			_treeWalker = treeWalker;
-			_pathThemeImages = pathThemeImages;
 		}
 
 		@Override
@@ -176,7 +166,7 @@ public class MBDiscussionCommentImpl
 		public DiscussionComment next() {
 			DiscussionComment discussionComment = new MBDiscussionCommentImpl(
 				_messages.get(_from), _treeWalker, _ratingsEntries,
-				_ratingsStats, _pathThemeImages);
+				_ratingsStats);
 
 			_from++;
 
@@ -190,7 +180,6 @@ public class MBDiscussionCommentImpl
 
 		private int _from;
 		private final List<MBMessage> _messages;
-		private final String _pathThemeImages;
 		private final int _to;
 		private final MBTreeWalker _treeWalker;
 

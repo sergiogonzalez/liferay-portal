@@ -40,6 +40,4 @@ public interface DiscussionComment extends Comment {
 	public DiscussionCommentIterator getThreadDiscussionCommentIterator(
 		int from);
 
-	public String getTranslatedBody();
-
 }
