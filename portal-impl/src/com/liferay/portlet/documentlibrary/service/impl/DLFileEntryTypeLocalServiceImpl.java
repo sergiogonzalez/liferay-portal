@@ -299,6 +299,7 @@ public class DLFileEntryTypeLocalServiceImpl
 		return dlFileEntryTypePersistence.findByG_F(groupId, fileEntryTypeKey);
 	}
 
+	@Override
 	public List<DLFileEntryType> getFileEntryTypes(long ddmStructureId)
 		throws PortalException {
 

@@ -97,7 +97,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = Indexer.class)
 public class JournalArticleIndexer
-	extends BaseIndexer implements DDMStructureIndexer {
+	extends BaseIndexer<JournalArticle> implements DDMStructureIndexer {
 
 	public static final String CLASS_NAME = JournalArticle.class.getName();
 
@@ -276,7 +276,7 @@ public class JournalArticleIndexer
 				ddmStructureKeys[i] = ddmStructure.getStructureKey();
 			}
 
-			ActionableDynamicQuery actionableDynamicQuery =
+			final ActionableDynamicQuery actionableDynamicQuery =
 				_journalArticleLocalService.getActionableDynamicQuery();
 
 			actionableDynamicQuery.setAddCriteriaMethod(
@@ -286,6 +286,20 @@ public class JournalArticleIndexer
 					public void addCriteria(DynamicQuery dynamicQuery) {
 						Property ddmStructureKey = PropertyFactoryUtil.forName(
 							"DDMStructureKey");
+
+						if (!JournalServiceConfigurationValues.
+								JOURNAL_ARTICLE_INDEX_ALL_VERSIONS) {
+
+							Property statusProperty =
+								PropertyFactoryUtil.forName("status");
+
+							Integer[] statuses = {
+								WorkflowConstants.STATUS_APPROVED,
+								WorkflowConstants.STATUS_IN_TRASH
+							};
+
+							dynamicQuery.add(statusProperty.in(statuses));
+						}
 
 						dynamicQuery.add(ddmStructureKey.in(ddmStructureKeys));
 					}
@@ -299,6 +313,14 @@ public class JournalArticleIndexer
 						throws PortalException {
 
 						JournalArticle article = (JournalArticle)object;
+
+						if (!JournalServiceConfigurationValues.
+								JOURNAL_ARTICLE_INDEX_ALL_VERSIONS) {
+
+							article =
+								_journalArticleLocalService.getLatestArticle(
+									article.getResourcePrimKey());
+						}
 
 						try {
 							doReindex(article, false);
@@ -405,75 +427,75 @@ public class JournalArticleIndexer
 	}
 
 	@Override
-	protected void doDelete(Object obj) throws Exception {
-		JournalArticle article = (JournalArticle)obj;
-
-		long classPK = article.getId();
+	protected void doDelete(JournalArticle journalArticle) throws Exception {
+		long classPK = journalArticle.getId();
 
 		if (!JournalServiceConfigurationValues.
 				JOURNAL_ARTICLE_INDEX_ALL_VERSIONS) {
 
 			if (_journalArticleLocalService.getArticlesCount(
-					article.getGroupId(), article.getArticleId()) > 0) {
+					journalArticle.getGroupId(),
+					journalArticle.getArticleId()) > 0) {
 
-				doReindex(obj);
+				doReindex(journalArticle);
 
 				return;
 			}
 			else {
-				classPK = article.getResourcePrimKey();
+				classPK = journalArticle.getResourcePrimKey();
 			}
 		}
 
-		deleteDocument(article.getCompanyId(), classPK);
+		deleteDocument(journalArticle.getCompanyId(), classPK);
 
-		if (!article.isApproved()) {
+		if (!journalArticle.isApproved()) {
 			return;
 		}
 
 		JournalArticle latestIndexableArticle =
 			_journalArticleLocalService.fetchLatestIndexableArticle(
-				article.getResourcePrimKey());
+				journalArticle.getResourcePrimKey());
 
 		if ((latestIndexableArticle == null) ||
-			(latestIndexableArticle.getVersion() > article.getVersion())) {
+			(latestIndexableArticle.getVersion() >
+				journalArticle.getVersion())) {
 
 			return;
 		}
 
 		SearchEngineUtil.updateDocument(
-			getSearchEngineId(), article.getCompanyId(),
+			getSearchEngineId(), journalArticle.getCompanyId(),
 			getDocument(latestIndexableArticle), isCommitImmediately());
 	}
 
 	@Override
-	protected Document doGetDocument(Object obj) throws Exception {
-		JournalArticle article = (JournalArticle)obj;
+	protected Document doGetDocument(JournalArticle journalArticle)
+		throws Exception {
 
-		Document document = getBaseModelDocument(CLASS_NAME, article);
+		Document document = getBaseModelDocument(CLASS_NAME, journalArticle);
 
-		long classPK = article.getId();
+		long classPK = journalArticle.getId();
 
 		if (!JournalServiceConfigurationValues.
 				JOURNAL_ARTICLE_INDEX_ALL_VERSIONS) {
 
-			classPK = article.getResourcePrimKey();
+			classPK = journalArticle.getResourcePrimKey();
 		}
 
 		document.addUID(CLASS_NAME, classPK);
 
 		String articleDefaultLanguageId = LocalizationUtil.getDefaultLanguageId(
-			article.getDocument());
+			journalArticle.getDocument());
 
 		String[] languageIds = LocalizationUtil.getAvailableLanguageIds(
-			article.getDocument());
+			journalArticle.getDocument());
 
 		for (String languageId : languageIds) {
-			String content = extractDDMContent(article, languageId);
+			String content = extractDDMContent(journalArticle, languageId);
 
-			String description = article.getDescription(languageId);
+			String description = journalArticle.getDescription(languageId);
 
-			String title = article.getTitle(languageId);
+			String title = journalArticle.getTitle(languageId);
 
 			if (languageId.equals(articleDefaultLanguageId)) {
 				document.addText(Field.CONTENT, content);
@@ -494,28 +516,30 @@ public class JournalArticleIndexer
 				title);
 		}
 
-		document.addKeyword(Field.FOLDER_ID, article.getFolderId());
+		document.addKeyword(Field.FOLDER_ID, journalArticle.getFolderId());
 
-		String articleId = article.getArticleId();
+		String articleId = journalArticle.getArticleId();
 
-		if (article.isInTrash()) {
+		if (journalArticle.isInTrash()) {
 			articleId = TrashUtil.getOriginalTitle(articleId);
 		}
 
 		document.addKeyword(Field.ARTICLE_ID, articleId);
 
-		document.addKeyword(Field.LAYOUT_UUID, article.getLayoutUuid());
+		document.addKeyword(Field.LAYOUT_UUID, journalArticle.getLayoutUuid());
 		document.addKeyword(
 			Field.TREE_PATH,
-			StringUtil.split(article.getTreePath(), CharPool.SLASH));
-		document.addKeyword(Field.VERSION, article.getVersion());
+			StringUtil.split(journalArticle.getTreePath(), CharPool.SLASH));
+		document.addKeyword(Field.VERSION, journalArticle.getVersion());
 
-		document.addKeyword("ddmStructureKey", article.getDDMStructureKey());
-		document.addKeyword("ddmTemplateKey", article.getDDMTemplateKey());
-		document.addDate("displayDate", article.getDisplayDate());
-		document.addKeyword("head", isHead(article));
+		document.addKeyword(
+			"ddmStructureKey", journalArticle.getDDMStructureKey());
+		document.addKeyword(
+			"ddmTemplateKey", journalArticle.getDDMTemplateKey());
+		document.addDate("displayDate", journalArticle.getDisplayDate());
+		document.addKeyword("head", isHead(journalArticle));
 
-		addDDMStructureAttributes(document, article);
+		addDDMStructureAttributes(document, journalArticle);
 
 		return document;
 	}
@@ -569,6 +593,11 @@ public class JournalArticleIndexer
 		return new Summary(snippetLocale, title, content);
 	}
 
+	@Override
+	protected void doReindex(JournalArticle journalArticle) throws Exception {
+		doReindex(journalArticle, true);
+	}
+
 	protected void doReindex(JournalArticle article, boolean allVersions)
 		throws Exception {
 
@@ -592,13 +621,6 @@ public class JournalArticleIndexer
 				getSearchEngineId(), article.getCompanyId(),
 				getDocument(article), isCommitImmediately());
 		}
-	}
-
-	@Override
-	protected void doReindex(Object obj) throws Exception {
-		JournalArticle article = (JournalArticle)obj;
-
-		doReindex(article, true);
 	}
 
 	@Override

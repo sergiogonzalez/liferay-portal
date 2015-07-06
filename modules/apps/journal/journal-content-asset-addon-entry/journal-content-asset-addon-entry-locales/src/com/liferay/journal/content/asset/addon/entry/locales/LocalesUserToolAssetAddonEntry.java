@@ -38,8 +38,8 @@ public class LocalesUserToolAssetAddonEntry
 	}
 
 	@Override
-	public String getJSPPath() {
-		return _JSP_PATH;
+	public String getJspPath() {
+		return "/META-INF/resources/locales.jsp";
 	}
 
 	@Override
@@ -65,7 +65,5 @@ public class LocalesUserToolAssetAddonEntry
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
 	}
-
-	private static final String _JSP_PATH = "/META-INF/resources/locales.jsp";
 
 }
