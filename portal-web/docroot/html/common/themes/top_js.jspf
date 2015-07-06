@@ -184,7 +184,7 @@
 				getParentGroupId: function() {
 					return '<%= themeDisplay.getSiteGroupId() %>';
 				},
-				ThemeDisplay: function() {
+				getPathContext: function() {
 					return '<%= themeDisplay.getPathContext() %>';
 				},
 				getPathImage: function() {
