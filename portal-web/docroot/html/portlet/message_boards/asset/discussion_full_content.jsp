@@ -54,7 +54,7 @@ if (comment instanceof WorkflowableComment) {
 		</c:if>
 
 		<div>
-			<%= HtmlUtil.escape(comment.getBody()) %>
+			<%= comment.getTranslatedBody(themeDisplay.getPathThemeImages()) %>
 		</div>
 
 		<br />

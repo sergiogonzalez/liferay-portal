@@ -21,7 +21,7 @@ int abstractLength = GetterUtil.getInteger(request.getAttribute(WebKeys.ASSET_EN
 
 Comment comment = (Comment)request.getAttribute(WebKeys.COMMENT);
 
-String summary = StringUtil.shorten(comment.getBody(), abstractLength);
+String summary = StringUtil.shorten(comment.getTranslatedBody(themeDisplay.getPathThemeImages()), abstractLength);
 %>
 
-<%= HtmlUtil.escape(summary) %>
+<%= summary %>
