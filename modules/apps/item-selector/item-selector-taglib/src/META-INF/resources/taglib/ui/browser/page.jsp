@@ -81,43 +81,90 @@ String uploadMessage = GetterUtil.getString(request.getAttribute("liferay-ui:ite
 						/>
 
 						<liferay-ui:search-container-row
-							className="com.liferay.portal.kernel.repository.model.FileEntry"
-							keyProperty="fileEntryId"
-							modelVar="fileEntry"
+							className="com.liferay.portal.kernel.repository.model.RepositoryEntry"
+							modelVar="repositoryEntry"
 						>
 
 							<%
-							FileVersion latestFileVersion = fileEntry.getLatestFileVersion();
+							FileEntry fileEntry = null;
+							FileShortcut fileShortcut = null;
+							Folder folder = null;
 
-							String title = DLUtil.getTitleWithExtension(fileEntry);
+							if (repositoryEntry instanceof FileEntry) {
+								fileEntry = (FileEntry)repositoryEntry;
+							}
+							else if (repositoryEntry instanceof FileShortcut) {
+								fileShortcut = (FileShortcut)repositoryEntry;
 
-							JSONObject itemMedatadaJSONObject = ItemSelectorBrowserUtil.getItemMetadataJSONObject(fileEntry, locale);
+								fileEntry = DLAppLocalServiceUtil.getFileEntry(fileShortcut.getToFileEntryId());
+							}
+							else {
+								folder = (Folder)repositoryEntry;
+							}
+
+							if (fileEntry != null) {
+								FileVersion latestFileVersion = fileEntry.getLatestFileVersion();
+
+								String title = DLUtil.getTitleWithExtension(fileEntry);
+
+								JSONObject itemMedatadaJSONObject = ItemSelectorBrowserUtil.getItemMetadataJSONObject(fileEntry, locale);
 							%>
 
-							<liferay-ui:search-container-column-text name="title">
-								<a class="item-preview" data-metadata="<%= HtmlUtil.escapeAttribute(itemMedatadaJSONObject.toString()) %>" data-returnType="<%= HtmlUtil.escapeAttribute(ClassUtil.getClassName(existingFileEntryReturnType)) %>" data-url="<%= HtmlUtil.escapeAttribute(DLUtil.getPreviewURL(fileEntry, latestFileVersion, themeDisplay, StringPool.BLANK)) %>" data-value="<%= HtmlUtil.escapeAttribute(ItemSelectorBrowserReturnTypeUtil.getValue(existingFileEntryReturnType, fileEntry, themeDisplay)) %>" href="<%= HtmlUtil.escapeHREF(DLUtil.getImagePreviewURL(fileEntry, themeDisplay)) %>" title="<%= HtmlUtil.escapeAttribute(title) %>">
+								<liferay-ui:search-container-column-text name="title">
+									<a class="item-preview" data-metadata="<%= HtmlUtil.escapeAttribute(itemMedatadaJSONObject.toString()) %>" data-returnType="<%= HtmlUtil.escapeAttribute(ClassUtil.getClassName(existingFileEntryReturnType)) %>" data-url="<%= HtmlUtil.escapeAttribute(DLUtil.getPreviewURL(fileEntry, latestFileVersion, themeDisplay, StringPool.BLANK)) %>" data-value="<%= HtmlUtil.escapeAttribute(ItemSelectorBrowserReturnTypeUtil.getValue(existingFileEntryReturnType, fileEntry, themeDisplay)) %>" href="<%= HtmlUtil.escapeHREF(DLUtil.getImagePreviewURL(fileEntry, themeDisplay)) %>" title="<%= HtmlUtil.escapeAttribute(title) %>">
 
-									<%
-									String iconCssClass = DLUtil.getFileIconCssClass(fileEntry.getExtension());
-									%>
+										<%
+										String iconCssClass = DLUtil.getFileIconCssClass(fileEntry.getExtension());
+										%>
 
-									<c:if test="<%= Validator.isNotNull(iconCssClass) %>">
-										<i class="<%= iconCssClass %>"></i>
-									</c:if>
+										<c:if test="<%= Validator.isNotNull(iconCssClass) %>">
+											<i class="<%= iconCssClass %>"></i>
+										</c:if>
 
-									<span class="taglib-text">
-										<%= HtmlUtil.escape(title) %>
-									</span>
-								</a>
-							</liferay-ui:search-container-column-text>
+										<span class="taglib-text">
+											<%= HtmlUtil.escape(title) %>
+										</span>
+									</a>
+								</liferay-ui:search-container-column-text>
 
-							<liferay-ui:search-container-column-text name="size" value="<%= TextFormatter.formatStorageSize(fileEntry.getSize(), locale) %>" />
+								<liferay-ui:search-container-column-text name="size" value="<%= TextFormatter.formatStorageSize(fileEntry.getSize(), locale) %>" />
 
-							<liferay-ui:search-container-column-status name="status" status="<%= latestFileVersion.getStatus() %>" />
+								<liferay-ui:search-container-column-status name="status" status="<%= latestFileVersion.getStatus() %>" />
 
-							<liferay-ui:search-container-column-text name="modified-date">
-								<liferay-ui:message arguments="<%= new String[] {LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - fileEntry.getModifiedDate().getTime(), true), HtmlUtil.escape(fileEntry.getUserName())} %>" key="x-ago-by-x" translateArguments="<%= false %>" />
-							</liferay-ui:search-container-column-text>
+								<liferay-ui:search-container-column-text name="modified-date">
+									<liferay-ui:message arguments="<%= new String[] {LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - fileEntry.getModifiedDate().getTime(), true), HtmlUtil.escape(fileEntry.getUserName())} %>" key="x-ago-by-x" translateArguments="<%= false %>" />
+								</liferay-ui:search-container-column-text>
+
+							<%
+							}
+							if (folder != null) {
+								PortletURL viewFolderURL = PortletURLUtil.clone(searchContainer.getIteratorURL(), liferayPortletResponse);
+
+								viewFolderURL.setParameter("folderId", String.valueOf(folder.getFolderId()));
+							%>
+
+								<liferay-ui:search-container-column-text name="title">
+									<a href="<%= HtmlUtil.escapeHREF(viewFolderURL.toString()) %>" title="<%= HtmlUtil.escapeAttribute(folder.getName()) %>">
+
+										<i class="icon-folder-open"></i>
+
+										<span class="taglib-text">
+											<%= HtmlUtil.escape(folder.getName()) %>
+										</span>
+									</a>
+								</liferay-ui:search-container-column-text>
+
+								<liferay-ui:search-container-column-text name="size" value="--" />
+
+								<liferay-ui:search-container-column-text name="status" value="--" />
+
+								<liferay-ui:search-container-column-text name="modified-date">
+									<liferay-ui:message arguments="<%= new String[] {LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - folder.getModifiedDate().getTime(), true), HtmlUtil.escape(folder.getUserName())} %>" key="x-ago-by-x" translateArguments="<%= false %>" />
+								</liferay-ui:search-container-column-text>
+
+							<%
+							}
+							%>
 
 						</liferay-ui:search-container-row>
 
@@ -130,41 +177,98 @@ String uploadMessage = GetterUtil.getString(request.getAttribute("liferay-ui:ite
 
 				<%
 				for (Object result : searchContainer.getResults()) {
-					FileEntry fileEntry = (FileEntry)result;
 
-					FileVersion latestFileVersion = fileEntry.getLatestFileVersion();
+					FileEntry fileEntry = null;
+					FileShortcut fileShortcut = null;
+					Folder folder = null;
 
-					String title = DLUtil.getTitleWithExtension(fileEntry);
+					if (result instanceof FileEntry) {
+						fileEntry = (FileEntry)result;
+					}
+					else if (result instanceof FileShortcut) {
+						fileShortcut = (FileShortcut)result;
 
-					JSONObject itemMedatadaJSONObject = ItemSelectorBrowserUtil.getItemMetadataJSONObject(fileEntry, locale);
+						fileEntry = DLAppLocalServiceUtil.getFileEntry(fileShortcut.getToFileEntryId());
+					}
+					else {
+						folder = (Folder)result;
+					}
+
+					if (fileEntry != null) {
+
+						FileVersion latestFileVersion = fileEntry.getLatestFileVersion();
+
+						String title = DLUtil.getTitleWithExtension(fileEntry);
+
+						JSONObject itemMedatadaJSONObject = ItemSelectorBrowserUtil.getItemMetadataJSONObject(fileEntry, locale);
 				%>
 
-					<li class="list-group-item list-group-item-default">
-						<div class="list-group-item-field">
-							<img src="<%= DLUtil.getThumbnailSrc(fileEntry, themeDisplay) %>" />
-						</div>
+						<li class="list-group-item list-group-item-default">
+							<div class="list-group-item-field">
+								<img src="<%= DLUtil.getThumbnailSrc(fileEntry, themeDisplay) %>" />
 
-						<div class="list-group-item-content">
-							<div class="text-default">
-								<liferay-ui:message key="modified" />
-								<liferay-ui:message arguments="<%= new String[] {LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - fileEntry.getModifiedDate().getTime(), true), HtmlUtil.escape(fileEntry.getUserName())} %>" key="x-ago-by-x" translateArguments="<%= false %>" />
+								<c:if test="<%= fileShortcut != null %>">
+									<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="shortcut" />" class="shortcut-icon" src="<%= themeDisplay.getPathThemeImages() %>/file_system/large/overlay_link.png" />
+								</c:if>
 							</div>
 
-							<div class="text-primary">
-								<a class="item-preview" data-metadata="<%= HtmlUtil.escapeAttribute(itemMedatadaJSONObject.toString()) %>" data-returnType="<%= HtmlUtil.escapeAttribute(ClassUtil.getClassName(existingFileEntryReturnType)) %>" data-url="<%= HtmlUtil.escapeAttribute(DLUtil.getPreviewURL(fileEntry, latestFileVersion, themeDisplay, StringPool.BLANK)) %>" data-value="<%= HtmlUtil.escapeAttribute(ItemSelectorBrowserReturnTypeUtil.getValue(existingFileEntryReturnType, fileEntry, themeDisplay)) %>" href="<%= HtmlUtil.escapeHREF(DLUtil.getImagePreviewURL(fileEntry, themeDisplay)) %>" title="<%= HtmlUtil.escapeAttribute(title) %>">
-									<%= HtmlUtil.escape(title) %>
-								</a>
+							<div class="list-group-item-content">
+								<div class="text-default">
+									<liferay-ui:message key="modified" />
+									<liferay-ui:message arguments="<%= new String[] {LanguageUtil.getTimeDescription(locale, System.currentTimeMillis() - fileEntry.getModifiedDate().getTime(), true), HtmlUtil.escape(fileEntry.getUserName())} %>" key="x-ago-by-x" translateArguments="<%= false %>" />
+								</div>
+
+								<div class="text-primary">
+									<a class="item-preview" data-metadata="<%= HtmlUtil.escapeAttribute(itemMedatadaJSONObject.toString()) %>" data-returnType="<%= HtmlUtil.escapeAttribute(ClassUtil.getClassName(existingFileEntryReturnType)) %>" data-url="<%= HtmlUtil.escapeAttribute(DLUtil.getPreviewURL(fileEntry, latestFileVersion, themeDisplay, StringPool.BLANK)) %>" data-value="<%= HtmlUtil.escapeAttribute(ItemSelectorBrowserReturnTypeUtil.getValue(existingFileEntryReturnType, fileEntry, themeDisplay)) %>" href="<%= HtmlUtil.escapeHREF(DLUtil.getImagePreviewURL(fileEntry, themeDisplay)) %>" title="<%= HtmlUtil.escapeAttribute(title) %>">
+										<%= HtmlUtil.escape(title) %>
+									</a>
+								</div>
+
+								<div class="status text-default">
+									<liferay-ui:message key="<%= WorkflowConstants.getStatusLabel(latestFileVersion.getStatus()) %>" />
+								</div>
+							</div>
+						</li>
+
+					<%
+					}
+					else {
+					%>
+
+						<li class="list-group-item list-group-item-default">
+
+							<%
+							String folderImage = "folder_empty_document";
+
+							if (PropsValues.DL_FOLDER_ICON_CHECK_COUNT && (DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(folder.getRepositoryId(), folder.getFolderId(), WorkflowConstants.STATUS_APPROVED, true) > 0)) {
+								folderImage = "folder_full_document";
+							}
+							%>
+
+							<div class="list-group-item-field">
+								<img src="<%= themeDisplay.getPathThemeImages() + "/file_system/large/" + folderImage + ".png" %>" />
 							</div>
 
-							<div class="status text-default">
-								<liferay-ui:message key="<%= WorkflowConstants.getStatusLabel(latestFileVersion.getStatus()) %>" />
-							</div>
-						</div>
-					</li>
+							<div class="list-group-item-content">
+								<div class="text-primary">
 
-				<%
-				}
-				%>
+									<%
+									PortletURL viewFolderURL = PortletURLUtil.clone(searchContainer.getIteratorURL(), liferayPortletResponse);
+
+									viewFolderURL.setParameter("folderId", String.valueOf(folder.getFolderId()));
+									%>
+
+									<a href="<%= HtmlUtil.escapeHREF(viewFolderURL.toString()) %>" title="<%= HtmlUtil.escapeAttribute(folder.getName()) %>">
+										<%= HtmlUtil.escape(folder.getName()) %>
+									</a>
+								</div>
+							</div>
+						</li>
+
+					<%
+						}
+					}
+					%>
 
 				</ul>
 
