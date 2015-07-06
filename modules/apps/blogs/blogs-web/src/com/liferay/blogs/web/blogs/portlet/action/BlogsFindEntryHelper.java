@@ -95,10 +95,10 @@ public class BlogsFindEntryHelper extends BaseFindActionHelper {
 			String mvcRenderCommandName = null;
 
 			if (portletId.equals(BlogsPortletKeys.BLOGS)) {
-				mvcRenderCommandName = "/blogs/view";
+				mvcRenderCommandName = "/blogs/view_entry";
 			}
 			else if (portletId.equals(BlogsPortletKeys.BLOGS_ADMIN)) {
-				mvcRenderCommandName = "/blogs_admin/view";
+				mvcRenderCommandName = "/blogs_admin/view_entry";
 			}
 			else {
 				mvcRenderCommandName = "/blogs_aggregator/view";
