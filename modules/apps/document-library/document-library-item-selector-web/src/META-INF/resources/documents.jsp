@@ -37,6 +37,7 @@ if (Validator.isNotNull(keywords)) {
 
 	searchContext.setAttribute("mimeTypes", mimeTypes);
 	searchContext.setEnd(searchContainer.getEnd());
+	searchContext.setFolderIds(new long[] {dlItemSelectorViewDisplayContext.getFolderId(request)});
 	searchContext.setStart(searchContainer.getStart());
 
 	Hits hits = DLAppServiceUtil.search(repositoryId, searchContext);
@@ -67,8 +68,8 @@ if (Validator.isNotNull(keywords)) {
 	}
 }
 else {
-	total = DLAppServiceUtil.getFileEntriesCount(repositoryId, folderId, mimeTypes);
-	results = DLAppServiceUtil.getFileEntries(repositoryId, folderId, mimeTypes, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+	total = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, WorkflowConstants.STATUS_APPROVED, mimeTypes, false);
+	results = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(repositoryId, folderId, WorkflowConstants.STATUS_APPROVED, mimeTypes, false, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 }
 
 searchContainer.setTotal(total);
