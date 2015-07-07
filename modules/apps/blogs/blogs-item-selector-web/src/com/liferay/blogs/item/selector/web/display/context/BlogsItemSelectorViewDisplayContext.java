@@ -16,12 +16,15 @@ package com.liferay.blogs.item.selector.web.display.context;
 
 import com.liferay.blogs.item.selector.criterion.BlogsItemSelectorCriterion;
 import com.liferay.blogs.item.selector.web.BlogsItemSelectorView;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portlet.PortletURLUtil;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 
 import java.util.Locale;
 
+import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -59,8 +62,17 @@ public class BlogsItemSelectorViewDisplayContext {
 		return _itemSelectedEventName;
 	}
 
-	public PortletURL getPortletURL() {
-		return _portletURL;
+	public PortletURL getPortletURL(
+			HttpServletRequest request,
+			LiferayPortletResponse liferayPortletResponse)
+		throws PortletException {
+
+		PortletURL portletURL = PortletURLUtil.clone(
+			_portletURL, liferayPortletResponse);
+
+		portletURL.setParameter("displayStyle", getDisplayStyle(request));
+
+		return portletURL;
 	}
 
 	public String getTitle(Locale locale) {
