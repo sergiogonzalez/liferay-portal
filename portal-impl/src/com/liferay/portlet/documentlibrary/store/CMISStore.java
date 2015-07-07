@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.documentlibrary.store;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -181,6 +183,10 @@ public class CMISStore extends BaseStore {
 		}
 		catch (NoSuchFileException nsfe) {
 			logFailedDeletion(companyId, repositoryId, fileName, versionLabel);
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(nsfe, nsfe);
+			}
 		}
 	}
 
@@ -610,6 +616,8 @@ public class CMISStore extends BaseStore {
 
 		return versions;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(CMISStore.class);
 
 	private final Folder _systemRootDir;
 
