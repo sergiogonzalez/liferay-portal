@@ -334,6 +334,13 @@ public class DLUtil {
 		return getDL().getThumbnailStyle(max, margin);
 	}
 
+	public static String getThumbnailStyle(
+			boolean max, int margin, int height, int width)
+		throws Exception {
+
+		return getDL().getThumbnailStyle(max, margin, height, width);
+	}
+
 	public static String getTitleWithExtension(FileEntry fileEntry) {
 		return getDL().getTitleWithExtension(fileEntry);
 	}
