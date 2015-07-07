@@ -43,6 +43,22 @@ public class PrincipalException extends PortalException {
 		super(cause);
 	}
 
+	public static class MustBeAuthenticated extends PrincipalException {
+
+		public MustBeAuthenticated(long userId) {
+			this(String.valueOf(userId));
+		}
+
+		public MustBeAuthenticated(String login) {
+			super(String.format("User %s must be authenticated", login));
+
+			this.login = login;
+		}
+
+		public final String login;
+
+	}
+
 	public static class MustHavePermission extends PrincipalException {
 
 		public MustHavePermission(long userId, String... actionIds) {
@@ -98,7 +114,8 @@ public class PrincipalException extends PortalException {
 	}
 
 	private static final Class<?>[] _NESTED_CLASSES = {
-		PrincipalException.class, PrincipalException.MustHavePermission.class
+		PrincipalException.class, PrincipalException.MustBeAuthenticated.class,
+		PrincipalException.MustHavePermission.class
 	};
 
 }

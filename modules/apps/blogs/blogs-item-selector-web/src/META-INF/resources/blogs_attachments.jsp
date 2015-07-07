@@ -29,8 +29,46 @@ int total = 0;
 List<FileEntry> results = new ArrayList<FileEntry>();
 
 if (folder != null) {
-	total = PortletFileRepositoryUtil.getPortletFileEntriesCount(scopeGroupId, folder.getFolderId());
-	results = PortletFileRepositoryUtil.getPortletFileEntries(scopeGroupId, folder.getFolderId());
+	String keywords = ParamUtil.getString(request, "keywords");
+
+	if (Validator.isNotNull(keywords)) {
+		SearchContext searchContext = SearchContextFactory.getInstance(request);
+
+		searchContext.setEnd(searchContainer.getEnd());
+		searchContext.setFolderIds(new long[] {folder.getFolderId()});
+		searchContext.setStart(searchContainer.getStart());
+
+		Hits hits = PortletFileRepositoryUtil.searchPortletFileEntries(folder.getRepositoryId(), searchContext);
+
+		total = hits.getLength();
+
+		Document[] docs = hits.getDocs();
+
+		results = new ArrayList(docs.length);
+
+		for (Document doc : docs) {
+			long fileEntryId = GetterUtil.getLong(doc.get(Field.ENTRY_CLASS_PK));
+
+			FileEntry fileEntry = null;
+
+			try {
+				fileEntry = DLAppLocalServiceUtil.getFileEntry(fileEntryId);
+			}
+			catch (Exception e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn("Documents and Media search index is stale and contains file entry {" + fileEntryId + "}");
+				}
+
+				continue;
+			}
+
+			results.add(fileEntry);
+		}
+	}
+	else {
+		total = PortletFileRepositoryUtil.getPortletFileEntriesCount(scopeGroupId, folder.getFolderId());
+		results = PortletFileRepositoryUtil.getPortletFileEntries(scopeGroupId, folder.getFolderId());
+	}
 }
 
 searchContainer.setTotal(total);
@@ -43,5 +81,10 @@ searchContainer.setResults(results);
 	displayStyleURL="<%= blogsItemSelectorViewDisplayContext.getPortletURL() %>"
 	itemSelectedEventName="<%= blogsItemSelectorViewDisplayContext.getItemSelectedEventName() %>"
 	searchContainer="<%= searchContainer %>"
+	searchURL="<%= PortletURLUtil.clone(blogsItemSelectorViewDisplayContext.getPortletURL(), liferayPortletResponse) %>"
 	tabName="<%= blogsItemSelectorViewDisplayContext.getTitle(locale) %>"
 />
+
+<%!
+private static Log _log = LogFactoryUtil.getLog("com_liferay_blogs_item_selector_web.blogs_attachments_jsp");
+%>

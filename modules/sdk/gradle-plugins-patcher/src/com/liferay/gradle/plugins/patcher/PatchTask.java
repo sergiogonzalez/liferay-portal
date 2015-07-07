@@ -16,6 +16,7 @@ package com.liferay.gradle.plugins.patcher;
 
 import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.GradleUtil;
+import com.liferay.gradle.util.copy.ReplaceLeadingPathAction;
 
 import groovy.lang.Closure;
 
@@ -49,9 +50,7 @@ import org.gradle.api.artifacts.ResolvedModuleVersion;
 import org.gradle.api.file.ConfigurableFileTree;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.FileCollection;
-import org.gradle.api.file.FileCopyDetails;
 import org.gradle.api.file.FileTree;
-import org.gradle.api.file.RelativePath;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputFiles;
@@ -225,37 +224,14 @@ public class PatchTask extends DefaultTask {
 				final String originalLibSrcDirName = getOriginalLibSrcDirName();
 
 				if (!originalLibSrcDirName.equals(".")) {
+					Map<Object, Object> leadingPathReplacementsMap =
+						new HashMap<>();
+
+					leadingPathReplacementsMap.put(originalLibSrcDirName, "");
+
 					copySpec.eachFile(
-						new Action<FileCopyDetails>() {
-
-							@Override
-							public void execute(
-								FileCopyDetails fileCopyDetails) {
-
-								RelativePath relativePath =
-									fileCopyDetails.getRelativePath();
-
-								String relativePathString =
-									relativePath.getPathString();
-
-								if (!relativePathString.startsWith(
-										originalLibSrcDirName + "/")) {
-
-									fileCopyDetails.exclude();
-
-									return;
-								}
-
-								relativePathString =
-									relativePathString.substring(
-										originalLibSrcDirName.length() + 1);
-
-								fileCopyDetails.setRelativePath(
-									RelativePath.parse(
-										true, relativePathString));
-							}
-
-						});
+						new ReplaceLeadingPathAction(
+							leadingPathReplacementsMap));
 				}
 
 				copySpec.filter(FixCrLfFilter.class);
@@ -341,7 +317,7 @@ public class PatchTask extends DefaultTask {
 	public void setFileNames(Iterable<Object> fileNames) {
 		_fileNames.clear();
 
-		GUtil.addToCollection(_fileNames, fileNames);
+		fileNames(fileNames);
 	}
 
 	public void setOriginalLibConfigurationName(
@@ -373,7 +349,7 @@ public class PatchTask extends DefaultTask {
 	public void setPatchFiles(Iterable<Object> patchFiles) {
 		_patchFiles.clear();
 
-		GUtil.addToCollection(_patchFiles, patchFiles);
+		patchFiles(patchFiles);
 	}
 
 	protected Dependency getOriginalLibDependency() {
