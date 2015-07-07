@@ -25,6 +25,7 @@ ItemSelectorReturnType draggableFileReturnType = (ItemSelectorReturnType)request
 ItemSelectorReturnType existingFileEntryReturnType = (ItemSelectorReturnType)request.getAttribute("liferay-ui:item-selector-browser:existingFileEntryReturnType");
 String itemSelectedEventName = GetterUtil.getString(request.getAttribute("liferay-ui:item-selector-browser:itemSelectedEventName"));
 SearchContainer searchContainer = (SearchContainer)request.getAttribute("liferay-ui:item-selector-browser:searchContainer");
+boolean showPortletBreadcrumb = GetterUtil.getBoolean(request.getAttribute("liferay-ui:item-selector-browser:showPortletBreadcrumb"));
 PortletURL searchURL = (PortletURL)request.getAttribute("liferay-ui:item-selector-browser:searchURL");
 String tabName = GetterUtil.getString(request.getAttribute("liferay-ui:item-selector-browser:tabName"));
 String uploadMessage = GetterUtil.getString(request.getAttribute("liferay-ui:item-selector-browser:uploadMessage"));
@@ -63,7 +64,7 @@ String uploadMessage = GetterUtil.getString(request.getAttribute("liferay-ui:ite
 	long folderId = ParamUtil.getLong(request, "folderId");
 	String keywords = ParamUtil.getString(request, "keywords");
 
-	if ((folderId > DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) && Validator.isNull(keywords)) {
+	if (showPortletBreadcrumb && Validator.isNull(keywords)) {
 		ItemSelectorBrowserUtil.addPortletBreadcrumbEntries(folderId, displayStyle, request, searchContainer.getIteratorURL());
 	%>
 
