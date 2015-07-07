@@ -1040,7 +1040,7 @@ public class DLImpl implements DL {
 	public String getThumbnailStyle(
 		boolean max, int margin, int height, int width) {
 
-		StringBundler sb = new StringBundler(5);
+		StringBundler sb = new StringBundler(7);
 
 		if (max) {
 			sb.append("max-height: ");
@@ -1049,7 +1049,9 @@ public class DLImpl implements DL {
 			sb.append("height: ");
 		}
 
-		sb.append(height + 2 * margin);
+		height = height + (2 * margin);
+
+		sb.append(height);
 
 		if (max) {
 			sb.append("px; max-width: ");
@@ -1058,7 +1060,9 @@ public class DLImpl implements DL {
 			sb.append("px; width: ");
 		}
 
-		sb.append(width + 2 * margin);
+		width = width + (2 * margin);
+
+		sb.append(width);
 		sb.append("px;");
 
 		return sb.toString();
