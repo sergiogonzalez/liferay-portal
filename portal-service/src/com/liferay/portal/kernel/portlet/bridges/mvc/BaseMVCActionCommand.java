@@ -16,6 +16,9 @@ package com.liferay.portal.kernel.portlet.bridges.mvc;
 
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 
 import java.io.IOException;
@@ -23,6 +26,8 @@ import java.io.IOException;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Brian Wing Shun Chan
@@ -50,6 +55,28 @@ public abstract class BaseMVCActionCommand implements MVCActionCommand {
 	protected abstract void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception;
+
+	protected boolean redirectToLogin(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws IOException {
+
+		if (actionRequest.getRemoteUser() == null) {
+			HttpServletRequest request = PortalUtil.getHttpServletRequest(
+				actionRequest);
+
+			SessionErrors.add(request, PrincipalException.class.getName());
+
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+			actionResponse.sendRedirect(themeDisplay.getURLSignIn());
+
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
 
 	protected void sendRedirect(
 			ActionRequest actionRequest, ActionResponse actionResponse,
