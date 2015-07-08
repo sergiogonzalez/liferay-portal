@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/message_boards/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
@@ -49,11 +49,9 @@ if (comment instanceof WorkflowableComment) {
 	title='<%= (comment == null) ? "new-message" : "edit-message" %>'
 />
 
-<portlet:actionURL var="editMessageURL">
-	<portlet:param name="struts_action" value="/message_boards/edit_discussion" />
-</portlet:actionURL>
+<portlet:actionURL name="invokeTaglibDiscussion" var="editCommentURL" />
 
-<aui:form action="<%= editMessageURL %>" enctype="multipart/form-data" method="post" name="fm">
+<aui:form action="<%= editCommentURL %>" enctype="multipart/form-data" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="commentId" type="hidden" value="<%= commentId %>" />
@@ -82,7 +80,7 @@ if (comment instanceof WorkflowableComment) {
 		request.setAttribute(WebKeys.COMMENT, parentComment);
 		%>
 
-		<liferay-util:include page="/html/portlet/message_boards/asset/discussion_full_content.jsp" />
+		<liferay-util:include page="/comments/asset/discussion_full_content.jsp" />
 	</c:if>
 
 	<c:if test="<%= pending %>">
