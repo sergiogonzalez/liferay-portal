@@ -349,6 +349,8 @@ public class PDFProcessorImpl
 
 		InputStream inputStream = null;
 
+		File convertedFile = null;
+
 		try {
 			if (sourceFileVersion != null) {
 				copy(sourceFileVersion, destinationFileVersion);
@@ -398,10 +400,10 @@ public class PDFProcessorImpl
 					FileUtil.delete(file);
 				}
 
-				File file = DocumentConversionUtil.convert(
+				convertedFile = DocumentConversionUtil.convert(
 					tempFileId, inputStream, extension, "pdf");
 
-				_generateImages(destinationFileVersion, file);
+				_generateImages(destinationFileVersion, convertedFile);
 			}
 		}
 		catch (NoSuchFileEntryException nsfee) {
@@ -410,6 +412,8 @@ public class PDFProcessorImpl
 			StreamUtil.cleanUp(inputStream);
 
 			_fileVersionIds.remove(destinationFileVersion.getFileVersionId());
+
+			FileUtil.delete(convertedFile);
 		}
 	}
 
