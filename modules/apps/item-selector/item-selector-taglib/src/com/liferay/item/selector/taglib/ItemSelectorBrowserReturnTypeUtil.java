@@ -23,13 +23,13 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.ClassUtil;
-import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 
 import java.util.Iterator;
-import java.util.Set;
+import java.util.List;
 
 /**
  * @author Sergio González
@@ -39,19 +39,19 @@ public class ItemSelectorBrowserReturnTypeUtil
 	implements ItemSelectorReturnType {
 
 	public static ItemSelectorReturnType
-		getExistingFileEntryReturnType(
-			Set<ItemSelectorReturnType> desiredItemSelectorReturnTypes) {
-
-		return getFirstAvailableItemSelectorReturnType(
-			desiredItemSelectorReturnTypes, _existingFileEntryReturnTypeNames);
-	}
-
-	public static ItemSelectorReturnType
 		getFirstAvailableDraggableFileReturnType(
-			Set<ItemSelectorReturnType> desiredItemSelectorReturnTypes) {
+			List<ItemSelectorReturnType> desiredItemSelectorReturnTypes) {
 
 		return getFirstAvailableItemSelectorReturnType(
 			desiredItemSelectorReturnTypes, _draggableFileReturnTypeNames);
+	}
+
+	public static ItemSelectorReturnType
+		getFirstAvailableExistingFileEntryReturnType(
+			List<ItemSelectorReturnType> desiredItemSelectorReturnTypes) {
+
+		return getFirstAvailableItemSelectorReturnType(
+			desiredItemSelectorReturnTypes, _existingFileEntryReturnTypeNames);
 	}
 
 	public static String getValue(
@@ -89,22 +89,20 @@ public class ItemSelectorBrowserReturnTypeUtil
 
 	protected static ItemSelectorReturnType
 		getFirstAvailableItemSelectorReturnType(
-			Set<ItemSelectorReturnType> desiredItemSelectorReturnTypes,
-			Set<String> itemSelectorReturnTypeTypes) {
+			List<ItemSelectorReturnType> desiredItemSelectorReturnTypes,
+			List<String> itemSelectorReturnTypeTypes) {
 
 		Iterator<ItemSelectorReturnType> iterator =
 			desiredItemSelectorReturnTypes.iterator();
 
-		if (!iterator.hasNext()) {
-			return null;
-		}
+		while (iterator.hasNext()) {
+			ItemSelectorReturnType itemSelectorReturnType = iterator.next();
 
-		ItemSelectorReturnType itemSelectorReturnType = iterator.next();
+			String className = ClassUtil.getClassName(itemSelectorReturnType);
 
-		String className = ClassUtil.getClassName(itemSelectorReturnType);
-
-		if (itemSelectorReturnTypeTypes.contains(className)) {
-			return itemSelectorReturnType;
+			if (itemSelectorReturnTypeTypes.contains(className)) {
+				return itemSelectorReturnType;
+			}
 		}
 
 		return null;
@@ -117,14 +115,14 @@ public class ItemSelectorBrowserReturnTypeUtil
 		return DLUtil.getImagePreviewURL(fileEntry, themeDisplay);
 	}
 
-	private static final Set<String> _draggableFileReturnTypeNames =
-		SetUtil.fromArray(
+	private static final List<String> _draggableFileReturnTypeNames =
+		ListUtil.fromArray(
 			new String[] {
 				ClassUtil.getClassName(new Base64ItemSelectorReturnType()),
 				ClassUtil.getClassName(new UploadableFileReturnType())
 			});
-	private static final Set<String> _existingFileEntryReturnTypeNames =
-		SetUtil.fromArray(
+	private static final List<String> _existingFileEntryReturnTypeNames =
+		ListUtil.fromArray(
 			new String[] {
 				ClassUtil.getClassName(new FileEntryItemSelectorReturnType()),
 				ClassUtil.getClassName(new URLItemSelectorReturnType())

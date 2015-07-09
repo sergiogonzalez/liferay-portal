@@ -23,7 +23,6 @@ import com.liferay.registry.collections.ServiceTrackerList;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author Roberto Díaz
@@ -39,10 +38,10 @@ public abstract class BaseItemSelectorCriterionHandler
 		List<ItemSelectorView<T>> filteredItemSelectedViews = new ArrayList<>();
 
 		for (ItemSelectorView itemSelectorView : _itemSelectorViews) {
-			Set<ItemSelectorReturnType> supportedItemSelectorReturnTypes =
+			List<ItemSelectorReturnType> supportedItemSelectorReturnTypes =
 				itemSelectorView.getSupportedItemSelectorReturnTypes();
 
-			Set<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
+			List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
 				itemSelectorCriterion.getDesiredItemSelectorReturnTypes();
 
 			for (ItemSelectorReturnType desiredItemSelectorReturnType :
