@@ -35,7 +35,7 @@ FileEntry fileEntry = fileVersion.getFileEntry();
 	/>
 
 	<portlet:renderURL var="viewFileVersionURL">
-		<portlet:param name="struts_action" value="/document_library/view_file_entry" />
+		<portlet:param name="mvcRenderCommandName" value="/document_library/view_file_entry" />
 		<portlet:param name="redirect" value="<%= redirect %>" />
 		<portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntry.getFileEntryId()) %>" />
 		<portlet:param name="version" value="<%= fileVersion.getVersion() %>" />
@@ -48,7 +48,7 @@ FileEntry fileEntry = fileVersion.getFileEntry();
 	/>
 
 	<portlet:renderURL var="viewFileEntryURL">
-		<portlet:param name="struts_action" value="/document_library/view_file_entry" />
+		<portlet:param name="mvcRenderCommandName" value="/document_library/view_file_entry" />
 		<portlet:param name="redirect" value="<%= redirect %>" />
 		<portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntry.getFileEntryId()) %>" />
 	</portlet:renderURL>

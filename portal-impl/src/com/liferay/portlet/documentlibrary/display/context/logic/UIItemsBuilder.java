@@ -712,13 +712,13 @@ public class UIItemsBuilder {
 		return PortalUtil.getLiferayPortletResponse(portletResponse);
 	}
 
-	private PortletURL _getRenderURL(String strutsAction) {
+	private PortletURL _getRenderURL(String mvcRenderCommandName) {
 		LiferayPortletResponse liferayPortletResponse =
 			_getLiferayPortletResponse();
 
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
-		portletURL.setParameter("struts_action", strutsAction);
+		portletURL.setParameter("mvcRenderCommandName", mvcRenderCommandName);
 		portletURL.setParameter("redirect", _getCurrentURL());
 		portletURL.setParameter(
 			"fileEntryId", String.valueOf(_fileEntry.getFileEntryId()));

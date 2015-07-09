@@ -472,7 +472,7 @@ DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = DLDisplayConte
 
 								PortletURL viewFileEntryURL = renderResponse.createRenderURL();
 
-								viewFileEntryURL.setParameter("struts_action", "/document_library/view_file_entry");
+								viewFileEntryURL.setParameter("mvcRenderCommandName", "/document_library/view_file_entry");
 								viewFileEntryURL.setParameter("redirect", currentURL);
 								viewFileEntryURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
 

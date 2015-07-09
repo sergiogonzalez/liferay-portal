@@ -12,6 +12,7 @@
 	<bean id="com.liferay.portlet.documentlibrary.action.SearchMVCRenderCommand" class="com.liferay.portlet.documentlibrary.action.SearchMVCRenderCommand" />
 	<bean id="com.liferay.portlet.documentlibrary.action.SelectFileEntryMVCRenderCommand" class="com.liferay.portlet.documentlibrary.action.SelectFileEntryMVCRenderCommand" />
 	<bean id="com.liferay.portlet.documentlibrary.action.SelectFolderMVCRenderCommand" class="com.liferay.portlet.documentlibrary.action.SelectFolderMVCRenderCommand" />
+	<bean id="com.liferay.portlet.documentlibrary.action.ViewFileEntryMVCRenderCommand" class="com.liferay.portlet.documentlibrary.action.ViewFileEntryMVCRenderCommand" />
 	<bean id="com.liferay.portlet.documentlibrary.action.ViewMVCRenderCommand" class="com.liferay.portlet.documentlibrary.action.ViewMVCRenderCommand" />
 	<bean id="com.liferay.portlet.documentlibrarydisplay.action.ViewMVCRenderCommand" class="com.liferay.portlet.documentlibrarydisplay.action.ViewMVCRenderCommand" />
 	<bean id="com.liferay.portlet.imagegallerydisplay.action.ViewMVCRenderCommand" class="com.liferay.portlet.imagegallerydisplay.action.ViewMVCRenderCommand" />

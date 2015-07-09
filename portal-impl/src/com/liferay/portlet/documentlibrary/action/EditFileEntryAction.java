@@ -254,37 +254,6 @@ public class EditFileEntryAction extends PortletAction {
 	}
 
 	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
-
-		try {
-			ActionUtil.getFileEntry(renderRequest);
-		}
-		catch (Exception e) {
-			if (e instanceof NoSuchFileEntryException ||
-				e instanceof NoSuchFileVersionException ||
-				e instanceof NoSuchRepositoryEntryException ||
-				e instanceof PrincipalException) {
-
-				SessionErrors.add(renderRequest, e.getClass());
-
-				return actionMapping.findForward(
-					"portlet.document_library.error");
-			}
-			else {
-				throw e;
-			}
-		}
-
-		String forward = "portlet.document_library.edit_file_entry";
-
-		return actionMapping.findForward(getForward(renderRequest, forward));
-	}
-
-	@Override
 	public void serveResource(
 			ActionMapping actionMapping, ActionForm actionForm,
 			PortletConfig portletConfig, ResourceRequest resourceRequest,

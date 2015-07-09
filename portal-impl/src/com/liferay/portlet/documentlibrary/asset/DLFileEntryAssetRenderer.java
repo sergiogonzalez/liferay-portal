@@ -286,7 +286,7 @@ public class DLFileEntryAssetRenderer
 			liferayPortletResponse, windowState);
 
 		portletURL.setParameter(
-			"struts_action", "/document_library_display/view_file_entry");
+			"mvcRenderCommandName", "/document_library/view_file_entry");
 		portletURL.setParameter(
 			"fileEntryId", String.valueOf(_fileEntry.getFileEntryId()));
 		portletURL.setWindowState(windowState);

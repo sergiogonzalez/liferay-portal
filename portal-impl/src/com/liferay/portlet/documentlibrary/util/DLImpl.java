@@ -123,7 +123,7 @@ public class DLImpl implements DL {
 		FileEntry unescapedFileEntry = fileEntry.toUnescapedModel();
 
 		portletURL.setParameter(
-			"struts_action", "/document_library/view_file_entry");
+			"mvcRenderCommandName", "/document_library/view_file_entry");
 		portletURL.setParameter(
 			"fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
 
@@ -150,7 +150,7 @@ public class DLImpl implements DL {
 		PortletURL portletURL = renderResponse.createRenderURL();
 
 		portletURL.setParameter(
-			"struts_action", "/document_library/view_file_entry");
+			"mvcRenderCommandName", "/document_library/view_file_entry");
 		portletURL.setParameter(
 			"fileEntryId", String.valueOf(fileShortcut.getToFileEntryId()));
 
@@ -459,7 +459,7 @@ public class DLImpl implements DL {
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter(
-			"struts_action", "/document_library/view_file_entry");
+			"mvcRenderCommandName", "/document_library/view_file_entry");
 		portletURL.setParameter("fileEntryId", String.valueOf(fileEntryId));
 
 		return portletURL.toString();
@@ -1377,7 +1377,7 @@ public class DLImpl implements DL {
 			PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter(
-			"struts_action", "/document_library/view_file_entry");
+			"mvcRenderCommandName", "/document_library/view_file_entry");
 		portletURL.setParameter(
 			"fileEntryId", String.valueOf(dlFileVersion.getFileEntryId()));
 
