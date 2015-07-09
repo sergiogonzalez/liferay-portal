@@ -34,7 +34,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 %>
 
 <liferay-portlet:renderURL varImpl="searchURL">
-	<portlet:param name="struts_action" value="/document_library_display/search" />
+	<portlet:param name="mvcPath" value="/html/portlet/document_library_display/search.jsp" />
 </liferay-portlet:renderURL>
 
 <aui:form action="<%= searchURL %>" method="get" name="fm">

@@ -235,25 +235,6 @@
 			<forward name="portlet.message_boards.error" path="portlet.document_library.error" />
 		</action>
 
-		<action path="/document_library/select_group" forward="portlet.document_library.select_group" />
-
-		<action path="/document_library/select_restricted_file_entry_type" forward="portlet.document_library.select_restricted_file_entry_type" />
-
-		<action path="/document_library/upload_file_entry" type="com.liferay.portlet.documentlibrary.action.EditFileEntryAction" />
-
-		<action path="/document_library/upload_multiple_file_entries" type="com.liferay.portlet.documentlibrary.action.EditFileEntryAction">
-			<forward name="portlet.document_library.edit_file_entry" path="portlet.document_library.upload_multiple_file_entries" />
-			<forward name="portlet.document_library.error" path="portlet.document_library.error" />
-		</action>
-
-		<action path="/document_library/view_file_entry_type" forward="portlet.document_library.view_file_entry_type" />
-
-		<!-- Document Library Display -->
-
-		<action path="/document_library_display/search" forward="portlet.document_library_display.search" />
-
-		<action path="/document_library_display/select_add_file_entry_type" forward="portlet.document_library_display.select_add_file_entry_type" />
-
 		<!-- Export Import -->
 
 		<action path="/export_import/confirmation" type="com.liferay.portlet.exportimport.action.ConfirmationExportImportConfigurationAction">
@@ -318,14 +299,6 @@
 		</action>
 
 		<!-- Image Gallery Display -->
-
-		<action path="/image_gallery_display/embedded_player" forward="portlet.image_gallery_display.embedded_player" />
-
-		<action path="/image_gallery_display/find_image" type="com.liferay.portlet.imagegallerydisplay.action.FindImageAction" />
-
-		<action path="/image_gallery_display/search" forward="portlet.image_gallery_display.search" />
-
-		<action path="/image_gallery_display/select_add_file_entry_type" forward="portlet.document_library_display.select_add_file_entry_type" />
 
 		<action path="/image_gallery_display/view_slide_show" type="com.liferay.portlet.imagegallerydisplay.action.ViewSlideShowAction">
 			<forward name="portlet.image_gallery_display.error" path="portlet.document_library.error" />
