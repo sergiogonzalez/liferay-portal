@@ -15,6 +15,7 @@
 package com.liferay.blogs.editor.configuration;
 
 import com.liferay.blogs.item.selector.criterion.BlogsItemSelectorCriterion;
+import com.liferay.blogs.web.constants.BlogsPortletKeys;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorReturnType;
@@ -28,9 +29,9 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.portlet.PortletURL;
 
@@ -42,8 +43,9 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = {
-		"editor.config.key=contentEditor", "javax.portlet.name=33",
-		"javax.portlet.name=161"
+		"editor.config.key=contentEditor",
+		"javax.portlet.name=" + BlogsPortletKeys.BLOGS,
+		"javax.portlet.name=" + BlogsPortletKeys.BLOGS_ADMIN
 	},
 	service = EditorConfigContributor.class
 )
@@ -77,8 +79,9 @@ public class BlogsContentEditorConfigContributor
 		JSONObject jsonObject, LiferayPortletResponse liferayPortletResponse,
 		String eventName) {
 
-		Set<ItemSelectorReturnType>
-			blogsContentEditorDesiredItemSelectorReturnTypes = new HashSet<>();
+		List<ItemSelectorReturnType>
+			blogsContentEditorDesiredItemSelectorReturnTypes =
+				new ArrayList<>();
 
 		blogsContentEditorDesiredItemSelectorReturnTypes.add(
 			new UploadableFileReturnType());
