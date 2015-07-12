@@ -23,10 +23,8 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.InstancePool;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -46,8 +44,6 @@ import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLContentLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.store.DBStore;
-import com.liferay.portlet.documentlibrary.store.FileSystemStore;
 import com.liferay.portlet.documentlibrary.store.Store;
 import com.liferay.portlet.documentlibrary.store.StoreFactory;
 import com.liferay.portlet.documentlibrary.util.DLPreviewableProcessor;
@@ -66,6 +62,7 @@ import java.util.List;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -73,6 +70,7 @@ import org.junit.Test;
 /**
  * @author Roberto Díaz
  * @author Sergio González
+ * @author Manuel de la Peña
  */
 public class ConvertDocumentLibraryTest {
 
@@ -82,33 +80,40 @@ public class ConvertDocumentLibraryTest {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE);
 
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		_storeFactory = StoreFactory.getInstance();
+	}
+
 	@Before
 	public void setUp() throws Exception {
-		PropsValues.DL_STORE_IMPL = FileSystemStore.class.getName();
+		PropsValues.DL_STORE_IMPL =
+			"com.liferay.portal.store.filesystem.FileSystemStore";
 
-		_sourceStore = (Store)InstanceFactory.newInstance(
-			ClassLoaderUtil.getPortalClassLoader(),
-			FileSystemStore.class.getName());
+		_sourceStore = _storeFactory.getStoreInstance(
+			PropsValues.DL_STORE_IMPL);
 
-		StoreFactory.setInstance(_sourceStore);
+		_storeFactory.setStoreInstance(PropsValues.DL_STORE_IMPL);
 
 		_group = GroupTestUtil.addGroup();
 
 		_convertProcess = (ConvertProcess)InstancePool.get(
 			ConvertDocumentLibrary.class.getName());
 
+		Store dbStore = _storeFactory.getStoreInstance(
+			"com.liferay.portal.store.db.DBStore");
+
+		_dbStoreClassName = dbStore.getClass().getName();
+
 		_convertProcess.setParameterValues(
-			new String[] {DBStore.class.getName(), Boolean.TRUE.toString()});
+			new String[] {_dbStoreClassName, Boolean.TRUE.toString()});
 	}
 
 	@After
 	public void tearDown() throws Exception {
 		PropsValues.DL_STORE_IMPL = PropsUtil.get(PropsKeys.DL_STORE_IMPL);
 
-		Store store = (Store)InstanceFactory.newInstance(
-			ClassLoaderUtil.getPortalClassLoader(), PropsValues.DL_STORE_IMPL);
-
-		StoreFactory.setInstance(store);
+		_storeFactory.setStoreInstance(PropsValues.DL_STORE_IMPL);
 	}
 
 	@Test
@@ -178,10 +183,9 @@ public class ConvertDocumentLibraryTest {
 	public void testStoreUpdatedAfterConversion() throws Exception {
 		_convertProcess.convert();
 
-		Store store = StoreFactory.getInstance();
+		Store store = _storeFactory.getStoreInstance();
 
-		Assert.assertEquals(
-			DBStore.class.getName(), store.getClass().getName());
+		Assert.assertEquals(_dbStoreClassName, store.getClass().getName());
 	}
 
 	protected FileEntry addFileEntry(
@@ -239,7 +243,7 @@ public class ConvertDocumentLibraryTest {
 		throws Exception {
 
 		_convertProcess.setParameterValues(
-			new String[] {DBStore.class.getName(), delete.toString()});
+			new String[] {_dbStoreClassName, delete.toString()});
 
 		FileEntry rootFileEntry = addFileEntry(
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
@@ -305,7 +309,10 @@ public class ConvertDocumentLibraryTest {
 			dlFileEntry.getName());
 	}
 
+	private static StoreFactory _storeFactory;
+
 	private ConvertProcess _convertProcess;
+	private String _dbStoreClassName;
 
 	@DeleteAfterTestRun
 	private Group _group;
