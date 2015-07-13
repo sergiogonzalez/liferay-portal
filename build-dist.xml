@@ -2132,7 +2132,7 @@ closeTemplate()
 				<var name="source.command" value="source" />
 
 				<if>
-					<os name="Linux" />
+					<os family="unix" />
 					<then>
 						<replace file="${app.server.weblogic.dir}/configure.sh">
 							<replacefilter token="#!/bin/sh" value="#!/bin/bash" />
@@ -2149,7 +2149,7 @@ closeTemplate()
 				/>
 
 				<if>
-					<os name="Linux" />
+					<os family="unix" />
 					<then>
 						<exec dir="${app.server.weblogic.dir}" executable="./configure.sh">
 							<env key="MW_HOME" file="${app.server.weblogic.dir}" />
@@ -2218,9 +2218,14 @@ closeTemplate()
 					<replacefilter token="startWebLogic" value="stopWebLogic" />
 				</replace>
 
+				<replace file="${app.server.weblogic.instance.dir}/bin/setDomainEnv.sh">
+					<replacetoken><![CDATA[JAVA_PROPERTIES="${JAVA_PROPERTIES} ${CLUSTER_PROPERTIES}"]]></replacetoken>
+					<replacevalue><![CDATA[JAVA_PROPERTIES="-Dfile.encoding=utf8 ${JAVA_PROPERTIES} ${CLUSTER_PROPERTIES}"]]></replacevalue>
+				</replace>
+
 				<chmod
 					dir="${app.server.weblogic.instance.dir}"
-					includes="*.sh"
+					includes="**/*.sh"
 					perm="744"
 				/>
 			</else>
