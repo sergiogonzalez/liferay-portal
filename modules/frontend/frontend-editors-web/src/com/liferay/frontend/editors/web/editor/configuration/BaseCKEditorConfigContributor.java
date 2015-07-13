@@ -75,9 +75,8 @@ public class BaseCKEditorConfigContributor extends BaseEditorConfigContributor {
 
 		jsonObject.put("language", languageId.replace("iw_", "he_"));
 
-		jsonObject.put("pasteFromWordRemoveFontStyles", false);
-
-		jsonObject.put("pasteFromWordRemoveStyles", false);
+		jsonObject.put("pasteFromWordRemoveFontStyles", Boolean.FALSE);
+		jsonObject.put("pasteFromWordRemoveStyles", Boolean.FALSE);
 
 		boolean resizable = GetterUtil.getBoolean(
 			(String)inputEditorTaglibAttributes.get(
