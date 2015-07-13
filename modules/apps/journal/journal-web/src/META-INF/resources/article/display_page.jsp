@@ -113,13 +113,13 @@ boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_artic
 
 		LayoutItemSelectorCriterion layoutItemSelectorCriterion = new LayoutItemSelectorCriterion();
 
-		Set<ItemSelectorReturnType> desiredItemSelectorReturnTypes = new HashSet<ItemSelectorReturnType>();
+		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes = new ArrayList<ItemSelectorReturnType>();
 
 		desiredItemSelectorReturnTypes.add(new UUIDItemSelectorReturnType());
 
 		layoutItemSelectorCriterion.setDesiredItemSelectorReturnTypes(desiredItemSelectorReturnTypes);
 
-		PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(liferayPortletResponse, eventName, layoutItemSelectorCriterion);
+		PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(PortletURLBuilder.create(liferayPortletResponse), eventName, layoutItemSelectorCriterion);
 		%>
 
 		<aui:script sandbox="<%= true %>">
