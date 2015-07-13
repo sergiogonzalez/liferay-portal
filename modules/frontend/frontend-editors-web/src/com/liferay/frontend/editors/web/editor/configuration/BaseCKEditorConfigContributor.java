@@ -75,6 +75,9 @@ public class BaseCKEditorConfigContributor extends BaseEditorConfigContributor {
 
 		jsonObject.put("language", languageId.replace("iw_", "he_"));
 
+		jsonObject.put("pasteFromWordRemoveFontStyles", Boolean.FALSE);
+		jsonObject.put("pasteFromWordRemoveStyles", Boolean.FALSE);
+
 		boolean resizable = GetterUtil.getBoolean(
 			(String)inputEditorTaglibAttributes.get(
 				"liferay-ui:input-editor:resizable"));
