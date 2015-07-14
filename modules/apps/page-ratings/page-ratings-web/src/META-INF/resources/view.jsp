@@ -14,6 +14,9 @@
  */
 --%>
 
-<%@ include file="/html/portlet/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
-<%@ include file="/html/portlet/page_ratings/init-ext.jsp" %>
+<liferay-ui:ratings
+	className="<%= Layout.class.getName() %>"
+	classPK="<%= layout.getPlid() %>"
+/>
