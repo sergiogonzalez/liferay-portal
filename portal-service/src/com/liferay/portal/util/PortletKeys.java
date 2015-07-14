@@ -122,8 +122,6 @@ public class PortletKeys {
 
 	public static final String PAGE_COMMENTS = "107";
 
-	public static final String PAGE_RATINGS = "108";
-
 	public static final String PLUGINS_ADMIN = "132";
 
 	public static final String PORTAL = "90";
