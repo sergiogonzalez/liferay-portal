@@ -36,6 +36,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/requests/",
 		"javax.portlet.portlet-preferences.portletSetupShowBorders=false",
+		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=guest,power-user,user",
 		"javax.portlet.supports.mime-type=text/html"
 	},
