@@ -356,13 +356,13 @@ public class JournalConverterImpl implements JournalConverter {
 		try {
 			FileEntry fileEntry = null;
 
-			if (url.contains("/documents/")) {
-				fileEntry = getFileEntryByDocumentLibraryURL(url);
-			}
-			else if (url.contains("/c/document_library/get_file?") ||
-					 url.contains("/image/image_gallery?")) {
+			if (url.contains("/c/document_library/get_file?") ||
+				url.contains("/image/image_gallery?")) {
 
 				fileEntry = getFileEntryByOldDocumentLibraryURL(url);
+			}
+			else if (url.contains("/documents/")) {
+				fileEntry = getFileEntryByDocumentLibraryURL(url);
 			}
 
 			if (fileEntry == null) {

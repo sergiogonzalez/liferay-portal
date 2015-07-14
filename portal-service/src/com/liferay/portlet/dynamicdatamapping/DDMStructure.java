@@ -59,6 +59,7 @@ public interface DDMStructure extends StagedModel {
 
 	public String getStructureKey();
 
+	@Override
 	public String getUuid();
 
 }

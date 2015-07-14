@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.dynamicdatamapping;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
@@ -30,18 +29,17 @@ public class DummyDDMStructureManagerImpl implements DDMStructureManager {
 
 	@Override
 	public DDMStructure addStructure(
-			long userId, long groupId, String parentStructureKey,
-			long classNameId, String structureKey, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, DDMForm ddmForm,
-			DDMFormLayout ddmFormLayout, String storageType, int type,
-			ServiceContext serviceContext)
-		throws PortalException {
+		long userId, long groupId, String parentStructureKey, long classNameId,
+		String structureKey, Map<Locale, String> nameMap,
+		Map<Locale, String> descriptionMap, DDMForm ddmForm,
+		DDMFormLayout ddmFormLayout, String storageType, int type,
+		ServiceContext serviceContext) {
 
 		return null;
 	}
 
 	@Override
-	public void deleteStructure(long structureId) throws PortalException {
+	public void deleteStructure(long structureId) {
 	}
 
 	@Override
@@ -66,32 +64,30 @@ public class DummyDDMStructureManagerImpl implements DDMStructureManager {
 	}
 
 	@Override
-	public DDMStructure getStructure(long structureId) throws PortalException {
+	public DDMStructure getStructure(long structureId) {
 		return null;
 	}
 
 	@Override
 	public DDMStructure getStructure(
-			long groupId, long classNameId, String structureKey)
-		throws PortalException {
+		long groupId, long classNameId, String structureKey) {
 
 		return null;
 	}
 
 	@Override
-	public DDMStructure getStructureByUuidAndGroupId(String uuid, long groupId)
-		throws PortalException {
+	public DDMStructure getStructureByUuidAndGroupId(
+		String uuid, long groupId) {
 
 		return null;
 	}
 
 	@Override
 	public DDMStructure updateStructure(
-			long userId, long structureId, long parentStructureId,
-			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			DDMForm ddmForm, DDMFormLayout ddmFormLayout,
-			ServiceContext serviceContext)
-		throws PortalException {
+		long userId, long structureId, long parentStructureId,
+		Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+		DDMForm ddmForm, DDMFormLayout ddmFormLayout,
+		ServiceContext serviceContext) {
 
 		return null;
 	}

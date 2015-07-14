@@ -320,6 +320,28 @@ public class AssetPublisherUtil {
 		actionableDynamicQuery.performActions();
 	}
 
+	public static String filterAssetTagNames(
+		long groupId, String assetTagNames) {
+
+		List<String> filteredAssetTagNames = new ArrayList<>();
+
+		String[] assetTagNamesArray = StringUtil.split(assetTagNames);
+
+		long[] assetTagIds = AssetTagLocalServiceUtil.getTagIds(
+			groupId, assetTagNamesArray);
+
+		for (long assetTagId : assetTagIds) {
+			AssetTag assetTag = AssetTagLocalServiceUtil.fetchAssetTag(
+				assetTagId);
+
+			if (assetTag != null) {
+				filteredAssetTagNames.add(assetTag.getName());
+			}
+		}
+
+		return StringUtil.merge(filteredAssetTagNames);
+	}
+
 	public static long[] getAssetCategoryIds(
 			PortletPreferences portletPreferences)
 		throws Exception {
