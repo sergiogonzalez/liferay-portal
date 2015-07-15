@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
@@ -41,6 +42,7 @@ import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.DuplicateFolderNameException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
@@ -338,21 +340,25 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 						return;
 					}
 
-					String title = dlFileEntry.getTitle();
+					String newTitle = dlFileEntry.getTitle();
 
-					if (StringUtil.contains(
-							title, StringPool.DOUBLE_BACK_SLASH)) {
+					for (String blacklistChar : PropsValues.DL_CHAR_BLACKLIST) {
+						newTitle = newTitle.replace(
+							blacklistChar, StringPool.UNDERLINE);
+					}
 
-						String newTitle = title.replace(
-							StringPool.BACK_SLASH, StringPool.UNDERLINE);
+					newTitle = renameDlCharLastBlacklist(newTitle);
 
+					newTitle = renameDlNameBlacklist(newTitle);
+
+					if (!dlFileEntry.getTitle().equals(newTitle)) {
 						try {
 							dlFileEntry = renameTitle(dlFileEntry, newTitle);
 						}
 						catch (Exception e) {
 							if (_log.isWarnEnabled()) {
 								_log.warn(
-									"Unable to rename duplicate title for " +
+									"Unable to rename invalid title for " +
 										"file entry " +
 											dlFileEntry.getFileEntryId(),
 									e);
@@ -504,6 +510,58 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 		}
 
 		return mimeType;
+	}
+
+	protected String renameDlCharLastBlacklist(String title) {
+		String previousTitle = null;
+
+		while (!title.equals(previousTitle)) {
+			previousTitle = title;
+
+			for (String blacklistLastChar :
+					PropsValues.DL_CHAR_LAST_BLACKLIST) {
+
+				if (blacklistLastChar.startsWith(
+						UnicodeFormatter.UNICODE_PREFIX)) {
+
+					blacklistLastChar = UnicodeFormatter.parseString(
+						blacklistLastChar);
+				}
+
+				if (title.endsWith(blacklistLastChar)) {
+					title = StringUtil.replaceLast(
+						title, blacklistLastChar, StringPool.BLANK);
+				}
+			}
+		}
+
+		return title;
+	}
+
+	protected String renameDlNameBlacklist(String title) {
+		String nameWithoutExtension = title;
+
+		String extension = StringPool.BLANK;
+
+		if (title.contains(StringPool.PERIOD)) {
+			int index = title.lastIndexOf(StringPool.PERIOD);
+
+			nameWithoutExtension = title.substring(0, index);
+
+			extension = title.substring(index);
+		}
+
+		for (String blacklistName : PropsValues.DL_NAME_BLACKLIST) {
+			if (StringUtil.equalsIgnoreCase(
+					nameWithoutExtension, blacklistName)) {
+
+				title = nameWithoutExtension + StringPool.UNDERLINE + extension;
+
+				break;
+			}
+		}
+
+		return title;
 	}
 
 	protected void renameDuplicateTitle(DLFileEntry dlFileEntry)
