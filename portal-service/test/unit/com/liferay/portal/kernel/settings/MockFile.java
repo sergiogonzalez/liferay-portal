@@ -294,6 +294,11 @@ public class MockFile implements com.liferay.portal.kernel.util.File {
 	}
 
 	@Override
+	public String stripSuffix(String fileName) {
+		return null;
+	}
+
+	@Override
 	public List<String> toList(Reader reader) {
 		return null;
 	}

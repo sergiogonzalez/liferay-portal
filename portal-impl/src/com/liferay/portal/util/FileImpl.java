@@ -862,6 +862,25 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 	}
 
 	@Override
+	public String stripSuffix(String fileName) {
+		if (!fileName.contains(StringPool.OPEN_PARENTHESIS) ||
+			!fileName.contains(StringPool.CLOSE_PARENTHESIS)) {
+
+			return fileName;
+		}
+
+		int i = fileName.lastIndexOf(StringPool.OPEN_PARENTHESIS);
+		int j = fileName.lastIndexOf(StringPool.CLOSE_PARENTHESIS);
+
+		if ((j - i) <= 1) {
+			return fileName;
+		}
+
+		return StringUtil.replaceLast(
+			fileName, fileName.substring(i, j + 1), StringPool.BLANK);
+	}
+
+	@Override
 	public List<String> toList(Reader reader) {
 		List<String> list = new ArrayList<>();
 

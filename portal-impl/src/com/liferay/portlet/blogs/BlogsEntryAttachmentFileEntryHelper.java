@@ -127,7 +127,7 @@ public class BlogsEntryAttachmentFileEntryHelper {
 		Folder folder = BlogsEntryLocalServiceUtil.addAttachmentsFolder(
 			userId, groupId);
 
-		fileName = fileName.replaceAll("\\(\\d+\\)\\.\\w$", StringPool.BLANK);
+		fileName = FileUtil.stripSuffix(fileName);
 
 		String uniqueFileName = getUniqueFileName(groupId, fileName, folder);
 

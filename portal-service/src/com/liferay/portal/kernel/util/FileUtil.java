@@ -372,6 +372,10 @@ public class FileUtil {
 		return getFile().stripExtension(fileName);
 	}
 
+	public static String stripSuffix(String fileName) {
+		return getFile().stripSuffix(fileName);
+	}
+
 	public static List<String> toList(Reader reader) {
 		return getFile().toList(reader);
 	}
