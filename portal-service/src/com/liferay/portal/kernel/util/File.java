@@ -27,6 +27,8 @@ import java.util.Properties;
  */
 public interface File {
 
+	public String appendSuffix(String fileName, String suffix);
+
 	public void copyDirectory(java.io.File source, java.io.File destination)
 		throws IOException;
 
@@ -141,6 +143,8 @@ public interface File {
 	public java.io.File[] sortFiles(java.io.File[] files);
 
 	public String stripExtension(String fileName);
+
+	public String stripSuffix(String fileName);
 
 	public List<String> toList(Reader reader);
 

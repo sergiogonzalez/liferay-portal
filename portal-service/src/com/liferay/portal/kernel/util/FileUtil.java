@@ -32,6 +32,10 @@ import java.util.Properties;
  */
 public class FileUtil {
 
+	public static String appendSuffix(String fileName, String suffix) {
+		return getFile().appendSuffix(fileName, suffix);
+	}
+
 	public static void copyDirectory(File source, File destination)
 		throws IOException {
 
@@ -366,6 +370,10 @@ public class FileUtil {
 
 	public static String stripExtension(String fileName) {
 		return getFile().stripExtension(fileName);
+	}
+
+	public static String stripSuffix(String fileName) {
+		return getFile().stripSuffix(fileName);
 	}
 
 	public static List<String> toList(Reader reader) {
