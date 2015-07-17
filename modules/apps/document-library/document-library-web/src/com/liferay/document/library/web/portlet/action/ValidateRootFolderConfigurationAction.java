@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.action;
+package com.liferay.document.library.web.portlet.action;
 
 import com.liferay.portal.NoSuchRepositoryEntryException;
 import com.liferay.portal.kernel.portlet.BaseJSPSettingsConfigurationAction;
@@ -30,10 +30,9 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 
 /**
- * @author Jorge Ferrer
  * @author Sergio González
  */
-public class ConfigurationActionImpl
+public abstract class ValidateRootFolderConfigurationAction
 	extends BaseJSPSettingsConfigurationAction {
 
 	@Override
@@ -52,17 +51,7 @@ public class ConfigurationActionImpl
 	}
 
 	protected void validate(ActionRequest actionRequest) throws Exception {
-		validateDisplayStyleViews(actionRequest);
 		validateRootFolder(actionRequest);
-	}
-
-	protected void validateDisplayStyleViews(ActionRequest actionRequest) {
-		String displayViews = GetterUtil.getString(
-			getParameter(actionRequest, "displayViews"));
-
-		if (Validator.isNull(displayViews)) {
-			SessionErrors.add(actionRequest, "displayViewsInvalid");
-		}
 	}
 
 	protected void validateRootFolder(ActionRequest actionRequest)
