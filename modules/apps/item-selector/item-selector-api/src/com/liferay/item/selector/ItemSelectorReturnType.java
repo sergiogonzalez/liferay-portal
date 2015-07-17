@@ -15,6 +15,8 @@
 package com.liferay.item.selector;
 
 /**
+ * A java abstraction to represent the element that the view layer will return.
+ *
  * @author Roberto Díaz
  */
 public interface ItemSelectorReturnType {

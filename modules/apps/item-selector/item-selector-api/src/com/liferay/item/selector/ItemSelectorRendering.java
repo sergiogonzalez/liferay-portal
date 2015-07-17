@@ -17,14 +17,33 @@ package com.liferay.item.selector;
 import java.util.List;
 
 /**
+ * A bean that contains info needed by the ItemSelector to render views.
+ *
  * @author Iván Zaera
  */
 public interface ItemSelectorRendering {
 
+	/**
+	 * Returns the event name that the view will throw once the selection is
+	 * performed.
+	 *
+	 * @return the event name.
+	 */
 	public String getItemSelectedEventName();
 
+	/**
+	 * Returns the ItemSelectorViewRenderers of the views that are going to be
+	 * rendered.
+	 *
+	 * @return the ItemSelectorViewRenderers.
+	 */
 	public List<ItemSelectorViewRenderer> getItemSelectorViewRenderers();
 
+	/**
+	 * Returns the selected tab.
+	 *
+	 * @return the selected tab.
+	 */
 	public String getSelectedTab();
 
 }

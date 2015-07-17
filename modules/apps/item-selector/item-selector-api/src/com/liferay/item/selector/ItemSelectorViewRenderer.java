@@ -20,14 +20,36 @@ import javax.servlet.ServletException;
 import javax.servlet.jsp.PageContext;
 
 /**
+ * A helper class to render the ItemSelectorView view layer. It also contains
+ * the ItemSelectorCriterion instance in order to allow use its inner
+ * information in the view layer.
+ *
  * @author Iván Zaera
  */
 public interface ItemSelectorViewRenderer {
 
+	/**
+	 * Returns an instance of ItemSelectorCriterion.
+	 *
+	 * @return an instance of ItemSelectorCriterion.
+	 */
 	public ItemSelectorCriterion getItemSelectorCriterion();
 
+	/**
+	 * Returns a List of ItemSelectorView.
+	 *
+	 * @return a List of ItemSelectorView.
+	 */
 	public ItemSelectorView<ItemSelectorCriterion> getItemSelectorView();
 
+	/**
+	 * Renders the HTML.
+	 *
+	 * @param  pageContext the pageContext with which the item selector is
+	 *         rendered.
+	 * @throws IOException
+	 * @throws javax.servlet.ServletException
+	 */
 	public void renderHTML(PageContext pageContext)
 		throws IOException, ServletException;
 
