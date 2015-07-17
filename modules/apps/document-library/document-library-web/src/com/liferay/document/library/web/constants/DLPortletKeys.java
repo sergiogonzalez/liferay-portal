@@ -12,12 +12,14 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.portlet;
-
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+package com.liferay.document.library.web.constants;
 
 /**
  * @author Sergio González
  */
-public class DLPortlet extends MVCPortlet {
+public class DLPortletKeys {
+
+	public static final String DOCUMENT_LIBRARY =
+		"com_liferay_document_library_web_portlet_DLPortlet";
+
 }
