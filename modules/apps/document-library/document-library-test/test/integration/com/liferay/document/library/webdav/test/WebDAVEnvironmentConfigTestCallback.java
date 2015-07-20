@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.webdav;
+package com.liferay.document.library.webdav.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.webdav.methods.Method;
 import com.liferay.portal.test.rule.callback.MainServletTestCallback;
@@ -22,10 +23,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.junit.Assert;
 import org.junit.runner.Description;
+import org.junit.runner.RunWith;
 
 /**
  * @author Shuyang Zhou
  */
+@RunWith(Arquillian.class)
 public class WebDAVEnvironmentConfigTestCallback
 	extends MainServletTestCallback {
 

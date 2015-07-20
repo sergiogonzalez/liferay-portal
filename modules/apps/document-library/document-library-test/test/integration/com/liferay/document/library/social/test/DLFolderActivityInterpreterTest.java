@@ -12,22 +12,20 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.social;
+package com.liferay.document.library.social.test;
 
-import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.document.library.web.social.DLFolderActivityInterpreter;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
-import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.social.model.SocialActivityInterpreter;
@@ -40,7 +38,7 @@ import org.junit.Rule;
  * @author Zsolt Berentey
  */
 @Sync
-public class DLFileEntryActivityInterpreterTest
+public class DLFolderActivityInterpreterTest
 		extends BaseSocialActivityInterpreterTestCase {
 
 	@ClassRule
@@ -56,22 +54,24 @@ public class DLFileEntryActivityInterpreterTest
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), TestPropsValues.getUserId());
 
-		_fileEntry = DLAppLocalServiceUtil.addFileEntry(
-			TestPropsValues.getUserId(), group.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-			RandomTestUtil.randomString() + ".txt", ContentTypes.TEXT_PLAIN,
-			RandomTestUtil.randomBytes(), serviceContext);
+		_folder = DLAppServiceUtil.addFolder(
+			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			serviceContext);
+
+		DLAppServiceUtil.moveFolderToTrash(_folder.getFolderId());
+
+		DLAppServiceUtil.restoreFolderFromTrash(_folder.getFolderId());
 	}
 
 	@Override
 	protected SocialActivityInterpreter getActivityInterpreter() {
-		return new DLFileEntryActivityInterpreter();
+		return new DLFolderActivityInterpreter();
 	}
 
 	@Override
 	protected int[] getActivityTypes() {
 		return new int[] {
-			DLActivityKeys.ADD_FILE_ENTRY, DLActivityKeys.UPDATE_FILE_ENTRY,
 			SocialActivityConstants.TYPE_MOVE_TO_TRASH,
 			SocialActivityConstants.TYPE_RESTORE_FROM_TRASH
 		};
@@ -79,27 +79,21 @@ public class DLFileEntryActivityInterpreterTest
 
 	@Override
 	protected void moveModelsToTrash() throws Exception {
-		DLAppServiceUtil.moveFileEntryToTrash(_fileEntry.getFileEntryId());
+		DLAppServiceUtil.moveFolderToTrash(_folder.getFolderId());
 	}
 
 	@Override
 	protected void renameModels() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(
-				group.getGroupId(), TestPropsValues.getUserId());
-
-		DLAppServiceUtil.updateFileEntry(
-			_fileEntry.getFileEntryId(), RandomTestUtil.randomString(),
-			ContentTypes.TEXT_PLAIN, RandomTestUtil.randomString(),
-			StringPool.BLANK, StringPool.BLANK, false,
-			RandomTestUtil.randomBytes(), serviceContext);
+		DLAppServiceUtil.updateFolder(
+			_folder.getFolderId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), serviceContext);
 	}
 
 	@Override
 	protected void restoreModelsFromTrash() throws Exception {
-		DLAppServiceUtil.restoreFileEntryFromTrash(_fileEntry.getFileEntryId());
+		DLAppServiceUtil.restoreFolderFromTrash(_folder.getFolderId());
 	}
 
-	private FileEntry _fileEntry;
+	private Folder _folder;
 
 }
