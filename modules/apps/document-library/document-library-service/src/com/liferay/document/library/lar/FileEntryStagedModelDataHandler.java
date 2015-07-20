@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.lar;
 
+import com.liferay.document.library.web.lar.DLPortletDataHandler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;

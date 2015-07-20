@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.lar;
+package com.liferay.document.library.web.lar;
 
+import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Conjunction;
 import com.liferay.portal.kernel.dao.orm.Criterion;
@@ -69,6 +70,7 @@ import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
 import com.liferay.portlet.documentlibrary.util.DLConstants;
 import com.liferay.portlet.exportimport.lar.BasePortletDataHandler;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
+import com.liferay.portlet.exportimport.lar.PortletDataHandler;
 import com.liferay.portlet.exportimport.lar.PortletDataHandlerBoolean;
 import com.liferay.portlet.exportimport.lar.PortletDataHandlerControl;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;
@@ -83,6 +85,8 @@ import java.util.Map;
 
 import javax.portlet.PortletPreferences;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Bruno Farache
  * @author Raymond Augé
@@ -90,6 +94,13 @@ import javax.portlet.PortletPreferences;
  * @author Mate Thurzo
  * @author Zsolt Berentey
  */
+@Component(
+	property = {
+		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY,
+		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY_ADMIN
+	},
+	service = PortletDataHandler.class
+)
 public class DLPortletDataHandler extends BasePortletDataHandler {
 
 	public static final String NAMESPACE = "document_library";
