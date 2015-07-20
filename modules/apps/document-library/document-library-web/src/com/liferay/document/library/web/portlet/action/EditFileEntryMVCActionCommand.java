@@ -869,7 +869,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			}
 
 			actionResponse.setRenderParameter(
-				"mvcPath", "/html/portlet/document_library/error.jsp");
+				"mvcPath", "/document_library/error.jsp");
 		}
 		else {
 			Throwable cause = e.getCause();
