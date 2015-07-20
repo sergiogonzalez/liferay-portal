@@ -18,10 +18,15 @@ import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UploadableFileReturnType;
 import com.liferay.item.selector.taglib.ItemSelectorBrowserReturnTypeUtil;
 import com.liferay.item.selector.taglib.util.ServletContextUtil;
+import com.liferay.item.selector.web.constants.ItemSelectorPortletKeys;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ClassUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portlet.PortalPreferences;
+import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.List;
@@ -35,6 +40,9 @@ import javax.servlet.jsp.PageContext;
  * @author Roberto Díaz
  */
 public class BrowserTag extends IncludeTag {
+
+	public static final String[] DISPLAY_STYLES =
+		new String[] {"icon", "descriptive", "list"};
 
 	public void setDesiredItemSelectorReturnTypes(
 		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes) {
@@ -102,11 +110,28 @@ public class BrowserTag extends IncludeTag {
 	}
 
 	protected String getDisplayStyle() {
-		if (Validator.isNotNull(_displayStyle)) {
-			return _displayStyle;
+		PortalPreferences portalPreferences =
+			PortletPreferencesFactoryUtil.getPortalPreferences(request);
+
+		if (Validator.isNull(_displayStyle)) {
+			return portalPreferences.getValue(
+				ItemSelectorPortletKeys.ITEM_SELECTOR, "display-style",
+				DISPLAY_STYLES[0]);
 		}
 
-		return _DEFAULT_DISPLAY_STYLE;
+		if (!ArrayUtil.contains(DISPLAY_STYLES, _displayStyle)) {
+			return DISPLAY_STYLES[0];
+		}
+
+		String selectedTab = ParamUtil.getString(request, "selectedTab");
+
+		if (Validator.isNotNull(selectedTab) && selectedTab.equals(_tabName)) {
+			portalPreferences.setValue(
+				ItemSelectorPortletKeys.ITEM_SELECTOR, "display-style",
+				_displayStyle);
+		}
+
+		return _displayStyle;
 	}
 
 	protected ItemSelectorReturnType getDraggableFileReturnType() {
@@ -175,8 +200,6 @@ public class BrowserTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:item-selector-browser:uploadURL", _uploadURL);
 	}
-
-	private static final String _DEFAULT_DISPLAY_STYLE = "icon";
 
 	private static final String _PAGE = "/taglib/ui/browser/page.jsp";
 
