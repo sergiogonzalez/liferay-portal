@@ -12,10 +12,11 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.atom;
+package com.liferay.document.library.atom;
 
 import com.liferay.portal.atom.AtomPager;
 import com.liferay.portal.atom.AtomUtil;
+import com.liferay.portal.kernel.atom.AtomCollectionAdapter;
 import com.liferay.portal.kernel.atom.AtomEntryContent;
 import com.liferay.portal.kernel.atom.AtomException;
 import com.liferay.portal.kernel.atom.AtomRequestContext;
@@ -39,9 +40,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Igor Spasic
  */
+@Component(
+	property = {"model.class.name=com.liferay.portal.kernel.repository.model.FileEntry"},
+	service = AtomCollectionAdapter.class
+)
 public class FileEntryAtomCollectionAdapter
 	extends BaseMediaAtomCollectionAdapter<FileEntry> {
 
@@ -121,7 +128,8 @@ public class FileEntryAtomCollectionAdapter
 			return fileEntry.getContentStream();
 		}
 		catch (Exception ex) {
-			throw new AtomException(SC_INTERNAL_SERVER_ERROR, ex);
+			throw new AtomException(
+				AtomCollectionAdapter.SC_INTERNAL_SERVER_ERROR, ex);
 		}
 	}
 
