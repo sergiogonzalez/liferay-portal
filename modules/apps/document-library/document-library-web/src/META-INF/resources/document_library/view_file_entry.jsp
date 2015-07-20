@@ -176,7 +176,15 @@ DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = DLDisplayConte
 						}
 						%>
 
-						<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="thumbnail" />" class="thumbnail" src="<%= thumbnailSrc %>" style="<%= DLUtil.getThumbnailStyle(true, 0, 128, 128) %>" />
+						<%
+						System.out.println("hola: " + thumbnailSrc);
+						%>
+
+						<img alt="<liferay-ui:message escapeAttribute="<%= true %>" key="thumbnail" />" class="thumbnail" src="fulanito" style="<%= DLUtil.getThumbnailStyle(true, 0, 128, 128) %>" />
+
+						<%
+						System.out.println("adios: " + thumbnailSrc);
+						%>
 					</span>
 
 					<span class="user-date">
