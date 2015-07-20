@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
@@ -29,12 +28,16 @@ import com.liferay.portlet.asset.model.BaseAssetRendererFactory;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
-import org.osgi.service.component.annotations.Component;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 import javax.portlet.WindowStateException;
+
+import javax.servlet.ServletContext;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alexander Chow
@@ -65,6 +68,7 @@ public class DLFolderAssetRendererFactory extends BaseAssetRendererFactory {
 			folder);
 
 		dlFolderAssetRenderer.setAssetRendererType(type);
+		dlFolderAssetRenderer.setServletContext(_servletContext);
 
 		return dlFolderAssetRenderer;
 	}
@@ -113,9 +117,19 @@ public class DLFolderAssetRendererFactory extends BaseAssetRendererFactory {
 		return DLFolderPermission.contains(permissionChecker, folder, actionId);
 	}
 
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.document.library.web)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		_servletContext = servletContext;
+	}
+
 	@Override
 	protected String getIconPath(ThemeDisplay themeDisplay) {
 		return themeDisplay.getPathThemeImages() + "/common/folder.png";
 	}
+
+	private ServletContext _servletContext;
 
 }
