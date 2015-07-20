@@ -12,9 +12,8 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.lar;
+package com.liferay.document.library.lar;
 
-import com.liferay.document.library.web.lar.DLPortletDataHandler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -62,6 +61,7 @@ import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
 import com.liferay.portlet.exportimport.lar.ExportImportThreadLocal;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataException;
+import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 import com.liferay.portlet.exportimport.lar.StagedModelModifiedDateComparator;
 import com.liferay.portlet.trash.util.TrashUtil;
@@ -73,9 +73,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Mate Thurzo
  */
+@Component(immediate = true, service = StagedModelDataHandler.class)
 public class FileEntryStagedModelDataHandler
 	extends BaseStagedModelDataHandler<FileEntry> {
 
@@ -228,7 +231,9 @@ public class FileEntryStagedModelDataHandler
 			InputStream is = null;
 
 			try {
-				is = FileEntryUtil.getContentStream(fileEntry);
+				is =
+					com.liferay.portlet.documentlibrary.lar.FileEntryUtil.
+						getContentStream(fileEntry);
 			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {
@@ -264,7 +269,7 @@ public class FileEntryStagedModelDataHandler
 		}
 
 		if (portletDataContext.getBooleanParameter(
-				DLPortletDataHandler.NAMESPACE, "previews-and-thumbnails")) {
+				"document_library", "previews-and-thumbnails")) {
 
 			DLProcessorRegistryUtil.exportGeneratedFiles(
 				portletDataContext, fileEntry, fileEntryElement);
@@ -342,7 +347,9 @@ public class FileEntryStagedModelDataHandler
 			portletDataContext.isPerformDirectBinaryImport()) {
 
 			try {
-				is = FileEntryUtil.getContentStream(fileEntry);
+				is =
+					com.liferay.portlet.documentlibrary.lar.FileEntryUtil.
+						getContentStream(fileEntry);
 			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {
@@ -588,7 +595,7 @@ public class FileEntryStagedModelDataHandler
 		}
 
 		if (portletDataContext.getBooleanParameter(
-				DLPortletDataHandler.NAMESPACE, "previews-and-thumbnails")) {
+				"document_library", "previews-and-thumbnails")) {
 
 			DLProcessorRegistryUtil.importGeneratedFiles(
 				portletDataContext, fileEntry, importedFileEntry,
