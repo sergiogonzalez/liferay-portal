@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -41,7 +40,6 @@ import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUt
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryTypePermission;
 import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
-import org.osgi.service.component.annotations.Component;
 
 import java.util.Locale;
 
@@ -49,6 +47,11 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 import javax.portlet.WindowStateException;
+
+import javax.servlet.ServletContext;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Julio Camarero
@@ -95,6 +98,7 @@ public class DLFileEntryAssetRendererFactory extends BaseAssetRendererFactory {
 			new DLFileEntryAssetRenderer(fileEntry, fileVersion);
 
 		dlFileEntryAssetRenderer.setAssetRendererType(type);
+		dlFileEntryAssetRenderer.setServletContext(_servletContext);
 
 		return dlFileEntryAssetRenderer;
 	}
@@ -207,9 +211,19 @@ public class DLFileEntryAssetRendererFactory extends BaseAssetRendererFactory {
 			permissionChecker, classPK, actionId);
 	}
 
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.document.library.web)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		_servletContext = servletContext;
+	}
+
 	@Override
 	protected String getIconPath(ThemeDisplay themeDisplay) {
 		return themeDisplay.getPathThemeImages() + "/common/clip.png";
 	}
+
+	private ServletContext _servletContext;
 
 }
