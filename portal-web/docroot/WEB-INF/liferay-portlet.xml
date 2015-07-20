@@ -136,7 +136,6 @@
 		<trash-handler>com.liferay.portlet.documentlibrary.trash.DLFileEntryTrashHandler</trash-handler>
 		<trash-handler>com.liferay.portlet.documentlibrary.trash.DLFileShortcutTrashHandler</trash-handler>
 		<trash-handler>com.liferay.portlet.documentlibrary.trash.DLFolderTrashHandler</trash-handler>
-		<workflow-handler>com.liferay.portlet.documentlibrary.workflow.DLFileEntryWorkflowHandler</workflow-handler>
 	</portlet>
 	<portlet>
 		<portlet-name>31</portlet-name>
