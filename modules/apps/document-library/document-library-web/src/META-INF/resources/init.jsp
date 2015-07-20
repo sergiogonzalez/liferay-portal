@@ -25,7 +25,8 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.portal.InvalidRepositoryException" %><%@
+<%@ page import="com.liferay.document.library.web.util.DLBreadcrumbUtil" %><%@
+page import="com.liferay.portal.InvalidRepositoryException" %><%@
 page import="com.liferay.portal.NoSuchRepositoryException" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.dao.search.RowChecker" %><%@
@@ -105,7 +106,6 @@ page import="com.liferay.portlet.documentlibrary.NoSuchMetadataSetException" %><
 page import="com.liferay.portlet.documentlibrary.RepositoryNameException" %><%@
 page import="com.liferay.portlet.documentlibrary.RequiredFileEntryTypeException" %><%@
 page import="com.liferay.portlet.documentlibrary.SourceFileNameException" %><%@
-page import="com.liferay.portlet.documentlibrary.action.EditFileEntryMVCActionCommand" %><%@
 page import="com.liferay.portlet.documentlibrary.display.context.DLDisplayContextProviderUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.display.context.DLEditFileEntryDisplayContext" %><%@
 page import="com.liferay.portlet.documentlibrary.display.context.DLFilePicker" %><%@
@@ -128,6 +128,7 @@ page import="com.liferay.portlet.documentlibrary.service.permission.DLFileShortc
 page import="com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission" %><%@
 page import="com.liferay.portlet.documentlibrary.service.permission.DLPermission" %><%@
 page import="com.liferay.portlet.documentlibrary.util.AudioProcessorUtil" %><%@
+page import="com.liferay.portlet.documentlibrary.util.DL" %><%@
 page import="com.liferay.portlet.documentlibrary.util.DLConstants" %><%@
 page import="com.liferay.portlet.documentlibrary.util.DLProcessorRegistryUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.util.ImageProcessorUtil" %><%@
