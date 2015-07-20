@@ -1,3 +1,5 @@
+<%@ page
+		import="com.liferay.document.library.web.display.context.DLDisplayContextProviderUtil" %>
 <%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
