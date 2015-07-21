@@ -14,7 +14,6 @@
 
 package com.liferay.document.library.trash;
 
-import com.liferay.document.library.web.asset.DLFolderAssetRenderer;
 import com.liferay.portal.InvalidRepositoryException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -167,13 +166,6 @@ public class DLFolderTrashHandler extends DLBaseTrashHandler {
 		DLFolder dlFolder = getDLFolder(classPK);
 
 		return dlFolder.getTrashEntry();
-	}
-
-	@Override
-	public TrashRenderer getTrashRenderer(long classPK) throws PortalException {
-		Folder folder = DLAppLocalServiceUtil.getFolder(classPK);
-
-		return new DLFolderAssetRenderer(folder);
 	}
 
 	@Override
