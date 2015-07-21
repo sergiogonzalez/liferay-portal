@@ -52,7 +52,6 @@ import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.AssetCategoryException;
 import com.liferay.portlet.asset.AssetTagException;
 import com.liferay.portlet.asset.model.AssetVocabulary;
-import com.liferay.portlet.documentlibrary.DLPortletInstanceSettings;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.DuplicateFolderNameException;
 import com.liferay.portlet.documentlibrary.FileExtensionException;
@@ -562,30 +561,8 @@ public class EditPageAttachmentsAction extends PortletAction {
 
 		String portletName = portletConfig.getPortletName();
 
-		if (!portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY)) {
-			return PrefsPropsUtil.getStringArray(
-				PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA);
-		}
-		else {
-			ThemeDisplay themeDisplay = (ThemeDisplay)
-				portletRequest.getAttribute(WebKeys.THEME_DISPLAY);
-
-			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-			DLPortletInstanceSettings dlPortletInstanceSettings =
-				DLPortletInstanceSettings.getInstance(
-					themeDisplay.getLayout(), portletDisplay.getId());
-
-			Set<String> extensions = new HashSet<>();
-
-			String[] mimeTypes = dlPortletInstanceSettings.getMimeTypes();
-
-			for (String mimeType : mimeTypes) {
-				extensions.addAll(MimeTypesUtil.getExtensions(mimeType));
-			}
-
-			return extensions.toArray(new String[extensions.size()]);
-		}
+		return PrefsPropsUtil.getStringArray(
+			PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA);
 	}
 
 	/**
