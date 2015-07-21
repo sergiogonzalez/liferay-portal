@@ -30,8 +30,6 @@ import com.liferay.portlet.documentlibrary.trash.DLFolderTrashHandler;
 import com.liferay.portlet.documentlibrary.util.DLFileEntryIndexer;
 import com.liferay.portlet.documentlibrary.util.DLFolderIndexer;
 import com.liferay.portlet.documentlibrary.workflow.DLFileEntryWorkflowHandler;
-import com.liferay.portlet.messageboards.asset.MBCategoryAssetRendererFactory;
-import com.liferay.portlet.messageboards.asset.MBMessageAssetRendererFactory;
 import com.liferay.portlet.messageboards.trash.MBCategoryTrashHandler;
 import com.liferay.portlet.messageboards.trash.MBMessageTrashHandler;
 import com.liferay.portlet.messageboards.trash.MBThreadTrashHandler;
@@ -121,9 +119,7 @@ public class PortalRegisterTestUtil {
 
 	private static final Class<?>[] _ASSET_RENDERER_FACTORY_CLASSES = {
 		DLFileEntryAssetRendererFactory.class,
-		DLFolderAssetRendererFactory.class,
-		MBCategoryAssetRendererFactory.class,
-		MBMessageAssetRendererFactory.class, UserAssetRendererFactory.class
+		DLFolderAssetRendererFactory.class, UserAssetRendererFactory.class
 	};
 
 	private static boolean _assetRendererFactoriesRegistered;
