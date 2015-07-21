@@ -182,7 +182,7 @@ public class StringUtil {
 			s = s.substring(0, pos);
 		}
 
-		return appendParentheticalSuffix(s, String.valueOf(suffix));
+		return appendParentheticalSuffix(s, String.valueOf(suffix), true);
 	}
 
 	/**
@@ -207,10 +207,42 @@ public class StringUtil {
 	 *         space, followed by the suffix enclosed in parentheses
 	 */
 	public static String appendParentheticalSuffix(String s, String suffix) {
+		return appendParentheticalSuffix(s, suffix, true);
+	}
+
+	/**
+	 * Returns the original string with an appended space followed by the suffix
+	 * surrounded by parentheses.
+	 *
+	 * <p>
+	 * Example:
+	 * </p>
+	 *
+	 * <p>
+	 * <pre>
+	 * <code>
+	 * appendParentheticalSuffix("Java", "EE", false) returns "Java(EE)"
+	 * </code>
+	 * </pre>
+	 * </p>
+	 *
+	 * @param  s the original string
+	 * @param  suffix the suffix to be appended
+	 * @param  addSpace whether to add space
+	 * @return a string that represents the original string, followed by a
+	 *         space or not, followed by the suffix enclosed in parentheses
+	 */
+	public static String appendParentheticalSuffix(
+		String s, String suffix, boolean addSpace) {
+
 		StringBundler sb = new StringBundler(5);
 
 		sb.append(s);
-		sb.append(StringPool.SPACE);
+
+		if (addSpace) {
+			sb.append(StringPool.SPACE);
+		}
+
 		sb.append(StringPool.OPEN_PARENTHESIS);
 		sb.append(suffix);
 		sb.append(StringPool.CLOSE_PARENTHESIS);
@@ -3882,6 +3914,52 @@ public class StringUtil {
 			s = s.substring(
 				StringPool.CDATA_OPEN.length(),
 				s.length() - StringPool.CDATA_CLOSE.length());
+		}
+
+		return s;
+	}
+
+	/**
+	 * Returns the original string without an appended the parenthedica suffix.
+	 * If the parenthedica suffix is preceded with a space it is also removed.
+	 *
+	 * <p>
+	 * Example:
+	 * <p>
+	 *
+	 * <p>
+	 * <pre>
+	 * <code>
+	 * stripParentheticalSuffix("file") returns "file"
+	 * stripParentheticalSuffix("file(0)") returns "file"
+	 * stripParentheticalSuffix("file (0)") returns "file"
+	 * </code>
+	 * </pre>
+	 * </p>
+	 *
+	 * @param  s the original string
+	 * @return a string representing the string <code>s</code> without the
+	 *         parentheticalSuffix
+	 */
+	public static String stripParentheticalSuffix(String s) {
+		if (!s.contains(StringPool.OPEN_PARENTHESIS) ||
+			!s.contains(StringPool.CLOSE_PARENTHESIS)) {
+
+			return s;
+		}
+
+		int i = s.lastIndexOf(StringPool.OPEN_PARENTHESIS);
+		int j = s.lastIndexOf(StringPool.CLOSE_PARENTHESIS);
+
+		if (((j - i) <= 0) || !s.endsWith(StringPool.CLOSE_PARENTHESIS)) {
+			return s;
+		}
+
+		s = StringUtil.replaceLast(s, s.substring(i, j + 1), StringPool.BLANK);
+
+		if (s.endsWith(StringPool.SPACE)) {
+			s = StringUtil.replaceLast(
+				s, s.substring(i - 1, s.length()), StringPool.BLANK);
 		}
 
 		return s;
