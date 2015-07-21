@@ -78,8 +78,6 @@
 	</portlet>
 	<portlet>
 		<portlet-name>19</portlet-name>
-		<custom-attributes-display>com.liferay.portlet.messageboards.MBCategoryCustomAttributesDisplay</custom-attributes-display>
-		<custom-attributes-display>com.liferay.portlet.messageboards.MBMessageCustomAttributesDisplay</custom-attributes-display>
 		<permission-propagator>com.liferay.portlet.messageboards.security.permission.MBPermissionPropagatorImpl</permission-propagator>
 		<trash-handler>com.liferay.portlet.messageboards.trash.MBCategoryTrashHandler</trash-handler>
 		<trash-handler>com.liferay.portlet.messageboards.trash.MBMessageTrashHandler</trash-handler>
