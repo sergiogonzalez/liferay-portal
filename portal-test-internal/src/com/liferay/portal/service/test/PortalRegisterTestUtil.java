@@ -30,9 +30,6 @@ import com.liferay.portlet.documentlibrary.trash.DLFolderTrashHandler;
 import com.liferay.portlet.documentlibrary.util.DLFileEntryIndexer;
 import com.liferay.portlet.documentlibrary.util.DLFolderIndexer;
 import com.liferay.portlet.documentlibrary.workflow.DLFileEntryWorkflowHandler;
-import com.liferay.portlet.messageboards.trash.MBCategoryTrashHandler;
-import com.liferay.portlet.messageboards.trash.MBMessageTrashHandler;
-import com.liferay.portlet.messageboards.trash.MBThreadTrashHandler;
 import com.liferay.portlet.messageboards.util.MBMessageIndexer;
 import com.liferay.portlet.trash.util.TrashIndexer;
 import com.liferay.portlet.usersadmin.util.ContactIndexer;
@@ -95,9 +92,6 @@ public class PortalRegisterTestUtil {
 		TrashHandlerRegistryUtil.register(new DLFileEntryTrashHandler());
 		TrashHandlerRegistryUtil.register(new DLFileShortcutTrashHandler());
 		TrashHandlerRegistryUtil.register(new DLFolderTrashHandler());
-		TrashHandlerRegistryUtil.register(new MBCategoryTrashHandler());
-		TrashHandlerRegistryUtil.register(new MBMessageTrashHandler());
-		TrashHandlerRegistryUtil.register(new MBThreadTrashHandler());
 
 		_trashHandlersRegistered = true;
 	}
