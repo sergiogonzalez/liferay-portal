@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.document.library.ddm;
+package com.liferay.document.library.web.ddm;
 
+import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageType;
 import com.liferay.portlet.dynamicdatamapping.util.BaseDDMDisplay;
@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Eduardo Garcia
  */
 @Component(
-	property = {"javax.portlet.name=" + PortletKeys.DOCUMENT_LIBRARY},
+	property = {"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY},
 	service = DDMDisplay.class
 )
 public class DLDDMDisplay extends BaseDDMDisplay {
@@ -42,7 +42,7 @@ public class DLDDMDisplay extends BaseDDMDisplay {
 
 	@Override
 	public String getPortletId() {
-		return PortletKeys.DOCUMENT_LIBRARY;
+		return DLPortletKeys.DOCUMENT_LIBRARY;
 	}
 
 	@Override
