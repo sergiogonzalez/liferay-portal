@@ -657,7 +657,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		String portletName = portletConfig.getPortletName();
 
-		if (!portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY)) {
+		if (!portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY)) {
 			return PrefsPropsUtil.getStringArray(
 				PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA);
 		}
@@ -959,7 +959,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 				String portletName = portletConfig.getPortletName();
 
-				if (portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY)) {
+				if (portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY)) {
 					PortletDisplay portletDisplay =
 						themeDisplay.getPortletDisplay();
 
