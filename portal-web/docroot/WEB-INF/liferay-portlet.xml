@@ -77,12 +77,6 @@
 		<css-class-wrapper>portlet-directory</css-class-wrapper>
 	</portlet>
 	<portlet>
-		<portlet-name>19</portlet-name>
-		<trash-handler>com.liferay.portlet.messageboards.trash.MBCategoryTrashHandler</trash-handler>
-		<trash-handler>com.liferay.portlet.messageboards.trash.MBMessageTrashHandler</trash-handler>
-		<trash-handler>com.liferay.portlet.messageboards.trash.MBThreadTrashHandler</trash-handler>
-	</portlet>
-	<portlet>
 		<portlet-name>20</portlet-name>
 		<icon>/html/icons/document_library.png</icon>
 		<struts-path>document_library</struts-path>
