@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.product.menu.site.administration.application.list;
+package com.liferay.message.boards.web.application.list;
 
 import com.liferay.application.list.BaseControlPanelEntryPanelApp;
 import com.liferay.application.list.PanelApp;
@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Eudaldo Alonso
+ * @author Edudaldo Alonso
  */
 @Component(
 	immediate = true,
@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = PanelApp.class
 )
-public class MessageBoardsPanelApp extends BaseControlPanelEntryPanelApp {
+public class MessageBoardsAdminPanelApp extends BaseControlPanelEntryPanelApp {
 
 	@Override
 	public String getParentCategoryKey() {
