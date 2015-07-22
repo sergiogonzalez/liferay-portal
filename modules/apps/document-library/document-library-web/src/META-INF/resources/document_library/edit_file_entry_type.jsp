@@ -92,7 +92,7 @@ String scopeAvailableFields = ParamUtil.getString(request, "scopeAvailableFields
 		</liferay-ui:panel>
 
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="mainMetadataFields" persistState="<%= true %>" title="main-metadata-fields">
-			<liferay-util:include page="/form_builder.jsp" portletId="<%= PortletKeys.DYNAMIC_DATA_MAPPING %>">
+			<liferay-util:include page="/form_builder.jsp" portletId="<%= PortletKeys.DYNAMIC_DATA_MAPPING %>" servletContext="<%= application %>">
 				<portlet:param name="refererPortletName" value="<%= DLPortletKeys.DOCUMENT_LIBRARY %>" />
 				<portlet:param name="portletResourceNamespace" value="<%= renderResponse.getNamespace() %>" />
 				<portlet:param name="script" value="<%= script %>" />
