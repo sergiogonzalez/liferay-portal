@@ -451,11 +451,6 @@
 		<system>true</system>
 	</portlet>
 	<portlet>
-		<portlet-name>162</portlet-name>
-		<configuration-action-class>com.liferay.portlet.messageboards.action.ConfigurationActionImpl</configuration-action-class>
-		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
-	</portlet>
-	<portlet>
 		<portlet-name>164</portlet-name>
 		<icon>/html/icons/login.png</icon>
 		<parent-struts-path>login</parent-struts-path>
