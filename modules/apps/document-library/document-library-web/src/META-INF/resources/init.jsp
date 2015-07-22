@@ -25,9 +25,9 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.document.library.web.context.IGDisplayContextProviderUtil" %><%@
-page import="com.liferay.document.library.web.context.util.DLDisplayRequestHelper" %><%@
-page import="com.liferay.document.library.web.context.util.IGRequestHelper" %><%@
+<%@ page import="com.liferay.document.library.web.display.context.IGDisplayContextProviderUtil" %><%@
+page import="com.liferay.document.library.web.display.context.util.DLDisplayRequestHelper" %><%@
+page import="com.liferay.document.library.web.display.context.util.IGRequestHelper" %><%@
 page import="com.liferay.document.library.web.display.context.DLDisplayContextProviderUtil" %><%@
 page import="com.liferay.document.library.web.display.context.logic.DLPortletInstanceSettingsHelper" %><%@
 page import="com.liferay.document.library.web.display.context.logic.DLVisualizationHelper" %><%@
@@ -140,7 +140,6 @@ page import="com.liferay.portlet.documentlibrary.util.ImageProcessorUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.util.PDFProcessorUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.util.RawMetadataProcessor" %><%@
 page import="com.liferay.portlet.documentlibrary.util.VideoProcessorUtil" %><%@
-page import="com.liferay.document.library.web.context.util.DLDisplayRequestHelper" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.DDMStructure" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.DDMStructureManager" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.DDMStructureManagerUtil" %><%@

@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalService;
 import com.liferay.portlet.documentlibrary.service.DLAppService;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalService;
@@ -78,7 +77,7 @@ public class DocumentLibraryPortletDisplayTemplateHandler
 	@Override
 	public String getName(Locale locale) {
 		String portletTitle = PortalUtil.getPortletTitle(
-			PortletKeys.DOCUMENT_LIBRARY, locale);
+			DLPortletKeys.DOCUMENT_LIBRARY, locale);
 
 		return portletTitle.concat(StringPool.SPACE).concat(
 			LanguageUtil.get(locale, "template"));
@@ -86,7 +85,7 @@ public class DocumentLibraryPortletDisplayTemplateHandler
 
 	@Override
 	public String getResourceName() {
-		return PortletKeys.DOCUMENT_LIBRARY;
+		return DLPortletKeys.DOCUMENT_LIBRARY;
 	}
 
 	@Override

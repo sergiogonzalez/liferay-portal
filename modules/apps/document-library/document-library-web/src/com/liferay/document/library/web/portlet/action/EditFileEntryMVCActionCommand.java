@@ -54,7 +54,6 @@ import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletURLImpl;
@@ -657,7 +656,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		String portletName = portletConfig.getPortletName();
 
-		if (!portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY)) {
+		if (!portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY)) {
 			return PrefsPropsUtil.getStringArray(
 				PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA);
 		}
@@ -959,7 +958,7 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 				String portletName = portletConfig.getPortletName();
 
-				if (portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY)) {
+				if (portletName.equals(DLPortletKeys.MEDIA_GALLERY_DISPLAY)) {
 					PortletDisplay portletDisplay =
 						themeDisplay.getPortletDisplay();
 
