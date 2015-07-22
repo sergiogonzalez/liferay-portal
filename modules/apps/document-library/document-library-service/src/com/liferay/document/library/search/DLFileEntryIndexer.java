@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.util;
+package com.liferay.document.library.search;
 
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -43,7 +43,6 @@ import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -59,7 +58,6 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
@@ -93,12 +91,14 @@ import java.util.Locale;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
  * @author Alexander Chow
  */
-@OSGiBeanProperties
+@Component(immediate = true, service = Indexer.class)
 public class DLFileEntryIndexer
 	extends BaseIndexer<DLFileEntry>
 	implements DDMStructureIndexer, RelatedEntryIndexer {
@@ -559,8 +559,8 @@ public class DLFileEntryIndexer
 		}
 		else {
 			long companyId = GetterUtil.getLong(ids[0]);
-			long groupId = GetterUtil.getLong(ids[2]);
-			long dataRepositoryId = GetterUtil.getLong(ids[3]);
+			long groupId = GetterUtil.getLong(ids[1]);
+			long dataRepositoryId = GetterUtil.getLong(ids[2]);
 
 			reindexFileEntries(companyId, groupId, dataRepositoryId);
 		}
@@ -665,13 +665,12 @@ public class DLFileEntryIndexer
 
 					DLFolder dlFolder = (DLFolder)object;
 
-					String portletId = PortletKeys.DOCUMENT_LIBRARY;
 					long groupId = dlFolder.getGroupId();
 					long folderId = dlFolder.getFolderId();
 
 					String[] newIds = {
-						String.valueOf(companyId), portletId,
-						String.valueOf(groupId), String.valueOf(folderId)
+						String.valueOf(companyId), String.valueOf(groupId),
+						String.valueOf(folderId)
 					};
 
 					reindex(newIds);
@@ -696,13 +695,12 @@ public class DLFileEntryIndexer
 
 					Group group = (Group)object;
 
-					String portletId = PortletKeys.DOCUMENT_LIBRARY;
 					long groupId = group.getGroupId();
 					long folderId = groupId;
 
 					String[] newIds = {
-						String.valueOf(companyId), portletId,
-						String.valueOf(groupId), String.valueOf(folderId)
+						String.valueOf(companyId), String.valueOf(groupId),
+						String.valueOf(folderId)
 					};
 
 					reindex(newIds);
