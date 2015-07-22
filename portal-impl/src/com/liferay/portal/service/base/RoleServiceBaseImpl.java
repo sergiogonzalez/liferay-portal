@@ -1127,7 +1127,7 @@ public abstract class RoleServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.portal.service.RoleLocalService.class)
 	protected com.liferay.portal.service.RoleLocalService roleLocalService;
-	@BeanReference(type = RoleService.class)
+	@BeanReference(type = com.liferay.portal.service.RoleService.class)
 	protected RoleService roleService;
 	@BeanReference(type = RolePersistence.class)
 	protected RolePersistence rolePersistence;

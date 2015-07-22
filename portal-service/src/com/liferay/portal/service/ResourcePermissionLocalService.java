@@ -592,8 +592,8 @@ public interface ResourcePermissionLocalService extends BaseLocalService,
 		long[] roleIds, java.lang.String actionId) throws PortalException;
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link
-	#getRoles(long, String, int, String, String}
+	* @deprecated As of 7.0.0, replaced by {@link #getRoles(long, String, int,
+	String, String}
 	*/
 	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

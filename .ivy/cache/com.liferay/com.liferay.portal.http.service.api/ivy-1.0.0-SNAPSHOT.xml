@@ -4,7 +4,7 @@
 		module="com.liferay.portal.http.service.api"
 		revision="1.0.0-SNAPSHOT"
 		status="integration"
-		publication="20150529102100"
+		publication="20150720160650"
 	>
 		<license name="LGPL 2.1" url="http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt" />
 		<description homepage="">

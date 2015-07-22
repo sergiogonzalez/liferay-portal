@@ -1375,7 +1375,7 @@ public abstract class CalEventLocalServiceBaseImpl extends BaseLocalServiceImpl
 		}
 	}
 
-	@BeanReference(type = CalEventLocalService.class)
+	@BeanReference(type = com.liferay.portlet.calendar.service.CalEventLocalService.class)
 	protected CalEventLocalService calEventLocalService;
 	@BeanReference(type = CalEventPersistence.class)
 	protected CalEventPersistence calEventPersistence;

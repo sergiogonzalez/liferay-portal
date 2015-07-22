@@ -2435,10 +2435,10 @@
 			<exclude org="org.slf4j" module="slf4j-api" name="*" type="*" ext="*" conf="" matcher="exact"/>
 		</dependency>
 		<dependency org="junit" name="junit" rev="4.10" force="true" conf="test->runtime(*),master(*)">
-			<exclude org="org.hamcrest" module="hamcrest-core" name="*" type="*" ext="*" conf="" matcher="exact"/>
+			<exclude org="org.hamcrest" module="hamcrest-core" name="*" type="*" ext="*" matcher="exact"/>
 		</dependency>
 		<dependency org="com.carrotsearch.randomizedtesting" name="randomizedtesting-runner" rev="2.1.13" force="true" conf="test->runtime(*),master(*)">
-			<exclude org="junit" module="junit" name="*" type="*" ext="*" conf="" matcher="exact"/>
+			<exclude org="junit" module="junit" name="*" type="*" ext="*" matcher="exact"/>
 		</dependency>
 		<override org="org.carrot2" module="carrot2-mini" matcher="exact" rev="3.9.0"/>
 		<override org="org.apache.hadoop" module="hadoop-mapreduce-client-hs" matcher="exact" rev="2.6.0"/>
@@ -2461,8 +2461,8 @@
 		<override org="org.kitesdk" module="kite-morphlines-tika-decompress" matcher="exact" rev="0.12.1"/>
 		<override org="org.apache.ivy" module="ivy" matcher="exact" rev="2.3.0"/>
 		<override org="org.apache.lucene" module="lucene-core" matcher="exact" rev="5.2.1"/>
-		<override org="org.apache.velocity" module="velocity" matcher="exact" rev="1.7"/>
 		<override org="javax.servlet" module="servlet-api" matcher="exact" rev="2.4"/>
+		<override org="org.apache.velocity" module="velocity" matcher="exact" rev="1.7"/>
 		<override org="org.mockito" module="mockito-core" matcher="exact" rev="1.9.5"/>
 		<override org="com.carrotsearch.randomizedtesting" module="junit4-ant" matcher="exact" rev="2.1.13"/>
 		<override org="org.apache.lucene" module="lucene-join" matcher="exact" rev="5.2.1"/>
@@ -2487,55 +2487,55 @@
 		<override org="org.apache.solr" module="solr-dataimporthandler-extras" matcher="exact" rev="5.2.1"/>
 		<override org="org.apache.httpcomponents" module="httpmime" matcher="exact" rev="4.4.1"/>
 		<override org="org.apache.lucene" module="lucene-expressions" matcher="exact" rev="5.2.1"/>
-		<override org="org.apache.directory.server" module="apacheds-all" matcher="exact" rev="2.0.0-M15"/>
 		<override org="com.google.guava" module="guava" matcher="exact" rev="14.0.1"/>
+		<override org="org.apache.directory.server" module="apacheds-all" matcher="exact" rev="2.0.0-M15"/>
 		<override org="org.apache.solr" module="solr-test-framework" matcher="exact" rev="5.2.1"/>
 		<override org="org.apache.lucene" module="lucene-codecs" matcher="exact" rev="5.2.1"/>
-		<override org="org.apache.james" module="apache-mime4j-core" matcher="exact" rev="0.7.2"/>
 		<override org="org.restlet.jee" module="org.restlet" matcher="exact" rev="2.3.0"/>
-		<override org="org.apache.uima" module="Tagger" matcher="exact" rev="2.3.1"/>
+		<override org="org.apache.james" module="apache-mime4j-core" matcher="exact" rev="0.7.2"/>
 		<override org="org.iq80.leveldb" module="leveldb" matcher="exact" rev="0.7"/>
+		<override org="org.apache.uima" module="Tagger" matcher="exact" rev="2.3.1"/>
 		<override org="org.apache.derby" module="derby" matcher="exact" rev="10.9.1.0"/>
 		<override org="org.carrot2" module="morfologik-polish" matcher="exact" rev="1.7.1"/>
 		<override org="org.apache.lucene" module="lucene-spatial" matcher="exact" rev="5.2.1"/>
 		<override org="org.apache.solr" module="solr-clustering" matcher="exact" rev="5.2.1"/>
-		<override org="org.eclipse.jetty" module="jetty-deploy" matcher="exact" rev="9.2.10.v20150310"/>
 		<override org="org.slf4j" module="jul-to-slf4j" matcher="exact" rev="1.7.7"/>
+		<override org="org.eclipse.jetty" module="jetty-deploy" matcher="exact" rev="9.2.10.v20150310"/>
 		<override org="com.pff" module="java-libpst" matcher="exact" rev="0.8.1"/>
 		<override org="com.adobe.xmp" module="xmpcore" matcher="exact" rev="5.1.2"/>
 		<override org="org.codehaus.jackson" module="jackson-jaxrs" matcher="exact" rev="1.9.13"/>
-		<override org="com.typesafe" module="config" matcher="exact" rev="1.0.2"/>
 		<override org="commons-configuration" module="commons-configuration" matcher="exact" rev="1.6"/>
+		<override org="com.typesafe" module="config" matcher="exact" rev="1.0.2"/>
 		<override org="org.apache.lucene" module="lucene-suggest" matcher="exact" rev="5.2.1"/>
 		<override org="org.apache.lucene" module="lucene-test-framework" matcher="exact" rev="5.2.1"/>
 		<override org="org.apache.lucene" module="lucene-analyzers-stempel" matcher="exact" rev="5.2.1"/>
 		<override org="xerces" module="xercesImpl" matcher="exact" rev="2.9.1"/>
 		<override org="commons-codec" module="commons-codec" matcher="exact" rev="1.10"/>
-		<override org="org.apache.hadoop" module="hadoop-yarn-server-common" matcher="exact" rev="2.6.0"/>
 		<override org="org.fusesource.leveldbjni" module="leveldbjni" matcher="exact" rev="1.8"/>
+		<override org="org.apache.hadoop" module="hadoop-yarn-server-common" matcher="exact" rev="2.6.0"/>
 		<override org="org.kitesdk" module="kite-morphlines-core" matcher="exact" rev="0.12.1"/>
 		<override org="junit" module="junit" matcher="exact" rev="4.10"/>
-		<override org="org.eclipse.jetty" module="jetty-jmx" matcher="exact" rev="9.2.10.v20150310"/>
-		<override org="org.apache.solr" module="solr-langid" matcher="exact" rev="5.2.1"/>
 		<override org="org.iq80.leveldb" module="leveldb-api" matcher="exact" rev="0.7"/>
+		<override org="org.apache.solr" module="solr-langid" matcher="exact" rev="5.2.1"/>
+		<override org="org.eclipse.jetty" module="jetty-jmx" matcher="exact" rev="9.2.10.v20150310"/>
 		<override org="org.apache.mahout" module="mahout-math" matcher="exact" rev="0.6"/>
 		<override org="org.apache.pdfbox" module="fontbox" matcher="exact" rev="1.8.8"/>
 		<override org="org.eclipse.jetty" module="jetty-xml" matcher="exact" rev="9.2.10.v20150310"/>
 		<override org="org.apache.lucene" module="lucene-benchmark" matcher="exact" rev="5.2.1"/>
 		<override org="org.apache.lucene" module="lucene-queryparser" matcher="exact" rev="5.2.1"/>
-		<override org="org.apache.james" module="apache-mime4j-dom" matcher="exact" rev="0.7.2"/>
 		<override org="jakarta-regexp" module="jakarta-regexp" matcher="exact" rev="1.4"/>
-		<override org="javax.servlet" module="javax.servlet-api" matcher="exact" rev="3.1.0"/>
+		<override org="org.apache.james" module="apache-mime4j-dom" matcher="exact" rev="0.7.2"/>
 		<override org="org.gagravarr" module="vorbis-java-tika" matcher="exact" rev="0.6"/>
+		<override org="javax.servlet" module="javax.servlet-api" matcher="exact" rev="3.1.0"/>
 		<override org="org.apache.lucene" module="lucene-demo" matcher="exact" rev="5.2.1"/>
 		<override org="org.objenesis" module="objenesis" matcher="exact" rev="1.2"/>
 		<override org="org.apache.lucene" module="lucene-facet" matcher="exact" rev="5.2.1"/>
-		<override org="org.apache.hadoop" module="hadoop-mapreduce-client-core" matcher="exact" rev="2.6.0"/>
 		<override org="org.restlet.jee" module="org.restlet.ext.servlet" matcher="exact" rev="2.3.0"/>
+		<override org="org.apache.hadoop" module="hadoop-mapreduce-client-core" matcher="exact" rev="2.6.0"/>
 		<override org="com.codahale.metrics" module="metrics-core" matcher="exact" rev="3.0.1"/>
-		<override org="org.bouncycastle" module="bcprov-jdk15" matcher="exact" rev="1.45"/>
-		<override org="org.apache.lucene" module="lucene-analyzers-morfologik" matcher="exact" rev="5.2.1"/>
 		<override org="hsqldb" module="hsqldb" matcher="exact" rev="1.8.0.10"/>
+		<override org="org.apache.lucene" module="lucene-analyzers-morfologik" matcher="exact" rev="5.2.1"/>
+		<override org="org.bouncycastle" module="bcprov-jdk15" matcher="exact" rev="1.45"/>
 		<override org="com.carrotsearch.randomizedtesting" module="randomizedtesting-runner" matcher="exact" rev="2.1.13"/>
 		<override org="org.apache.solr" module="solr-cell" matcher="exact" rev="5.2.1"/>
 		<override org="dom4j" module="dom4j" matcher="exact" rev="1.6.1"/>
@@ -2634,20 +2634,20 @@
 		<override org="org.codehaus.jackson" module="jackson-mapper-asl" matcher="exact" rev="1.9.13"/>
 		<override org="org.apache.zookeeper" module="zookeeper" matcher="exact" rev="3.4.6"/>
 		<override org="org.apache.uima" module="OpenCalaisAnnotator" matcher="exact" rev="2.3.1"/>
-		<override org="org.apache.tika" module="tika-core" matcher="exact" rev="1.7"/>
 		<override org="net.sf.saxon" module="Saxon-HE" matcher="exact" rev="9.6.0-2"/>
+		<override org="org.apache.tika" module="tika-core" matcher="exact" rev="1.7"/>
 		<override org="org.ccil.cowan.tagsoup" module="tagsoup" matcher="exact" rev="1.2.1"/>
-		<override org="com.googlecode.concurrentlinkedhashmap" module="concurrentlinkedhashmap-lru" matcher="exact" rev="1.2"/>
 		<override org="com.sun.jersey" module="jersey-json" matcher="exact" rev="1.9"/>
+		<override org="com.googlecode.concurrentlinkedhashmap" module="concurrentlinkedhashmap-lru" matcher="exact" rev="1.2"/>
 		<override org="com.sun.jersey" module="jersey-server" matcher="exact" rev="1.9"/>
-		<override org="org.apache.solr" module="solr-velocity" matcher="exact" rev="5.2.1"/>
 		<override org="org.apache.solr" module="solr-core" matcher="exact" rev="5.2.1"/>
-		<override org="org.apache.httpcomponents" module="httpcore" matcher="exact" rev="4.4.1"/>
-		<override org="org.apache.solr" module="solr-analytics" matcher="exact" rev="5.2.1"/>
+		<override org="org.apache.solr" module="solr-velocity" matcher="exact" rev="5.2.1"/>
 		<override org="org.kitesdk" module="kite-morphlines-hadoop-sequencefile" matcher="exact" rev="0.12.1"/>
+		<override org="org.apache.solr" module="solr-analytics" matcher="exact" rev="5.2.1"/>
+		<override org="org.apache.httpcomponents" module="httpcore" matcher="exact" rev="4.4.1"/>
 		<override org="com.sun.mail" module="javax.mail" matcher="exact" rev="1.5.1"/>
-		<override org="jdom" module="jdom" matcher="exact" rev="1.0"/>
 		<override org="it.unimi.dsi" module="fastutil" matcher="exact" rev="6.5.11"/>
+		<override org="jdom" module="jdom" matcher="exact" rev="1.0"/>
 		<override org="org.apache.hadoop" module="hadoop-mapreduce-client-shuffle" matcher="exact" rev="2.6.0"/>
 		<override org="org.codehaus.jackson" module="jackson-core-asl" matcher="exact" rev="1.9.13"/>
 		<override org="org.apache.lucene" module="lucene-queries" matcher="exact" rev="5.2.1"/>
@@ -2656,15 +2656,15 @@
 		<override org="net.arnx" module="jsonic" matcher="exact" rev="1.2.7"/>
 		<override org="org.apache.solr" module="solr-uima" matcher="exact" rev="5.2.1"/>
 		<override org="org.apache.hadoop" module="hadoop-yarn-server-web-proxy" matcher="exact" rev="2.6.0"/>
-		<override org="com.codahale.metrics" module="metrics-healthchecks" matcher="exact" rev="3.0.1"/>
-		<override org="org.mortbay.jetty" module="jetty" matcher="exact" rev="6.1.26"/>
 		<override org="org.tukaani" module="xz" matcher="exact" rev="1.5"/>
-		<override org="org.eclipse.jetty" module="jetty-http" matcher="exact" rev="9.2.10.v20150310"/>
+		<override org="org.mortbay.jetty" module="jetty" matcher="exact" rev="6.1.26"/>
+		<override org="com.codahale.metrics" module="metrics-healthchecks" matcher="exact" rev="3.0.1"/>
 		<override org="org.ow2.asm" module="asm-commons" matcher="exact" rev="4.1"/>
+		<override org="org.eclipse.jetty" module="jetty-http" matcher="exact" rev="9.2.10.v20150310"/>
 		<override org="org.eclipse.jetty" module="jetty-io" matcher="exact" rev="9.2.10.v20150310"/>
-		<override org="org.apache.lucene" module="lucene-highlighter" matcher="exact" rev="5.2.1"/>
 		<override org="com.sun.mail" module="gimap" matcher="exact" rev="1.5.1"/>
-		<override org="org.apache.hadoop" module="hadoop-annotations" matcher="exact" rev="2.6.0"/>
+		<override org="org.apache.lucene" module="lucene-highlighter" matcher="exact" rev="5.2.1"/>
 		<override org="com.sun.jersey.contribs" module="jersey-guice" matcher="exact" rev="1.9"/>
+		<override org="org.apache.hadoop" module="hadoop-annotations" matcher="exact" rev="2.6.0"/>
 	</dependencies>
 </ivy-module>

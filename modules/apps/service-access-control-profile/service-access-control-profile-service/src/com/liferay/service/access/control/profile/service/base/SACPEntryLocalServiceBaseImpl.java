@@ -770,7 +770,7 @@ public abstract class SACPEntryLocalServiceBaseImpl extends BaseLocalServiceImpl
 		}
 	}
 
-	@BeanReference(type = SACPEntryLocalService.class)
+	@BeanReference(type = com.liferay.service.access.control.profile.service.SACPEntryLocalService.class)
 	protected SACPEntryLocalService sacpEntryLocalService;
 	@BeanReference(type = com.liferay.service.access.control.profile.service.SACPEntryService.class)
 	protected com.liferay.service.access.control.profile.service.SACPEntryService sacpEntryService;

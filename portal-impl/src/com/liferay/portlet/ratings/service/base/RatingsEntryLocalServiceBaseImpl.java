@@ -974,7 +974,7 @@ public abstract class RatingsEntryLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = RatingsEntryLocalService.class)
+	@BeanReference(type = com.liferay.portlet.ratings.service.RatingsEntryLocalService.class)
 	protected RatingsEntryLocalService ratingsEntryLocalService;
 	@BeanReference(type = com.liferay.portlet.ratings.service.RatingsEntryService.class)
 	protected com.liferay.portlet.ratings.service.RatingsEntryService ratingsEntryService;

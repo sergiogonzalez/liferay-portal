@@ -694,8 +694,8 @@ public class ResourcePermissionLocalServiceWrapper
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link
-	#getRoles(long, String, int, String, String}
+	* @deprecated As of 7.0.0, replaced by {@link #getRoles(long, String, int,
+	String, String}
 	*/
 	@Deprecated
 	@Override

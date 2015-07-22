@@ -94,6 +94,7 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 			{ "name", Types.VARCHAR },
 			{ "description", Types.VARCHAR },
 			{ "restrictionType", Types.INTEGER },
+			{ "lastPublishDate", Types.TIMESTAMP },
 			{ "status", Types.INTEGER },
 			{ "statusByUserId", Types.BIGINT },
 			{ "statusByUserName", Types.VARCHAR },
@@ -115,13 +116,14 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("restrictionType", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("statusByUserId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("statusByUserName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table JournalFolder (uuid_ VARCHAR(75) null,folderId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentFolderId LONG,treePath STRING null,name VARCHAR(100) null,description STRING null,restrictionType INTEGER,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table JournalFolder (uuid_ VARCHAR(75) null,folderId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentFolderId LONG,treePath STRING null,name VARCHAR(100) null,description STRING null,restrictionType INTEGER,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table JournalFolder";
 	public static final String ORDER_BY_JPQL = " ORDER BY journalFolder.parentFolderId ASC, journalFolder.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY JournalFolder.parentFolderId ASC, JournalFolder.name ASC";
@@ -171,6 +173,7 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 		model.setName(soapModel.getName());
 		model.setDescription(soapModel.getDescription());
 		model.setRestrictionType(soapModel.getRestrictionType());
+		model.setLastPublishDate(soapModel.getLastPublishDate());
 		model.setStatus(soapModel.getStatus());
 		model.setStatusByUserId(soapModel.getStatusByUserId());
 		model.setStatusByUserName(soapModel.getStatusByUserName());
@@ -252,6 +255,7 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
 		attributes.put("restrictionType", getRestrictionType());
+		attributes.put("lastPublishDate", getLastPublishDate());
 		attributes.put("status", getStatus());
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
@@ -341,6 +345,12 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 
 		if (restrictionType != null) {
 			setRestrictionType(restrictionType);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
 		}
 
 		Integer status = (Integer)attributes.get("status");
@@ -622,6 +632,17 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 	@Override
 	public void setRestrictionType(int restrictionType) {
 		_restrictionType = restrictionType;
+	}
+
+	@JSON
+	@Override
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
 	}
 
 	@JSON
@@ -991,6 +1012,7 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 		journalFolderImpl.setName(getName());
 		journalFolderImpl.setDescription(getDescription());
 		journalFolderImpl.setRestrictionType(getRestrictionType());
+		journalFolderImpl.setLastPublishDate(getLastPublishDate());
 		journalFolderImpl.setStatus(getStatus());
 		journalFolderImpl.setStatusByUserId(getStatusByUserId());
 		journalFolderImpl.setStatusByUserName(getStatusByUserName());
@@ -1172,6 +1194,15 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 
 		journalFolderCacheModel.restrictionType = getRestrictionType();
 
+		Date lastPublishDate = getLastPublishDate();
+
+		if (lastPublishDate != null) {
+			journalFolderCacheModel.lastPublishDate = lastPublishDate.getTime();
+		}
+		else {
+			journalFolderCacheModel.lastPublishDate = Long.MIN_VALUE;
+		}
+
 		journalFolderCacheModel.status = getStatus();
 
 		journalFolderCacheModel.statusByUserId = getStatusByUserId();
@@ -1198,7 +1229,7 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1226,6 +1257,8 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 		sb.append(getDescription());
 		sb.append(", restrictionType=");
 		sb.append(getRestrictionType());
+		sb.append(", lastPublishDate=");
+		sb.append(getLastPublishDate());
 		sb.append(", status=");
 		sb.append(getStatus());
 		sb.append(", statusByUserId=");
@@ -1241,7 +1274,7 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(55);
+		StringBundler sb = new StringBundler(58);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.journal.model.JournalFolder");
@@ -1300,6 +1333,10 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 		sb.append(getRestrictionType());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
+		sb.append(getLastPublishDate());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>status</column-name><column-value><![CDATA[");
 		sb.append(getStatus());
 		sb.append("]]></column-value></column>");
@@ -1349,6 +1386,7 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 	private String _originalName;
 	private String _description;
 	private int _restrictionType;
+	private Date _lastPublishDate;
 	private int _status;
 	private int _originalStatus;
 	private boolean _setOriginalStatus;

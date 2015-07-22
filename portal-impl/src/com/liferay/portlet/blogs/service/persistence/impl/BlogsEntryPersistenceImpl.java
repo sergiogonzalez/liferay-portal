@@ -17895,13 +17895,15 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 
 			try {
 				blogsEntry.setTitle(SanitizerUtil.sanitize(companyId, groupId,
-						userId, BlogsEntry.class.getName(), entryId,
-						ContentTypes.TEXT_PLAIN, Sanitizer.MODE_ALL,
+						userId,
+						com.liferay.portlet.blogs.model.BlogsEntry.class.getName(),
+						entryId, ContentTypes.TEXT_PLAIN, Sanitizer.MODE_ALL,
 						blogsEntry.getTitle(), null));
 
 				blogsEntry.setContent(SanitizerUtil.sanitize(companyId,
-						groupId, userId, BlogsEntry.class.getName(), entryId,
-						ContentTypes.TEXT_HTML, Sanitizer.MODE_ALL,
+						groupId, userId,
+						com.liferay.portlet.blogs.model.BlogsEntry.class.getName(),
+						entryId, ContentTypes.TEXT_HTML, Sanitizer.MODE_ALL,
 						blogsEntry.getContent(), null));
 			}
 			catch (SanitizerException se) {

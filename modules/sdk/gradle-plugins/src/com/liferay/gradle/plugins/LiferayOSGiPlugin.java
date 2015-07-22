@@ -19,6 +19,8 @@ import aQute.bnd.osgi.Constants;
 import com.liferay.gradle.plugins.css.builder.BuildCSSTask;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.extensions.LiferayOSGiExtension;
+import com.liferay.gradle.plugins.jasper.jspc.JspCExtension;
+import com.liferay.gradle.plugins.jasper.jspc.JspCPlugin;
 import com.liferay.gradle.plugins.service.builder.BuildServiceTask;
 import com.liferay.gradle.plugins.tasks.DirectDeployTask;
 import com.liferay.gradle.plugins.wsdd.builder.BuildWSDDTask;
@@ -33,6 +35,7 @@ import groovy.lang.Closure;
 import java.io.File;
 
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Callable;
@@ -47,7 +50,9 @@ import org.gradle.api.GradleException;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.file.ConfigurableFileCollection;
 import org.gradle.api.file.FileCollection;
+import org.gradle.api.file.FileTree;
 import org.gradle.api.plugins.BasePluginConvention;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.specs.Spec;
@@ -73,11 +78,13 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 
 	public static final String COPY_LIBS_TASK_NAME = "copyLibs";
 
+	public static final String UNZIP_JAR_TASK_NAME = "unzipJar";
+
 	@Override
 	public void apply(Project project) {
 		super.apply(project);
 
-		configureBundleExtension(project);
+		configureJspCExtension(project);
 
 		configureArchivesBaseName(project);
 		configureVersion(project);
@@ -93,9 +100,46 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 
 					configureBundleExtensionDefaults(
 						project, liferayOSGiExtension);
+
+					configureTaskUnzipJar(project);
 				}
 
 			});
+	}
+
+	@Override
+	protected void addDependenciesJspC(
+		Project project, LiferayExtension liferayExtension) {
+
+		super.addDependenciesJspC(project, liferayExtension);
+
+		FileTree fileTree = getJarsFileTree(
+			project, liferayExtension.getAppServerLibGlobalDir());
+
+		GradleUtil.addDependency(
+			project, JspCPlugin.CONFIGURATION_NAME, fileTree);
+
+		fileTree = getJarsFileTree(
+			project,
+			new File(liferayExtension.getAppServerPortalDir(), "WEB-INF/lib"));
+
+		GradleUtil.addDependency(
+			project, JspCPlugin.CONFIGURATION_NAME, fileTree);
+
+		fileTree = getJarsFileTree(
+			project,
+			new File(liferayExtension.getLiferayHome(), "osgi/modules"));
+
+		GradleUtil.addDependency(
+			project, JspCPlugin.CONFIGURATION_NAME, fileTree);
+
+		ConfigurableFileCollection configurableFileCollection = project.files(
+			getUnzippedJarDir(project));
+
+		configurableFileCollection.builtBy(UNZIP_JAR_TASK_NAME);
+
+		GradleUtil.addDependency(
+			project, JspCPlugin.CONFIGURATION_NAME, configurableFileCollection);
 	}
 
 	@Override
@@ -340,6 +384,7 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 		addTaskAutoUpdateXml(project);
 		addTaskCopyLibs(project);
 		addTaskBuildWSDDJar(project);
+		addTaskUnzipJar(project);
 	}
 
 	@Override
@@ -351,11 +396,21 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 		return task;
 	}
 
+	protected Copy addTaskUnzipJar(final Project project) {
+		Copy copy = GradleUtil.addTask(
+			project, UNZIP_JAR_TASK_NAME, Copy.class);
+
+		copy.dependsOn(JavaPlugin.JAR_TASK_NAME);
+		copy.into(getUnzippedJarDir(project));
+
+		return copy;
+	}
+
 	@Override
 	protected void applyPlugins(Project project) {
 		GradleUtil.applyPlugin(project, BundlePlugin.class);
 
-		replaceJarBuilderFactory(project);
+		configureBundleExtension(project);
 
 		super.applyPlugins(project);
 	}
@@ -371,6 +426,8 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 	}
 
 	protected void configureBundleExtension(Project project) {
+		replaceJarBuilderFactory(project);
+
 		Map<String, String> bundleInstructions = getBundleInstructions(project);
 
 		Properties bundleProperties = null;
@@ -410,6 +467,45 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 				bundleInstructions.put(key, entry.getValue());
 			}
 		}
+	}
+
+	protected void configureJspCExtension(final Project project) {
+		JspCExtension jspCExtension = GradleUtil.getExtension(
+			project, JspCExtension.class);
+
+		jspCExtension.setModuleWeb(true);
+
+		jspCExtension.setPortalDir(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					LiferayExtension liferayExtension = GradleUtil.getExtension(
+						project, LiferayExtension.class);
+
+					return liferayExtension.getAppServerPortalDir();
+				}
+
+			});
+
+		jspCExtension.setWebAppDir(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					File unzippedJarDir = getUnzippedJarDir(project);
+
+					File resourcesDir = new File(
+						unzippedJarDir, "META-INF/resources");
+
+					if (resourcesDir.exists()) {
+						return resourcesDir;
+					}
+
+					return unzippedJarDir;
+				}
+
+			});
 	}
 
 	@Override
@@ -475,6 +571,18 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 	}
 
 	@Override
+	protected void configureTaskBuildServiceHbmFileName(
+		BuildServiceTask buildServiceTask) {
+
+		Project project = buildServiceTask.getProject();
+
+		File hbmFile = new File(
+			getResourcesDir(project), "META-INF/module-hbm.xml");
+
+		buildServiceTask.setHbmFileName(project.relativePath(hbmFile));
+	}
+
+	@Override
 	protected void configureTaskBuildServiceOsgiModule(
 		BuildServiceTask buildServiceTask) {
 
@@ -489,10 +597,44 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 	}
 
 	@Override
+	protected void configureTaskBuildServicePropsUtil(
+		BuildServiceTask buildServiceTask) {
+
+		String bundleSymbolicName = getBundleInstruction(
+			buildServiceTask.getProject(), Constants.BUNDLE_SYMBOLICNAME);
+
+		buildServiceTask.setPropsUtil(
+			bundleSymbolicName + ".util.ServiceProps");
+	}
+
+	@Override
+	protected void configureTaskBuildServiceSpringFileName(
+		BuildServiceTask buildServiceTask) {
+
+		Project project = buildServiceTask.getProject();
+
+		File springFile = new File(
+			getResourcesDir(project), "META-INF/spring/module-spring.xml");
+
+		buildServiceTask.setSpringFileName(project.relativePath(springFile));
+	}
+
+	@Override
 	protected void configureTaskBuildServiceSpringNamespaces(
 		BuildServiceTask buildServiceTask) {
 
 		buildServiceTask.setSpringNamespaces(new String[] {"beans", "osgi"});
+	}
+
+	@Override
+	protected void configureTaskBuildServiceSqlDirName(
+		BuildServiceTask buildServiceTask) {
+
+		Project project = buildServiceTask.getProject();
+
+		File sqlDir = new File(getResourcesDir(project), "META-INF/sql");
+
+		buildServiceTask.setSqlDirName(project.relativePath(sqlDir));
 	}
 
 	@Override
@@ -566,6 +708,14 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 		configureTaskAutoUpdateXml(project);
 	}
 
+	protected void configureTaskUnzipJar(Project project) {
+		Copy copy = (Copy)GradleUtil.getTask(project, UNZIP_JAR_TASK_NAME);
+
+		Jar jar = (Jar)GradleUtil.getTask(project, JavaPlugin.JAR_TASK_NAME);
+
+		copy.from(project.zipTree(jar.getArchivePath()));
+	}
+
 	protected void configureVersion(Project project) {
 		String bundleVersion = getBundleInstruction(
 			project, Constants.BUNDLE_VERSION);
@@ -591,6 +741,15 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 		return (Map<String, String>)bundleExtension.getInstructions();
 	}
 
+	protected FileTree getJarsFileTree(Project project, File dir) {
+		Map<String, Object> args = new HashMap<>();
+
+		args.put("dir", dir);
+		args.put("include", "*.jar");
+
+		return project.fileTree(args);
+	}
+
 	@Override
 	protected File getLibDir(Project project) {
 		File docrootDir = project.file("docroot");
@@ -611,6 +770,10 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 		}
 
 		return new File(docrootDir, "WEB-INF");
+	}
+
+	protected File getUnzippedJarDir(Project project) {
+		return new File(project.getBuildDir(), "unzipped-jar");
 	}
 
 	protected File getWSDDJarFile(Project project) {

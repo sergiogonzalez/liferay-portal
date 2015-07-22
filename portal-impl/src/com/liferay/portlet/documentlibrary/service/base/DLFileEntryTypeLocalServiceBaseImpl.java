@@ -1172,7 +1172,7 @@ public abstract class DLFileEntryTypeLocalServiceBaseImpl
 		}
 	}
 
-	@BeanReference(type = DLFileEntryTypeLocalService.class)
+	@BeanReference(type = com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalService.class)
 	protected DLFileEntryTypeLocalService dlFileEntryTypeLocalService;
 	@BeanReference(type = com.liferay.portlet.documentlibrary.service.DLFileEntryTypeService.class)
 	protected com.liferay.portlet.documentlibrary.service.DLFileEntryTypeService dlFileEntryTypeService;

@@ -1722,7 +1722,7 @@ public abstract class RoleLocalServiceBaseImpl extends BaseLocalServiceImpl
 		}
 	}
 
-	@BeanReference(type = RoleLocalService.class)
+	@BeanReference(type = com.liferay.portal.service.RoleLocalService.class)
 	protected RoleLocalService roleLocalService;
 	@BeanReference(type = com.liferay.portal.service.RoleService.class)
 	protected com.liferay.portal.service.RoleService roleService;

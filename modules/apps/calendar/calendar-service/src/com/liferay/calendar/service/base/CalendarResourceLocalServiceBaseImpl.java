@@ -1037,7 +1037,7 @@ public abstract class CalendarResourceLocalServiceBaseImpl
 	protected com.liferay.calendar.service.CalendarNotificationTemplateService calendarNotificationTemplateService;
 	@BeanReference(type = CalendarNotificationTemplatePersistence.class)
 	protected CalendarNotificationTemplatePersistence calendarNotificationTemplatePersistence;
-	@BeanReference(type = CalendarResourceLocalService.class)
+	@BeanReference(type = com.liferay.calendar.service.CalendarResourceLocalService.class)
 	protected CalendarResourceLocalService calendarResourceLocalService;
 	@BeanReference(type = com.liferay.calendar.service.CalendarResourceService.class)
 	protected com.liferay.calendar.service.CalendarResourceService calendarResourceService;

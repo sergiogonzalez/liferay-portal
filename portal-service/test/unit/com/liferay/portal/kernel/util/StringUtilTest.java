@@ -437,6 +437,31 @@ public class StringUtilTest {
 	}
 
 	@Test
+	public void testStripParentheticalSuffixInteger() throws Exception {
+		Assert.assertEquals(
+			"Hello World",
+			StringUtil.stripParentheticalSuffix("Hello World (2)"));
+		Assert.assertEquals(
+			"Hello World(2)",
+			StringUtil.stripParentheticalSuffix("Hello World(2)"));
+		Assert.assertEquals(
+			"Hello (World)",
+			StringUtil.stripParentheticalSuffix("Hello (World) (2)"));
+		Assert.assertEquals(
+			"Hello World (2)",
+			StringUtil.stripParentheticalSuffix("Hello World (2) (3)"));
+	}
+
+	@Test
+	public void testStripParentheticalSuffixString() throws Exception {
+		Assert.assertEquals(
+			"Hello", StringUtil.stripParentheticalSuffix("Hello (World)"));
+		Assert.assertEquals(
+			"Hello (World)",
+			StringUtil.stripParentheticalSuffix("Hello (World) (Liferay)"));
+	}
+
+	@Test
 	public void testToLowerCase() throws Exception {
 		Assert.assertEquals(
 			"hello world", StringUtil.toLowerCase("hello world"));

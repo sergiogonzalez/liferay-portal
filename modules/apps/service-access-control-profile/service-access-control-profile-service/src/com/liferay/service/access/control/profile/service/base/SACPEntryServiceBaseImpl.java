@@ -434,7 +434,7 @@ public abstract class SACPEntryServiceBaseImpl extends BaseServiceImpl
 
 	@BeanReference(type = com.liferay.service.access.control.profile.service.SACPEntryLocalService.class)
 	protected com.liferay.service.access.control.profile.service.SACPEntryLocalService sacpEntryLocalService;
-	@BeanReference(type = SACPEntryService.class)
+	@BeanReference(type = com.liferay.service.access.control.profile.service.SACPEntryService.class)
 	protected SACPEntryService sacpEntryService;
 	@BeanReference(type = SACPEntryPersistence.class)
 	protected SACPEntryPersistence sacpEntryPersistence;
